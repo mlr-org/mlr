@@ -27,7 +27,7 @@ In `mlr` a benchmark experiment can be conducted by calling function `benchmark(
 `benchmark()` basically executes `resample()` for each combination of `makeLearner()` and `Task()`.
 You can specify an individual resampling strategy for each `Task()` and select one or multiple performance measures to be calculated.
 
-### Conducting benchmark experiments
+# Conducting benchmark experiments
 
 We start with a small example. 
 Two learners, `MASS::lda()` and a `rpart::rpart()`, are applied to one classification problem (`sonar.task()`).
@@ -73,7 +73,7 @@ The entries show the [mean misclassification error](measures.html){target="_blan
 
 The result `bmr` is an object of class `BenchmarkResult()`. Basically, it contains a `base::list()` of lists of `ResampleResult()` objects, first ordered by `Task()` and then by `makeLearner()`.
 
-#### Making experiments reproducible
+## Making experiments reproducible
 
 Typically, we would want our experiment results to be reproducible. 
 `mlr` obeys the `set.seed` function, so make sure to use `set.seed` at the beginning of your script if you would like your results to be reproducible.
@@ -83,12 +83,12 @@ call `set.seed` depending on your usecase.
 One possibility is to use `set.seed(123, "L'Ecuyer")` in order to ensure the results are reproducible for each child process. 
 See the examples in `parallel::mclapply()` for more information on reproducibility and parallel computing.
 
-### Accessing benchmark results
+# Accessing benchmark results
 
 `mlr` provides several accessor functions, named `getBMR<WhatToExtract>`, that permit to retrieve information for further analyses. 
 This includes for example the performances or predictions of the learning algorithms under consideration.
 
-#### Learner performances
+## Learner performances
 
 Let's have a look at the benchmark result above.
 `getBMRPerformances()` returns individual performances in resampling runs, while
@@ -119,7 +119,7 @@ getBMRPerformances(bmr, as.df = TRUE)
 getBMRAggrPerformances(bmr, as.df = TRUE)
 ```
 
-#### Predictions
+## Predictions
 
 Per default, the `BenchmarkResult()` contains the learner predictions.
 If you do not want to keep them, e.g., to conserve memory, set `keep.pred = FALSE` when calling `benchmark()`.
@@ -144,7 +144,7 @@ head(getBMRPredictions(bmr, learner.ids = "classif.rpart", as.df = TRUE))
 If you don't like the default IDs, you can set the IDs of learners and tasks via the `id` option of `makeLearner()` and `makeTask()`.
 Moreover, you can conveniently change the ID of a `makeLearner()` via function `setLearnerid()`.
 
-#### IDs
+## IDs
 
 The IDs of all `makeLearner()`s, `Task()`s and Measure's (`makeMeasure()`) in a benchmark experiment can be retrieved as follows:
 
@@ -156,7 +156,7 @@ getBMRLearnerIds(bmr)
 getBMRMeasureIds(bmr)
 ```
 
-#### Fitted models
+## Fitted models
 
 Per default the `BenchmarkResult()` also contains the fitted models for all learners on all tasks.
 If you do not want to keep them set `models = FALSE` when calling `benchmark()`.
@@ -171,7 +171,7 @@ getBMRModels(bmr, drop = TRUE)
 getBMRModels(bmr, learner.ids = "classif.lda")
 ```
 
-#### Learners and measures
+## Learners and measures
 
 Moreover, you can extract the employed `makeLearner()`s and Measure's (`makeMeasure()`).
 
@@ -181,7 +181,7 @@ getBMRLearners(bmr)
 getBMRMeasures(bmr)
 ```
 
-### Merging benchmark results
+# Merging benchmark results
 
 Sometimes after completing a benchmark experiment it turns out that you want to extend it by another `makeLearner()` or another `Task()`.
 In this case you can perform an additional benchmark experiment and then use function `mergeBenchmarkResults()` to combine the results to a single `BenchmarkResult()` object that can be accessed and analyzed as usual.
@@ -224,14 +224,14 @@ bmr3
 mergeBenchmarkResults(list(bmr, bmr3))
 ```
 
-### Benchmark analysis and visualization
+# Benchmark analysis and visualization
 
 `mlr` offers several ways to analyze the results of a benchmark experiment.
 This includes visualization, ranking of learning algorithms and hypothesis tests to assess performance differences between learners.
 
 In order to demonstrate the functionality we conduct a slightly larger benchmark experiment with three learning algorithms that are applied to five classification tasks.
 
-#### Example: Comparing lda, rpart and random Forest
+## Example: Comparing lda, rpart and random Forest
 
 We consider `MASS::lda()`, classification trees `rpart::rpart()`, and random forests `randomForest::randomForest()`.
 Since the default learner IDs are a little long, we choose shorter names in the
@@ -291,11 +291,11 @@ With increasing size of such `benchmark()` experiments, those tables become almo
 `mlr` features some plotting functions to visualize results of benchmark experiments that you might find useful.
 Moreover, `mlr` offers statistical hypothesis tests to assess performance differences between learners.
 
-#### Integrated plots
+## Integrated plots
 
 Plots are generated using `ggplot2::ggplot2()`. Further customization, such as renaming plot elements or changing colors, is easily possible.
 
-##### Visualizing performances
+### Visualizing performances
 
 `plotBMRBoxplots()` creates box or violin plots which show the
 distribution of performance values across resampling iterations for one performance measure and for all learners and tasks (and thus visualize the output of `getBMRPerformances()`).
@@ -342,7 +342,7 @@ levels(plt$data$learner.id) = c("LDA", "CART", "RF")
 plt + ylab("Error rate")
 ```
 
-##### Visualizing aggregated performances
+### Visualizing aggregated performances
 
 The aggregated performance values (resulting from `getBMRAggrPerformances()`) can be visualized by function `plotBMRSummary()`. 
 This plot draws one line for each task on which the aggregated values of one performance measure for all learners are displayed.
@@ -353,7 +353,7 @@ Moreover, a small vertical jitter is added to prevent overplotting.
 plotBMRSummary(bmr)
 ```
 
-##### Calculating and visualizing ranks
+### Calculating and visualizing ranks
 
 Additional to the absolute performance, relative performance, i.e., ranking the learners is usually of interest and might provide valuable additional insight.
 
@@ -390,7 +390,7 @@ plotBMRRanksAsBarChart(bmr, order.lrn = getBMRLearnerIds(bmr))
 plotBMRRanksAsBarChart(bmr, pos = "dodge", order.lrn = getBMRLearnerIds(bmr))
 ```
 
-#### Comparing learners using hypothesis tests
+## Comparing learners using hypothesis tests
 
 Many researchers feel the need to display an algorithm's superiority by employing some sort of hypothesis testing. 
 As non-parametric tests seem better suited for such benchmark results the tests provided in `mlr` are the **Overall Friedman test** and the **Friedman-Nemenyi post hoc test**.
@@ -417,7 +417,7 @@ friedmanPostHocTestBMR(bmr, p.value = 0.1)
 
 At this level of significance, we can reject the null hypothesis that there exists no performance difference between the decision tree (`rpart::rpart()`) and the `randomForest::randomForest()`.
 
-#### Critical differences diagram
+## Critical differences diagram
 
 In order to visualize differently performing learners, a
 critical differences diagramcan be plotted, using either the Nemenyi test (`test = "nemenyi"`) or the Bonferroni-Dunn test (`test = "bd"`).
@@ -447,7 +447,7 @@ plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
     scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
 ```
 
-#### Custom plots
+## Custom plots
 
 You can easily generate your own visualizations by customizing the `ggplot2::ggplot()` objects returned by the plots above, retrieve the data from the `ggplot2::ggplot()` objects and use them as basis for your own plots, or rely on the `base::data.frame()`s returned by `getBMRPerformances()` or `getBMRAggrPerformances()`. 
 Here are some examples.
@@ -494,7 +494,7 @@ head(df)
 GGally::ggpairs(df, 3:5)
 ```
 
-### Further comments
+# Further comments
 
 * Note that for supervised classification `mlr` offers some more plots that operate on `BenchmarkResult()` objects and allow you to compare the performance of learning algorithms.
 See for example the tutorial page on [ROC analysis](roc_analysis.html){target="_blank"} and functions `generateThreshVsPerfData()`, `plotROCCurves()`, and `plotViperCharts()` as well as the page about [classifier calibration](classifier_calibration.html){target="_blank"} and function `generateCalibrationData()`.

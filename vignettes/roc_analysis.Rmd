@@ -52,13 +52,13 @@ Below are some examples that demonstrate the three possible ways.
 Note that you can only use [learners](learner.html){target="_blank"} that are capable of predicting probabilities.
 Have a look at the  learner table in the [Appendix](integrated_learners.html){target="_blank"} or run `listLearners("classif", properties = c("twoclass", "prob"))` to get a list of all learners that support this.
 
-### Performance plots with plotROCCurves
+# Performance plots with plotROCCurves
 
 As you might recall `generateThreshVsPerfData()` calculates one or several performance measures for a sequence of decision thresholds from 0 to 1.
 It provides S3 methods for objects of class `Prediction()`, `ResampleResult()` and `BenchmarkResult()` (resulting from `predict` (`predict.WrappedModel()`), `resample()` or `benchmark()`). 
 `plotROCCurves()` plots the result of `generateThreshVsPerfData()` using `ggplot2`.
 
-#### Example 1: Single predictions
+## Example 1: Single predictions
 
 We consider the `Sonar` (`mlbench::Sonar()`) data set from package `mlbench`, which poses a binary classification problem (`sonar.task()`) and apply linear discriminant analysis (`MASS::lda()`).
 
@@ -145,7 +145,7 @@ plotROCCurves(df, measures = list(tpr, ppv), diagonal = FALSE)
 plotROCCurves(df, measures = list(tnr, tpr), diagonal = FALSE)
 ```
 
-#### Example 2: Benchmark experiment
+## Example 2: Benchmark experiment
 
 The analysis in the example above can be improved a little.
 Instead of writing individual code for training/prediction of each learner, which can become
@@ -225,7 +225,7 @@ plotROCCurves(df)
 
 Again, you can easily create other standard evaluation plots by passing the appropriate performance measures to `generateThreshVsPerfData()` and `plotROCCurves()`.
 
-### Performance plots with asROCRPrediction
+# Performance plots with asROCRPrediction
 
 Drawing performance plots with package `ROCR` works through three basic commands:
 
@@ -237,7 +237,7 @@ Drawing performance plots with package `ROCR` works through three basic commands
 `ROCR`'s plot (`ROCR::plot-methods()`) method has some nice features which are not (yet) available in `plotROCCurves()`, for example plotting the convex hull of the ROC curves.
 Some examples are shown below.
 
-#### Example 1: Single predictions (continued)
+## Example 1: Single predictions (continued)
 
 We go back to out first example where we trained and predicted `MASS::lda()` on the sonar classification task (`sonar.task()`).
 
@@ -278,7 +278,7 @@ ch = ROCR::performance(ROCRpred1, "rch")
 ROCR::plot(ch, add = TRUE, lty = 2)
 ```
 
-#### Example 2: Benchmark experiments (continued)
+## Example 2: Benchmark experiments (continued)
 
 We again consider the benchmark experiment conducted earlier.
 We first extract the predictions by `getBMRPredictions()` and then convert them via function `asROCRPrediction()`.
@@ -348,7 +348,7 @@ plot(ROCRperfs[[1]], avg = "vertical", spread.estimate = "boxplot", lwd = 2, col
   show.spread.at = seq(0.1, 0.9, 0.1), ylim = c(0,1), xlab = "Threshold")
 ```
 
-### Viper charts
+# Viper charts
 
 `mlr` also supports [ViperCharts](http://viper.ijs.si/) for plotting ROC and other performance curves.
 Like `generateThreshVsPerfData()` it has S3 methods for objects of class `Prediction()`, `ResampleResult()` and `BenchmarkResult()`.

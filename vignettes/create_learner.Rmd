@@ -30,7 +30,7 @@ Three functions are mandatory for each learner.
 Technically, integrating a learning method means introducing a new S3 `class` and implementing the corresponding methods for the generic functions `RLearner()`, `trainLearner()`, and `predictLearner()`.
 Therefore we start with a quick overview of the involved classes and constructor functions.
 
-### Classes, constructors, and naming schemes
+# Classes, constructors, and naming schemes
 
 As you already know `makeLearner()` generates an object of class Learner (`makeLearner()`).
 
@@ -69,12 +69,12 @@ Defining a completely new type of learner that has special properties and does n
 We use a classification example to explain some general principles (so even if you are interested in integrating a learner for another type of learning task you might want to read the following section).
 Examples for other types of learning tasks are shown later on.
 
-### Classification
+# Classification
 
 We show how the Linear Discriminant Analysis (`MASS::lda()`) from
 package `MASS` has been integrated into the classification learner ``classif.lda`` in `mlr` as an example.
 
-#### Definition of the learner
+## Definition of the learner
 
 The minimal information required to define a learner is the `mlr` name of the learner, its package, the parameter set, and the set of properties of your learner. 
 In addition, you may provide a human-readable name, a short name and a note with information relevant to users of the learner.
@@ -152,7 +152,7 @@ makeRLearner.classif.lda = function() {
 }
 ```
 
-#### Creating the training function of the learner
+## Creating the training function of the learner
 
 Once the learner has been defined, we need to tell `mlr` how to call it to train a model. 
 The name of the function has to start with ``trainLearner.``, followed by the `mlr` name of the learner as defined above (``classif.lda`` here). 
@@ -179,7 +179,7 @@ trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  
 }
 ```
 
-#### Creating the prediction method
+## Creating the prediction method
 
 Finally, the prediction function needs to be defined. 
 The name of this function starts with ``predictLearner.``, followed again by the `mlr` name of the learner. 
@@ -208,7 +208,7 @@ predictLearner.classif.lda = function(.learner, .model, .newdata, predict.method
 }
 ```
 
-### Regression
+# Regression
 
 The main difference for regression is that the type of predictions are different (numeric instead of labels or probabilities) and that not all of the properties are relevant. 
 In particular, whether one-, two-, or multi-class problems and posterior probabilities are supported is not applicable.
@@ -260,7 +260,7 @@ predictLearner.regr.earth = function(.learner, .model, .newdata, ...) {
 
 Again most of the data is passed straight through to/from the train/predict functions of the learner.
 
-### Survival analysis
+# Survival analysis
 
 For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the [cindex](measures.html){target="_blank"} (for ``.learner$predict.type`` == ``"response"``). 
 For ``.learner$predict.type`` == ``"prob"``, there is no substantially meaningful measure (yet). 
@@ -329,7 +329,7 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
 }
 ```
 
-### Clustering
+# Clustering
 
 For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to. 
 The numbering should start at 1.
@@ -371,7 +371,7 @@ predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...)
 }
 ```
 
-### Multilabel classification
+# Multilabel classification
 
 As stated in the [multilabel](multilabel.html){target="_blank"} section, multilabel classification methods can be divided into problem transformation methods and algorithm adaptation methods.
 
@@ -417,7 +417,7 @@ predictLearner.multilabel.rFerns = function(.learner, .model, .newdata, ...) {
 }
 ```
 
-### Creating a new method for extracting feature importance values
+# Creating a new method for extracting feature importance values
 
 Some learners, for example decision trees and random forests, can calculate feature importance values, which can be extracted from a fitted model (`makeWrappedModel()`) using function `getFeatureImportance()`.
 
@@ -448,7 +448,7 @@ getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model,
 }
 ```
 
-### Creating a new method for extracting out-of-bag predictions
+# Creating a new method for extracting out-of-bag predictions
 
 Many ensemble learners generate out-of-bag predictions (OOB predictions) automatically.
 `mlr` provides the function `getOOBPreds()` to access these predictions in the `mlr` framework.
@@ -464,7 +464,7 @@ It must return the predictions in the same format as the `predictLearner()` func
 ```{r, code=showFunctionDef(mlr:::getOOBPredsLearner.classif.randomForest), eval=FALSE, tidy=TRUE, tidy.opts=list(indent=2, width.cutoff=100)}
 ```
 
-### Registering your learner
+# Registering your learner
 
 If your interface code to a new learning algorithm exists only locally, i.e., it is not (yet) merged into `mlr` or does not live in an extra package with a proper namespace you might want to register the new S3 methods to make sure that these are found by, e.g., `listLearners()`.
 You can do this as follows:
@@ -492,7 +492,7 @@ parallelExport("trainLearner.<awesome_new_learner_class>",
   "predictLearner.<awesome_new_learner_class>")
 ```
 
-### Further information for developers
+# Further information for developers
 
 If you haven't written a learner interface for private use only, but intend to send a pull request to have it included in the `mlr` package there are a few things to take care of, most importantly unit testing!
 
@@ -507,7 +507,7 @@ Sometimes, this makes it necessary to change or set some additional defaults as 
 
 * Every learner interface must be unit tested.
 
-### Unit testing
+# Unit testing
 
 The tests make sure that we get the same results when the learner is invoked through the `mlr` interface and when using the original functions.
 If you are not familiar or want to learn more about unit testing and package `testthat` have a look at [the Testing chapter in Hadley Wickham's R packages](http://r-pkgs.had.co.nz/tests.html){target="_blank"}.

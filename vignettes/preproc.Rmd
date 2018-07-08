@@ -42,7 +42,7 @@ Moreover, there are tutorial pages devoted to
 * [Feature selection](feature_selection.html){target="_blank"} and
 * [Imputation of missing values](impute.html){target="_blank"}.
 
-### Fusing learners with preprocessing
+# Fusing learners with preprocessing
 
 `mlr`'s wrapper functionality permits to combine learners with preprocessing steps.
 This means that the preprocessing "belongs" to the learner and is done any time the learner is trained or predictions are made.
@@ -84,7 +84,7 @@ In contrast to the preprocessing options listed above like `normalizeFeatures()`
 
 We start with some examples for `makePreprocWrapperCaret()`.
 
-### Preprocessing with makePreprocWrapperCaret
+# Preprocessing with makePreprocWrapperCaret
 
 `makePreprocWrapperCaret()` is an interface to `caret`'s `caret::preProcess()` function that provides many different options like imputation of missing values, data transformations as scaling the features to a certain range or Box-Cox and dimensionality reduction via Independent or Principal Component Analysis.
 For all possible options see the help page of function `caret::preProcess()`.
@@ -155,7 +155,7 @@ res
 
 PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.
 
-#### Joint tuning of preprocessing options and learner parameters
+## Joint tuning of preprocessing options and learner parameters
 
 Let's see if we can optimize this a bit.
 The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components.
@@ -191,7 +191,7 @@ as.data.frame(res$opt.path)[1:3]
 
 There seems to be a preference for a lower number of principal components (<27) for both `"plug-in"` and `"debiased"` with `"plug-in"` achieving slightly lower error rates.
 
-### Writing a custom preprocessing wrapper
+# Writing a custom preprocessing wrapper
 
 If the options offered by `makePreprocWrapperCaret()` are not enough, you can write your own preprocessing wrapper using function `makePreprocWrapper()`.
 
@@ -206,7 +206,7 @@ In the following we show how to add a scaling option to a Learner (`makeLearner(
 Note that we chose this simple example for demonstration.
 Centering/scaling the data is also possible with `makePreprocWrapperCaret()`.
 
-#### Specifying the train function
+## Specifying the train function
 
 The *train* function has to be a function with the following arguments:
 
@@ -245,7 +245,7 @@ trainfun = function(data, target, args = list(center, scale)) {
 }
 ```
 
-#### Specifying the predict function
+## Specifying the predict function
 
 The *predict* function has the following arguments:
 
@@ -273,7 +273,7 @@ predictfun = function(data, target, args, control) {
 }
 ```
 
-#### Creating the preprocessing wrapper
+## Creating the preprocessing wrapper
 
 Below we create a preprocessing wrapper with a regression neural network (`nnet::nnet()`) (which itself does not have a scaling option) as base learner.
 
@@ -300,7 +300,7 @@ r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r
 ```
 
-#### Joint tuning of preprocessing and learner parameters
+## Joint tuning of preprocessing and learner parameters
 
 Often it's not clear which preprocessing options work best with a certain learning algorithm.
 As already shown for the number of principal components in `makePreprocWrapperCaret()` we can [tune](tune.html){target="_blank"} them easily together with other hyperparameters of the learner.
@@ -343,7 +343,7 @@ res
 as.data.frame(res$opt.path)
 ```
 
-#### Preprocessing wrapper functions
+## Preprocessing wrapper functions
 
 If you have written a preprocessing wrapper that you might want to use from time to time it's a good idea to encapsulate it in an own function as shown below.
 If you think your preprocessing method is something others might want to use as well and should be integrated into `mlr` just [contact us](https://github.com/mlr-org/mlr/issues).

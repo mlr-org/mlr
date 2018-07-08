@@ -50,7 +50,7 @@ ggplot(df) +
   geom_line(aes(y = NIR_Obs1, x = lambda))
 ```
 
-### How to model functional data?
+# How to model functional data?
 
 There are two commonly used approaches for analyzing functional data.
 
@@ -67,7 +67,7 @@ This is done by [extracting](functional_data.html#feature-extraction) non-tempor
 Non-temporal features do not have any interdependence between each other, similarly to features in traditional machine learning. 
 This is explained in more detail [below](functional_data.html#feature-extraction).
 
-### Creating a task that contains functional features
+# Creating a task that contains functional features
 
 The first step is to get the data in the right format. [%mlr] expects a `base::data.frame` which consists of the functional features and the target variable as input. Functional data in contrast to __numeric__ data have to be stored as a matrix column in the data.frame.
 After that a [task](task.html) that contains the data in a well-defined format is created. [tasks](task.html) come in different flavours, such as `makeClassifTask()` and `makeRegrTask()`, which can be used according to the class of the target variable.
@@ -127,7 +127,7 @@ tsk1 = makeRegrTask("fuelsubset", data = fdf, target = "heatan")
 tsk1
 ```
 
-### Constructing a learner
+# Constructing a learner
 
 For functional data, [learners](learner.html) are constructed using  `makeLearner("classif.<R_method_name>")` or  `makeLearner("regr.<R_method_name>")` depending on the target variable.
 
@@ -165,7 +165,7 @@ In this case, a normal regression- or classification-[learner](learner.html) can
 
 This is explained in more detail in the [feature extraction](functional_data.html#feature-extraction) section below.
 
-### Train the learner
+# Train the learner
 
 The resulting [learner](learner.html) can now be trained on the task created in section [Creating a task](functional_data.html#creating-a-task) above. 
 
@@ -187,7 +187,7 @@ m = train(learner = rpart.lrn, task = tsk1)
 m
 ```
 
-### Feature extraction
+# Feature extraction
 
 In contrast to applying a learner that works on a [task](task.html) containing functional features, the [task](task.html) can be converted to a normal [task](task.html).
 This works by transforming the functional features into a non-functional domain, e.g by extracting wavelets.
@@ -214,7 +214,7 @@ extracted = extractFDAFeatures(tsk1, feat.methods = feat.methods)
 extracted
 ```
 
-#### Wavelets
+## Wavelets
 
 In this example, discrete wavelet feature transformation is applied to the data using the function `extractFDAWavelets`.
 Discrete wavelet transform decomposes the functional into several _wavelets_.
@@ -235,7 +235,7 @@ feat.methods = list("NIR" = extractFDAWavelets(filter = "d4"))
 task.wd4 = extractFDAFeatures(tsk1, feat.methods = feat.methods)
 ```
 
-#### Fourier transformation
+## Fourier transformation
 
 Now, we use the Fourier feature transformation.
 The Fourier transform takes a functional and transforms it to a frequency domain by splitting the signal up into its different frequency components. 
@@ -252,7 +252,7 @@ task.fourier = extractFDAFeatures(tsk1, feat.methods = feat.methods)
 task.fourier
 ```
 
-### Wrappers
+# Wrappers
 
 Additionally we can wrap the preprocessing around a standard learner such as [classif.rpart](rpart::rpart()).
 For additional information, please consider the [Wrappers](wrapper.html#wrapper) section.

@@ -61,7 +61,7 @@ result$aggr
 Training more learners takes more time, but can outperform pure learners
 on noisy data with many features.
 
-### Changing the type of prediction
+# Changing the type of prediction
 
 In case of a *classification* problem the predicted class labels are determined by majority voting over the predictions of the individual models.
 Additionally, posterior probabilities can be estimated as the relative proportions of the predicted class labels.

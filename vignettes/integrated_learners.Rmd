@@ -77,7 +77,7 @@ names(tables) = types
 numbers = sapply(tables, nrow)
 ```
 
-#### Classification (`r numbers["classif"]`)
+# Classification (`r numbers["classif"]`)
 
 For classification the following additional learner properties are relevant and shown in column **Props**:
 
@@ -89,7 +89,7 @@ For classification the following additional learner properties are relevant and 
 makeTab(tables[["classif"]])
 ```
 
-#### Regression (`r numbers["regr"]`)
+# Regression (`r numbers["regr"]`)
 
 Additional learner properties:
 
@@ -99,7 +99,7 @@ Additional learner properties:
 makeTab(tables[["regr"]])
 ```
 
-#### Survival analysis (`r numbers["surv"]`)
+# Survival analysis (`r numbers["surv"]`)
 
 Additional learner properties:
 
@@ -110,7 +110,7 @@ Additional learner properties:
 makeTab(tables[["surv"]])
 ```
 
-#### Cluster analysis (`r numbers["cluster"]`)
+# Cluster analysis (`r numbers["cluster"]`)
 
 Additional learner properties:
 
@@ -120,14 +120,14 @@ Additional learner properties:
 makeTab(tables[["cluster"]])
 ```
 
-#### Cost-sensitive classification
+# Cost-sensitive classification
 
 For *ordinary misclassification costs* you can use all the standard classification methods listed above.
 
 For *example-dependent costs* there are several ways to generate cost-sensitive learners from ordinary regression and classification learners.
 See section [cost-sensitive classification](cost_sensitive_classif.html){target="_blank"} and the documentation of `makeCostSensClassifWrapper()`, `makeCostSensRegrWrapper()` and `makeCostSensWeightedPairsWrapper()` for details.
 
-#### Multilabel classification (`r numbers["multilabel"]`)
+# Multilabel classification (`r numbers["multilabel"]`)
 
 ```{r echo=FALSE,results="asis"}
 makeTab(tables[["multilabel"]])

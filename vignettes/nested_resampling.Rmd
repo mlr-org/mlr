@@ -62,7 +62,7 @@ For this reason in the examples shown below we use relatively small search space
 In practice, you normally have to increase both.
 As this is computationally intensive you might want to have a look at section [parallelization](parallelization.html){target="_blank"}.
 
-### Tuning
+# Tuning
 
 As you might recall from the tutorial page about [tuning](tune.html){target="_blank"}, you need to define a search space by function `ParamHelpers::makeParamSet()`, a search strategy by `makeTuneControl*`(`TuneControl()`), and a method to evaluate hyperparameter settings (i.e., the inner resampling strategy and a performance measure).
 
@@ -98,7 +98,7 @@ You can obtain the error rates on the 3 outer test sets by:
 r$measures.test
 ```
 
-#### Accessing the tuning result
+## Accessing the tuning result
 
 We have kept the results of the tuning for further evaluations.
 For example one might want to find out, if the best obtained configurations vary for the different outer splits.
@@ -144,11 +144,11 @@ You can furthermore access the resampling indices of the inner level using `getR
 getResamplingIndices(r, inner = TRUE)
 ```
 
-### Feature selection
+# Feature selection
 
 As you might recall from the section about [feature selection](feature_selection.html){target="_blank"}, `mlr` supports the filter and the wrapper approach.
 
-#### Wrapper methods
+## Wrapper methods
 
 Wrapper methods use the performance of a learning algorithm to assess the usefulness of a feature set. 
 In order to select a feature subset a learner is trained repeatedly on different feature subsets and the subset which leads to the best learner performance is chosen.
@@ -175,7 +175,7 @@ r
 r$measures.test
 ```
 
-##### Accessing the selected features
+### Accessing the selected features
 
 The result of the feature selection can be extracted by function `getFeatSelResult()`.
 It is also possible to keep whole models (`makeWrappedModel()`) by setting `models = TRUE` when calling `resample()`.
@@ -204,7 +204,7 @@ An easy-to-read version of the optimization path for sequential feature selectio
 analyzeFeatSelResult(r$extract[[1]])
 ```
 
-#### Filter methods with tuning
+## Filter methods with tuning
 
 Filter methods assign an importance value to each feature.
 Based on these values you can select a feature subset by either keeping all features with importance higher than a certain threshold or by keeping a fixed number or percentage of the highest ranking features.
@@ -229,7 +229,7 @@ r = resample(learner = lrn, task = bh.task, resampling = outer, models = TRUE, s
 r
 ```
 
-##### Accessing the selected features and optimal percentage
+### Accessing the selected features and optimal percentage
 
 In the above example we kept the complete model (`makeWrappedModel()`)s.
 
@@ -256,7 +256,7 @@ opt.paths = lapply(res, function(x) as.data.frame(x$opt.path))
 opt.paths[[1]]
 ```
 
-### Benchmark experiments
+# Benchmark experiments
 
 In a benchmark experiment multiple learners are compared on one or several tasks (see also the section about [benchmarking](benchmark_experiments.html){target="_blank"}.
 Nested resampling in benchmark experiments is achieved the same way as in resampling:
@@ -278,7 +278,7 @@ We will see three examples to show different benchmark settings:
 2. One data set + two regression algorithms + feature selection
 3. One data set + two regression algorithms + feature filtering + tuning
 
-#### Example 1: Two tasks, two learners, tuning
+## Example 1: Two tasks, two learners, tuning
 
 Below is a benchmark experiment with two data sets, `datasets::iris()` and `mlbench::sonar()`, and two Learner (`makeLearner()`)s,
 `kernlab::ksvm()` and `kknn::kknn()`, that are both tuned.
@@ -350,7 +350,7 @@ tune.res
 getNestedTuneResultsOptPathDf(res$results[["Sonar-example"]][["classif.ksvm.tuned"]])
 ```
 
-#### Example 2: One task, two learners, feature selection
+## Example 2: One task, two learners, feature selection
 
 Let's see how we can do [feature selection](feature_selection.html){target="_blank"} in a benchmark experiment:
 
@@ -402,7 +402,7 @@ head(opt.paths[[1]])
 analyzeFeatSelResult(feats[[1]])
 ```
 
-#### Example 3: One task, two learners, feature filtering with tuning
+## Example 3: One task, two learners, feature filtering with tuning
 
 Here is a minimal example for feature filtering with tuning of the feature subset size.
 

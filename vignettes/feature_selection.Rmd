@@ -27,12 +27,12 @@ Feature selection can enhance the interpretability of the model, speed up the le
 There exist different approaches to identify the relevant features.
 `mlr` supports *filter* and *wrapper methods*.
 
-### Filter methods
+# Filter methods
 
 Filter methods assign an importance value to each feature.
 Based on these values the features can be ranked and a feature subset can be selected.
 
-#### Calculating the feature importance
+## Calculating the feature importance
 
 Different methods for calculating the feature importance are built into `mlr`'s function `generateFilterValuesData()` (`getFilterValues()` has been deprecated in favor of `generateFilterValuesData()`.). 
 Currently, classification, regression and survival analysis tasks are supported. 
@@ -70,7 +70,7 @@ plotFilterValuesGGVIS(fv2)
 
 According to the ``"information.gain"`` measure, `Petal.Width` and `Petal.Length` contain the most information about the target variable `Species`.
 
-#### Selecting a feature subset
+## Selecting a feature subset
 
 With `mlr`'s function `filterFeatures()` you can create a new `Task()` by leaving out features of lower importance.
 
@@ -95,7 +95,7 @@ filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
 filtered.task
 ```
 
-#### Fuse a learner with a filter method
+## Fuse a learner with a filter method
 
 Often feature selection based on a filter method is part of the data preprocessing and in a subsequent step a learning method is applied to the filtered data.
 In a proper experimental setup you might want to automate the selection of the features so that it can be part of the validation method of your choice.
@@ -126,7 +126,7 @@ table(sfeats)
 The selection of features seems to be very stable.
 The features `Sepal.Length` and `Sepal.Width` did not make it into a single fold.
 
-#### Tuning the size of the feature subset
+## Tuning the size of the feature subset
 
 In the above examples the number/percentage of features to select or the threshold value have been arbitrarily chosen.
 If filtering is a preprocessing step before applying a learning method optimal values with regard to the learner performance can be found by [tuning](tune.html){target="_blank"}.
@@ -191,7 +191,7 @@ The size of the points on the Pareto front is slightly increased.
 plotTuneMultiCritResult(res)
 ```
 
-### Wrapper methods
+# Wrapper methods
 
 Wrapper methods use the performance of a learning algorithm to assess the usefulness of a feature set.
 In order to select a feature subset a learner is trained repeatedly on different feature subsets and the subset which leads to the best learner performance is chosen.
@@ -211,7 +211,7 @@ The following search strategies are available:
 * Random search `makeFeatSelControlRandom` (`?FeatSelControl()`),
 * Deterministic forward or backward search `makeFeatSelControlSequential` (`?FeatSelControl()`).
 
-#### Select a feature subset
+## Select a feature subset
 
 Feature selection can be conducted with function `selectFeatures()`.
 
@@ -269,7 +269,7 @@ Further information about the sequential feature selection process can be obtain
 analyzeFeatSelResult(sfeats)
 ```
 
-#### Fuse a learner with feature selection
+## Fuse a learner with feature selection
 
 A Learner (`makeLearner()`) can be fused with a feature selection strategy (i.e., a search strategy, a performance measure and a resampling strategy) by function `makeFeatSelWrapper()`.
 During training features are selected according to the specified selection scheme. 

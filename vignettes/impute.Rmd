@@ -38,7 +38,7 @@ listLearners("regr", properties = "missings")[c("class", "package")]
 
 See also the list of [integrated learners](integrated_learners.html){target="_blank"} in the Appendix.
 
-### Imputation and reimputation
+# Imputation and reimputation
 
 Imputation can be done by function `impute()`.
 You can specify an imputation method for each feature individually or for classes of features like numerics or factors.
@@ -141,7 +141,7 @@ Especially when evaluating a machine learning method by some resampling techniqu
 `impute()`/`reimpute()` are called automatically each time before training/prediction.
 This can be achieved by creating an imputation wrapper.
 
-### Fusing a learner with imputation
+# Fusing a learner with imputation
 
 You can couple a Learner (`makeLearner()`) with imputation by function `makeImputeWrapper()` which basically has the same formal arguments as `impute()`.
 Like in the example above we impute ``Solar.R`` by random numbers from its empirical distribution,

@@ -21,7 +21,7 @@ knitr::knit_hooks$set(document = function(x){
 
 Learning tasks encapsulate the data set and further relevant information about a machine learning problem, for example the name of the target variable for supervised problems.
 
-### Task types and creation
+# Task types and creation
 
 The tasks are organized in a hierarchy, with the generic `Task()` at the top.
 The following tasks can be instantiated and all inherit from the virtual superclass `Task()`:
@@ -39,7 +39,7 @@ If no ID is provided it is automatically generated using the variable name of th
 The ID will be later used to name results, for example of [benchmark experiments](benchmark_experiments.html){target="_blank"}, and to annotate plots.
 Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.
 
-#### Regression
+## Regression
 
 For supervised learning like regression (as well as classification and survival analysis) we, in addition to ``data``, have to specify the name of the ``target`` variable.
 
@@ -54,7 +54,7 @@ As you can see, the `Task()` records the type of the learning problem and basic 
 Creating tasks for classification and survival analysis follows the same scheme, the data type of the target variables included in ``data`` is simply different.
 For each of these learning problems some specifics are described below.
 
-#### Classification
+## Classification
 
 For classification the target column has to be a `factor`.
 
@@ -79,7 +79,7 @@ Class ``malignant`` can be manually selected as follows:
 classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
 ```
 
-#### Survival analysis
+## Survival analysis
 
 Survival tasks use two target columns.
 For left and right censored problems these consist of the survival time and a binary event indicator.
@@ -94,7 +94,7 @@ surv.task
 
 The type of censoring can be specified via the argument ``censoring``, which defaults to ``"rcens"`` for right censored data.
 
-#### Multilabel classification
+## Multilabel classification
 
 In multilabel classification each object can belong to more than one category at the same time.
 
@@ -114,7 +114,7 @@ yeast.task
 
 See also the tutorial page [multilabel](multilabel.html){target="_blank"}.
 
-#### Cluster analysis
+## Cluster analysis
 
 As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
 Below we create a learning task from the data set `datasets::mtcars()`.
@@ -125,7 +125,7 @@ cluster.task = makeClusterTask(data = mtcars)
 cluster.task
 ```
 
-#### Cost-sensitive classification
+## Cost-sensitive classification
 
 The standard objective in classification is to obtain a high prediction accuracy, i.e., to minimize the number of errors. 
 All types of misclassification errors are thereby deemed equally severe. 
@@ -152,7 +152,7 @@ costsens.task
 
 For more details see the page on [cost sensitive classification](cost_sensitive_classif.html){target="_blank"}.
 
-### Further settings
+# Further settings
 
 The `Task()` help page also lists several other arguments to describe further details of the learning problem.
 
@@ -165,7 +165,7 @@ Note that you should use this option only if the weights really belong to the ta
 If you plan to train some learning algorithms with different weights on the same `Task()`, `mlr` offers several other ways to set observation or class weights (for supervised classification). 
 See for example the tutorial page about [training](train.html){target="_blank"} or function `makeWeightedClassesWrapper()`.
 
-### Accessing a learning task
+# Accessing a learning task
 
 We provide many operators to access the elements stored in a `Task()`.
 The most important ones are listed in the documentation of `Task()` and `getTaskData()`.
@@ -219,7 +219,7 @@ Note that `getTaskData()` offers many options for converting the data set into a
 This especially comes in handy when you [integrate a new learner](create_learner.html){target="_blank"} from another **R** package into `mlr`.
 In this regard function `getTaskFormula()` is also useful.
 
-### Modifying a learning task
+# Modifying a learning task
 
 `mlr` provides several functions to alter an existing `Task()`, which is often more convenient than creating a new `Task()` from scratch.
 Here are some examples.
@@ -242,7 +242,7 @@ summary(getTaskData(task))
 
 For more functions and more detailed explanations have a look at the [data preprocessing](preproc.html){target="_blank"} page.
 
-### Example tasks and convenience functions
+# Example tasks and convenience functions
 
 For your convenience `mlr` provides pre-defined `Task()`s for each type of learning problem.
 These are also used throughout this tutorial in order to get shorter and more readable code.

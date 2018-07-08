@@ -104,31 +104,31 @@ getTab = function(type) {
 }
 ```
 
-#### Classification
+# Classification
 
 ```{r echo=FALSE,results="asis"}
 getTab("classif")
 ```
 
-#### Regression
+# Regression
 
 ```{r echo=FALSE,results="asis"}
 getTab("regr")
 ```
 
-#### Survival analysis
+# Survival analysis
 
 ```{r echo=FALSE,results="asis"}
 getTab("surv")
 ```
 
-#### Cluster analysis
+# Cluster analysis
 
 ```{r echo=FALSE,results="asis"}
 getTab("cluster")
 ```
 
-#### Cost-sensitive classification
+# Cost-sensitive classification
 
 ```{r echo=FALSE,results="asis"}
 getTab("costsens")
@@ -137,13 +137,13 @@ getTab("costsens")
 Note that in case of *ordinary misclassification costs* you can also generate performance measures from cost matrices by function `makeCostMeasure()`.
 For details see the tutorial page on [cost-sensitive classification](cost_sensitive_classif.html){target="_blank"} and also the page on [custom performance measures](create_measure.html){target="_blank"}.
 
-#### Multilabel classification
+# Multilabel classification
 
 ```{r echo=FALSE,results="asis"}
 getTab("multilabel")
 ```
 
-#### General performance measures
+# General performance measures
 
 ```{r echo=FALSE,results="asis"}
 getTab("general")

@@ -53,7 +53,7 @@ After tuning, you may want to evaluate the tuning process in order to answer que
 
 `mlr` provides methods to generate and plot the data in order to evaluate the effect of hyperparameter tuning.
 
-### Generating hyperparameter tuning data
+# Generating hyperparameter tuning data
 
 `mlr` separates the generation of the data from the plotting of the data in case the user wishes to use the data in a custom way downstream.
 
@@ -111,7 +111,7 @@ After generating the hyperparameter effect data, the next step is to visualize i
 `mlr` has several methods built-in to visualize the data, meant to support the needs of the researcher and the engineer in industry. 
 The next few sections will walk through the visualization support for several use-cases.
 
-### Visualizing the effect of a single hyperparameter
+# Visualizing the effect of a single hyperparameter
 
 In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.
 
@@ -189,7 +189,7 @@ data = generateHyperParsEffectData(res)
 plotHyperParsEffect(data, x = "C", y = "acc.test.mean", plot.type = "line")
 ```
 
-### Visualizing the effect of 2 hyperparameters
+# Visualizing the effect of 2 hyperparameters
 
 In the case of tuning 2 hyperparameters simultaneously, `mlr` provides the ability to plot a heatmap and contour plot in addition to a scatterplot or line.
 
@@ -276,7 +276,7 @@ plt + scale_fill_gradient2(breaks = seq(min_plt, max_plt, length.out = 5),
   low = "red", mid = "white", high = "blue", midpoint = med_plt)
 ```
 
-### Visualizing the effects of more than 2 hyperparameters
+# Visualizing the effects of more than 2 hyperparameters
 
 In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of [partial dependence plots](partial_dependence.html){target="_blank"} to show how the performance depends on a one- or two-dimensional subset of the hyperparameters.
 Below we tune three hyperparameters `C`, `sigma`, and `degree` of an SVM with Bessel kernel and set the `partial.dep` flag to `TRUE` to indicate that we intend to calculate partial dependences.

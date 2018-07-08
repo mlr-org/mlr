@@ -22,7 +22,7 @@ knitr::knit_hooks$set(document = function(x){
 The quality of the predictions of a model in `mlr` can be assessed with respect to a number of different performance measures.
 In order to calculate the performance measures, call `performance()` on the object returned by `predict` (`predict.WrappedModel()`) and specify the desired performance measures.
 
-### Available performance measures
+# Available performance measures
 
 `mlr` provides a large number of performance measures for all types of learning problems.
 Typical performance measures for *classification* are the mean misclassification error ([mmce](measures.html){target="_blank"}), accuracy ([acc](measures.html){target="_blank"}) or measures based on [ROC analysis](roc_analysis.html){target="_blank"}.
@@ -34,7 +34,7 @@ To see which performance measures are implemented, have a look at the table of [
 
 If you want to implement an additional measure or include a measure with non-standard misclassification costs, see the section on [creating custom measures](create_measure.html){target="_blank"}.
 
-### Listing measures
+# Listing measures
 
 The properties and requirements of the individual measures are shown in the table of [performance measures](measures.html){target="_blank"}.
 
@@ -60,7 +60,7 @@ getDefaultMeasure(iris.task)
 getDefaultMeasure(makeLearner("regr.lm"))
 ```
 
-### Calculate performance measures
+# Calculate performance measures
 
 In the following example we fit a gradient boosting machine (`gbm::gbm()`) on a subset of the `BostonHousing` (`mlbench::BostonHousing()`) data set and calculate the default measure mean squared error ([mse](measures.html){target="_blank"}) on the remaining observations.
 
@@ -89,7 +89,7 @@ performance(pred, measures = list(mse, medse, mae))
 
 For the other types of learning problems and measures, calculating the performance basically works in the same way.
 
-#### Requirements of performance measures
+## Requirements of performance measures
 
 Note that in order to calculate some performance measures it is required that you pass the `Task()` or the fitted model (`makeWrappedModel()`) in addition to the `Prediction()`.
 
@@ -124,7 +124,7 @@ performance(pred, measures = auc)
 
 Also bear in mind that many of the performance measures that are available for classification, e.g., the false positive rate ([fpr](measures.html){target="_blank"}), are only suitable for binary problems.
 
-### Access a performance measure
+# Access a performance measure
 
 Performance measures in `mlr` are objects of class `Measure` (`makeMeasure()`).
 If you are interested in the properties or requirements of a single measure you can access it directly.
@@ -135,11 +135,11 @@ See the help page of `Measure` (`makeMeasure()`) for information on the individu
 str(mmce)
 ```
 
-### Binary classification
+# Binary classification
 
 For binary classification specialized techniques exist to analyze the performance.
 
-#### Plot performance versus threshold
+## Plot performance versus threshold
 
 As you may recall (see the previous section on [making predictions](predict.html){target="_blank"}) in binary classification we can adjust the threshold used to map probabilities to class labels.
 Helpful in this regard is are the functions `generateThreshVsPerfData()` and `plotThreshVsPerf()`, which generate and plot, respectively, the learner performance versus the threshold.
@@ -167,7 +167,7 @@ There is an experimental `ggvis` plotting function `plotThreshVsPerfGGVIS()` whi
 plotThreshVsPerfGGVIS(d)
 ```
 
-#### ROC measures
+## ROC measures
 
 For binary classification a large number of specialized measures exist, which can be nicely formatted into
 one matrix, see for example the [receiver operating characteristic page on wikipedia](https://en.wikipedia.org/wiki/Receiver_operating_characteristic).

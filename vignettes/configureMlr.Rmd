@@ -37,7 +37,7 @@ It is also possible to set options locally.
   and `tuneParamsMultiCrit()` have a `show.info` flag that controls if progress messages are shown. 
   The default value of `show.info` can be set by `configureMlr()`.
 
-### Example: Reducing the output on the console
+# Example: Reducing the output on the console
 
 You are bothered by all the output on the console like in this example?
 
@@ -62,7 +62,7 @@ configureMlr(show.learner.output = FALSE, show.info = FALSE)
 r = resample("classif.multinom", iris.task, rdesc)
 ```
 
-### Accessing and resetting the configuration
+# Accessing and resetting the configuration
 
 Function `getMlrOptions()` returns a `base::list()` with the current configuration.
 
@@ -80,7 +80,7 @@ configureMlr()
 getMlrOptions()
 ```
 
-### Example: Turning off parameter checking
+# Example: Turning off parameter checking
 
 It might happen that you want to set a parameter of a Learner (`makeLearner()`, but the parameter is not registered in the learner's parameter set (`ParamHelpers::makeParamSet()`) yet.
 In this case you might want to [contact us](https://github.com/mlr-org/mlr#get-in-touch) or [open an issue](https://github.com/mlr-org/mlr/issues/new) as well!
@@ -107,7 +107,7 @@ lrn = makeLearner("classif.ksvm", kernl = "vanilladot", newParam = 3)
 train(lrn, iris.task)
 ```
 
-### Example: Handling errors in a learning method
+# Example: Handling errors in a learning method
 
 If a learning method throws an error the default behavior of `mlr` is to
 generate an exception as well.

@@ -64,7 +64,7 @@ newdata.pred
 Note that for supervised learning you do not have to remove the target columns from the data.
 These columns are automatically removed prior to calling the underlying `predict` method of the learner.
 
-### Accessing the prediction
+# Accessing the prediction
 
 Function `predict()` returns a named `list` of class `Prediction()`.
 Its most important element is `$data` which is a `data.frame` that contains columns with the true values of the target variable (in case of supervised learning problems) and the predictions.
@@ -92,7 +92,7 @@ head(getPredictionTruth(task.pred))
 head(getPredictionResponse(task.pred))
 ```
 
-#### Regression: Extracting standard errors
+## Regression: Extracting standard errors
 
 Some learners provide standard errors for predictions, which can be accessed in `mlr`.
 An overview is given by calling the function `listLearners()` and setting `properties = "se"`.
@@ -119,7 +119,7 @@ The standard errors can then be extracted using `getPredictionSE()`.
 head(getPredictionSE(task.pred.lm))
 ```
 
-#### Classification and clustering: Extracting probabilities
+## Classification and clustering: Extracting probabilities
 
 The predicted probabilities can be extracted from the `Prediction()` using function
 `getPredictionProbabilities()`.
@@ -162,7 +162,7 @@ As mentioned above, the predicted posterior probabilities can be accessed via th
 head(getPredictionProbabilities(pred))
 ```
 
-#### Classification: Confusion matrix
+## Classification: Confusion matrix
 
 A confusion matrix can be obtained by calling `calculateConfusionMatrix()`. 
 The columns represent
@@ -197,7 +197,7 @@ Finally, we can also add the absolute number of observations for each predicted 
 calculateConfusionMatrix(pred, relative = TRUE, sums = TRUE)
 ```
 
-### Classification: Adjusting the decision threshold
+## Classification: Adjusting the decision threshold
 
 We can set the threshold value that is used to map the predicted posterior probabilities to class labels.
 Note that for this purpose we need to create a Learner (`makeLearner()`) that predicts probabilities.
@@ -257,7 +257,7 @@ table(as.data.frame(pred)$response)
 
 If you are interested in tuning the threshold (vector) have a look at the section about [performance curves and threshold tuning](roc_analysis.html){target="_blank"}.
 
-### Visualizing the prediction
+# Visualizing the prediction
 
 The function `plotLearnerPrediction()` allows to visualize predictions, e.g., for teaching purposes
 or exploring models.

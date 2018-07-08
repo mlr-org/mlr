@@ -55,7 +55,7 @@ mod = train("surv.coxph", lung.task)
 mod
 ```
 
-## Accessing learner models
+# Accessing learner models
 
 Function `train()` returns an object of class `WrappedModel` (`makeWrappedModel()`), which encapsulates
 the fitted model, i.e., the output of the underlying **R** learning method. 
@@ -94,7 +94,7 @@ mod$time
 getLearnerModel(mod)
 ```
 
-## Further options and comments
+# Further options and comments
 
 By default, the whole data set in the `Task()` is used for training.
 The `subset` argument of `train()` takes a logical or integer vector that indicates which observations to use, for example if you want to split your data into a training and a test set or if you want to fit separate models to different subgroups in the data.

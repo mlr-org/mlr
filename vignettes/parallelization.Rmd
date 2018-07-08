@@ -43,7 +43,7 @@ parallelStop()
 On Linux or Mac OS X, you may want to use
 `parallelStartMulticore` (`parallelMap::parallelStart()`) instead.
 
-### Parallelization levels
+# Parallelization levels
 
 We offer different parallelization levels for fine grained control over the parallelization.
 E.g., if you do not want to parallelize the `benchmark()` function because it has only very few iterations but want to parallelize the resampling (`resample()`) of each learner instead, you can specifically pass the `level` `"mlr.resample"` to the `parallelStart*` (`parallelMap::parallelStart()`)
@@ -56,7 +56,7 @@ parallelGetRegisteredLevels()
 
 For further details please see the `parallelization()` documentation page.
 
-### Custom learners and parallelization
+# Custom learners and parallelization
 
 If you have implemented a [custom learner yourself](create_learner.html){target="_blank"}, locally, you currently need to export this to the slave.
 So if you see an error after calling, e.g., a parallelized version of `resample()` like this:
@@ -71,7 +71,7 @@ simply add the following line somewhere after calling `parallelMap::parallelStar
 parallelExport("trainLearner.<my_new_learner>", "predictLearner.<my_new_learner>")
 ```
 
-### The end
+# The end
 
 For further details, consult the
 [parallelMap tutorial](https://github.com/berndbischl/parallelMap#parallelmap) and help (`?parallelMap()`).

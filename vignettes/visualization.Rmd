@@ -21,7 +21,7 @@ knitr::knit_hooks$set(document = function(x){
 })
 ```
 
-### Generation and plotting functions
+# Generation and plotting functions
 
 `mlr`'s visualization capabilities rely on *generation functions* which generate data for plots, and *plotting functions* which plot this output using either `ggplot2::ggplot2()` or `ggvis::ggvis()` (the latter being currently experimental).
 
@@ -34,7 +34,7 @@ These functions output objects of class `FunctionPurposeData`.
 * Plotting functions are prefixed by `plot` followed by their purpose, i.e., `plotFunctionPurpose`.
 * `ggvis::ggvis()` plotting functions have an additional suffix `GGVIS`, i.e., `plotFunctionPurposeGGVIS`.
 
-#### Some examples
+## Some examples
 
 In the example below we create a plot of classifier performance as function of the decision threshold for the binary classification problem `sonar.task`.
 The generation function `generateThreshVsPerfData()` creates an object of class `ThreshVsPerfData` which contains the data for the plot in slot `$data`.
@@ -68,7 +68,7 @@ fpr$id
 This does not only apply to `plotThreshVsPerf()`, but to other plot functions that show performance measures as well, for example `plotLearningCurve()`.
 You can use the `id`s instead of the names by setting `pretty.names = FALSE`.
 
-#### Customizing plots
+## Customizing plots
 
 As mentioned above it is easily possible to customize the built-in plots or making your own visualizations from scratch based on the generated data.
 
@@ -143,7 +143,7 @@ plt
 plot(M ~ Value, data = plt$data, type = "b", xlab = plt$data$Feature[1])
 ```
 
-### Available generation and plotting functions
+# Available generation and plotting functions
 
 Below the currently available generation and plotting functions are listed and tutorial pages that provide in depth descriptions of the listed functions are referenced.
 

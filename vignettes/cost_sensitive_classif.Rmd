@@ -37,7 +37,7 @@ The classification problem is therefore completely defined by the feature values
 In the following we show ways to handle cost-sensitive classification problems in `mlr`.
 Some of the functionality is currently experimental, and there may be changes in the future.
 
-#### Class-dependent misclassification costs
+## Class-dependent misclassification costs
 
 There are some classification methods that can accomodate misclassification costs
 directly.
@@ -61,7 +61,7 @@ Alternatively, we can use cost-insensitive methods and manipulate the prediction
 
 We start with binary classification problems and afterwards deal with multi-class problems.
 
-#### Binary classification problems
+## Binary classification problems
 
 The positive and negative classes are labeled $1$ and $-1$, respectively, and we consider the following cost matrix where the rows indicate true classes and the columns predicted classes:
 
@@ -101,7 +101,7 @@ colnames(costs) = rownames(costs) = getTaskClassLevels(credit.task)
 costs
 ```
 
-##### 1. Thresholding
+### 1. Thresholding
 
 We start by fitting a logistic regression model (`nnet::multinom()`) to the German Credit data set (`caret::GermanCredit()`) and predict posterior probabilities.
 
@@ -117,7 +117,7 @@ The default thresholds for both classes are 0.5.
 But according to the cost matrix we should predict class Good only if we are very sure that Good is indeed the correct label. 
 Therefore we should increase the threshold for class Good and decrease the threshold for class Bad.
 
-###### i. Theoretical thresholding
+#### i. Theoretical thresholding
 
 The theoretical threshold for the *positive* class can be calculated from the cost matrix as $$t^* = \frac{c(+1,-1) - c(-1,-1)}{c(+1,-1) - c(+1,+1) + c(-1,+1) - c(-1,-1)}.$$
 For more details see [Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf).
@@ -196,7 +196,7 @@ d = generateThreshVsPerfData(r, measures = list(credit.costs, mmce))
 plotThreshVsPerf(d, mark.th = th)
 ```
 
-###### ii. Empirical thresholding
+#### ii. Empirical thresholding
 
 The idea of *empirical thresholding* (see [Sheng and Ling, 2006](http://sun0.cs.uca.edu/~ssheng/papers/AAAI06a.pdf))
 is to select cost-optimal threshold values for a given learning method based on the training data.
@@ -221,7 +221,7 @@ tune.res
 `tuneThreshold()` returns the optimal threshold value for the positive class and the corresponding performance.
 As expected the tuned threshold is smaller than the theoretical threshold.
 
-##### 2. Rebalancing
+### 2. Rebalancing
 
 In order to minimize the average costs, observations from the less costly class should be given higher importance during training.
 This can be achieved by *weighting* the classes, provided that the learner under consideration has a 'class weights' or an 'observation weights' argument.
@@ -238,7 +238,7 @@ listLearners("classif", properties = "class.weights")[c("class", "package")]
 
 Alternatively, *over- and undersampling* techniques can be used.
 
-###### i. Weighting
+#### i. Weighting
 
 Just as *theoretical thresholds*, *theoretical weights* can be calculated from the
 cost matrix.
@@ -309,7 +309,7 @@ tune.res
 as.data.frame(tune.res$opt.path)[1:3]
 ```
 
-###### ii. Over- and undersampling
+#### ii. Over- and undersampling
 
 If the Learner (`makeLearner()`) supports neither observation nor class weights the proportions of the classes in the training data can be changed by over- or undersampling.
 
@@ -355,7 +355,7 @@ tune.res = tuneParams(lrn, credit.task, rin, par.set = ps, measures = list(credi
 tune.res
 ```
 
-#### Multi-class problems
+## Multi-class problems
 
 We consider the waveform `mlbench::mlbench.waveform()` data set from package `mlbench::mlbench()` and add an artificial cost matrix:
 
@@ -387,7 +387,7 @@ This condition means that the cost of misclassifying an observation is independe
 Given a cost matrix of this type, theoretical thresholds and weights can be derived in a similar manner as in the binary case.
 Obviously, the cost matrix given above does not have this special structure.
 
-##### 1. Thresholding
+### 1. Thresholding
 
 Given a vector of positive threshold values as long as the number of classes $K$, the predicted probabilities for all classes are adjusted by dividing them by the corresponding threshold value.
 Then the class with the highest adjusted probability is predicted.
@@ -415,7 +415,7 @@ The threshold vector ``th`` in the above example is chosen according to the aver
 More exactly, ``th`` corresponds to an artificial cost matrix of the structure mentioned above with off-diagonal elements $c(2,1) = c(3,1) = 55$, $c(1,2) = c(3,2) = 4.5$ and $c(1,3) = c(2,3) = 9$.
 This threshold vector may be not optimal but leads to smaller total costs on the data set than the default.
 
-###### ii. Empirical thresholding
+#### ii. Empirical thresholding
 
 As in the binary case it is possible to tune the threshold vector using function `tuneThreshold()`.
 Since the scaling of the threshold vector does not change the predicted class labels
@@ -432,9 +432,9 @@ For comparison we show the standardized version of the theoretically motivated t
 th/sum(th)
 ```
 
-##### 2. Rebalancing
+### 2. Rebalancing
 
-###### i. Weighting
+#### i. Weighting
 
 In the multi-class case you have to pass a vector of weights as long as the number of classes $K$ to function `makeWeightedClassesWrapper()`.
 The weight vector can be tuned using function `tuneParams()`.
@@ -451,7 +451,7 @@ tune.res = tuneParams(lrn, wf.task, resampling = rin, par.set = ps,
 tune.res
 ```
 
-### Example-dependent misclassification costs
+# Example-dependent misclassification costs
 
 In case of example-dependent costs we have to create a special `Task()` via function
 `makeCostSensTask()`.

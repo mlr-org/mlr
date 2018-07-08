@@ -20,7 +20,7 @@ knitr::knit_hooks$set(document = function(x){
 })
 ```
 
-### Introduction
+# Introduction
 
 Spatial data is different from non-spatial data by having a spatial reference information attached to each observation. 
 This information is usually stored as coordinates, often named `x` and `y`. 
@@ -55,7 +55,7 @@ This reduces the influence of spatial autocorrelation and subsequently also the 
 The example in Figure 1 shows a five-fold nested cross-validation setting and exhibits the difference between spatial and non-spatial partitioning.
 The nested approach is used when hyperparameter tuning is performed.
 
-### How to use spatial partitioning in mlr
+# How to use spatial partitioning in mlr
 
 Spatial partitioning can be used when performing cross-validation. 
 In any `resample()` call you can choose `SpCV` or `SpRepCV` to use it. 
@@ -70,7 +70,7 @@ This means that a 3-D partitioning might also work but we have not tested this e
 Coordinates need to be numeric so it is suggested to use a UTM projection.
 If this applies, the coordinates will be used for spatial partitioning if `SpCV` or `SpRepCV` is selected as resampling strategy. 
 
-### Examples
+# Examples
 
 The `spatial.task` data set serves as an example data set for spatial modeling tasks in `mlr`.
 The [task](task.html){target="_blank"} argument `coordinates` is a `data.frame` with two coordinates that will later be used for the spatial partitioning of the data set.
@@ -79,7 +79,7 @@ In this example, the "Random Forest" algorithm (package [ranger](&ranger::ranger
 
 For performance assessment, a repeated spatial cross-validation with 5 folds and 5 repetitions is chosen.
 
-#### Spatial Cross-Validation
+## Spatial Cross-Validation
 
 ```{r, eval = TRUE}
 data("spatial.task")
@@ -100,7 +100,7 @@ We can check for the introduced spatial autocorrelation bias here by performing 
 To do so, we simply choose `RepCV` instead of `SpRepCV`.
 There is no need to remove `coordinates` from the task as it is only used if `SpCV` or `SpRepCV` is selected as the resampling strategy.
 
-#### Non-Spatial Cross-Validation
+## Non-Spatial Cross-Validation
 
 ```{r, eval = TRUE}
 learner.rf = makeLearner("classif.ranger", predict.type = "prob")
@@ -116,7 +116,7 @@ mean(out$measures.test$auc)
 
 The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC. 
 
-### Notes
+# Notes
 
 * Some models are more affected by spatial autocorrelation than others. 
 In general, it can be said that the more flexible a model is, the more it will profit from underlying spatial autocorrelation.

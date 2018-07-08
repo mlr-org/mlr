@@ -27,7 +27,7 @@ The *learn* and *impute* functions both have at least the following formal argum
 * ``col`` indicates the feature to be imputed.
 * ``target`` indicates the target variable(s) in a supervised learning task.
 
-### Example: Imputation using the mean
+# Example: Imputation using the mean
 
 Let's have a look at function imputeMean (`imputations()`).
 
@@ -51,7 +51,7 @@ imputeMean (`imputations()`) calls the unexported `mlr` function `simpleImpute` 
 The *learn* function calculates the mean of the non-missing observations in column ``col``.
 The mean is passed via argument ``const`` to the *impute* function that replaces all missing values in feature ``col``.
 
-### Writing your own imputation method
+# Writing your own imputation method
 
 Now let's write a new imputation method:
 A frequently used simple technique for longitudinal data is *last observation carried forward* (LOCF). 
