@@ -1,6 +1,7 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
   requirePackages("irace", why = "tuneIrace", default.method = "load")
-  targetRunnerParallel = function(experiment, exec.target.runner, scenario) {
+
+  targetRunnerParallel = function(experiment, exec.target.runner, scenario, target.runner) {
     # get our param settings that irace should try
     cands = extractSubList(experiment, "configuration", simplify = FALSE)
     # some conversion code
