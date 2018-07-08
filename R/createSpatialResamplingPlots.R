@@ -9,10 +9,12 @@
 #' @author Patrick Schratz
 #' @param task [Task] \cr
 #'   Task object.
-#' @param resample [ResampleResult] or named `list` with (multiple) [ResampleResult]\cr
+#' @param resample [ResampleResult] or named `list` with (multiple)
+#' [ResampleResult]\cr
 #'   As returned by [resample].
 #' @param crs [integer]\cr
-#'   Coordinate reference system (EPSG code number) for the supplied coordinates in the `Task`.
+#'   Coordinate reference system (EPSG code number) for the supplied
+#'   coordinates in the `Task`.
 #' @param datum [integer]\cr
 #'   Coordinate reference system which should be used in the resulting map.
 #' @param repetitions [integer]\cr
