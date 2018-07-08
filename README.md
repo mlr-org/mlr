@@ -156,7 +156,7 @@ We also do not hate beginners and it is perfectly valid to mark an issue as "Que
 Please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
 We also welcome pull requests or new developers.
-Just make sure that you have a glance at our [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines) before.
+Just make sure that you have a glance at our [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#mlr-coding-guidelines) before.
 
 For everything else the maintainer Bernd Bischl can be reached via [mail](mailto:bernd_bischl@gmx.net).
 He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)
@@ -178,7 +178,6 @@ If you want to modify/add a tutorial section, please follow these steps:
      - Reference other tutorial pages with `<name_of_vignette>.html`, e.g. `[bagging](bagging.html)`.
      - Always start a new sentence with a new line. 
      - If you want to insert a paragraph, skip one line.
-     - The most up-level header starts with `###` and is subsequently followed by `####` and `#####` etc.
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
      - Referencing images is a bit tricky since we need to ensure that they look good in both the HTML and PDF version.
        Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/resampling.Rmd), [nested_resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/handling_of_spatial_data.Rmd).
