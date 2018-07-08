@@ -10,6 +10,7 @@ targetRunnerParallel = function(experiment, exec.target.runner, scenario, target
 
     # the instance is always the same for all different param setting
     rin = experiment[[1L]]$instance
+
     ys = tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
       convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE, resample.fun)
