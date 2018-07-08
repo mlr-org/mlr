@@ -1,5 +1,4 @@
 #' @title Predict new data.
-#'
 #' @description
 #' Predict the target variable of new data using a fitted model.
 #' What is stored exactly in the ([Prediction]) object depends
@@ -18,8 +17,6 @@
 #'   New observations which should be predicted.
 #'   Pass this alternatively instead of `task`.
 #' @template arg_subset
-#' @param ... (any)\cr
-#'   Currently ignored.
 #' @return ([Prediction]).
 #' @family predict
 #' @export
@@ -38,7 +35,7 @@
 #' p = predict(model, task = iris.task, subset = test.set)
 #' print(p)
 #' getPredictionProbabilities(p)
-predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
+predict.WrappedModel = function(object, task, newdata, subset = NULL) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
   assertClass(object, classes = "WrappedModel")
