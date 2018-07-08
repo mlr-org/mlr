@@ -126,6 +126,9 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     stopf("Please specify a crs that matches the coordinates of the task.")
   if(task$task.desc$has.coordinates == FALSE)
     stopf("The supplied task needs to have coordinates.")
+  if(!identical(as.integer(rownames(task$env$data)), 1:length(task$env$data[, 1]))) {
+    rownames(task$env$data) = seq(1:length(task$env$data[, 1]))
+  }
 
   # in case one supplies only one resample object, wrap it into a list
   # to work with map()
