@@ -68,7 +68,8 @@ print(ps)
 
 rdesc = makeResampleDesc("CV", iters = 2L)
 ctrl = makeTuneControlIrace(maxExperiments = 200L)
-res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE)
+res = tuneParams(lrn, iris.task, rdesc, par.set = ps, 
+  control = ctrl, show.info = FALSE)
 print(head(as.data.frame(res$opt.path)))
 ```
 
@@ -89,7 +90,8 @@ ps = makeParamSet(
 )
 ctrl = makeTuneMultiCritControlRandom(maxit = 30L)
 rdesc = makeResampleDesc("Holdout")
-res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task, resampling = rdesc, par.set = ps,
+res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task, 
+  resampling = rdesc, par.set = ps,
   measures = list(fpr, fnr), control = ctrl, show.info = FALSE)
 res
 
