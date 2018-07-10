@@ -4,7 +4,6 @@
 #' @import ggplot2
 #' @import sf
 #' @importFrom purrr map imap is_list flatten map_int
-#' @importFrom cowplot plot_grid
 #' @import hrbrthemes
 #' @family plot
 #' @author Patrick Schratz
@@ -68,7 +67,7 @@
 #'
 #' @md
 #' @examples
-#'
+#' \donttest{
 #' rdesc = makeResampleDesc("SpRepCV", folds = 5, reps = 4)
 #' r = resample(makeLearner("classif.qda"), spatial.task, rdesc)
 #'
@@ -123,7 +122,7 @@
 #'   nrow = 1, labels = plist[["Labels"]][9:10], label_size = 18)
 #'
 #' cowplot::plot_grid(p1, p12, p2, p22, ncol = 1)
-#'
+#' }
 #' @export
 createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL,
   datum = 4326, repetitions = 1, color.train = "#0072B5", color.test = "#E18727",
