@@ -4,6 +4,7 @@
 #' @import ggplot2
 #' @import sf
 #' @importFrom purrr map imap is_list flatten map_int
+#' @importFrom cowplot plot_grid
 #' @import hrbrthemes
 #' @family plot
 #' @author Patrick Schratz
