@@ -21,7 +21,8 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
 get_stage("script") %>%
     add_code_step(devtools::document()) %>%
-    add_step(step_rcmdcheck(notes_are_errors = FALSE, build_args = "--no-build-vignettes"))
+    add_step(step_rcmdcheck(notes_are_errors = FALSE, build_args = "--no-build-vignettes",
+                            check_args = "--no-build-vignettes --no-manual --as-cran"))
 
   get_stage("deploy") %>%
     add_code_step(system2("bash", args = c("inst/convert_to_ascii_news.sh"))) %>%
