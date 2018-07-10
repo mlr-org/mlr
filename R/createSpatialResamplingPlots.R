@@ -20,10 +20,18 @@
 #'   Coordinate reference system which should be used in the resulting map.
 #' @param repetitions [integer]\cr
 #'   Number of repetitions.
-#' @param color.train Color for train set.
-#' @param color.test Color for test set.
-#' @param point.size Point size.
-#' @param axis.text.size Font size of axis labels.
+#' @param color.train [character]\cr
+#'   Color for train set.
+#' @param color.test [character]\cr
+#'   Color for test set.
+#' @param point.size [integer]\cr
+#'   Point size.
+#' @param axis.text.size [integer]\cr
+#'   Font size of axis labels.
+#' @param x.axis.breaks [numeric]\cr
+#'   Custom x axis breaks
+#' @param y.axis.breaks [numeric]\cr
+#'   Custom y axis breaks
 #'
 #' @return ([list] of `2L` containing (1) multiple `gg`` objects and (2) their
 #' corresponding labels.
@@ -71,7 +79,7 @@
 #' plots = createSpatialResamplingPlots(spatial.task, r, crs = 32717,
 #'   repetitions = 2, x.axis.breaks = c(-79.065, -79.085),
 #'   y.axis.breaks = c(-3.970, -4))
-#' plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
+#' cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
 #'   labels = plots[["Labels"]])
 #'
 #' ##--------------------------------------------------------------------------
@@ -80,7 +88,7 @@
 #'
 #' plots = createSpatialResamplingPlots(spatial.task, list("Resamp" = r),
 #'   crs = 32717, datum = 32717, repetitions = 1)
-#' plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 1,
+#' cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 1,
 #'   labels = plots[["Labels"]])
 #'
 #' ##-------------------------------------------------------------
@@ -95,7 +103,7 @@
 #' plots = createSpatialResamplingPlots(spatial.task,
 #'   list("SpRepCV" = r1, "RepCV" = r2), crs = 32717, repetitions = 1,
 #'   x.axis.breaks = c(-79.055, -79.085), y.axis.breaks = c(-3.975, -4))
-#' plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
+#' cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
 #'   labels = plots[["Labels"]])
 #'
 #' ##-------------------------------------------------------------------------------------
@@ -114,7 +122,7 @@
 #' p22 <- plot_grid(plist[["Plots"]][[9]], plist[["Plots"]][[10]], ncol = 2,
 #'   nrow = 1, labels = plist[["Labels"]][9:10], label_size = 18)
 #'
-#' plot_grid(p1, p12, p2, p22, ncol = 1)
+#' cowplot::plot_grid(p1, p12, p2, p22, ncol = 1)
 #'
 #' @export
 createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL,
