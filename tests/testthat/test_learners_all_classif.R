@@ -62,7 +62,8 @@ test_that("learners work: classif", {
 
   # classif with only one feature
   min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
-  lapply(lrns, testBasicLearnerProperties, task = min.task)
+  lrns = mylist(min.task, create = TRUE)
+  lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
 })
 
 
