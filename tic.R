@@ -18,7 +18,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_setup_ssh())
 
 get_stage("script") %>%
-    add_code_step(devtools::install_github("r-lib/rcmdcheck")) %>%
+    add_code_step(devtools::install_github("pat-s/rcmdcheck@catch-test-errors")) %>%
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck(notes_are_errors = FALSE))
 
