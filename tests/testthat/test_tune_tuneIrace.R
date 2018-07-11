@@ -7,7 +7,7 @@ test_that("tuneIrace", {
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
 
-  n = 20
+  n = 100
   ctrl = makeTuneControlIrace(maxExperiments = n, nbIterations = 1L, minNbSurvival = 1)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(getOptPathLength(tr1$opt.path) >= 10 && getOptPathLength(tr1$opt.path) <= n)
