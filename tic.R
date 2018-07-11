@@ -22,11 +22,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 get_stage("script") %>%
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck(notes_are_errors = FALSE, build_args = "--no-build-vignettes",
-                            check_args = " --no-vignettes --no-build-vignettes --no-manual --as-cran"))
-
-  get_stage("deploy") %>%
-    add_code_step(system2("bash", args = c("inst/convert_to_ascii_news.sh"))) %>%
-    add_step(step_push_deploy(orphan = FALSE, branch = "master", commit_paths = c("NAMESPACE", "man/*", "NEWS")))
+                            check_args = "--ignore-vignettes --no-manual --as-cran"))
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
