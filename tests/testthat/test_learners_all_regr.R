@@ -57,5 +57,8 @@ test_that("learners work: regr ", {
   # regr with only one feature
   min.task = makeRegrTask("oneCol", data.frame(x = 1:10, y = 1:10), target = "y")
   lrns = mylist(min.task, create = TRUE)
+  # regr.gbm: Meaningfull error about too small dataset
+  # others: see learners_all_classif and random errors
+  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% c("regr.cforest", "regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.slim")]
   lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
 })
