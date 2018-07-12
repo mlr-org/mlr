@@ -115,7 +115,7 @@ The next few sections will walk through the visualization support for several us
 
 In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.
 
-In the example below, we tune the number of clusters against the silhouette score on the Pima dataset. 
+In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. 
 We specify the x-axis with the `x` argument and the y-axis with the `y` argument. 
 If the `plot.type` argument is not specified, `mlr` will attempt to plot a scatterplot by default. 
 Since `plotHyperParsEffect()` returns a `ggplot2::ggplot()` object, we can easily customize it to our liking!
