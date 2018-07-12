@@ -8,7 +8,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
     add_code_step(install.packages(old.packages())) %>%
-    add_code_step(devtools::install_github("pat-s/rcmdcheck@build-args")) %>%
+    add_code_step(devtools::install_github("pat-s/rcmdcheck@build-args")) %>% # FIXME: If this is solved in r-lib/rcmdcheck
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
     add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
 
@@ -20,7 +20,6 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_setup_ssh())
 
 get_stage("script") %>%
-    add_code_step(devtools::install_github("pat-s/rcmdcheck@catch-test-errors")) %>% # FIXME: If this is solved in r-lib/rcmdcheck
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck(notes_are_errors = FALSE, build_args = "--no-build-vignettes",
                             check_args = "--ignore-vignettes --no-manual --as-cran"))
