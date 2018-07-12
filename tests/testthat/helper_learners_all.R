@@ -78,7 +78,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
   if (pred.type == "se") {
     s = getPredictionSE(p)
     y = getPredictionResponse(p)
-    expect_numeric(info = info, s, lower = 0, upper = range(y), finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
+    expect_numeric(info = info, s, lower = 0, upper = diff(range(y)), finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
 
   # check that probs works, and are in [0,1] and sum to 1

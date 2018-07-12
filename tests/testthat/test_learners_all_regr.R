@@ -12,7 +12,8 @@ test_that("learners work: regr ", {
       num_iterations_after_burn_in = 10L),
     regr.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     regr.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
+    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed")),
+    regr.cforest = list(minsplit = 1, minbucket = 1)
   )
 
   # Create smaller task: dont use feature 2, it is nearly always 0, don't use feature 4, it is a factor variable
@@ -59,6 +60,6 @@ test_that("learners work: regr ", {
   lrns = mylist(min.task, create = TRUE)
   # regr.gbm: Meaningfull error about too small dataset
   # others: see learners_all_classif and random errors
-  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% c("regr.cforest", "regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.slim")]
+  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% c("regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.slim")]
   lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
 })
