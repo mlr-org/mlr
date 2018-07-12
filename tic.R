@@ -20,6 +20,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_setup_ssh())
 
 get_stage("script") %>%
+    add_code_step(devtools::install_github("pat-s/rcmdcheck@catch-test-errors")) %>% # FIXME: If this is solved in r-lib/rcmdcheck
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck(notes_are_errors = FALSE, build_args = "--no-build-vignettes",
                             check_args = "--ignore-vignettes --no-manual --as-cran"))
