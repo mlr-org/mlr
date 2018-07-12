@@ -5,7 +5,7 @@ test_that("learners work: classif", {
   # settings to make learners faster and deal with small data size
   hyperpars = list(
     classif.boosting = list(mfinal = 2L),
-    classif.cforest = list(mtry = 1L),
+    classif.cforest = list(mtry = 1L, minsplit = 1, minbucket = 1),
     classif.bdk = list(ydim = 2L),
     classif.earth = list(degree = 3L, nprune = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
@@ -13,8 +13,7 @@ test_that("learners work: classif", {
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     classif.xyf = list(ydim = 2L),
     classif.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed")),
-    classif.cforest = list(minsplit = 1, minbucket = 1)
+    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
   )
 
   # binary classif
