@@ -37,14 +37,9 @@ trainLearner.classif.cforest = function(.learner, .task, .subset,
   .weights = NULL, ntree, mtry, replace, fraction, trace, teststat,
   testtype, mincriterion, minsplit, minbucket, stump,
   nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
+  browser()
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
-  defaults = getDefaults(getParamSet(.learner))
-  if (missing(teststat)) teststat = defaults$teststat
-  if (missing(testtype)) testtype = defaults$testtype
-  if (missing(mincriterion)) mincriterion = defaults$mincriterion
-  if (missing(replace)) replace = defaults$replace
-  if (missing(fraction)) fraction = defaults$fraction
   ctrl = learnerArgsToControl(party::cforest_control, ntree, mtry, replace,
     fraction, trace, teststat, testtype, mincriterion,
     minsplit, minbucket, stump, nresample, maxsurrogate,
