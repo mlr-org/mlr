@@ -9,8 +9,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
     add_code_step(install.packages(old.packages())) %>%
     add_code_step(devtools::install_github("pat-s/rcmdcheck@build-args")) %>% # FIXME: If this is solved in r-lib/rcmdcheck
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
-    add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_script") %>%
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
@@ -37,8 +36,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>% # favicon creation
     add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(install.packages(old.packages())) %>%
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
-    add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
