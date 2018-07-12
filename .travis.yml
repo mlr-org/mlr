@@ -34,7 +34,7 @@ jobs:
            - libudunits2-dev # for sf
       # only stages with the same env share a cache
       # this should be share to other stages via the cache
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
@@ -48,7 +48,7 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
       script: true
     - stage: check
@@ -63,7 +63,7 @@ jobs:
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
       before_install:
-        - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
+        - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script: R -q -e 'tic::script()'
@@ -99,7 +99,7 @@ jobs:
            - libudunits2-dev # for sf
       latex: false
       pandoc_version: 2.2.1
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       before_deploy: R -q -e 'tic::before_deploy()'
@@ -120,7 +120,7 @@ jobs:
            - libgsl0-dev
            - ghostscript # for mlr-tutorial pdf
       pandoc_version: 2.2.1
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       before_deploy: R -q -e 'tic::before_deploy()'
@@ -141,7 +141,7 @@ jobs:
            - libgsl0-dev
            - ghostscript # for mlr-tutorial pdf
       pandoc_version: 2.2.1
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       before_deploy: R -q -e 'tic::before_deploy()'
