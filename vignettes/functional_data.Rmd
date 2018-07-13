@@ -20,7 +20,7 @@ knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
 ```
-In ([Hooker, 2017](http://faculty.bscb.cornell.edu/~hooker/ShortCourseHandout.pdf)) it is defined, tah "Functional data is multivariate data with an ordering on the dimensions".
+In ([Hooker, 2017](http://faculty.bscb.cornell.edu/~hooker/ShortCourseHandout.pdf)) it is defined, that "Functional data is multivariate data with an ordering on the dimensions".
 It means that this type of data consists of curves varying over a continuum, such as time, frequency, or wavelength. 
 Thus, functional data is often present when measurements at various time points are analyzed.
 The curves of functional data are usually interdependent, which means that the measurement at a point, e.g., $t_{i + 1}$, depends on measurements at some other points, e.g., ${t_1, ..., t_i}; i \in \mathbb{N}$.
@@ -51,7 +51,7 @@ ggplot(df) +
   geom_line(aes(y = NIR_Obs1, x = lambda))
 ```
 
-*Note:* this is an example of spectroscopic data. NIR stands for "near infra-red radiation (light)", UVVIS (you will find this below) -- "ultra-violet and visible radiation (light)",  and in spectroscopy it is common to denote wavelengths as "lambda" $(\lambda)$. For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible "colors" expressed as numbers.
+*Note:* this is an example of spectroscopic data. NIR stands for "near infra-red radiation (light)", UVVIS (you will find this below) -- "ultra-violet and visible radiation (light)", and in spectroscopy it is common to denote wavelengths as "lambda" $(\lambda)$. For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible "colors" expressed as numbers.
 
 # How to model functional data?
 
@@ -61,8 +61,7 @@ There are two commonly used approaches for analyzing functional data.
 Those learners have the prefixes __classif.fda__ and __regr.fda__.
 
 For more info on learners see [fda learners](functional_data.html#constructing-a-learner).
-For this purpose, the functional data has to be saved as a matrix column in the data frame used
-for constructing the [task](task.html). For more info on functional tasks consider the following section.
+For this purpose, the functional data has to be saved as a matrix column in the data frame used for constructing the [task](task.html). For more info on functional tasks, consider the following section.
 
 * Transform the task into a format suitable for standard __classification__ or __regression__ [learners](learner.html).
 
@@ -85,17 +84,18 @@ str(fuelSubset)
 
 * __heatan__ is the target variable, in this case, a numeric value.
 * __h2o__ is an additional scalar variable.
-* __NIR__ and __UVVIS__ are matrices containing the curve data. Each column corresponds to a single wavelength the data was sampled at. Each row indicates a single curve. 
+* __NIR__ and __UVVIS__ are matrices containing the curve data. Each column corresponds to a single wavelength the data was sampled at.
+ Each row indicates a single curve. 
 __NIR__ was measured at $231$ wavelength points, while __UVVIS__ was measured at $129$ wavelength points.
 * __nir.lambda__ and __uvvis.lambda__ are numeric vectors of length $231$ and $129$ indicate the wavelength points the data was measured at. 
 Each entry corresponds to one column of __NIR__ and __UVVIS__ respectively. For now, we ignore this additional information in `mlr`.
 
 Our data already contains functional features as matrices in a list.
-In order to showcase how such a matrix can be created from arbitrary numeric columns, we transform the list into a data frame with a set of numeric columns for each matrix. These columns refer to the matrix columns in the list, i.e 
-__UVVIS.1__ is the first column of the UVVIS matrix. 
+In order to demonstrate how such a matrix can be created from arbitrary numeric columns, we transform the list into a data frame with a set of numeric columns for each matrix. 
+These columns refer to the matrix columns in the list, i.e., __UVVIS.1__ is the first column of the UVVIS matrix. 
 
 ```{r}
-## Put all values into a data.frame
+## Put all values into a data frame
 df = data.frame(fuelSubset[c("heatan", "h2o", "UVVIS", "NIR")])
 str(df[, 1:5])
 ```
