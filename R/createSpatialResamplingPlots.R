@@ -63,7 +63,7 @@
 #' the data will by default projected into a lat/lon projection, specifically
 #' EPSG 4326.
 #' If other projections are desired for the resulting map, please set argument
-#' `datum` accordingly. This argument will be passed onto [sf::coord_sf].
+#' `datum` accordingly. This argument will be passed onto [ggplot2::coord_sf].
 #'
 #' @md
 #' @examples
