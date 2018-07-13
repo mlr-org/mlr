@@ -29,6 +29,9 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
+      install: R -q -e 'tic::install()'
+      script: true
     - stage: check
       env: RCMDCHECK=TRUE
       addons:
