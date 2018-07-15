@@ -51,7 +51,9 @@ ggplot(df) +
   geom_line(aes(y = NIR_Obs1, x = lambda))
 ```
 
-*Note:* this is an example of spectroscopic data. NIR stands for "near infra-red radiation (light)", UVVIS (you will find this below) -- "ultra-violet and visible radiation (light)", and in spectroscopy it is common to denote wavelengths as "lambda" $(\lambda)$. For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible "colors" expressed as numbers.
+*Note:* this is an example of spectroscopic data. 
+NIR stands for "near infra-red radiation (light)", UVVIS (you will find this below) -- "ultra-violet and visible radiation (light)", and in spectroscopy it is common to denote wavelengths as "lambda" $(\lambda)$. 
+For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible "colors" expressed as numbers.
 
 # How to model functional data?
 
@@ -61,7 +63,8 @@ There are two commonly used approaches for analyzing functional data.
 Those learners have the prefixes __classif.fda__ and __regr.fda__.
 
 For more info on learners see [fda learners](functional_data.html#constructing-a-learner).
-For this purpose, the functional data has to be saved as a matrix column in the data frame used for constructing the [task](task.html). For more info on functional tasks, consider the following section.
+For this purpose, the functional data has to be saved as a matrix column in the data frame used for constructing the [task](task.html).
+For more info on functional tasks, consider the following section.
 
 * Transform the task into a format suitable for standard __classification__ or __regression__ [learners](learner.html).
 
@@ -71,8 +74,11 @@ This is explained in more detail [below](functional_data.html#feature-extraction
 
 # Creating a task that contains functional features
 
-The first step is to get the data in the right format. `mlr` expects a `base::data.frame` which consists of the functional features and the target variable as input. Functional data in contrast to __numeric__ data have to be stored as a matrix column in the data frame.
-After that, a [task](task.html) that contains the data in a well-defined format is created. The [tasks](task.html) come in different flavors, such as `makeClassifTask()` and `makeRegrTask()`, which can be used according to the class of the target variable.
+The first step is to get the data in the right format.
+`mlr` expects a `base::data.frame` which consists of the functional features and the target variable as input. 
+Functional data in contrast to __numeric__ data have to be stored as a matrix column in the data frame.
+After that, a [task](task.html) that contains the data in a well-defined format is created.
+The [tasks](task.html) come in different flavors, such as `makeClassifTask()` and `makeRegrTask()`, which can be used according to the class of the target variable.
 
 In the following example, the data is first stored as matrix columns using the helper function `makeFunctionalData()` for the [fuelSubset](&fuelSubset.task) data from package `FDboost`.
 
@@ -84,11 +90,13 @@ str(fuelSubset)
 
 * __heatan__ is the target variable, in this case, a numeric value.
 * __h2o__ is an additional scalar variable.
-* __NIR__ and __UVVIS__ are matrices containing the curve data. Each column corresponds to a single wavelength the data was sampled at.
+* __NIR__ and __UVVIS__ are matrices containing the curve data. 
+Each column corresponds to a single wavelength the data was sampled at.
  Each row indicates a single curve. 
 __NIR__ was measured at $231$ wavelength points, while __UVVIS__ was measured at $129$ wavelength points.
 * __nir.lambda__ and __uvvis.lambda__ are numeric vectors of length $231$ and $129$ indicate the wavelength points the data was measured at. 
-Each entry corresponds to one column of __NIR__ and __UVVIS__ respectively. For now, we ignore this additional information in `mlr`.
+Each entry corresponds to one column of __NIR__ and __UVVIS__ respectively. 
+For now, we ignore this additional information in `mlr`.
 
 Our data already contains functional features as matrices in a list.
 In order to demonstrate how such a matrix can be created from arbitrary numeric columns, we transform the list into a data frame with a set of numeric columns for each matrix. 
