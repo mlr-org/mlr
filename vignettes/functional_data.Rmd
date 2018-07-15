@@ -122,7 +122,7 @@ fd.features = list("UVVIS" = 3:136, "NIR" = 137:367)
 fdf = makeFunctionalData(df, fd.features = fd.features)
 ```
 
-`makeFunctionalData()` returns a `data.frame`, where the functional features are contained as matrices.
+`makeFunctionalData()` returns a `base::data.frame`, where the functional features are contained as matrices.
 
 ```{r}
 str(fdf)
@@ -232,7 +232,7 @@ Discrete wavelet transform decomposes the functional into several _wavelets_.
 This essentially transforms the time signal to a time-scale representation, where every wavelet captures the data at a different resolution.
 We can specify which additional parameters (i.e., the `filter` (a type of wavelet) and the `boundary`) in the pars argument.
 This function returns a regression task of type _regr_ since the raw data contained temporal structure but the transformed data does not inherit temporal structure anymore.
-For more information on wavelets consider the documentation [wavelets](https://www.rdocumentation.org/packages/wavelets/versions/0.3-0/topics/dwt).
+For more information on wavelets consider the documentation of `wavelets::dwt`.
 A more comprehensive guide is, for example, given [here](https://www.cs.unm.edu/~williams/cs530/arfgtw.pdf).
 
 ```{r, eval = FALSE}
