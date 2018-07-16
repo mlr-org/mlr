@@ -123,3 +123,6 @@ ecuador$y = NULL
 spatial.task = makeClassifTask(target = "slides", data = ecuador, coordinates = coords,
                                positive = "TRUE")
 use_data(spatial.task, overwrite = TRUE, compress = COMPRESSION)
+
+data(meuse, package = "sp")
+data("meuse.grid", package = "sp")
