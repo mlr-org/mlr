@@ -2,9 +2,9 @@
 #'
 #' @description Visualize partitioning of resample objects with spatial information.
 #' @import ggplot2
-#' @import sf
+#' @importFrom sf st_as_sf
 #' @importFrom purrr map imap is_list flatten map_int
-#' @import hrbrthemes
+#' @importFrom hrbrthemes theme_ipsum_rc
 #' @family plot
 #' @author Patrick Schratz
 #' @param task [Task] \cr
