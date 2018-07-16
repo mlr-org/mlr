@@ -2,9 +2,7 @@
 #'
 #' @description Visualize partitioning of resample objects with spatial information.
 #' @import ggplot2
-#' @importFrom sf st_as_sf
 #' @importFrom purrr map imap is_list flatten map_int
-#' @importFrom hrbrthemes theme_ipsum_rc
 #' @family plot
 #' @author Patrick Schratz
 #' @param task [Task] \cr
@@ -129,6 +127,9 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   point.size = 0.5, axis.text.size = 14, x.axis.breaks = waiver(),
   y.axis.breaks = waiver()) {
 
+  requireNamespace("hrbrthemes", quietly = TRUE)
+  requireNamespace("sf", quietly = TRUE)
+
   # some checks
   if (is.null(crs))
     stopf("Please specify a crs that matches the coordinates of the task.")
@@ -160,7 +161,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     data = cbind(task$env$data, task$coordinates)
 
     # create 'sf' object
-    data = st_as_sf(data, coords = names(task$coordinates), crs = crs)
+    data = sf::st_as_sf(data, coords = names(task$coordinates), crs = crs)
 
     # create plot list with length = folds
     plot.list = map(1:(nfolds * repetitions), ~ data)
@@ -175,7 +176,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
       scale_x_continuous(breaks = x.axis.breaks) +
       scale_y_continuous(breaks = y.axis.breaks) +
       coord_sf(datum = st_crs(datum)) +
-      theme_ipsum_rc() +
+      hrbrthemes::theme_ipsum_rc() +
       theme(axis.text.x = element_text(size = axis.text.size),
         axis.text.y = element_text(size = axis.text.size),
         plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm"))

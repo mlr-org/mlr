@@ -56,7 +56,6 @@ Imports:
     methods,
     parallelMap (>= 1.3),
     purrr,
-    sf,
     survival,
     utils,
     XML
@@ -149,6 +148,7 @@ Suggests:
     RSNNS,
     RWeka,
     sda,
+    sf,
     smoof,
     sparseLDA,
     stepPlr,
