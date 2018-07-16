@@ -1,3 +1,23 @@
+# mlr 2.13:
+
+## general
+* Disabled unit tests for CRAN, we test on travis only now
+* Suppress messages with show.learner.output = FALSE
+
+## functions - general
+* plotHyperParsEffect: add colors
+
+## functions - new
+* getResamplingIndices
+
+## learners - general
+*  regr.nnet: Removed unneeded params linout, entropy, softmax and censored
+*  regr.ranger: Add weight handling
+
+## learners - removed
+* {classif,regr}.blackboost: broke API with new release
+
+
 # mlr 2.12:
 
 ## general
@@ -70,7 +90,7 @@
 * classif.lda learner: add 'prior' hyperparameter
 * ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
 * h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
-* h20*: Add support for "missings" 
+* h20*: Add support for "missings"
 
 ## learners - new
 * classif.adaboostm1
