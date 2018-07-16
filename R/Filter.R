@@ -123,6 +123,8 @@ print.Filter = function(x, ...) {
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "mrmr",
   desc = "Minimum redundancy, maximum relevance filter",
@@ -158,6 +160,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "carscore",
   desc = "CAR scores",
@@ -180,6 +184,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 rf.importance = makeFilter(
   name = "randomForestSRC.rfsrc",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
@@ -214,6 +220,8 @@ rf.importance = makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 rf.min.depth = makeFilter(
   name = "randomForestSRC.var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
@@ -240,6 +248,8 @@ rf.min.depth = makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "cforest.importance",
   desc = "Permutation importance of random forest fitted in package 'party'",
@@ -277,6 +287,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "randomForest.importance",
   desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
@@ -299,6 +311,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
@@ -316,6 +330,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
@@ -333,6 +349,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "information.gain",
   desc = "Entropy-based information gain between feature and target",
@@ -350,6 +368,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "gain.ratio",
   desc = "Entropy-based gain ratio between feature and target",
@@ -367,6 +387,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "symmetrical.uncertainty",
   desc = "Entropy-based symmetrical uncertainty between feature and target",
@@ -388,6 +410,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "chi.squared",
   desc = "Chi-squared statistic of independence between feature and target",
@@ -416,6 +440,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "relief",
   desc = "RELIEF algorithm",
@@ -436,6 +462,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "oneR",
   desc = "oneR association rule",
@@ -456,6 +484,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 univariate = makeFilter(
   name = "univariate.model.score",
   desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
@@ -506,6 +536,8 @@ univariate = makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
@@ -531,6 +563,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "kruskal.test",
   desc = "Kruskal Test for binary and multiclass classification tasks",
@@ -553,6 +587,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "variance",
   desc = "A simple variance filter",
@@ -578,6 +614,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "permutation.importance",
   desc = "Aggregated difference between feature permuted and unpermuted predictions",
@@ -604,6 +642,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "auc",
   desc = "AUC filter for binary classification tasks",
@@ -619,58 +659,6 @@ makeFilter(
   }
 )
 
-# Preprocess the data before applying praznik filter. According to Praznik documentation:
-# The best practice is to convert data to factors prior to feeding them in this function.
-# Real attributes are cut into about 10 equally-spaced bins, following the heuristic often used in literature.
-# Precise number of cuts depends on the number of objects; namely, it is n/3, but never less than 2 and never more than 10.
-preprocess.cmi.praznik = function(data) {
-    colns = colnames(data)
-    data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
-    int.yes = vlapply(data, is.integer)
-    if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
-    numeric.yes = vlapply(data, is.numeric)
-    df.num = data.frame(data[, numeric.yes])
-    interval = max(min(as.integer(nrow(data) / 3L), 10L), 2L)
-	  cols.unique.len = viapply(df.num, function(x) length(unique(x)))
-    const.cols.yes = vlapply(df.num, function(x) length(unique(x)) < 2L)
-    if (any(const.cols.yes)) {
-      df.num.uni =  lapply(df.num[const.cols.yes], as.factor)
-      df.num.cut = df.num[!const.cols.yes]
-      df.num.cut = data.frame(apply(df.num.cut, 2L, cut, interval))
-      df.num = cbind(df.num.cut, df.num.uni)
-    }
-    colnames(df.num) = colns[numeric.yes]
-    df.nonnum = data.frame(data[, !numeric.yes])
-    colnames(df.nonnum) =  colns[!numeric.yes]
-    data = cbind(df.nonnum, df.num)
-    return(data)
-}
-
-helper.cmi.praznik = function(fun, preprocess = FALSE) {
-  force(fun)
-  force(preprocess)
-  function(task, nselect, ...) {
-    org.data = getTaskData(task)
-    org.featnames = getTaskFeatureNames(task)
-    const.flag = vlapply(org.data, function(x) length(unique(x)) == 1L)
-    const.pos = which(const.flag)
-    norm.pos = which(!const.flag)
-    feat.score = vector(mode = "numeric", length = nrow(org.data))
-    names(feat.score) = org.featnames
-    task = removeConstantFeatures(task)  # without removing constant features, praznik will generate Rcpp error
-    data = getTaskData(task)
-    featnames = getTaskFeatureNames(task)
-    targetname = getTaskTargetNames(task)
-    if (preprocess) data = preprocess.cmi.praznik(data)
-    # if the target column is character, it will be transformed to factor here, which is why i pass the whole dataframe here, the split is done on numerical column which will not affect the target column except it transform the character target to factors.
-    X = data[, featnames]
-    Y = data[, targetname]
-    k = min(nselect, length(featnames))
-    k = max(k, 1)
-    fun(X = X, Y = Y, k = k)$score
-  }
-}
-
 # fun must return a named vector of feature importance values. By convention the most important features receive the highest scores. If you are making use of the nselect option fun can either return a vector of nselect scores or a vector as long as the total numbers of features in the task filled with NAs for all features whose scores weren't calculated.
 # test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 2)
 # test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 4)
@@ -681,199 +669,136 @@ helper.cmi.praznik = function(fun, preprocess = FALSE) {
 #' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
 #' @rdname makeFilter
 #' @name makeFilter
-#'
-makeFilter(
-  name = "praznik.MIM",
-  desc = "conditional mutual information based feature selection filters",
-  pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::MIM)
-  )
+NULL
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-#' @rdname makeFilter
-#' @name makeFilter
-#'
+praznik.filter = function(fun) {
+  force(fun)
+
+  function(task, nselect, ...) {
+    requireNamespace("praznik")
+    fun = getFromNamespace(fun, ns = "praznik")
+
+    data = getTaskData(task)
+    X = data[getTaskFeatureNames(task)]
+    Y = data[[getTaskTargetNames(task)]]
+    k = max(min(nselect, ncol(X)), 1L)
+    score = fun(X, Y, k = k)$score
+
+    if (length(score) < ncol(X)) {
+      unscored = sample(setdiff(names(X), names(score)))
+      score = c(score, setNames(rep.int(NA_real_, length(unscored)), unscored))
+    }
+
+    score
+  }
+}
+
 makeFilter(
   name = "praznik.JMI",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::JMI)
-  )
+  fun = praznik.filter("JMI")
+)
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-#' @rdname makeFilter
-#' @name makeFilter
-#'
 makeFilter(
   name = "praznik.DISR",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::DISR)
-  )
+  fun = praznik.filter("DISR")
+)
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-#' @rdname makeFilter
-#' @name makeFilter
-#'
 makeFilter(
   name = "praznik.JMIM",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::JMIM)
-  )
+  fun = praznik.filter("JMIM")
+)
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-#' @rdname makeFilter
-#' @name makeFilter
-#'
+makeFilter(
+  name = "praznik.MIM",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik.filter("MIM")
+)
+
 makeFilter(
   name = "praznik.NJMIM",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::NJMIM)
-  )
+  fun = praznik.filter("NJMIM")
+)
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-#' @rdname makeFilter
-#' @name makeFilter
-#'
 makeFilter(
   name = "praznik.MRMR",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::MRMR)
-  )
+  fun = praznik.filter("MRMR")
+)
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-#' @rdname makeFilter
-#' @name makeFilter
-#'
 makeFilter(
   name = "praznik.CMIM",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik(praznik::CMIM)
-  )
-
-helper.fun.FSelectorRcpp = function(type = "infogain") {
-  type.candidate = c("infogain", "gainratio", "symuncert")
-  fun = function(task, nselect, ...) {
-    mdata = getTaskData(task)
-    fns = getTaskFeatureNames(task)
-    tns = getTaskTargetNames(task)
-    X = mdata[, fns]
-    y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
-    ns = df.res[["attributes"]]
-    imp = df.res[["importance"]]
-    names(imp) = ns
-    imp
-  }
-  return(fun)
-}
+  fun = praznik.filter("CMIM")
+)
 
 #' Simple entropy based filter with Rcpp implementation
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
+FSelectorRcpp.filter = function(type) {
+  force(type)
+
+  function(task, nselect, ...) {
+    data = getTaskData(task)
+    X = data[getTaskFeatureNames(task)]
+    y = data[[getTaskTargetNames(task)]]
+    res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
+    res = setNames(res$importance, res$attributes)
+    replace(res, is.nan(res), 0) # FIXME: this is a technical fix, need to report upstream
+  }
+}
+
 makeFilter(
   name = "FSelectorRcpp.infogain",
   desc = "info.gain: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, ...) {
-    type = "infogain"
-    mdata = getTaskData(task)
-    fns = getTaskFeatureNames(task)
-    tns = getTaskTargetNames(task)
-    X = mdata[, fns]
-    y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
-    ns = df.res[["attributes"]]
-    imp = df.res[["importance"]]
-    names(imp) = ns
-    imp
-  }
+  fun = FSelectorRcpp.filter("infogain")
 )
 
-#' Simple entropy based filter with Rcpp implementation
-#' @rdname makeFilter
-#' @name makeFilter
 makeFilter(
   name = "FSelectorRcpp.gainratio",
   desc = "gain.ratio: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, ...) {
-    type = "gainratio"
-    mdata = getTaskData(task)
-    fns = getTaskFeatureNames(task)
-    tns = getTaskTargetNames(task)
-    X = mdata[, fns]
-    y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
-    ns = df.res[["attributes"]]
-    imp = df.res[["importance"]]
-    names(imp) = ns
-    imp
-  }
+  fun = FSelectorRcpp.filter("gainratio")
 )
 
-#' Simple entropy based filter with Rcpp implementation
-#' @rdname makeFilter
-#' @name makeFilter
 makeFilter(
   name = "FSelectorRcpp.symuncert",
   desc = "symmetric uncertainty: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, ...) {
-    type = "symuncert"
-    mdata = getTaskData(task)
-    fns = getTaskFeatureNames(task)
-    tns = getTaskTargetNames(task)
-    X = mdata[, fns]
-    y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
-    ns = df.res[["attributes"]]
-    imp = df.res[["importance"]]
-    names(imp) = ns
-    imp
-  }
+  fun = FSelectorRcpp.filter("symuncert")
 )
 
 #' Filter \dQuote{ranger.permutation} trains a ranger learner with
@@ -882,6 +807,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "ranger.permutation",
   desc = "Variable importance based on ranger permutation importance",
@@ -902,6 +829,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "ranger.impurity",
   desc = "Variable importance based on ranger impurity importance",
@@ -915,4 +844,3 @@ makeFilter(
     ranger::importance(mod$learner.model)
   }
 )
-

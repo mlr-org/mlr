@@ -6,31 +6,33 @@ test_that("filterFeatures_praznik", {
   c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)  # logical vector
   d = c(1L, 3L, 5L, 7L, 9L, 17L)
   f = rep(c("c1", "c2"), 9)
-  df = data.frame(a = a, b = b, c = c, d = d, f = f)
+  df = data.frame(a = a, b = b, c = c, d = d, f = f, const1 = f, const2 = a)
   df = convertDataFrameCols(df, logicals.as.factor = TRUE)
-
   task = makeClassifTask(data = df, target = "f")
-  candidates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+
+
+  candidates = as.character(listFilterMethods()$id)
+  candidates = candidates[startsWith(candidates, "praznik.")]
   for (candidate in candidates) {
-    m = paste("praznik", candidate, sep = ".")
-    fv = generateFilterValuesData(task, method = m, nselect = 2L)
+    fv = generateFilterValuesData(task, method = candidate, nselect = 2L)
     expect_class(fv, "FilterValues")
     expect_data_frame(fv$data, nrow = getTaskNFeats(task))
     expect_set_equal(fv$data$name, getTaskFeatureNames(task))
-    expect_equal(sum(!is.na(fv$data[[m]])), 2L)
+    expect_equal(sum(!is.na(fv$data[[candidate]])), 2L)
 
     lrn = makeLearner("classif.featureless")
-    lrn = makeFilterWrapper(learner = lrn, fw.method = m, fw.abs = 3L)
+    lrn = makeFilterWrapper(learner = lrn, fw.method = candidate, fw.abs = 3L)
     res = resample(learner = lrn, task = binaryclass.task, resampling = hout, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
     expect_length(res$extract[[1L]], 3L)
   }
 })
 
 test_that("FilterWrapper with praznik mutual information, resample", {
-  candidates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+  candidates = as.character(listFilterMethods()$id)
+  candidates = candidates[startsWith(candidates, "praznik.")]
   lapply(candidates, function(x) {
     lrn1 = makeLearner("classif.lda")
-    lrn2 = makeFilterWrapper(lrn1, fw.method = paste("praznik", x, sep = "."), fw.perc = 0.5)
+    lrn2 = makeFilterWrapper(lrn1, fw.method = x, fw.perc = 0.5)
     m = train(lrn2, binaryclass.task)
     expect_true(!inherits(m, "FailureModel"))
     expect_equal(m$features, getTaskFeatureNames(binaryclass.task))
@@ -38,7 +40,7 @@ test_that("FilterWrapper with praznik mutual information, resample", {
     m = train(lrn2, binaryclass.task)
     expect_equal(getLeafModel(m)$features, character(0))
     expect_true(inherits(getLeafModel(m)$learner.model, "NoFeaturesModel"))
-    lrn2 = makeFilterWrapper(lrn1, fw.method = paste("praznik", x, sep = "."), fw.perc = 0.1)
+    lrn2 = makeFilterWrapper(lrn1, fw.method = x, fw.perc = 0.1)
     res = makeResampleDesc("CV", iters = 2)
     r = resample(lrn2, binaryclass.task, res)
     expect_true(!any(is.na(r$aggr)))
