@@ -55,7 +55,6 @@ Imports:
     data.table,
     methods,
     parallelMap (>= 1.3),
-    purrr,
     survival,
     utils,
     XML
@@ -130,6 +129,7 @@ Suggests:
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
+    purrr,
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.8.0),
