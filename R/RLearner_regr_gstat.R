@@ -1,3 +1,27 @@
+#' @title gstat regression learner.
+#'
+#' @description
+#' mlr learner for regression tasks using [gstat::gstat].
+#'
+#' This learner does not use the krige interface from gstat. This is because we want to make it the most general as possible.
+#' Therefore the learner makes use the combination of gstat::gstat and gstat::predict to compute spatial predidction.
+#' You can read more this StackOverflow thread : https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict.
+#'
+#' The learner handles gstat variogram autofitting functionnality presented in this post https://www.r-spatial.org/r/2016/02/14/gstat-variogram-fitting.html.
+#' To use manual fitting, you must provide a list to the argument model that holds the following elements :
+#' psill, model, range and nugget.
+#' To use auto fitting, simply provide a list containting the types of models to be tested.
+#' Manual fitting example : lrn.man = makeLearner(cl = 'regr.gstat', id = 'manual', model = list(psill = 1, model = 'Sph', range = 900, nugget = 1), locations = ~x+y).\n
+# 'Automatic fitting example : lrn.auto = makeLearner(cl = 'regr.gstat', id = 'auto', model = list(psill = c('Sph','Exp','Gau', 'Mat')), locations = ~x+y)"
+#'
+#' @references Edzer J Pebesma
+#' Multivariable geostatistics in S: the gstat package
+#' Computers & Geosciences Volume 30, Issue 7, 2004, 683-691.
+#'
+#' @name regr.gstat
+#' @rdname regr.gstat
+NULL
+
 #' @export
 makeRLearner.regr.gstat = function() {
   makeRLearnerRegr(
