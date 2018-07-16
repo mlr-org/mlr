@@ -126,3 +126,13 @@ use_data(spatial.task, overwrite = TRUE, compress = COMPRESSION)
 
 data(meuse, package = "sp")
 data("meuse.grid", package = "sp")
+meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")$data
+meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")$data
+meuse <- dplyr::mutate(meuse, log_zinc = log(zinc))
+meuse <- dplyr::mutate(meuse, sqrt_dist = sqrt(dist))
+meuse.grid <- dplyr::mutate(meuse.grid, sqrt_dist = sqrt(dist))
+meuse.task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
+use_data(meuse.task, overwrite = TRUE, compress = COMPRESSION)
+use_data(meuse.grid, overwrite = TRUE, compress = COMPRESSION)
