@@ -17,17 +17,15 @@ test_that("regr_gstat", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(formula = regr.formula, data = regr.train)
+    pars = list(formula = meuse.formula, data = meuse.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(gstat::gstat, pars)
     set.seed(getOption("mlr.debug.seed"))
-    p = predict(m, newdata = regr.train, type = "response")
+    p = predict(m, task = meuse.train, type = "response")
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("regr.gstat", regr.df, regr.target,
-    regr.train.inds, old.predicts.list, parset.list)
-
-
+  testSimpleParsets(t.name = "spatial.gstat", df = meuse.df, target = meuse.target,
+    train.inds = meuse.train.inds, old.predicts.list, parset.list)
 })
