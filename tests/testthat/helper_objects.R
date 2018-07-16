@@ -1,6 +1,7 @@
 data(Sonar, package = "mlbench", envir = environment())
 data(BreastCancer, package = "mlbench", envir = environment())
 data(spatial.task, package = "mlr", envir = environment())
+data(meuse.task, package = "mlr", envir = environment())
 
 binaryclass.df = Sonar
 binaryclass.formula = Class~.
@@ -24,6 +25,16 @@ binaryclass.spatial.test  = binaryclass.spatial.df[binaryclass.spatial.test.inds
 binaryclass.spatial.class.col = 3
 binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
 binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
+
+meuse.df = meuse$task$env
+meuse.target = "zinc"
+meuse.train = meuse.df
+meuse.train.inds =
+# meuse.trendsurfaces.task = dropFeatures(task = meuse.task, features = getTaskFeatureNames(meuse.task)[-c(1,2)])
+# meuse.idw.task = trendsurfaces.meuse.task
+# meuse.ordinarykriging.task = trendsurfaces.meuse.task
+# meuse.universalkriging.task = dropFeatures(task = meuse.task, features = getTaskFeatureNames(meuse.task)[-c(1,2,15)])
+meuse.formula = zinc~1
 
 multiclass.df = iris
 multiclass.formula = Species~.
