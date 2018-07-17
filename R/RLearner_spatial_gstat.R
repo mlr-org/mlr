@@ -54,7 +54,7 @@ makeRLearner.regr.gstat = function() {
     properties = c("numerics", "factors" , "se", "weights", "missings"),
     name = "Multivariable Geostatistical Prediction And Simulation",
     short.name = "gstat",
-    note = "To make the learner work, you cannot use the standard krige interface from gstat.\n
+    note = "The default prediction (when passing no arguments) is IDW (inverse distance weighted). To make the learner work, you cannot use the standard krige interface from gstat.\n
     You must first create a gstat object. The train function handles it for you.\n
     More information here : https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict.\n
     The learner handles gstat variogram autofitting functionnality presented in this post https://www.r-spatial.org/r/2016/02/14/gstat-variogram-fitting.html.\n
