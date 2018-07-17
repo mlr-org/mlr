@@ -174,7 +174,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
         color = color.test, size = point.size) +
       scale_x_continuous(breaks = x.axis.breaks) +
       scale_y_continuous(breaks = y.axis.breaks) +
-      coord_sf(datum = st_crs(datum)) +
+      coord_sf(datum = sf::st_crs(datum)) +
       hrbrthemes::theme_ipsum_rc() +
       theme(axis.text.x = element_text(size = axis.text.size),
         axis.text.y = element_text(size = axis.text.size),
