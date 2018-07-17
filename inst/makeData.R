@@ -131,9 +131,8 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
   dummy.classes = "integer")$data
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
-meuse <- dplyr::mutate(meuse, log_zinc = log(zinc))
-meuse <- dplyr::mutate(meuse, sqrt_dist = sqrt(dist))
-meuse.grid <- dplyr::mutate(meuse.grid, sqrt_dist = sqrt(dist))
-meuse.task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
+meuse <- meuse[ , c(1,2,3,8)]
+meuse.grid <- meuse.grid[ , c(1,2,5)]
+meuse.task = makeRegrTask(id = "meuse",  data = meuse, target = "cadmium")
 use_data(meuse.task, overwrite = TRUE, compress = COMPRESSION)
 use_data(meuse.grid, overwrite = TRUE, compress = COMPRESSION)
