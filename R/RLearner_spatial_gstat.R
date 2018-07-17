@@ -72,7 +72,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, mo
   # check if a variogram model is passed
   if (!is.null(model)) {
     # build the samples variogram
-    v = variogram(object = f, locations = ~x+y, data = d)
+    v = gstat::variogram(object = f, locations = ~x+y, data = d)
     # fit the variogram model
     fit <- gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model,
       range = model$range, nugget = model$nugget))
