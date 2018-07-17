@@ -30,7 +30,7 @@ makeRLearner.regr.gstat = function() {
     par.set = makeParamSet(
       makeFunctionLearnerParam(id = "g"),
       makeUntypedLearnerParam(id = "id"), # FIXME what should be the type ?
-      makeUntypedLearnerParam(id = "locations"), # FIXME what should be the type ?
+      makeUntypedLearnerParam(id = "locations", default = ~x+y), # FIXME what should be the type ?
       makeUntypedLearnerParam(id = "model", default = NULL), # FIXME what should be the type ?
       makeIntegerVectorLearnerParam(id = "beta"),
       makeIntegerLearnerParam(id = "nmax", default = 0),
