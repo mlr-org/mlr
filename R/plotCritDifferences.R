@@ -22,7 +22,7 @@
 #' @template arg_measure
 #' @param p.value (`numeric(1)`)\cr
 #'   P-value for the critical difference. Default: 0.05
-#' @param baseline (`character(1)`): ([learner.id]) \cr
+#' @param baseline (`character(1)`): (`learner.id`) \cr
 #'   Select a `learner.id` as baseline for the `test = "bd"`
 #'   ("Bonferroni-Dunn") critical differences
 #'   diagram. The critical difference interval will then be positioned arround this learner.
