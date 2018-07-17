@@ -116,8 +116,36 @@ mean(out$measures.test$auc)
 
 The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC. 
 
-# Notes
-
+### Visualization of spatial partitions
+ 
+You can visualize the spatial partitioning using `createSpatialResamplingPlots()`.
+This function creates multiple `ggplot2` objects that can then be visualized in a gridded way using your favorite "plot arrangement" function 
+We recommend to use `cowplot::plot_grid()` and `cowplot::save_plot()` for this. 
+ 
+You can pass multiple `resample` result objects as inputs. 
+This is useful to visualize the differences between a spatial and non-spatial partitioning.
+If you pass the `resample` objects in a named list, those names will be populated as plot titles. 
+By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument `datum`.
+If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using `purrr::map()`, `base::lapply()` or similar functions.
+ 
+```{r out.width = "800px", fig.align='center'}
+library(mlr)
+library(cowplot)
+ 
+rdesc1 = makeResampleDesc("SpCV", folds = 5, reps = 4)
+r1 = resample(makeLearner("classif.qda"), spatial.task, rdesc1, show.info = FALSE)
+rdesc2 = makeResampleDesc("CV", folds = 5, reps = 4)
+r2 = resample(makeLearner("classif.qda"), spatial.task, rdesc2, show.info = FALSE)
+ 
+plots = createSpatialResamplingPlots(spatial.task,
+  list("SpRepCV" = r1, "RepCV" = r2), crs = 32717, repetitions = 1,
+  x.axis.breaks = c(-79.075), y.axis.breaks = c(-3.975))
+plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
+  labels = plots[["Labels"]], label_size = 8)
+```
+ 
+### Notes
+ 
 * Some models are more affected by spatial autocorrelation than others. 
 In general, it can be said that the more flexible a model is, the more it will profit from underlying spatial autocorrelation.
 Simpler models (e.g., GLM) will show less overoptimistic performance estimates.
