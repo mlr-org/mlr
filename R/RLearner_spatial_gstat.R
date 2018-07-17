@@ -36,8 +36,7 @@ makeRLearner.regr.gstat = function() {
       makeIntegerLearnerParam(id = "nmax", default = 0),
       makeIntegerLearnerParam(id = "nmin", default = 0),
       makeIntegerLearnerParam(id = "omax", default = 0),
-      makeNumericLearnerParam(id = "maxdist", default = Inf),
-      makeLogicalLearnerParam(id = "force", default = FALSE),
+      makeNumericLearnerParam(id = "maxdist", default = 1000000), # FIXME should be Inf but returns error
       makeLogicalLearnerParam(id = "dummy", default = FALSE),
       makeUntypedLearnerParam(id = "set"),
       makeFunctionLearnerParam(id = "x"),
@@ -49,7 +48,7 @@ makeRLearner.regr.gstat = function() {
       makeLogicalLearnerParam(id = "vdist", default = FALSE),
       makeUntypedLearnerParam(id = "lambda")
     ),
-    par.vals = list(model = NULL, nmax = 0, nmin = 0, omax = 0, maxdist = Inf, force = FALSE,
+    par.vals = list(model = NULL, nmax = 0, nmin = 0, omax = 0, maxdist = 1000000, force = FALSE,
       dummy = FALSE, fill.all = FALSE, fill.cross = TRUE, variance = "identity", degree = 0, vdist = FALSE),
     properties = c("numerics", "factors" , "se", "weights", "missings"),
     name = "Multivariable Geostatistical Prediction And Simulation",
@@ -64,7 +63,7 @@ makeRLearner.regr.gstat = function() {
 }
 
 #' @export
-trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, model = NULL, ...) {
+trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, model = NULL, locations, ...) {
   d = getTaskData(.task, .subset)
   f <- getTaskFormula(.task, explicit.features = TRUE)
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
@@ -72,7 +71,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, mo
   # check if a variogram model is passed
   if (!is.null(model)) {
     # build the samples variogram
-    v = gstat::variogram(object = f, locations = ~x+y, data = d)
+    v = gstat::variogram(object = f, locations = locations, data = d)
     # fit the variogram model
     fit <- gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model,
       range = model$range, nugget = model$nugget))
@@ -81,6 +80,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, mo
       formula = f,
       data = d,
       model = fit,
+      locations = locations,
       ...
     )
   } else {
