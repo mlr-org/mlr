@@ -40,13 +40,13 @@
 #'   which is comparing all classifiers to each other. The null hypothesis that
 #'   there is a difference between the classifiers can not be rejected for all
 #'   classifiers that have a single grey bar connecting them.
-#' @return ([critDifferencesData]). List containing:
-#' \item{data}{([data.frame]) containing the info for the descriptive
+#' @return (`critDifferencesData`). List containing:
+#' \item{data}{(data.frame) containing the info for the descriptive
 #'                part of the plot}
-#' \item{friedman.nemenyi.test}{([list]) of class `pairwise.htest` \cr
+#' \item{friedman.nemenyi.test}{(list) of class `pairwise.htest` \cr
 #'                                contains the calculated
 #'                                [PMCMR::posthoc.friedman.nemenyi.test]}
-#' \item{cd.info}{([list]) containing info on the critical difference
+#' \item{cd.info}{(list) containing info on the critical difference
 #'                  and its positioning}
 #' \item{baseline}{`baseline` chosen for plotting}
 #' \item{p.value}{p.value used for the [PMCMR::posthoc.friedman.nemenyi.test]
