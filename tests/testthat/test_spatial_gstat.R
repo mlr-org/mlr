@@ -2,13 +2,13 @@ test_that("regr_gstat", {
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
-    #list(),
-    list(id = "trend_surfaces_degree_1", degree = 1, locations = ~x+y),
-    list(id = "trend_surfaces_degree_2", degree = 2, locations = ~x+y),
-    list(id = "trend_surfaces_degree_3", degree = 3, locations = ~x+y),
-    list(id = "inverse_distance_weighted", locations = ~x+y),
+    list(),
+    list(id = "trend_surfaces_degree_1", degree = 1),
+    list(id = "trend_surfaces_degree_2", degree = 2),
+    list(id = "trend_surfaces_degree_3", degree = 3),
+    list(id = "inverse_distance_weighted"),
     list(id = "ordinary_kriging",
-      model = list(psill = 1, model = "Sph", range = 900, nugget = 1), locations = ~x+y)
+      model = list(psill = 1, model = "Sph", range = 900, nugget = 1))
   )
 
   old.predicts.list = list()
@@ -19,6 +19,7 @@ test_that("regr_gstat", {
     parset = parset.list[[i]]
     pars = list(formula = meuse.formula, data = meuse.train)
     pars = c(pars, parset)
+    pars$locations = ~x+y
     set.seed(getOption("mlr.debug.seed"))
 
     if (!is.null(pars$model)) {
@@ -33,9 +34,11 @@ test_that("regr_gstat", {
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = meuse.grid)
     old.predicts.list[[i]] = p
-    browser()
   }
 
+  print("testing")
+
+  browser()
 
   testSimpleParsets(t.name = "regr.gstat", df = meuse.df, target = meuse.target,
     train.inds = meuse.train.inds, old.predicts.list, parset.list)
