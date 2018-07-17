@@ -36,10 +36,6 @@ test_that("regr_gstat", {
     old.predicts.list[[i]] = p
   }
 
-  print("testing")
-
-  browser()
-
   testSimpleParsets(t.name = "regr.gstat", df = meuse.df, target = meuse.target,
     train.inds = meuse.train.inds, old.predicts.list, parset.list)
 })
