@@ -30,7 +30,7 @@ binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.
 meuse.df = meuse.task$env$data
 meuse.target = "zinc"
 meuse.train = meuse.df
-meuse.train.inds = (1:nrow(meuse.df))
+meuse.train.inds = (1:(nrow(meuse.df)/2))
 # meuse.trendsurfaces.task = dropFeatures(task = meuse.task, features = getTaskFeatureNames(meuse.task)[-c(1,2)])
 # meuse.idw.task = trendsurfaces.meuse.task
 # meuse.ordinarykriging.task = trendsurfaces.meuse.task
