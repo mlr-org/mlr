@@ -29,7 +29,6 @@ test_that("regr_gstat", {
         range = pars$model$range, nugget = pars$model$nugget))
       pars = list(formula = pars$formula, data = pars$data, locations = pars$locations, model = fit)
     }
-    browser()
     m = do.call(gstat::gstat, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = meuse.test)
