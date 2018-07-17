@@ -1,6 +1,7 @@
 library(mlr)
 library(BBmisc)
 library(devtools)
+library(sp)
 
 
 DATASEED = 7761  # nolint
