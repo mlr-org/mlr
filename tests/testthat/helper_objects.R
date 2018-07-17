@@ -28,6 +28,8 @@ binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spa
 binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
 
 meuse.df = meuse.task$env$data
+meuse.grid.sp <- meuse.grid
+coordinates(meuse.grid.sp) <- ~x+y
 meuse.target = "zinc"
 meuse.train = meuse.df
 meuse.train.inds = (1:nrow(meuse.df))
