@@ -37,10 +37,10 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_deploy") %>%
-    add_step(step_setup_ssh())
+    add_step(step_setup_ssh()) %>%
+    add_code_step(devtools::document(roclets=c('rd', 'collate', 'namespace'))) %>%
+    add_step(step_build_pkgdown())
 
   get_stage("deploy") %>%
-    add_code_step(devtools::document(roclets=c('rd', 'collate', 'namespace'))) %>%
-    add_step(step_build_pkgdown()) %>%
     add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
 }
