@@ -116,7 +116,7 @@ mean(out$measures.test$auc)
 
 The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC. 
 
-### Visualization of spatial partitions
+# Visualization of spatial partitions
  
 You can visualize the spatial partitioning using `createSpatialResamplingPlots()`.
 This function creates multiple `ggplot2` objects that can then be visualized in a gridded way using your favorite "plot arrangement" function 
@@ -132,9 +132,9 @@ If you do not like the plot appearance, you can customize all plots stored in th
 library(mlr)
 library(cowplot)
  
-rdesc1 = makeResampleDesc("SpCV", folds = 5, reps = 4)
+rdesc1 = makeResampleDesc("SpRepCV", folds = 5, reps = 4)
 r1 = resample(makeLearner("classif.qda"), spatial.task, rdesc1, show.info = FALSE)
-rdesc2 = makeResampleDesc("CV", folds = 5, reps = 4)
+rdesc2 = makeResampleDesc("RepCV", folds = 5, reps = 4)
 r2 = resample(makeLearner("classif.qda"), spatial.task, rdesc2, show.info = FALSE)
  
 plots = createSpatialResamplingPlots(spatial.task,
@@ -144,7 +144,7 @@ plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
   labels = plots[["Labels"]], label_size = 8)
 ```
  
-### Notes
+# Notes
  
 * Some models are more affected by spatial autocorrelation than others. 
 In general, it can be said that the more flexible a model is, the more it will profit from underlying spatial autocorrelation.
