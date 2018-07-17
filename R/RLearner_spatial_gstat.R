@@ -48,7 +48,7 @@ makeRLearner.regr.gstat = function() {
       makeLogicalLearnerParam(id = "vdist", default = FALSE),
       makeUntypedLearnerParam(id = "lambda")
     ),
-    par.vals = list(model = NULL, nmax = 0, nmin = 0, omax = 0, maxdist = 1000000, force = FALSE,
+    par.vals = list(locations = ~x+y, model = NULL, nmax = 0, nmin = 0, omax = 0, maxdist = 1000000, force = FALSE,
       dummy = FALSE, fill.all = FALSE, fill.cross = TRUE, variance = "identity", degree = 0, vdist = FALSE),
     properties = c("numerics", "factors" , "se", "weights", "missings"),
     name = "Multivariable Geostatistical Prediction And Simulation",
@@ -63,7 +63,8 @@ makeRLearner.regr.gstat = function() {
 }
 
 #' @export
-trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, model = NULL, locations, ...) {
+trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, model = NULL, ...) {
+  args = list(...)
   d = getTaskData(.task, .subset)
   f <- getTaskFormula(.task, explicit.features = TRUE)
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
@@ -71,7 +72,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, mo
   # check if a variogram model is passed
   if (!is.null(model)) {
     # build the samples variogram
-    v = gstat::variogram(object = f, locations = locations, data = d)
+    v = gstat::variogram(object = f, data = d, ...)
     # fit the variogram model
     fit <- gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model,
       range = model$range, nugget = model$nugget))
@@ -80,7 +81,6 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, mo
       formula = f,
       data = d,
       model = fit,
-      locations = locations,
       ...
     )
   } else {
@@ -89,6 +89,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, mo
       data = d,
       ...
     )
+    browser()
   }
 }
 
