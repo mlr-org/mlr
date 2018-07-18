@@ -85,7 +85,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 .dv, .ot {color: darkblue;}   /* numbers, logicals */
 .sourceCode.r .op {color: #505050;}  /* operators */
 .sourceCode.r .dt {color: #303030;}  /* function argument names,  #303030 - darkgray */
-.sourceCode.r .kw, .fu, .cf, .sourceCode a:link {color:darkred;} /* function names */
+.sourceCode.r .kw, .fu, .cf,   /* function names */
+    .sourceCode a:link,
+    .sourceCode a:active,
+    .sourceCode a:visited {color:darkred;}
 
 /*
 .message {color: darkgreen;}
