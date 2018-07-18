@@ -8,8 +8,8 @@
 # https://stackoverflow.com/questions/50083521/error-in-xmethod-attempt-to-apply-non-function-in-testthat-test-when
 # https://stackoverflow.com/questions/7028385/can-i-remove-an-element-in-dot-dot-dot-and-pass-it-on
 
-context("spatial_gstat")
-test_that("spatial_gstat", { #regr_gstat
+context("regr_gstat")
+test_that("regr_gstat", { #regr_gstat
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
