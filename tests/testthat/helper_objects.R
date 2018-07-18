@@ -33,10 +33,6 @@ meuse.train.inds = (1:(nrow(meuse)/2))
 meuse.train = meuse[meuse.train.inds, ]
 meuse.test.inds = (length(meuse.train.inds) + 1):nrow(meuse)
 meuse.test = meuse[meuse.test.inds, ]
-# meuse.trendsurfaces.task = dropFeatures(task = meuse.task, features = getTaskFeatureNames(meuse.task)[-c(1,2)])
-# meuse.idw.task = trendsurfaces.meuse.task
-# meuse.ordinarykriging.task = trendsurfaces.meuse.task
-# meuse.universalkriging.task = dropFeatures(task = meuse.task, features = getTaskFeatureNames(meuse.task)[-c(1,2,15)])
 meuse.formula = cadmium~1
 
 multiclass.df = iris
