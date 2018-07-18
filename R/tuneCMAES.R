@@ -3,9 +3,7 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
 
   low = getLower(par.set)
   upp = getUpper(par.set)
-  start = control$start
-  if (is.null(start))
-    start = sampleValue(par.set, start, trafo = FALSE)
+  start = control$start %??% sampleValue(par.set, trafo = FALSE)
   start = convertStartToNumeric(start, par.set)
   # set sigma to 1/4 per dim, defaults in cmaes are crap for this, last time I looked
   # and vectorized evals for speed and parallel, then insert user controls
@@ -43,5 +41,5 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
     convertx = convertXVectorizedMatrixCols, remove.nas = FALSE, resample.fun = resample.fun)
 
-  makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
+  makeTuneResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }

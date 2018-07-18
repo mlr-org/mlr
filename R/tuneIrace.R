@@ -1,6 +1,7 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
   requirePackages("irace", why = "tuneIrace", default.method = "load")
-  targetRunnerParallel = function(experiment, exec.target.runner, scenario) {
+
+  targetRunnerParallel = function(experiment, exec.target.runner, scenario, target.runner) {
     # get our param settings that irace should try
     cands = extractSubList(experiment, "configuration", simplify = FALSE)
     # some conversion code
@@ -47,7 +48,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   par.names = names(x1)
   # get all lines in opt.path which correspond to x and average their perf values
   j = vlapply(seq_row(d), function(i) isTRUE(all.equal(removeMissingValues(as.list(d[i, par.names, drop = FALSE])),
-      removeMissingValues(x1))))
+    removeMissingValues(x1))))
   if (!any(j))
     stop("No matching rows for final elite configuarion found in opt.path! This cannot be!")
   y = colMeans(d[j, opt.path$y.names, drop = FALSE])
@@ -60,5 +61,5 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
     threshold = getThresholdFromOptPath(opt.path, which(j))
   else
     threshold = NULL
-  makeTuneResult(learner, control, x, y, threshold, opt.path)
+  makeTuneResult(learner, control, x, y, resampling, threshold, opt.path)
 }

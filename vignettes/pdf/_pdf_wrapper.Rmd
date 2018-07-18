@@ -1,0 +1,217 @@
+---
+title: "mlr Tutorial"
+author: "Julia Schiffner, Bernd Bischl, Michel Lang, Jakob Richter, Zachary M. Jones, Philipp Probst, Florian Pfisterer, Mason Gallo, Dominik Kirchhoff, Tobias Kühn, Janek Thomas, Kira Engelhardt, Teodora Pandeva, Gunnar König, Lars Kotthoff, Patrick Schratz"
+output: 
+  bookdown::pdf_document2:
+     number_sections: true
+     toc_depth: 3
+biblio-style: apalike
+link-citations: yes
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("ROCR")
+library("glmnet")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+library("mlr")
+```
+
+# Machine Learning in R: mlr Tutorial
+
+```{r child = '../_mlr-tutorial_intro.Rmd'}
+```
+
+# Basics
+
+## Learning Tasks 
+
+```{r child = '../task.Rmd'}
+```
+
+## Learners
+
+```{r child = '../learner.Rmd'}
+```
+
+## Predicting Outcomes for New Data
+
+```{r child = '../predict.Rmd'}
+```
+
+##  Evaluating Learner Performance
+
+```{r child = '../performance.Rmd'}
+```
+
+## Resampling
+
+```{r child = '../resample.Rmd'}
+```
+
+## Tuning Hyperparameters
+
+```{r child = '../tune.Rmd'}
+```
+
+## Benchmark Experiments
+
+```{r child = '../benchmark_experiments.Rmd'}
+```
+
+## Parallelization
+
+```{r child = '../parallelization.Rmd'}
+```
+
+## Visualization
+
+```{r child = '../visualization.Rmd'}
+```
+
+## Use case: Regression
+
+```{r child = '../usecase_regression.Rmd'}
+```
+
+# Advanced
+
+## Configuring mlr
+
+```{r child = '../configureMlr.Rmd'}
+```
+
+## Wrapper
+
+```{r child = '../wrapper.Rmd'}
+```
+
+## Data Preprocessing
+
+```{r child = '../preproc.Rmd'}
+```
+
+## Imputation of Missing Values
+
+```{r child = '../impute.Rmd'}
+```
+
+## Generic Bagging
+
+```{r child = '../bagging.Rmd'}
+```
+
+## Iterated F-Racing for mixed spaces and dependencies
+
+```{r child = '../advanced_tune.Rmd'}
+```
+
+## Feature Selection
+
+```{r child = '../feature_selection.Rmd'}
+```
+
+## Nested Resampling
+
+```{r child = '../nested_resampling.Rmd'}
+```
+
+## Cost-Sensitive Classification
+
+```{r child = '../cost_sensitive_classif.Rmd'}
+```
+
+## Imbalanced Classification Problems
+
+```{r child = '../over_and_undersampling.Rmd'}
+```
+
+## ROC Analysis and Performance Curves
+
+```{r child = '../roc_analysis.Rmd'}
+```
+
+## Multilabel Classification
+
+```{r child = '../multilabel.Rmd'}
+```
+
+## Learning Curve Analysis
+
+```{r child = '../learning_curve.Rmd'}
+```
+
+## Exploring Learner Predictions
+
+```{r child = '../partial_dependence.Rmd'}
+```
+
+## Classifier Calibration
+
+```{r child = '../classifier_calibration.Rmd'}
+```
+
+## Evaluating Hyperparameter Tuning
+
+```{r child = '../hyperpar_tuning_effects.Rmd'}
+```
+
+## Out-of-Bag Predictions
+
+```{r child = '../out_of_bag_predictions.Rmd'}
+```
+
+## Handling of Spatial Data
+
+```{r child = '../handling_of_spatial_data.Rmd'}
+```
+
+## Functional Data
+
+```{r child = '../functional_data.Rmd'}
+```
+
+# Extending
+
+## Integrating Another Learner
+
+```{r child = '../create_learner.Rmd'}
+```
+
+## Integrating Another Measure
+
+```{r child = '../create_measure.Rmd'}
+```
+
+## Creating an Imputation Method
+
+```{r child = '../create_imputation.Rmd'}
+```
+
+## Integrating Another Filter Method
+
+```{r child = '../create_filter.Rmd'}
+```
+
+# Appendix
+
+## Example Tasks
+
+```{r child = '../example_tasks.Rmd'}
+```
+
+## Integrated Learners
+
+```{r child = '../integrated_learners.Rmd'}
+```
+
+## Implemented Performance Measures
+
+```{r child = '../measures.Rmd'}
+```
+
+## Integrated Filter Methods
+
+```{r child = '../filter_methods.Rmd'}
+```

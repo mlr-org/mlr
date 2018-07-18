@@ -1,17 +1,14 @@
 language: r
 sudo: false
 dist: trusty
-cache:
-  - packages
-  - ccache
+cache: packages
 env:
   global:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
-    - R_MAX_NUM_DLLS=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
+    - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown xgboost xml2'
 
 r_github_packages:
   - berndbischl/BBmisc
@@ -20,34 +17,20 @@ r_github_packages:
   - jimhester/lintr
 
 jobs:
-  fast_finish: true
-  allow_failures:
-    - env: TUTORIAL=HTML
-    - env: TUTORIAL=PDF
   include:
-    - stage: warmup-1
+    - stage: warmup
       env: RCMDCHECK=TRUE
       addons:
         apt:
           packages:
            - libgmp-dev
            - libgsl0-dev
-      # only stages with the same env share a cache
-      # this should be share to other stages via the cache
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      install:
-      #  - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-        - R -q -e 'tic::install()'
-      script: true
-    - stage: warmup-2
-      env: RCMDCHECK=TRUE
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      before_script: R -q -e 'tic::before_script()'
+           - libgdal-dev # for sf
+           - libproj-dev # for sf
+           - libgeos-dev # for sf
+           - libudunits2-dev # for sf
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
+      install: R -q -e 'tic::install()'
       script: true
     - stage: check
       env: RCMDCHECK=TRUE
@@ -56,17 +39,18 @@ jobs:
           packages:
            - libgmp-dev
            - libgsl0-dev
-      before_install:
-        - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+           - libgdal-dev # for sf
+           - libproj-dev # for sf
+           - libgeos-dev # for sf
+           - libudunits2-dev # for sf
+      before_install: R -q -e 'tic::prepare_all_stages()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
-      script:
-        - R CMD build .
-        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+      script: R -q -e 'tic::script()'
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-        - R --no-save <<< 'library("devtools"); document()'
+        - R --no-save <<< "devtools::document(roclets=c('rd', 'collate', 'namespace'))"
         - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
         - git config user.name $GN
         - git config user.email $GM
@@ -76,45 +60,29 @@ jobs:
         - git config push.default matching
         - git add --force NEWS
         - git add --force man/*
+        - git add --force NAMESPACE
         - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+
     - stage: Tutorial
-      env:
-        - TUTORIAL=HTML
+      env: TUTORIAL=HTML
       addons:
         apt:
           packages:
            - libgmp-dev
            - libgsl0-dev
-           - imagemagick # for favicon
+           - libmagick++-dev # for favicon
+           - libgdal-dev # for sf
+           - libproj-dev # for sf
+           - libgeos-dev # for sf
+           - libudunits2-dev # for sf
       latex: false
-      pandoc_version: 2.1.3
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      pandoc_version: 2.2.1
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
-      before_deploy: R -q -e 'tic::before_deploy()'
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           branch: master
-           condition:
-             - $TRAVIS_PULL_REQUEST = false
-             - $TRAVIS_EVENT_TYPE != cron
-    - stage: Tutorial
-      env:
-        - TUTORIAL=PDF
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-           - ghostscript # for mlr-tutorial pdf
-      pandoc_version: 2.1.3
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      install: R -q -e 'tic::install()'
-      script:  R -q -e 'tic::script()'
+      after_script: R -q -e 'tic::after_script()'
       before_deploy: R -q -e 'tic::before_deploy()'
       deploy:
          provider: script
@@ -129,8 +97,6 @@ notifications:
   email:
     recipients:
       - bernd_bischl@gmx.net
-      - schiffner@math.uni-duesseldorf.de
-      - erich.studerus@gmail.com
   slack: mlr-org:DYNA3KIwcG9F4sQoeyTnPBhF#buildnotifications
 on_success: change
 on_failure: always
