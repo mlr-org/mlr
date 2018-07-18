@@ -76,3 +76,16 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 .contents h1, .contents h2, .contents h3, .contents h4 {
     margin-top: -40px;
 }
+
+/* Syntax highlighting theme */
+
+.fl      {color: #1514b5;}
+.co      {color: #888888;}    /* comments */
+.ch, .st {color: green;}      /* strings */
+.dv, .ot {color: darkblue;}   /* numbers, logicals */
+.sourceCode.r .op {color: #505050;}  /* operators */
+.sourceCode.r .dt {color: #303030;}  /* function argument names,  #303030 - darkgray */
+.sourceCode.r .kw, .fu, .cf, .sourceCode a:link {color:darkred;} /* function names */
+
+
+
