@@ -7,8 +7,8 @@
 # https://github.com/r-lib/devtools/issues/1675 - Error in x[[method]](...) : attempt to apply non-function
 # https://stackoverflow.com/questions/50083521/error-in-xmethod-attempt-to-apply-non-function-in-testthat-test-when
 # https://stackoverflow.com/questions/7028385/can-i-remove-an-element-in-dot-dot-dot-and-pass-it-on
-context("spatial_gstat")
 
+context("spatial_gstat")
 test_that("spatial_gstat", { #regr_gstat
   requirePackagesOrSkip("gstat", default.method = "load")
 
@@ -43,7 +43,7 @@ test_that("spatial_gstat", { #regr_gstat
     m = do.call(gstat::gstat, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = meuse.test)
-    old.predicts.list[[i]] = p
+    old.predicts.list[[i]] = p[,3]
   }
   testSimpleParsets(t.name = "regr.gstat", df = meuse, target = meuse.target,
     train.inds = meuse.train.inds, old.predicts.list = old.predicts.list, parset.list = parset.list)
