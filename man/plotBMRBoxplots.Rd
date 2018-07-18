@@ -45,7 +45,8 @@ of the resampling strategy, faceted by the \code{task.id}.
 # see benchmark
 }
 \seealso{
-Other plot: \code{\link{plotBMRRanksAsBarChart}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},

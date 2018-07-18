@@ -11,50 +11,50 @@
 #' For `test = "nemenyi"` a bar is drawn, connecting all groups of not
 #' significantly different learners.\cr
 #' For `test = "bd"` an interval is drawn arround the algorithm selected
-#' as baseline. All learners within this interval are not signifcantly different
+#' as a baseline. All learners within this interval are not signifcantly different
 #' from the baseline. \cr
 #' Calculation:
-#' \deqn{ CD = q_{\alpha} \sqrt{(\frac{k(k+1)}{6N})}}{CD = q_alpha sqrt(k(k+1)/(6N))} \cr
-#' Where \eqn{q_\alpha} is based on the  studentized range statistic.
+#' \deqn{CD = q_{\alpha} \sqrt{\left(\frac{k(k+1)}{6N}\right)}}{CD = q_alpha sqrt(k(k+1)/(6N))} \cr
+#' Where \eqn{q_\alpha} is based on the studentized range statistic.
 #' See references for details.
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value ([numeric`(1)]\cr
+#' @param p.value (`numeric(1)`)\cr
 #'   P-value for the critical difference. Default: 0.05
-#' @param baseline (`character(1)`): ([learner.id]) \cr
+#' @param baseline (`character(1)`): (`learner.id`) \cr
 #'   Select a `learner.id` as baseline for the `test = "bd"`
 #'   ("Bonferroni-Dunn") critical differences
-#'   diagram.The critical difference Interval will then be positioned arround this learner.
+#'   diagram. The critical difference interval will then be positioned arround this learner.
 #'   Defaults to best performing algorithm. \cr
-#'   For `test = "nemenyi"`, no baseline is needed as it performs `all pairwise
-#'   comparisons.`
+#'   For `test = "nemenyi"`, no baseline is needed as it performs *all pairwise
+#'   comparisons*.
 #' @param test (`character(1)`) \cr
 #'   Test for which the critical differences are computed. \cr
 #'   \dQuote{bd} for the Bonferroni-Dunn Test, which is comparing all
 #'   classifiers to a `baseline`, thus performing a comparison
 #'   of one classifier to all others. \cr
-#'   Algorithms not connected by a single line are statistically different.
-#'   then the baseline. \cr
+#'   Algorithms not connected by a single line are statistically different
+#'   from the baseline. \cr
 #'   \dQuote{nemenyi} for the [PMCMR::posthoc.friedman.nemenyi.test]
 #'   which is comparing all classifiers to each other. The null hypothesis that
 #'   there is a difference between the classifiers can not be rejected for all
 #'   classifiers that have a single grey bar connecting them.
-#' @return ([critDifferencesData]). List containing:
-#' \item{data}{([data.frame]) containing the info for the descriptive
+#' @return (`critDifferencesData`). List containing:
+#' \item{data}{(data.frame) containing the info for the descriptive
 #'                part of the plot}
-#' \item{friedman.nemenyi.test}{([list]) of class `pairwise.htest` \cr
+#' \item{friedman.nemenyi.test}{(list) of class `pairwise.htest` \cr
 #'                                contains the calculated
-#'                                \link[PMCMR]{posthoc.friedman.nemenyi.test}}
-#' \item{cd.info}{([list]) containing info on the critical difference
+#'                                [PMCMR::posthoc.friedman.nemenyi.test]}
+#' \item{cd.info}{(list) containing info on the critical difference
 #'                  and its positioning}
 #' \item{baseline}{`baseline` chosen for plotting}
-#' \item{p.value}{p.value used for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
+#' \item{p.value}{p.value used for the [PMCMR::posthoc.friedman.nemenyi.test]
 #'                  and for computation of the critical difference}
 #'
 #' @family generate_plot_data
 #' @family benchmark
-#' @noMd
+#' @md
 #' @export
 generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
                                        baseline = NULL, test = "bd") {

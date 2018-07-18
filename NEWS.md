@@ -9,6 +9,7 @@
 
 ## functions - new
 * getResamplingIndices
+* createSpatialResamplingPlots
 
 ## learners - general
 *  regr.nnet: Removed unneeded params linout, entropy, softmax and censored
