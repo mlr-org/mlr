@@ -131,8 +131,8 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
   dummy.classes = "integer")$data
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
-meuse <- meuse[ , c(1,2,3,8)]
-meuse.grid <- meuse.grid[ , c(1,2,5)]
+meuse <- meuse[ , c(1,2,3)]
+meuse.grid <- meuse.grid[ , c(1,2)]
 meuse.task = makeRegrTask(id = "meuse",  data = meuse, target = "cadmium")
 use_data(meuse.task, overwrite = TRUE, compress = COMPRESSION)
 use_data(meuse.grid, overwrite = TRUE, compress = COMPRESSION)
