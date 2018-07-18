@@ -63,34 +63,35 @@ makeRLearner.regr.gstat = function() {
 }
 
 #' @export
-trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, model = NULL, ...) {
+trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
   args = list(...)
+  browser()
   d = getTaskData(.task, .subset)
-  f <- getTaskFormula(.task, explicit.features = TRUE)
+  f = getTaskFormula(.task, explicit.features = TRUE)
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
-  f <- update(f, .~.-y-x)
+  f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
   # check if a variogram model is passed
-  if (!is.null(model)) {
+  if (!is.null(args$model)) {
     # build the samples variogram
     v = gstat::variogram(object = f, data = d, ...)
     # fit the variogram model
-    fit <- gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model,
-      range = model$range, nugget = model$nugget))
+    fit = gstat::fit.variogram(v, gstat::vgm(psill = args$model$psill, model = args$model$model,
+      range = args$model$range, nugget = args$model$nugget))
     # create the gstat object
-    g <- gstat::gstat(
+    g = gstat::gstat(
       formula = f,
       data = d,
       model = fit,
       ...
     )
   } else {
-    g <- gstat::gstat(
+    g = gstat::gstat(
       formula = f,
       data = d,
       ...
     )
-    browser()
   }
+  return(g)
 }
 
 #' @export
