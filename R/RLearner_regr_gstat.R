@@ -96,8 +96,8 @@ makeRLearner.regr.gstat = function() {
     short.name = "gstat",
     note = "The default prediction (when passing no arguments) is IDW (inverse distance weighted).
     The learner handles gstat variogram autofitting functionnality presented in this post https://www.r-spatial.org/r/2016/02/14/gstat-variogram-fitting.html.\n
-    Manual fitting example : lrn.man = makeLearner(cl = 'regr.gstat', id = 'manual', model = list(psill = 1, model = 'Sph', range = 900, nugget = 1), locations = ~x+y).\n
-    Automatic fitting example : lrn.auto = makeLearner(cl = 'regr.gstat', id = 'auto', model = list(psill = c('Sph','Exp','Gau', 'Mat')), locations = ~x+y)"
+    Manual fitting example : lrn.man = makeLearner(cl = 'regr.gstat', id = 'manual', psill = 1, model = 'Sph', range = 900, nugget = 2, locations = ~x+y).\n
+    Automatic fitting example : lrn.auto = makeLearner(cl = 'regr.gstat', id = 'auto', psill = c('Sph','Exp','Gau', 'Mat'), locations = ~x+y)"
   )
 }
 
@@ -120,7 +120,6 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
   # check if a variogram model is passed
   if (!is.na(dots$psill)) {
-    browser()
     # build the samples variogram
     v = do.call(gstat::variogram, c(list(object = f, data = d), dots[ names(dots) %in% variogram.names] ))
     # fit the variogram model
