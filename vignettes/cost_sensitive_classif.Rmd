@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -106,7 +106,7 @@ costs
 We start by fitting a logistic regression model (`nnet::multinom()`) to the German Credit data set (`caret::GermanCredit()`) and predict posterior probabilities.
 
 ```{r}
-### Train and predict posterior probabilities
+# Train and predict posterior probabilities
 lrn = makeLearner("classif.multinom", predict.type = "prob", trace = FALSE)
 mod = train(lrn, credit.task)
 pred = predict(mod, task = credit.task)
@@ -126,7 +126,7 @@ Below the theoretical threshold for the German Credit data set (`caret::GermanCr
 Since the diagonal of the cost matrix is zero the formula given above simplifies accordingly.
 
 ```{r}
-### Calculate the theoretical threshold for the positive class
+# Calculate the theoretical threshold for the positive class
 th = costs[2,1]/(costs[2,1] + costs[1,2])
 th
 ```
@@ -136,7 +136,7 @@ As you may recall you can change thresholds in `mlr` either before training by u
 As we already have a prediction we use the `setThreshold()` function. It returns an altered `Prediction()` object with class predictions for the theoretical threshold.
 
 ```{r}
-### Predict class labels according to the theoretical threshold
+# Predict class labels according to the theoretical threshold
 pred.th = setThreshold(pred, th)
 pred.th
 ```
@@ -155,10 +155,10 @@ Then the average costs can be computed by function `performance()`.
 Below we compare the average costs and the error rate ([mmce](measures.html){target="_blank"}) of the learning algorithm with both default thresholds 0.5 and theoretical thresholds.
 
 ```{r}
-### Performance with default thresholds 0.5
+# Performance with default thresholds 0.5
 performance(pred, measures = list(credit.costs, mmce))
 
-### Performance with theoretical thresholds
+# Performance with theoretical thresholds
 performance(pred.th, measures = list(credit.costs, mmce))
 ```
 
@@ -167,7 +167,7 @@ In the **R** code below we make use of the `predict.threshold` argument of `make
 Note that we create a `ResampleInstance` (`makeResampleInstance()`) (`rin`) that is used throughout the next several code chunks to get comparable performance values.
 
 ```{r}
-### Cross-validated performance with theoretical thresholds
+# Cross-validated performance with theoretical thresholds
 rin = makeResampleInstance("CV", iters = 3, task = credit.task)
 lrn = makeLearner("classif.multinom", predict.type = "prob", predict.threshold = th, trace = FALSE)
 r = resample(lrn, credit.task, resampling = rin, measures = list(credit.costs, mmce), show.info = FALSE)
@@ -177,7 +177,7 @@ r
 If we are also interested in the cross-validated performance for the default threshold values we can call `setThreshold()` on the resample prediction (`ResamplePrediction()`) `r$pred`.
 
 ```{r}
-### Cross-validated performance with default thresholds
+# Cross-validated performance with default thresholds
 performance(setThreshold(r$pred, 0.5), measures = list(credit.costs, mmce))
 ```
 
@@ -209,11 +209,11 @@ Below we perform 3-fold cross-validation and use `tuneThreshold()` to calculate 
 ```{r}
 lrn = makeLearner("classif.multinom", predict.type = "prob", trace = FALSE)
 
-### 3-fold cross-validation
+# 3-fold cross-validation
 r = resample(lrn, credit.task, resampling = rin, measures = list(credit.costs, mmce), show.info = FALSE)
 r
 
-### Tune the threshold based on the predicted probabilities on the 3 test data sets
+# Tune the threshold based on the predicted probabilities on the 3 test data sets
 tune.res = tuneThreshold(pred = r$pred, measure = credit.costs)
 tune.res
 ```
@@ -229,10 +229,10 @@ To find out which learning methods support either type of weights have a look at
 list of [integrated learners](integrated_learners.html){target="_blank"} in the Appendix or use `listLearners()`.
 
 ```{r}
-### Learners that accept observation weights
+# Learners that accept observation weights
 listLearners("classif", properties = "weights")[c("class", "package")]
 
-### Learners that can deal with class weights
+# Learners that can deal with class weights
 listLearners("classif", properties = "class.weights")[c("class", "package")]
 ```
 
@@ -255,7 +255,7 @@ proportion of observations in the positive class has to be multiplied by $$\frac
 For the credit example (`caret:GermanCredit()`) the theoretical threshold corresponds to a weight of 5 for the positive class.
 
 ```{r}
-### Weight for positive class corresponding to theoretical treshold
+# Weight for positive class corresponding to theoretical treshold
 w = (1 - th)/th
 w
 ```
@@ -270,7 +270,7 @@ For binary classification problems it is sufficient to specify the weight `w` fo
 The negative class then automatically receives weight 1.
 
 ```{r}
-### Weighted learner
+# Weighted learner
 lrn = makeLearner("classif.multinom", trace = FALSE)
 lrn = makeWeightedClassesWrapper(lrn, wcw.weight = w)
 lrn
@@ -369,15 +369,15 @@ We consider the waveform `mlbench::mlbench.waveform()` data set from package `ml
 We start by creating the `Task()`, the cost matrix and the corresponding performance measure.
 
 ```{r}
-### Task
+# Task
 df = mlbench::mlbench.waveform(500)
 wf.task = makeClassifTask(id = "waveform", data = as.data.frame(df), target = "classes")
 
-### Cost matrix
+# Cost matrix
 costs = matrix(c(0, 5, 10, 30, 0, 8, 80, 4, 0), 3)
 colnames(costs) = rownames(costs) = getTaskClassLevels(wf.task)
 
-### Performance measure
+# Performance measure
 wf.costs = makeCostMeasure(id = "wf.costs", name = "Waveform costs", costs = costs,
   best = 0, worst = 10)
 ```
@@ -402,7 +402,7 @@ rin = makeResampleInstance("CV", iters = 3, task = wf.task)
 r = resample(lrn, wf.task, rin, measures = list(wf.costs, mmce), show.info = FALSE)
 r
 
-### Calculate thresholds as 1/(average costs of true classes)
+# Calculate thresholds as 1/(average costs of true classes)
 th = 2/rowSums(costs)
 names(th) = getTaskClassLevels(wf.task)
 th

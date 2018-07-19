@@ -15,7 +15,7 @@ urlMlrFunctions = "http://rpackages.ianhowson.com/cran/mlr/man/"
 ext = ".html"
 library("pander")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -26,7 +26,7 @@ For your convenience `mlr` provides pre-defined `Task()`s for each type of learn
 These are used throughout this tutorial in order to get shorter and more readable code.
 
 ```{r echo=FALSE, results="asis"}
-## urlMlrFunctions, ext are defined in build
+# urlMlrFunctions, ext are defined in build
 linkTask = function(x) {
   collapse(sprintf("[%1$s](%2$s%1$s%3$s)", x, urlMlrFunctions, ext), sep = "<br />")
 }

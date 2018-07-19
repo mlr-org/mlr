@@ -13,7 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -25,7 +25,7 @@ As mentioned on the [tuning](tune.html){target="_blank"} tutorial page, tuning a
 * the hyperparameter search space:
 
 ```{r search_space}
-### ex: create a search space for the C hyperparameter from 0.01 to 0.1
+# ex: create a search space for the C hyperparameter from 0.01 to 0.1
 ps = makeParamSet(
   makeNumericParam("C", lower = 0.01, upper = 0.1)
 )
@@ -34,14 +34,14 @@ ps = makeParamSet(
 * the optimization algorithm (aka tuning method):
 
 ```{r opt_algo}
-### ex: random search with 100 iterations
+# ex: random search with 100 iterations
 ctrl = makeTuneControlRandom(maxit = 100L)
 ```
 
 * an evaluation method, i.e., a resampling strategy and a performance measure:
 
 ```{r eval_method}
-### ex: 2-fold CV
+# ex: 2-fold CV
 rdesc = makeResampleDesc("CV", iters = 2L)
 ```
 
@@ -122,6 +122,7 @@ Since `plotHyperParsEffect()` returns a `ggplot2::ggplot()` object, we can easil
 
 ```{r cluster, eval = F}
 library("clusterSim")
+
 ps = makeParamSet(
   makeDiscreteParam("centers", values = 3:10)
 )
@@ -131,7 +132,8 @@ res = tuneParams("cluster.kmeans", task = mtcars.task, control = ctrl,
   measures = silhouette, resampling = rdesc, par.set = ps, show.info = FALSE)
 data = generateHyperParsEffectData(res)
 plt = plotHyperParsEffect(data, x = "centers", y = "silhouette.test.mean")
-### add our own touches to the plot
+
+# add our own touches to the plot
 plt + geom_point(colour = "red") +
   ggtitle("Evaluating Number of Cluster Centers on mtcars") +
   scale_x_continuous(breaks = 3:10) +
