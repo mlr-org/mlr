@@ -105,7 +105,7 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
-
+  browser()
   dots = list(...)
   # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
   variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for formula arguments

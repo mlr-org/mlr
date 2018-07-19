@@ -47,6 +47,6 @@ test_that("regr_gstat", {
     p = predict(m, newdata = meuse.test)
     old.predicts.list[[i]] = p[,3]
   }
-  testSimpleParsets(t.name = "regr.gstat", df = meuse, target = meuse.target,
+  testSimpleParsets(t.name = "regr.gstat", df = meuse.task$env$data, target = meuse.target,
     train.inds = meuse.train.inds, old.predicts.list = old.predicts.list, parset.list = parset.list)
 })

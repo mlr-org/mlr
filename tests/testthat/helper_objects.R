@@ -27,8 +27,8 @@ binaryclass.spatial.class.col = 3
 binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
 binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
 
-meuse.task = dropFeatures(meuse.task, "dist")
-meuse = meuse.task$env$data
+meuse.univar.task = mlr::dropFeatures(meuse.task, "dist")
+meuse = meuse.univar.task$env$data
 meuse.target = "zinc"
 meuse.train.inds = (1:(nrow(meuse)/2))
 meuse.train = meuse[meuse.train.inds, ]
