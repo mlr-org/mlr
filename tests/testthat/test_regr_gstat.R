@@ -28,7 +28,6 @@ test_that("regr_gstat", {
   # https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict
 
   for (i in 1:length(parset.list)) {
-    browser()
     parset = parset.list[[i]]
     pars = list(formula = meuse.formula, data = meuse.train)
     pars = c(pars, parset)
