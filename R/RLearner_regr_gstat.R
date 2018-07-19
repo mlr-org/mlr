@@ -114,16 +114,16 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
   f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
   # check if a variogram model is passed
-  if (!is.null(dots$model)) {
+  if (!is.na(dots$psill)) {
     # build the samples variogram
     v = do.call(gstat::variogram, c(list(object = f, data = d), dots[ names(dots) %in% variogram.names] ))
     # fit the variogram model
     fit = do.call(gstat::fit.variogram,
       c(list(object = v,
-        model = gstat::vgm(psill = dots$model$psill,
-          model = dots$model$model,
-          range = dots$model$range,
-          nugget = dots$model$nugget)),
+        model = gstat::vgm(psill = dots$psill,
+          model = dots$model,
+          range = dots$range,
+          nugget = dots$nugget)),
         dots[names(dots) %in% fit.variogram.names[fit.variogram.names != "model"]])
     )
     # create the gstat object with a model
