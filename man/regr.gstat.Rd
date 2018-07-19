@@ -14,7 +14,7 @@ The learner handles gstat variogram autofitting functionnality presented in this
 To use manual fitting, you must provide a list to the argument model that holds the following elements :
 psill, model, range and nugget.
 To use auto fitting, simply provide a list containting the types of models to be tested.
-Manual fitting example : lrn.man = makeLearner(cl = 'regr.gstat', id = 'manual', model = list(psill = 1, model = 'Sph', range = 900, nugget = 1), locations = ~x+y).\n
+Manual fitting example : lrn.man = makeLearner(cl = 'regr.gstat', id = 'manual', psill = 1, model = 'Sph', range = 900, nugget = 1, locations = ~x+y).\n
 }
 \references{
 Edzer J Pebesma
