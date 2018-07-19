@@ -9,7 +9,7 @@
 # https://stackoverflow.com/questions/7028385/can-i-remove-an-element-in-dot-dot-dot-and-pass-it-on
 
 context("regr_gstat")
-test_that("regr_gstat", { #regr_gstat
+test_that("regr_gstat", {
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
