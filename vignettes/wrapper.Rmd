@@ -14,7 +14,7 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -98,5 +98,7 @@ The base wrapper function calls the base learner `bw.iters` times and stores the
 
 ```{r}
 lrn = train(tuned.lrn, task = task)
+
 print(lrn)
 ```
+
