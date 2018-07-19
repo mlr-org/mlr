@@ -105,7 +105,7 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
-  browser()
+
   dots = list(...)
   # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
   variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for formula arguments
@@ -120,6 +120,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
   # check if a variogram model is passed
   if (!is.na(dots$psill)) {
+    browser()
     # build the samples variogram
     v = do.call(gstat::variogram, c(list(object = f, data = d), dots[ names(dots) %in% variogram.names] ))
     # fit the variogram model
@@ -141,11 +142,11 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
     )
   } else {
     # create the gstat object without model
-    browser()
     g = do.call(gstat::gstat,
       c(list(formula = f,
         data = d),
-        dots[names(dots) %in% gstat.names[gstat.names != "model"]])
+        dots[ names(dots)[names(dots) != "model"] %in% gstat.names ]
+      )
     )
   }
   return(g)
