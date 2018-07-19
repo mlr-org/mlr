@@ -66,7 +66,9 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
   dots = list(...)
-  variogram.names = names(formals(gstat::variogram))
+  # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
+  variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for formula arguments
+  variogram.names = c("object", "locations", "data")
   fit.variogram.names = names(formals(gstat::fit.variogram))
   gstat.names = names(formals(gstat::gstat))
 
@@ -79,14 +81,18 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   # check if a variogram model is passed
   if (!is.null(dots$model)) {
     # build the samples variogram
-    v = do.call(gstat::variogram, c(list(object = f, data = d), dots[names(dots) %in% variogram.names]))
+    v = do.call(gstat::variogram, c(list(object = f, data = d), dots[ names(dots) %in% variogram.names] ))
     ##v = gstat::variogram(object = f, data = d, ...)#...
     # fit the variogram model
     fit = do.call(gstat::fit.variogram,
       c(list(object = v,
-        model = gstat::vgm(psill = dot$model$psill, model = dots$model$model,
-      range = dots$model$range, nugget = dots$model$nugget)), dots[names(dots)[-"model"] %in% fit.variogram.names] )
+        model = gstat::vgm(psill = dots$model$psill,
+          model = dots$model$model,
+          range = dots$model$range,
+          nugget = dots$model$nugget)),
+        dots[names(dots) %in% fit.variogram.names[fit.variogram.names != "model"]])
     )
+    # dots[ names(dots)[names(dots) != "model"] %in% fit.variogram.names]
     ##fit = gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model, range = model$range, nugget = model$nugget))
     # create the gstat object
     g = do.call(gstat::gstat,
@@ -94,8 +100,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         data = d,
         model = fit
         ),
-        dots[ names(dots)[names(dots) != "model"] %in% gstat.names ]
-      )
+        dots[names(dots) %in% gstat.names[gstat.names != "model"]])
     )
     # g = gstat::gstat(
     #   formula = f,
@@ -110,7 +115,6 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         dots[ names(dots)[names(dots) != "model"] %in% gstat.names ]
       )
     )
-    gstat::gstat(formula = f, data = d,  dots[ names(dots)[names(dots) != "model"] %in% gstat.names ])
     # g = gstat::gstat(
     #   formula = f,
     #   data = d,
