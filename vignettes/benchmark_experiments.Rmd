@@ -14,7 +14,7 @@ library("ParamHelpers")
 library("ggplot2")
 set.seed(5)
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -41,13 +41,13 @@ It is also possible to directly pass a `makeResampleInstance()`.
 If you would like to use a *fixed test data set* instead of a randomly selected one, you can create a suitable `makeResampleInstance()` through function `makeFixedHoldoutInstance()`.
 
 ```{r}
-### Two learners to be compared
+# Two learners to be compared
 lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
 
-### Choose the resampling strategy
+# Choose the resampling strategy
 rdesc = makeResampleDesc("Holdout")
 
-### Conduct the benchmark experiment
+# Conduct the benchmark experiment
 bmr = benchmark(lrns, sonar.task, rdesc)
 
 bmr
@@ -57,10 +57,10 @@ For convenience, if you don't want to pass any additional arguments to `makeLear
 In the above example we could also have written:
 
 ```{r}
-### Vector of strings
+# Vector of strings
 lrns = c("classif.lda", "classif.rpart")
 
-### A mixed list of Learner objects and strings works, too
+# A mixed list of Learner objects and strings works, too
 lrns = list(makeLearner("classif.lda", predict.type = "prob"), "classif.rpart")
 
 bmr = benchmark(lrns, sonar.task, rdesc)
@@ -190,15 +190,15 @@ For example in the benchmark experiment above we applied `MASS::lda()` and `rpar
 We now perform a second experiment using a `randomForest::randomForest()` and quadratic discriminant analysis `MASS::qda()` and merge the results.
 
 ```{r}
-### First benchmark result
+# First benchmark result
 bmr
 
-### Benchmark experiment for the additional learners
+# Benchmark experiment for the additional learners
 lrns2 = list(makeLearner("classif.randomForest"), makeLearner("classif.qda"))
 bmr2 = benchmark(lrns2, sonar.task, rdesc, show.info = FALSE)
 bmr2
 
-### Merge the results
+# Merge the results
 mergeBenchmarkResults(list(bmr, bmr2))
 ```
 
@@ -216,11 +216,11 @@ Alternatively, if you used a resample description in the first benchmark experim
 rin = getBMRPredictions(bmr)[[1]][[1]]$instance
 rin
 
-### Benchmark experiment for the additional random forest
+# Benchmark experiment for the additional random forest
 bmr3 = benchmark(lrns2, sonar.task, rin, show.info = FALSE)
 bmr3
 
-### Merge the results
+# Merge the results
 mergeBenchmarkResults(list(bmr, bmr3))
 ```
 
@@ -253,14 +253,14 @@ set.seed(4444)
 ```
 
 ```{r, message = FALSE}
-### Create a list of learners
+# Create a list of learners
 lrns = list(
   makeLearner("classif.lda", id = "lda"),
   makeLearner("classif.rpart", id = "rpart"),
   makeLearner("classif.randomForest", id = "randomForest")
 )
 
-### Get additional Tasks from package mlbench
+# Get additional Tasks from package mlbench
 ring.task = convertMLBenchObjToTask("mlbench.ringnorm", n = 600)
 wave.task = convertMLBenchObjToTask("mlbench.waveform", n = 600)
 
@@ -437,11 +437,12 @@ Function `generateCritDifferencesData()` does all necessary calculations while f
 See the tutorial page about [visualization](visualization.html){target="_blank"} for details on data generation and plotting functions.
 
 ```{r, fig.asp = 0.5}
-### Nemenyi test
+# Nemenyi test
 g = generateCritDifferencesData(bmr, p.value = 0.1, test = "nemenyi")
 plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
   scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
-### Bonferroni-Dunn test
+
+# Bonferroni-Dunn test
 g = generateCritDifferencesData(bmr, p.value = 0.1, test = "bd", baseline = "randomForest")
 plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
     scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
@@ -457,7 +458,7 @@ Instead of boxplots (as in `plotBMRBoxplots()`) we could create density plots to
 ```{r, fig.asp = 0.5}
 perf = getBMRPerformances(bmr, as.df = TRUE)
 
-### Density plots for two tasks
+# Density plots for two tasks
 qplot(mmce, colour = learner.id, facets = . ~ task.id,
   data = perf[perf$task.id %in% c("iris-example", "Sonar-example"),], geom = "density") +
   theme(strip.text.x = element_text(size = 8))
@@ -467,7 +468,7 @@ In order to plot multiple performance measures in parallel, `perf` is reshaped t
 Below we generate grouped boxplots showing the error rate and the training time [timetrain](measures.html){target="_blank"}.
 
 ```{r, fig.asp = 2/3}
-### Compare mmce and timetrain
+# Compare mmce and timetrain
 df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
 df = df[df$variable != "ber",]
 head(df)

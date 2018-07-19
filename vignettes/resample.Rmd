@@ -11,11 +11,11 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
-## Not strictly necessary, but otherwise we might get NAs later on
-### if 'rpart' is not installed.
+# Not strictly necessary, but otherwise we might get NAs later on
+# if 'rpart' is not installed.
 library("rpart")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -55,7 +55,7 @@ The supported resampling strategies are:
 For example if you want to use 3-fold cross-validation type:
 
 ```{r}
-### 3-fold cross-validation
+# 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3)
 rdesc
 ```
@@ -63,7 +63,7 @@ rdesc
 For holdout estimation use:
 
 ```{r}
-### Holdout estimation
+# Holdout estimation
 rdesc = makeResampleDesc("Holdout")
 rdesc
 ```
@@ -89,10 +89,10 @@ As usual, you can either pass a Learner (`makeLearner()`) object to `resample()`
 Since no performance measure is specified the default for regression learners (mean squared error, [mse](measures.html){target="_blank"}) is calculated.
 
 ```{r}
-### Specify the resampling strategy (3-fold cross-validation)
+# Specify the resampling strategy (3-fold cross-validation)
 rdesc = makeResampleDesc("CV", iters = 3)
 
-### Calculate the performance
+# Calculate the performance
 r = resample("regr.lm", bh.task, rdesc)
 
 r
@@ -102,7 +102,7 @@ The result `r` is an object of class `resample()` result.
 It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.
 
 ```{r}
-### Peak into r
+# Peak into r
 names(r)
 
 r$aggr
@@ -125,16 +125,16 @@ You can calculate several measures at once by passing a `list` of Measures (`mak
 Below, the error rate ([mmce](measures.html){target="_blank"}), false positive and false negative rates ([fpr](measures.html){target="_blank"}, [fnr](measures.html){target="_blank"}), and the time it takes to train the learner ([timetrain](measures.html){target="_blank"}) are estimated by *subsampling* with 5 iterations.
 
 ```{r}
-### Subsampling with 5 iterations and default split ratio 2/3
+# Subsampling with 5 iterations and default split ratio 2/3
 rdesc = makeResampleDesc("Subsample", iters = 5)
 
-### Subsampling with 5 iterations and 4/5 training data
+# Subsampling with 5 iterations and 4/5 training data
 rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
 
-### Classification tree with information splitting criterion
+# Classification tree with information splitting criterion
 lrn = makeLearner("classif.rpart", parms = list(split = "information"))
 
-### Calculate the performance measures
+# Calculate the performance measures
 r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
 
 r
@@ -143,7 +143,7 @@ r
 If you want to add further measures afterwards, use `addRRMeasure()`.
 
 ```{r}
-### Add balanced error rate (ber) and time used to predict
+# Add balanced error rate (ber) and time used to predict
 addRRMeasure(r, list(ber, timepredict))
 ```
 
@@ -200,7 +200,7 @@ In any case, this is necessary for some bootstrap methods (*b632* and *b632+*) a
 Below, we use simple Holdout, i.e., split the data once into a training and test set, as resampling strategy and make predictions on both sets.
 
 ```{r}
-### Make predictions on both training and test sets
+# Make predictions on both training and test sets
 rdesc = makeResampleDesc("Holdout", predict = "both")
 
 r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
@@ -226,7 +226,7 @@ By default, the resulting `WrappedModel` (`makeWrappedModel()`)s are not include
 In order to keep them, set `models = TRUE` when calling `resample()`, as in the following survival analysis example.
 
 ```{r}
-### 3-fold cross-validation
+# 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3)
 
 r = resample("surv.coxph", lung.task, rdesc, show.info = FALSE, models = TRUE)
@@ -243,10 +243,10 @@ To this end you need to pass a function to `extract` which is applied to each `W
 Below, we cluster the `datasets::mtcars()` data using the $k$-means algorithm with $k = 3$ and keep only the cluster centers.
 
 ```{r}
-### 3-fold cross-validation
+# 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3)
 
-### Extract the compute cluster centers
+# Extract the compute cluster centers
 r = resample("cluster.kmeans", mtcars.task, rdesc, show.info = FALSE,
   centers = 3, extract = function(x) getLearnerModel(x)$centers)
 r$extract
@@ -256,7 +256,7 @@ As a second example, we extract the variable importances from fitted regression 
 (For more detailed information on this topic see the [feature selection](feature_selection.html){target="_blank"} page.)
 
 ```{r}
-### Extract the variable importance in a regression tree
+# Extract the variable importance in a regression tree
 r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE, extract = getFeatureImportance)
 r$extract
 ```
@@ -286,7 +286,7 @@ sets which can decrease the performance of the learner, or lead to model crashes
 In order to conduct stratified resampling, set ``stratify = TRUE`` in `makeResampleDesc()`.
 
 ```{r}
-### 3-fold cross-validation
+# 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
 
 r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
@@ -313,7 +313,7 @@ r
 If some observations "belong together" and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a `blocking` `factor` when creating the [task](task.html){target="_blank"}.
 
 ```{r}
-### 5 blocks containing 30 observations each
+# 5 blocks containing 30 observations each
 task = makeClassifTask(data = iris, target = "Species", blocking = factor(rep(1:5, each = 30)))
 task
 ```
@@ -336,17 +336,17 @@ The result `rdesc` inherits from class `ResampleDesc` (`makeResampleDesc()`) (sh
 Given either the size of the data set at hand or the `Task()`, function `makeResampleInstance()` draws the training and test sets according to the `ResampleDesc` (`makeResampleDesc()`).
 
 ```{r}
-### Create a resample instance based an a task
+# Create a resample instance based an a task
 rin = makeResampleInstance(rdesc, iris.task)
 rin
 
 str(rin)
 
-### Create a resample instance given the size of the data set
+# Create a resample instance given the size of the data set
 rin = makeResampleInstance(rdesc, size = nrow(iris))
 str(rin)
 
-### Access the indices of the training observations in iteration 3
+# Access the indices of the training observations in iteration 3
 rin$train.inds[[3]]
 ```
 
@@ -365,7 +365,7 @@ Moreover, you can store the resample instance along with your data in order to b
 rdesc = makeResampleDesc("CV", iters = 3)
 rin = makeResampleInstance(rdesc, task = iris.task)
 
-### Calculate the performance of two learners based on the same resample instance
+# Calculate the performance of two learners based on the same resample instance
 r.lda = resample("classif.lda", iris.task, rin, show.info = FALSE)
 r.rpart = resample("classif.rpart", iris.task, rin, show.info = FALSE)
 r.lda$aggr
@@ -395,12 +395,12 @@ The default aggregation for most measures is `test.mean`(`aggregations()`).
 One exception is the root mean square error ([rmse](measures.html){target="_blank"}).
 
 ```{r}
-### Mean misclassification error
+# Mean misclassification error
 mmce$aggr
 
 mmce$aggr$fun
 
-### Root mean square error
+# Root mean square error
 rmse$aggr
 
 rmse$aggr$fun
@@ -460,10 +460,10 @@ $D$, i.e., $D \setminus D^{*b}$, form the test set.
 The *b632* and *b632+* variants calculate a convex combination of the training performance and the out-of-bag bootstrap performance and thus require predictions on the training sets and an appropriate aggregation strategy.
 
 ```{r}
-### Use bootstrap as resampling strategy and predict on both train and test sets
+# Use bootstrap as resampling strategy and predict on both train and test sets
 rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = 10)
 
-### Set aggregation schemes for b632 and b632+ bootstrap
+# Set aggregation schemes for b632 and b632+ bootstrap
 mmceB632 = setAggregation(mmce, b632)
 mmceB632plus = setAggregation(mmce, b632plus)
 
@@ -473,7 +473,7 @@ r = resample("classif.rpart", iris.task, rdesc, measures = list(mmce, mmceB632, 
   show.info = FALSE)
 head(r$measures.train)
 
-### Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap
+# Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap
 r$aggr
 ```
 
@@ -489,3 +489,4 @@ crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
 
 bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
 ```
+

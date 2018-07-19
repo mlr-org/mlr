@@ -14,8 +14,10 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
-```
 
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
 This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
 
@@ -55,22 +57,23 @@ We demonstrate how to simply perform a classification analysis using a stratifie
 library(mlr)
 data(iris)
 
-## Define the task:
+# Define the task:
 task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
 print(task)
 
-## Define the learner:
+# Define the learner:
 lrn = makeLearner("classif.lda")
 print(lrn)
 
-## Define the resampling strategy:
+# Define the resampling strategy:
 rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
 
-## Do the resampling:
+# Do the resampling:
 r = resample(learner = lrn, task = task, resampling = rdesc)
+
 print(r)
 
-## Get the mean misclassification error:
+# Get the mean misclassification error:
 r$aggr
 ```
 

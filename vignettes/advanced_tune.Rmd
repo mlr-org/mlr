@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -25,6 +25,8 @@ One of the cooler algorithms is iterated F-racing from the `irace::irace()` pack
 This not only works for arbitrary parameter types (numeric, integer, discrete, logical), but also for so-called dependent / hierarchical parameters:
 
 ```{r}
+set.seed(555666)
+
 ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeDiscreteParam("kernel", values = c("vanilladot", "polydot", "rbfdot")),
@@ -35,7 +37,8 @@ ps = makeParamSet(
 )
 ctrl = makeTuneControlIrace(maxExperiments = 200L)
 rdesc = makeResampleDesc("Holdout")
-res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE)
+res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl,
+  show.info = FALSE)
 print(head(as.data.frame(res$opt.path)))
 ```
 
@@ -60,6 +63,8 @@ Function `makeModelMultiplexerParamSet()` offers a simple way to construct a par
 The parameter names are prefixed automatically and the `requires` element is set, too, to make all parameters subordinate to `selected.learner`.
 
 ```{r}
+set.seed(555666)
+
 ps = makeModelMultiplexerParamSet(lrn,
   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeIntegerParam("ntree", lower = 1L, upper = 500L)
@@ -68,8 +73,8 @@ print(ps)
 
 rdesc = makeResampleDesc("CV", iters = 2L)
 ctrl = makeTuneControlIrace(maxExperiments = 200L)
-res = tuneParams(lrn, iris.task, rdesc, par.set = ps, 
-  control = ctrl, show.info = FALSE)
+res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl,
+  show.info = FALSE)
 print(head(as.data.frame(res$opt.path)))
 ```
 
@@ -84,6 +89,8 @@ As search strategy we choose a random search.
 For all available multi-criteria tuning algorithms see `TuneMultiCritControl()`.
 
 ```{r}
+set.seed(555666)
+
 ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)

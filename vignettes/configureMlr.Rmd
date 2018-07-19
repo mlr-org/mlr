@@ -88,19 +88,19 @@ But until the problem is fixed you can turn off `mlr`'s parameter checking.
 The parameter setting will then be passed to the underlying function without further ado.
 
 ```{r error=TRUE}
-### Support Vector Machine with linear kernel and new parameter 'newParam'
+# Support Vector Machine with linear kernel and new parameter 'newParam'
 lrn = makeLearner("classif.ksvm", kernel = "vanilladot", newParam = 3)
 
-### Turn off parameter checking completely
+# Turn off parameter checking completely
 configureMlr(on.par.without.desc = "quiet")
 lrn = makeLearner("classif.ksvm", kernel = "vanilladot", newParam = 3)
 train(lrn, iris.task)
 
-### Option "quiet" also masks typos
+# Option "quiet" also masks typos
 lrn = makeLearner("classif.ksvm", kernl = "vanilladot")
 train(lrn, iris.task)
 
-### Alternatively turn off parameter checking, but still see warnings
+# Alternatively turn off parameter checking, but still see warnings
 configureMlr(on.par.without.desc = "warn")
 lrn = makeLearner("classif.ksvm", kernl = "vanilladot", newParam = 3)
 
@@ -115,22 +115,22 @@ However, in some situations, for example if you conduct a larger [bechmark exper
 You can prevent this using the `on.learner.error` option of `configureMlr()`.
 
 ```{r error=TRUE}
-### This call gives an error caused by the low number of observations in class "virginica"
+# This call gives an error caused by the low number of observations in class "virginica"
 train("classif.qda", task = iris.task, subset = 1:104)
 
-### Get a warning instead of an error
+# Get a warning instead of an error
 configureMlr(on.learner.error = "warn")
 mod = train("classif.qda", task = iris.task, subset = 1:104)
 
 mod
 
-### mod is an object of class FailureModel
+# mod is an object of class FailureModel
 isFailureModel(mod)
 
-### Retrieve the error message
+# Retrieve the error message
 getFailureModelMsg(mod)
 
-### predict and performance return NA's
+# predict and performance return NA's
 pred = predict(mod, iris.task)
 pred
 

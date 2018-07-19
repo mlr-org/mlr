@@ -15,7 +15,7 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -138,10 +138,10 @@ Below, we generate a *precision/recall graph* (precision = positive predictive v
 ```{r, fig.show = "hold", out.width = '50%'}
 df = generateThreshVsPerfData(list(lda = pred1, ksvm = pred2), measures = list(ppv, tpr, tnr))
 
-### Precision/recall graph
+# Precision/recall graph
 plotROCCurves(df, measures = list(tpr, ppv), diagonal = FALSE)
 
-### Sensitivity/specificity plot
+# Sensitivity/specificity plot
 plotROCCurves(df, measures = list(tnr, tpr), diagonal = FALSE)
 ```
 
@@ -158,7 +158,7 @@ We assume that we are interested in a good performance over the complete thresho
 The error rate ([mmce](measures.html){target="_blank"}) for a threshold value of 0.5 is reported as well.
 
 ```{r}
-### Tune wrapper for ksvm
+# Tune wrapper for ksvm
 rdesc.inner = makeResampleDesc("Holdout")
 ms = list(auc, mmce)
 ps = makeParamSet(
@@ -172,7 +172,7 @@ Below the actual benchmark experiment is conducted.
 As resampling strategy we use 5-fold cross-validation and again calculate the [auc](measures.html){target="_blank"} as well as the error rate (for a threshold/cutoff value of 0.5).
 
 ```{r}
-### Benchmark experiment
+# Benchmark experiment
 lrns = list(lrn1, lrn2)
 rdesc.outer = makeResampleDesc("CV", iters = 5)
 
@@ -212,13 +212,13 @@ Below, the predictions are extracted from the `BenchmarkResult()` via function `
 Averaging methods are normally preferred (cp. [Fawcett, 2006](https://ccrma.stanford.edu/workshops/mir2009/references/ROCintro.pdf)), as they permit to assess the variability, which is needed to properly compare classifier performance.
 
 ```{r, fig.asp = 7/10}
-### Extract predictions
+# Extract predictions
 preds = getBMRPredictions(bmr, drop = TRUE)
 
-### Change the class attribute
+# Change the class attribute
 preds2 = lapply(preds, function(x) {class(x) = "Prediction"; return(x)})
 
-### Draw ROC curves
+# Draw ROC curves
 df = generateThreshVsPerfData(preds2, measures = list(fpr, tpr, mmce))
 plotROCCurves(df)
 ```
@@ -246,7 +246,7 @@ n = getTaskSize(sonar.task)
 train.set = sample(n, size = round(2/3 * n))
 test.set = setdiff(seq_len(n), train.set)
 
-### Train and predict linear discriminant analysis
+# Train and predict linear discriminant analysis
 lrn1 = makeLearner("classif.lda", predict.type = "prob")
 mod1 = train(lrn1, sonar.task, subset = train.set)
 pred1 = predict(mod1, task = sonar.task, subset = test.set)
@@ -255,13 +255,13 @@ pred1 = predict(mod1, task = sonar.task, subset = test.set)
 Below we use `asROCRPrediction()` to convert the lda prediction, let `ROCR` calculate the true and false positive rate and plot the ROC curve.
 
 ```{r, out.width = '75%'}
-### Convert prediction
+# Convert prediction
 ROCRpred1 = asROCRPrediction(pred1)
 
-### Calculate true and false positive rate
+# Calculate true and false positive rate
 ROCRperf1 = ROCR::performance(ROCRpred1, "tpr", "fpr")
 
-### Draw ROC curve
+# Draw ROC curve
 ROCR::plot(ROCRperf1)
 ```
 
@@ -270,10 +270,10 @@ The ROC curve is color-coded by the threshold and selected threshold values are 
 Additionally, the convex hull (black broken line) of the ROC curve is drawn.
 
 ```{r, out.width = '75%'}
-### Draw ROC curve
+# Draw ROC curve
 ROCR::plot(ROCRperf1, colorize = TRUE, print.cutoffs.at = seq(0.1, 0.9, 0.1), lwd = 2)
 
-### Draw convex hull of ROC curve
+# Draw convex hull of ROC curve
 ch = ROCR::performance(ROCRpred1, "rch")
 ROCR::plot(ch, add = TRUE, lty = 2)
 ```
@@ -284,13 +284,13 @@ We again consider the benchmark experiment conducted earlier.
 We first extract the predictions by `getBMRPredictions()` and then convert them via function `asROCRPrediction()`.
 
 ```{r}
-### Extract predictions
+# Extract predictions
 preds = getBMRPredictions(bmr, drop = TRUE)
 
-### Convert predictions
+# Convert predictions
 ROCRpreds = lapply(preds, asROCRPrediction)
 
-### Calculate true and false positive rate
+# Calculate true and false positive rate
 ROCRperfs = lapply(ROCRpreds, function(x) ROCR::performance(x, "tpr", "fpr"))
 ```
 
@@ -299,16 +299,16 @@ Moreover, standard error bars are plotted for selected true positive rates (0.1,
 See `ROCR`'s plot (`ROCR::plot-methods()`) function for details.
 
 ```{r, out.width = '75%'}
-### lda average ROC curve
+# lda average ROC curve
 plot(ROCRperfs[[1]], col = "blue", avg = "vertical", spread.estimate = "stderror",
   show.spread.at = seq(0.1, 0.8, 0.1), plotCI.col = "blue", plotCI.lwd = 2, lwd = 2)
-### lda individual ROC curves
+# lda individual ROC curves
 plot(ROCRperfs[[1]], col = "blue", lty = 2, lwd = 0.25, add = TRUE)
 
-### ksvm average ROC curve
+# ksvm average ROC curve
 plot(ROCRperfs[[2]], col = "red", avg = "vertical", spread.estimate = "stderror",
   show.spread.at = seq(0.1, 0.6, 0.1), plotCI.col = "red", plotCI.lwd = 2, lwd = 2, add = TRUE)
-### ksvm individual ROC curves
+# ksvm individual ROC curves
 plot(ROCRperfs[[2]], col = "red", lty = 2, lwd = 0.25, add = TRUE)
 
 legend("bottomright", legend = getBMRLearnerIds(bmr), lty = 1, lwd = 2, col = c("blue", "red"))
@@ -318,14 +318,14 @@ In order to create other evaluation plots like *precision/recall graphs* you jus
 (Note that you have to use the measures provided by `ROCR` listed in `ROCR::performance()` and not `mlr`'s performance measures.)
 
 ```{r, out.width = '75%'}
-### Extract and convert predictions
+# Extract and convert predictions
 preds = getBMRPredictions(bmr, drop = TRUE)
 ROCRpreds = lapply(preds, asROCRPrediction)
 
-### Calculate precision and recall
+# Calculate precision and recall
 ROCRperfs = lapply(ROCRpreds, function(x) ROCR::performance(x, "prec", "rec"))
 
-### Draw performance plot
+# Draw performance plot
 plot(ROCRperfs[[1]], col = "blue", avg = "threshold")
 plot(ROCRperfs[[2]], col = "red", avg = "threshold", add = TRUE)
 legend("bottomleft", legend = getBMRLearnerIds(bmr), lty = 1, col = c("blue", "red"))
@@ -336,14 +336,14 @@ Below the average accuracy over the 5 cross-validation iterations is plotted aga
 Moreover, boxplots for certain threshold values (0.1, 0.2, ..., 0.9) are drawn.
 
 ```{r, out.width = '75%'}
-### Extract and convert predictions
+# Extract and convert predictions
 preds = getBMRPredictions(bmr, drop = TRUE)
 ROCRpreds = lapply(preds, asROCRPrediction)
 
-### Calculate accuracy
+# Calculate accuracy
 ROCRperfs = lapply(ROCRpreds, function(x) ROCR::performance(x, "acc"))
 
-### Plot accuracy versus threshold
+# Plot accuracy versus threshold
 plot(ROCRperfs[[1]], avg = "vertical", spread.estimate = "boxplot", lwd = 2, col = "blue",
   show.spread.at = seq(0.1, 0.9, 0.1), ylim = c(0,1), xlab = "Threshold")
 ```
