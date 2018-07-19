@@ -12,6 +12,7 @@ library("mlr")
 library("sp")
 library("gstat")
 library("ParamHelpers")
+library("dplyr")
 
 ## show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
@@ -201,7 +202,7 @@ meuse <- meuse %>% dplyr::mutate(log_zinc = log(zinc))
 task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
 task.krg <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
 # defining the learner
-lrn.krg = makeLearner(cl = "regr.gstat", id= "ln(zn) mlr ordinary kriging", predict.type = "response", model = list(psill=1, model="Sph", range=900, nugget=1), locations = ~x+y)
+lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr ordinary kriging", predict.type = "response", psill = 1, model = "Sph", range = 900, nugget = 1, locations = ~x+y)
 # training the model
 mod.krg = train(lrn.krg, task.krg)
 # kriging
@@ -258,7 +259,7 @@ lzn.kriged = krige(log(zinc)~sqrt(dist), meuse, meuse.grid, model = lzn.fit)
 lzn.kriged.plot <- spplot(lzn.kriged["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) kriging with external drift")
 lzn.kriged.plot
 # mapping the se
-se.lzn.kriged.plot <- spplot(lzn.kriged["var1.var"], do.log = F, colorkey = TRUE, main ="var log(zn) kriging with external drift")
+se.lzn.kriged.plot <- spplot(lzn.kriged["var1.var"], do.log = F, colorkey = TRUE, main = "var log(zn) kriging with external drift")
 se.lzn.kriged.plot
 ```
 
@@ -281,7 +282,7 @@ meuse.grid <- meuse.grid %>% dplyr::mutate(sqrt_dist = sqrt(dist))
 task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
 task.krg <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2,15)])
 # defining the learner
-lrn.krg = makeLearner(cl = "regr.gstat", id= "ln(zn) mlr kriging with external drift", predict.type = "response", model = list(psill=1, model="Exp", range=300, nugget=1), locations = ~x+y) 
+lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr kriging with external drift", predict.type = "response",  psill = 1, model = "Exp", range = 300, nugget = 1, locations = ~x+y) 
 # training the model
 mod.krg = train(lrn.krg, task.krg)
 # kriging
@@ -334,7 +335,7 @@ meuse.grid <- meuse.grid %>% dplyr::mutate(sqrt_dist = sqrt(dist))
 task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
 task.krg <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2,15)])
 # defining the learner
-lrn.krg = makeLearner(cl = "regr.gstat", id= "ln(zn) mlr kriging with external drift", predict.type = "response", model = list(psill=1, model="Exp", range=300, nugget=1), locations = ~x+y) 
+lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr kriging with external drift", predict.type = "response", psill = 1, model = "Exp", range = 300, nugget = 1, locations = ~x+y) 
 # training the model
 mod.krg = train(lrn.krg, task.krg)
 # kriging
