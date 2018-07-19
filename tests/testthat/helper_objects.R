@@ -27,13 +27,14 @@ binaryclass.spatial.class.col = 3
 binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
 binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
 
+meuse.task = dropFeatures(meuse.task, "dist")
 meuse = meuse.task$env$data
-meuse.target = "cadmium"
+meuse.target = "zinc"
 meuse.train.inds = (1:(nrow(meuse)/2))
 meuse.train = meuse[meuse.train.inds, ]
 meuse.test.inds = (length(meuse.train.inds) + 1):nrow(meuse)
 meuse.test = meuse[meuse.test.inds, ]
-meuse.formula = cadmium~1
+meuse.formula = zinc~1
 
 multiclass.df = iris
 multiclass.formula = Species~.
