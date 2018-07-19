@@ -14,10 +14,7 @@ library("ParamHelpers")
 library("ggplot2")
 
 # show grouped code output instead of single lines
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 In some cases, you might want to evaluate a `Prediction()` or `ResamplePrediction()` with a `Measure` (`makeMeasure()`) which is not yet implemented in `mlr`. 
