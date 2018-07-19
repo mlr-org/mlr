@@ -18,9 +18,9 @@ test_that("regr_gstat", {
     list(id = "trend_surfaces_degree_2", degree = 2),
     list(id = "trend_surfaces_degree_3", degree = 3),
     list(id = "ordinary_kriging_manual",
-      model = list(psill = 1, model = "Sph", range = 900, nugget = 1)),
+      psill = 1, model = "Sph", range = 900, nugget = 2),
     list(id = "ordinary_kriging_auto",
-      list(psill = c('Sph','Exp','Gau', 'Mat')))
+      psill = c('Sph','Exp','Gau', 'Mat'))
   )
 
   old.predicts.list = list()
@@ -34,12 +34,12 @@ test_that("regr_gstat", {
     pars$locations = ~x+y
     set.seed(getOption("mlr.debug.seed"))
 
-    if (!is.null(pars$model)) {
+    if (!is.null(pars$psill)) {
       # build the samples variogram
       v = gstat::variogram(object = pars$formula, locations = pars$locations, data = pars$data)
       # fit the variogram model
-      fit = gstat::fit.variogram(object = v, gstat::vgm(psill = pars$model$psill, model = pars$model$model,
-        range = pars$model$range, nugget = pars$model$nugget))
+      fit = gstat::fit.variogram(object = v, gstat::vgm(psill = pars$psill, model = pars$model,
+        range = pars$range, nugget = pars$nugget))
       pars = list(formula = pars$formula, data = pars$data, locations = pars$locations, model = fit)
     }
     m = do.call(gstat::gstat, pars)

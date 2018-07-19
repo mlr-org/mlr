@@ -84,8 +84,13 @@ makeRLearner.regr.gstat = function() {
       makeUntypedLearnerParam(id = "covtable"),
       makeNumericLearnerParam(id = "Err", default = 0)
     ),
-    par.vals = list(locations = ~x+y, model = NULL, nmax = 0, nmin = 0, omax = 0, maxdist = Inf, force = FALSE,
-      dummy = FALSE, fill.all = FALSE, fill.cross = TRUE, variance = "identity", degree = 0, vdist = FALSE),
+    par.vals = list(locations = ~x+y, nmax = 0, nmin = 0, omax = 0, maxdist = Inf,
+      dummy = FALSE, fill.all = FALSE, fill.cross = TRUE, variance = "identity", degree = 0, vdist = FALSE,
+      alpha = 0, beta.variogram = 0, cressie = FALSE, dX = 0, boundaries = 0, cloud = FALSE,
+      trend.beta = NULL, debug.level = 1, cross = TRUE, map = FALSE, projected = TRUE, lambda = 1.0,
+      verbose = FALSE, covariogram = FALSE, PR = FALSE, pseudo = -1,
+      fit.sills = TRUE, fit.ranges = TRUE, fit.method = 7, warn.if.neg = FALSE, fit.kappa = FALSE,
+      psill = NA, range = NA, kappa = 0.5, Err = 0),
     properties = c("numerics", "factors" , "se", "weights", "missings"),
     name = "Multivariable Geostatistical Prediction And Simulation",
     short.name = "gstat",
@@ -100,14 +105,14 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   dots = list(...)
   # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
   variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for formula arguments
-  variogram.names = c("object", "locations", "data")
+  variogram.names = c("object", "locations", "beta.variogram")
+  #variogram.names = replace(names(formals(gstat::variogram)), variogram.names == "beta", "beta.variogram")
   fit.variogram.names = names(formals(gstat::fit.variogram))
-  gstat.names = replace(names(formals(gstat::gstat)), gstat.names == "beta", "beta.gstat")
-
-  #browser()
+  gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
 
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task, explicit.features = TRUE)
@@ -115,6 +120,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
   # check if a variogram model is passed
   if (!is.na(dots$psill)) {
+    browser()
     # build the samples variogram
     v = do.call(gstat::variogram, c(list(object = f, data = d), dots[ names(dots) %in% variogram.names] ))
     # fit the variogram model
