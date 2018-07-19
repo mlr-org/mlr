@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -87,7 +87,7 @@ For interval censored data the two target columns must be specified in the ``"in
 
 ```{r}
 data(lung, package = "survival")
-lung$status = (lung$status == 2) ## convert to logical
+lung$status = (lung$status == 2) # convert to logical
 surv.task = makeSurvTask(data = lung, target = c("time", "status"))
 surv.task
 ```
@@ -180,38 +180,38 @@ Note that `TaskDesc()` have slightly different elements for different types of `
 Frequently required elements can also be accessed directly.
 
 ```{r}
-### Get the ID
+# Get the ID
 getTaskId(classif.task)
 
-### Get the type of task
+# Get the type of task
 getTaskType(classif.task)
 
-### Get the names of the target columns
+# Get the names of the target columns
 getTaskTargetNames(classif.task)
 
-### Get the number of observations
+# Get the number of observations
 getTaskSize(classif.task)
 
-### Get the number of input variables
+# Get the number of input variables
 getTaskNFeats(classif.task)
 
-### Get the class levels in classif.task
+# Get the class levels in classif.task
 getTaskClassLevels(classif.task)
 ```
 
 Moreover, `mlr` provides several functions to extract data from a `Task()`.
 
 ```{r}
-### Accessing the data set in classif.task
+# Accessing the data set in classif.task
 str(getTaskData(classif.task))
 
-### Get the names of the input variables in cluster.task
+# Get the names of the input variables in cluster.task
 getTaskFeatureNames(cluster.task)
 
-### Get the values of the target variables in surv.task
+# Get the values of the target variables in surv.task
 head(getTaskTargets(surv.task))
 
-### Get the cost matrix in costsens.task
+# Get the cost matrix in costsens.task
 head(getTaskCosts(costsens.task))
 ```
 
@@ -225,17 +225,17 @@ In this regard function `getTaskFormula()` is also useful.
 Here are some examples.
 
 ```{r}
-### Select observations and/or features
+# Select observations and/or features
 cluster.task = subsetTask(cluster.task, subset = 4:17)
 
-### It may happen, especially after selecting observations, that features are constant.
-### These should be removed.
+# It may happen, especially after selecting observations, that features are constant.
+# These should be removed.
 removeConstantFeatures(cluster.task)
 
-### Remove selected features
+# Remove selected features
 dropFeatures(surv.task, c("meal.cal", "wt.loss"))
 
-### Standardize numerical features
+# Standardize numerical features
 task = normalizeFeatures(cluster.task, method = "range")
 summary(getTaskData(task))
 ```
@@ -249,3 +249,4 @@ These are also used throughout this tutorial in order to get shorter and more re
 A list of all `Task()`s can be found in the [Appendix](example_tasks.html){target="_blank"}.
 
 Moreover, `mlr`'s function `convertMLBenchObjToTask()` can generate `Task()`s from the data sets and data generating functions in package `mlbench::mlbench()`.
+

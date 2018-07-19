@@ -13,7 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -92,13 +92,13 @@ Then the `Measure` (`makeMeasure()`) object is created and we work with it as us
 See the **R** documentation of `makeMeasure()` for more details on the various parameters.
 
 ```{r}
-### Define a function that calculates the misclassification rate
+# Define a function that calculates the misclassification rate
 my.mmce.fun = function(task, model, pred, feats, extra.args) {
   tb = table(getPredictionResponse(pred), getPredictionTruth(pred))
   1 - sum(diag(tb)) / sum(tb)
 }
 
-### Generate the Measure object
+# Generate the Measure object
 my.mmce = makeMeasure(
   id = "my.mmce", name = "My Mean Misclassification Error",
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
@@ -106,14 +106,14 @@ my.mmce = makeMeasure(
   fun = my.mmce.fun
 )
 
-### Train a learner and make predictions
+# Train a learner and make predictions
 mod = train("classif.lda", iris.task)
 pred = predict(mod, task = iris.task)
 
-### Calculate the performance using the new measure
+# Calculate the performance using the new measure
 performance(pred, measures = my.mmce)
 
-### Apparently the result coincides with the mlr implementation
+# Apparently the result coincides with the mlr implementation
 performance(pred, measures = mmce)
 ```
 
@@ -129,22 +129,22 @@ The cost matrix can then be wrapped in a `Measure` (`makeMeasure()`) object and 
 See the **R** documentation of function `makeCostMeasure()` for details on the various parameters.
 
 ```{r}
-### Create the cost matrix
+# Create the cost matrix
 costs = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol = 3)
 rownames(costs) = colnames(costs) = getTaskClassLevels(iris.task)
 
-### Encapsulate the cost matrix in a Measure object
+# Encapsulate the cost matrix in a Measure object
 my.costs = makeCostMeasure(
   id = "my.costs", name = "My Costs",
   costs = costs,
   minimize = TRUE, best = 0, worst = 3
 )
 
-### Train a learner and make a prediction
+# Train a learner and make a prediction
 mod = train("classif.lda", iris.task)
 pred = predict(mod, newdata = iris)
 
-### Calculate the average costs
+# Calculate the average costs
 performance(pred, measures = my.costs)
 ```
 
@@ -179,22 +179,22 @@ In most cases (unless you are using bootstrap as resampling strategy or have set
 Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.
 
 ```{r, fig.asp = 7/9}
-### mmce with default aggregation scheme test.mean
+# mmce with default aggregation scheme test.mean
 ms1 = mmce
 
-### mmce with new aggregation scheme my.range.aggr
+# mmce with new aggregation scheme my.range.aggr
 ms2 = setAggregation(ms1, my.range.aggr)
 
-### Minimum and maximum of the mmce over test sets
+# Minimum and maximum of the mmce over test sets
 ms1min = setAggregation(ms1, test.min)
 ms1max = setAggregation(ms1, test.max)
 
-### Feature selection
+# Feature selection
 rdesc = makeResampleDesc("CV", iters = 3)
 res = selectFeatures("classif.rpart", iris.task, rdesc, measures = list(ms1, ms2, ms1min, ms1max),
   control = makeFeatSelControlExhaustive(), show.info = FALSE)
 
-### Optimization path, i.e., performances for the 16 possible feature subsets
+# Optimization path, i.e., performances for the 16 possible feature subsets
 perf.data = as.data.frame(res$opt.path)
 head(perf.data[1:8])
 

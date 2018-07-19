@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -366,7 +366,7 @@ trainLearner.cluster.FarthestFirst = function(.learner, .task, .subset, .weights
 
 ```{r, code=showFunctionDef(mlr:::predictLearner.cluster.FarthestFirst), eval=FALSE, tidy=TRUE, tidy.opts=list(indent=2, width.cutoff=100)}
 predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...) {
-  ## RWeka returns cluster indices (i.e. starting from 0, which some tools don't like
+  # RWeka returns cluster indices (i.e. starting from 0, which some tools don't like
   as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
 }
 ```

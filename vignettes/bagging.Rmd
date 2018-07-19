@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -110,6 +110,7 @@ Here we plot the percentage of lower status of the population (`lstat`) against 
 library("ggplot2")
 library("reshape2")
 data = cbind(as.data.frame(pred), getTaskData(bh.task, subset = test.inds))
-g = ggplot(data, aes(x = lstat, y = response, ymin = response-se, ymax = response+se, col = age))
-g + geom_point() + geom_linerange(alpha=0.5)
+g = ggplot(data, aes(x = lstat, y = response, ymin = response - se,
+  ymax = response + se, col = age))
+g + geom_point() + geom_linerange(alpha = 0.5)
 ```
