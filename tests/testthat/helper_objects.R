@@ -1,7 +1,7 @@
 data(Sonar, package = "mlbench", envir = environment())
 data(BreastCancer, package = "mlbench", envir = environment())
 data(spatial.task, package = "mlr", envir = environment())
-data(meuse.task, package = "mlr", envir = environment())
+data(meuse, package = "mlr", envir = environment())
 data(meuse.grid, package = "mlr", envir = environment())
 
 binaryclass.df = Sonar
