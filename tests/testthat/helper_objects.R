@@ -27,7 +27,9 @@ binaryclass.spatial.class.col = 3
 binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
 binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
 
-meuse = meuse.task$env$data
+meuse <- meuse[ , c(1,2,3)]
+meuse.grid <- meuse.grid[ , c(1,2)]
+meuse.task = makeRegrTask(id = "meuse",  data = meuse, target = "cadmium")
 meuse.target = "cadmium"
 meuse.train.inds = (1:(nrow(meuse)/2))
 meuse.train = meuse[meuse.train.inds, ]
