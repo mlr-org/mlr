@@ -30,10 +30,10 @@ See also `RLearner()` for details.
 ```{r include=FALSE}
 library("mlr")
 library("pander")
-## baseR, urlBasePackages, urlContribPackages are defined in build
+# baseR, urlBasePackages, urlContribPackages are defined in build
 linkPkg = function(x) {
   x = strsplit(x, ",")[[1]]
-  x = mlr:::cleanupPackageNames(x)    ## remove exclamation marks
+  x = mlr:::cleanupPackageNames(x)    # remove exclamation marks
   if (urlBasePackages != urlContribPackages) {
     ind = x %in% baseR
     url = c(urlContribPackages, urlBasePackages)[ind + 1]

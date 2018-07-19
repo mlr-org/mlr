@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -38,19 +38,19 @@ Moreover, you can:
 * Set an ID to name the object (some methods will later use this ID to name results or annotate plots).
 
 ```{r}
-### Classification tree, set it up for predicting probabilities
+# Classification tree, set it up for predicting probabilities
 classif.lrn = makeLearner("classif.randomForest", predict.type = "prob", fix.factors.prediction = TRUE)
 
-### Regression gradient boosting machine, specify hyperparameters via a list
+# Regression gradient boosting machine, specify hyperparameters via a list
 regr.lrn = makeLearner("regr.gbm", par.vals = list(n.trees = 500, interaction.depth = 3))
 
-### Cox proportional hazards model with custom name
+# Cox proportional hazards model with custom name
 surv.lrn = makeLearner("surv.coxph", id = "cph")
 
-### K-means with 5 clusters
+# K-means with 5 clusters
 cluster.lrn = makeLearner("cluster.kmeans", centers = 5)
 
-### Multilabel Random Ferns classification algorithm
+# Multilabel Random Ferns classification algorithm
 multilabel.lrn = makeLearner("multilabel.rFerns")
 ```
 
@@ -83,13 +83,13 @@ This is explained in greater detail in the section about [cost-sensitive classif
 The Learner (`makeLearner()`) object is a `list` and the following elements contain information regarding the hyperparameters and the type of prediction.
 
 ```{r}
-### Get the configured hyperparameter settings that deviate from the defaults
+# Get the configured hyperparameter settings that deviate from the defaults
 cluster.lrn$par.vals
 
-### Get the set of hyperparameters
+# Get the set of hyperparameters
 classif.lrn$par.set
 
-### Get the type of prediction
+# Get the type of prediction
 regr.lrn$predict.type
 ```
 
@@ -101,10 +101,10 @@ These are particularly useful in case of wrapped Learner (`makeLearner()`)s, for
 For details see the section on [wrapped learners](wrapper.md).
 
 ```{r}
-### Get current hyperparameter settings
+# Get current hyperparameter settings
 getHyperPars(cluster.lrn)
 
-### Get a description of all possible hyperparameter settings
+# Get a description of all possible hyperparameter settings
 getParamSet(classif.lrn)
 ```
 
@@ -118,16 +118,16 @@ Functions for accessing a Learner's meta information are available in `mlr`. We 
 Moreover, in order to show the required packages for the Learner, one can call `getLearnerPackages()`.
 
 ```{r}
-### Get object's id
+# Get object's id
 getLearnerId(surv.lrn)
 
-### Get the short name
+# Get the short name
 getLearnerShortName(classif.lrn)
 
-### Get the type of the learner
+# Get the type of the learner
 getLearnerType(multilabel.lrn)
 
-### Get required packages
+# Get required packages
 getLearnerPackages(cluster.lrn)
 ```
 
@@ -137,17 +137,17 @@ There are also some functions that enable you to change certain aspects of a Lea
 Here are some examples.
 
 ```{r}
-### Change the ID
+# Change the ID
 surv.lrn = setLearnerId(surv.lrn, "CoxModel")
 surv.lrn
 
-### Change the prediction type, predict a factor with class labels instead of probabilities
+# Change the prediction type, predict a factor with class labels instead of probabilities
 classif.lrn = setPredictType(classif.lrn, "response")
 
-### Change hyperparameter values
+# Change hyperparameter values
 cluster.lrn = setHyperPars(cluster.lrn, centers = 4)
 
-### Go back to default hyperparameter values
+# Go back to default hyperparameter values
 regr.lrn = removeHyperPars(regr.lrn, c("n.trees", "interaction.depth"))
 ```
 
@@ -158,18 +158,18 @@ A list of all learners integrated in `mlr` and their respective properties is sh
 If you would like a list of available learners, maybe only with certain properties or suitable for a certain learning `Task()` use function `listLearners()`.
 
 ```{r}
-### List everything in mlr
+# List everything in mlr
 lrns = listLearners()
 head(lrns[c("class", "package")])
 
-### List classifiers that can output probabilities
+# List classifiers that can output probabilities
 lrns = listLearners("classif", properties = "prob")
 head(lrns[c("class", "package")])
 
-### List classifiers that can be applied to iris (i.e., multiclass) and output probabilities
+# List classifiers that can be applied to iris (i.e., multiclass) and output probabilities
 lrns = listLearners(iris.task, properties = "prob")
 head(lrns[c("class", "package")])
 
-### The calls above return character vectors, but you can also create learner objects
+# The calls above return character vectors, but you can also create learner objects
 head(listLearners("cluster", create = TRUE), 2)
 ```

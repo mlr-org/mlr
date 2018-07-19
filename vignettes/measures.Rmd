@@ -15,7 +15,7 @@ urlMlrFunctions = "http://www.rdocumentation.org/packages/mlr/functions/"
 ext = ".html"
 library("pander")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -45,14 +45,14 @@ The next six columns refer to information required to calculate the performance 
 **Aggr.** shows the default aggregation method (`aggregations()`) tied to the measure.
 
 ```{r include=FALSE}
-## urlMlrFunctions, ext are defined in build
+# urlMlrFunctions, ext are defined in build
 linkFct = function(x, y) {
   collapse(sprintf("[%1$s](%3$s%2$s%4$s)", x, y, urlMlrFunctions, ext), sep = "<br />")
 }
 
 cn = function(x) if (is.null(x)) NA else gsub("\\n", " ", x)
 urls = function(x) if (is.na(x)) NA else gsub("(http)(\\S+)(\\.)", "[\\1\\2](\\1\\2)\\3", x)
-## regex is not ideal and can break
+# regex is not ideal and can break
 
 getTab = function(type) {
   m = list(featperc = featperc, timeboth = timeboth, timepredict = timepredict, timetrain = timetrain)
