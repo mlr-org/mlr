@@ -13,7 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -76,7 +76,7 @@ Note that in practice the parameter set should be larger.
 A common recommendation is `2^(-12:12)` for both `C` and `sigma`.
 
 ```{r}
-### Tuning in inner resampling loop
+# Tuning in inner resampling loop
 ps = makeParamSet(
   makeDiscreteParam("C", values = 2^(-2:2)),
   makeDiscreteParam("sigma", values = 2^(-2:2))
@@ -85,7 +85,7 @@ ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("Subsample", iters = 2)
 lrn = makeTuneWrapper("classif.ksvm", resampling = inner, par.set = ps, control = ctrl, show.info = FALSE)
 
-### Outer resampling loop
+# Outer resampling loop
 outer = makeResampleDesc("CV", iters = 3)
 r = resample(lrn, iris.task, resampling = outer, extract = getTuneResult, show.info = FALSE)
 
@@ -160,12 +160,12 @@ Below we use sequential forward selection with linear regression on the
 `BostonHousing` (`mlbench::BostonHousing()` data set (`bh.task()`).
 
 ```{r}
-### Feature selection in inner resampling loop
+# Feature selection in inner resampling loop
 inner = makeResampleDesc("CV", iters = 3)
 lrn = makeFeatSelWrapper("regr.lm", resampling = inner,
   control = makeFeatSelControlSequential(method = "sfs"), show.info = FALSE)
 
-### Outer resampling loop
+# Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
 r = resample(learner = lrn, task = bh.task, resampling = outer, extract = getFeatSelResult,
   show.info = FALSE)
@@ -183,10 +183,10 @@ It is also possible to keep whole models (`makeWrappedModel()`) by setting `mode
 ```{r}
 r$extract
 
-### Selected features in the first outer resampling iteration
+# Selected features in the first outer resampling iteration
 r$extract[[1]]$x
 
-### Resampled performance of the selected feature subset on the first inner training set
+# Resampled performance of the selected feature subset on the first inner training set
 r$extract[[1]]$y
 ```
 
@@ -216,14 +216,14 @@ First, `makeFilterWrapper()` is used to fuse linear regression with a feature fi
 Then a tuning step is added by `makeTuneWrapper()`.
 
 ```{r}
-### Tuning of the percentage of selected filters in the inner loop
+# Tuning of the percentage of selected filters in the inner loop
 lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
 ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(0, 1, 0.2)))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iters = 3)
 lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl, show.info = FALSE)
 
-### Outer resampling loop
+# Outer resampling loop
 outer = makeResampleDesc("CV", iters = 3)
 r = resample(learner = lrn, task = bh.task, resampling = outer, models = TRUE, show.info = FALSE)
 r
@@ -288,10 +288,10 @@ As outer resampling strategies we take holdout for the `datasets::iris()` and bo
 We consider the accuracy ([acc](measures.html){target="_blank"}), which is used as tuning criterion, and also calculate the balanced error rate ([ber](measures.html){target="_blank"}).
 
 ```{r}
-### List of learning tasks
+# List of learning tasks
 tasks = list(iris.task, sonar.task)
 
-### Tune svm in the inner resampling loop
+# Tune svm in the inner resampling loop
 ps = makeParamSet(
   makeDiscreteParam("C", 2^(-1:1)),
   makeDiscreteParam("sigma", 2^(-1:1)))
@@ -300,17 +300,17 @@ inner = makeResampleDesc("Holdout")
 lrn1 = makeTuneWrapper("classif.ksvm", resampling = inner, par.set = ps, control = ctrl,
   show.info = FALSE)
 
-### Tune k-nearest neighbor in inner resampling loop
+# Tune k-nearest neighbor in inner resampling loop
 ps = makeParamSet(makeDiscreteParam("k", 3:5))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("Subsample", iters = 3)
 lrn2 = makeTuneWrapper("classif.kknn", resampling = inner, par.set = ps, control = ctrl,
   show.info = FALSE)
 
-### Learners
+# Learners
 lrns = list(lrn1, lrn2)
 
-### Outer resampling loop
+# Outer resampling loop
 outer = list(makeResampleDesc("Holdout"), makeResampleDesc("Bootstrap", iters = 2))
 res = benchmark(lrns, tasks, outer, measures = list(acc, ber), show.info = FALSE)
 res
@@ -355,15 +355,15 @@ getNestedTuneResultsOptPathDf(res$results[["Sonar-example"]][["classif.ksvm.tune
 Let's see how we can do [feature selection](feature_selection.html){target="_blank"} in a benchmark experiment:
 
 ```{r}
-### Feature selection in inner resampling loop
+# Feature selection in inner resampling loop
 ctrl = makeFeatSelControlSequential(method = "sfs")
 inner = makeResampleDesc("Subsample", iters = 2)
 lrn = makeFeatSelWrapper("regr.lm", resampling = inner, control = ctrl, show.info = FALSE)
 
-### Learners
+# Learners
 lrns = list("regr.rpart", lrn)
 
-### Outer resampling loop
+# Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
 res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, show.info = FALSE)
 
@@ -384,10 +384,10 @@ You can access results for individual learners and tasks and inspect them furthe
 ```{r}
 feats = getBMRFeatSelResults(res, learner.id = "regr.lm.featsel", drop = TRUE)
 
-### Selected features in the first outer resampling iteration
+# Selected features in the first outer resampling iteration
 feats[[1]]$x
 
-### Resampled performance of the selected feature subset on the first inner training set
+# Resampled performance of the selected feature subset on the first inner training set
 feats[[1]]$y
 ```
 
@@ -407,7 +407,7 @@ analyzeFeatSelResult(feats[[1]])
 Here is a minimal example for feature filtering with tuning of the feature subset size.
 
 ```{r}
-### Feature filtering with tuning in the inner resampling loop
+# Feature filtering with tuning in the inner resampling loop
 lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
 ps = makeParamSet(makeDiscreteParam("fw.abs", values = seq_len(getTaskNFeats(bh.task))))
 ctrl = makeTuneControlGrid()
@@ -415,10 +415,10 @@ inner = makeResampleDesc("CV", iter = 2)
 lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl,
   show.info = FALSE)
 
-### Learners
+# Learners
 lrns = list("regr.rpart", lrn)
 
-### Outer resampling loop
+# Outer resampling loop
 outer = makeResampleDesc("Subsample", iter = 3)
 res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, show.info = FALSE)
 
@@ -426,6 +426,7 @@ res
 ```
 
 ```{r}
-### Performances on individual outer test data sets
+# Performances on individual outer test data sets
 getBMRPerformances(res, as.df = TRUE)
 ```
+

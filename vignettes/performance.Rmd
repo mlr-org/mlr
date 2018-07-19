@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -41,9 +41,9 @@ The properties and requirements of the individual measures are shown in the tabl
 If you would like a list of available measures with certain properties or suitable for a certain learning `Task()` use the function `listMeasures()`.
 
 ```{r}
-### Performance measures for classification with multiple classes
+# Performance measures for classification with multiple classes
 listMeasures("classif", properties = "classif.multi")
-### Performance measure suitable for the iris classification task
+# Performance measure suitable for the iris classification task
 listMeasures(iris.task)
 ```
 
@@ -53,10 +53,10 @@ The help page of function `getDefaultMeasure()` lists all defaults for all types
 The function itself returns the default measure for a given task type, `Task()` or `Learner()`.
 
 ```{r}
-### Get default measure for iris.task
+# Get default measure for iris.task
 getDefaultMeasure(iris.task)
 
-### Get the default measure for linear regression
+# Get the default measure for linear regression
 getDefaultMeasure(makeLearner("regr.lm"))
 ```
 
@@ -106,7 +106,7 @@ lrn = makeLearner("cluster.kmeans", centers = 3)
 mod = train(lrn, mtcars.task)
 pred = predict(mod, task = mtcars.task)
 
-### Calculate the Dunn index
+# Calculate the Dunn index
 performance(pred, measures = dunn, task = mtcars.task)
 ```
 
@@ -131,7 +131,7 @@ If you are interested in the properties or requirements of a single measure you 
 See the help page of `Measure` (`makeMeasure()`) for information on the individual slots.
 
 ```{r}
-### Mean misclassification error
+# Mean misclassification error
 str(mmce)
 ```
 
@@ -154,9 +154,9 @@ n = getTaskSize(sonar.task)
 mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
 pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 
-### Performance for the default threshold 0.5
+# Performance for the default threshold 0.5
 performance(pred, measures = list(fpr, fnr, mmce))
-### Plot false negative and positive rates as well as the error rate versus the threshold
+# Plot false negative and positive rates as well as the error rate versus the threshold
 d = generateThreshVsPerfData(pred, measures = list(fpr, fnr, mmce))
 plotThreshVsPerf(d)
 ```
@@ -183,3 +183,4 @@ The top left $2 \times 2$ matrix is the [confusion matrix](predict.html){target=
 By default some additional info about the measures is printed.
 You can turn this off using the `abbreviations` argument of the `print` (`calculateROCMeasures()`) method:
 `print(r, abbreviations = FALSE)`.
+

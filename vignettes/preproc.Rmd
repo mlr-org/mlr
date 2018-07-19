@@ -14,7 +14,7 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -91,7 +91,7 @@ For all possible options see the help page of function `caret::preProcess()`.
 
 Note that the usage of `makePreprocWrapperCaret()` is slightly different than that of `caret::preProcess()`.
 
-* `makePreprocWrapperCaret()` takes (almost) the same formal arguments as `caret:preProcess()`, but their names are prefixed by `ppc.`.
+* `makePreprocWrapperCaret()` takes (almost) the same formal arguments as `caret::preProcess()`, but their names are prefixed by `ppc.`.
 * The only exception: `makePreprocWrapperCaret()` does not have a `method` argument. 
 Instead all preprocessing options that would be passed to `caret::preProcess()`'s `method` argument are given as individual logical parameters to `makePreprocWrapperCaret()`.
 
@@ -225,20 +225,20 @@ If a logical value was passed to `args` we store the column means and standard d
 
 ```{r}
 trainfun = function(data, target, args = list(center, scale)) {
-  ### Identify numerical features
+  # Identify numerical features
   cns = colnames(data)
   nums = setdiff(cns[sapply(data, is.numeric)], target)
-  ### Extract numerical features from the data set and call scale
+  # Extract numerical features from the data set and call scale
   x = as.matrix(data[, nums, drop = FALSE])
   x = scale(x, center = args$center, scale = args$scale)
-  ### Store the scaling parameters in control
-  ### These are needed to preprocess the data before prediction
+  # Store the scaling parameters in control
+  # These are needed to preprocess the data before prediction
   control = args
   if (is.logical(control$center) && control$center)
     control$center = attr(x, "scaled:center")
   if (is.logical(control$scale) && control$scale)
     control$scale = attr(x, "scaled:scale")
-  ### Recombine the data
+  # Recombine the data
   data = data[, setdiff(cns, nums), drop = FALSE]
   data = cbind(data, as.data.frame(x))
   return(list(data = data, control = control))
@@ -260,13 +260,13 @@ In our scaling example the *predict* function scales the numerical features usin
 
 ```{r}
 predictfun = function(data, target, args, control) {
-  ### Identify numerical features
+  # Identify numerical features
   cns = colnames(data)
   nums = cns[sapply(data, is.numeric)]
-  ### Extract numerical features from the data set and call scale
+  # Extract numerical features from the data set and call scale
   x = as.matrix(data[, nums, drop = FALSE])
   x = scale(x, center = control$center, scale = control$scale)
-  ### Recombine the data
+  # Recombine the data
   data = data[, setdiff(cns, nums), drop = FALSE]
   data = cbind(data, as.data.frame(x))
   return(data)

@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -264,3 +264,4 @@ If the underlying learner already has a parameter for class weighting (e.g.,
 lrn = makeLearner("classif.ksvm")
 wcw.lrn = makeWeightedClassesWrapper(lrn, wcw.weight = 0.01)
 ```
+

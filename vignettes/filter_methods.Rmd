@@ -14,7 +14,7 @@ library("ParamHelpers")
 urlContribPackages = "https://cran.r-project.org/web/packages/"
 library("pander")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -28,7 +28,7 @@ Columns **Fac.**, **Num.** and **Ord.** show if a particular method can deal wit
 # Current methods
 
 ```{r, echo = FALSE, results = "asis"}
-## urlContribPackages is defined in build
+# urlContribPackages is defined in build
 linkPkg = function(x) {
   ifelse(x == "", "", collapse(sprintf("[%1$s](%2$s%1$s/)", x, urlContribPackages), sep = "<br />"))
 }
