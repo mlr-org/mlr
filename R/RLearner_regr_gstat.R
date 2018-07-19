@@ -18,6 +18,7 @@
 #' Multivariable geostatistics in S: the gstat package
 #' Computers & Geosciences Volume 30, Issue 7, 2004, 683-691.
 #'
+#'
 #' @name regr.gstat
 #' @rdname regr.gstat
 NULL
@@ -61,32 +62,60 @@ makeRLearner.regr.gstat = function() {
 }
 
 #' @export
-trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, model = NULL, ...) {
-  args = list(...)
+# https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
+# https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
+trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
+  dots = list(...)
+  variogram.names = names(formals(gstat::variogram))
+  fit.variogram.names = names(formals(gstat::fit.variogram))
+  gstat.names = names(formals(gstat::gstat))
+
+  browser()
+
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task, explicit.features = TRUE)
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
   f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
   # check if a variogram model is passed
-  if (!is.null(model)) {
+  if (!is.null(dots$model)) {
     # build the samples variogram
-    v = gstat::variogram(object = f, data = d, ...)#...
+    v = do.call(gstat::variogram, c(list(object = f, data = d), dots[names(dots) %in% variogram.names]))
+    ##v = gstat::variogram(object = f, data = d, ...)#...
     # fit the variogram model
-    fit = gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model,
-      range = model$range, nugget = model$nugget))
+    fit = do.call(gstat::fit.variogram,
+      c(list(object = v,
+        model = gstat::vgm(psill = dot$model$psill, model = dots$model$model,
+      range = dots$model$range, nugget = dots$model$nugget)), dots[names(dots)[-"model"] %in% fit.variogram.names] )
+    )
+    ##fit = gstat::fit.variogram(v, gstat::vgm(psill = model$psill, model = model$model, range = model$range, nugget = model$nugget))
     # create the gstat object
-    g = gstat::gstat(
-      formula = f,
-      data = d,
-      model = fit,
-      ...
+    g = do.call(gstat::gstat,
+      c(list(formula = f,
+        data = d,
+        model = fit
+        ),
+        dots[ names(dots)[names(dots) != "model"] %in% gstat.names ]
+      )
     )
+    # g = gstat::gstat(
+    #   formula = f,
+    #   data = d,
+    #   model = fit,
+    #   ...
+    # )
   } else {
-    g = gstat::gstat(
-      formula = f,
-      data = d,
-      ...
+    g = do.call(gstat::gstat,
+      c(list(formula = f,
+        data = d),
+        dots[ names(dots)[names(dots) != "model"] %in% gstat.names ]
+      )
     )
+    gstat::gstat(formula = f, data = d,  dots[ names(dots)[names(dots) != "model"] %in% gstat.names ])
+    # g = gstat::gstat(
+    #   formula = f,
+    #   data = d,
+    #   ...
+    # )
   }
   return(g)
 }
