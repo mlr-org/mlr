@@ -1,5 +1,6 @@
 ---
 title: "Use case gstat"
+author: "Thomas Goossens (@pokyah)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -7,104 +8,44 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r, echo = FALSE, message=FALSE}
-library("mlr")
+```{r global_options, echo = FALSE, message = FALSE}
 library("sp")
 library("gstat")
 library("ParamHelpers")
 library("dplyr")
+library("gridExtra")
+devtools::load_all()
 
 ## show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
+
+knitr::opts_chunk$set(warning = FALSE, echo = TRUE, message = FALSE, fig.width = 8, fig.height = 6)
 ```
 
-From gstat CRAN [vignette](https://cran.r-project.org/web/packages/gstat/vignettes/gstat.pdf), let's compare raw-gstat outputs with mlr-gstat outputs.
+For the gstat use case we use the well-known `meuse` and `meuse.grid` datasets from [sp](https://cran.r-project.org/web/packages/sp/index.html) package. 
 
-## Prepare the required libraries
-```{r}
+The purpose of this vignette is to demonstrate how to use gstat spatial prediction functionalities from the mlr interface.
+
+Original gstat code will be presented with its mlr counterpart for various spatial prediction methods (Inverse Distance Weighted, trend surfaces, ordinaray kriging and kriging with external drift).
+
+The examples presented in this vignette are inspired by the examples from the gstat [vignette](https://cran.r-project.org/web/packages/gstat/vignettes/gstat.pdf)
+
+First, let's prepare the required libraries
+
+```{r libraries, eval=FALSE}
 library(gstat)
 library(sp)
 library(mlr)
 library(dplyr)
 ```
 
-##trend surfaces
-### trend surfaces - raw gstat
-```{r}
-# loading the data
-data(meuse)
-data(meuse.grid)
-# imputing values to missing data
-meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
-  dummy.classes = "integer")$data
-meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
-  dummy.classes = "integer")$data
-# making spatial
-coordinates(meuse) = ~x+y
-coordinates(meuse.grid) = ~x+y
-gridded(meuse.grid) = TRUE
-# interpolating
-ts.raw <- meuse.grid
-ts.raw$ts1 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 1)$var1.pred
-ts.raw$ts2 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 2)$var1.pred
-ts.raw$ts3 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 3)$var1.pred
-# mapping
-ts.raw.plot <- spplot(ts.raw, c("ts1", "ts2", "ts3"), main = "log(zinc), trend surface interpolation")
-ts.raw.plot
-```
-
-### trend surfaces - mlr gstat
-```{r}
-# loading the data
-data(meuse)
-data(meuse.grid)
-# imputing values to missing data
-meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
-  dummy.classes = "integer")$data
-meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
-  dummy.classes = "integer")$data
-# adding a column with log zinc
-meuse <- meuse %>% dplyr::mutate(log_zinc = log(zinc))
-# defining the regression task
-task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
-task.ts<- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
-# defining the learner
-lrn.ts.1 = makeLearner(cl = "regr.gstat", id= "mlr-ts1", degree = 1, locations = ~x+y)
-lrn.ts.2 = makeLearner(cl = "regr.gstat", id= "mlr-ts2", degree = 2, locations = ~x+y)
-lrn.ts.3 = makeLearner(cl = "regr.gstat", id= "mlr-ts3", degree = 3, locations = ~x+y)
-# training the learners
-mod.ts.1 = train(lrn.ts.1, task.ts)
-mod.ts.2 = train(lrn.ts.2, task.ts)
-mod.ts.3 = train(lrn.ts.3, task.ts)
-# interpolating
-ts.mlr <- meuse.grid
-newdata.pred.ts.1 = predict(mod.ts.1, newdata = meuse.grid)
-ts.mlr$mlr.ts.1<- (bind_cols(data.frame(meuse.grid), newdata.pred.ts.1$data))$response
-newdata.pred.ts.2 = predict(mod.ts.2, newdata = meuse.grid)
-ts.mlr$mlr.ts.2 <- (bind_cols(data.frame(meuse.grid), newdata.pred.ts.2$data))$response
-newdata.pred.ts.3 = predict(mod.ts.3, newdata = meuse.grid)
-ts.mlr$mlr.ts.3 <- (bind_cols(data.frame(meuse.grid), newdata.pred.ts.3$data))$response
-# mapping
-coordinates(ts.mlr) <- ~x+y
-gridded(ts.mlr) = TRUE
-ts.mlr.plot <- spplot(ts.mlr, c("mlr.ts.1", "mlr.ts.2", "mlr.ts.3"), main = "log(zinc), trend surface interpolation")
-ts.mlr.plot
-```
-### identical predictions ? 
-```{r}
-identical(ts.mlr$mlr.ts.1, ts.raw$ts1)
-identical(ts.mlr$mlr.ts.2, ts.raw$ts2)
-identical(ts.mlr$mlr.ts.3, ts.raw$ts3)
-```
-
-
-## idw
-### idw - raw gstat
-```{r}
-# loading the data
+## Inverse distance Weighted 
+Here is the code using pure __gstat__ :
+```{r idw_gstat}
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -119,14 +60,12 @@ gridded(meuse.grid) = TRUE
 # interpolating
 zinc.idw = idw(zinc~1, meuse, meuse.grid)
 # mapping
-idw.raw.plot <- spplot(zinc.idw["var1.pred"], do.log = F, colorkey=TRUE,  main = "zinc inverse distance weighted interpolations")
-idw.raw.plot
+idw.gstat.plot = spplot(zinc.idw["var1.pred"], do.log = F, colorkey = TRUE,  main = "zn : idw interpoaltion (gstat)")
 ```
 
-### idw - mlr gstat
-mlr only works with pure dataframes. neither tibbles, sp, or sf dataframes are supported. 
-```{r}
-# loading the data
+And using __mlr__ : 
+```{r idw_mlr}
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -136,30 +75,109 @@ meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = 
   dummy.classes = "integer")$data
 # defining the regression task
 task = makeRegrTask(id = "meuse",  data = meuse, target = "zinc")
-task.idw <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
+task.idw = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
 # defining the learner
-lrn.idw = makeLearner(cl = "regr.gstat", id= "mlr-idw", locations = ~x+y)
+lrn.idw = makeLearner(cl = "regr.gstat", id = "mlr-idw", locations = ~x+y)
 # training the model
 mod.idw = train(lrn.idw, task.idw)
 # interpolating
 newdata.pred.idw = predict(mod.idw, newdata = meuse.grid)
-mlr.idw <- bind_cols(data.frame(meuse.grid), newdata.pred.idw$data)
+mlr.idw = bind_cols(data.frame(meuse.grid), newdata.pred.idw$data)
 # mapping
-coordinates(mlr.idw) <- ~x+y
+coordinates(mlr.idw) = ~x+y
 gridded(mlr.idw) = TRUE
-idw.mlr.plot <- spplot(mlr.idw["response"], do.log = F, colorkey = TRUE, main = mod.idw$learner$id)
-idw.mlr.plot
+idw.mlr.plot = spplot(mlr.idw["response"], do.log = F, colorkey = TRUE, main = "zn : idw interpoaltion (mlr)")
 ```
 
-### identical predictions ? 
-```{r}
+Let's check that spatial predictions outputs are identical for the 2 methods :
+
+```{r idw_maps, echo=FALSE, fig.height=3}
+do.call(gridExtra::grid.arrange, (list(idw.gstat.plot, idw.mlr.plot, ncol = 2)))
+```
+
+```{r idw_identical}
 identical(zinc.idw["var1.pred"]@data[[1]], mlr.idw["response"]@data[[1]])
 ```
 
-## ordinary kriging example
-### ordinary kriging - raw gstat
-```{r}
-# loading the data
+## Trend surfaces interpolation.
+Here is the code using pure __gstat__ :
+
+```{r ts_gstat}
+# loading datasets
+data(meuse)
+data(meuse.grid)
+# imputing values to missing data (using mlr::imput)
+meuse = mlr::impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")$data
+meuse.grid = mlr::impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")$data
+# making spatial
+sp::coordinates(meuse) = ~x+y
+sp::coordinates(meuse.grid) = ~x+y
+sp::gridded(meuse.grid) = TRUE
+# interpolating
+ts.gstat = meuse.grid
+ts.gstat$ts1 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 1)$var1.pred
+ts.gstat$ts2 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 2)$var1.pred
+ts.gstat$ts3 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 3)$var1.pred
+# mapping
+ts.gstat.plot = spplot(ts.gstat, c("ts1", "ts2", "ts3"), main = "log(zn) : ts interpolation (gstat)")
+```
+
+And using __mlr__ : 
+
+```{r ts_mlr}
+# loading datasets
+data(meuse)
+data(meuse.grid)
+# imputing values to missing data
+meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")$data
+meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")$data
+# adding a column with log zinc
+meuse = meuse %>% dplyr::mutate(log_zinc = log(zinc))
+# defining the regression task
+task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
+task.ts = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
+# defining the learner
+lrn.ts.1 = makeLearner(cl = "regr.gstat", id = "mlr-ts1", degree = 1, locations = ~x+y)
+lrn.ts.2 = makeLearner(cl = "regr.gstat", id = "mlr-ts2", degree = 2, locations = ~x+y)
+lrn.ts.3 = makeLearner(cl = "regr.gstat", id = "mlr-ts3", degree = 3, locations = ~x+y)
+# training the learners
+mod.ts.1 = train(lrn.ts.1, task.ts)
+mod.ts.2 = train(lrn.ts.2, task.ts)
+mod.ts.3 = train(lrn.ts.3, task.ts)
+# interpolating
+ts.mlr = meuse.grid
+newdata.pred.ts.1 = predict(mod.ts.1, newdata = meuse.grid)
+ts.mlr$mlr.ts.1 = (bind_cols(data.frame(meuse.grid), newdata.pred.ts.1$data))$response
+newdata.pred.ts.2 = predict(mod.ts.2, newdata = meuse.grid)
+ts.mlr$mlr.ts.2 = (bind_cols(data.frame(meuse.grid), newdata.pred.ts.2$data))$response
+newdata.pred.ts.3 = predict(mod.ts.3, newdata = meuse.grid)
+ts.mlr$mlr.ts.3 = (bind_cols(data.frame(meuse.grid), newdata.pred.ts.3$data))$response
+# mapping
+coordinates(ts.mlr) = ~x+y
+gridded(ts.mlr) = TRUE
+ts.mlr.plot = spplot(ts.mlr, c("mlr.ts.1", "mlr.ts.2", "mlr.ts.3"), main = "log(zn) : ts interpolation (mlr)")
+```
+
+Let's check that spatial predictions outputs are identical for the 2 methods :
+
+```{r ts_maps, echo=FALSE}
+do.call(gridExtra::grid.arrange, (list(ts.gstat.plot, ts.mlr.plot)))
+```
+
+```{r ts_identical}
+identical(ts.mlr$mlr.ts.1, ts.gstat$ts1)
+identical(ts.mlr$mlr.ts.2, ts.gstat$ts2)
+identical(ts.mlr$mlr.ts.3, ts.gstat$ts3)
+```
+
+## Ordinary kriging example
+Here is the code using pure __gstat__
+```{r ok_gstat}
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -175,20 +193,18 @@ gridded(meuse.grid) = TRUE
 lzn.vgm = variogram(log(zinc)~1, meuse)
 # manually fitting a model to the vgm with constant mean
 lzn.fit = fit.variogram(lzn.vgm, model = vgm(1, "Sph", 900, 1))
-plot(lzn.vgm, lzn.fit)
+# to show the plot run : plot(lzn.vgm, lzn.fit)
 # kriging
-lzn.kriged = krige(log(zinc)~1, meuse, meuse.grid, model = lzn.fit)
+ok.gstat = krige(log(zinc)~1, meuse, meuse.grid, model = lzn.fit)
 # mapping
-lzn.kriged.plot <- spplot(lzn.kriged["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) ordinary kriging")
-lzn.kriged.plot
+ok.gstat.plot = spplot(ok.gstat["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
 # mapping the se
-se.lzn.kriged.plot <- spplot(lzn.kriged["var1.var"], do.log = F, colorkey = TRUE, main ="var log(zn) ordinary kriging")
-se.lzn.kriged.plot
+ok.se.gstat.plot = spplot(ok.gstat["var1.var"], do.log = F, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (gstat)")
 ```
 
-### ordinary kriging mlr gstat
-```{r}
-# loading the data
+And using __mlr__
+```{r ok_mlr}
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -197,45 +213,50 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # adding a column with log zinc
-meuse <- meuse %>% dplyr::mutate(log_zinc = log(zinc))
+meuse = meuse %>% dplyr::mutate(log_zinc = log(zinc))
 # defining the regression task
 task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
-task.krg <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
+task.krg = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
 # defining the learner
 lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr ordinary kriging", predict.type = "response", psill = 1, model = "Sph", range = 900, nugget = 1, locations = ~x+y)
 # training the model
 mod.krg = train(lrn.krg, task.krg)
 # kriging
 newdata.pred.krg = predict(object = mod.krg, newdata = meuse.grid)
-mlr.krg <- bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
+ok.mlr = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
 # mapping
-coordinates(mlr.krg) <- ~x+y
-gridded(mlr.krg) = TRUE
-pred.plot <- spplot(mlr.krg["response"], do.log = T, colorkey = TRUE, main = mod.krg$learner$id)
-pred.plot
+coordinates(ok.mlr) = ~x+y
+gridded(ok.mlr) = TRUE
+ok.mlr.plot = spplot(ok.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
 # SE - defining the standard error learner by altering the previous one.
 se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
 # training the SE model
 se.mod.krg = train(se.lrn.krg, task.krg)
 # SE kriging
 se.newdata.pred.krg = predict(object = se.mod.krg, newdata = meuse.grid)
-se.mlr.krg <- bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
+ok.se.mlr = bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
 # SE mapping
-coordinates(se.mlr.krg) <- ~x+y
-gridded(se.mlr.krg) = TRUE
-se.plot  <- spplot(se.mlr.krg["se"], do.log = T, colorkey = TRUE, main = se.mod.krg$learner$id)
-se.plot 
+coordinates(ok.se.mlr) = ~x+y
+gridded(ok.se.mlr) = TRUE
+ok.se.mlr.plot = spplot(ok.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (mlr)")
 ```
 
-### identical predictions ? 
-```{r}
-identical(lzn.kriged["var1.pred"]@data[[1]], mlr.krg["response"]@data[[1]])
+Let's check that spatial predictions outputs are identical for the 2 methods :
+
+```{r ok_maps, echo=FALSE}
+do.call(gridExtra::grid.arrange, (list(ok.gstat.plot, ok.mlr.plot, ok.se.gstat.plot, ok.se.mlr.plot)))
+```
+
+```{r ok_identical}
+identical(ok.gstat["var1.pred"]@data[[1]], ok.mlr["response"]@data[[1]])
 ```
 
 ## Kriging with External Drift (KED) = Universal Kriging (UK)
-### raw gstat KED
-```{r}
-# loading the data
+
+Using __gstat__ 
+
+```{r ked_gstat}
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -252,20 +273,18 @@ lzn.vgm = variogram(log(zinc)~1, meuse)
 # manually fitting a model to the vgm with a mean function where sqrt dist is the explanatory var
 lzn.vgm = variogram(log(zinc)~sqrt(dist), meuse)
 lzn.fit = fit.variogram(lzn.vgm, model = vgm(1, "Exp", 300, 1))
-plot(lzn.vgm, lzn.fit)
+# to show the plot run : plot(lzn.vgm, lzn.fit)
 # kriging
-lzn.kriged = krige(log(zinc)~sqrt(dist), meuse, meuse.grid, model = lzn.fit)
+ked.gstat = krige(log(zinc)~sqrt(dist), meuse, meuse.grid, model = lzn.fit)
 # mapping
-lzn.kriged.plot <- spplot(lzn.kriged["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) kriging with external drift")
-lzn.kriged.plot
+ked.gstat.plot = spplot(ked.gstat["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) : ked interpolation (gstat)")
 # mapping the se
-se.lzn.kriged.plot <- spplot(lzn.kriged["var1.var"], do.log = F, colorkey = TRUE, main = "var log(zn) kriging with external drift")
-se.lzn.kriged.plot
+ked.se.gstat.plot = spplot(ked.gstat["var1.var"], do.log = F, colorkey = TRUE, main = "se(log(zn)) : ked interpolation (gstat)")
 ```
 
-### mlr gstat KED
-```{r}
-# loading the data
+And using __mlr__
+```{r ked_mlr}
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -274,51 +293,54 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # adding a column with log zinc
-meuse <- meuse %>% dplyr::mutate(log_zinc = log(zinc))
+meuse = meuse %>% dplyr::mutate(log_zinc = log(zinc))
 # adding a column with sqrt dist
-meuse <- meuse %>% dplyr::mutate(sqrt_dist = sqrt(dist))
-meuse.grid <- meuse.grid %>% dplyr::mutate(sqrt_dist = sqrt(dist))
+meuse = meuse %>% dplyr::mutate(sqrt_dist = sqrt(dist))
+meuse.grid = meuse.grid %>% dplyr::mutate(sqrt_dist = sqrt(dist))
 # defining the regression task
 task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
-task.krg <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2,15)])
+task.krg = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2,15)])
 # defining the learner
 lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr kriging with external drift", predict.type = "response",  psill = 1, model = "Exp", range = 300, nugget = 1, locations = ~x+y) 
 # training the model
 mod.krg = train(lrn.krg, task.krg)
 # kriging
 newdata.pred.krg = predict(object = mod.krg, newdata = meuse.grid)
-mlr.krg <- bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
+ked.mlr = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
 # mapping
-coordinates(mlr.krg) <- ~x+y
-gridded(mlr.krg) = TRUE
-pred.plot <- spplot(mlr.krg["response"], do.log = T, colorkey = TRUE, main = mod.krg$learner$id)
-pred.plot
+coordinates(ked.mlr) = ~x+y
+gridded(ked.mlr) = TRUE
+ked.mlr.plot = spplot(ked.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ked interpolation (mlr)")
 # SE - defining the standard error learner by altering the previous one.
 se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
 # training the SE model
 se.mod.krg = train(se.lrn.krg, task.krg)
 # SE kriging
 se.newdata.pred.krg = predict(object = se.mod.krg, newdata = meuse.grid)
-se.mlr.krg <- bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
+ked.se.mlr = bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
 # SE mapping
-coordinates(se.mlr.krg) <- ~x+y
-gridded(se.mlr.krg) = TRUE
-se.plot  <- spplot(se.mlr.krg["se"], do.log = T, colorkey = TRUE, main = se.mod.krg$learner$id)
-se.plot 
+coordinates(ked.se.mlr) = ~x+y
+gridded(ked.se.mlr) = TRUE
+ked.se.mlr.plot = spplot(ked.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ked interpolation (mlr)")
 ```
 
-### identical predictions ? 
-```{r}
-identical(lzn.kriged["var1.pred"]@data[[1]], mlr.krg["response"]@data[[1]])
+Let's check that spatial predictions outputs are identical for the 2 methods :
+
+```{r ked_maps, echo=FALSE}
+do.call(gridExtra::grid.arrange, (list(ked.gstat.plot, ked.mlr.plot, ked.se.gstat.plot, ked.se.mlr.plot)))
 ```
 
-## interactively map prediction + SE with leaflet
+```{r ked_identical}
+identical(ked.gstat["var1.pred"]@data[[1]], ked.mlr["response"]@data[[1]])
+```
+
+## Interactively mapping prediction with the attached standard error using leaflet
 
 Here we demonstrate how to map the prediction together with the uncertainty in an intuitive and intelligible way. Our approach is based on [this](http://spatial-analyst.net/wiki/index.php/Uncertainty_visualization#Visualization_of_uncertainty_using_whitening_in_R) post by *Tomislav Hengl* and [this](https://www.e-education.psu.edu/geog486/node/1891) post by *Penn state college of earth and mineral sciences*
 
 ```{r}
 # For the example, using the output of mlr gstat KED from previous section
-# loading the data
+# loading datasets
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data
@@ -327,32 +349,31 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # adding a column with log zinc
-meuse <- meuse %>% dplyr::mutate(log_zinc = log(zinc))
+meuse = meuse %>% dplyr::mutate(log_zinc = log(zinc))
 # adding a column with sqrt dist
-meuse <- meuse %>% dplyr::mutate(sqrt_dist = sqrt(dist))
-meuse.grid <- meuse.grid %>% dplyr::mutate(sqrt_dist = sqrt(dist))
+meuse = meuse %>% dplyr::mutate(sqrt_dist = sqrt(dist))
+meuse.grid = meuse.grid %>% dplyr::mutate(sqrt_dist = sqrt(dist))
 # defining the regression task
 task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
-task.krg <- dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2,15)])
+task.krg = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2,15)])
 # defining the learner
 lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr kriging with external drift", predict.type = "response", psill = 1, model = "Exp", range = 300, nugget = 1, locations = ~x+y) 
 # training the model
 mod.krg = train(lrn.krg, task.krg)
 # kriging
 newdata.pred.krg = predict(object = mod.krg, newdata = meuse.grid)
-mlr.krg <- bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
+mlr.krg = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
 # mapping
-coordinates(mlr.krg) <- ~x+y
+coordinates(mlr.krg) = ~x+y
 gridded(mlr.krg) = TRUE
-pred.plot <- spplot(mlr.krg["response"], do.log = T, colorkey = TRUE, main = mod.krg$learner$id)
-pred.plot
+pred.plot = spplot(mlr.krg["response"], do.log = T, colorkey = TRUE, main = mod.krg$learner$id)
 # SE - defining the standard error learner by altering the previous one.
 se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
 # training the SE model
 se.mod.krg = train(se.lrn.krg, task.krg)
 # SE kriging
 se.newdata.pred.krg = predict(object = se.mod.krg, newdata = meuse.grid)
-se.mlr.krg <- bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
+se.mlr.krg = bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
 
 # mapping with leaflet
 
@@ -363,64 +384,64 @@ library(htmltools)
 library(sf)
 
 # defining the function to create a palette of different levels of alpha for the choosen color 
-alphaPal <- function(color) {
-  alpha <- seq(0,1,0.1)
-  r <- col2rgb(color, alpha=T)
-  r <- t(apply(r, 1, rep, length(alpha)))
+alphaPal = function(color) {
+  alpha = seq(0,1,0.1)
+  r = col2rgb(color, alpha=T)
+  r = t(apply(r, 1, rep, length(alpha)))
   # Apply alpha
-  r[4,] <- alpha*255
-  r <- r/255.0
-  codes <- (rgb(r[1,], r[2,], r[3,], r[4,]))
+  r[4,] = alpha*255
+  r = r/255.0
+  codes = (rgb(r[1,], r[2,], r[3,], r[4,]))
   return(codes)
 }
 
 # keeping what we need 
-interpolated.df <- se.mlr.krg %>% select(one_of(c("x","y","response","se")))
+interpolated.df = se.mlr.krg %>% select(one_of(c("x","y","response","se")))
 # making it spatial object class sf
-interpolated.sf <- st_as_sf(interpolated.df,coords = c("x","y"))
+interpolated.sf = st_as_sf(interpolated.df,coords = c("x","y"))
 # defining the crs
-st_crs(interpolated.sf) <- 28992 # found at https://rdrr.io/cran/sp/man/meuse.html
+st_crs(interpolated.sf) = 28992 # found at https://rdrr.io/cran/sp/man/meuse.html
 # transforming to geographic CRS (EPSG = 4326)
-interpolated.sf <- st_transform(interpolated.sf, crs = 4326)
+interpolated.sf = st_transform(interpolated.sf, crs = 4326)
 # Now we need to inject this point info into polygon centered arounds the points to fake a raster layer but which is interactive
 class(mlr.krg) # SpatialPixelsDataFrame
 # making the gridded mlr.krg a raster 
-grid.r <- raster::raster(mlr.krg, values=TRUE)
+grid.r = raster::raster(mlr.krg, values=TRUE)
 # convert raster to polygons
 grid.sp = raster::rasterToPolygons(grid.r, dissolve = F)
 class(grid.sp) # SpatialPolygonsDataFrame
 # converting to sf for later joining
-grid.sf <- st_as_sf(grid.sp)
-st_crs(grid.sf) <- 28992 # found at https://rdrr.io/cran/sp/man/meuse.html
+grid.sf = st_as_sf(grid.sp)
+st_crs(grid.sf) = 28992 # found at https://rdrr.io/cran/sp/man/meuse.html
 # transforming to geographic CRS (EPSG = 4326)
-grid.sf <- st_transform(grid.sf, crs = 4326)
+grid.sf = st_transform(grid.sf, crs = 4326)
 # injecting the prediction and se data into the polygon grid doing a spatial join
-# interpolated.sf <- st_join(grid.sf, interpolated.sf) %>% select(one_of(c("response", "se")))
-interpolated.pg.sf <- dplyr::bind_cols(grid.sf, interpolated.sf)
-interpolated.pg.sf <- interpolated.pg.sf %>% select(one_of(c("response", "se")))
+# interpolated.sf = st_join(grid.sf, interpolated.sf) %>% select(one_of(c("response", "se")))
+interpolated.pg.sf = dplyr::bind_cols(grid.sf, interpolated.sf)
+interpolated.pg.sf = interpolated.pg.sf %>% select(one_of(c("response", "se")))
 # Do we have polygons ? 
 head(interpolated.pg.sf)
 
 # defining the function to map using leaflet
-leafletize <- function(data.sf){
+leafletize = function(data.sf){
   # to make the map responsive
   responsiveness.chr = "\'<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\'"
   
   # defining the color palette for the response
-  varPal <- colorNumeric(
+  varPal = colorNumeric(
     palette = "Spectral",
     domain = data.sf$response
   )
   
   # defining the transparent colorpal for the se
-  uncPal <- colorNumeric(
+  uncPal = colorNumeric(
     palette = alphaPal("#e6e6e6"),
     domain = data.sf$se,
     alpha = TRUE
   )
 
   # 
-  prediction.map <- leaflet::leaflet(data.sf) %>%
+  prediction.map = leaflet::leaflet(data.sf) %>%
     addProviderTiles(group = "Stamen",
                      providers$Stamen.Toner,
                      options = providerTileOptions(opacity = 0.25)
@@ -478,10 +499,10 @@ leafletize <- function(data.sf){
   return(prediction.map)
 }
 # create the map object
-prediction.map <- leafletize(interpolated.pg.sf)
+prediction.map = leafletize(interpolated.pg.sf)
 
 # render it
-html <- list(h3(paste0("interactive prediction map")),
+html = list(h3(paste0("interactive prediction map")),
                  prediction.map 
                  )
 tagList(html)
