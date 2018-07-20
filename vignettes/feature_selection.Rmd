@@ -14,7 +14,7 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -34,7 +34,7 @@ Based on these values the features can be ranked and a feature subset can be sel
 
 ## Calculating the feature importance
 
-Different methods for calculating the feature importance are built into `mlr`'s function `generateFilterValuesData()` (`getFilterValues()` has been deprecated in favor of `generateFilterValuesData()`.). 
+Different methods for calculating the feature importance are built into `mlr`'s function `generateFilterValuesData()` (`getFilterValues()` has been deprecated in favor of `generateFilterValuesData()`). 
 Currently, classification, regression and survival analysis tasks are supported. 
 A table showing all available methods can be found in article [filter methods](filter_methods.html){target="_blank"}.
 
@@ -84,13 +84,13 @@ Function `filterFeatures()` supports these three methods as shown in the followi
 Moreover, you can either specify the ``method`` for calculating the feature importance or you can use previously computed importance values via argument ``fval``.
 
 ```{r}
-### Keep the 2 most important features
+# Keep the 2 most important features
 filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2)
 
-### Keep the 25% most important features
+# Keep the 25% most important features
 filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
 
-### Keep all features with importance greater than 0.5
+# Keep all features with importance greater than 0.5
 filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
 filtered.task
 ```
@@ -221,7 +221,7 @@ As learning method we use the `Cox proportional hazards model` (`survival::coxph
 The performance is assessed by the holdout estimate of the concordance index [cindex](measures.html){target="_blank"}).
 
 ```{r}
-### Specify the search strategy
+# Specify the search strategy
 ctrl = makeFeatSelControlRandom(maxit = 20L)
 ctrl
 ```
@@ -229,10 +229,10 @@ ctrl
 ``ctrl`` is a`FeatSelControl()` object that contains information about the search strategy and potential parameter values.
 
 ```{r}
-### Resample description
+# Resample description
 rdesc = makeResampleDesc("Holdout")
 
-### Select features
+# Select features
 sfeats = selectFeatures(learner = "surv.coxph", task = wpbc.task, resampling = rdesc,
   control = ctrl, show.info = FALSE)
 sfeats
@@ -253,10 +253,10 @@ See the documentation page `makeFeatSelControlSequential` (`?FeatSelControl()`) 
 The search is stopped if the improvement is smaller than ``alpha = 0.02``.
 
 ```{r}
-### Specify the search strategy
+# Specify the search strategy
 ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.02)
 
-### Select features
+# Select features
 rdesc = makeResampleDesc("CV", iters = 10)
 sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = rdesc, control = ctrl,
   show.info = FALSE)

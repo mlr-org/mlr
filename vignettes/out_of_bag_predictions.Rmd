@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -42,3 +42,4 @@ performance(oob, measures = list(auc, mmce))
 ```
 
 As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.
+

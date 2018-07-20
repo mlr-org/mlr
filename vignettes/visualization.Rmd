@@ -14,7 +14,7 @@ library("ggplot2")
 library("lattice")
 library("mlr")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -83,12 +83,12 @@ Imagine you want to change the order of the panels and also are not satisfied wi
 ```{r, fig.asp = 0.5}
 plt = plotThreshVsPerf(d, pretty.names = FALSE)
 
-### Reshaped version of the underlying data d
+# Reshaped version of the underlying data d
 head(plt$data)
 
 levels(plt$data$measure)
 
-### Rename and reorder factor levels
+# Rename and reorder factor levels
 plt$data$measure = factor(plt$data$measure, levels = c("mmce", "fpr", "fnr"),
   labels = c("Error rate", "False positive rate", "False negative rate"))
 plt = plt + xlab("Cutoff") + ylab("Performance")
@@ -105,8 +105,8 @@ measure_names = c(
   fnr = "False negative rate",
   mmce = "Error rate"
 )
-### Manipulate the measure names via the labeller function and
-### arrange the panels in two columns and choose common axis limits for all panels
+# Manipulate the measure names via the labeller function and
+# arrange the panels in two columns and choose common axis limits for all panels
 plt = plt + facet_wrap( ~ measure, labeller = labeller(measure = measure_names), ncol = 2)
 plt = plt + xlab("Decision threshold") + ylab("Performance")
 plt
