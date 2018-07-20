@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -68,10 +68,10 @@ imputeLOCF = function() {
       x = data[[col]]
       ind = is.na(x)
       dind = diff(ind)
-      lastValue = which(dind == 1)  ## position of the last observed value previous to NA
-      lastNA = which(dind == -1)    ## position of the last of potentially several consecutive NA's
-      values = x[lastValue]         ## last observed value previous to NA
-      times = lastNA - lastValue    ## number of consecutive NA's
+      lastValue = which(dind == 1)  # position of the last observed value previous to NA
+      lastNA = which(dind == -1)    # position of the last of potentially several consecutive NA's
+      values = x[lastValue]         # last observed value previous to NA
+      times = lastNA - lastValue    # number of consecutive NA's
       return(list(values = values, times = times))
     },
     impute = function(data, target, col, values, times) {

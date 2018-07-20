@@ -12,7 +12,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-## show grouped code output instead of single lines
+# show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
@@ -25,14 +25,14 @@ Often suitable parameter values are not obvious and it is preferable to tune the
 
 In order to tune a machine learning algorithm, you have to specify:
 
-* the search space
-* the optimization algorithm (aka tuning method)
-* an evaluation method, i.e., a resampling strategy and a performance measure
+* the search space;
+* the optimization algorithm (aka tuning method);
+* an evaluation method, i.e., a resampling strategy and a performance measure.
 
 An example of the search space could be searching values of the `C` parameter for `kernlab::ksvm()`:
 
 ```{r}
-### ex: create a search space for the C hyperparameter from 0.01 to 0.1
+# ex: create a search space for the C hyperparameter from 0.01 to 0.1
 ps = makeParamSet(
   makeNumericParam("C", lower = 0.01, upper = 0.1)
 )
@@ -41,7 +41,7 @@ ps = makeParamSet(
 An example of the optimization algorithm could be performing random search on the space:
 
 ```{r}
-### ex: random search with 100 iterations
+# ex: random search with 100 iterations
 ctrl = makeTuneControlRandom(maxit = 100L)
 ```
 
@@ -172,10 +172,10 @@ As no performance measure was specified, by default the error rate ([mmce](measu
 Note that each measure (`makeMeasure()`) "knows" if it is minimized or maximized during tuning.
 
 ```{r}
-### error rate
+# error rate
 mmce$minimize
 
-### accuracy
+# accuracy
 acc$minimize
 ```
 

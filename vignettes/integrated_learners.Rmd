@@ -30,10 +30,10 @@ See also `RLearner()` for details.
 ```{r include=FALSE}
 library("mlr")
 library("pander")
-## baseR, urlBasePackages, urlContribPackages are defined in build
+# baseR, urlBasePackages, urlContribPackages are defined in build
 linkPkg = function(x) {
   x = strsplit(x, ",")[[1]]
-  x = mlr:::cleanupPackageNames(x)    ## remove exclamation marks
+  x = mlr:::cleanupPackageNames(x)    # remove exclamation marks
   if (urlBasePackages != urlContribPackages) {
     ind = x %in% baseR
     url = c(urlContribPackages, urlBasePackages)[ind + 1]
@@ -44,7 +44,7 @@ linkPkg = function(x) {
 }
 
 getTab = function(type) {
-  cn = function(x) if (is.null(x)) NA else gsub("\\n", " ", x)
+  cn = function(x) if (is.null(x)) NA else {r = gsub("\\n", " ", x); gsub("(\\$)", "\\\\\\1", r)}
   lrns = listLearners(type)
   lrns$note[is.na(lrns$note)] = ""
   cols = c("class", "type", "package", "short.name", "name", "numerics", "factors", "ordered", "missings", "weights", "note", "installed")
