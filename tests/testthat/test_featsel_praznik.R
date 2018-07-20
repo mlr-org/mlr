@@ -10,7 +10,6 @@ test_that("filterFeatures_praznik", {
   df = convertDataFrameCols(df, logicals.as.factor = TRUE)
   task = makeClassifTask(data = df, target = "f")
 
-
   candidates = as.character(listFilterMethods()$id)
   candidates = candidates[startsWith(candidates, "praznik.")]
   for (candidate in candidates) {
@@ -19,6 +18,7 @@ test_that("filterFeatures_praznik", {
     expect_data_frame(fv$data, nrow = getTaskNFeats(task))
     expect_set_equal(fv$data$name, getTaskFeatureNames(task))
     expect_equal(sum(!is.na(fv$data[[candidate]])), 2L)
+    expect_numeric(fv$data[[candidate]], lower = 0, upper = 1, all.missing = FALSE)
 
     lrn = makeLearner("classif.featureless")
     lrn = makeFilterWrapper(learner = lrn, fw.method = candidate, fw.abs = 3L)

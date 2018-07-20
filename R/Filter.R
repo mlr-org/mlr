@@ -659,14 +659,10 @@ makeFilter(
   }
 )
 
-# fun must return a named vector of feature importance values. By convention the most important features receive the highest scores. If you are making use of the nselect option fun can either return a vector of nselect scores or a vector as long as the total numbers of features in the task filled with NAs for all features whose scores weren't calculated.
-# test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 2)
-# test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 4)
-
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only tested with classification task with non-missing values
-#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' Filters in the praznik package using mutual information criteria in a greedy forward search fashion.
+#' As the feature scores are not guaranteed to be monotone, the scores returned by \pkg{mlr} reflect the
+#' select order instead. The selected features get scores \code{1}, \code{(n-1)/n}, ..., \code{1/n} where \code{n}
+#' is the total number of features.
 #' @rdname makeFilter
 #' @name makeFilter
 NULL
@@ -682,7 +678,8 @@ praznik.filter = function(fun) {
     X = data[getTaskFeatureNames(task)]
     Y = data[[getTaskTargetNames(task)]]
     k = max(min(nselect, ncol(X)), 1L)
-    score = fun(X, Y, k = k)$score
+    selected = names(fun(X, Y, k = k)$selection)
+    score = setNames(rev(seq_along(selected)) / length(selected), selected)
 
     if (length(score) < ncol(X)) {
       unscored = sample(setdiff(names(X), names(score)))
@@ -751,7 +748,7 @@ makeFilter(
   name = "praznik.CMIM",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik.filter("CMIM")
 )
