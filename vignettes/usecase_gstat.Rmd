@@ -54,13 +54,13 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # making spatial
-coordinates(meuse) = ~x+y
-coordinates(meuse.grid) = ~x+y
-gridded(meuse.grid) = TRUE
+sp::coordinates(meuse) = ~x+y
+sp::coordinates(meuse.grid) = ~x+y
+sp::gridded(meuse.grid) = TRUE
 # interpolating
-zinc.idw = idw(zinc~1, meuse, meuse.grid)
+zinc.idw = gstat::idw(zinc~1, meuse, meuse.grid)
 # mapping
-idw.gstat.plot = spplot(zinc.idw["var1.pred"], do.log = F, colorkey = TRUE,  main = "zn : idw interpoaltion (gstat)")
+idw.gstat.plot = sp::spplot(zinc.idw["var1.pred"], do.log = F, colorkey = TRUE,  main = "zn : idw interpoaltion (gstat)")
 ```
 
 And using __mlr__ : 
@@ -84,9 +84,9 @@ mod.idw = train(lrn.idw, task.idw)
 newdata.pred.idw = predict(mod.idw, newdata = meuse.grid)
 mlr.idw = bind_cols(data.frame(meuse.grid), newdata.pred.idw$data)
 # mapping
-coordinates(mlr.idw) = ~x+y
-gridded(mlr.idw) = TRUE
-idw.mlr.plot = spplot(mlr.idw["response"], do.log = F, colorkey = TRUE, main = "zn : idw interpoaltion (mlr)")
+sp::coordinates(mlr.idw) = ~x+y
+sp::gridded(mlr.idw) = TRUE
+idw.mlr.plot = sp::spplot(mlr.idw["response"], do.log = F, colorkey = TRUE, main = "zn : idw interpoaltion (mlr)")
 ```
 
 Let's check that spatial predictions outputs are identical for the 2 methods :
@@ -107,9 +107,9 @@ Here is the code using pure __gstat__ :
 data(meuse)
 data(meuse.grid)
 # imputing values to missing data (using mlr::imput)
-meuse = mlr::impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
+meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
-meuse.grid = mlr::impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
+meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # making spatial
 sp::coordinates(meuse) = ~x+y
@@ -117,11 +117,11 @@ sp::coordinates(meuse.grid) = ~x+y
 sp::gridded(meuse.grid) = TRUE
 # interpolating
 ts.gstat = meuse.grid
-ts.gstat$ts1 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 1)$var1.pred
-ts.gstat$ts2 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 2)$var1.pred
-ts.gstat$ts3 = krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 3)$var1.pred
+ts.gstat$ts1 = sp::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 1)$var1.pred
+ts.gstat$ts2 = sp::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 2)$var1.pred
+ts.gstat$ts3 = sp::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 3)$var1.pred
 # mapping
-ts.gstat.plot = spplot(ts.gstat, c("ts1", "ts2", "ts3"), main = "log(zn) : ts interpolation (gstat)")
+ts.gstat.plot = sp::spplot(ts.gstat, c("ts1", "ts2", "ts3"), main = "log(zn) : ts interpolation (gstat)")
 ```
 
 And using __mlr__ : 
@@ -157,9 +157,9 @@ ts.mlr$mlr.ts.2 = (bind_cols(data.frame(meuse.grid), newdata.pred.ts.2$data))$re
 newdata.pred.ts.3 = predict(mod.ts.3, newdata = meuse.grid)
 ts.mlr$mlr.ts.3 = (bind_cols(data.frame(meuse.grid), newdata.pred.ts.3$data))$response
 # mapping
-coordinates(ts.mlr) = ~x+y
-gridded(ts.mlr) = TRUE
-ts.mlr.plot = spplot(ts.mlr, c("mlr.ts.1", "mlr.ts.2", "mlr.ts.3"), main = "log(zn) : ts interpolation (mlr)")
+sp::coordinates(ts.mlr) = ~x+y
+sp::gridded(ts.mlr) = TRUE
+ts.mlr.plot = sp::spplot(ts.mlr, c("mlr.ts.1", "mlr.ts.2", "mlr.ts.3"), main = "log(zn) : ts interpolation (mlr)")
 ```
 
 Let's check that spatial predictions outputs are identical for the 2 methods :
@@ -186,20 +186,20 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # making spatial
-coordinates(meuse) = ~x+y
-coordinates(meuse.grid) = ~x+y
-gridded(meuse.grid) = TRUE
+sp::coordinates(meuse) = ~x+y
+sp::coordinates(meuse.grid) = ~x+y
+sp::gridded(meuse.grid) = TRUE
 # computing sample variogram
-lzn.vgm = variogram(log(zinc)~1, meuse)
+lzn.vgm = gstat::variogram(log(zinc)~1, meuse)
 # manually fitting a model to the vgm with constant mean
-lzn.fit = fit.variogram(lzn.vgm, model = vgm(1, "Sph", 900, 1))
+lzn.fit = gstat::fit.variogram(lzn.vgm, model = vgm(1, "Sph", 900, 1))
 # to show the plot run : plot(lzn.vgm, lzn.fit)
 # kriging
-ok.gstat = krige(log(zinc)~1, meuse, meuse.grid, model = lzn.fit)
+ok.gstat = gstat::krige(log(zinc)~1, meuse, meuse.grid, model = lzn.fit)
 # mapping
-ok.gstat.plot = spplot(ok.gstat["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
+ok.gstat.plot = sp::spplot(ok.gstat["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
 # mapping the se
-ok.se.gstat.plot = spplot(ok.gstat["var1.var"], do.log = F, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (gstat)")
+ok.se.gstat.plot = sp::spplot(ok.gstat["var1.var"], do.log = F, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (gstat)")
 ```
 
 And using __mlr__
@@ -225,9 +225,9 @@ mod.krg = train(lrn.krg, task.krg)
 newdata.pred.krg = predict(object = mod.krg, newdata = meuse.grid)
 ok.mlr = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
 # mapping
-coordinates(ok.mlr) = ~x+y
-gridded(ok.mlr) = TRUE
-ok.mlr.plot = spplot(ok.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
+sp::coordinates(ok.mlr) = ~x+y
+sp::gridded(ok.mlr) = TRUE
+ok.mlr.plot = sp::spplot(ok.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
 # SE - defining the standard error learner by altering the previous one.
 se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
 # training the SE model
@@ -236,9 +236,9 @@ se.mod.krg = train(se.lrn.krg, task.krg)
 se.newdata.pred.krg = predict(object = se.mod.krg, newdata = meuse.grid)
 ok.se.mlr = bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
 # SE mapping
-coordinates(ok.se.mlr) = ~x+y
-gridded(ok.se.mlr) = TRUE
-ok.se.mlr.plot = spplot(ok.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (mlr)")
+sp::coordinates(ok.se.mlr) = ~x+y
+sp::gridded(ok.se.mlr) = TRUE
+ok.se.mlr.plot = sp::spplot(ok.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (mlr)")
 ```
 
 Let's check that spatial predictions outputs are identical for the 2 methods :
@@ -265,21 +265,21 @@ meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
 # making spatial
-coordinates(meuse) = ~x+y
-coordinates(meuse.grid) = ~x+y
-gridded(meuse.grid) = TRUE
+sp::coordinates(meuse) = ~x+y
+sp::coordinates(meuse.grid) = ~x+y
+sp::gridded(meuse.grid) = TRUE
 # computing sample variogram
-lzn.vgm = variogram(log(zinc)~1, meuse)
+lzn.vgm = gstat::variogram(log(zinc)~1, meuse)
 # manually fitting a model to the vgm with a mean function where sqrt dist is the explanatory var
-lzn.vgm = variogram(log(zinc)~sqrt(dist), meuse)
-lzn.fit = fit.variogram(lzn.vgm, model = vgm(1, "Exp", 300, 1))
+lzn.vgm = gstat::variogram(log(zinc)~sqrt(dist), meuse)
+lzn.fit = gstat::fit.variogram(lzn.vgm, model = vgm(1, "Exp", 300, 1))
 # to show the plot run : plot(lzn.vgm, lzn.fit)
 # kriging
-ked.gstat = krige(log(zinc)~sqrt(dist), meuse, meuse.grid, model = lzn.fit)
+ked.gstat = gstat::krige(log(zinc)~sqrt(dist), meuse, meuse.grid, model = lzn.fit)
 # mapping
-ked.gstat.plot = spplot(ked.gstat["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) : ked interpolation (gstat)")
+ked.gstat.plot = sp::spplot(ked.gstat["var1.pred"], do.log = F, colorkey = TRUE, main = "log(zn) : ked interpolation (gstat)")
 # mapping the se
-ked.se.gstat.plot = spplot(ked.gstat["var1.var"], do.log = F, colorkey = TRUE, main = "se(log(zn)) : ked interpolation (gstat)")
+ked.se.gstat.plot = sp::spplot(ked.gstat["var1.var"], do.log = F, colorkey = TRUE, main = "se(log(zn)) : ked interpolation (gstat)")
 ```
 
 And using __mlr__
@@ -308,9 +308,9 @@ mod.krg = train(lrn.krg, task.krg)
 newdata.pred.krg = predict(object = mod.krg, newdata = meuse.grid)
 ked.mlr = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
 # mapping
-coordinates(ked.mlr) = ~x+y
-gridded(ked.mlr) = TRUE
-ked.mlr.plot = spplot(ked.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ked interpolation (mlr)")
+sp::coordinates(ked.mlr) = ~x+y
+sp::gridded(ked.mlr) = TRUE
+sp::ked.mlr.plot = sp::spplot(ked.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ked interpolation (mlr)")
 # SE - defining the standard error learner by altering the previous one.
 se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
 # training the SE model
@@ -319,9 +319,9 @@ se.mod.krg = train(se.lrn.krg, task.krg)
 se.newdata.pred.krg = predict(object = se.mod.krg, newdata = meuse.grid)
 ked.se.mlr = bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
 # SE mapping
-coordinates(ked.se.mlr) = ~x+y
-gridded(ked.se.mlr) = TRUE
-ked.se.mlr.plot = spplot(ked.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ked interpolation (mlr)")
+sp::coordinates(ked.se.mlr) = ~x+y
+sp::gridded(ked.se.mlr) = TRUE
+ked.se.mlr.plot = sp::spplot(ked.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ked interpolation (mlr)")
 ```
 
 Let's check that spatial predictions outputs are identical for the 2 methods :
