@@ -117,9 +117,9 @@ sp::coordinates(meuse.grid) = ~x+y
 sp::gridded(meuse.grid) = TRUE
 # interpolating
 ts.gstat = meuse.grid
-ts.gstat$ts1 = sp::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 1)$var1.pred
-ts.gstat$ts2 = sp::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 2)$var1.pred
-ts.gstat$ts3 = sp::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 3)$var1.pred
+ts.gstat$ts1 = gstat::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 1)$var1.pred
+ts.gstat$ts2 = gstat::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 2)$var1.pred
+ts.gstat$ts3 = gstat::krige(log(zinc) ~ 1, meuse, meuse.grid, degree = 3)$var1.pred
 # mapping
 ts.gstat.plot = sp::spplot(ts.gstat, c("ts1", "ts2", "ts3"), main = "log(zn) : ts interpolation (gstat)")
 ```
@@ -310,7 +310,7 @@ ked.mlr = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
 # mapping
 sp::coordinates(ked.mlr) = ~x+y
 sp::gridded(ked.mlr) = TRUE
-sp::ked.mlr.plot = sp::spplot(ked.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ked interpolation (mlr)")
+ked.mlr.plot = sp::spplot(ked.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ked interpolation (mlr)")
 # SE - defining the standard error learner by altering the previous one.
 se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
 # training the SE model
