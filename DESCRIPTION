@@ -160,7 +160,8 @@ Suggests:
     TH.data,
     wavelets,
     xgboost (>= 0.6-2),
-    sp
+    sp,
+    gridExtra
 LazyData: yes
 ByteCompile: yes
 Version: 2.13
