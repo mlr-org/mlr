@@ -13,10 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 
 # show grouped code output instead of single lines
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 One reason why random forests perform so well is that they are using bagging as

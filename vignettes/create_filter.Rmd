@@ -13,10 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 
 # show grouped code output instead of single lines
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 A lot of feature filter methods are already integrated in `mlr` and a complete list is given in the [Appendix](filter_methods.html){target="_blank"} or can be obtained using `listFilterMethods()`.
