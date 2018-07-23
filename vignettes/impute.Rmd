@@ -15,10 +15,7 @@ library("ggplot2")
 library("lattice")
 
 # show grouped code output instead of single lines
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 `mlr` provides several imputation methods which are listed on the help page `imputations()`.
