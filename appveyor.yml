@@ -6,17 +6,12 @@ init:
           $ErrorActionPreference = "Stop"
           Invoke-WebRequest https://raw.githubusercontent.com/rwinlib/base/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
           Import-Module '..\appveyor-tool.ps1'
-  - ps: >-
-        if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
-          cinst pandoc
-        }
-  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
-  - pandoc -v
 install:
   - ps: Bootstrap
   - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
   - cmd: R -q -e "getOption('repos')"
-  - cmd: R -q -e "install.packages('remotes'); remotes::install_github('pat-s/tic@rcmdcheck-build-args'); tic::prepare_all_stages()"
+  - cmd: R -q -e "install.packages('devtools'); devtools::install_github('pat-s/tic@rcmdcheck-build-args'); tic::prepare_all_stages()"
+
 
 cache:
   - C:\RLibrary
@@ -25,7 +20,14 @@ cache:
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
 after_build: R -q -e "tic::after_install()"
-before_test: R -q -e "tic::before_script()"
+before_test:
+ - ps: >-
+      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
+        cinst pandoc
+      }
+ - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+ - pandoc -v
+ - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
 on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
 on_failure: R -q -e "tic::after_failure()"
