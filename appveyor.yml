@@ -1,0 +1,69 @@
+# DO NOT CHANGE the "init" and "install" sections below
+
+# Download script file from GitHub
+init:
+  - ps:   |
+          $ErrorActionPreference = "Stop"
+          Invoke-WebRequest https://raw.githubusercontent.com/rwinlib/base/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+          Import-Module '..\appveyor-tool.ps1'
+install:
+  - ps: Bootstrap
+  - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
+  - cmd: R -q -e "getOption('repos')"
+  - cmd: R -q -e "install.packages('devtools'); devtools::install_github('pat-s/tic@rcmdcheck-build-args'); tic::prepare_all_stages()"
+
+
+cache:
+  - C:\RLibrary
+  - C:\Program Files (x86)\Pandoc\
+
+before_build: R -q -e "tic::before_install()"
+build_script: R -q -e "tic::install()"
+after_build: R -q -e "tic::after_install()"
+before_test:
+ - ps: >-
+      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
+        cinst pandoc
+      }
+ - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+ - pandoc -v
+ - R -q -e "tic::before_script()"
+test_script: R -q -e "tic::script()"
+on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
+on_failure: R -q -e "tic::after_failure()"
+before_deploy: R -q -e "tic::before_deploy()"
+deploy_script: R -q -e "tic::deploy()"
+after_deploy: R -q -e "tic::after_deploy()"
+on_finish: R -q -e "tic::after_script()"
+
+# Adapt as necessary starting from here
+
+environment:
+  GITHUB_PAT:
+    secure: VXO22OHLkl4YhVIomSMwCZyOTx03Xf2WICaVng9xH7gISlAg8a+qrt1DtFtk8sK5
+  RCMDCHECK: TRUE
+  _R_CHECK_FORCE_SUGGESTS_: false
+  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown xgboost xml2'
+
+#  matrix:
+#    - R_VERSION: devel
+#    - R_VERSION: release
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
+    name: Bits
