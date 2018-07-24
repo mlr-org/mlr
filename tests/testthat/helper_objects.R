@@ -57,6 +57,7 @@ multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target 
 multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
 multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
 multilabel.small.inds = c(1, 52, 53, 123)
+multilabel.class.col = c(6, 7)
 
 noclass.df = iris[, -5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
@@ -172,3 +173,45 @@ mediumblue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #3366F
 red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
 red.rug.line.xpath = "/svg:svg//svg:line[contains(@style, 'stroke: #FF0000;')]"
 black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"
+
+#multiregr
+multiregr.df = BostonHousing
+multiregr.formula = medv + lstat ~ .
+multiregr.target = c("medv", "lstat")
+multiregr.train.inds = seq(1, 506, 7)
+multiregr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
+multiregr.train = multiregr.df[regr.train.inds, ]
+multiregr.test  = multiregr.df[regr.test.inds, ]
+multiregr.task = makeMultiRegrTask("multiregrtask", data = multiregr.df, target = multiregr.target)
+multiregr.class.col = c(13, 14)
+
+multiregr.small.df = BostonHousing[150:160, ]
+multiregr.small.formula = medv + lstat ~ .
+multiregr.small.target = c("medv", "lstat")
+multiregr.small.train.inds = 1:7
+multiregr.small.test.inds  = setdiff(seq_len(nrow(multiregr.small.df)), multiregr.small.train.inds)
+multiregr.small.train = multiregr.small.df[multiregr.small.train.inds, ]
+multiregr.small.test  = multiregr.small.df[multiregr.small.test.inds, ]
+multiregr.small.task = makeMultiRegrTask("multiregrtask", data = multiregr.small.df, target = multiregr.small.target)
+
+#mixedoutput
+mixedoutput.df = BostonHousing
+mixedoutput.df$medv = as.factor(ifelse(mixedoutput.df$medv > 20, "high", "low"))
+mixedoutput.formula = medv + lstat ~ .
+mixedoutput.target = c("medv", "lstat")
+mixedoutput.train.inds = seq(1, 506, 7)
+mixedoutput.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
+mixedoutput.train = mixedoutput.df[regr.train.inds, ]
+mixedoutput.test  = mixedoutput.df[regr.test.inds, ]
+mixedoutput.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.df, target = mixedoutput.target)
+mixedoutput.class.col = c(13, 14)
+
+mixedoutput.small.df = BostonHousing[150:160, ]
+mixedoutput.small.df$medv = as.factor(ifelse(mixedoutput.small.df$medv > 20, "high", "low"))
+mixedoutput.small.formula = medv + lstat ~ .
+mixedoutput.small.target = c("medv", "lstat")
+mixedoutput.small.train.inds = 1:7
+mixedoutput.small.test.inds  = setdiff(seq_len(nrow(mixedoutput.small.df)), mixedoutput.small.train.inds)
+mixedoutput.small.train = mixedoutput.small.df[mixedoutput.small.train.inds, ]
+mixedoutput.small.test  = mixedoutput.small.df[mixedoutput.small.test.inds, ]
+mixedoutput.small.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.small.df, target = mixedoutput.small.target)

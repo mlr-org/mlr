@@ -19,6 +19,9 @@ test_that("getHyperPars", {
   lrn = makeLearner("multilabel.rFerns")
   expect_true(setequal(getHyperPars(lrn), list()))
 
+  lrn = makeLearner("multiregr.randomForestSRC")
+  expect_true(setequal(getHyperPars(lrn), "na.impute"))
+
   lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
   expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
 
