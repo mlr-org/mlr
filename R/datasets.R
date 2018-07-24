@@ -207,3 +207,13 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+#' Wine rating task for ordinal regression.
+#' The variable 'response' was deleted, as the rating was directly calculated by this variable.
+#' Contains the task (`wine.task`).
+#'
+#' @name wine.task
+#' @references See [ordinal::wine].
+#' @keywords data
+#' @docType data
+NULL
