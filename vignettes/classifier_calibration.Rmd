@@ -13,10 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 
 # show grouped code output instead of single lines
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 A classifier is "calibrated" when the predicted probability of a class matches the expected frequency of that class. 

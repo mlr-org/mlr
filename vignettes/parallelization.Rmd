@@ -15,10 +15,7 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 **R** by default does not make use of parallelization.

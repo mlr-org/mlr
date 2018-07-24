@@ -14,10 +14,7 @@ library("ParamHelpers")
 urlContribPackages = urlBasePackages = "http://www.rdocumentation.org/packages/"
 
 ## show grouped code output instead of single lines
-knitr::opts_chunk$set(collapse = FALSE)
-knitr::knit_hooks$set(document = function(x){
-  gsub("```\n*```r*\n*", "", x)
-})
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 This page lists the learning methods already integrated in `mlr`.
