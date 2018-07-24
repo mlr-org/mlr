@@ -168,7 +168,8 @@ makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), propert
 
 #' @export
 #' @rdname RLearner
-makeRLearnerMultiRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
+makeRLearnerMultiRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+  name = cl, short.name = cl, note = "", callees = character(0L)) {
   addClasses(
     makeRLearnerInternal(cl, "multiregr", package, par.set, par.vals, properties, name, short.name, note, callees),
     c(cl, "RLearnerMultiRegr")
@@ -177,9 +178,20 @@ makeRLearnerMultiRegr = function(cl, package, par.set, par.vals = list(), proper
 
 #' @export
 #' @rdname RLearner
-makeRLearnerMixedOutput = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
+makeRLearnerMixedOutput = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+  name = cl, short.name = cl, note = "", callees = character(0L)) {
   addClasses(
     makeRLearnerInternal(cl, "mixedoutput", package, par.set, par.vals, properties, name, short.name, note, callees),
     c(cl, "RLearnerMixedOutput")
+  )
+}
+
+#' @export
+#' @rdname RLearner
+makeRLearnerOrdinal = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+  name = cl, short.name = cl, note = "", callees = character(0L)) {
+  addClasses(
+    makeRLearnerInternal(cl, "ordinal", package, par.set, par.vals, properties, name, short.name, note, callees),
+    c(cl, "RLearnerOrdinal")
   )
 }
