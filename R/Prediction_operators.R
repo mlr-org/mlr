@@ -143,6 +143,13 @@ getPredictionResponse.PredictionMixedOutput = function(pred) {
   setColNames(m, pred$task.desc$class.levels)
 }
 
+#' @export
+getPredictionResponse.PredictionOrdinal = function(pred) {
+  i = stri_detect_regex(colnames(pred$data), "^response\\.")
+  m = pred$data[, i]
+  setColNames(m, pred$task.desc$ordinal.levels)
+}
+
 #' @rdname getPredictionResponse
 #' @export
 getPredictionSE = function(pred) {
@@ -194,6 +201,13 @@ getPredictionTruth.PredictionMixedOutput = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = pred$data[, i]
   setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @export
+getPredictionTruth.PredictionOrdinal = function(pred) {
+  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
+  m = pred$data[, i]
+  setColNames(m, pred$task.desc$ordinal.levels)
 }
 
 #' @title Return the error dump of a failed Prediction.

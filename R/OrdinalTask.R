@@ -32,5 +32,9 @@ print.OrdinalTask = function(x, ...) {
 #' @export
 #' @rdname makeTaskDesc
 makeOrdinalTaskDesc = function(id, data, target, weights, blocking, coordinates) {
-  addClasses(makeTaskDescInternal("ordinal", id, data, target, weights, blocking, coordinates), c("OrdinalTaskDesc", "SupervisedTaskDesc"))
+  levs = levels(data[[target]])
+  td = makeTaskDescInternal("ordinal", id, data, target, weights, blocking, coordinates)
+  td$ordinal.levels = levs
+  td$level.distribution = table(data[target])
+  addClasses(td, c("OrdinalTaskDesc", "SupervisedTaskDesc"))
 }
