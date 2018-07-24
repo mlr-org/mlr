@@ -204,3 +204,52 @@ print.Prediction = function(x, ...) {
   printHead(as.data.frame(x), ...)
 }
 
+#' @export
+makePrediction.MultiRegrTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+  data = namedList(c("id", "truth", "response", "se"))
+  data$id = id
+  data$truth = truth
+  if (predict.type == "se") {
+    data$se = y
+  } else {
+    data$response = y
+  }
+
+  p = makeS3Obj(c("PredictionMultiRegr", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(as.data.frame(filterNull(data)), row.names),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time,
+    error = error,
+    dump = dump
+  )
+  return(p)
+}
+
+#' @export
+makePrediction.MixedOutputTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+  data = namedList(c("id", "truth", "response", "se", "prob"))
+  data$id = id
+  data$truth = truth
+
+  data$response = y
+
+  # Other predict types are not supported yet! #FIXME
+  # if (predict.type == "se") {
+  #   data$se = y
+  # } else {
+  #   data$response = y
+  # }
+
+  p = makeS3Obj(c("PredictionMixedOutput", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(as.data.frame(filterNull(data)), row.names),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time,
+    error = error,
+    dump = dump
+  )
+  return(p)
+}

@@ -129,6 +129,20 @@ getPredictionResponse.PredictionMultilabel = function(pred) {
   setColNames(m, pred$task.desc$class.levels)
 }
 
+#' @export
+getPredictionResponse.PredictionMultiRegr = function(pred) {
+  i = stri_detect_regex(colnames(pred$data), "^response\\.")
+  m = as.matrix(pred$data[, i])
+  setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @export
+getPredictionResponse.PredictionMixedOutput = function(pred) {
+  i = stri_detect_regex(colnames(pred$data), "^response\\.")
+  m = pred$data[, i]
+  setColNames(m, pred$task.desc$class.levels)
+}
+
 #' @rdname getPredictionResponse
 #' @export
 getPredictionSE = function(pred) {
@@ -165,6 +179,20 @@ getPredictionTruth.PredictionSurv = function(pred) {
 getPredictionTruth.PredictionMultilabel = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = as.matrix(pred$data[, i])
+  setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @export
+getPredictionTruth.PredictionMultiRegr = function(pred) {
+  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
+  m = as.matrix(pred$data[, i])
+  setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @export
+getPredictionTruth.PredictionMixedOutput = function(pred) {
+  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
+  m = pred$data[, i]
   setColNames(m, pred$task.desc$class.levels)
 }
 
