@@ -253,3 +253,44 @@ makePrediction.MixedOutputTaskDesc = function(task.desc, row.names, id, truth, p
   )
   return(p)
 }
+
+#' @export
+makePrediction.OrdinalTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+  data = namedList(c("id", "truth", "response", "prob"))
+  data$id = id
+  # truth can come from a simple "newdata" df. then there might not be all factor levels present
+  if (!is.null(truth))
+    levels(truth) = union(levels(truth), task.desc$class.levels)
+  data$truth = truth
+  if (predict.type == "response") {
+    data$response = y
+    data = as.data.frame(filterNull(data))
+  } else {
+    data$prob = y
+    data = as.data.frame(filterNull(data))
+    # fix columnnames for prob if strange chars are in factor levels
+    indices = stri_detect_fixed(names(data), "prob.")
+    if (sum(indices) > 0)
+      names(data)[indices] = stri_paste("prob.", colnames(y))
+  }
+
+  p = makeS3Obj(c("PredictionOrdinal", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(data, row.names),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time,
+    error = error,
+    dump = dump
+  )
+
+  if (predict.type == "prob") {
+    # set default threshold to 1/k
+    if (is.null(predict.threshold)) {
+      predict.threshold = rep(1 / length(task.desc$class.levels), length(task.desc$class.levels))
+      names(predict.threshold) = task.desc$class.levels
+    }
+    p = setThreshold(p, predict.threshold)
+  }
+  return(p)
+}

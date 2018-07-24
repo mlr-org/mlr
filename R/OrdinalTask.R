@@ -19,7 +19,14 @@ makeOrdinalTask = function(id = deparse(substitute(data)), data, target, weights
   }
 
   task$task.desc = makeOrdinalTaskDesc(id, data, target, weights, blocking, coordinates)
-  addClasses(task, "RegrTask")
+  addClasses(task, "OrdinalTask")
+}
+
+#' @export
+print.OrdinalTask = function(x, ...) {
+  y = levels(getTaskTargets(x))
+  print.SupervisedTask(x)
+  cat("Levels:", paste(y, collapse = " < "))
 }
 
 #' @export
