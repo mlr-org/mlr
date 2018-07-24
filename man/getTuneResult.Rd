@@ -20,6 +20,7 @@ Returns the optimal hyperparameters and optimization path after training.
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
   \code{\link{makeTuneControlCMAES}},

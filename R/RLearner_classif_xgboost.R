@@ -23,7 +23,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "eval_metric", default = "error", tunable = FALSE),
       makeNumericLearnerParam(id = "base_score", default = 0.5, tunable = FALSE),
       makeNumericLearnerParam(id = "max_delta_step", lower = 0, default = 0),
-      makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
+      makeNumericLearnerParam(id = "missing", default = NA, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
       makeIntegerVectorLearnerParam(id = "monotone_constraints", default = 0, lower = -1, upper = 1),
       makeNumericLearnerParam(id = "tweedie_variance_power", lower = 1, upper = 2, default = 1.5, requires = quote(objective == "reg:tweedie")),
