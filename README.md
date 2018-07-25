@@ -29,9 +29,9 @@ Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](h
 
 Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately. 
-An overview of all mlr related publications can be found [here](http://mlr-org.github.io/mlr/articles/tutorial/devel/mlr_publications.html).
+An overview of all mlr related publications can be found [here](http://mlr-org.github.io/mlr/articles/mlr_publications.html).
 
-A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).
+A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Misc#publications-that-use-mlr).
 
 # Introduction
 
