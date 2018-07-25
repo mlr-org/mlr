@@ -19,7 +19,7 @@ development:
 home:
   links:
   - text: Cheatsheet
-    href: https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf
+    href: https://github.com/mlr-org/mlr/blob/master/inst/cheatsheet/MlrCheatsheet.pdf
 
 navbar:
   title:
