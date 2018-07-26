@@ -80,7 +80,6 @@ getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
   character(0L)
 }
 
-
 #' @title Get the class levels for classification and multilabel tasks.
 #'
 #' @description
@@ -106,6 +105,11 @@ getTaskClassLevels.MultilabelTask = function(x) {
 }
 
 #' @export
+getTaskClassLevels.OrdinalTask = function(x) {
+  getTaskClassLevels(getTaskDesc(x))
+}
+
+#' @export
 getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDesc(x)$class.levels
 }
@@ -113,6 +117,35 @@ getTaskClassLevels.ClassifTaskDesc = function(x) {
 #' @export
 getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDesc(x)$class.levels
+}
+
+#' @export
+getTaskClassLevels.OrdinalTaskDesc = function(x) {
+  getTaskDesc(x)$ordinal.levels
+}
+
+#' @title Get the ordianl levels for ordinal tasks.
+#'
+#' @description
+#' NB: For ordinal, [getTaskOrdinalLevels] and [getTaskClassLevels]
+#' actually return the same thing.
+#'
+#' @template arg_task_or_desc
+#' @return ([character]).
+#' @export
+#' @family task
+getTaskOrdinalLevels = function(x) {
+  UseMethod("getTaskOrdinalLevels")
+}
+
+#' @export
+getTaskOrdinalLevels.OrdinalTask = function(x) {
+  getTaskOrdinalLevels(getTaskDesc(x))
+}
+
+#' @export
+getTaskOrdinalLevels.OrdinalTaskDesc = function(x) {
+  getTaskDesc(x)$ordinal.levels
 }
 
 #' Get feature names of task.
@@ -445,7 +478,8 @@ changeData = function(task, data, costs, weights, coordinates) {
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "multiregr" = makeMultiRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
-    "mixedoutput" = makeMixedOutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
+    "mixedoutput" = makeMixedOutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "ordinal" = makeOrdinalTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
   )
 
   return(task)
