@@ -33,6 +33,7 @@ setPredictType.Learner = function(learner, predict.type) {
     multilabel = c("response", "prob"),
     multiregr = c("response", "se"),
     mixedoutput = c("response"),
+    ordinal = c("response", "prob"),
     regr = c("response", "se"),
     surv = c("response", "prob"),
     costsens = "response",
