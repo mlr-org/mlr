@@ -19,7 +19,7 @@ development:
 home:
   links:
   - text: Cheatsheet
-    href: https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf
+    href: https://github.com/mlr-org/mlr/blob/master/inst/cheatsheet/MlrCheatsheet.pdf
 
 navbar:
   title:
@@ -148,4 +148,4 @@ navbar:
   - icon: fa-stack-overflow
     href: https://stackoverflow.com/questions/tagged/mlr
   - icon: fa-rss
-    href: https://mlr-org.github.io
+    href: https://mlr-blog.netlify.com/
