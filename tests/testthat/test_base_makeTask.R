@@ -7,6 +7,7 @@ test_that("makeXXTask ignores bad columns if check.data = FALSE", {
       multilabel = makeMultilabelTask,
       multiregr = makeMultiRegrTask,
       mixedoutput = makeMixedOutputTask,
+      ordinal = makeOrdinalTask,
       regr = makeRegrTask,
       surv = makeSurvTask)
     constructor(id = id, data = data, target = target, fixup.data = "no", check.data = FALSE)
@@ -22,6 +23,7 @@ test_that("makeXXTask ignores bad columns if check.data = FALSE", {
     multilabel = function(...) makeMultilabelTask("test", cbind(badcoldf, target1 = TRUE, target2 = FALSE), target = c("target1", "target2"), ...),
     multiregr = function(...) makeMultiRegrTask("test", cbind(badcoldf, target1 = 1, target2 = 2), target = c("target1", "target2"), ...),
     mixedoutput = function(...) makeMixedOutputTask("test", cbind(badcoldf, target1 = 1, target2 = TRUE), target = c("target1", "target2"), ...),
+    ordinal = function(...) makeOrdinalTask("test", cbind(badcoldf, target = "x"), target = "target", ...),
     regr = function(...) makeRegrTask("test", cbind(badcoldf, target = 1), target = "target", ...),
     surv = function(...) makeSurvTask("test", cbind(badcoldf, target1 = 1, target2 = FALSE), target = c("target1", "target2"), ...),
     cluster = function(...) makeClusterTask("test", badcoldf, ...))
