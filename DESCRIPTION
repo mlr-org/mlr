@@ -109,7 +109,6 @@ Suggests:
     laGP,
     LiblineaR,
     lintr (>= 1.0.0.9001),
-    lqa,
     MASS,
     mboost,
     mco,
