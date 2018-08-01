@@ -28,21 +28,21 @@
 #' @template ret_learner
 #' @family wrapper
 #' @export
-makeOrdinalWrapper = function(learner, mcw.method = "onevsrest") {
+makeOrdinalWrapper = function(learner, method = "tune.threshold") {
   learner = checkLearner(learner)
   ps = makeParamSet(
-    makeUntypedLearnerParam(id = "mcw.method", default = "onevsrest")
+    makeUntypedLearnerParam(id = "method", default = "tune.threshold")
   )
   assert(
-    checkChoice(mcw.method, c("onevsrest", "onevsone")),
-    checkFunction(mcw.method, args = "task")
+    checkChoice(method, "tune.threshold"),
+    checkFunction(method, args = "task")
   )
-  pv = list(mcw.method = mcw.method)
-  id = stri_paste(learner$id, "multiclass", sep = ".")
+  pv = list(method = method)
+  id = stri_paste(learner$id, "ordinal", sep = ".")
 
-  x = makeHomogeneousEnsemble(id = id, type = "classif", next.learner = learner,
+  x = makeHomogeneousEnsemble(id = id, type = "regr", next.learner = learner,
     package = learner$package,  par.set = ps, par.vals = pv,
-    learner.subclass = "MulticlassWrapper", model.subclass = "MulticlassModel")
+    learner.subclass = "OrdinalWrapper", model.subclass = "OrdinalModel")
   x = setPredictType(x, predict.type = "response")
   return(x)
 }
@@ -57,7 +57,7 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset = NULL, .weig
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(i = seq_along(x$row.inds), doMulticlassTrainIteration,
-                       more.args = args, level = "mlr.ensemble")
+    more.args = args, level = "mlr.ensemble")
   m = makeHomChainModel(.learner, models)
   m$cm = cm
   return(m)
@@ -76,7 +76,7 @@ doMulticlassTrainIteration = function(x, i, learner, task, weights) {
 }
 
 #' @export
-predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+predictLearner.OrdinalWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = .model$learner.model$next.model
   cm = .model$learner.model$cm
   # predict newdata with every binary model, get n x n.models matrix of +1,-1
@@ -97,7 +97,7 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, .subset 
 }
 
 #' @export
-getLearnerProperties.MulticlassWrapper = function(learner){
+getLearnerProperties.OrdinalWrapper = function(learner){
   props = getLearnerProperties(learner$next.learner)
   props = union(props, "multiclass")
   setdiff(props, "prob")
