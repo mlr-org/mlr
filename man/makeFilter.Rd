@@ -164,18 +164,21 @@ prediction rule is: class 1 if the feature exceeds a threshold and class 0
 otherwise. The performance of this classification rule is measured by the
 AUC and the resulting filter score is |0.5 - AUC|.
 
-Filters in the praznik package using mutual information criteria greedy search
-Features with higher scores are considered more important features
-Currently only tested with classification task with non-missing values
-candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+Filters from the package \pkg{praznik} use the mutual information criteria in a greedy forward fashion:
+\dQuote{praznik.CMIM}, \dQuote{praznik.DISR}, \dQuote{praznik.JMIM}, \dQuote{praznik.JMI},
+\dQuote{praznik.MIM}, \dQuote{praznik.MRMR}, \dQuote{praznik.NJMIM}.
+As the calculated feature scores are not guaranteed to be monotone, the scores returned by \pkg{mlr} reflect the
+selection order instead. The selected features get scores \code{1}, \code{(n-1)/n}, ..., \code{1/n} where \code{n}
+is the total number of features.
 
-Simple entropy based filter with Rcpp implementation
+Entropy based filters from the package \pkg{FSelectorRcpp}:
+\dQuote{FSelectorRcpp.gainratio}, dQuote{FSelectorRcpp.infogain}, \dQuote{FSelectorRcpp.symuncert}.
 
-Filter \dQuote{ranger.permutation} trains a ranger learner with
+Filter \dQuote{ranger.permutation} trains a \pkg{ranger} learner with
 \dQuote{importance = "permutation"} and assesses the variable
 importance for each feature.
 
-Filter \dQuote{ranger.impurity} trains a ranger learner with
+Filter \dQuote{ranger.impurity} trains a \pkg{ranger} learner with
 \dQuote{importance = "impurity"} and assesses the variable
 importance for each feature.
 }
