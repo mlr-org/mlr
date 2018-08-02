@@ -44,3 +44,5 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{learning_curve}
+\concept{plot}

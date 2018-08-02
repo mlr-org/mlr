@@ -4,10 +4,11 @@
 \alias{plotHyperParsEffect}
 \title{Plot the hyperparameter effects data}
 \usage{
-plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
-  plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  global.only = TRUE, interpolate = NULL, show.experiments = FALSE,
-  show.interpolated = FALSE, nested.agg = mean, partial.dep.learn = NULL)
+plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL,
+  z = NULL, plot.type = "scatter", loess.smooth = FALSE,
+  facet = NULL, global.only = TRUE, interpolate = NULL,
+  show.experiments = FALSE, show.interpolated = FALSE,
+  nested.agg = mean, partial.dep.learn = NULL)
 }
 \arguments{
 \item{hyperpars.effect.data}{(\code{HyperParsEffectData})\cr

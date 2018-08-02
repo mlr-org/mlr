@@ -4,10 +4,11 @@
 \alias{createSpatialResamplingPlots}
 \title{Create (spatial) resampling plot objects.}
 \usage{
-createSpatialResamplingPlots(task = NULL, resample = NULL, crs = NULL,
-  datum = 4326, repetitions = 1, color.train = "#0072B5",
-  color.test = "#E18727", point.size = 0.5, axis.text.size = 14,
-  x.axis.breaks = waiver(), y.axis.breaks = waiver())
+createSpatialResamplingPlots(task = NULL, resample = NULL,
+  crs = NULL, datum = 4326, repetitions = 1,
+  color.train = "#0072B5", color.test = "#E18727", point.size = 0.5,
+  axis.text.size = 14, x.axis.breaks = waiver(),
+  y.axis.breaks = waiver())
 }
 \arguments{
 \item{task}{\link{Task} \cr
@@ -156,3 +157,4 @@ Other plot: \code{\link{plotBMRBoxplots}},
 \author{
 Patrick Schratz
 }
+\concept{plot}

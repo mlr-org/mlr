@@ -33,3 +33,4 @@ Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}
 }
+\concept{impute}
