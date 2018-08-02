@@ -659,9 +659,11 @@ makeFilter(
   }
 )
 
-#' Filters in the praznik package using mutual information criteria in a greedy forward search fashion.
-#' As the feature scores are not guaranteed to be monotone, the scores returned by \pkg{mlr} reflect the
-#' select order instead. The selected features get scores \code{1}, \code{(n-1)/n}, ..., \code{1/n} where \code{n}
+#' Filters from the package \pkg{praznik} use the mutual information criteria in a greedy forward fashion:
+#' \dQuote{praznik.CMIM}, \dQuote{praznik.DISR}, \dQuote{praznik.JMIM}, \dQuote{praznik.JMI},
+#' \dQuote{praznik.MIM}, \dQuote{praznik.MRMR}, \dQuote{praznik.NJMIM}.
+#' As the calculated feature scores are not guaranteed to be monotone, the scores returned by \pkg{mlr} reflect the
+#' selection order instead. The selected features get scores \code{1}, \code{(n-1)/n}, ..., \code{1/n} where \code{n}
 #' is the total number of features.
 #' @rdname makeFilter
 #' @name makeFilter
@@ -753,7 +755,8 @@ makeFilter(
   fun = praznik.filter("CMIM")
 )
 
-#' Simple entropy based filter with Rcpp implementation
+#' Entropy based filters from the package \pkg{FSelectorRcpp}:
+#' \dQuote{FSelectorRcpp.gainratio}, dQuote{FSelectorRcpp.infogain}, \dQuote{FSelectorRcpp.symuncert}.
 #' @rdname makeFilter
 #' @name makeFilter
 NULL
@@ -762,6 +765,7 @@ FSelectorRcpp.filter = function(type) {
   force(type)
 
   function(task, nselect, ...) {
+    requireNamespace("FSelectorRcpp")
     data = getTaskData(task)
     X = data[getTaskFeatureNames(task)]
     y = data[[getTaskTargetNames(task)]]
@@ -798,7 +802,7 @@ makeFilter(
   fun = FSelectorRcpp.filter("symuncert")
 )
 
-#' Filter \dQuote{ranger.permutation} trains a ranger learner with
+#' Filter \dQuote{ranger.permutation} trains a \pkg{ranger} learner with
 #' \dQuote{importance = "permutation"} and assesses the variable
 #' importance for each feature.
 #'
@@ -820,7 +824,7 @@ makeFilter(
   }
 )
 
-#' Filter \dQuote{ranger.impurity} trains a ranger learner with
+#' Filter \dQuote{ranger.impurity} trains a \pkg{ranger} learner with
 #' \dQuote{importance = "impurity"} and assesses the variable
 #' importance for each feature.
 #'
