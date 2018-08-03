@@ -7,8 +7,8 @@
 \usage{
 generateFeatureImportanceData(task, method = "permutation.importance",
   learner, features = getTaskFeatureNames(task), interaction = FALSE,
-  measure, contrast = function(x, y) x - y, aggregation = mean, nmc = 50L,
-  replace = TRUE, local = FALSE)
+  measure, contrast = function(x, y) x - y, aggregation = mean,
+  nmc = 50L, replace = TRUE, local = FALSE)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -117,3 +117,4 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
+\concept{generate_plot_data}

@@ -97,3 +97,4 @@ Other impute: \code{\link{impute}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }
+\concept{impute}

@@ -69,3 +69,4 @@ plotTuneMultiCritResult(res, path = TRUE)
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{plotTuneMultiCritResult}}
 }
+\concept{tune_multicrit}

@@ -64,3 +64,5 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
 
 Other calibration: \code{\link{generateCalibrationData}}
 }
+\concept{calibration}
+\concept{plot}

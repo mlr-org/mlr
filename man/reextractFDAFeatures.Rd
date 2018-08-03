@@ -23,3 +23,4 @@ This function accepts a data frame or a task and an extractFDAFeatDesc
 as returned by \link{extractFDAFeatures} to extract features
 from previously unseen data.
 }
+\concept{extractFDAFeatures}
