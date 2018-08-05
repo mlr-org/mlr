@@ -21,8 +21,9 @@ makeTuneMultiCritControlGrid(same.resampling.instance = TRUE,
 makeTuneMultiCritControlMBO(n.objectives = mbo.control$n.objectives,
   same.resampling.instance = TRUE, impute.val = NULL, learner = NULL,
   mbo.control = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), continue = FALSE, log.fun = "default",
-  final.dw.perc = NULL, budget = NULL, mbo.design = NULL)
+  tune.threshold.args = list(), continue = FALSE,
+  log.fun = "default", final.dw.perc = NULL, budget = NULL,
+  mbo.design = NULL)
 
 makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
   impute.val = NULL, log.fun = "default", final.dw.perc = NULL,
@@ -154,3 +155,4 @@ parameter types can be handled.}
 Other tune_multicrit: \code{\link{plotTuneMultiCritResult}},
   \code{\link{tuneParamsMultiCrit}}
 }
+\concept{tune_multicrit}
