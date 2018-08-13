@@ -4,7 +4,8 @@
 \alias{makeMultilabelNestedStackingWrapper}
 \title{Use nested stacking method to create a multilabel learner.}
 \usage{
-makeMultilabelNestedStackingWrapper(learner, order = NULL, cv.folds = 2)
+makeMultilabelNestedStackingWrapper(learner, order = NULL,
+  cv.folds = 2)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -16,8 +17,8 @@ Specifies the chain order using the names of the target labels.
 E.g. for \code{m} target labels, this must be a character vector of length \code{m} that contains a permutation of the target label names.
 Default is \code{NULL} which uses a random ordering of the target label names.}
 
-\item{cv.folds}{(`integer(1)`)\cr
-The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is `2`.}
+\item{cv.folds}{(\code{integer(1)})\cr
+The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.}
 }
 \value{
 \link{Learner}.
@@ -87,3 +88,5 @@ Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
   \code{\link{makeMultilabelDBRWrapper}},
   \code{\link{makeMultilabelStackingWrapper}}
 }
+\concept{multilabel}
+\concept{wrapper}

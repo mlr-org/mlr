@@ -4,8 +4,8 @@
 \alias{plotResiduals}
 \title{Create residual plots for prediction objects or benchmark results.}
 \usage{
-plotResiduals(obj, type = "scatterplot", loess.smooth = TRUE, rug = TRUE,
-  pretty.names = TRUE)
+plotResiduals(obj, type = "scatterplot", loess.smooth = TRUE,
+  rug = TRUE, pretty.names = TRUE)
 }
 \arguments{
 \item{obj}{(\link{Prediction} | \link{BenchmarkResult})\cr
@@ -48,3 +48,4 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{plot}

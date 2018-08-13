@@ -4,8 +4,8 @@
 \alias{makeFeatSelWrapper}
 \title{Fuse learner with feature selection.}
 \usage{
-makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
-  control, show.info = getMlrOption("show.info"))
+makeFeatSelWrapper(learner, resampling, measures, bit.names,
+  bits.to.features, control, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -93,3 +93,5 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{featsel}
+\concept{wrapper}

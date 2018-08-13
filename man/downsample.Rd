@@ -21,9 +21,6 @@ Default is \code{FALSE}.}
 }
 \value{
 ([data.frame\code{| [Task] | [ResampleInstance]). Same type as}obj`.
-
-[data.frame` | [Task]: R:data.frame%60%20%7C%20[Task
-[ResampleInstance]: R:ResampleInstance
 }
 \description{
 Decrease the observations in a \code{task} or a \code{ResampleInstance}
@@ -34,3 +31,4 @@ to a given percentage of observations.
 
 Other downsample: \code{\link{makeDownsampleWrapper}}
 }
+\concept{downsample}

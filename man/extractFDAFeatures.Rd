@@ -53,3 +53,4 @@ parameters for reextraction}.
 Other fda: \code{\link{makeExtractFDAFeatMethod}},
   \code{\link{makeExtractFDAFeatsWrapper}}
 }
+\concept{fda}

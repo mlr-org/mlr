@@ -43,3 +43,4 @@ Other costsens: \code{\link{makeClassifTask}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}}
 }
+\concept{costsens}

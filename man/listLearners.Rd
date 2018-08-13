@@ -12,22 +12,25 @@ listLearners(obj = NA_character_, properties = character(0L),
   create = FALSE)
 
 \method{listLearners}{default}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
-  check.packages = FALSE, create = FALSE)
+  properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, check.packages = FALSE,
+  create = FALSE)
 
 \method{listLearners}{character}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
-  check.packages = FALSE, create = FALSE)
+  properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, check.packages = FALSE,
+  create = FALSE)
 
-\method{listLearners}{Task}(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
+\method{listLearners}{Task}(obj = NA_character_,
+  properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, check.packages = TRUE,
   create = FALSE)
 }
 \arguments{
-\item{obj}{(`character(1)` | [Task])\cr
-Either `character(1)` task or the type of the task, in the latter case one of:
+\item{obj}{(\code{character(1)} | \link{Task})\cr
+Either \code{character(1)} task or the type of the task, in the latter case one of:
 \dQuote{classif} \dQuote{regr} \dQuote{surv} \dQuote{costsens} \dQuote{cluster} \dQuote{multilabel}.
-Default is `NA` matching all types.}
+Default is \code{NA} matching all types.}
 
 \item{properties}{(\link{character})\cr
 Set of required properties to filter for. Default is \code{character(0)}.}
@@ -57,11 +60,9 @@ Packages are loaded if and only if this option is \code{TRUE}.
 Default is \code{FALSE}.}
 }
 \value{
-([data.frame\code{|}list` of [Learner]).
+([data.frame\code{|}list` of \link{Learner}).
 Either a descriptive data.frame that allows access to all properties of the learners
 or a list of created learner objects (named by ids of listed learners).
-
-[data.frame\code{|}list` of [Learner]: R:data.frame%60%20%7C%20%60list%60%20of%20[Learner
 }
 \description{
 Returns learning algorithms which have specific characteristics, e.g.

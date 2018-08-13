@@ -15,3 +15,4 @@ Gets the options for mlr.
 \seealso{
 Other configure: \code{\link{configureMlr}}
 }
+\concept{configure}
