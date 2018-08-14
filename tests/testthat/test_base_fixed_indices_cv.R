@@ -8,20 +8,16 @@ test_that("fixed in single resampling", {
 
   # test blocking in single resample
   lrn = makeLearner("classif.lda")
-  rdesc = makeResampleDesc("CV", iters = 30, fixed = TRUE)
+  rdesc = makeResampleDesc("CV", fixed = TRUE)
   p = resample(lrn, ct, rdesc)$pred
 
   # check if all test.inds are unique
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
 
-  # warning for wrong iter count
-  rdesc = makeResampleDesc("CV", iters = 2)
-  expect_warning(makeResampleInstance(rdesc, ct))
 })
 
 test_that("fixed in nested resampling", {
   df = multiclass.df
-  #df$Species = NULL
   fixed = as.factor(rep(1:5, rep(30, 5)))
   ct = makeClassifTask(target = multiclass.target, data = df,
    blocking = fixed)
@@ -51,19 +47,14 @@ test_that("fixed in nested resampling", {
   expect_length(p$extract, 5)
 
   # expect warning if the level of the inner inds is not reduced by one
-  inner = makeResampleDesc("CV", iters = 5, fixed = TRUE)
-  outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
+  inner = makeResampleDesc("CV", fixed = TRUE)
+  outer = makeResampleDesc("CV", fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE)
 
-  warns = capture_warnings(resample(tune_wrapper, ct, outer,
-    show.info = FALSE, extract = getTuneResult))
-
-  expect_match(warns[1],
-   "iters (5) is not equal to length of blocking levels (4)!", fixed = TRUE)
-
+  # check that a combination of fixed and normal random sampling works
   inner = makeResampleDesc("CV", iters = 5)
-  outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
+  outer = makeResampleDesc("CV", fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
                                  control = ctrl, show.info = FALSE)
   expect_success(resample(tune_wrapper, ct, outer, show.info = FALSE,
