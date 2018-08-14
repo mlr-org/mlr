@@ -24,8 +24,8 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
       stopf("To use blocking in resampling, you need to pass a factor variable when creating the task!")
     }
 
-    if (!is.null(desc$iters) && desc$iters != length(levels(droplevels(task$blocking)))) {
-      warningf("iters (%i) is not equal to length of blocking levels (%i)!", desc$iters, length(levels(droplevels(task$blocking))))
+    if (desc$iters != length(levels(task$blocking))) {
+      desc$iters = length(levels(task$blocking))
     }
     levs = levels(task$blocking)
     n_levels = length(levels(task$blocking))
