@@ -1417,7 +1417,7 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
 ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
   properties = c("surv", "req.truth", "req.model", "req.task"),
   name = "Integrated brier score using Kaplan-Meier estimator for weighting",
-  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  note = "Only works for methods for which probabilities are provided via pec::predictSurvProb. Currently these are only coxph and randomForestSRC. To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages(c("survival", "pec"))
     targets = getTaskTargets(task)
