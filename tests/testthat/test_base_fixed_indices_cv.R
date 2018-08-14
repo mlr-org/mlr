@@ -53,11 +53,12 @@ test_that("fixed in nested resampling", {
     control = ctrl, show.info = FALSE)
 
   # check that a combination of fixed and normal random sampling works
-  inner = makeResampleDesc("CV", iters = 5)
+  inner = makeResampleDesc("CV", iters = 6)
   outer = makeResampleDesc("CV", fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
                                  control = ctrl, show.info = FALSE)
-  expect_success(resample(tune_wrapper, ct, outer, show.info = FALSE,
-    extract = getTuneResult))
+  p = resample(tune_wrapper, ct, outer, show.info = FALSE,
+    extract = getTuneResult)
+  expect_length(getResamplingIndices(p, inner = TRUE)[[1]][[1]], 6)
 
 })
