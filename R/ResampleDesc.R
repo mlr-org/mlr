@@ -66,7 +66,6 @@
 #'      of test indices.}
 #'   \item{fixed (`logical(1)`)}{Whether indices supplied via argument 'blocking' in the task should be used in resampling. Default is `FALSE`.
 #'     'grouping' only works with 'CV' and the supplied indices must match the number of observations.}
-#'   }
 #'   \item{blocking.cv (`logical(1)`)}{Should 'blocking' be used in 'CV'? Default to `FALSE`}
 #'   }
 #' @param stratify (`logical(1)`)\cr
