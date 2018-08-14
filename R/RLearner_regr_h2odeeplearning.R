@@ -62,7 +62,7 @@
 # Unifrom: -value ... value, Normal: stddev
 
 # loss
-# Loss function: Automatic, CrossEntropy (for classification only), MeanSquare, Absolute (experimental) or Huber (experimental)
+# Loss function: Automatic, CrossEntropy (for classification only), Quadratic, Absolute (experimental) or Huber (experimental)
 
 # score_interval
 # Shortest time interval (in secs) between model scoring
@@ -186,7 +186,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeDiscreteLearnerParam("initial_weight_distribution",
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
-      makeDiscreteLearnerParam("loss", values = c("Automatic", "MeanSquare",
+      makeDiscreteLearnerParam("loss", values = c("Automatic", "Quadratic",
         "Absolute", "Huber")),
       makeDiscreteLearnerParam("distribution", values = c("AUTO", "gaussian",
         "bernoulli", "multinomial", "poisson", "gamma", "tweedie", "laplace",
@@ -227,9 +227,10 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "weights"),
+    properties = c("numerics", "factors", "weights", "missings"),
     name = "h2o.deeplearning",
     short.name = "h2o.dl",
+    note = 'The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
     callees = "h2o.deeplearning"
   )
 }

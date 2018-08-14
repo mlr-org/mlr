@@ -27,8 +27,8 @@ perfsToString = function(y, sep = "=", digits = options()$digits) {
 # Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line
 # If y is numeric we trim to desired digit with
 # if not it's a character and we only need to take care that the col has desired width
-# Example output (prefix = "[Resample] iter 1:"):    
-# [Resample] iter 1:    0.0000000    0.0370370    0.9629630    
+# Example output (prefix = "[Resample] iter 1:"):
+# [Resample] iter 1:    0.0000000    0.0370370    0.9629630
 printResampleFormatLine = function(prefix, y, digits = options()$digits) {
   # get desired width for each col (if measure ids are short --> digits)
   # +3L to obtain spaces between cols
@@ -40,7 +40,7 @@ printResampleFormatLine = function(prefix, y, digits = options()$digits) {
     y = formatC(y, digits = digits, flag = "0", format = "f")
   # Extend witdh of prefix and y. width = 22 is the ideal size for
   # the prefix column. Change value here when iter.message was
-  # modified in resample.R 
+  # modified in resample.R
   prefix = formatC(prefix, width = 22, flag = "-")
   str = stri_flatten(formatC(y, width = tab.width, flag = "-"))
 
@@ -81,7 +81,7 @@ propVectorToMatrix = function(p, levs) {
 #' @description
 #' Returns a character vector with each of the supported task types in mlr.
 #'
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 listTaskTypes = function() {
   c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
@@ -121,4 +121,57 @@ suppressWarning = function(expr, str) {
 
 hasEmptyLevels = function(x) {
   !all(levels(x) %chin% as.character(unique(x)))
+}
+
+# thin a vector
+thin = function(x, skip = 0) {
+  n = length(x)
+  x[seq(1, n, by = skip)]
+}
+
+# scale window if < 1
+scaleWindows = function(window, scaler) {
+  if (window < 1) {
+    scaled.window = round(window * scaler)
+  } else {
+    scaled.window = round(window)
+  }
+  return(scaled.window)
+}
+
+# Create the resampling windows for growing and fixed window cross validation
+makeResamplingWindow = function(desc, size, task = NULL, coords, window.type) {
+  initial.window.abs = scaleWindows(desc$initial.window, size)
+  horizon.window = scaleWindows(desc$horizon, initial.window.abs)
+
+  if (size - initial.window.abs < horizon.window) {
+    stop(catf("The initial window is %i observations while the data is %i observations. \n There is not enough data left (%i observations) to create a test set for a %i size horizon.",
+              initial.window.abs, size, initial.window.abs - size, horizon.window))
+  }
+  if (window.type == "FixedWindowCV") {
+    stops  = (seq(size))[initial.window.abs:(size - horizon.window)]
+    starts = stops - initial.window.abs + 1
+    train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
+    test.inds  = mapply(seq, stops + 1, stops + horizon.window, SIMPLIFY = FALSE)
+  } else if (window.type == "GrowingWindowCV") {
+    stops  = (seq(from = 1, to = size))[initial.window.abs:(size - horizon.window)]
+    starts = rep(1, length(stops))
+    train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
+    test.inds  = mapply(seq, stops + 1, stops + horizon.window, SIMPLIFY = FALSE)
+  }
+  skip = scaleWindows(desc$skip, length(train.inds))
+
+  if (skip > 0) {
+    train.inds = thin(train.inds, skip = skip)
+    test.inds = thin(test.inds, skip = skip)
+  }
+  if (length(test.inds) == 0) {
+    stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
+  }
+  if (test.inds[[length(test.inds)]][horizon.window] != size) {
+    num.excluded = size - test.inds[[length(test.inds)]][horizon.window]
+    warning(paste0("The last ", num.excluded, " observation(s) were excluded. To include these observations please change either the initial.window or horizon."))
+  }
+  desc$iters = length(test.inds)
+  makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds)
 }

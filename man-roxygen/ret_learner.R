@@ -1,2 +1,2 @@
-#' @return [\code{\link{Learner}}].
-
+#' @return [Learner].
+#' @md

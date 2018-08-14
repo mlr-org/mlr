@@ -1,0 +1,51 @@
+pandoc: 2.2.1
+pkgdown: 1.1.0.9000
+pkgdown_sha: ~
+articles:
+  _mlr-tutorial_intro: _mlr-tutorial_intro.html
+  advanced_tune: advanced_tune.html
+  bagging: bagging.html
+  benchmark_experiments: benchmark_experiments.html
+  classifier_calibration: classifier_calibration.html
+  configureMlr: configureMlr.html
+  cost_sensitive_classif: cost_sensitive_classif.html
+  create_filter: create_filter.html
+  create_imputation: create_imputation.html
+  create_learner: create_learner.html
+  create_measure: create_measure.html
+  example_tasks: example_tasks.html
+  feature_selection: feature_selection.html
+  filter_methods: filter_methods.html
+  functional_data: functional_data.html
+  handling_of_spatial_data: handling_of_spatial_data.html
+  hyperpar_tuning_effects: hyperpar_tuning_effects.html
+  impute: impute.html
+  integrated_learners: integrated_learners.html
+  learner: learner.html
+  learning_curve: learning_curve.html
+  measures: measures.html
+  mlr: mlr.html
+  mlr_publications: mlr_publications.html
+  multilabel: multilabel.html
+  nested_resampling: nested_resampling.html
+  out_of_bag_predictions: out_of_bag_predictions.html
+  over_and_undersampling: over_and_undersampling.html
+  parallelization: parallelization.html
+  partial_dependence: partial_dependence.html
+  _pdf_wrapper: pdf/_pdf_wrapper.html
+  performance: performance.html
+  predict: predict.html
+  preproc: preproc.html
+  resample: resample.html
+  roc_analysis: roc_analysis.html
+  talks_videos_workshops: talks_videos_workshops.html
+  task: task.html
+  train: train.html
+  tune: tune.html
+  usecase_regression: usecase_regression.html
+  visualization: visualization.html
+  wrapper: wrapper.html
+urls:
+  reference: https://mlr-org.github.io/mlr/reference
+  article: https://mlr-org.github.io/mlr/articles
+

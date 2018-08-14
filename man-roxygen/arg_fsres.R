@@ -1,2 +1,3 @@
-#' @param res [\code{\link{FeatSelResult}}]\cr
-#'   The result of of \code{\link{selectFeatures}}.
+#' @param res ([FeatSelResult])\cr
+#'   The result of of [selectFeatures].
+#' @md

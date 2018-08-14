@@ -8,11 +8,11 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param ties.method [\code{character(1)}]\cr
-#'   See \code{\link[base]{rank}} for details.
+#' @param ties.method (`character(1)`)\cr
+#'   See [base::rank] for details.
 #' @template arg_aggregation_method
-#' @return [\code{matrix}] with measure ranks as entries.
-#'   The matrix has one row for each \code{learner}, and one column for each \code{task}.
+#' @return ([matrix]) with measure ranks as entries.
+#'   The matrix has one row for each `learner`, and one column for each `task`.
 #' @family benchmark
 #' @export
 #' @examples

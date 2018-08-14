@@ -2,7 +2,7 @@
 #'
 #' @description
 #' A measure object encapsulates a function to evaluate the performance of a prediction.
-#' Information about already implemented measures can be obtained here: \code{\link{measures}}.
+#' Information about already implemented measures can be obtained here: [measures].
 #'
 #' A learner is trained on a training set d1, results in a model m and predicts another set d2
 #' (which may be a different one or the training set) resulting in the prediction.
@@ -11,24 +11,24 @@
 #'
 #' Object slots:
 #' \describe{
-#'   \item{id [\code{character(1)}]}{See argument.}
-#'   \item{minimize [\code{logical(1)}]}{See argument.}
-#'   \item{properties [\code{character}]}{See argument.}
-#'   \item{fun [\code{function}]}{See argument.}
-#'   \item{extra.args [\code{list}]}{See argument.}
-#'   \item{aggr [\code{\link{Aggregation}}]}{See argument.}
-#'   \item{best [\code{numeric(1)}]}{See argument.}
-#'   \item{worst [\code{numeric(1)}]}{See argument.}
-#'   \item{name [\code{character(1)}]}{See argument.}
-#'   \item{note [\code{character(1)}]}{See argument.}
+#'   \item{id (`character(1)`)}{See argument.}
+#'   \item{minimize (`logical(1)`)}{See argument.}
+#'   \item{properties ([character])}{See argument.}
+#'   \item{fun (`function])}{See argument.}
+#'   \item{extra.args ([list])}{See argument.}
+#'   \item{aggr ([Aggregation])}{See argument.}
+#'   \item{best (`numeric(1)`)}{See argument.}
+#'   \item{worst (`numeric(1)`)}{See argument.}
+#'   \item{name (`character(1)`)}{See argument.}
+#'   \item{note (`character(1)`)}{See argument.}
 #' }
 #'
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of measure.
-#' @param minimize [\code{logical(1)}]\cr
+#' @param minimize (`logical(1)`)\cr
 #'   Should the measure be minimized?
-#'   Default is \code{TRUE}.
-#' @param properties [\code{character}]\cr
+#'   Default is `TRUE`.
+#' @param properties ([character])\cr
 #'   Set of measure properties. Some standard property names include:
 #'   \describe{
 #'     \item{classif}{Is the measure applicable for classification?}
@@ -45,41 +45,42 @@
 #'     \item{req.feats}{Are feature values required in calculation? Usually not the case.}
 #'     \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
 #'   }
-#'   Default is \code{character(0)}.
-#' @param fun [\code{function(task, model, pred, feats, extra.args)}]\cr
+#'   Default is `character(0)`.
+#' @param fun (`function(task, model, pred, feats, extra.args)`)\cr
 #'   Calculates the performance value. Usually you will only need the prediction
-#'   object \code{pred}.
+#'   object `pred`.
 #'   \describe{
-#'     \item{\code{task} [\code{\link{Task}}]}{
+#'     \item{`task` ([Task])}{
 #'       The task.}
-#'     \item{\code{model} [\code{\link{WrappedModel}}]}{
+#'     \item{`model` ([WrappedModel])}{
 #'       The fitted model.}
-#'     \item{\code{pred} [\code{\link{Prediction}}]}{
+#'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
-#'     \item{\code{feats} [\code{data.frame}]}{
+#'     \item{`feats` ([data.frame])}{
 #'       The features.}
-#'     \item{\code{extra.args} [\code{list}]}{
+#'     \item{`extra.args` ([list])}{
 #'       See below.}
 #'   }
-#' @param extra.args [\code{list}]\cr
-#'   List of extra arguments which will always be passed to \code{fun}.
-#'   Can be changed after construction via \code{\link{setMeasurePars}}<`3`>.
+#' @param extra.args ([list])\cr
+#'   List of extra arguments which will always be passed to `fun`.
+#'   Can be changed after construction via [setMeasurePars]<`3`>.
 #'   Default is empty list.
-#' @param aggr [\code{\link{Aggregation}}]\cr
+#' @param aggr ([Aggregation])\cr
 #'   Aggregation funtion, which is used to aggregate the values measured
 #'   on test / training sets of the measure to a single value.
-#'   Default is \code{\link{test.mean}}.
-#' @param best [\code{numeric(1)}]\cr
+#'   Default is [test.mean].
+#' @param best (`numeric(1)`)\cr
 #'   Best obtainable value for measure.
-#'   Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.
-#' @param worst [\code{numeric(1)}]\cr
+#'   Default is -`Inf` or `Inf`, depending on `minimize`.
+#' @param worst (`numeric(1)`)\cr
 #'   Worst obtainable value for measure.
-#'   Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.
-#' @param name [\code{character}] \cr
-#'   Name of the measure. Default is \code{id}.
-#' @param note [\code{character}] \cr
+#'   Default is `Inf` or -`Inf`, depending on `minimize`.
+#' @param name ([character]) \cr
+#'   Name of the measure. Default is `id`.
+#' @param note ([character]) \cr
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
+#' @noMd
 #' @export
 #' @family performance
 #' @aliases Measure
@@ -132,9 +133,9 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    multilabel  \tab multilabel.hamloss\cr
 #' }
 #'
-#' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
+#' @param x ([character(1)` | [Task] | [TaskDesc] | [Learner])\cr
 #'  Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
-#' @return [\code{\link{Measure}}].
+#' @return ([Measure]).
 #' @export
 getDefaultMeasure = function(x) {
   type = if (inherits(x, "TaskDesc"))

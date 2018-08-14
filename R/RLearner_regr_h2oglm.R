@@ -19,10 +19,10 @@ makeRLearner.regr.h2o.glm = function() {
       makeUntypedLearnerParam("beta_constraints"),
       makeLogicalLearnerParam("intercept", default = TRUE)
     ),
-    properties = c("numerics", "factors", "weights"),
+    properties = c("numerics", "factors", "weights", "missings"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'gaussian'.",
+    note = '`family` is always set to `"gaussian"`. The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
     callees = "h2o.glm"
   )
 }

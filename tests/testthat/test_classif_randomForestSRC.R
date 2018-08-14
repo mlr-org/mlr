@@ -4,10 +4,10 @@ test_that("classif_randomForestSRC", {
   requirePackagesOrSkip("randomForestSRC", default.method = "load")
 
   parset.list = list(
-    list(),
-    list(ntree = 100),
-    list(ntree = 250, mtry = 5L),
-    list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE)
+    list(seed = getOption("mlr.debug.seed")),
+    list(ntree = 100, seed = getOption("mlr.debug.seed")),
+    list(ntree = 250, mtry = 5L, seed = getOption("mlr.debug.seed")),
+    list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE, seed = getOption("mlr.debug.seed"))
   )
   old.predicts.list = list()
   old.probs.list = list()

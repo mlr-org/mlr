@@ -1,7 +1,7 @@
 #' Join some class existing levels to new, larger class levels for classification problems.
 #'
 #' @template arg_task
-#' @param new.levels [\code{list} of \code{character}]\cr
+#' @param new.levels (`list` of `character`)\cr
 #'   Element names specify the new class levels to create, while the corresponding element
 #'   character vector specifies the existing class levels which will be joined to the new one.
 #' @template ret_task

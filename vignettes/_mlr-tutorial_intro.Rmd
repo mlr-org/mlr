@@ -1,0 +1,62 @@
+---
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include=FALSE}
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+This document provides an in-depth introduction to [Machine Learning in R: mlr](https://github.com/mlr-org/mlr), a framework for machine learning experiments in **R**.
+
+In this tutorial, we focus on basic functions and applications.
+More detailed technical information can be found in the [manual pages](https://mlr-org.github.io/mlr/index.html){target="_blank"} which are regularly updated and reflect the documentation of the current package development version.
+
+Offline versions of this tutorial are also available for download:
+
+* [current mlr release on CRAN](https://github.com/mlr-org/mlr/blob/tutorial_pdf_release/vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf)
+* [the mlr devel version on GitHub](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
+
+The tutorial aims to walkthrough basic data analysis tasks step by step.
+We will use simple examples from classification, regression, cluster and survival analysis to illustrate the main features of the package.
+
+Enjoy reading!
+
+## Quick start
+
+Here we show the `mlr` workflow to train, make predictions, and evaluate a learner on a classification problem.
+We walk through 5 basic steps that work on any learning problem or method supported by `mlr`.
+
+```{r}
+library(mlr)
+data(iris)
+
+# 1) Define the task
+# Specify the type of analysis (e.g. classification) and provide data and response variable
+task = makeClassifTask(data = iris, target = "Species")
+
+# 2) Define the learner
+# Choose a specific algorithm (e.g. linear discriminant analysis)
+lrn = makeLearner("classif.lda")
+
+n = nrow(iris)
+train.set = sample(n, size = 2/3*n)
+test.set = setdiff(1:n, train.set)
+
+# 3) Fit the model
+# Train the learner on the task using a random subset of the data as training set
+model = train(lrn, task, subset = train.set)
+
+# 4) Make predictions
+# Predict values of the response variable for new observations by the trained model
+# using the other part of the data as test set
+pred = predict(model, task = task, subset = test.set)
+
+# 5) Evaluate the learner
+# Calculate the mean misclassification error and accuracy
+performance(pred, measures = list(mmce, acc))
+```

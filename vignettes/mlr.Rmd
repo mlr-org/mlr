@@ -1,26 +1,31 @@
 ---
 title: "mlr: Machine Learning in R"
-author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-date: "`r Sys.Date()`"
+# author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
+# Tobias Kuehn, Erich Studerus, Lars Kotthoff"
+# date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-# mlr: Machine Learning in R
 
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
 This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
 
-- [Project Page](https://github.com/mlr-org/mlr/)
-- Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
-- Download the online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip) as zip for offline usage
+* Detailed Tutorial:
+  * [Main: Online as HTML](https://mlr-org.github.io/mlr/)
+  * [Download PDF for offline usage](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
 
-## Purpose
+# Purpose
 
 The main goal of `mlr` is to provide a unified interface for *machine learning tasks* as *classification*, *regression*, *cluster analysis* and *survival analysis* in R.
 In lack of a common interface it becomes a hassle to carry out standard methods like cross-validation and hyperparameter tuning for different learners.
@@ -43,7 +48,7 @@ Hence, `mlr` offers the following features:
 - Extension points to integrate your own stuff
 - Parallelization is built-in
 
-## Quick Start
+# Quick Start
 
 To highlight the main principles of `mlr` we give a quick introduction to the package.
 We demonstrate how to simply perform a classification analysis using a stratified cross validation, which illustrates some of the major building blocks of the `mlr` workflow, namely tasks and learners.
@@ -52,42 +57,38 @@ We demonstrate how to simply perform a classification analysis using a stratifie
 library(mlr)
 data(iris)
 
-## Define the task:
+# Define the task:
 task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
 print(task)
 
-## Define the learner:
+# Define the learner:
 lrn = makeLearner("classif.lda")
 print(lrn)
 
-## Define the resampling strategy:
+# Define the resampling strategy:
 rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
 
-## Do the resampling:
+# Do the resampling:
 r = resample(learner = lrn, task = task, resampling = rdesc)
+
 print(r)
 
-## Get the mean misclassification error:
+# Get the mean misclassification error:
 r$aggr
 ```
 
-## Detailed Tutorial
+# Detailed Tutorial
 
 The previous example just demonstrated a tiny fraction of the capabilities of `mlr`.
 More features are covered in the tutorial which can be found online on the `mlr` project page.
 It covers among others: *benchmarking*, *preprocessing*, *imputation*, *feature selection*, *ROC analysis*, how to implement your own learner and the list of all supported learners.
 Reading is highly recommended!
 
-* [Project Page](https://github.com/mlr-org/mlr/)
-* Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
-* Offline Tutorial: online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip)
-  as zip for offline usage
+* [Project Page and Tutorial](https://github.com/mlr-org/mlr/)
+* [Offline Tutorial](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
 * [Wiki](https://github.com/mlr-org/mlr/wiki) with additional information for developers
 
-
-## Thanks
+# Thanks
 
 We would like to thank the authors of all packages which `mlr` uses under the hood:
 

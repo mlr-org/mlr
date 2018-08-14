@@ -3,21 +3,21 @@
 #' @description
 #' Creates a cost measure for non-standard classification error costs.
 #'
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
-#' @param minimize [\code{logical(1)}]\cr
+#' @param minimize (`logical(1)`)\cr
 #'   Should the measure be minimized?
 #'   Otherwise you are effectively specifying a benefits matrix.
-#'   Default is \code{TRUE}.
-#' @param costs [\code{matrix}]\cr
+#'   Default is `TRUE`.
+#' @param costs ([matrix])\cr
 #'   Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 #'   Rows indicate true classes, columns predicted classes.
-#' @param combine [\code{function}]\cr
+#' @param combine (`function`)\cr
 #'   How to combine costs over all cases for a SINGLE test set?
-#'   Note this is not the same as the \code{aggregate} argument in \code{\link{makeMeasure}}
-#'   You can set this as well via \code{\link{setAggregation}}, as for any measure.
-#'   Default is \code{\link{mean}}.
+#'   Note this is not the same as the `aggregate` argument in [makeMeasure]
+#'   You can set this as well via [setAggregation], as for any measure.
+#'   Default is [mean].
 #' @inheritParams makeMeasure
 #' @template ret_measure
 #' @export
@@ -32,7 +32,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
   assertString(note)
 
 
-  makeMeasure(id = id, minimize = minimize, extra.args = list(costs, combine),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(costs = costs, combine = combine),
     properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {

@@ -4,7 +4,7 @@
 #' Gets the class weight parameter of a learner.
 #'
 #' @template arg_learner
-#' @return [\code{numeric \link{LearnerParam}}]:
+#' @return [numeric] [LearnerParam]:
 #'   A numeric parameter object, containing the class weight parameter of the given learner.
 #' @family learner
 #' @export

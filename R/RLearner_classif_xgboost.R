@@ -23,7 +23,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "eval_metric", default = "error", tunable = FALSE),
       makeNumericLearnerParam(id = "base_score", default = 0.5, tunable = FALSE),
       makeNumericLearnerParam(id = "max_delta_step", lower = 0, default = 0),
-      makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
+      makeNumericLearnerParam(id = "missing", default = NA, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
       makeIntegerVectorLearnerParam(id = "monotone_constraints", default = 0, lower = -1, upper = 1),
       makeNumericLearnerParam(id = "tweedie_variance_power", lower = 1, upper = 2, default = 1.5, requires = quote(objective == "reg:tweedie")),
@@ -120,7 +120,9 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
     }
   } else { #multiclass
     if (.learner$par.vals$objective  == "multi:softmax") {
-      return(factor(p, levels = cls)) #special handling for multi:softmax which directly predicts class levels
+      p = as.factor(p) #special handling for multi:softmax which directly predicts class levels
+      levels(p) = cls
+      return(p)
     } else {
       p = matrix(p, nrow = length(p) / nc, ncol = nc, byrow = TRUE)
       colnames(p) = cls
@@ -137,7 +139,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   imp = xgboost::xgb.importance(feature_names = .model$features,
     model = mod, ...)
 

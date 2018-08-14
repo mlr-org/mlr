@@ -115,6 +115,25 @@ registerS3method("makeRLearner", "regr.__mlrmocklearners__6", makeRLearner.regr.
 registerS3method("trainLearner", "regr.__mlrmocklearners__6", trainLearner.regr.__mlrmocklearners__6)
 registerS3method("predictLearner", "regr.__mlrmocklearners__6", predictLearner.regr.__mlrmocklearners__6)
 
+makeRLearner.classif.__mlrmocklearners__6 = function() {  # nolint
+  makeRLearnerClassif(
+    cl = "classif.__mlrmocklearners__6", package = character(0L),
+    par.set = makeParamSet(),
+    properties = c("missings", "numerics", "factors", "weights", "twoclass", "multiclass")
+  )
+}
+
+trainLearner.classif.__mlrmocklearners__6 = function(.learner, .task, .subset, .weights = NULL, ...) {  # nolint
+  list(weights = .weights)
+}
+
+predictLearner.classif.__mlrmocklearners__6 = function(.learner, .model, .newdata) {  # nolint
+  rep(1, nrow(.newdata))
+}
+registerS3method("makeRLearner", "classif.__mlrmocklearners__6", makeRLearner.classif.__mlrmocklearners__6)
+registerS3method("trainLearner", "classif.__mlrmocklearners__6", trainLearner.classif.__mlrmocklearners__6)
+registerS3method("predictLearner", "classif.__mlrmocklearners__6", predictLearner.classif.__mlrmocklearners__6)
+
 
 
 

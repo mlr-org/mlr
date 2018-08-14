@@ -1,2 +1,3 @@
-#' @param pred [\code{\link{Prediction}}]\cr
+#' @param pred ([Prediction])\cr
 #'   Prediction object.
+#' @md

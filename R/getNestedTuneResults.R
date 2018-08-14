@@ -1,13 +1,13 @@
 #' @title Get the tuned hyperparameter settings from a nested tuning.
 #'
 #' @description
-#' After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
-#' with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
-#' the the best found hyperparameter settings for each resampling iteration.
+#' After you resampled a tuning wrapper (see [makeTuneWrapper])
+#' with `resample(..., extract = getTuneResult)` this helper returns a `data.frame` with
+#' the best found hyperparameter settings for each resampling iteration.
 #'
-#' @param r [\code{\link{ResampleResult}}] \cr
+#' @param r ([ResampleResult]) \cr
 #'   The result of resampling of a tuning wrapper.
-#' @return [\code{data.frame}]. One column for each tuned hyperparameter and one row for each outer resampling iteration.
+#' @return ([data.frame]). One column for each tuned hyperparameter and one row for each outer resampling iteration.
 #' @family tune
 #' @examples
 #' # see example of makeTuneWrapper
@@ -20,23 +20,23 @@ getNestedTuneResultsX = function(r) {
 }
 
 
-#' @title Get the \code{opt.path}s from each tuning step from the outer resampling.
+#' @title Get the `opt.path`s from each tuning step from the outer resampling.
 #'
 #' @description
-#' After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
-#' with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
-#' with all \code{opt.path}s combined by \code{rbind}.
-#' An additional column \code{iter} indicates to what resampling iteration the row belongs.
+#' After you resampled a tuning wrapper (see [makeTuneWrapper])
+#' with `resample(..., extract = getTuneResult)` this helper returns a `data.frame` with
+#' with all `opt.path`s combined by `rbind`.
+#' An additional column `iter` indicates to what resampling iteration the row belongs.
 #'
-#' @param r [\code{\link{ResampleResult}}] \cr
+#' @param r ([ResampleResult]) \cr
 #'   The result of resampling of a tuning wrapper.
-#' @param trafo [\code{logical(1)}]\cr
+#' @param trafo (`logical(1)`)\cr
 #'   Should the units of the hyperparameter path be converted to the
 #'   transformed scale? This is only necessary when trafo was used to create
-#'   the \code{opt.path}s. Note that \code{opt.path}s are always stored on the
+#'   the `opt.path`s. Note that `opt.path`s are always stored on the
 #'   untransformed scale.
-#'   Default is \code{FALSE}.
-#' @return [\code{data.frame}]. See above.
+#'   Default is `FALSE`.
+#' @return ([data.frame]). See above.
 #' @family tune
 #' @examples
 #' # see example of makeTuneWrapper

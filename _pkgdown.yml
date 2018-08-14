@@ -1,0 +1,151 @@
+url: https://mlr-org.github.io/mlr
+
+template:
+  params:
+    bootswatch: cosmo
+    docsearch:
+      api_key: e300ecafdf04fe1199e3339c825ce7d0
+      index_name: mlr
+  path: pkgdown/templates
+  assets: pkgdown/assets
+  default_assets: false
+
+development:
+  mode: unreleased
+  destination: devel
+  version_label: default
+  version_tooltip: "Github version"
+
+home:
+  links:
+  - text: Cheatsheet
+    href: https://github.com/mlr-org/mlr/blob/master/inst/cheatsheet/MlrCheatsheet.pdf
+
+navbar:
+  title:
+  type: default
+  left:
+  #- icon: fa-home
+  #  href: index.html
+  - text: Get Started
+    href: articles/mlr.html
+  - text: Basics
+    menu:
+    - text: Tasks
+      href: articles/task.html
+    - text: Learners
+      href: articles/learner.html
+    - text: Train
+      href: articles/train.html
+    - text: Predict
+      href: articles/predict.html
+    - text: Preprocessing
+      href: articles/preproc.html
+    - text: Performance
+      href: articles/performance.html
+    - text: Resampling
+      href: articles/resample.html
+    - text: Tuning
+      href: articles/tune.html
+    - text: Benchmark Experiments
+      href: articles/benchmark_experiments.html
+    - text: Parallelization
+      href: articles/parallelization.html
+    - text: Visualization
+      href: articles/visualization.html
+    - text: Use case - Regression
+      href: articles/usecase_regression.html
+
+  - text: Advanced
+    menu:
+    - text: Configuration
+      href: articles/configureMlr.html
+    - text: Wrapped Learners
+      href: articles/wrapper.html
+    - text: Imputation
+      href: articles/impute.html
+    - text: Generic Bagging
+      href: articles/bagging.html
+    - text: Advanced Tuning
+      href: articles/advanced_tune.html
+    - text: Feature Selection
+      href: articles/feature_selection.html
+    - text: Nested Resampling
+      href: articles/nested_resampling.html
+    - text: Cost-Sensitive Classification
+      href: articles/cost_sensitive_classif.html
+    - text: Imbalanced Classification Problems
+      href: articles/over_and_undersampling.html
+    - text: ROC Analysis and Performance Curves
+      href: articles/roc_analysis.html
+    - text: Multilabel Classification
+      href: articles/multilabel.html
+    - text: Learning Curve Analysis
+      href: articles/learning_curve.html
+    - text: Partial Dependence Plots
+      href: articles/partial_dependence.html
+    - text: Classifier Calibration
+      href: articles/classifier_calibration.html
+    - text: Hyperparameter Tuning Effects
+      href: articles/hyperpar_tuning_effects.html
+    - text: Out-of-Bag Predictions
+      href: articles/out_of_bag_predictions.html
+    - text: Handling of Spatial Data
+      href: articles/handling_of_spatial_data.html
+    - text: Functional Data
+      href: articles/functional_data.html
+
+  - text: Extending
+    menu:
+    - text: Create Custom Learners
+      href: articles/create_learner.html
+    - text: Create Custom Measures
+      href: articles/create_measure.html
+    - text: Create Imputation Methods
+      href: articles/create_imputation.html
+    - text: Create Custom Filters
+      href: articles/create_filter.html
+
+  - text: Appendix
+    menu:
+    - text: Function Reference
+      href: reference/index.html
+    - text: News
+      href: news/index.html
+    - text: Example Tasks
+      href: articles/example_tasks.html
+    - text: Integrated Learners
+      href: articles/integrated_learners.html
+    - text: Implemented Measures
+      href: articles/measures.html
+    - text: Integrated Filter Methods
+      href: articles/filter_methods.html
+    - text: mlr Publications
+      href: articles/mlr_publications.html
+    - text: Talks, Videos and Workshops
+      href: articles/talks_videos_workshops.html
+
+  - text: mlr-org Packages
+    menu:
+    - text: mlrMBO
+      href: https://github.com/mlr-org/mlrMBO
+    - text: mlrng
+      href: https://github.com/mlr-org/mlrng
+    - text: mlrCPO
+      href: https://github.com/mlr-org/mlrCPO
+    - text: shinyMlr
+      href: https://github.com/mlr-org/shinyMlr
+    - text: mlrHyperopt
+      href: http://jakob-r.de/mlrHyperopt/index.html
+    - text: OpenML
+      href: http://openml.github.io/openml-r/vignettes/OpenML.html
+
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/mlr-org/mlr
+  - icon: fa-slack
+    href: https://mlr-org.slack.com
+  - icon: fa-stack-overflow
+    href: https://stackoverflow.com/questions/tagged/mlr
+  - icon: fa-rss
+    href: https://mlr-blog.netlify.com/

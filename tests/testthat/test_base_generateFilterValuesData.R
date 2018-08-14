@@ -60,22 +60,26 @@ test_that("filterFeatures", {
 })
 
 test_that("plotFilterValues", {
-  fv = generateFilterValuesData(binaryclass.task, method = "variance")
-  plotFilterValues(fv)
-  dir = tempdir()
-  path = paste0(dir, "/test.svg")
-  ggsave(path)
-  doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
-  ## plotFilterValuesGGVIS(fv)
+  filter.methods = listFilterMethods(tasks = TRUE)
 
+  filter.classif = as.character(filter.methods[filter.methods$task.classif == TRUE, "id"])
+  filter.classif = setdiff(filter.classif, "permutation.importance") # this filter needs additional arguments
+
+  fv = generateFilterValuesData(binaryclass.task, method = filter.classif)
+  plotFilterValues(fv)
+
+  filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE & filter.methods$task.classif == FALSE, "id"])
+
+  fv = generateFilterValuesData(regr.num.task, method = filter.regr)
+  plotFilterValues(fv)
+
+  path = file.path(tempdir(), "test.svg")
   fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC.rfsrc"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
-  ## plotFilterValuesGGVIS(fv2)
 
   # facetting works:
   q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
@@ -133,4 +137,9 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
   expect_equal(fv$data$name, ns)
   expect_equal(fv$data$mock.filter, seq_along(ns))
   rm("mock.filter", envir = mlr:::.FilterRegister)
+})
+
+test_that("filter method 'variance' works with missing values", {
+  fi = generateFilterValuesData(regr.na.num.task, method = "variance")
+  expect_false(anyMissing(fi$data$variance))
 })
