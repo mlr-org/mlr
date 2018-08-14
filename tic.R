@@ -45,5 +45,5 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_setup_ssh())
 
   get_stage("deploy") %>%
-    add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
+    add_step(step_push_deploy())
 }
