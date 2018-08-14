@@ -164,10 +164,11 @@ makeResampleDescBootstrap = function(iters = 30L) {
   makeResampleDescInternal("OOB bootstrapping", iters = iters)
 }
 
-makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
+makeResampleDescRepCV = function(reps = 10L, folds = 10L, fixed = FALSE, blocking.cv = FALSE) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
-  makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps)
+  makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps,
+    fixed = fixed, blocking.cv = blocking.cv)
 }
 
 makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {

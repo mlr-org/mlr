@@ -94,7 +94,7 @@ instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
   folds = desc$iters / desc$reps
-  d = makeResampleDesc("CV", iters = folds)
+  d = makeResampleDesc("CV", iters = folds, blocking.cv = desc$blocking.cv, fixed = desc$fixed)
   i = replicate(desc$reps, makeResampleInstance(d, size = size), simplify = FALSE)
   train.inds = Reduce(c, lapply(i, function(j) j$train.inds))
   test.inds = Reduce(c, lapply(i, function(j) j$test.inds))
