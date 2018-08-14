@@ -61,7 +61,16 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (length(blocking) && desc$stratify)
     stop("Blocking can currently not be mixed with stratification in resampling!")
 
-  if (length(blocking)) {
+  if(is.null(desc$grouping)) {
+    grouping = FALSE
+  } else {
+    if(desc$grouping == FALSE)
+      grouping = FALSE
+  }
+
+  # 'grouping' only exists by default for 'CV' -> is.null(desc$grouping)
+  # only use this way of blocking of 'grouping = FALSE' -> is.null(desc$grouping)
+  if (length(blocking) && !grouping) {
     if (is.null(task))
       stop("Blocking always needs the task!")
     levs = levels(blocking)
