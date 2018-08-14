@@ -64,8 +64,10 @@
 #'     else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
 #'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
 #'      of test indices.}
-#'   \item{grouping (`logical(1)`)}{Whether indices supplied via argument 'blocking' in the task should be used in resampling. Default is `FALSE`.
+#'   \item{fixed (`logical(1)`)}{Whether indices supplied via argument 'blocking' in the task should be used in resampling. Default is `FALSE`.
 #'     'grouping' only works with 'CV' and the supplied indices must match the number of observations.}
+#'   }
+#'   \item{blocking.cv (`logical(1)`)}{Should 'blocking' be used in 'CV'? Default to `FALSE`}
 #'   }
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
@@ -137,9 +139,10 @@ makeResampleDescHoldout = function(iters, split = 2 / 3) {
   makeResampleDescInternal("holdout", iters = 1L, split = split)
 }
 
-makeResampleDescCV = function(iters = 10L, grouping = FALSE) {
+makeResampleDescCV = function(iters = 10L, fixed = FALSE, blocking.cv = FALSE) {
   iters = asInt(iters, lower = 2L)
-  makeResampleDescInternal("cross-validation", iters = iters, grouping = grouping)
+  makeResampleDescInternal("cross-validation", iters = iters, fixed = fixed,
+    blocking.cv = blocking.cv)
 }
 
 makeResampleDescSpCV = function(iters = 10L) {

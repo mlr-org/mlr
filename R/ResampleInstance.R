@@ -61,16 +61,26 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (length(blocking) && desc$stratify)
     stop("Blocking can currently not be mixed with stratification in resampling!")
 
-  if(is.null(desc$grouping)) {
-    grouping = FALSE
+  # 'fixed' only exists by default for 'CV' -> is.null(desc$grouping)
+  # only use this way of blocking of 'fixed = FALSE' -> is.null(desc$grouping)
+  if(is.null(desc$fixed)) {
+    fixed = FALSE
   } else {
-    if(desc$grouping == FALSE)
-      grouping = FALSE
+    if(desc$fixed == FALSE) {
+      fixed = FALSE
+      ### check if blocking should be used or not
+      # set to FALSE for all rdesc that do not have the arg
+      if(is.null(desc$blocking.cv)) {
+        blocking.cv = FALSE
+      } else {
+        blocking.cv = desc$blocking.cv
+      }
+    } else {
+      fixed = TRUE
+    }
   }
 
-  # 'grouping' only exists by default for 'CV' -> is.null(desc$grouping)
-  # only use this way of blocking of 'grouping = FALSE' -> is.null(desc$grouping)
-  if (length(blocking) && !grouping) {
+  if (length(blocking) && !fixed && blocking.cv) {
     if (is.null(task))
       stop("Blocking always needs the task!")
     levs = levels(blocking)

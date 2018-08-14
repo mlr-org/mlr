@@ -1,14 +1,14 @@
-context("grouping")
+context("fixed")
 
-test_that("grouping in single resampling", {
+test_that("fixed in single resampling", {
   df = multiclass.df
-  grouping = as.factor(rep(1:30, 5))
+  fixed = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target = multiclass.target, data = multiclass.df,
-    blocking = grouping)
+    blocking = fixed)
 
   # test blocking in single resample
   lrn = makeLearner("classif.lda")
-  rdesc = makeResampleDesc("CV", iters = 30, grouping = TRUE)
+  rdesc = makeResampleDesc("CV", iters = 30, fixed = TRUE)
   p = resample(lrn, ct, rdesc)$pred
 
   # check if all test.inds are unique
@@ -19,19 +19,19 @@ test_that("grouping in single resampling", {
   expect_warning(makeResampleInstance(rdesc, ct))
 })
 
-test_that("grouping in nested resampling", {
+test_that("fixed in nested resampling", {
   df = multiclass.df
   #df$Species = NULL
-  grouping = as.factor(rep(1:5, rep(30, 5)))
+  fixed = as.factor(rep(1:5, rep(30, 5)))
   ct = makeClassifTask(target = multiclass.target, data = df,
-   blocking = grouping)
+   blocking = fixed)
 
-  # test grouping in nested resampling
+  # test fixed in nested resampling
   lrn = makeLearner("classif.lda")
   ctrl <- makeTuneControlRandom(maxit = 2)
   ps <- makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
-  inner = makeResampleDesc("CV", iters = 4, grouping = TRUE)
-  outer = makeResampleDesc("CV", iters = 5, grouping = TRUE)
+  inner = makeResampleDesc("CV", iters = 4, fixed = TRUE)
+  outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE)
 
@@ -51,8 +51,8 @@ test_that("grouping in nested resampling", {
   expect_length(p$extract, 5)
 
   # expect warning if the level of the inner inds is not reduced by one
-  inner = makeResampleDesc("CV", iters = 5, grouping = TRUE)
-  outer = makeResampleDesc("CV", iters = 5, grouping = TRUE)
+  inner = makeResampleDesc("CV", iters = 5, fixed = TRUE)
+  outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE)
 
@@ -61,4 +61,12 @@ test_that("grouping in nested resampling", {
 
   expect_match(warns[1],
    "iters (5) is not equal to length of blocking levels (4)!", fixed = TRUE)
+
+  inner = makeResampleDesc("CV", iters = 5)
+  outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
+  tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
+                                 control = ctrl, show.info = FALSE)
+  expect_success(resample(tune_wrapper, ct, outer, show.info = FALSE,
+    extract = getTuneResult))
+
 })

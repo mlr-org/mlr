@@ -10,7 +10,7 @@ instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL) {
 instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
 
   # Random sampling CV
-  if (!desc$grouping) {
+  if (!desc$fixed) {
     if (desc$iters > size) {
       stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
     }
