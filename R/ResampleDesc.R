@@ -64,6 +64,8 @@
 #'     else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
 #'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
 #'      of test indices.}
+#'   \item{grouping (`logical(1)`)}{Whether indices supplied via argument 'blocking' in the task should be used in resampling. Default is `FALSE`.
+#'     'grouping' only works with 'CV' and the supplied indices must match the number of observations.}
 #'   }
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
@@ -92,7 +94,8 @@
 #'
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
-makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
+makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE,
+  stratify.cols = NULL) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
                                    "Subsample", "Bootstrap", "SpCV", "SpRepCV",
                                    "GrowingWindowCV", "FixedWindowCV"))
@@ -134,9 +137,9 @@ makeResampleDescHoldout = function(iters, split = 2 / 3) {
   makeResampleDescInternal("holdout", iters = 1L, split = split)
 }
 
-makeResampleDescCV = function(iters = 10L) {
+makeResampleDescCV = function(iters = 10L, grouping = FALSE) {
   iters = asInt(iters, lower = 2L)
-  makeResampleDescInternal("cross-validation", iters = iters)
+  makeResampleDescInternal("cross-validation", iters = iters, grouping = grouping)
 }
 
 makeResampleDescSpCV = function(iters = 10L) {
