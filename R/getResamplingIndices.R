@@ -54,6 +54,8 @@ getResamplingIndices = function(object, inner = FALSE) {
         set_names(c("train.inds", "test.inds")) # now set list names
     )
 
+    return(inner_inds_translated)
+
   } else {
     object$pred$instance[c("train.inds", "test.inds")]
   }
