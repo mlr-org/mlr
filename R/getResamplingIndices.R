@@ -47,11 +47,19 @@ getResamplingIndices = function(object, inner = FALSE) {
 
     inner_inds_translated = map(1:length(inner_inds), function(z) # map over number of outer folds
       map(c("train.inds", "test.inds"), function(u) # map over train/test level
-        map(inner_inds[[z]][[u]], ~ # map over number of inner folds
-              outer_inds[["train.inds"]][[z]][.x]) %>% # the inner test.inds are a subset of the outer train.inds! That's why "train.inds" is hardcoded here
-          list(.)) %>% # create list for "train.inds" and "test.inds"
-        flatten() %>% # reduce by one level
-        set_names(c("train.inds", "test.inds")) # now set list names
+
+        # list() -> create list for "train.inds" and "test.inds"
+        # flatten() -> reduce by one level
+        # set_names(c("train.inds", "test.inds")) -> now set list names
+        set_names(
+          flatten(
+            map(inner_inds[[z]][[u]], ~ # map over number of inner folds
+                  list(outer_inds[["train.inds"]][[z]][.x]) # the inner test.inds are a subset of the outer train.inds! That's why "train.inds" is hardcoded here
+            )
+          ),
+          c("train.inds", "test.inds")
+        )
+      )
     )
 
     return(inner_inds_translated)
