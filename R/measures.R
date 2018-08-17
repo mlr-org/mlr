@@ -1427,7 +1427,7 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
     grid = seq(0, max.time, length.out = extra.args$resolution)
 
-    probs = predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
       maxtime = max.time, verbose = FALSE)
 
