@@ -1438,6 +1438,34 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
   extra.args = list(max.time = NULL, resolution = 1000L)
 )
 
+#' @export ibrier
+#' @rdname measures
+#' @format none
+#' @references
+#' UB Mogensen et al.
+#' \emph{Evaluating Random Forests for Survival Analysis using Prediction Error Curves}
+#' Journal of statistical software. 2012;50(11):1-23. \url{https://www.jstatsoft.org/article/view/v050i11/v50i11.pdf}.
+ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.truth", "req.model", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages(c("survival", "pec"))
+    targets = getTaskTargets(task)
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    newdata = getTaskData(task)[model$subset, ]
+    max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
+    grid = seq(0, max.time, length.out = extra.args$resolution)
+    probs = pec::predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    # this function is only suitable for coxph and randomForestSRC at the moment!
+    perror = pec::pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
+      maxtime = max.time, verbose = FALSE, cens.model = "marginal")
+    pec::crps(perror, times = max.time)[2L, ]
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
+)
+
 ###############################################################################
 ### cost-sensitive ###
 ###############################################################################
