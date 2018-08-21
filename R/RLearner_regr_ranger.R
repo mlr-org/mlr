@@ -38,7 +38,7 @@ makeRLearner.regr.ranger = function() {
 }
 
 #' @export
-trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, mtry, mtry.perc, ...) {
+trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, mtry, mtry.perc, case.weights, ...) {
   tn = getTaskTargetNames(.task)
   if (missing(mtry)) {
     if (missing(mtry.perc)) {
@@ -47,10 +47,13 @@ trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, k
       mtry = max(1, floor(mtry.perc * getTaskNFeats(.task)))
     }
   }
+  if (missing(case.weights)) {
+    case.weights = .weights
+  }
   keep.inbag = if (is.null(keep.inbag)) FALSE else keep.inbag
   keep.inbag = if (.learner$predict.type == "se") TRUE else keep.inbag
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-                 case.weights = .weights, keep.inbag = keep.inbag, mtry = mtry, ...)
+                 case.weights = case.weights, keep.inbag = keep.inbag, mtry = mtry, ...)
 }
 
 #' @export
