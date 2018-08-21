@@ -17,6 +17,7 @@ test_that("classif_randomForestSRC", {
     parset = c(parset, list(data = binaryclass.train, formula = binaryclass.formula, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForestSRC::rfsrc, parset)
+    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = binaryclass.test, membership = FALSE, na.action = "na.impute")
     old.predicts.list[[i]] = p$class
     old.probs.list[[i]] = p$predicted[, 1]
