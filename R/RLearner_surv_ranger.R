@@ -8,6 +8,7 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "num.trees", lower = 1L, default = 500L),
       # FIXME: Add default value when data dependent defaults are implemented: mtry=floor(sqrt(#independent vars))
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
+      makeNumericLearnerParam(id = "mtry.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L, default = 3L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
@@ -29,17 +30,27 @@ makeRLearner.surv.ranger = function() {
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
-    properties = c("numerics", "factors", "ordered", "featimp"),
+    properties = c("numerics", "factors", "ordered", "featimp", "weights"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable.",
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable.`mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task.",
     callees = "ranger"
   )
 }
 
 #' @export
-trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.surv.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, mtry, mtry.perc, case.weights, ...) {
   tn = getTaskTargetNames(.task)
+  if (missing(mtry)) {
+    if (missing(mtry.perc)) {
+      mtry = floor(sqrt(getTaskNFeats(.task)))
+    } else {
+      mtry = max(1, floor(mtry.perc * getTaskNFeats(.task)))
+    }
+  }
+  if (missing(case.weights)) {
+    case.weights = .weights
+  }
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
     status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
 }
