@@ -86,13 +86,13 @@ jobs:
       script:  R -q -e 'tic::script()'
       after_script: R -q -e 'tic::after_script()'
       before_deploy: R -q -e 'tic::before_deploy()'
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           branch: master
-           condition:
-             - $TRAVIS_EVENT_TYPE != cron
+      # deploy:
+         # provider: script
+         # script: R -q -e 'tic::deploy()'
+         # on:
+           # branch: master
+           # condition:
+             # - $TRAVIS_EVENT_TYPE != cron
 
 notifications:
   email:

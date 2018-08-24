@@ -44,6 +44,6 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
 
-  get_stage("deploy") %>%
-    add_step(step_push_deploy())
+  # get_stage("deploy") %>%
+    # add_step(step_push_deploy())
 }
