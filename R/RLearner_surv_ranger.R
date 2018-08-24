@@ -41,7 +41,6 @@ trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
     status.variable.name = tn[2L], data = getTaskData(.task, .subset), case.weights = .weights, ...)
-                 case.weights = .weights, keep.inbag = keep.inbag, ...)
 }
 
 #' @export
