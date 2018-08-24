@@ -34,10 +34,10 @@ makeRLearner.classif.ranger = function() {
 }
 
 #' @export
-trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL, min.node.size, ...) {
+trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-                 probability = (.learner$predict.type == "prob"), case.weights = .weights, min.node.size = min.node.size, ...)
+                 probability = (.learner$predict.type == "prob"), case.weights = .weights, ...)
 }
 
 #' @export
