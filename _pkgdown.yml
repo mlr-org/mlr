@@ -129,12 +129,8 @@ navbar:
     menu:
     - text: mlrMBO
       href: https://github.com/mlr-org/mlrMBO
-    - text: mlrng
-      href: https://github.com/mlr-org/mlrng
     - text: mlrCPO
       href: https://github.com/mlr-org/mlrCPO
-    - text: shinyMlr
-      href: https://github.com/mlr-org/shinyMlr
     - text: mlrHyperopt
       href: http://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
