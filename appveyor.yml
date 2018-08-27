@@ -19,7 +19,7 @@ cache:
 
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
-after_build: R -q -e "tic::after_install()"
+# after_build: R -q -e "tic::after_install()"
 before_test:
  - ps: >-
       if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
@@ -30,7 +30,7 @@ before_test:
  - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
 on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
-on_failure: R -q -e "tic::after_failure()"
+# on_failure: R -q -e "tic::after_failure()"
 before_deploy: R -q -e "tic::before_deploy()"
 deploy_script: R -q -e "tic::deploy()"
 after_deploy: R -q -e "tic::after_deploy()"
