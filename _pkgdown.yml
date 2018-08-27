@@ -27,84 +27,82 @@ navbar:
   left:
   #- icon: fa-home
   #  href: index.html
-  - text: Get Started
-    href: articles/mlr.html
   - text: Basics
     menu:
     - text: Tasks
-      href: articles/task.html
+      href: articles/tutorial/task.html
     - text: Learners
-      href: articles/learner.html
+      href: articles/tutorial/learner.html
     - text: Train
-      href: articles/train.html
+      href: articles/tutorial/train.html
     - text: Predict
-      href: articles/predict.html
+      href: articles/tutorial/predict.html
     - text: Preprocessing
-      href: articles/preproc.html
+      href: articles/tutorial/preproc.html
     - text: Performance
-      href: articles/performance.html
+      href: articles/tutorial/performance.html
     - text: Resampling
-      href: articles/resample.html
+      href: articles/tutorial/resample.html
     - text: Tuning
-      href: articles/tune.html
+      href: articles/tutorial/tune.html
     - text: Benchmark Experiments
-      href: articles/benchmark_experiments.html
+      href: articles/tutorial/benchmark_experiments.html
     - text: Parallelization
-      href: articles/parallelization.html
+      href: articles/tutorial/parallelization.html
     - text: Visualization
-      href: articles/visualization.html
+      href: articles/tutorial/visualization.html
     - text: Use case - Regression
-      href: articles/usecase_regression.html
+      href: articles/tutorial/usecase_regression.html
 
   - text: Advanced
     menu:
     - text: Configuration
-      href: articles/configureMlr.html
+      href: articles/tutorial/configureMlr.html
     - text: Wrapped Learners
-      href: articles/wrapper.html
+      href: articles/tutorial/wrapper.html
     - text: Imputation
-      href: articles/impute.html
+      href: articles/tutorial/impute.html
     - text: Generic Bagging
-      href: articles/bagging.html
+      href: articles/tutorial/bagging.html
     - text: Advanced Tuning
-      href: articles/advanced_tune.html
+      href: articles/tutorial/advanced_tune.html
     - text: Feature Selection
-      href: articles/feature_selection.html
+      href: articles/tutorial/feature_selection.html
     - text: Nested Resampling
-      href: articles/nested_resampling.html
+      href: articles/tutorial/nested_resampling.html
     - text: Cost-Sensitive Classification
-      href: articles/cost_sensitive_classif.html
+      href: articles/tutorial/cost_sensitive_classif.html
     - text: Imbalanced Classification Problems
-      href: articles/over_and_undersampling.html
+      href: articles/tutorial/over_and_undersampling.html
     - text: ROC Analysis and Performance Curves
-      href: articles/roc_analysis.html
+      href: articles/tutorial/roc_analysis.html
     - text: Multilabel Classification
-      href: articles/multilabel.html
+      href: articles/tutorial/multilabel.html
     - text: Learning Curve Analysis
-      href: articles/learning_curve.html
+      href: articles/tutorial/learning_curve.html
     - text: Partial Dependence Plots
-      href: articles/partial_dependence.html
+      href: articles/tutorial/partial_dependence.html
     - text: Classifier Calibration
-      href: articles/classifier_calibration.html
+      href: articles/tutorial/classifier_calibration.html
     - text: Hyperparameter Tuning Effects
-      href: articles/hyperpar_tuning_effects.html
+      href: articles/tutorial/hyperpar_tuning_effects.html
     - text: Out-of-Bag Predictions
-      href: articles/out_of_bag_predictions.html
+      href: articles/tutorial/out_of_bag_predictions.html
     - text: Handling of Spatial Data
-      href: articles/handling_of_spatial_data.html
+      href: articles/tutorial/handling_of_spatial_data.html
     - text: Functional Data
-      href: articles/functional_data.html
+      href: articles/tutorial/functional_data.html
 
   - text: Extending
     menu:
     - text: Create Custom Learners
-      href: articles/create_learner.html
+      href: articles/tutorial/create_learner.html
     - text: Create Custom Measures
-      href: articles/create_measure.html
+      href: articles/tutorial/create_measure.html
     - text: Create Imputation Methods
-      href: articles/create_imputation.html
+      href: articles/tutorial/create_imputation.html
     - text: Create Custom Filters
-      href: articles/create_filter.html
+      href: articles/tutorial/create_filter.html
 
   - text: Appendix
     menu:
@@ -113,17 +111,17 @@ navbar:
     - text: News
       href: news/index.html
     - text: Example Tasks
-      href: articles/example_tasks.html
+      href: articles/tutorial/example_tasks.html
     - text: Integrated Learners
-      href: articles/integrated_learners.html
+      href: articles/tutorial/integrated_learners.html
     - text: Implemented Measures
-      href: articles/measures.html
+      href: articles/tutorial/measures.html
     - text: Integrated Filter Methods
-      href: articles/filter_methods.html
+      href: articles/tutorial/filter_methods.html
     - text: mlr Publications
-      href: articles/mlr_publications.html
+      href: articles/tutorial/mlr_publications.html
     - text: Talks, Videos and Workshops
-      href: articles/talks_videos_workshops.html
+      href: articles/tutorial/talks_videos_workshops.html
 
   - text: mlr-org Packages
     menu:
