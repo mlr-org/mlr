@@ -7,20 +7,20 @@
 makeImputeMethod(learn, impute, args = list())
 }
 \arguments{
-\item{learn}{(\code{function(data, target, col, ...)})\cr
-Function to learn and extract information on column \code{col}
-out of data frame \code{data}. Argument \code{target} specifies
+\item{learn}{(`function(data, target, col, ...)`)\cr
+Function to learn and extract information on column `col`
+out of data frame `data`. Argument `target` specifies
 the target column of the learning task.
 The function has to return a named list of values.}
 
-\item{impute}{(\code{function(data, target, col, ...)})\cr
-Function to impute missing values in \code{col} using information
-returned by \code{learn} on the same column.
-All list elements of the return values o \code{learn}
-are passed to this function into \code{...}.}
+\item{impute}{(`function(data, target, col, ...)`)\cr
+Function to impute missing values in `col` using information
+returned by `learn` on the same column.
+All list elements of the return values o `learn`
+are passed to this function into `...`.}
 
-\item{args}{(\link{list})\cr
-Named list of arguments to pass to \code{learn} via \code{...}.}
+\item{args}{([list])\cr
+Named list of arguments to pass to `learn` via `...`.}
 }
 \description{
 This is a constructor to create your own imputation methods.
@@ -30,4 +30,4 @@ Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeWrapper}},
   \code{\link{reimpute}}
 }
-\concept{impute}
+

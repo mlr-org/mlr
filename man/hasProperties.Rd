@@ -2,7 +2,7 @@
 % Please edit documentation in R/Learner_properties.R
 \name{hasProperties}
 \alias{hasProperties}
-\title{Deprecated, use \code{hasLearnerProperties} instead.}
+\title{Deprecated, use `hasLearnerProperties` instead.}
 \usage{
 hasProperties(learner, props)
 }
@@ -12,5 +12,6 @@ hasProperties(learner, props)
 \item{props}{Deprecated.}
 }
 \description{
-Deprecated, use \code{hasLearnerProperties} instead.
+Deprecated, use `hasLearnerProperties` instead.
 }
+

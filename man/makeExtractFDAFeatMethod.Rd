@@ -7,31 +7,31 @@
 makeExtractFDAFeatMethod(learn, reextract, args = list())
 }
 \arguments{
-\item{learn}{(\code{function(data, target, col, ...)})\cr
-Function to learn and extract information on functional column \code{col}.
+\item{learn}{(`function(data, target, col, ...)`)\cr
+Function to learn and extract information on functional column `col`.
 Arguments are:
 \itemize{
-\item data \link{data.frame}\cr
-Data.frame with one row per observation of a single functional feature
-or time series and one column per measurement time point.
-All entries need to be numeric.
-\item data \link{data.frame}\cr
-Data.frame containing matricies with one row per observation of a single functional
-or time series and one column per measurement time point. All entries need to be numeric.
-\item target \link{character}\cr
-Name of the target variable. Default: \dQuote{NULL}.
-The variable is only set to be consistent with the API.
-\item col (\link{character} | \link{numeric})\cr
-column names or indices, the extraction should be performed on.
-The function has to return a named list of values.
+\item data [data.frame]\cr
+  Data.frame with one row per observation of a single functional feature
+  or time series and one column per measurement time point.
+  All entries need to be numeric.
+\item data [data.frame]\cr
+  Data.frame containing matricies with one row per observation of a single functional
+  or time series and one column per measurement time point. All entries need to be numeric.
+\item target [character]\cr
+  Name of the target variable. Default: \dQuote{NULL}.
+  The variable is only set to be consistent with the API.
+\item col ([character] | [numeric])\cr
+  column names or indices, the extraction should be performed on.
+  The function has to return a named list of values.
 }}
 
-\item{reextract}{(\code{function(data, target, col, ...)})\cr
+\item{reextract}{(`function(data, target, col, ...)`)\cr
 Function used for reextracting data in predict phase.
-Can be equal to \code{learn}.}
+Can be equal to `learn`.}
 
-\item{args}{(\link{list})\cr
-Named list of arguments to pass to \code{learn} via \code{...}.}
+\item{args}{([list])\cr
+Named list of arguments to pass to `learn` via `...`.}
 }
 \description{
 This can be used to implement custom feature FDA extraction.
@@ -40,4 +40,4 @@ This can be used to implement custom feature FDA extraction.
 Other fda: \code{\link{extractFDAFeatures}},
   \code{\link{makeExtractFDAFeatsWrapper}}
 }
-\concept{fda}
+

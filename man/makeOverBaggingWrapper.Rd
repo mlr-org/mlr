@@ -8,39 +8,39 @@ makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate = 1,
   obw.maxcl = "boot", obw.cl = NULL)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{obw.iters}{(\code{integer(1)})\cr
+\item{obw.iters}{(`integer(1)`)\cr
 Number of fitted models in bagging.
 Default is 10.}
 
-\item{obw.rate}{(\code{numeric(1)})\cr
+\item{obw.rate}{(`numeric(1)`)\cr
 Factor to upsample a class in each bag.
-Must be between 1 and \code{Inf},
+Must be between 1 and `Inf`,
 where 1 means no oversampling and 2 would mean doubling the class size.
 Default is 1.}
 
-\item{obw.maxcl}{(\code{character(1)})\cr
+\item{obw.maxcl}{(`character(1)`)\cr
 How should other class (usually larger class) be handled?
 \dQuote{all} means every instance of the class gets in each bag,
 \dQuote{boot} means the class instances are bootstrapped in each iteration.
 Default is \dQuote{boot}.}
 
-\item{obw.cl}{(\code{character(1)})\cr
-Which class should be over- or undersampled. If \code{NULL}, \code{makeOverBaggingWrapper}
+\item{obw.cl}{(`character(1)`)\cr
+Which class should be over- or undersampled. If `NULL`, `makeOverBaggingWrapper`
 will take the smaller class.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a classification learner for binary classification with an over-bagging method
 for imbalancy correction when we have strongly unequal class sizes.
 Creates a learner object, which can be
 used like any other learner object.
-Models can easily be accessed via \link{getLearnerModel}.
+Models can easily be accessed via [getLearnerModel].
 
 OverBagging is implemented as follows:
 For each iteration a random data subset is sampled. Class examples
@@ -82,5 +82,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{imbalancy}
-\concept{wrapper}
+

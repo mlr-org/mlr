@@ -8,29 +8,29 @@ getTaskData(task, subset = NULL, features, target.extra = FALSE,
   recode.target = "no", functionals.as = "dfcols")
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
+\item{subset}{([integer] | [logical] | `NULL`)\cr
 Selected cases. Either a logical or an index vector.
-By default \code{NULL} if all observations are used.}
+By default `NULL` if all observations are used.}
 
-\item{features}{(\link{character} | \link{integer} | \link{logical})\cr
+\item{features}{([character] | [integer] | [logical])\cr
 Vector of selected inputs. You can either pass a character vector with the
 feature names, a vector of indices, or a logical vector.\cr
 In case of an index vector each element denotes the position of the feature
-name returned by \link{getTaskFeatureNames}.\cr
+name returned by [getTaskFeatureNames].\cr
 Note that the target feature is always included in the
 resulting task, you should not pass it here.
 Default is to use all features.}
 
-\item{target.extra}{(\code{logical(1)})\cr
+\item{target.extra}{(`logical(1)`)\cr
 Should target vector be returned separately?
 If not, a single data.frame including the target columns is returned, otherwise a list
 with the input data.frame and an extra vector or data.frame for the targets.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 
-\item{recode.target}{(\code{character(1)})\cr
+\item{recode.target}{(`character(1)`)\cr
 Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 In the two latter cases the target vector is converted into a numeric vector.
@@ -39,20 +39,20 @@ The positive class is coded as \dQuote{+1} and the negative class either as \dQu
 In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
-See \link[survival:Surv]{survival::Surv} for the format specification.
+See [survival::Surv] for the format specification.
 Default for both binary classification and survival is \dQuote{no} (do nothing).}
 
-\item{functionals.as}{(\code{character(1)})\cr
+\item{functionals.as}{(`character(1)`)\cr
 How to represents functional features?
 Option \dQuote{matrix}: Keep them as matrix columns in the data.frame.
 Option \dQuote{dfcols}: Convert them to individual numeric data.frame columns.
 Default is \dQuote{dfcols}.}
 }
 \value{
-Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
+Either a data.frame or a list with data.frame `data` and vector `target`.
 }
 \description{
-Useful in \link{trainLearner} when you add a learning machine to the package.
+Useful in [trainLearner] when you add a learning machine to the package.
 }
 \examples{
 library("mlbench")
@@ -75,4 +75,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-\concept{task}
+

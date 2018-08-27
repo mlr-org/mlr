@@ -9,33 +9,33 @@ reduceBatchmarkResults(ids = NULL, keep.pred = TRUE,
   reg = batchtools::getDefaultRegistry())
 }
 \arguments{
-\item{ids}{(\link{data.frame} or \link{integer})\cr
-A \link[base:data.frame]{base::data.frame} (or \link[data.table:data.table]{data.table::data.table})
+\item{ids}{([data.frame] or [integer])\cr
+A [base::data.frame] (or [data.table::data.table])
 with a column named \dQuote{job.id}.
 Alternatively, you may also pass a vector of integerish job ids.
-If not set, defaults to all successfully terminated jobs (return value of \link[batchtools:findDone]{batchtools::findDone}.}
+If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone].}
 
-\item{keep.pred}{(\code{logical(1)})\cr
-Keep the prediction data in the \code{pred} slot of the result object.
+\item{keep.pred}{(`logical(1)`)\cr
+Keep the prediction data in the `pred` slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to \code{FALSE}.
-Default is \code{TRUE}.}
+In this case you can set this argument to `FALSE`.
+Default is `TRUE`.}
 
-\item{show.info}{(\code{logical(1)})\cr
+\item{show.info}{(`logical(1)`)\cr
 Print verbose output on console?
-Default is set via \link{configureMlr}.}
+Default is set via [configureMlr].}
 
-\item{reg}{(\link[batchtools:ExperimentRegistry]{batchtools::ExperimentRegistry})\cr
-Registry, created by \link[batchtools:makeExperimentRegistry]{batchtools::makeExperimentRegistry}. If not explicitly passed,
+\item{reg}{([batchtools::ExperimentRegistry])\cr
+Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 uses the last created registry.}
 }
 \value{
-(\link{BenchmarkResult}).
+([BenchmarkResult]).
 }
 \description{
-This creates a \link{BenchmarkResult} from a \link[batchtools:ExperimentRegistry]{batchtools::ExperimentRegistry}.
-To setup the benchmark have a look at \link{batchmark}.
+This creates a [BenchmarkResult] from a [batchtools::ExperimentRegistry].
+To setup the benchmark have a look at [batchmark].
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -62,4 +62,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}}
 }
-\concept{benchmark}
+

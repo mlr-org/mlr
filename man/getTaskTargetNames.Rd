@@ -7,14 +7,14 @@
 getTaskTargetNames(x)
 }
 \arguments{
-\item{x}{(\link{Task} | \link{TaskDesc})\cr
+\item{x}{([Task] | [TaskDesc])\cr
 Task or its description object.}
 }
 \value{
-(\link{character}).
+([character]).
 }
 \description{
-NB: For multilabel, \link{getTaskTargetNames} and \link{getTaskClassLevels}
+NB: For multilabel, [getTaskTargetNames] and [getTaskClassLevels]
 actually return the same thing.
 }
 \seealso{
@@ -27,4 +27,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-\concept{task}
+

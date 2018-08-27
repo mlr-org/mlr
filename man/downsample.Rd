@@ -7,28 +7,28 @@
 downsample(obj, perc = 1, stratify = FALSE)
 }
 \arguments{
-\item{obj}{(\link{Task} | \link{ResampleInstance})\cr
-Input data or a \code{ResampleInstance}.}
+\item{obj}{([Task] | [ResampleInstance])\cr
+Input data or a `ResampleInstance`.}
 
-\item{perc}{(\code{numeric(1)})\cr
+\item{perc}{(`numeric(1)`)\cr
 Percentage from (0, 1).
 Default is 1.}
 
-\item{stratify}{(\code{logical(1)})\cr
+\item{stratify}{(`logical(1)`)\cr
 Only for classification:
 Should the downsampled data be stratified according to the target classes?
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 }
 \value{
-([data.frame\code{| [Task] | [ResampleInstance]). Same type as}obj`.
+([data.frame` | [Task] | [ResampleInstance]). Same type as `obj`.
 }
 \description{
-Decrease the observations in a \code{task} or a \code{ResampleInstance}
+Decrease the observations in a `task` or a `ResampleInstance`
 to a given percentage of observations.
 }
 \seealso{
-\link{makeResampleInstance}
+[makeResampleInstance]
 
 Other downsample: \code{\link{makeDownsampleWrapper}}
 }
-\concept{downsample}
+

@@ -7,15 +7,15 @@
 makeConstantClassWrapper(learner, frac = 0)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{frac}{\code{numeric(1)}\cr
+\item{frac}{`numeric(1)`\cr
 The fraction of labels in [0, 1) that can be different from the majority label. Default is 0, which means that constant labels are only predicted if there is exactly one label in the data.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 If the training data contains only a single class (or almost only a single class), this wrapper creates a model that always predicts the constant class in the training data. In all other cases, the underlying learner is trained and the resulting model used for predictions.
@@ -48,4 +48,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{wrapper}
+

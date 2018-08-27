@@ -8,28 +8,28 @@ plotTuneMultiCritResult(res, path = TRUE, col = NULL, shape = NULL,
   pointsize = 2, pretty.names = TRUE)
 }
 \arguments{
-\item{res}{(\link{TuneMultiCritResult})\cr
-Result of \link{tuneParamsMultiCrit}.}
+\item{res}{([TuneMultiCritResult])\cr
+Result of [tuneParamsMultiCrit].}
 
-\item{path}{(\code{logical(1)})\cr
+\item{path}{(`logical(1)`)\cr
 Visualize all evaluated points (or only the non-dominated pareto front)?
 For the full path, the size of the points on the front is slightly increased.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{col}{(\code{character(1)})\cr
-Which column of \code{res$opt.path} should be mapped to ggplot2 color?
-Default is \code{NULL}, which means none.}
+\item{col}{(`character(1)`)\cr
+Which column of `res$opt.path` should be mapped to ggplot2 color?
+Default is `NULL`, which means none.}
 
-\item{shape}{(\code{character(1)})\cr
-Which column of \code{res$opt.path} should be mapped to ggplot2 shape?
-Default is \code{NULL}, which means none.}
+\item{shape}{(`character(1)`)\cr
+Which column of `res$opt.path` should be mapped to ggplot2 shape?
+Default is `NULL`, which means none.}
 
-\item{pointsize}{(\code{numeric(1)})\cr
-Point size for ggplot2 \link[ggplot2:geom_point]{ggplot2::geom_point} for data points.
+\item{pointsize}{(`numeric(1)`)\cr
+Point size for ggplot2 [ggplot2::geom_point] for data points.
 Default is 2.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the ID of the measures instead of their name in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the ID of the measures instead of their name in labels. Defaults to `TRUE`.}
 }
 \value{
 ggplot2 plot object.
@@ -44,4 +44,4 @@ Visualizes the pareto front and possibly the dominated points.
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{tuneParamsMultiCrit}}
 }
-\concept{tune_multicrit}
+

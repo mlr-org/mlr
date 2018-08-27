@@ -4,21 +4,20 @@
 \alias{extractFDAMultiResFeatures}
 \title{Multiresolution feature extraction.}
 \usage{
-extractFDAMultiResFeatures(res.level = 3L, shift = 0.5,
-  curve.lens = NULL)
+extractFDAMultiResFeatures(res.level = 3L, shift = 0.5, curve.lens = NULL)
 }
 \arguments{
-\item{res.level}{(\code{integer(1)})\cr
+\item{res.level}{(`integer(1)`)\cr
 The number of resolution hierachy, each length is divided by a factor of 2.}
 
-\item{shift}{(\code{numeric(1)})\cr
+\item{shift}{(`numeric(1)`)\cr
 The overlapping proportion when slide the window for one step.}
 
-\item{curve.lens}{(\link{integer})\cr
+\item{curve.lens}{([integer])\cr
 Curve subsequence lengths. Needs to sum up to the length of the functional.}
 }
 \value{
-(\link{data.frame}).
+([data.frame]).
 }
 \description{
 The function extracts currently the mean of multiple segments of each curve and stacks them
@@ -30,4 +29,4 @@ Other fda_featextractor: \code{\link{extractFDAFPCA}},
   \code{\link{extractFDAFourier}},
   \code{\link{extractFDAWavelets}}
 }
-\concept{fda_featextractor}
+

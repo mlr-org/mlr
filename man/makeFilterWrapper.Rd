@@ -9,42 +9,42 @@ makeFilterWrapper(learner, fw.method = "randomForestSRC.rfsrc",
   fw.mandatory.feat = NULL, ...)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{fw.method}{(\code{character(1)})\cr
-Filter method. See \link{listFilterMethods}.
+\item{fw.method}{(`character(1)`)\cr
+Filter method. See [listFilterMethods].
 Default is \dQuote{randomForestSRC.rfsrc}.}
 
-\item{fw.perc}{(\code{numeric(1)})\cr
-If set, select \code{fw.perc}*100 top scoring features.
-Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
+\item{fw.perc}{(`numeric(1)`)\cr
+If set, select `fw.perc`*100 top scoring features.
+Mutually exclusive with arguments `fw.abs` and `fw.threshold`.}
 
-\item{fw.abs}{(\code{numeric(1)})\cr
-If set, select \code{fw.abs} top scoring features.
-Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
+\item{fw.abs}{(`numeric(1)`)\cr
+If set, select `fw.abs` top scoring features.
+Mutually exclusive with arguments `fw.perc` and `fw.threshold`.}
 
-\item{fw.threshold}{(\code{numeric(1)})\cr
-If set, select features whose score exceeds \code{fw.threshold}.
-Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.}
+\item{fw.threshold}{(`numeric(1)`)\cr
+If set, select features whose score exceeds `fw.threshold`.
+Mutually exclusive with arguments `fw.perc` and `fw.abs`.}
 
-\item{fw.mandatory.feat}{(\link{character})\cr
+\item{fw.mandatory.feat}{([character])\cr
 Mandatory features which are always included regardless of their scores}
 
 \item{...}{(any)\cr
 Additional parameters passed down to the filter.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a base learner with a filter method. Creates a learner object, which can be
 used like any other learner object.
-Internally uses \link{filterFeatures} before every model fit.
+Internally uses [filterFeatures] before every model fit.
 
 After training, the selected features can be retrieved with
-\link{getFilteredFeatures}.
+[getFilteredFeatures].
 
 Note that observation weights do not influence the filtering and are simply passed
 down to the next learner.
@@ -96,5 +96,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{filter}
-\concept{wrapper}
+

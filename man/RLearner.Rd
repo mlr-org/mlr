@@ -9,92 +9,92 @@
 \alias{RLearnerSurv}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
+\alias{makeRLearnerCluster}
+\alias{makeRLearnerCostSens}
 \alias{makeRLearnerMultilabel}
 \alias{makeRLearnerRegr}
 \alias{makeRLearnerSurv}
-\alias{makeRLearnerCluster}
-\alias{makeRLearnerCostSens}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl,
-  note = "", class.weights.param = NULL, callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  class.weights.param = NULL, callees = character(0L))
 
 makeRLearnerMultilabel(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl,
-  note = "", callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl,
-  note = "", callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl,
-  note = "", callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerCluster(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl,
-  note = "", callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl,
-  note = "", callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 }
 \arguments{
-\item{cl}{(\code{character(1)})\cr
+\item{cl}{(`character(1)`)\cr
 Class of learner. By convention, all classification learners
 start with \dQuote{classif.} all regression learners with
 \dQuote{regr.} all survival learners start with \dQuote{surv.}
 all clustering learners with \dQuote{cluster.} and all multilabel
 classification learners start with \dQuote{multilabel.}.
 A list of all integrated learners is available on the
-\link{learners} help page.}
+[learners] help page.}
 
-\item{package}{(\link{character})\cr
+\item{package}{([character])\cr
 Package(s) to load for the implementation of the learner.}
 
-\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+\item{par.set}{([ParamHelpers::ParamSet])\cr
 Parameter set of (hyper)parameters and their constraints.
-Dependent parameters with a \code{requires} field must use \code{quote} and not
-\code{expression} to define it.}
+Dependent parameters with a `requires` field must use `quote` and not
+`expression` to define it.}
 
-\item{par.vals}{(\link{list})\cr
+\item{par.vals}{([list])\cr
 Always set hyperparameters to these values when the object is constructed.
 Useful when default values are missing in the underlying function.
 The values can later be overwritten when the user sets hyperparameters.
 Default is empty list.}
 
-\item{properties}{(\link{character})\cr
+\item{properties}{([character])\cr
 Set of learner properties. See above.
-Default is \code{character(0)}.}
+Default is `character(0)`.}
 
-\item{name}{(\code{character(1)})\cr
+\item{name}{(`character(1)`)\cr
 Meaningful name for learner.
-Default is \code{id}.}
+Default is `id`.}
 
-\item{short.name}{(\code{character(1)})\cr
+\item{short.name}{(`character(1)`)\cr
 Short name for learner.
 Should only be a few characters so it can be used in plots and tables.
-Default is \code{id}.}
+Default is `id`.}
 
-\item{note}{(\code{character(1)})\cr
+\item{note}{(`character(1)`)\cr
 Additional notes regarding the learner and its integration in mlr.
 Default is \dQuote{}.}
 
-\item{class.weights.param}{(\code{character(1)})\cr
+\item{class.weights.param}{(`character(1)`)\cr
 Name of the parameter, which can be used for providing class weights.}
 
-\item{callees}{(\link{character})\cr
+\item{callees}{([character])\cr
 Character vector naming all functions of the learner's package being called which
 have a relevant R help page.
-Default is \code{character(0)}.}
+Default is `character(0)`.}
 }
 \value{
-(\link{RLearner}). The specific subclass is one of \link{RLearnerClassif},
-\link{RLearnerCluster}, \link{RLearnerMultilabel},
-\link{RLearnerRegr}, \link{RLearnerSurv}.
+([RLearner]). The specific subclass is one of [RLearnerClassif],
+  [RLearnerCluster], [RLearnerMultilabel],
+  [RLearnerRegr], [RLearnerSurv].
 }
 \description{
 Wraps an already implemented learning method from R to make it accessible to mlr.
@@ -105,7 +105,8 @@ features of the learner.
 
 For a general overview on how to integrate a learning algorithm into mlr's system, please read the
 section in the online tutorial:
-\url{https://mlr-org.github.io/mlr/articles/create_learner.html}
+<https://mlr-org.github.io/mlr/articles/create_learner.html>
 
-To see all possible properties of a learner, go to: \link{LearnerProperties}.
+To see all possible properties of a learner, go to: [LearnerProperties].
 }
+

@@ -8,11 +8,11 @@ batchmark(learners, tasks, resamplings, measures, models = TRUE,
   reg = batchtools::getDefaultRegistry())
 }
 \arguments{
-\item{learners}{(list of \link{Learner} | \link{character})\cr
+\item{learners}{(list of [Learner] | [character])\cr
 Learning algorithms which should be compared, can also be a single learner.
-If you pass strings the learners will be created via \link{makeLearner}.}
+If you pass strings the learners will be created via [makeLearner].}
 
-\item{tasks}{{list of \link{Task}}\cr
+\item{tasks}{{list of [Task]}\cr
 Tasks that learners should be run on.}
 
 \item{resamplings}{[(list of) [ResampleDesc])\cr
@@ -20,13 +20,13 @@ Resampling strategy for each tasks.
 If only one is provided, it will be replicated to match the number of tasks.
 If missing, a 10-fold cross validation is used.}
 
-\item{measures}{(list of \link{Measure})\cr
+\item{measures}{(list of [Measure])\cr
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
 
-\item{models}{(\code{logical(1)})\cr
-Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+\item{models}{(`logical(1)`)\cr
+Should all fitted models be stored in the [ResampleResult]?
+Default is `TRUE`.}
 
 \item{reg}{([batchtools::Registry])\cr
 Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
@@ -85,4 +85,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-\concept{benchmark}
+

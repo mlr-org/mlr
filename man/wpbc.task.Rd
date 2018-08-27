@@ -5,10 +5,11 @@
 \alias{wpbc.task}
 \title{Wisonsin Prognostic Breast Cancer (WPBC) survival task.}
 \description{
-Contains the task (\code{wpbc.task}).
+Contains the task (`wpbc.task`).
 }
 \references{
-See \link[TH.data:wpbc]{TH.data::wpbc}.
-Incomplete cases have been removed from the task.
+See [TH.data::wpbc].
+ Incomplete cases have been removed from the task.
 }
 \keyword{data}
+

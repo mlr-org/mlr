@@ -7,27 +7,27 @@
 makeLearners(cls, ids = NULL, type = NULL, ...)
 }
 \arguments{
-\item{cls}{(\link{character})\cr
+\item{cls}{([character])\cr
 Classes of learners.}
 
-\item{ids}{(\link{character})\cr
+\item{ids}{([character])\cr
 Id strings. Must be unique.
-Default is \code{cls}.}
+Default is `cls`.}
 
-\item{type}{(\code{character(1)})\cr
-Shortcut to prepend type string to \code{cls} so one can set \code{cls = "rpart"}.
-Default is \code{NULL}, i.e., this is not used.}
+\item{type}{(`character(1)`)\cr
+Shortcut to prepend type string to `cls` so one can set `cls = "rpart"`.
+Default is `NULL`, i.e., this is not used.}
 
 \item{...}{(any)\cr
 Optional named (hyper)parameters.
-Alternatively these can be given using the \code{par.vals} argument.}
+Alternatively these can be given using the `par.vals` argument.}
 }
 \value{
-[named list of \link{Learner}). Named by \code{ids}.
+[named list of [Learner]). Named by `ids`.
 }
 \description{
 Small helper function that can save some typing when creating mutiple learner objects.
-Calls \link{makeLearner} multiple times internally.
+Calls [makeLearner] multiple times internally.
 }
 \examples{
 makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
@@ -50,4 +50,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-\concept{learner}
+

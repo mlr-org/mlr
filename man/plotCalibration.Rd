@@ -8,31 +8,31 @@ plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE,
   facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{obj}{(\link{CalibrationData})\cr
-Result of \link{generateCalibrationData}.}
+\item{obj}{([CalibrationData])\cr
+Result of [generateCalibrationData].}
 
-\item{smooth}{(\code{logical(1)})\cr
+\item{smooth}{(`logical(1)`)\cr
 Whether to use a loess smoother.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 
-\item{reference}{(\code{logical(1)})\cr
+\item{reference}{(`logical(1)`)\cr
 Whether to plot a reference line showing perfect calibration.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{rag}{(\code{logical(1)})\cr
+\item{rag}{(`logical(1)`)\cr
 Whether to include a rag plot which shows a rug plot on the top which pertains to
 positive cases and on the bottom which pertains to negative cases.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
 }
 \description{
-Plots calibration data from \link{generateCalibrationData}.
+Plots calibration data from [generateCalibrationData].
 }
 \examples{
 \dontrun{
@@ -52,6 +52,8 @@ plotCalibration(out)
 }
 }
 \seealso{
+Other calibration: \code{\link{generateCalibrationData}}
+
 Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
@@ -61,8 +63,5 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
-
-Other calibration: \code{\link{generateCalibrationData}}
 }
-\concept{calibration}
-\concept{plot}
+

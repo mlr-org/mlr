@@ -4,6 +4,7 @@
 \alias{learners}
 \title{List of supported learning algorithms.}
 \description{
-All supported learners can be found by \link{listLearners} or as a table
-in the tutorial appendix: \url{https://mlr-org.github.io/mlr/articles/integrated_learners.html}.
+All supported learners can be found by [listLearners] or as a table
+in the tutorial appendix: <https://mlr-org.github.io/mlr/articles/integrated_learners.html>.
 }
+

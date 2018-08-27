@@ -8,23 +8,23 @@ plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE,
   facet.learner = FALSE)
 }
 \arguments{
-\item{obj}{(\link{ThreshVsPerfData})\cr
-Result of \link{generateThreshVsPerfData}.}
+\item{obj}{([ThreshVsPerfData])\cr
+Result of [generateThreshVsPerfData].}
 
-\item{measures}{([list(2)` of \link{Measure})\cr
-Default is the first 2 measures passed to \link{generateThreshVsPerfData}.}
+\item{measures}{([list(2)` of [Measure])\cr
+Default is the first 2 measures passed to [generateThreshVsPerfData].}
 
-\item{diagonal}{(\code{logical(1)})\cr
+\item{diagonal}{(`logical(1)`)\cr
 Whether to plot a dashed diagonal line.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the \link{Measure} name instead of the id in the plot.
-Default is \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the [Measure] name instead of the id in the plot.
+Default is `TRUE`.}
 
-\item{facet.learner}{(\code{logical(1)})\cr
+\item{facet.learner}{(`logical(1)`)\cr
 Weather to use facetting or different colors to compare multiple learners.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 }
 \value{
 ggplot2 plot object.
@@ -64,5 +64,4 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
   \code{\link{plotThreshVsPerf}}
 }
-\concept{plot}
-\concept{thresh_vs_perf}
+

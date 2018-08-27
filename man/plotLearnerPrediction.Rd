@@ -4,84 +4,84 @@
 \alias{plotLearnerPrediction}
 \title{Visualizes a learning algorithm on a 1D or 2D data set.}
 \usage{
-plotLearnerPrediction(learner, task, features = NULL, measures,
-  cv = 10L, ..., gridsize, pointsize = 2, prob.alpha = TRUE,
-  se.band = TRUE, err.mark = "train", bg.cols = c("darkblue",
-  "green", "darkred"), err.col = "white", err.size = pointsize,
-  greyscale = FALSE, pretty.names = TRUE)
+plotLearnerPrediction(learner, task, features = NULL, measures, cv = 10L,
+  ..., gridsize, pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
+  err.mark = "train", bg.cols = c("darkblue", "green", "darkred"),
+  err.col = "white", err.size = pointsize, greyscale = FALSE,
+  pretty.names = TRUE)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{features}{(\link{character})\cr
+\item{features}{([character])\cr
 Selected features for model.
 By default the first 2 features are used.}
 
-\item{measures}{(\link{Measure} | list of \link{Measure})\cr
+\item{measures}{([Measure] | list of [Measure])\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \link{getDefaultMeasure}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 
-\item{cv}{(\code{integer(1)})\cr
+\item{cv}{(`integer(1)`)\cr
 Do cross-validation and display in plot title?
 Number of folds. 0 means no CV.
 Default is 10.}
 
 \item{...}{(any)\cr
-Parameters for \code{learner}.}
+Parameters for `learner`.}
 
-\item{gridsize}{(\code{integer(1)})\cr
+\item{gridsize}{(`integer(1)`)\cr
 Grid resolution per axis for background predictions.
 Default is 500 for 1D and 100 for 2D.}
 
-\item{pointsize}{(\code{numeric(1)})\cr
-Pointsize for ggplot2 \link[ggplot2:geom_point]{ggplot2::geom_point} for data points.
+\item{pointsize}{(`numeric(1)`)\cr
+Pointsize for ggplot2 [ggplot2::geom_point] for data points.
 Default is 2.}
 
-\item{prob.alpha}{(\code{logical(1)})\cr
+\item{prob.alpha}{(`logical(1)`)\cr
 For classification: Set alpha value of background to probability for
 predicted class? Allows visualization of \dQuote{confidence} for prediction.
 If not, only a constant color is displayed in the background for the predicted label.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{se.band}{(\code{logical(1)})\cr
+\item{se.band}{(`logical(1)`)\cr
 For regression in 1D: Show band for standard error estimation?
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{err.mark}{(\code{character(1)}):
+\item{err.mark}{(`character(1)`):
 For classification: Either mark error of the model on the training data (\dQuote{train}) or
 during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 Default is \dQuote{train}.}
 
-\item{bg.cols}{(\code{character(3)})\cr
+\item{bg.cols}{(`character(3)`)\cr
 Background colors for classification and regression.
 Sorted from low, medium to high.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{err.col}{(\code{character(1)})\cr
+\item{err.col}{(`character(1)`)\cr
 For classification: Color of misclassified data points.
 Default is \dQuote{white}}
 
-\item{err.size}{(\code{integer(1)})\cr
+\item{err.size}{(`integer(1)`)\cr
 For classification: Size of misclassified data points.
-Default is \code{pointsize}.}
+Default is `pointsize`.}
 
-\item{greyscale}{(\code{logical(1)})\cr
+\item{greyscale}{(`logical(1)`)\cr
 Should the plot be greyscale completely?
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to `TRUE`.}
 }
 \value{
 The ggplot2 object.
 }
 \description{
-Trains the model for 1 or 2 selected features, then displays it via \link[ggplot2:ggplot]{ggplot2::ggplot}.
+Trains the model for 1 or 2 selected features, then displays it via [ggplot2::ggplot].
 Good for teaching or exploring models.
 
 For classification and clustering, only 2D plots are supported. The data points, the classification and
@@ -94,3 +94,4 @@ but only the estimated mean via background color.
 The plot title displays the model id, its parameters, the training performance
 and the cross-validation performance.
 }
+

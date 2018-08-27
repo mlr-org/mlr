@@ -7,23 +7,23 @@
 makePreprocWrapperCaret(learner, ...)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
 \item{...}{(any)\cr
-See \link[caret:preProcess]{caret::preProcess} for parameters not listed above.
-If you use them you might want to define them in the \code{add.par.set} so that they can be tuned.}
+See [caret::preProcess] for parameters not listed above.
+If you use them you might want to define them in the `add.par.set` so that they can be tuned.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
-Fuses a learner with preprocessing methods provided by \link[caret:preProcess]{caret::preProcess}.
-Before training the preprocessing will be performed and the preprocessing model will be stored.
-Before prediction the preprocessing model will transform the test data according to the trained model.
+Fuses a learner with preprocessing methods provided by [caret::preProcess].
+ Before training the preprocessing will be performed and the preprocessing model will be stored.
+ Before prediction the preprocessing model will transform the test data according to the trained model.
 
-After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.medianImpute} is set to \code{TRUE}.
+ After being wrapped the learner will support missing values although this will only be the case if `ppc.knnImpute`, `ppc.bagImpute` or `ppc.medianImpute` is set to `TRUE`.
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
@@ -51,4 +51,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{wrapper}
+

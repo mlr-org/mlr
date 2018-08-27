@@ -7,23 +7,24 @@
 estimateResidualVariance(x, task, data, target)
 }
 \arguments{
-\item{x}{(\link{Learner} or \link{WrappedModel})\cr
+\item{x}{([Learner] or [WrappedModel])\cr
 Learner or wrapped model.}
 
-\item{task}{(\link{RegrTask})\cr
+\item{task}{([RegrTask])\cr
 Regression task.
-If missing, \code{data} and \code{target} must be supplied.}
+If missing, `data` and `target` must be supplied.}
 
-\item{data}{(\link{data.frame})\cr
+\item{data}{([data.frame])\cr
 A data frame containing the features and target variable.
-If missing, \code{task} must be supplied.}
+If missing, `task` must be supplied.}
 
-\item{target}{(\code{character(1)})\cr
+\item{target}{(`character(1)`)\cr
 Name of the target variable.
-If missing, \code{task} must be supplied.}
+If missing, `task` must be supplied.}
 }
 \description{
 Estimate the residual variance of a regression model on a given task.
 If a regression learner is provided instead of a model, the model is
-trained (see \link{train}) first.
+trained (see [train]) first.
 }
+

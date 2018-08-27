@@ -7,15 +7,16 @@
 getFailureModelMsg(model)
 }
 \arguments{
-\item{model}{(\link{WrappedModel})\cr
+\item{model}{([WrappedModel])\cr
 The model.}
 }
 \value{
-(\code{character(1)}).
+(`character(1)`).
 }
 \description{
-Such a model is created when one sets the corresponding option in \link{configureMlr}.
-If no failure occurred, \code{NA} is returned.
+Such a model is created when one sets the corresponding option in [configureMlr].
+If no failure occurred, `NA` is returned.
 
 For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 }
+

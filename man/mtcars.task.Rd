@@ -5,9 +5,10 @@
 \alias{mtcars.task}
 \title{Motor Trend Car Road Tests clustering task.}
 \description{
-Contains the task (\code{mtcars.task}).
+Contains the task (`mtcars.task`).
 }
 \references{
-See \link[datasets:mtcars]{datasets::mtcars}.
+See [datasets::mtcars].
 }
 \keyword{data}
+

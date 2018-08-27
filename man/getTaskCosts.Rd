@@ -7,15 +7,15 @@
 getTaskCosts(task, subset = NULL)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
+\item{subset}{([integer] | [logical] | `NULL`)\cr
 Selected cases. Either a logical or an index vector.
-By default \code{NULL} if all observations are used.}
+By default `NULL` if all observations are used.}
 }
 \value{
-(\code{matrix} | \code{NULL}).
+(`matrix` | `NULL`).
 }
 \description{
 Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
@@ -30,4 +30,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-\concept{task}
+

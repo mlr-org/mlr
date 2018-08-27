@@ -7,16 +7,16 @@
 getRRDump(res)
 }
 \arguments{
-\item{res}{(\link{ResampleResult})\cr
-The result of \link{resample}.}
+\item{res}{([ResampleResult])\cr
+The result of [resample].}
 }
 \value{
-\link{list}.
+[list].
 }
 \description{
-Returns the error dumps generated during resampling, which can be used with \code{debugger()}
-to debug errors. These dumps are saved if \link{configureMlr} configuration \code{on.error.dump},
-or the corresponding learner \code{config}, is \code{TRUE}.
+Returns the error dumps generated during resampling, which can be used with `debugger()`
+to debug errors. These dumps are saved if [configureMlr] configuration `on.error.dump`,
+or the corresponding learner `config`, is `TRUE`.
 
 The returned object is a list with as many entries as the resampling being used has folds. Each of these
 entries can have a subset of the following slots, depending on which step in the resampling iteration failed:
@@ -28,4 +28,4 @@ Other debug: \code{\link{FailureModel}},
   \code{\link{ResampleResult}},
   \code{\link{getPredictionDump}}
 }
-\concept{debug}
+

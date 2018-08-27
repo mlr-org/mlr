@@ -8,30 +8,37 @@ getFilterValues(task, method = "randomForestSRC.rfsrc",
   nselect = getTaskNFeats(task), ...)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{method}{(\code{character(1)})\cr
+\item{method}{(`character(1)`)\cr
 Filter method, see above.
 Default is \dQuote{randomForestSRC.rfsrc}.}
 
-\item{nselect}{(\code{integer(1)})\cr
+\item{nselect}{(`integer(1)`)\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
 
 \item{...}{(any)\cr
 Passed down to selected method.}
 }
 \value{
-(\link{FilterValues}).
+([FilterValues]).
 }
 \description{
 Calculates numerical filter values for features.
-For a list of features, use \link{listFilterMethods}.
+For a list of features, use [listFilterMethods].
 }
 \note{
-\code{getFilterValues} is deprecated in favor of \link{generateFilterValuesData}.
+`getFilterValues` is deprecated in favor of [generateFilterValuesData].
 }
 \seealso{
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
@@ -47,13 +54,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{plotFilterValues}}
-
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{listFilterMethods}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
-\concept{filter}
-\concept{generate_plot_data}
+

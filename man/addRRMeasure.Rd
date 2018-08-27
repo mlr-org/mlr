@@ -7,18 +7,18 @@
 addRRMeasure(res, measures)
 }
 \arguments{
-\item{res}{(\link{ResampleResult})\cr
-The result of \link{resample} run with \code{keep.pred = TRUE}.}
+\item{res}{([ResampleResult])\cr
+The result of [resample] run with `keep.pred = TRUE`.}
 
-\item{measures}{(\link{Measure} | list of \link{Measure})\cr
+\item{measures}{([Measure] | list of [Measure])\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \link{getDefaultMeasure}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 }
 \value{
-(\link{ResampleResult}).
+([ResampleResult]).
 }
 \description{
-Adds new measures to an existing \code{ResampleResult}.
+Adds new measures to an existing `ResampleResult`.
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
@@ -31,4 +31,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
-\concept{resample}
+

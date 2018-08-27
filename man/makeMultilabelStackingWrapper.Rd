@@ -7,15 +7,15 @@
 makeMultilabelStackingWrapper(learner, cv.folds = 2)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{cv.folds}{(\code{integer(1)})\cr
-The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.}
+\item{cv.folds}{(`integer(1)`)\cr
+The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is `2`.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Every learner which is implemented in mlr and which supports binary
@@ -24,7 +24,7 @@ Stacking trains a binary classifier for each label using predicted label informa
 as additional features (by cross validation).
 During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 
-Models can easily be accessed via \link{getLearnerModel}.
+Models can easily be accessed via [getLearnerModel].
 }
 \examples{
 d = getTaskData(yeast.task)
@@ -45,10 +45,16 @@ getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 }
 \references{
 Montanes, E. et al. (2013)
-\emph{Dependent binary relevance models for multi-label classification}
+*Dependent binary relevance models for multi-label classification*
 Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 }
 \seealso{
+Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}}
+
 Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
@@ -73,12 +79,5 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
-
-Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
-  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}}
 }
-\concept{multilabel}
-\concept{wrapper}
+

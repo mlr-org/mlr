@@ -4,45 +4,45 @@
 \alias{makeSMOTEWrapper}
 \title{Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.}
 \usage{
-makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L,
-  sw.standardize = TRUE, sw.alt.logic = FALSE)
+makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L, sw.standardize = TRUE,
+  sw.alt.logic = FALSE)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{sw.rate}{(\code{numeric(1)})\cr
-Factor to oversample the smaller class. Must be between 1 and \code{Inf},
+\item{sw.rate}{(`numeric(1)`)\cr
+Factor to oversample the smaller class. Must be between 1 and `Inf`,
 where 1 means no oversampling and 2 would mean doubling the class size.
 Default is 1.}
 
-\item{sw.nn}{(\code{integer(1)})\cr
+\item{sw.nn}{(`integer(1)`)\cr
 Number of nearest neighbors to consider.
 Default is 5.}
 
-\item{sw.standardize}{(\code{logical(1)})\cr
+\item{sw.standardize}{(`logical(1)`)\cr
 Standardize input variables before calculating the nearest neighbors
 for data sets with numeric input variables only. For mixed variables
 (numeric and factor) the gower distance is used and variables are
 standardized anyway.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{sw.alt.logic}{(\code{logical(1)})\cr
+\item{sw.alt.logic}{(`logical(1)`)\cr
 Use an alternative logic for selection of minority class observations.
 Instead of sampling a minority class element AND one of its nearest
 neighbors, each minority class element is taken multiple times (depending
 on rate) for the interpolation and only the corresponding nearest neighbor
 is sampled.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Creates a learner object, which can be
 used like any other learner object.
-Internally uses \link{smote} before every model fit.
+Internally uses [smote] before every model fit.
 
 Note that observation weights do not influence the sampling and are simply passed
 down to the next learner.
@@ -73,4 +73,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{wrapper}
+

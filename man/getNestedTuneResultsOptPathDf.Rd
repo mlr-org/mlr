@@ -2,29 +2,29 @@
 % Please edit documentation in R/getNestedTuneResults.R
 \name{getNestedTuneResultsOptPathDf}
 \alias{getNestedTuneResultsOptPathDf}
-\title{Get the \code{opt.path}s from each tuning step from the outer resampling.}
+\title{Get the `opt.path`s from each tuning step from the outer resampling.}
 \usage{
 getNestedTuneResultsOptPathDf(r, trafo = FALSE)
 }
 \arguments{
-\item{r}{(\link{ResampleResult}) \cr
+\item{r}{([ResampleResult]) \cr
 The result of resampling of a tuning wrapper.}
 
-\item{trafo}{(\code{logical(1)})\cr
+\item{trafo}{(`logical(1)`)\cr
 Should the units of the hyperparameter path be converted to the
 transformed scale? This is only necessary when trafo was used to create
-the \code{opt.path}s. Note that \code{opt.path}s are always stored on the
+the `opt.path`s. Note that `opt.path`s are always stored on the
 untransformed scale.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 }
 \value{
-(\link{data.frame}). See above.
+([data.frame]). See above.
 }
 \description{
-After you resampled a tuning wrapper (see \link{makeTuneWrapper})
-with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
-with all \code{opt.path}s combined by \code{rbind}.
-An additional column \code{iter} indicates to what resampling iteration the row belongs.
+After you resampled a tuning wrapper (see [makeTuneWrapper])
+with `resample(..., extract = getTuneResult)` this helper returns a `data.frame` with
+with all `opt.path`s combined by `rbind`.
+An additional column `iter` indicates to what resampling iteration the row belongs.
 }
 \examples{
 # see example of makeTuneWrapper
@@ -46,4 +46,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
-\concept{tune}
+

@@ -7,20 +7,20 @@
 makeMulticlassWrapper(learner, mcw.method = "onevsrest")
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{mcw.method}{(\code{character(1)} | \code{function}) \cr
+\item{mcw.method}{(`character(1)` | `function`) \cr
 \dQuote{onevsone} or \dQuote{onevsrest}.
-You can also pass a function, with signature \code{function(task)} and which
+You can also pass a function, with signature `function(task)` and which
 returns a ECOC codematrix with entries +1,-1,0.
 Columns define new binary problems, rows correspond to classes (rows must be named).
 0 means class is not included in binary problem.
 Default is \dQuote{onevsrest}.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a base learner with a multi-class method.
@@ -33,7 +33,7 @@ problems are created from the multiclass task. How these binary problems
 are generated is defined by an error-correcting-output-code (ECOC) code book.
 This also allows the simple and well-known one-vs-one and one-vs-rest
 approaches. Decoding is currently done via Hamming decoding, see
-e.g. here \url{http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf}.
+e.g. here <http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf>.
 
 Currently, the approach always operates on the discrete predicted labels
 of the binary base models (instead of their probabilities) and the created
@@ -65,4 +65,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{wrapper}
+

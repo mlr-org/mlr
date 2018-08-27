@@ -4,20 +4,21 @@
 \alias{crossover}
 \title{Crossover.}
 \arguments{
-\item{x}{(\link{logical})\cr
+\item{x}{([logical])\cr
 First parent string.}
 
-\item{y}{(\link{logical})\cr
+\item{y}{([logical])\cr
 Second parent string.}
 
-\item{rate}{(\code{numeric(1)})\cr
+\item{rate}{(`numeric(1)`)\cr
 A number representing the probability of selecting an element of the first string.
-Default is \code{0.5}.}
+Default is `0.5`.}
 }
 \value{
-(\link{crossover}).
+([crossover]).
 }
 \description{
 Takes two bit strings and creates a new one of the same size by selecting the items from the first string or
 the second, based on a given rate (the probability of choosing an element from the first string).
 }
+

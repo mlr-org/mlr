@@ -7,22 +7,23 @@
 checkPredictLearnerOutput(learner, model, p)
 }
 \arguments{
-\item{learner}{(\link{Learner})\cr
+\item{learner}{([Learner])\cr
 The learner.}
 
-\item{model}{(\link{WrappedModel})]\cr
+\item{model}{([WrappedModel])]\cr
 Model produced by training.}
 
 \item{p}{(any)\cr
-The prediction made by \code{learner}.}
+The prediction made by `learner`.}
 }
 \value{
-(any). A sanitized version of \code{p}.
+(any). A sanitized version of `p`.
 }
 \description{
 Check the output coming from a Learner's internal
-\code{predictLearner} function.
+`predictLearner` function.
 
 This function is for internal use.
 }
 \keyword{internal}
+

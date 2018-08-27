@@ -7,14 +7,15 @@
 simplifyMeasureNames(xs)
 }
 \arguments{
-\item{xs}{(\link{character})\cr
+\item{xs}{([character])\cr
 Character vector that (possibly) contains aggregated measure names.}
 }
 \value{
-(\link{character}).
+([character]).
 }
 \description{
 Clips aggregation names from character vector.
 E.g: 'mmce.test.mean' becomes 'mmce'.
 Elements that don't contain a measure name are ignored and returned unchanged.
 }
+

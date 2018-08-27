@@ -7,16 +7,17 @@
 getOOBPredsLearner(.learner, .model)
 }
 \arguments{
-\item{.learner}{(\link{Learner})\cr
+\item{.learner}{([Learner])\cr
 The learner.}
 
-\item{.model}{(\link{WrappedModel})\cr
+\item{.model}{([WrappedModel])\cr
 Wrapped model.}
 }
 \value{
-Same output structure as in (\link{predictLearner}).
+Same output structure as in ([predictLearner]).
 }
 \description{
-This function is mostly for internal usage. To get out-of-bag predictions use \link{getOOBPreds}.
+This function is mostly for internal usage. To get out-of-bag predictions use [getOOBPreds].
 }
 \keyword{internal}
+

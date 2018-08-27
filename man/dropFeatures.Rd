@@ -7,14 +7,14 @@
 dropFeatures(task, features)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{features}{(\link{character})\cr
+\item{features}{([character])\cr
 Features to drop.}
 }
 \value{
-\link{Task}.
+[Task].
 }
 \description{
 Drop some features of task.
@@ -27,4 +27,4 @@ Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{removeConstantFeatures}},
   \code{\link{summarizeColumns}}
 }
-\concept{eda_and_preprocess}
+

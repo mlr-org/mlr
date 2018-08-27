@@ -8,48 +8,48 @@ makeTuneWrapper(learner, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
+\item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behavior, look at \link{TuneControl}.}
+If you want to change that behavior, look at [TuneControl].}
 
-\item{measures}{(list of \link{Measure} | \link{Measure})\cr
+\item{measures}{(list of [Measure] | [Measure])\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here \link{getDefaultMeasure}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 
-\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+\item{par.set}{([ParamHelpers::ParamSet])\cr
 Collection of parameters and their constraints for optimization.
-Dependent parameters with a \code{requires} field must use \code{quote} and not
-\code{expression} to define it.}
+Dependent parameters with a `requires` field must use `quote` and not
+`expression` to define it.}
 
-\item{control}{(\link{TuneControl})\cr
+\item{control}{([TuneControl])\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
-\item{show.info}{(\code{logical(1)})\cr
+\item{show.info}{(`logical(1)`)\cr
 Print verbose output on console?
-Default is set via \link{configureMlr}.}
+Default is set via [configureMlr].}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a base learner with a search strategy to select its hyperparameters.
 Creates a learner object, which can be used like any other learner object,
-but which internally uses \link{tuneParams}.
+but which internally uses [tuneParams].
 If the train function is called on it,
 the search strategy and resampling are invoked
 to select an optimal set of hyperparameter values. Finally, a model is fitted on the
 complete training data with these optimal hyperparameters and returned.
-See \link{tuneParams} for more details.
+See [tuneParams] for more details.
 
 After training, the optimal hyperparameters (and other related information) can be retrieved with
-\link{getTuneResult}.
+[getTuneResult].
 }
 \examples{
 \donttest{
@@ -116,5 +116,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{tune}
-\concept{wrapper}
+

@@ -6,61 +6,61 @@
 \usage{
 makeImputeWrapper(learner, classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L),
-  dummy.type = "factor", force.dummies = FALSE,
-  impute.new.levels = TRUE, recode.factor.levels = TRUE)
+  dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{classes}{(named \link{list})\cr
+\item{classes}{(named [list])\cr
 Named list containing imputation techniques for classes of columns.
-E.g. \code{list(numeric = imputeMedian())}.}
+E.g. `list(numeric = imputeMedian())`.}
 
-\item{cols}{(named \link{list})\cr
+\item{cols}{(named [list])\cr
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overrules imputation set via
-\code{classes}.}
+`classes`.}
 
-\item{dummy.classes}{(\link{character})\cr
+\item{dummy.classes}{([character])\cr
 Classes of columns to create dummy columns for.
-Default is \code{character(0)}.}
+Default is `character(0)`.}
 
-\item{dummy.cols}{(\link{character})\cr
+\item{dummy.cols}{([character])\cr
 Column names to create dummy columns (containing binary missing indicator) for.
-Default is \code{character(0)}.}
+Default is `character(0)`.}
 
-\item{dummy.type}{(\code{character(1)})\cr
+\item{dummy.type}{(`character(1)`)\cr
 How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 or as \dQuote{factor}.
 Default is \dQuote{factor}.}
 
-\item{force.dummies}{(\code{logical(1)})\cr
+\item{force.dummies}{(`logical(1)`)\cr
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
 be stochastic if you turn this off.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 
-\item{impute.new.levels}{(\code{logical(1)})\cr
+\item{impute.new.levels}{(`logical(1)`)\cr
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{recode.factor.levels}{(\code{logical(1)})\cr
+\item{recode.factor.levels}{(`logical(1)`)\cr
 Recode factor levels after reimputation, so they match the respective element of
-\code{lvls} (in the description object) and therefore match the levels of the
+`lvls` (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a base learner with an imputation method. Creates a learner object, which can be
 used like any other learner object.
-Internally uses \link{impute} before training the learner and \link{reimpute}
+Internally uses [impute] before training the learner and [reimpute]
 before predicting.
 }
 \seealso{
@@ -93,5 +93,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{impute}
-\concept{wrapper}
+

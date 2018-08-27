@@ -7,8 +7,9 @@
 listMeasureProperties()
 }
 \value{
-(\link{character}).
+([character]).
 }
 \description{
 This is useful for determining which measure properties are available.
 }
+

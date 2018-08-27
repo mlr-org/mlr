@@ -2,7 +2,7 @@
 % Please edit documentation in R/Prediction_operators.R
 \name{getProbabilities}
 \alias{getProbabilities}
-\title{Deprecated, use \code{getPredictionProbabilities} instead.}
+\title{Deprecated, use `getPredictionProbabilities` instead.}
 \usage{
 getProbabilities(pred, cl)
 }
@@ -12,5 +12,6 @@ getProbabilities(pred, cl)
 \item{cl}{Deprecated.}
 }
 \description{
-Deprecated, use \code{getPredictionProbabilities} instead.
+Deprecated, use `getPredictionProbabilities` instead.
 }
+

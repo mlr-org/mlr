@@ -5,9 +5,10 @@
 \alias{spam.task}
 \title{Spam classification task.}
 \description{
-Contains the task (\code{spam.task}).
+Contains the task (`spam.task`).
 }
 \references{
-See \link[kernlab:spam]{kernlab::spam}.
+See [kernlab::spam].
 }
 \keyword{data}
+

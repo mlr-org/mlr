@@ -4,57 +4,47 @@
 \alias{plotBMRBoxplots}
 \title{Create box or violin plots for a BenchmarkResult.}
 \usage{
-plotBMRBoxplots(bmr, measure = NULL, style = "box",
-  order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE,
-  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
+plotBMRBoxplots(bmr, measure = NULL, style = "box", order.lrns = NULL,
+  order.tsks = NULL, pretty.names = TRUE, facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{style}{(\code{character(1)})\cr
+\item{style}{(`character(1)`)\cr
 Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 Default is \dQuote{box}.}
 
-\item{order.lrns}{(\code{character(n.learners)})\cr
-Character vector with \code{learner.ids} in new order.}
+\item{order.lrns}{(`character(n.learners)`)\cr
+Character vector with `learner.ids` in new order.}
 
-\item{order.tsks}{(\code{character(n.tasks)})\cr
-Character vector with \code{task.ids} in new order.}
+\item{order.tsks}{(`character(n.tasks)`)\cr
+Character vector with `task.ids` in new order.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the \link{Measure} name and the \link{Learner}
-short name instead of the id. Default is \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the [Measure] name and the [Learner]
+short name instead of the id. Default is `TRUE`.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
 }
 \description{
-Plots box or violin plots for a selected \code{measure} across all iterations
-of the resampling strategy, faceted by the \code{task.id}.
+Plots box or violin plots for a selected `measure` across all iterations
+of the resampling strategy, faceted by the `task.id`.
 }
 \examples{
 # see benchmark
 }
 \seealso{
-Other plot: \code{\link{createSpatialResamplingPlots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerf}}
-
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
@@ -78,6 +68,15 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
+
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerf}}
 }
-\concept{benchmark}
-\concept{plot}
+

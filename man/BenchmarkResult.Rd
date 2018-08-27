@@ -4,18 +4,18 @@
 \alias{BenchmarkResult}
 \title{BenchmarkResult object.}
 \description{
-Result of a benchmark experiment conducted by \link{benchmark}
+Result of a benchmark experiment conducted by [benchmark]
 with the following members:
 \describe{
-\item{results (list of \link{ResampleResult}):}{
-A nested \link{list} of resample results,
-first ordered by task id, then by learner id.
+\item{results (list of [ResampleResult]):}{
+  A nested [list] of resample results,
+  first ordered by task id, then by learner id.
 }
-\item{measures (list of \link{Measure}):}{
-The performance measures used in the benchmark experiment.
+\item{measures (list of [Measure]):}{
+  The performance measures used in the benchmark experiment.
 }
-\item{learners (list of \link{Learner}):}{
-The learning algorithms compared in the benchmark experiment.
+\item{learners (list of [Learner]):}{
+  The learning algorithms compared in the benchmark experiment.
 }
 }
 
@@ -23,8 +23,8 @@ The print method of this object shows aggregated performance values
 for all tasks and learners.
 
 It is recommended to
-retrieve required information via the \code{getBMR*} getter functions.
-You can also convert the object using \link{as.data.frame}.
+retrieve required information via the `getBMR*` getter functions.
+You can also convert the object using [as.data.frame].
 }
 \seealso{
 Other benchmark: \code{\link{batchmark}},
@@ -52,4 +52,4 @@ Other benchmark: \code{\link{batchmark}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-\concept{benchmark}
+

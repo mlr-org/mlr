@@ -7,11 +7,11 @@
 setPredictType(learner, predict.type)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{predict.type}{(\code{character(1)})\cr
+\item{predict.type}{(`character(1)`)\cr
 Classification: \dQuote{response} or \dQuote{prob}.
 Regression: \dQuote{response} or \dQuote{se}.
 Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
@@ -19,7 +19,7 @@ Clustering: \dQuote{response} or \dQuote{prob}.
 Default is \dQuote{response}.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Possible prediction types are:
@@ -31,13 +31,6 @@ For complex wrappers the predict type is usually also passed down the
 encapsulated learner in a recursive fashion.
 }
 \seealso{
-Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{getPredictionProbabilities}},
-  \code{\link{getPredictionResponse}},
-  \code{\link{getPredictionTaskDesc}},
-  \code{\link{predict.WrappedModel}},
-  \code{\link{setPredictThreshold}}
-
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
@@ -53,6 +46,12 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}}
+
+Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{getPredictionProbabilities}},
+  \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionTaskDesc}},
+  \code{\link{predict.WrappedModel}},
+  \code{\link{setPredictThreshold}}
 }
-\concept{learner}
-\concept{predict}
+

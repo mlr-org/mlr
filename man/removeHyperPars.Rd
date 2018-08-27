@@ -7,16 +7,16 @@
 removeHyperPars(learner, ids = character(0L))
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{ids}{(\link{character})\cr
+\item{ids}{([character])\cr
 Parameter names to remove settings for.
-Default is \code{character(0L)}.}
+ Default is `character(0L)`.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Remove settings (previously set through mlr) for some parameters.
@@ -39,4 +39,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-\concept{learner}
+

@@ -5,10 +5,11 @@
 \alias{lung.task}
 \title{NCCTG Lung Cancer survival task.}
 \description{
-Contains the task (\code{lung.task}).
+Contains the task (`lung.task`).
 }
 \references{
-See \link[survival:lung]{survival::lung}.
-Incomplete cases have been removed from the task.
+See [survival::lung].
+ Incomplete cases have been removed from the task.
 }
 \keyword{data}
+

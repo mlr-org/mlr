@@ -26,3 +26,4 @@ Note that if you want to merge several [BenchmarkResult]
   When merging [BenchmarkResult] objects with different measures,
   all missing measures will automatically be recomputed.
 }
+

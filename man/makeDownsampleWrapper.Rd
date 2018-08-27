@@ -7,20 +7,20 @@
 makeDownsampleWrapper(learner, dw.perc = 1, dw.stratify = FALSE)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{dw.perc}{(\code{numeric(1)})\cr
-See \link{downsample}.
+\item{dw.perc}{(`numeric(1)`)\cr
+See [downsample].
 Default is 1.}
 
-\item{dw.stratify}{(\code{logical(1)})\cr
-See \link{downsample}.
-Default is \code{FALSE}.}
+\item{dw.stratify}{(`logical(1)`)\cr
+See [downsample].
+Default is `FALSE`.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Creates a learner object, which can be
@@ -55,5 +55,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{downsample}
-\concept{wrapper}
+

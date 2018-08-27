@@ -8,26 +8,26 @@ getBMRFeatSelResults(bmr, task.ids = NULL, learner.ids = NULL,
   as.df = FALSE, drop = FALSE)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{task.ids}{(\code{character(1)})\cr
+\item{task.ids}{(`character(1)`)\cr
 Restrict result to certain tasks.
 Default is all.}
 
-\item{learner.ids}{(\code{character(1)})\cr
+\item{learner.ids}{(`character(1)`)\cr
 Restrict result to certain learners.
 Default is all.}
 
-\item{as.df}{(\code{character(1)})\cr
-Return one \link{data.frame} as result - or a list of lists of objects?.
-Default is \code{FALSE}.}
+\item{as.df}{(`character(1)`)\cr
+Return one [data.frame] as result - or a list of lists of objects?.
+Default is `FALSE`.}
 
-\item{drop}{(\code{logical(1)})\cr
-If drop is \code{FALSE} (the default), a nested list with
+\item{drop}{(`logical(1)`)\cr
+If drop is `FALSE` (the default), a nested list with
 the following structure is returned:\cr
-\code{res[task.ids][learner.ids]}.\cr
-If drop is set to \code{TRUE} it is checked if the list
+`res[task.ids][learner.ids]`.\cr
+If drop is set to `TRUE` it is checked if the list
 structure can be simplified.\cr
 If only one learner was passed, a list with entries
 for each task is returned.\cr
@@ -39,10 +39,10 @@ Note that the name of the
 task/learner will be dropped from the return object.}
 }
 \value{
-(\link{list} | \link{data.frame}). See above.
+([list] | [data.frame]). See above.
 }
 \description{
-Returns a nested list of \link{FeatSelResult}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+Returns a nested list of [FeatSelResult]s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If `as.df` is `TRUE`, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
 
 Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 }
@@ -71,4 +71,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-\concept{benchmark}
+

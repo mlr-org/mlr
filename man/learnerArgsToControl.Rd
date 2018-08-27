@@ -7,7 +7,7 @@
 learnerArgsToControl(control, ...)
 }
 \arguments{
-\item{control}{(\code{function})\cr
+\item{control}{(`function`)\cr
 Function that creates control structure.}
 
 \item{...}{(any)\cr
@@ -17,6 +17,7 @@ Arguments for control structure function.}
 Control structure for learner.
 }
 \description{
-Find all elements in \code{...} which are not missing and
-call \code{control} on them.
+Find all elements in `...` which are not missing and
+call `control` on them.
 }
+

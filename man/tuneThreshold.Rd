@@ -7,37 +7,37 @@
 tuneThreshold(pred, measure, task, model, nsub = 20L, control = list())
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure to optimize.
 Default is the default measure for the task.}
 
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 Learning task. Rarely neeeded,
 only when required for the performance measure.}
 
-\item{model}{(\link{WrappedModel})\cr
+\item{model}{([WrappedModel])\cr
 Fitted model. Rarely neeeded,
 only when required for the performance measure.}
 
-\item{nsub}{(\code{integer(1)})\cr
-Passed to \link[BBmisc:optimizeSubInts]{BBmisc::optimizeSubInts} for 2class problems.
+\item{nsub}{(`integer(1)`)\cr
+Passed to [BBmisc::optimizeSubInts] for 2class problems.
 Default is 20.}
 
-\item{control}{(\link{list})\cr
-Control object for \link[cmaes:cma_es]{cmaes::cma_es} when used.
+\item{control}{([list])\cr
+Control object for [cmaes::cma_es] when used.
 Default is empty list.}
 }
 \value{
-(\link{list}). A named list with with the following components:
-\code{th} is the optimal threshold, \code{perf} the performance value.
+([list]). A named list with with the following components:
+  `th` is the optimal threshold, `perf` the performance value.
 }
 \description{
 Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
-Uses \link[BBmisc:optimizeSubInts]{BBmisc::optimizeSubInts} for normal binary class problems and \link[cmaes:cma_es]{cmaes::cma_es}
+Uses [BBmisc::optimizeSubInts] for normal binary class problems and [cmaes::cma_es]
 for multiclass and multilabel problems.
 }
 \seealso{
@@ -57,4 +57,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}}
 }
-\concept{tune}
+

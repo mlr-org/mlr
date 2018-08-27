@@ -7,19 +7,19 @@
 setMeasurePars(measure, ..., par.vals = list())
 }
 \arguments{
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.}
 
 \item{...}{(any)\cr
 Named (hyper)parameters with new settings. Alternatively these can be passed
-using the \code{par.vals} argument.}
+using the `par.vals` argument.}
 
-\item{par.vals}{(\link{list})\cr
+\item{par.vals}{([list])\cr
 Optional list of named (hyper)parameter settings. The arguments in
-\code{...} take precedence over values in this list.}
+`...` take precedence over values in this list.}
 }
 \value{
-\link{Measure}.
+[Measure].
 }
 \description{
 Sets hyperparameters of measures.
@@ -34,4 +34,4 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
   \code{\link{performance}}, \code{\link{setAggregation}}
 }
-\concept{performance}
+

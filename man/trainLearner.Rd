@@ -7,17 +7,17 @@
 trainLearner(.learner, .task, .subset, .weights = NULL, ...)
 }
 \arguments{
-\item{.learner}{(\link{RLearner})\cr
+\item{.learner}{([RLearner])\cr
 Wrapped learner.}
 
-\item{.task}{(\link{Task})\cr
+\item{.task}{([Task])\cr
 Task to train learner on.}
 
-\item{.subset}{(\link{integer})\cr
+\item{.subset}{([integer])\cr
 Subset of cases for training set, index the task with this.
-You probably want to use \link{getTaskData} for this purpose.}
+You probably want to use [getTaskData] for this purpose.}
 
-\item{.weights}{(\link{numeric})\cr
+\item{.weights}{([numeric])\cr
 Weights for each observation.}
 
 \item{...}{(any)\cr
@@ -32,6 +32,7 @@ You have to implement this method if you want to add another learner to this pac
 }
 \details{
 Your implementation must adhere to the following:
-The model must be fitted on the subset of \code{.task} given by \code{.subset}. All parameters
-in \code{...} must be passed to the underlying training function.
+The model must be fitted on the subset of `.task` given by `.subset`. All parameters
+in `...` must be passed to the underlying training function.
 }
+

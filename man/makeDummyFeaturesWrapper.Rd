@@ -7,26 +7,26 @@
 makeDummyFeaturesWrapper(learner, method = "1-of-n", cols = NULL)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 
-\item{method}{(\code{character(1)})\cr
+\item{method}{(`character(1)`)\cr
 Available are:
 \describe{
-\item{"1-of-n":}{For n factor levels there will be n dummy variables.}
-\item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
+  \item{"1-of-n":}{For n factor levels there will be n dummy variables.}
+  \item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
 }
 Default is \dQuote{1-of-n}.}
 
-\item{cols}{(\link{character})\cr
+\item{cols}{([character])\cr
 Columns to create dummy features for. Default is to use all columns.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
-Fuses a base learner with the dummy feature creator (see \link{createDummyFeatures}).
+Fuses a base learner with the dummy feature creator (see [createDummyFeatures]).
 Returns a learner which can be used like any other learner.
 }
 \seealso{
@@ -55,4 +55,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{wrapper}
+

@@ -7,12 +7,13 @@
 getBMRTaskDescriptions(bmr)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 }
 \value{
-(\link{list}).
+([list]).
 }
 \description{
-A list containing all \link{TaskDesc}s for each task contained in the benchmark experiment.
+A list containing all [TaskDesc]s for each task contained in the benchmark experiment.
 }
+

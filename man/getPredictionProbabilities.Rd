@@ -7,16 +7,16 @@
 getPredictionProbabilities(pred, cl)
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 
-\item{cl}{(\link{character})\cr
+\item{cl}{([character])\cr
 Names of classes.
 Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.}
 }
 \value{
-(\link{data.frame}) with numerical columns or a numerical vector if length of \code{cl} is 1.
-Order of columns is defined by \code{cl}.
+([data.frame]) with numerical columns or a numerical vector if length of `cl` is 1.
+  Order of columns is defined by `cl`.
 }
 \description{
 Get probabilities for some classes.
@@ -42,4 +42,4 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-\concept{predict}
+

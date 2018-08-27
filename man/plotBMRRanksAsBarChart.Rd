@@ -9,62 +9,52 @@ plotBMRRanksAsBarChart(bmr, measure = NULL, ties.method = "average",
   order.tsks = NULL, pretty.names = TRUE)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{ties.method}{(\code{character(1)})\cr
-See \link{rank} for details.}
+\item{ties.method}{(`character(1)`)\cr
+See [rank] for details.}
 
-\item{aggregation}{(\code{character(1)}) \cr
-\dQuote{mean} or \dQuote{default}. See \link{getBMRAggrPerformances}
+\item{aggregation}{(`character(1)`) \cr
+\dQuote{mean} or \dQuote{default}. See [getBMRAggrPerformances]
 for details on \dQuote{default}.}
 
-\item{pos}{(\code{character(1)})\cr
+\item{pos}{(`character(1)`)\cr
 Optionally set how the bars are positioned in ggplot2.
 Ranks are plotted on the x-axis.
-\dQuote{tile} plots a heat map with \code{task} as the y-axis.
+\dQuote{tile} plots a heat map with `task` as the y-axis.
 Allows identification of the performance in a special task.
 \dQuote{stack} plots a stacked bar plot.
 Allows for comparison of learners within and and across ranks.
 \dQuote{dodge} plots a bar plot with bars next to each other instead
 of stacked bars.}
 
-\item{order.lrns}{(\code{character(n.learners)})\cr
-Character vector with \code{learner.ids} in new order.}
+\item{order.lrns}{(`character(n.learners)`)\cr
+Character vector with `learner.ids` in new order.}
 
-\item{order.tsks}{(\code{character(n.tasks)})\cr
-Character vector with \code{task.ids} in new order.}
+\item{order.tsks}{(`character(n.tasks)`)\cr
+Character vector with `task.ids` in new order.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to `TRUE`.}
 }
 \value{
 ggplot2 plot object.
 }
 \description{
 Plots a bar chart from the ranks of algorithms. Alternatively,
-tiles can be plotted for every rank-task combination, see \code{pos}
+tiles can be plotted for every rank-task combination, see `pos`
 for details. In all plot variants the ranks of the learning algorithms are displayed on
-the x-axis. Areas are always colored according to the \code{learner.id}.
+the x-axis. Areas are always colored according to the `learner.id`.
 }
 \examples{
 # see benchmark
 }
 \seealso{
-Other plot: \code{\link{createSpatialResamplingPlots}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerf}}
-
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
@@ -88,6 +78,15 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
+
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerf}}
 }
-\concept{benchmark}
-\concept{plot}
+

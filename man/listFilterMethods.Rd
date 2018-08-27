@@ -8,24 +8,24 @@ listFilterMethods(desc = TRUE, tasks = FALSE, features = FALSE,
   include.deprecated = FALSE)
 }
 \arguments{
-\item{desc}{(\code{logical(1)})\cr
+\item{desc}{(`logical(1)`)\cr
 Provide more detailed information about filters.
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{tasks}{(\code{logical(1)})\cr
+\item{tasks}{(`logical(1)`)\cr
 Provide information on supported tasks.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 
-\item{features}{(\code{logical(1)})\cr
+\item{features}{(`logical(1)`)\cr
 Provide information on supported features.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 
-\item{include.deprecated}{(\code{logical(1)})\cr
+\item{include.deprecated}{(`logical(1)`)\cr
 Should deprecated filter methods be included in the list.
-Default is \code{FALSE}.}
+Default is `FALSE`.}
 }
 \value{
-(\link{data.frame}).
+([data.frame]).
 }
 \description{
 Returns a subset-able dataframe with filter information.
@@ -38,4 +38,4 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
-\concept{filter}
+

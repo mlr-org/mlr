@@ -2,7 +2,7 @@
 % Please edit documentation in R/HomogeneousEnsemble.R
 \name{getHomogeneousEnsembleModels}
 \alias{getHomogeneousEnsembleModels}
-\title{Deprecated, use \code{getLearnerModel} instead.}
+\title{Deprecated, use `getLearnerModel` instead.}
 \usage{
 getHomogeneousEnsembleModels(model, learner.models = FALSE)
 }
@@ -12,5 +12,6 @@ getHomogeneousEnsembleModels(model, learner.models = FALSE)
 \item{learner.models}{Deprecated.}
 }
 \description{
-Deprecated, use \code{getLearnerModel} instead.
+Deprecated, use `getLearnerModel` instead.
 }
+

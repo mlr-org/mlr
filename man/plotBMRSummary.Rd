@@ -4,37 +4,36 @@
 \alias{plotBMRSummary}
 \title{Plot a benchmark summary.}
 \usage{
-plotBMRSummary(bmr, measure = NULL, trafo = "none",
-  order.tsks = NULL, pointsize = 4L, jitter = 0.05,
-  pretty.names = TRUE)
+plotBMRSummary(bmr, measure = NULL, trafo = "none", order.tsks = NULL,
+  pointsize = 4L, jitter = 0.05, pretty.names = TRUE)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{trafo}{(\code{character(1)})\cr
+\item{trafo}{(`character(1)`)\cr
 Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 (with average handling of ties) of the scores per task.
-NB: You can add always add \link[ggplot2:scale_x_log10]{ggplot2::scale_x_log10} to the result to put scores on a log scale.
+NB: You can add always add [ggplot2::scale_x_log10] to the result to put scores on a log scale.
 Default is \dQuote{none}.}
 
-\item{order.tsks}{(\code{character(n.tasks)})\cr
-Character vector with \code{task.ids} in new order.}
+\item{order.tsks}{(`character(n.tasks)`)\cr
+Character vector with `task.ids` in new order.}
 
-\item{pointsize}{(\code{numeric(1)})\cr
-Point size for ggplot2 \link[ggplot2:geom_point]{ggplot2::geom_point} for data points.
+\item{pointsize}{(`numeric(1)`)\cr
+Point size for ggplot2 [ggplot2::geom_point] for data points.
 Default is 4.}
 
-\item{jitter}{(\code{numeric(1)})\cr
+\item{jitter}{(`numeric(1)`)\cr
 Small vertical jitter to deal with overplotting in case of equal scores.
 Default is 0.05.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to `TRUE`.}
 }
 \value{
 ggplot2 plot object.
@@ -43,7 +42,7 @@ ggplot2 plot object.
 Creates a scatter plot, where each line refers to a task.
 On that line the aggregated scores for all learners are plotted, for that task.
 Optionally, you can apply a rank transformation or just use one of ggplot2's transformations
-like \link[ggplot2:scale_x_log10]{ggplot2::scale_x_log10}.
+like [ggplot2::scale_x_log10].
 }
 \examples{
 # see benchmark
@@ -83,5 +82,4 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 }
-\concept{benchmark}
-\concept{plot}
+

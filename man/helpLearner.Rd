@@ -7,15 +7,17 @@
 helpLearner(learner)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass a string the learner will be created via [makeLearner].}
 }
 \description{
 Interactive function that gives the user quick access to the
-help pages associated with various functions involved in the given learner.
+  help pages associated with various functions involved in the given learner.
 }
 \seealso{
+Other help: \code{\link{helpLearnerParam}}
+
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
@@ -32,8 +34,5 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
-
-Other help: \code{\link{helpLearnerParam}}
 }
-\concept{help}
-\concept{learner}
+

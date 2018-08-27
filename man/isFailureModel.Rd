@@ -7,14 +7,15 @@
 isFailureModel(model)
 }
 \arguments{
-\item{model}{(\link{WrappedModel})\cr
+\item{model}{([WrappedModel])\cr
 The model.}
 }
 \value{
-(\code{logical(1)}).
+(`logical(1)`).
 }
 \description{
-Such a model is created when one sets the corresponding option in \link{configureMlr}.
+Such a model is created when one sets the corresponding option in [configureMlr].
 
-For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
+For complex wrappers this getter returns `TRUE` if ANY model contained in it failed.
 }
+

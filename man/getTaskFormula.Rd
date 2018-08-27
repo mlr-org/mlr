@@ -4,27 +4,27 @@
 \alias{getTaskFormula}
 \title{Get formula of a task.}
 \usage{
-getTaskFormula(x, target = getTaskTargetNames(x),
-  explicit.features = FALSE, env = parent.frame())
+getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE,
+  env = parent.frame())
 }
 \arguments{
-\item{x}{(\link{Task} | \link{TaskDesc})\cr
+\item{x}{([Task] | [TaskDesc])\cr
 Task or its description object.}
 
-\item{target}{(\code{character(1)})\cr
+\item{target}{(`character(1)`)\cr
 Left hand side of the formula.
-Default is defined by task \code{x}.}
+Default is defined by task `x`.}
 
-\item{explicit.features}{(\code{logical(1)})\cr
+\item{explicit.features}{(`logical(1)`)\cr
 Should the features (right hand side of the formula) be explicitly listed?
-Default is \code{FALSE}, i.e., they will be represented as \code{"."}.}
+Default is `FALSE`, i.e., they will be represented as `"."`.}
 
-\item{env}{(\link{environment})\cr
+\item{env}{([environment])\cr
 Environment of the formula.
-Default is \code{parent.frame()}.}
+Default is `parent.frame()`.}
 }
 \value{
-(\link{formula}).
+([formula]).
 }
 \description{
 This is usually simply \dQuote{<target> ~ .}.
@@ -41,4 +41,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-\concept{task}
+
