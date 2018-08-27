@@ -5,10 +5,10 @@
 \alias{yeast.task}
 \title{Yeast multilabel classification task.}
 \source{
-<https://archive.ics.uci.edu/ml/datasets/Yeast> (In long instead of wide format)
+\url{https://archive.ics.uci.edu/ml/datasets/Yeast} (In long instead of wide format)
 }
 \description{
-Contains the task (`yeast.task`).
+Contains the task (\code{yeast.task}).
 }
 \references{
 Elisseeff, A., & Weston, J. (2001):
@@ -16,4 +16,3 @@ A kernel method for multi-labelled classification.
 In Advances in neural information processing systems (pp. 681-687).
 }
 \keyword{data}
-

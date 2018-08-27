@@ -7,18 +7,18 @@
 getResamplingIndices(object, inner = FALSE)
 }
 \arguments{
-\item{object}{([ResampleResult]) \cr
+\item{object}{(\link{ResampleResult}) \cr
 The result of resampling of a tuning or feature selection wrapper.}
 
-\item{inner}{([logical]) \cr
-If `TRUE`, returns the inner indices of a nested resampling setting.}
+\item{inner}{(\link{logical}) \cr
+If \code{TRUE}, returns the inner indices of a nested resampling setting.}
 }
 \value{
-([list]). One list for each outer resampling fold.
+(\link{list}). One list for each outer resampling fold.
 }
 \description{
-After you resampled a tuning or feature selection wrapper (see [makeTuneWrapper])
-with `resample(..., extract = getTuneResult)` or `resample(..., extract = getFeatSelResult)` this helper returns a `list` with
+After you resampled a tuning or feature selection wrapper (see \link{makeTuneWrapper})
+with \code{resample(..., extract = getTuneResult)} or \code{resample(..., extract = getFeatSelResult)} this helper returns a \code{list} with
 the resampling indices used for the respective method.
 }
 \examples{
@@ -57,4 +57,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
-
+\concept{tune}

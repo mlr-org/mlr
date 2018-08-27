@@ -4,41 +4,41 @@
 \alias{capLargeValues}
 \title{Convert large/infinite numeric values in a data.frame or task.}
 \usage{
-capLargeValues(obj, target = character(0L), cols = NULL, threshold = Inf,
-  impute = threshold, what = "abs")
+capLargeValues(obj, target = character(0L), cols = NULL,
+  threshold = Inf, impute = threshold, what = "abs")
 }
 \arguments{
-\item{obj}{([data.frame] | [Task])\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{target}{([character])\cr
+\item{target}{(\link{character})\cr
 Name of the column(s) specifying the response.
 Target columns will not be capped.
-Default is `character(0)`.}
+Default is \code{character(0)}.}
 
-\item{cols}{([character])\cr
+\item{cols}{(\link{character})\cr
 Which columns to convert.
 Default is all numeric columns.}
 
-\item{threshold}{(`numeric(1)`)\cr
+\item{threshold}{(\code{numeric(1)})\cr
 Threshold for capping.
 Every entry whose absolute value is equal or larger is converted.
-Default is `Inf`.}
+Default is \code{Inf}.}
 
-\item{impute}{(`numeric(1)`)\cr
+\item{impute}{(\code{numeric(1)})\cr
 Replacement value for large entries.
-Large negative entries are converted to `-impute`.
-Default is `threshold`.}
+Large negative entries are converted to \code{-impute}.
+Default is \code{threshold}.}
 
-\item{what}{(`character(1)`)\cr
+\item{what}{(\code{character(1)})\cr
 What kind of entries are affected?
-\dQuote{abs} means `abs(x) > threshold`,
-\dQuote{pos} means `abs(x) > threshold && x > 0`,
-\dQuote{neg} means `abs(x) > threshold && x < 0`.
+\dQuote{abs} means \code{abs(x) > threshold},
+\dQuote{pos} means \code{abs(x) > threshold && x > 0},
+\dQuote{neg} means \code{abs(x) > threshold && x < 0}.
 Default is \dQuote{abs}.}
 }
 \value{
-([data.frame])
+(\link{data.frame})
 }
 \description{
 Convert numeric entries which large/infinite (absolute) values
@@ -56,4 +56,4 @@ Other eda_and_preprocess: \code{\link{createDummyFeatures}},
   \code{\link{removeConstantFeatures}},
   \code{\link{summarizeColumns}}
 }
-
+\concept{eda_and_preprocess}

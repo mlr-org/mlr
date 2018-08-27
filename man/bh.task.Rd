@@ -5,10 +5,9 @@
 \alias{bh.task}
 \title{Boston Housing regression task.}
 \description{
-Contains the task (`bh.task`).
+Contains the task (\code{bh.task}).
 }
 \references{
-See [mlbench::BostonHousing].
+See \link[mlbench:BostonHousing]{mlbench::BostonHousing}.
 }
 \keyword{data}
-

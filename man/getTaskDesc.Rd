@@ -7,7 +7,7 @@
 getTaskDesc(x)
 }
 \arguments{
-\item{x}{([Task] | [TaskDesc])\cr
+\item{x}{(\link{Task} | \link{TaskDesc})\cr
 Task or its description object.}
 }
 \value{
@@ -26,4 +26,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-
+\concept{task}

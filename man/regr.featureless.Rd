@@ -15,6 +15,5 @@ for each new observation which corresponds to the observed mean or median of
 the target feature in training data, respectively.
 
 The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
-from WEKA, see <https://weka.wikispaces.com/ZeroR>.
+from WEKA, see \url{https://weka.wikispaces.com/ZeroR}.
 }
-

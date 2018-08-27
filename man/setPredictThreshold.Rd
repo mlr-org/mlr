@@ -7,25 +7,32 @@
 setPredictThreshold(learner, predict.threshold)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{predict.threshold}{([numeric])\cr
+\item{predict.threshold}{(\link{numeric})\cr
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 Only for binary classification it can be a single numerical threshold for the positive class.
-See [setThreshold] for details on how it is applied.
-Default is `NULL` which means 0.5 / an equal threshold for each class.}
+See \link{setThreshold} for details on how it is applied.
+Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
-See `predict.threshold` in [makeLearner] and [setThreshold].
+See \code{predict.threshold} in \link{makeLearner} and \link{setThreshold}.
 
-For complex wrappers only the top-level `predict.type` is currently set.
+For complex wrappers only the top-level \code{predict.type} is currently set.
 }
 \seealso{
+Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{getPredictionProbabilities}},
+  \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionTaskDesc}},
+  \code{\link{predict.WrappedModel}},
+  \code{\link{setPredictType}}
+
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
@@ -40,12 +47,6 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}}, \code{\link{setPredictType}}
-
-Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{getPredictionProbabilities}},
-  \code{\link{getPredictionResponse}},
-  \code{\link{getPredictionTaskDesc}},
-  \code{\link{predict.WrappedModel}},
-  \code{\link{setPredictType}}
 }
-
+\concept{learner}
+\concept{predict}

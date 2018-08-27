@@ -9,4 +9,3 @@
 \description{
 Learner for kernel Classification.
 }
-

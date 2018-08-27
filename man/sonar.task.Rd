@@ -5,10 +5,9 @@
 \alias{sonar.task}
 \title{Sonar classification task.}
 \description{
-Contains the task (`sonar.task`).
+Contains the task (\code{sonar.task}).
 }
 \references{
-See [mlbench::Sonar].
+See \link[mlbench:Sonar]{mlbench::Sonar}.
 }
 \keyword{data}
-

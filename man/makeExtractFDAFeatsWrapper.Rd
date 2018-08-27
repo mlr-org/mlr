@@ -7,26 +7,26 @@
 makeExtractFDAFeatsWrapper(learner, feat.methods = list())
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{feat.methods}{(named [list])\cr
+\item{feat.methods}{(named \link{list})\cr
 List of functional features along with the desired methods for each functional feature.
-\dQuote{all} applies the [extractFDAFeatures] method to each
+\dQuote{all} applies the \link{extractFDAFeatures} method to each
 functional feature.
-Names of `feat.methods` must match column names of functional features.
-Available feature extraction methods are available under family `fda_featextractor`.
-Default is [list] which does nothing.}
+Names of \code{feat.methods} must match column names of functional features.
+Available feature extraction methods are available under family \code{fda_featextractor}.
+Default is \link{list} which does nothing.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with an extractFDAFeatures method. Creates a learner object, which can be
 used like any other learner object.
-Internally uses [extractFDAFeatures] before training the learner and
-[reextractFDAFeatures] before predicting.
+Internally uses \link{extractFDAFeatures} before training the learner and
+\link{reextractFDAFeatures} before predicting.
 }
 \seealso{
 Other fda: \code{\link{extractFDAFeatures}},
@@ -57,4 +57,5 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-
+\concept{fda}
+\concept{wrapper}

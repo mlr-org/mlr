@@ -7,22 +7,22 @@
 getBMRModels(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE)
 }
 \arguments{
-\item{bmr}{([BenchmarkResult])\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{task.ids}{(`character(1)`)\cr
+\item{task.ids}{(\code{character(1)})\cr
 Restrict result to certain tasks.
 Default is all.}
 
-\item{learner.ids}{(`character(1)`)\cr
+\item{learner.ids}{(\code{character(1)})\cr
 Restrict result to certain learners.
 Default is all.}
 
-\item{drop}{(`logical(1)`)\cr
-If drop is `FALSE` (the default), a nested list with
+\item{drop}{(\code{logical(1)})\cr
+If drop is \code{FALSE} (the default), a nested list with
 the following structure is returned:\cr
-`res[task.ids][learner.ids]`.\cr
-If drop is set to `TRUE` it is checked if the list
+\code{res[task.ids][learner.ids]}.\cr
+If drop is set to \code{TRUE} it is checked if the list
 structure can be simplified.\cr
 If only one learner was passed, a list with entries
 for each task is returned.\cr
@@ -34,12 +34,12 @@ Note that the name of the
 task/learner will be dropped from the return object.}
 }
 \value{
-([list]).
+(\link{list}).
 }
 \description{
-A list of lists containing all [WrappedModel]s trained in the benchmark experiment.
+A list of lists containing all \link{WrappedModel}s trained in the benchmark experiment.
 
-If `models` is `FALSE` in the call to [benchmark], the function will return `NULL`.
+If \code{models} is \code{FALSE} in the call to \link{benchmark}, the function will return \code{NULL}.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -67,4 +67,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-
+\concept{benchmark}

@@ -14,7 +14,7 @@ Method \dQuote{majority} predicts always the majority class for each new
 observation. In the case of ties, one randomly sampled, constant class is predicted
 for all observations in the test set.
 This method is used as the default. It is very similar to the ZeroR classifier
-from WEKA (see <https://weka.wikispaces.com/ZeroR>). The only difference is
+from WEKA (see \url{https://weka.wikispaces.com/ZeroR}). The only difference is
 that ZeroR always predicts the first class of the tied class values instead
 of sampling them randomly.
 
@@ -24,4 +24,3 @@ observation according to the prior probabilities observed in the training data.
 If you opt to predict probabilities, the class probabilities always
 correspond to the prior probabilities observed in the training data.
 }
-

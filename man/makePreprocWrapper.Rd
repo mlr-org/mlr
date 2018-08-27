@@ -8,37 +8,37 @@ makePreprocWrapper(learner, train, predict, par.set = makeParamSet(),
   par.vals = list())
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{train}{(`function(data, target, args)`)\cr
+\item{train}{(\code{function(data, target, args)})\cr
 Function to preprocess the data before training.
-`target` is a string and denotes the target variable in `data`.
-`args` is a list of further arguments and parameters to influence the
+\code{target} is a string and denotes the target variable in \code{data}.
+\code{args} is a list of further arguments and parameters to influence the
 preprocessing.
-Must return a `list(data, control)`, where `data` is the preprocessed
-data and `control` stores all information necessary to do the preprocessing
+Must return a \code{list(data, control)}, where \code{data} is the preprocessed
+data and \code{control} stores all information necessary to do the preprocessing
 before predictions.}
 
-\item{predict}{(`function(data, target, args, control)`)\cr
+\item{predict}{(\code{function(data, target, args, control)})\cr
 Function to preprocess the data before prediction.
-`target` is a string and denotes the target variable in `data`.
-`args` are the args that were passed to `train`.
-`control` is the object you returned in `train`.
+\code{target} is a string and denotes the target variable in \code{data}.
+\code{args} are the args that were passed to \code{train}.
+\code{control} is the object you returned in \code{train}.
 Must return the processed data.}
 
-\item{par.set}{([ParamHelpers::ParamSet])\cr
-Parameter set of [ParamHelpers::LearnerParam] objects to describe the
-parameters in `args`.
+\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+Parameter set of \link[ParamHelpers:LearnerParam]{ParamHelpers::LearnerParam} objects to describe the
+parameters in \code{args}.
 Default is empty set.}
 
-\item{par.vals}{([list])\cr
-Named list of default values for params in `args` respectively `par.set`.
+\item{par.vals}{(\link{list})\cr
+Named list of default values for params in \code{args} respectively \code{par.set}.
 Default is empty list.}
 }
 \value{
-([Learner]).
+(\link{Learner}).
 }
 \description{
 Fuses a base learner with a preprocessing method. Creates a learner object, which can be
@@ -71,4 +71,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-
+\concept{wrapper}

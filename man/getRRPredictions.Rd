@@ -7,11 +7,11 @@
 getRRPredictions(res)
 }
 \arguments{
-\item{res}{([ResampleResult])\cr
-The result of [resample] run with `keep.pred = TRUE`.}
+\item{res}{(\link{ResampleResult})\cr
+The result of \link{resample} run with \code{keep.pred = TRUE}.}
 }
 \value{
-([ResamplePrediction]).
+(\link{ResamplePrediction}).
 }
 \description{
 Very simple getter.
@@ -26,4 +26,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
-
+\concept{resample}

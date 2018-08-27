@@ -4,23 +4,23 @@
 \alias{makeFeatSelWrapper}
 \title{Fuse learner with feature selection.}
 \usage{
-makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
-  control, show.info = getMlrOption("show.info"))
+makeFeatSelWrapper(learner, resampling, measures, bit.names,
+  bits.to.features, control, show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
 Resampling strategy for feature selection. If you pass a description,
 it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
 If you want to change that behaviour, look at [FeatSelControl].}
 
-\item{measures}{(list of [Measure] | [Measure])\cr
+\item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
 \item{bit.names}{[character]\cr
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
@@ -34,12 +34,12 @@ Per default a value of 1 in the ith bit selects the ith feature to be in the can
 Control object for search method.
 Also selects the optimization algorithm for feature selection.}
 
-\item{show.info}{(`logical(1)`)\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via [configureMlr].}
+Default is set via \link{configureMlr}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a search strategy to select variables.
@@ -93,4 +93,5 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-
+\concept{featsel}
+\concept{wrapper}

@@ -8,24 +8,24 @@ makeCostMeasure(id = "costs", minimize = TRUE, costs, combine = mean,
   best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
-\item{id}{(`character(1)`)\cr
+\item{id}{(\code{character(1)})\cr
 Name of measure.
 Default is \dQuote{costs}.}
 
-\item{minimize}{(`logical(1)`)\cr
+\item{minimize}{(\code{logical(1)})\cr
 Should the measure be minimized?
 Otherwise you are effectively specifying a benefits matrix.
-Default is `TRUE`.}
+Default is \code{TRUE}.}
 
-\item{costs}{([matrix])\cr
+\item{costs}{(\link{matrix})\cr
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.}
 
-\item{combine}{(`function`)\cr
+\item{combine}{(\code{function})\cr
 How to combine costs over all cases for a SINGLE test set?
-Note this is not the same as the `aggregate` argument in [makeMeasure]
-You can set this as well via [setAggregation], as for any measure.
-Default is [mean].}
+Note this is not the same as the \code{aggregate} argument in \link{makeMeasure}
+You can set this as well via \link{setAggregation}, as for any measure.
+Default is \link{mean}.}
 
 \item{best}{(`numeric(1)`)\cr
 Best obtainable value for measure.
@@ -42,7 +42,7 @@ Name of the measure. Default is `id`.}
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-[Measure].
+\link{Measure}.
 }
 \description{
 Creates a cost measure for non-standard classification error costs.
@@ -57,4 +57,4 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{performance}}, \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
-
+\concept{performance}

@@ -11,21 +11,20 @@ getMeasureProperties(measure)
 hasMeasureProperties(measure, props)
 }
 \arguments{
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{props}{([character])\cr
+\item{props}{(\link{character})\cr
 Vector of properties to query.}
 }
 \value{
-`getMeasureProperties` returns a character vector with measure properties.
- `hasMeasureProperties` returns a logical vector of the same length as `props`.
+\code{getMeasureProperties} returns a character vector with measure properties.
+\code{hasMeasureProperties} returns a logical vector of the same length as \code{props}.
 }
 \description{
-Properties can be accessed with `getMeasureProperties(measure)`, which returns a
+Properties can be accessed with \code{getMeasureProperties(measure)}, which returns a
 character vector.
 
-The measure properties are defined in [Measure].
+The measure properties are defined in \link{Measure}.
 }
-

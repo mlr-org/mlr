@@ -8,22 +8,22 @@ plotLearningCurve(obj, facet = "measure", pretty.names = TRUE,
   facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{obj}{([LearningCurveData])\cr
-Result of [generateLearningCurveData], with class `LearningCurveData`.}
+\item{obj}{(\link{LearningCurveData})\cr
+Result of \link{generateLearningCurveData}, with class \code{LearningCurveData}.}
 
-\item{facet}{(`character(1)`)\cr
+\item{facet}{(\code{character(1)})\cr
 Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
-The variable mapped to `facet` must have more than one unique value, otherwise it will
+The variable mapped to \code{facet} must have more than one unique value, otherwise it will
 be ignored. The variable not chosen is mapped to color if it has more than one unique value.
 The default is \dQuote{measure}.}
 
-\item{pretty.names}{(`logical(1)`)\cr
-Whether to use the [Measure] name instead of the id in the plot.
-Default is `TRUE`.}
+\item{pretty.names}{(\code{logical(1)})\cr
+Whether to use the \link{Measure} name instead of the id in the plot.
+Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
-Number of rows and columns for facetting. Default for both is `NULL`.
-In this case ggplot's `facet_wrap` will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -44,4 +44,5 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 }
-
+\concept{learning_curve}
+\concept{plot}

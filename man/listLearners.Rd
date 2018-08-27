@@ -2,9 +2,9 @@
 % Please edit documentation in R/listLearners.R
 \name{listLearners}
 \alias{listLearners}
-\alias{listLearners.Task}
-\alias{listLearners.character}
 \alias{listLearners.default}
+\alias{listLearners.character}
+\alias{listLearners.Task}
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
@@ -12,54 +12,57 @@ listLearners(obj = NA_character_, properties = character(0L),
   create = FALSE)
 
 \method{listLearners}{default}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
-  check.packages = FALSE, create = FALSE)
+  properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, check.packages = FALSE,
+  create = FALSE)
 
 \method{listLearners}{character}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
-  check.packages = FALSE, create = FALSE)
+  properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, check.packages = FALSE,
+  create = FALSE)
 
-\method{listLearners}{Task}(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
+\method{listLearners}{Task}(obj = NA_character_,
+  properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, check.packages = TRUE,
   create = FALSE)
 }
 \arguments{
-\item{obj}{(`character(1)` | [Task])\cr
-Either `character(1)` task or the type of the task, in the latter case one of:
+\item{obj}{(\code{character(1)} | \link{Task})\cr
+Either \code{character(1)} task or the type of the task, in the latter case one of:
 \dQuote{classif} \dQuote{regr} \dQuote{surv} \dQuote{costsens} \dQuote{cluster} \dQuote{multilabel}.
-Default is `NA` matching all types.}
+Default is \code{NA} matching all types.}
 
-\item{properties}{([character])\cr
-Set of required properties to filter for. Default is `character(0)`.}
+\item{properties}{(\link{character})\cr
+Set of required properties to filter for. Default is \code{character(0)}.}
 
-\item{quiet}{(`logical(1)`)\cr
+\item{quiet}{(\code{logical(1)})\cr
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
-Default is `TRUE`.}
+Default is \code{TRUE}.}
 
-\item{warn.missing.packages}{(`logical(1)`)\cr
+\item{warn.missing.packages}{(\code{logical(1)})\cr
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
-Default is `TRUE`.}
+Default is \code{TRUE}.}
 
-\item{check.packages}{(`logical(1)`)\cr
-Check if required packages are installed. Calls `find.package()`.
-If `create` is `TRUE`, this is done implicitly and the value of this parameter is ignored.
-If `create` is `FALSE` and `check.packages` is `TRUE` the returned table only
+\item{check.packages}{(\code{logical(1)})\cr
+Check if required packages are installed. Calls \code{find.package()}.
+If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only
 contains learners whose dependencies are installed.
-If `check.packages` set to `FALSE`, learners that cannot actually be constructed because
+If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because
 of missing packages may be returned.
-Default is `FALSE`.}
+Default is \code{FALSE}.}
 
-\item{create}{(`logical(1)`)\cr
+\item{create}{(\code{logical(1)})\cr
 Instantiate objects (or return info table)?
-Packages are loaded if and only if this option is `TRUE`.
-Default is `FALSE`.}
+Packages are loaded if and only if this option is \code{TRUE}.
+Default is \code{FALSE}.}
 }
 \value{
-([data.frame` | `list` of [Learner]).
-  Either a descriptive data.frame that allows access to all properties of the learners
-  or a list of created learner objects (named by ids of listed learners).
+([data.frame\code{|}list` of \link{Learner}).
+Either a descriptive data.frame that allows access to all properties of the learners
+or a list of created learner objects (named by ids of listed learners).
 }
 \description{
 Returns learning algorithms which have specific characteristics, e.g.
@@ -70,9 +73,9 @@ This can be a lot. If you do not create them we only inspect properties of the S
 This will be a lot faster.
 
 Note that for general cost-sensitive learning, mlr currently supports mainly
-\dQuote{wrapper} approaches like [CostSensWeightedPairsWrapper],
+\dQuote{wrapper} approaches like \link{CostSensWeightedPairsWrapper},
 which are not listed, as they are not basic R learning algorithms.
-The same applies for many multilabel methods, see, e.g., [makeMultilabelBinaryRelevanceWrapper].
+The same applies for many multilabel methods, see, e.g., \link{makeMultilabelBinaryRelevanceWrapper}.
 }
 \examples{
 \dontrun{
@@ -82,4 +85,3 @@ task = makeClassifTask(data = data, target = "Species")
 listLearners(task)
 }
 }
-

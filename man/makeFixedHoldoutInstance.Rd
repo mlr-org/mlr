@@ -7,20 +7,19 @@
 makeFixedHoldoutInstance(train.inds, test.inds, size)
 }
 \arguments{
-\item{train.inds}{([integer])\cr
+\item{train.inds}{(\link{integer})\cr
 Indices for training set.}
 
-\item{test.inds}{([integer])\cr
+\item{test.inds}{(\link{integer})\cr
 Indices for test set.}
 
-\item{size}{(`integer(1)`)\cr
+\item{size}{(\code{integer(1)})\cr
 Size of the data set to resample.
 The function needs to know the largest possible index of the whole data set.}
 }
 \value{
-([ResampleInstance]).
+(\link{ResampleInstance}).
 }
 \description{
 Generate a fixed holdout instance for resampling.
 }
-

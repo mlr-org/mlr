@@ -7,13 +7,12 @@
 hasFunctionalFeatures(obj)
 }
 \arguments{
-\item{obj}{(`Task` | `TaskDesc` | `data.frame`)\cr
+\item{obj}{(\code{Task} | \code{TaskDesc} | \code{data.frame})\cr
 Object to check.}
 }
 \value{
-(`logical(1)`)
+(\code{logical(1)})
 }
 \description{
 See title.
 }
-

@@ -8,28 +8,28 @@ estimateRelativeOverfitting(predish, measures, task, learner = NULL,
   pred.train = NULL, iter = 1)
 }
 \arguments{
-\item{predish}{([ResampleDesc] | [ResamplePrediction] | [Prediction])\cr
+\item{predish}{(\link{ResampleDesc} | \link{ResamplePrediction} | \link{Prediction})\cr
 Resampling strategy or resampling prediction or test predictions.}
 
-\item{measures}{([Measure] | list of [Measure])\cr
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{pred.train}{([Prediction])\cr
+\item{pred.train}{(\link{Prediction})\cr
 Training predictions. Only needed if test predictions are passed.}
 
-\item{iter}{([integer])\cr
+\item{iter}{(\link{integer})\cr
 Iteration number. Default 1, usually you don't need to specify this. Only needed if test predictions are passed.}
 }
 \value{
-([data.frame]). Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
+(\link{data.frame}). Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
 }
 \description{
 Estimates the relative overfitting of a model as the ratio of the difference in test and train performance to the difference of test performance in the no-information case and train performance.
@@ -59,4 +59,4 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{performance}}, \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
-
+\concept{performance}

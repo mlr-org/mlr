@@ -8,18 +8,18 @@ friedmanPostHocTestBMR(bmr, measure = NULL, p.value = 0.05,
   aggregation = "default")
 }
 \arguments{
-\item{bmr}{([BenchmarkResult])\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
 \item{p.value}{(`numeric(1)`)\cr
 p-value for the tests. Default: 0.05}
 
-\item{aggregation}{(`character(1)`) \cr
-\dQuote{mean} or \dQuote{default}. See [getBMRAggrPerformances]
+\item{aggregation}{(\code{character(1)}) \cr
+\dQuote{mean} or \dQuote{default}. See \link{getBMRAggrPerformances}
 for details on \dQuote{default}.}
 }
 \value{
@@ -69,4 +69,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-
+\concept{benchmark}

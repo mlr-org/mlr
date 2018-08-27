@@ -8,46 +8,46 @@ generateHyperParsEffectData(tune.result, include.diagnostics = FALSE,
   trafo = FALSE, partial.dep = FALSE)
 }
 \arguments{
-\item{tune.result}{([TuneResult] | [ResampleResult])\cr
-Result of [tuneParams] (or [resample] ONLY when used
+\item{tune.result}{(\link{TuneResult} | \link{ResampleResult})\cr
+Result of \link{tuneParams} (or \link{resample} ONLY when used
 for nested cross-validation). The tuning result (or results if the
 output is from nested cross-validation), also containing the
 optimizer results. If nested CV output is passed, each element in the list
 will be considered a separate run, and the data from each run will be
-included in the dataframe within the returned `HyperParsEffectData`.}
+included in the dataframe within the returned \code{HyperParsEffectData}.}
 
-\item{include.diagnostics}{(`logical(1)`)\cr
+\item{include.diagnostics}{(\code{logical(1)})\cr
 Should diagnostic info (eol and error msg) be included?
-Default is `FALSE`.}
+Default is \code{FALSE}.}
 
-\item{trafo}{(`logical(1)`)\cr
+\item{trafo}{(\code{logical(1)})\cr
 Should the units of the hyperparameter path be converted to the
 transformed scale? This is only useful when trafo was used to create the
 path.
-Default is `FALSE`.}
+Default is \code{FALSE}.}
 
-\item{partial.dep}{(`logical(1)`)\cr
+\item{partial.dep}{(\code{logical(1)})\cr
 Should partial dependence be requested based on converting to reg task? This
 sets a flag so that we know to use partial dependence downstream. This
-should most likely be set to `TRUE` if 2 or more hyperparameters were
+should most likely be set to \code{TRUE} if 2 or more hyperparameters were
 tuned simultaneously. Partial dependence should always be requested when
 more than 2 hyperparameters were tuned simultaneously. Setting to
-`TRUE` will cause [plotHyperParsEffect] to automatically
+\code{TRUE} will cause \link{plotHyperParsEffect} to automatically
 plot partial dependence when called downstream.
-Default is `FALSE`.}
+Default is \code{FALSE}.}
 }
 \value{
-(`HyperParsEffectData`)
- Object containing the hyperparameter effects dataframe, the tuning
- performance measures used, the hyperparameters used, a flag for including
- diagnostic info, a flag for whether nested cv was used, a flag for whether
- partial dependence should be generated, and the optimization algorithm used.
+(\code{HyperParsEffectData})
+Object containing the hyperparameter effects dataframe, the tuning
+performance measures used, the hyperparameters used, a flag for including
+diagnostic info, a flag for whether nested cv was used, a flag for whether
+partial dependence should be generated, and the optimization algorithm used.
 }
 \description{
 Generate cleaned hyperparameter effect data from a tuning result or from a
 nested cross-validation tuning result. The object returned can be used for
 custom visualization or passed downstream to an out of the box mlr method,
-[plotHyperParsEffect].
+\link{plotHyperParsEffect}.
 }
 \examples{
 \dontrun{
@@ -73,4 +73,3 @@ data = generateHyperParsEffectData(res)
 plotHyperParsEffect(data, x = "C", y = "mmce.test.mean", plot.type = "line")
 }
 }
-

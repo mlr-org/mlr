@@ -4,12 +4,12 @@
 \alias{ResamplePrediction}
 \title{Prediction from resampling.}
 \description{
-Contains predictions from resampling, returned (among other stuff) by function [resample].
-Can basically be used in the same way as [Prediction], its super class.
+Contains predictions from resampling, returned (among other stuff) by function \link{resample}.
+Can basically be used in the same way as \link{Prediction}, its super class.
 The main differences are:
-(a) The internal data.frame (member `data`) contains an additional column `iter`, specifying the iteration
-of the resampling strategy, and and additional columns `set`, specifying whether the prediction
-was from an observation in the \dQuote{train} or \dQuote{test} set. (b) The prediction `time` is
+(a) The internal data.frame (member \code{data}) contains an additional column \code{iter}, specifying the iteration
+of the resampling strategy, and and additional columns \code{set}, specifying whether the prediction
+was from an observation in the \dQuote{train} or \dQuote{test} set. (b) The prediction \code{time} is
 a numeric vector, its length equals the number of iterations.
 }
 \seealso{
@@ -23,4 +23,4 @@ Other resample: \code{\link{ResampleResult}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
-
+\concept{resample}

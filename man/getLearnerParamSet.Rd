@@ -7,15 +7,15 @@
 getLearnerParamSet(learner)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[ParamSet].
+\link{ParamSet}.
 }
 \description{
-Alias for [getParamSet].
+Alias for \link{getParamSet}.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
@@ -34,4 +34,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-
+\concept{learner}

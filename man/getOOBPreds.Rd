@@ -7,24 +7,24 @@
 getOOBPreds(model, task)
 }
 \arguments{
-\item{model}{([WrappedModel])\cr
+\item{model}{(\link{WrappedModel})\cr
 The model.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 }
 \value{
-([Prediction]).
+(\link{Prediction}).
 }
 \description{
-Learners like `randomForest` produce out-of-bag predictions.
-`getOOBPreds` extracts this information from trained models and builds a
+Learners like \code{randomForest} produce out-of-bag predictions.
+\code{getOOBPreds} extracts this information from trained models and builds a
 prediction object as provided by predict (with prediction time set to NA).
 In the classification case:
-What is stored exactly in the ([Prediction]) object depends
-on the `predict.type` setting of the [Learner].
+What is stored exactly in the (\link{Prediction}) object depends
+on the \code{predict.type} setting of the \link{Learner}.
 
-You can call `listLearners(properties = "oobpreds")` to get a list of learners
+You can call \code{listLearners(properties = "oobpreds")} to get a list of learners
 which provide this.
 }
 \examples{
@@ -35,4 +35,3 @@ oob = getOOBPreds(mod, sonar.task)
 oob
 performance(oob, measures = list(auc, mmce))
 }
-

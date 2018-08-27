@@ -5,46 +5,47 @@
 \title{Filter features by thresholding filter values.}
 \usage{
 filterFeatures(task, method = "randomForestSRC.rfsrc", fval = NULL,
-  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
+  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
+  ...)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{method}{(`character(1)`)\cr
-See [listFilterMethods].
+\item{method}{(\code{character(1)})\cr
+See \link{listFilterMethods}.
 Default is \dQuote{randomForestSRC.rfsrc}.}
 
-\item{fval}{([FilterValues])\cr
-Result of [generateFilterValuesData].
+\item{fval}{(\link{FilterValues})\cr
+Result of \link{generateFilterValuesData}.
 If you pass this, the filter values in the object are used for feature filtering.
-`method` and `...` are ignored then.
-Default is `NULL` and not used.}
+\code{method} and \code{...} are ignored then.
+Default is \code{NULL} and not used.}
 
-\item{perc}{(`numeric(1)`)\cr
-If set, select `perc`*100 top scoring features.
-Mutually exclusive with arguments `abs` and `threshold`.}
+\item{perc}{(\code{numeric(1)})\cr
+If set, select \code{perc}*100 top scoring features.
+Mutually exclusive with arguments \code{abs} and \code{threshold}.}
 
-\item{abs}{(`numeric(1)`)\cr
-If set, select `abs` top scoring features.
-Mutually exclusive with arguments `perc` and `threshold`.}
+\item{abs}{(\code{numeric(1)})\cr
+If set, select \code{abs} top scoring features.
+Mutually exclusive with arguments \code{perc} and \code{threshold}.}
 
-\item{threshold}{(`numeric(1)`)\cr
-If set, select features whose score exceeds `threshold`.
-Mutually exclusive with arguments `perc` and `abs`.}
+\item{threshold}{(\code{numeric(1)})\cr
+If set, select features whose score exceeds \code{threshold}.
+Mutually exclusive with arguments \code{perc} and \code{abs}.}
 
-\item{mandatory.feat}{([character])\cr
+\item{mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
 
 \item{...}{(any)\cr
 Passed down to selected filter method.}
 }
 \value{
-[Task].
+\link{Task}.
 }
 \description{
-First, calls [generateFilterValuesData].
-Features are then selected via `select` and `val`.
+First, calls \link{generateFilterValuesData}.
+Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
 Other filter: \code{\link{generateFilterValuesData}},
@@ -54,4 +55,4 @@ Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
-
+\concept{filter}

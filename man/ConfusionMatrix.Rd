@@ -4,18 +4,18 @@
 \alias{ConfusionMatrix}
 \title{Confusion matrix}
 \description{
-The result of [calculateConfusionMatrix].
+The result of \link{calculateConfusionMatrix}.
 
 Object members:
 \describe{
-\item{result ([matrix])}{Confusion matrix of absolute values and marginals. Can also contain
-  row and column sums of observations.}
-\item{task.desc ([TaskDesc])}{Additional information about the task.}
-\item{sums (`logical(1)`)}{Flag if marginal sums of observations are calculated.}
-\item{relative (`logical(1)`)}{Flag if the relative confusion matrices are calculated.}
-\item{relative.row ([matrix])}{Confusion matrix of relative values and marginals normalized by row.}
-\item{relative.col ([matrix])}{Confusion matrix of relative values and marginals normalized by column.}
-\item{relative.error (`numeric(1)`)}{Relative error overall.}
+\item{result (\link{matrix})}{Confusion matrix of absolute values and marginals. Can also contain
+row and column sums of observations.}
+\item{task.desc (\link{TaskDesc})}{Additional information about the task.}
+\item{sums (\code{logical(1)})}{Flag if marginal sums of observations are calculated.}
+\item{relative (\code{logical(1)})}{Flag if the relative confusion matrices are calculated.}
+\item{relative.row (\link{matrix})}{Confusion matrix of relative values and marginals normalized by row.}
+\item{relative.col (\link{matrix})}{Confusion matrix of relative values and marginals normalized by column.}
+\item{relative.error (\code{numeric(1)})}{Relative error overall.}
 }
 }
 \seealso{
@@ -28,4 +28,4 @@ Other performance: \code{\link{calculateConfusionMatrix}},
   \code{\link{performance}}, \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
-
+\concept{performance}

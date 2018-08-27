@@ -7,38 +7,38 @@
 getCaretParamSet(learner, length = 3L, task, discretize = TRUE)
 }
 \arguments{
-\item{learner}{(`character(1)`)\cr
-The name of the learner from `caret`
-(cf. <https://topepo.github.io/caret/available-models.html>). Note that the
-names in `caret` often differ from the ones in `mlr`.}
+\item{learner}{(\code{character(1)})\cr
+The name of the learner from \code{caret}
+(cf. \url{https://topepo.github.io/caret/available-models.html}). Note that the
+names in \code{caret} often differ from the ones in \code{mlr}.}
 
-\item{length}{(`integer(1)`)\cr
-A length / precision parameter which is used by `caret` for
-generating the grid of tuning parameters. `caret` generates either as
-many values per tuning parameter / dimension as defined by `length`
-or only a single value (in case of non-tunable `par.vals`).}
+\item{length}{(\code{integer(1)})\cr
+A length / precision parameter which is used by \code{caret} for
+generating the grid of tuning parameters. \code{caret} generates either as
+many values per tuning parameter / dimension as defined by \code{length}
+or only a single value (in case of non-tunable \code{par.vals}).}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 Learning task, which might be requested for creating the tuning grid.}
 
-\item{discretize}{(`logical(1)`)\cr
+\item{discretize}{(\code{logical(1)})\cr
 Should the numerical parameters be discretized? Alternatively, they will
-be defined by their lower and upper bounds. The default is `TRUE`.}
+be defined by their lower and upper bounds. The default is \code{TRUE}.}
 }
 \value{
-(`list(2)`). A list of parameters:
+(\code{list(2)}). A list of parameters:
 \itemize{
-  \item{`par.vals`} contains a list of all constant tuning parameters
-  \item{`par.set`} is a [ParamHelpers::ParamSet], containing all the configurable
-  tuning parameters
+\item{\code{par.vals}} contains a list of all constant tuning parameters
+\item{\code{par.set}} is a \link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet}, containing all the configurable
+tuning parameters
 }
 }
 \description{
-Constructs a grid of tuning parameters from a learner of the `caret`
+Constructs a grid of tuning parameters from a learner of the \code{caret}
 R-package. These values are then converted into a list of non-tunable
-parameters (`par.vals`) and a tunable
-[ParamHelpers::ParamSet] (`par.set`), which can be used by
-[tuneParams] for tuning the learner. Numerical parameters will
+parameters (\code{par.vals}) and a tunable
+\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet} (\code{par.set}), which can be used by
+\link{tuneParams} for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
 discretized into specific values.
 }
@@ -57,4 +57,3 @@ if (requireNamespace("caret") && requireNamespace("mlbench")) {
   getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 }
 }
-

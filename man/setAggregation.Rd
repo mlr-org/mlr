@@ -7,18 +7,18 @@
 setAggregation(measure, aggr)
 }
 \arguments{
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.}
 
-\item{aggr}{([Aggregation])\cr
+\item{aggr}{(\link{Aggregation})\cr
 Aggregation function.}
 }
 \value{
-([Measure]) with changed aggregation behaviour.
+(\link{Measure}) with changed aggregation behaviour.
 }
 \description{
 Set how this measure will be aggregated after resampling.
-To see possible aggregation functions: [aggregations].
+To see possible aggregation functions: \link{aggregations}.
 }
 \seealso{
 Other performance: \code{\link{ConfusionMatrix}},
@@ -30,4 +30,4 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
   \code{\link{performance}}, \code{\link{setMeasurePars}}
 }
-
+\concept{performance}

@@ -7,11 +7,11 @@
 getTaskFeatureNames(task)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 }
 \value{
-([character]).
+(\link{character}).
 }
 \description{
 Target column name is not included.
@@ -26,4 +26,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-
+\concept{task}

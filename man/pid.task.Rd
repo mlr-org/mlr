@@ -5,11 +5,10 @@
 \alias{pid.task}
 \title{PimaIndiansDiabetes classification task.}
 \description{
-Contains the task (`pid.task`).
+Contains the task (\code{pid.task}).
 }
 \references{
-See [mlbench::PimaIndiansDiabetes].
-  Note that this is the uncorrected version from mlbench.
+See \link[mlbench:PimaIndiansDiabetes]{mlbench::PimaIndiansDiabetes}.
+Note that this is the uncorrected version from mlbench.
 }
 \keyword{data}
-

@@ -4,9 +4,9 @@
 \alias{makeStackedLearner}
 \title{Create a stacked learner object.}
 \usage{
-makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL,
-  parset = list())
+makeStackedLearner(base.learners, super.learner = NULL,
+  predict.type = NULL, method = "stack.nocv", use.feat = FALSE,
+  resampling = NULL, parset = list())
 }
 \arguments{
 \item{base.learners}{[(list of) [Learner])\cr
@@ -104,4 +104,3 @@ The following stacking methods are available:
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 }
-

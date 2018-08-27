@@ -7,26 +7,26 @@
 performance(pred, measures, task = NULL, model = NULL, feats = NULL)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
-\item{measures}{([Measure] | list of [Measure])\cr
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 Learning task, might be requested by performance measure, usually not needed except for clustering or survival.}
 
-\item{model}{([WrappedModel])\cr
+\item{model}{(\link{WrappedModel})\cr
 Model built on training data, might be requested by performance measure, usually not needed except for survival.}
 
-\item{feats}{([data.frame])\cr
+\item{feats}{(\link{data.frame})\cr
 Features of predicted data, usually not needed except for clustering.
-If the prediction was generated from a `task`, you can also pass this instead and the features
+If the prediction was generated from a \code{task}, you can also pass this instead and the features
 are extracted from it.}
 }
 \value{
-(named [numeric]). Performance value(s), named by measure(s).
+(named \link{numeric}). Performance value(s), named by measure(s).
 }
 \description{
 Measures the quality of a prediction w.r.t. some performance measure.
@@ -56,4 +56,4 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
-
+\concept{performance}

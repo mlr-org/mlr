@@ -7,28 +7,28 @@
 train(learner, task, subset = NULL, weights = NULL)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{subset}{([integer] | [logical] | `NULL`)\cr
+\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
-By default `NULL` if all observations are used.}
+By default \code{NULL} if all observations are used.}
 
-\item{weights}{([numeric])\cr
+\item{weights}{(\link{numeric})\cr
 Optional, non-negative case weight vector to be used during fitting.
-If given, must be of same length as `subset` and in corresponding order.
-By default `NULL` which means no weights are used unless specified in the task ([Task]).
+If given, must be of same length as \code{subset} and in corresponding order.
+By default \code{NULL} which means no weights are used unless specified in the task (\link{Task}).
 Weights from the task will be overwritten.}
 }
 \value{
-([WrappedModel]).
+(\link{WrappedModel}).
 }
 \description{
-Given a [Task], creates a model for the learning machine
+Given a \link{Task}, creates a model for the learning machine
 which can be used for predictions on new data.
 }
 \examples{
@@ -47,6 +47,5 @@ mod = train(learner, task, subset = training.set)
 print(mod)
 }
 \seealso{
-[predict.WrappedModel]
+\link{predict.WrappedModel}
 }
-

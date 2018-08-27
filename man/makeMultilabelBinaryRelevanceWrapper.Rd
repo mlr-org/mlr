@@ -7,12 +7,12 @@
 makeMultilabelBinaryRelevanceWrapper(learner)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Every learner which is implemented in mlr and which supports binary
@@ -20,13 +20,13 @@ classification can be converted to a wrapped binary relevance multilabel learner
 The multilabel classification problem is converted into simple binary classifications
 for each label/target on which the binary learner is applied.
 
-Models can easily be accessed via [getLearnerModel].
+Models can easily be accessed via \link{getLearnerModel}.
 
-Note that it does not make sense to set a threshold in the used base `learner`
+Note that it does not make sense to set a threshold in the used base \code{learner}
 when you predict probabilities.
-On the other hand, it can make a lot of sense, to call [setThreshold]
-on the `MultilabelBinaryRelevanceWrapper` for each label indvidually;
-Or to tune these thresholds with [tuneThreshold]; especially when you face very
+On the other hand, it can make a lot of sense, to call \link{setThreshold}
+on the \code{MultilabelBinaryRelevanceWrapper} for each label indvidually;
+Or to tune these thresholds with \link{tuneThreshold}; especially when you face very
 unabalanced class distributions for each binary label.
 }
 \examples{
@@ -48,16 +48,10 @@ getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 }
 \references{
 Tsoumakas, G., & Katakis, I. (2006)
-*Multi-label classification: An overview.*
+\emph{Multi-label classification: An overview.}
 Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 }
 \seealso{
-Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}},
-  \code{\link{makeMultilabelStackingWrapper}}
-
 Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
@@ -82,5 +76,12 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
-}
 
+Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}}
+}
+\concept{multilabel}
+\concept{wrapper}

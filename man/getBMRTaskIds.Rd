@@ -7,11 +7,11 @@
 getBMRTaskIds(bmr)
 }
 \arguments{
-\item{bmr}{([BenchmarkResult])\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 }
 \value{
-([character]).
+(\link{character}).
 }
 \description{
 Gets the task IDs used in a benchmark experiment.
@@ -41,4 +41,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-
+\concept{benchmark}

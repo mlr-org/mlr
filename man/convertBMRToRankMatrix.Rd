@@ -8,23 +8,23 @@ convertBMRToRankMatrix(bmr, measure = NULL, ties.method = "average",
   aggregation = "default")
 }
 \arguments{
-\item{bmr}{([BenchmarkResult])\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{ties.method}{(`character(1)`)\cr
-See [base::rank] for details.}
+\item{ties.method}{(\code{character(1)})\cr
+See \link[base:rank]{base::rank} for details.}
 
-\item{aggregation}{(`character(1)`) \cr
-\dQuote{mean} or \dQuote{default}. See [getBMRAggrPerformances]
+\item{aggregation}{(\code{character(1)}) \cr
+\dQuote{mean} or \dQuote{default}. See \link{getBMRAggrPerformances}
 for details on \dQuote{default}.}
 }
 \value{
-([matrix]) with measure ranks as entries.
-  The matrix has one row for each `learner`, and one column for each `task`.
+(\link{matrix}) with measure ranks as entries.
+The matrix has one row for each \code{learner}, and one column for each \code{task}.
 }
 \description{
 Computes a matrix of all the ranks of different algorithms
@@ -61,4 +61,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
-
+\concept{benchmark}

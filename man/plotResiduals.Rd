@@ -4,30 +4,30 @@
 \alias{plotResiduals}
 \title{Create residual plots for prediction objects or benchmark results.}
 \usage{
-plotResiduals(obj, type = "scatterplot", loess.smooth = TRUE, rug = TRUE,
-  pretty.names = TRUE)
+plotResiduals(obj, type = "scatterplot", loess.smooth = TRUE,
+  rug = TRUE, pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{([Prediction] | [BenchmarkResult])\cr
+\item{obj}{(\link{Prediction} | \link{BenchmarkResult})\cr
 Input data.}
 
 \item{type}{Type of plot. Can be \dQuote{scatterplot}, the default. Or
 \dQuote{hist}, for a histogram, or in case of classification problems
 a barplot, displaying the residuals.}
 
-\item{loess.smooth}{(`logical(1)`)\cr
-Should a loess smoother be added to the plot? Defaults to `TRUE`.
-Only applicable for regression tasks and if `type` is set to `scatterplot`.}
+\item{loess.smooth}{(\code{logical(1)})\cr
+Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
+Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.}
 
-\item{rug}{(`logical(1)`)\cr
-Should marginal distributions be added to the plot? Defaults to `TRUE`.
-Only applicable for regression tasks and if `type` is set to `scatterplot`.}
+\item{rug}{(\code{logical(1)})\cr
+Should marginal distributions be added to the plot? Defaults to \code{TRUE}.
+Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.}
 
-\item{pretty.names}{(`logical(1)`)\cr
+\item{pretty.names}{(\code{logical(1)})\cr
 Whether to use the short name of the learner instead of its ID in labels.
-Defaults to `TRUE`. \cr
-Only applicable if a [BenchmarkResult]
-is passed to `obj` in the function call, ignored otherwise.}
+Defaults to \code{TRUE}. \cr
+Only applicable if a \link{BenchmarkResult}
+is passed to \code{obj} in the function call, ignored otherwise.}
 }
 \value{
 ggplot2 plot object.
@@ -48,4 +48,4 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerf}}
 }
-
+\concept{plot}

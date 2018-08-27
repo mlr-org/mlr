@@ -7,35 +7,35 @@
 smote(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{rate}{(`numeric(1)`)\cr
+\item{rate}{(\code{numeric(1)})\cr
 Factor to upsample the smaller class.
-Must be between 1 and `Inf`,
+Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.}
 
-\item{nn}{(`integer(1)`)\cr
+\item{nn}{(\code{integer(1)})\cr
 Number of nearest neighbors to consider.
 Default is 5.}
 
-\item{standardize}{(`integer(1)`)\cr
+\item{standardize}{(\code{integer(1)})\cr
 Standardize input variables before calculating the nearest neighbors
 for data sets with numeric input variables only. For mixed variables
 (numeric and factor) the gower distance is used and variables are
 standardized anyway.
-Default is `TRUE`.}
+Default is \code{TRUE}.}
 
-\item{alt.logic}{(`integer(1)`)\cr
+\item{alt.logic}{(\code{integer(1)})\cr
 Use an alternative logic for selection of minority class observations.
 Instead of sampling a minority class element AND one of its nearest
 neighbors, each minority class element is taken multiple times (depending
 on rate) for the interpolation and only the corresponding nearest neighbor
 is sampled.
-Default is `FALSE`.}
+Default is \code{FALSE}.}
 }
 \value{
-[Task].
+\link{Task}.
 }
 \description{
 In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
@@ -43,13 +43,13 @@ Both points are now interpolated / convex-combined, resulting in a new virtual d
 for the minority class.
 
 The method handles factor features, too. The gower distance is used for nearest neighbor
-calculation, see [cluster::daisy].
+calculation, see \link[cluster:daisy]{cluster::daisy}.
 For interpolation, the new factor level for x3
 is sampled from the two given levels of x1 and x2 per feature.
 }
 \references{
 Chawla, N., Bowyer, K., Hall, L., & Kegelmeyer, P. (2000)
-*SMOTE: Synthetic Minority Over-sampling TEchnique.*
+\emph{SMOTE: Synthetic Minority Over-sampling TEchnique.}
 In International Conference of Knowledge Based Computer Systems, pp. 46-57.
 National Center for Software Technology, Mumbai, India, Allied Press.
 }
@@ -58,4 +58,4 @@ Other imbalancy: \code{\link{makeOverBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{oversample}}
 }
-
+\concept{imbalancy}

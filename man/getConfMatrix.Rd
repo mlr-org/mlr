@@ -7,19 +7,18 @@
 getConfMatrix(pred, relative = FALSE)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
-\item{relative}{(`logical(1)`)\cr
-If `TRUE` rows are normalized to show relative frequencies.
-Default is `FALSE`.}
+\item{relative}{(\code{logical(1)})\cr
+If \code{TRUE} rows are normalized to show relative frequencies.
+Default is \code{FALSE}.}
 }
 \value{
-([matrix]). A confusion matrix.
+(\link{matrix}). A confusion matrix.
 }
 \description{
-`getConfMatrix` is deprecated. Please use [calculateConfusionMatrix].
-
+\code{getConfMatrix} is deprecated. Please use \link{calculateConfusionMatrix}.
 
 Calculates confusion matrix for (possibly resampled) prediction.
 Rows indicate true classes, columns predicted classes.
@@ -36,6 +35,5 @@ joined to a vector y. Then yhat is simply tabulated vs y, as if both were comput
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 }
 \seealso{
-[predict.WrappedModel]
+\link{predict.WrappedModel}
 }
-

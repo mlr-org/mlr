@@ -5,17 +5,16 @@
 \alias{fuelsubset.task}
 \title{FuelSubset functional data regression task.}
 \description{
-Contains the task (`fuelsubset.task`).
+Contains the task (\code{fuelsubset.task}).
 2 functional covariates and 1 scalar covariate.
 You have to predict the heat value of some fuel based on the
 ultraviolet radiation spectrum and infrared ray radiation and one scalar
 column called h2o.
 }
 \details{
-The features and grids are scaled in the same way as in [FDboost::FDboost].
+The features and grids are scaled in the same way as in \link[FDboost:FDboost]{FDboost::FDboost}.
 }
 \references{
 See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
 }
 \keyword{data}
-

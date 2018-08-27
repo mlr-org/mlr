@@ -8,57 +8,57 @@ tuneParams(learner, task, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
+\item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behavior, look at [TuneControl].}
+If you want to change that behavior, look at \link{TuneControl}.}
 
-\item{measures}{(list of [Measure] | [Measure])\cr
+\item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{par.set}{([ParamHelpers::ParamSet])\cr
+\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
 Collection of parameters and their constraints for optimization.
-Dependent parameters with a `requires` field must use `quote` and not
-`expression` to define it.}
+Dependent parameters with a \code{requires} field must use \code{quote} and not
+\code{expression} to define it.}
 
-\item{control}{([TuneControl])\cr
+\item{control}{(\link{TuneControl})\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
-\item{show.info}{(`logical(1)`)\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via [configureMlr].}
+Default is set via \link{configureMlr}.}
 
-\item{resample.fun}{([closure])\cr
-The function to use for resampling. Defaults to [resample]. If a user-given function
+\item{resample.fun}{(\link{closure})\cr
+The function to use for resampling. Defaults to \link{resample}. If a user-given function
 is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
-\dQuote{measures}, and \dQuote{show.info}; see [resample]. Within this function,
-it is easiest to call [resample] and possibly modify the result.
+\dQuote{measures}, and \dQuote{show.info}; see \link{resample}. Within this function,
+it is easiest to call \link{resample} and possibly modify the result.
 However, it is possible to return a list with only the following essential slots:
 the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
-(see [TuneControl]), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
-This parameter must be the default when `mbo` tuning is performed.}
+(see \link{TuneControl}), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+This parameter must be the default when \code{mbo} tuning is performed.}
 }
 \value{
-([TuneResult]).
+(\link{TuneResult}).
 }
 \description{
 Optimizes the hyperparameters of a learner.
 Allows for different optimization methods, such as grid search, evolutionary strategies,
 iterated F-race, etc. You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
-[TuneControl].
+\link{TuneControl}.
 
-Multi-criteria tuning can be done with [tuneParamsMultiCrit].
+Multi-criteria tuning can be done with \link{tuneParamsMultiCrit}.
 }
 \note{
 If you would like to include results from the training data set, make
@@ -110,7 +110,7 @@ print(head(as.data.frame(res$opt.path)))
 }
 }
 \seealso{
-[generateHyperParsEffectData]
+\link{generateHyperParsEffectData}
 
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
@@ -129,4 +129,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}},
   \code{\link{tuneThreshold}}
 }
-
+\concept{tune}

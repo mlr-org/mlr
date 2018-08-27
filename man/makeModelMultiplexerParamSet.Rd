@@ -7,33 +7,33 @@
 makeModelMultiplexerParamSet(multiplexer, ..., .check = TRUE)
 }
 \arguments{
-\item{multiplexer}{([ModelMultiplexer])\cr
+\item{multiplexer}{(\link{ModelMultiplexer})\cr
 The muliplexer learner.}
 
-\item{...}{([ParamHelpers::ParamSet] | [ParamHelpers::Param])\cr
+\item{...}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet} | \link[ParamHelpers:Param]{ParamHelpers::Param})\cr
 (a) First option: Named param sets. Names must correspond to base learners.
 You only need to enter the parameters you want to tune without reference
-to the `selected.learner` field in any way.\cr
+to the \code{selected.learner} field in any way.\cr
 (b) Second option. Just the params you would enter in the param sets.
 Even shorter to create. Only works when it can be uniquely identified to which
 learner each of your passed parameters belongs.}
 
-\item{.check}{([logical])\cr
-Check that for each param in `...` one param in found in the base learners.
-Default is `TRUE`}
+\item{.check}{(\link{logical})\cr
+Check that for each param in \code{...} one param in found in the base learners.
+Default is \code{TRUE}}
 }
 \value{
-[ParamSet].
+\link{ParamSet}.
 }
 \description{
 Handy way to create the param set with less typing.
 
 The following is done automatically:
 \itemize{
-\item{The `selected.learner` param is created}
+\item{The \code{selected.learner} param is created}
 \item{Parameter names are prefixed.}
-\item{The `requires` field of each param is set.
-  This makes all parameters subordinate to `selected.learner`}
+\item{The \code{requires} field of each param is set.
+This makes all parameters subordinate to \code{selected.learner}}
 }
 }
 \examples{
@@ -58,4 +58,5 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
-
+\concept{multiplexer}
+\concept{tune}

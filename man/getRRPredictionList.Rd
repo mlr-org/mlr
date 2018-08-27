@@ -7,23 +7,23 @@
 getRRPredictionList(res, ...)
 }
 \arguments{
-\item{res}{([ResampleResult])\cr
-The result of [resample] run with `keep.pred = TRUE`.}
+\item{res}{(\link{ResampleResult})\cr
+The result of \link{resample} run with \code{keep.pred = TRUE}.}
 
 \item{...}{(any)\cr
-Further options passed to [makePrediction].}
+Further options passed to \link{makePrediction}.}
 }
 \value{
-[list].
+\link{list}.
 }
 \description{
-This function creates a list with two slots `train` and `test` where
-each slot is again a list of [Prediction] objects for each single
+This function creates a list with two slots \code{train} and \code{test} where
+each slot is again a list of \link{Prediction} objects for each single
 resample iteration.
-In case that `predict = "train"` was used for the resample description
-(see [makeResampleDesc]), the slot `test` will be `NULL`
-and in case that `predict = "test"` was used, the slot `train` will be
-`NULL`.
+In case that \code{predict = "train"} was used for the resample description
+(see \link{makeResampleDesc}), the slot \code{test} will be \code{NULL}
+and in case that \code{predict = "test"} was used, the slot \code{train} will be
+\code{NULL}.
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
@@ -35,4 +35,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
-
+\concept{resample}

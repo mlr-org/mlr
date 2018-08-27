@@ -5,10 +5,9 @@
 \alias{iris.task}
 \title{Iris classification task.}
 \description{
-Contains the task (`iris.task`).
+Contains the task (\code{iris.task}).
 }
 \references{
-See [datasets::iris].
+See \link[datasets:iris]{datasets::iris}.
 }
 \keyword{data}
-

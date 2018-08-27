@@ -7,13 +7,12 @@
 listLearnerProperties(type = "any")
 }
 \arguments{
-\item{type}{(`character(1)`)\cr
+\item{type}{(\code{character(1)})\cr
 Only return properties for a specified task type. Default is \dQuote{any}.}
 }
 \value{
-([character]).
+(\link{character}).
 }
 \description{
 This is useful for determining which learner properties are available.
 }
-

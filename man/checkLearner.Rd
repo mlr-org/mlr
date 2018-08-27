@@ -7,17 +7,16 @@
 checkLearner(learner, type = NULL, props = NULL)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner to check, or the name of the learner to create}
 
-\item{type}{(`character(1)`)\cr
+\item{type}{(\code{character(1)})\cr
 What type of learner to require.}
 
-\item{props}{(`character(1)`)\cr
+\item{props}{(\code{character(1)})\cr
 What properties to require.}
 }
 \description{
 Exported for internal use only.
 }
 \keyword{internal}
-

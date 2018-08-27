@@ -7,21 +7,21 @@
 getLearnerParVals(learner, for.fun = c("train", "predict", "both"))
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{for.fun}{(`character(1)`)\cr
-Restrict the returned settings to hyperparameters corresponding to `when`
-the are used (see [ParamHelpers::LearnerParam]).
+\item{for.fun}{(\code{character(1)})\cr
+Restrict the returned settings to hyperparameters corresponding to \code{when}
+the are used (see \link[ParamHelpers:LearnerParam]{ParamHelpers::LearnerParam}).
 Must be a subset of: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
-Default is `c("train", "predict", "both")`.}
+Default is \code{c("train", "predict", "both")}.}
 }
 \value{
-([list]). A named list of values.
+(\link{list}). A named list of values.
 }
 \description{
-Alias for [getHyperPars].
+Alias for \link{getHyperPars}.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
@@ -40,4 +40,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-
+\concept{learner}

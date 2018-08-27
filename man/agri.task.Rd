@@ -5,10 +5,9 @@
 \alias{agri.task}
 \title{European Union Agricultural Workforces clustering task.}
 \description{
-Contains the task (`agri.task`).
+Contains the task (\code{agri.task}).
 }
 \references{
-See [cluster::agriculture].
+See \link[cluster:agriculture]{cluster::agriculture}.
 }
 \keyword{data}
-

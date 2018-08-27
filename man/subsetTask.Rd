@@ -7,24 +7,24 @@
 subsetTask(task, subset = NULL, features)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{subset}{([integer] | [logical] | `NULL`)\cr
+\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
-By default `NULL` if all observations are used.}
+By default \code{NULL} if all observations are used.}
 
-\item{features}{([character] | [integer] | [logical])\cr
+\item{features}{(\link{character} | \link{integer} | \link{logical})\cr
 Vector of selected inputs. You can either pass a character vector with the
 feature names, a vector of indices, or a logical vector.\cr
 In case of an index vector each element denotes the position of the feature
-name returned by [getTaskFeatureNames].\cr
+name returned by \link{getTaskFeatureNames}.\cr
 Note that the target feature is always included in the
 resulting task, you should not pass it here.
 Default is to use all features.}
 }
 \value{
-([Task]). Task with subsetted data.
+(\link{Task}). Task with subsetted data.
 }
 \description{
 See title.
@@ -43,4 +43,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}}
 }
-
+\concept{task}

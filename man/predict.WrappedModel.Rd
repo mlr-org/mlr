@@ -7,35 +7,35 @@
 \method{predict}{WrappedModel}(object, task, newdata, subset = NULL, ...)
 }
 \arguments{
-\item{object}{([WrappedModel])\cr
-Wrapped model, result of [train].}
+\item{object}{(\link{WrappedModel})\cr
+Wrapped model, result of \link{train}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task. If this is passed, data from this task is predicted.}
 
-\item{newdata}{([data.frame])\cr
+\item{newdata}{(\link{data.frame})\cr
 New observations which should be predicted.
-Pass this alternatively instead of `task`.}
+Pass this alternatively instead of \code{task}.}
 
-\item{subset}{([integer] | [logical] | `NULL`)\cr
+\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
-By default `NULL` if all observations are used.}
+By default \code{NULL} if all observations are used.}
 
 \item{...}{(any)\cr
 Currently ignored.}
 }
 \value{
-([Prediction]).
+(\link{Prediction}).
 }
 \description{
 Predict the target variable of new data using a fitted model.
-What is stored exactly in the ([Prediction]) object depends
-on the `predict.type` setting of the [Learner].
-If `predict.type` was set to \dQuote{prob} probability thresholding
-can be done calling the [setThreshold] function on the
+What is stored exactly in the (\link{Prediction}) object depends
+on the \code{predict.type} setting of the \link{Learner}.
+If \code{predict.type} was set to \dQuote{prob} probability thresholding
+can be done calling the \link{setThreshold} function on the
 prediction object.
 
-The row names of the input `task` or `newdata` are preserved in the output.
+The row names of the input \code{task} or \code{newdata} are preserved in the output.
 }
 \examples{
 # train and predict
@@ -61,4 +61,4 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-
+\concept{predict}

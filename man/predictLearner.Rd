@@ -7,13 +7,13 @@
 predictLearner(.learner, .model, .newdata, ...)
 }
 \arguments{
-\item{.learner}{([RLearner])\cr
+\item{.learner}{(\link{RLearner})\cr
 Wrapped learner.}
 
-\item{.model}{([WrappedModel])\cr
+\item{.model}{(\link{WrappedModel})\cr
 Model produced by training.}
 
-\item{.newdata}{([data.frame])\cr
+\item{.newdata}{(\link{data.frame})\cr
 New data to predict. Does not include target column.}
 
 \item{...}{(any)\cr
@@ -21,23 +21,23 @@ Additional parameters, which need to be passed to the underlying predict functio
 }
 \value{
 \itemize{
-  \item For classification: Either a factor with class labels for type
-    \dQuote{response} or, if the learner supports this, a matrix of class probabilities
-    for type \dQuote{prob}. In the latter case the columns must be named with the class
-    labels.
-  \item For regression: Either a numeric vector for type \dQuote{response} or,
-    if the learner supports this, a matrix with two columns for type \dQuote{se}.
-    In the latter case the first column contains the estimated response (mean value)
-    and the second column the estimated standard errors.
-  \item For survival: Either a numeric vector with some sort of orderable risk
-    for type \dQuote{response} or, if supported, a numeric vector with time dependent
-    probabilities for type \dQuote{prob}.
-  \item For clustering: Either an integer with cluster IDs for type \dQuote{response}
-    or, if supported, a matrix of membership probabilities for type \dQuote{prob}.
-  \item For multilabel: A logical matrix that indicates predicted class labels for type
-    \dQuote{response} or, if supported, a matrix of class probabilities for type
-    \dQuote{prob}. The columns must be named with the class labels.
- }
+\item For classification: Either a factor with class labels for type
+\dQuote{response} or, if the learner supports this, a matrix of class probabilities
+for type \dQuote{prob}. In the latter case the columns must be named with the class
+labels.
+\item For regression: Either a numeric vector for type \dQuote{response} or,
+if the learner supports this, a matrix with two columns for type \dQuote{se}.
+In the latter case the first column contains the estimated response (mean value)
+and the second column the estimated standard errors.
+\item For survival: Either a numeric vector with some sort of orderable risk
+for type \dQuote{response} or, if supported, a numeric vector with time dependent
+probabilities for type \dQuote{prob}.
+\item For clustering: Either an integer with cluster IDs for type \dQuote{response}
+or, if supported, a matrix of membership probabilities for type \dQuote{prob}.
+\item For multilabel: A logical matrix that indicates predicted class labels for type
+\dQuote{response} or, if supported, a matrix of class probabilities for type
+\dQuote{prob}. The columns must be named with the class labels.
+}
 }
 \description{
 Mainly for internal use. Predict new data with a fitted model.
@@ -45,8 +45,7 @@ You have to implement this method if you want to add another learner to this pac
 }
 \details{
 Your implementation must adhere to the following:
-Predictions for the observations in `.newdata` must be made based on the fitted
-model (`.model$learner.model`).
-All parameters in `...` must be passed to the underlying predict function.
+Predictions for the observations in \code{.newdata} must be made based on the fitted
+model (\code{.model$learner.model}).
+All parameters in \code{...} must be passed to the underlying predict function.
 }
-

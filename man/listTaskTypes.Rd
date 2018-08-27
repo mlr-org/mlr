@@ -7,9 +7,8 @@
 listTaskTypes()
 }
 \value{
-([character]).
+(\link{character}).
 }
 \description{
 Returns a character vector with each of the supported task types in mlr.
 }
-

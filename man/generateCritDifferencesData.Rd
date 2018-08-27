@@ -8,61 +8,61 @@ generateCritDifferencesData(bmr, measure = NULL, p.value = 0.05,
   baseline = NULL, test = "bd")
 }
 \arguments{
-\item{bmr}{([BenchmarkResult])\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{p.value}{(`numeric(1)`)\cr
+\item{p.value}{(\code{numeric(1)})\cr
 P-value for the critical difference. Default: 0.05}
 
-\item{baseline}{(`character(1)`): (`learner.id`) \cr
-Select a `learner.id` as baseline for the `test = "bd"`
+\item{baseline}{(\code{character(1)}): (\code{learner.id}) \cr
+Select a \code{learner.id} as baseline for the \code{test = "bd"}
 ("Bonferroni-Dunn") critical differences
 diagram. The critical difference interval will then be positioned arround this learner.
 Defaults to best performing algorithm. \cr
-For `test = "nemenyi"`, no baseline is needed as it performs *all pairwise
-comparisons*.}
+For \code{test = "nemenyi"}, no baseline is needed as it performs \emph{all pairwise
+comparisons}.}
 
-\item{test}{(`character(1)`) \cr
+\item{test}{(\code{character(1)}) \cr
 Test for which the critical differences are computed. \cr
 \dQuote{bd} for the Bonferroni-Dunn Test, which is comparing all
-classifiers to a `baseline`, thus performing a comparison
+classifiers to a \code{baseline}, thus performing a comparison
 of one classifier to all others. \cr
 Algorithms not connected by a single line are statistically different
 from the baseline. \cr
-\dQuote{nemenyi} for the [PMCMR::posthoc.friedman.nemenyi.test]
+\dQuote{nemenyi} for the \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test}
 which is comparing all classifiers to each other. The null hypothesis that
 there is a difference between the classifiers can not be rejected for all
 classifiers that have a single grey bar connecting them.}
 }
 \value{
-(`critDifferencesData`). List containing:
+(\code{critDifferencesData}). List containing:
 \item{data}{(data.frame) containing the info for the descriptive
-               part of the plot}
-\item{friedman.nemenyi.test}{(list) of class `pairwise.htest` \cr
-                               contains the calculated
-                               [PMCMR::posthoc.friedman.nemenyi.test]}
+part of the plot}
+\item{friedman.nemenyi.test}{(list) of class \code{pairwise.htest} \cr
+contains the calculated
+\link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test}}
 \item{cd.info}{(list) containing info on the critical difference
-                 and its positioning}
-\item{baseline}{`baseline` chosen for plotting}
-\item{p.value}{p.value used for the [PMCMR::posthoc.friedman.nemenyi.test]
-                 and for computation of the critical difference}
+and its positioning}
+\item{baseline}{\code{baseline} chosen for plotting}
+\item{p.value}{p.value used for the \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test}
+and for computation of the critical difference}
 }
 \description{
 Generates data that can be used to plot a
 critical differences plot. Computes the critical differences according
 to either the
-`"Bonferroni-Dunn"` test or the `"Nemenyi"` test.\cr
-`"Bonferroni-Dunn"` usually yields higher power as it does not
+\code{"Bonferroni-Dunn"} test or the \code{"Nemenyi"} test.\cr
+\code{"Bonferroni-Dunn"} usually yields higher power as it does not
 compare all algorithms to each other, but all algorithms to a
-`baseline` instead. \cr
+\code{baseline} instead. \cr
 Learners are drawn on the y-axis according to their average rank. \cr
-For `test = "nemenyi"` a bar is drawn, connecting all groups of not
+For \code{test = "nemenyi"} a bar is drawn, connecting all groups of not
 significantly different learners.\cr
-For `test = "bd"` an interval is drawn arround the algorithm selected
+For \code{test = "bd"} an interval is drawn arround the algorithm selected
 as a baseline. All learners within this interval are not signifcantly different
 from the baseline. \cr
 Calculation:
@@ -71,6 +71,15 @@ Where \eqn{q_\alpha} is based on the studentized range statistic.
 See references for details.
 }
 \seealso{
+Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generateLearningCurveData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
+
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
@@ -94,14 +103,6 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
-
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
-  \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
-  \code{\link{plotFilterValues}}
 }
-
+\concept{benchmark}
+\concept{generate_plot_data}

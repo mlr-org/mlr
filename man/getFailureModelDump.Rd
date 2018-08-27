@@ -7,15 +7,14 @@
 getFailureModelDump(model)
 }
 \arguments{
-\item{model}{([WrappedModel])\cr
+\item{model}{(\link{WrappedModel})\cr
 The model.}
 }
 \value{
-(`last.dump`).
+(\code{last.dump}).
 }
 \description{
-Returns the error dump that can be used with `debugger()` to evaluate errors.
-If [configureMlr] configuration `on.error.dump` is `FALSE`, this returns
-`NULL`.
+Returns the error dump that can be used with \code{debugger()} to evaluate errors.
+If \link{configureMlr} configuration \code{on.error.dump} is \code{FALSE}, this returns
+\code{NULL}.
 }
-

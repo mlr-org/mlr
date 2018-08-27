@@ -5,11 +5,10 @@
 \alias{bc.task}
 \title{Wisconsin Breast Cancer classification task.}
 \description{
-Contains the task (`bc.task`).
+Contains the task (\code{bc.task}).
 }
 \references{
-See [mlbench::BreastCancer].
-  The column `"Id"` and all incomplete cases have been removed from the task.
+See \link[mlbench:BreastCancer]{mlbench::BreastCancer}.
+The column \code{"Id"} and all incomplete cases have been removed from the task.
 }
 \keyword{data}
-
