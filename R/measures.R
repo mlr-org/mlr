@@ -1429,9 +1429,9 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
 
     probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
-      maxtime = max.time, verbose = FALSE)
+      maxtime = max.time, verbose = FALSE, reference = FALSE)
+    
 
-    # FIXME: what is the difference between reference and matrix?
     # FIXME: this might be the wrong number!
     crps(perror, times = max.time)[1L, ]
   },
