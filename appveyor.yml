@@ -19,7 +19,7 @@ cache:
 
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
-after_build: R -q -e "tic::after_install()"
+# after_build: R -q -e "tic::after_install()"
 before_test:
  - ps: >-
       if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
@@ -30,7 +30,7 @@ before_test:
  - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
 on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
-on_failure: R -q -e "tic::after_failure()"
+# on_failure: R -q -e "tic::after_failure()"
 before_deploy: R -q -e "tic::before_deploy()"
 deploy_script: R -q -e "tic::deploy()"
 after_deploy: R -q -e "tic::after_deploy()"
@@ -43,7 +43,7 @@ environment:
     secure: VXO22OHLkl4YhVIomSMwCZyOTx03Xf2WICaVng9xH7gISlAg8a+qrt1DtFtk8sK5
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
-  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown xgboost xml2'
+  WARMUPPKGS: 'digest roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2'
 
 #  matrix:
 #    - R_VERSION: devel

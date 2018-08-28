@@ -22,7 +22,7 @@ You can easily add another filter, be it a brand new one or a method which is al
 # Filter objects
 
 In `mlr` all filter methods are objects of class Filter (`makeFilter()`) and are registered in an environment called `.FilterRegister` (where `listFilterMethods()` looks them up to compile the list of available methods).
-To get to know their structure let's have a closer look at the `"rank.correlation"` filter which interfaces function `Rfast::correls()` in package `Rfast`.
+To get to know their structure let's have a closer look at the `"rank.correlation"` filter.
 
 ```{r}
 filters = as.list(mlr:::.FilterRegister)
@@ -34,7 +34,7 @@ filters$rank.correlation$fun
 ```
 
 The core element is `$fun` which calculates the feature importance.
-For the `"rank.correlation"` filter it just extracts the data and formula from the `task` and passes them on to the `Rfast::correls()` function.
+For the `"rank.correlation"` filter it just extracts the data and formula from the `task` and passes them on to the `base::cor()` function.
 
 Additionally, each Filter (`makeFilter()`) object has a `$name`, which should be short and is for example used to annotate graphics (cp. `plotFilterValues()`), and a slightly more detailed description in slot `$desc`.
 If the filter method is implemented by another package its name is given in the `$pkg` member.
@@ -42,7 +42,7 @@ Moreover, the supported task types and feature types are listed.
 
 # Writing a new filter method
 
-You can integrate your own filter method using `makeFilter()`. 
+You can integrate your own filter method using `makeFilter()`.
 This function generates a Filter (`makeFilter()`) object and also registers it in the `.FilterRegister` environment.
 
 The arguments of `makeFilter()` correspond to the slot names of the Filter (`makeFilter()`) object above.

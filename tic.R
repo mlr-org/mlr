@@ -20,8 +20,8 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
 get_stage("script") %>%
     add_code_step(devtools::document()) %>%
-    add_step(step_rcmdcheck(notes_are_errors = FALSE, build_args = "--no-build-vignettes",
-                            check_args = "--ignore-vignettes --no-manual --as-cran"))
+    add_step(step_rcmdcheck(notes_are_errors = FALSE,
+                            check_args = "--as-cran"))
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
@@ -44,6 +44,6 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
 
-  get_stage("deploy") %>%
-    add_step(step_push_deploy())
+  # get_stage("deploy") %>%
+    # add_step(step_push_deploy())
 }

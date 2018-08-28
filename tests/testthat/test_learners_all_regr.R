@@ -12,7 +12,8 @@ test_that("learners work: regr ", {
       num_iterations_after_burn_in = 10L),
     regr.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     regr.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
+    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed")),
+    regr.ranger = list(keep.inbag = TRUE)
   )
 
   # Create smaller task: dont use feature 2, it is nearly always 0, don't use feature 4, it is a factor variable
