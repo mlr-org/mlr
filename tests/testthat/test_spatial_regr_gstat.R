@@ -8,8 +8,8 @@
 # https://stackoverflow.com/questions/50083521/error-in-xmethod-attempt-to-apply-non-function-in-testthat-test-when
 # https://stackoverflow.com/questions/7028385/can-i-remove-an-element-in-dot-dot-dot-and-pass-it-on
 
-context("regr_gstat")
-test_that("regr_gstat", {
+context("spatial_regr_gstat")
+test_that("spatial_regr_gstat", {
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
@@ -18,7 +18,7 @@ test_that("regr_gstat", {
     list(id = "trend_surfaces_degree_2", degree = 2),
     list(id = "trend_surfaces_degree_3", degree = 3),
     list(id = "ordinary_kriging_manual",
-      psill = 1, model = "Sph", range = 900, nugget = 2),
+      psill = 1, model.vgm = "Sph", range = 900, nugget = 2),
     list(id = "ordinary_kriging_auto",
       psill = c('Sph','Exp','Gau', 'Mat'))
   )
@@ -36,11 +36,11 @@ test_that("regr_gstat", {
 
     if (!is.null(pars$psill)) {
       # build the samples variogram
-      v = gstat::variogram(object = pars$formula, locations = pars$locations, data = pars$data)
+      v = gstat::variogram(object = pars$formula, data = pars$data)
       # fit the variogram model
-      fit = gstat::fit.variogram(object = v, gstat::vgm(psill = pars$psill, model = pars$model,
+      fit = gstat::fit.variogram(object = v, gstat::vgm(psill = pars$psill, model = pars$model.vgm,
         range = pars$range, nugget = pars$nugget))
-      pars = list(formula = pars$formula, data = pars$data, locations = pars$locations, model = fit)
+      pars = list(formula = pars$formula, data = pars$data, model = fit)
     }
     m = do.call(gstat::gstat, pars)
     set.seed(getOption("mlr.debug.seed"))
