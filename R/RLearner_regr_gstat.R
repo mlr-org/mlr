@@ -7,12 +7,52 @@
 #' Therefore the learner makes use the combination of gstat::gstat and gstat::predict to compute spatial predidction.
 #' You can read more this StackOverflow thread : https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict.
 #'
+#' The columns holding the longitude and latitude values must be respectively named x and y
+#'
 #' The learner handles gstat variogram autofitting functionnality presented in this post https://www.r-spatial.org/r/2016/02/14/gstat-variogram-fitting.html.
 #' To use manual fitting, you must provide a list to the argument model that holds the following elements :
 #' psill, model, range and nugget.
 #' To use auto fitting, simply provide a list containting the types of models to be tested.
-#' Manual fitting example : lrn.man = makeLearner(cl = 'regr.gstat', id = 'manual', psill = 1, model = 'Sph', range = 900, nugget = 1, locations = ~x+y).\n
-# 'Automatic fitting example : lrn.auto = makeLearner(cl = 'regr.gstat', id = 'auto', psill = c('Sph','Exp','Gau', 'Mat'), locations = ~x+y)"
+#'
+#' @examples
+#' # loading datasets
+#' library(sp)
+#' data(meuse)
+#' data(meuse.grid)
+#' # imputing values to missing data
+#' meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
+#'   dummy.classes = "integer")$data
+#' meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
+#'   dummy.classes = "integer")$data
+#' # adding a column with log zinc
+#' meuse = meuse %>% dplyr::mutate(log_zinc = log(zinc))
+#' # defining the regression task
+#' task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
+#' task.krg = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
+#' # defining the learner with manual variogram fitting
+#' lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr ordinary kriging", predict.type = "response", psill = 1, model = "Sph", range = 900, nugget = 1)
+#' # in case, you xant to define the same learner but with automatic variogram fitting use this line instead
+#' lrn.krg.auto = makeLearner(cl = 'regr.gstat', id = 'ln(zn) mlr ordinary kriging autofit',  predict.type = "response", psill = c('Sph','Exp','Gau', 'Mat'))
+#' # training the model
+#' mod.krg = train(lrn.krg, task.krg)
+#' # kriging
+#' newdata.pred.krg = predict(object = mod.krg, newdata = meuse.grid)
+#' ok.mlr = bind_cols(data.frame(meuse.grid), newdata.pred.krg$data)
+#' # mapping
+#' sp::coordinates(ok.mlr) = ~x+y
+#' sp::gridded(ok.mlr) = TRUE
+#' ok.mlr.plot = sp::spplot(ok.mlr["response"], do.log = T, colorkey = TRUE, main = "log(zn) : ok interpolation (gstat)")
+#' # SE - defining the standard error learner by altering the previous one.
+#' se.lrn.krg = setPredictType(lrn.krg, predict.type = "se")
+#' # training the SE model
+#' se.mod.krg = train(se.lrn.krg, task.krg)
+#' # SE kriging
+#' se.newdata.pred.krg = predict(object = se.mod.krg, newdata = meuse.grid)
+#' ok.se.mlr = bind_cols(data.frame(meuse.grid), se.newdata.pred.krg$data)
+#' # SE mapping
+#' sp::coordinates(ok.se.mlr) = ~x+y
+# sp::gridded(ok.se.mlr) = TRUE
+# ok.se.mlr.plot = sp::spplot(ok.se.mlr["se"], do.log = T, colorkey = TRUE, main = "se(log(zn)) : ok interpolation (mlr)")
 #'
 #' @references Edzer J Pebesma
 #' Multivariable geostatistics in S: the gstat package
@@ -31,13 +71,12 @@ makeRLearner.regr.gstat = function() {
     par.set = makeParamSet(
       # gstat::gstat params
       makeFunctionLearnerParam(id = "g"),
-      makeUntypedLearnerParam(id = "id"), # FIXME what should be the type ?
-      makeUntypedLearnerParam(id = "locations", default = ~x+y), # FIXME what should be the type ?
+      makeUntypedLearnerParam(id = "id", tunable = FALSE), # FIXME what should be the type ?
       makeUntypedLearnerParam(id = "beta.gstat"),
-      makeIntegerLearnerParam(id = "nmax", default = 0),
-      makeIntegerLearnerParam(id = "nmin", default = 0),
-      makeIntegerLearnerParam(id = "omax", default = 0),
-      makeNumericLearnerParam(id = "maxdist", allow.inf = TRUE, default = Inf),
+      makeIntegerLearnerParam(id = "nmax", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
+      makeIntegerLearnerParam(id = "nmin", allow.inf = TRUE, default = 0, lower = 0, upper = Inf),
+      makeIntegerLearnerParam(id = "omax", allow.inf = TRUE, default = 0, lower = 0, upper = Inf),
+      makeNumericLearnerParam(id = "maxdist", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
       makeLogicalLearnerParam(id = "dummy", default = FALSE),
       makeUntypedLearnerParam(id = "set"),
       makeFunctionLearnerParam(id = "x"),
@@ -45,52 +84,44 @@ makeRLearner.regr.gstat = function() {
       makeLogicalLearnerParam(id = "fill.cross", default = TRUE),
       makeDiscreteLearnerParam(id = "variance", values = c("identity", "mu", "mu(1-mu)"), default = "identity"),
       makeUntypedLearnerParam(id = "merge"),
-      makeIntegerLearnerParam(id = "degree", default = 0),
+      makeIntegerLearnerParam(id = "degree", default = 0, lower = 0, upper = 3),
       makeLogicalLearnerParam(id = "vdist", default = FALSE),
       # gstat::variogram params
-      makeNumericLearnerParam(id = "cutoff"), # FIXME default value
+      makeNumericLearnerParam(id = "cutoff", allow.inf = TRUE, lower = 0, upper = Inf), # default value is calculated according to spatial extent of data
       makeNumericLearnerParam(id = "width"),
-      makeNumericLearnerParam(id = "alpha", default = 0),
-      makeNumericLearnerParam(id = "beta.variogram", default = 0),
-      makeNumericLearnerParam(id = "tol.hor"),
-      makeNumericLearnerParam(id = "tol.ver"),
+      makeNumericLearnerParam(id = "alpha", default = 0, lower = 0, upper = 360),
+      makeNumericLearnerParam(id = "beta.variogram", default = 0, lower = 0, upper = 360),
+      makeNumericLearnerParam(id = "tol.hor", lower = 0, upper = 360),
+      makeNumericLearnerParam(id = "tol.ver", lower = 0, upper = 360),
       makeLogicalLearnerParam(id = "cressie", default = FALSE),
       makeNumericLearnerParam(id = "dX", default = 0),
-      makeNumericLearnerParam(id = "boundaries", default = 0),
       makeLogicalLearnerParam(id = "cloud", default = FALSE),
       makeUntypedLearnerParam(id = "trend.beta", default = NULL),
-      makeIntegerLearnerParam(id = "debug.level", default = 1),
+      makeIntegerLearnerParam(id = "debug.level", default = 1, lower = -1, upper = 1),
       makeLogicalLearnerParam(id = "cross", default = TRUE),
       makeLogicalLearnerParam(id = "map", default = FALSE),
       makeLogicalLearnerParam(id = "projected", default = TRUE),
-      makeNumericLearnerParam(id = "lambda", default = 1.0),
+      makeNumericLearnerParam(id = "lambda", default = 1.0), # from gstat doc : test feature; not working (yet)
       makeLogicalLearnerParam(id = "verbose", default = FALSE),
       makeLogicalLearnerParam(id = "covariogram", default = FALSE),
       makeLogicalLearnerParam(id = "PR", default = FALSE),
-      makeIntegerLearnerParam(id = "pseudo", default = -1),
+      makeIntegerLearnerParam(id = "pseudo", default = -1, lower = -1, upper = 1),
       # gstat::fit.variogram params
       makeLogicalLearnerParam(id = "fit.sills", default = TRUE),
       makeLogicalLearnerParam(id = "fit.ranges", default = TRUE),
-      makeIntegerLearnerParam(id = "fit.method", default = 7),
+      makeIntegerLearnerParam(id = "fit.method", default = 7, lower = 1, upper = 6),
       makeLogicalLearnerParam(id = "warn.if.neg", default = FALSE),
       makeLogicalLearnerParam(id = "fit.kappa", default = FALSE),
       # gstat::vgm params
       makeUntypedLearnerParam(id = "psill", default = NA),
-      makeUntypedLearnerParam(id = "model"), # FIXME what should be the type ?
+      makeUntypedLearnerParam(id = "model.vgm"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
       makeUntypedLearnerParam(id = "range", default = NA),
-      makeNumericLearnerParam(id = "kappa", default = 0.5),
+      makeNumericLearnerParam(id = "kappa", default = 0.5, lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "nugget"),
       makeUntypedLearnerParam(id = "add.to"),
       makeUntypedLearnerParam(id = "covtable"),
-      makeNumericLearnerParam(id = "Err", default = 0)
+      makeNumericLearnerParam(id = "Err", default = 0) #FIXME impossible to find the lower and upper in the doc https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm
     ),
-    par.vals = list(locations = ~x+y, nmax = 0, nmin = 0, omax = 0, maxdist = Inf,
-      dummy = FALSE, fill.all = FALSE, fill.cross = TRUE, variance = "identity", degree = 0, vdist = FALSE,
-      alpha = 0, beta.variogram = 0, cressie = FALSE, dX = 0, boundaries = 0, cloud = FALSE,
-      trend.beta = NULL, debug.level = 1, cross = TRUE, map = FALSE, projected = TRUE, lambda = 1.0,
-      verbose = FALSE, covariogram = FALSE, PR = FALSE, pseudo = -1,
-      fit.sills = TRUE, fit.ranges = TRUE, fit.method = 7, warn.if.neg = FALSE, fit.kappa = FALSE,
-      psill = NA, range = NA, kappa = 0.5, Err = 0),
     properties = c("numerics", "factors" , "se", "weights", "missings"),
     name = "Multivariable Geostatistical Prediction And Simulation",
     short.name = "gstat",
@@ -116,7 +147,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task, explicit.features = TRUE)
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
-  f = update(f, .~.-y-x) # FIXME should be the params entered in locations arg
+  f = update(f, .~.-y-x) # users must provide longitude and latitude in columns respectively named y and x
   # check if a variogram model is passed
   if (!is.na(dots$psill)) {
     # build the samples variogram
@@ -125,10 +156,10 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
     fit = do.call(gstat::fit.variogram,
       c(list(object = v,
         model = gstat::vgm(psill = dots$psill,
-          model = dots$model,
+          model = dots$model.vgm,
           range = dots$range,
           nugget = dots$nugget)),
-        dots[names(dots) %in% fit.variogram.names[fit.variogram.names != "model"]])
+        dots[names(dots) %in% fit.variogram.names[fit.variogram.names != "model.vgm"]])
     )
     # create the gstat object with a model
     g = do.call(gstat::gstat,
