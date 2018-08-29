@@ -66,7 +66,7 @@ NULL
 #' @export
 makeRLearner.regr.gstat = function() {
   makeRLearnerRegr(
-    cl = "spatial.regr.gstat",
+    cl = "regr.gstat",
     package = "gstat",
     par.set = makeParamSet(
       # gstat::gstat params
