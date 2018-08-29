@@ -17,13 +17,13 @@ makeRLearner.ordinal.clm = function() {
 }
 
 #' @export
-trainLearner.ordinal.glm = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.ordinal.clm = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  ordinal::clm(formula = f, data = d)
+  ordinal::clm(formula = f, data = d, ...)
 }
 
 #' @export
-predictLearner.ordinal.glm = function(.learner, .model, .newdata, ...) {
+predictLearner.ordinal.clm = function(.learner, .model, .newdata, ...) {
 
 }
