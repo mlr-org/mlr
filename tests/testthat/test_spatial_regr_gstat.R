@@ -13,7 +13,7 @@ test_that("spatial_regr_gstat", {
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
-    list(), # = list(id = "inverse_distance_weighted"),
+    list(id = "inverse_distance_weighted"), #list(),
     list(id = "trend_surfaces_degree_1", degree = 1),
     list(id = "trend_surfaces_degree_2", degree = 2),
     list(id = "trend_surfaces_degree_3", degree = 3),
@@ -28,10 +28,11 @@ test_that("spatial_regr_gstat", {
   # https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict
 
   for (i in 1:length(parset.list)) {
+    browser()
     parset = parset.list[[i]]
     pars = list(formula = meuse.formula, data = meuse.train)
     pars = c(pars, parset)
-    pars$locations = ~x+y
+    #pars$locations = ~x+y
     set.seed(getOption("mlr.debug.seed"))
 
     if (!is.null(pars$psill)) {
