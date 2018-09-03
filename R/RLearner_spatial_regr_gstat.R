@@ -139,9 +139,9 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   browser()
   dots = list(...)
   # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
-  variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for default arguments
-  variogram.names = c("object", "locations", "beta.variogram") #
+  # variogram.names = names(formals(gstat::variogram))
   # variogram.names = replace(names(formals(gstat::variogram)), variogram.names == "beta", "beta.variogram")
+  variogram.names = c("object", "locations", "beta.variogram") # FIXME cannot retrieve the S3 method for default arguments using formals
   fit.variogram.names = names(formals(gstat::fit.variogram))
   gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
 
