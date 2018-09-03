@@ -73,10 +73,10 @@ makeRLearner.regr.gstat = function() {
       makeFunctionLearnerParam(id = "g"),
       makeUntypedLearnerParam(id = "id", tunable = FALSE), # FIXME what should be the type ?
       makeUntypedLearnerParam(id = "beta.gstat"),
-      makeIntegerLearnerParam(id = "nmax", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
-      makeIntegerLearnerParam(id = "nmin", allow.inf = TRUE, default = 0, lower = 0, upper = Inf),
-      makeIntegerLearnerParam(id = "omax", allow.inf = TRUE, default = 0, lower = 0, upper = Inf),
-      makeNumericLearnerParam(id = "maxdist", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
+      makeNumericLearnerParam("nmax", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
+      makeIntegerLearnerParam(id = "nmin", default = 0, lower = 0, upper = Inf),
+      makeIntegerLearnerParam(id = "omax", default = 0, lower = 0, upper = Inf),
+      makeNumericLearnerParam(id = "maxdist", default = Inf, lower = 0, upper = Inf, allow.inf = TRUE),
       makeLogicalLearnerParam(id = "dummy", default = FALSE),
       makeUntypedLearnerParam(id = "set"),
       makeFunctionLearnerParam(id = "x"),
@@ -87,7 +87,7 @@ makeRLearner.regr.gstat = function() {
       makeIntegerLearnerParam(id = "degree", default = 0, lower = 0, upper = 3),
       makeLogicalLearnerParam(id = "vdist", default = FALSE),
       # gstat::variogram params
-      makeNumericLearnerParam(id = "cutoff", allow.inf = TRUE, lower = 0, upper = Inf), # default value is calculated according to spatial extent of data
+      makeNumericLearnerParam(id = "cutoff", lower = 0, upper = Inf), # default value is calculated according to spatial extent of data
       makeNumericLearnerParam(id = "width"),
       makeNumericLearnerParam(id = "alpha", default = 0, lower = 0, upper = 360),
       makeNumericLearnerParam(id = "beta.variogram", default = 0, lower = 0, upper = 360),
@@ -109,15 +109,15 @@ makeRLearner.regr.gstat = function() {
       # gstat::fit.variogram params
       makeLogicalLearnerParam(id = "fit.sills", default = TRUE),
       makeLogicalLearnerParam(id = "fit.ranges", default = TRUE),
-      makeIntegerLearnerParam(id = "fit.method", default = 7, lower = 1, upper = 6),
+      makeIntegerLearnerParam(id = "fit.method", default = 7, lower = 1, upper = 7),
       makeLogicalLearnerParam(id = "warn.if.neg", default = FALSE),
       makeLogicalLearnerParam(id = "fit.kappa", default = FALSE),
       # gstat::vgm params
-      makeUntypedLearnerParam(id = "psill", default = NA),
+      makeNumericLearnerParam(id = "psill", lower = 0, upper = Inf), #default = NA
       makeUntypedLearnerParam(id = "model.vgm"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
-      makeUntypedLearnerParam(id = "range", default = NA),
+      makeNumericLearnerParam(id = "range", lower = 0, upper = Inf), # default = NA),
       makeNumericLearnerParam(id = "kappa", default = 0.5, lower = 0, upper = 1),
-      makeUntypedLearnerParam(id = "nugget"),
+      makeNumericLearnerParam(id = "nugget", lower = 0, upper = Inf),
       makeUntypedLearnerParam(id = "add.to"),
       makeUntypedLearnerParam(id = "covtable"),
       makeNumericLearnerParam(id = "Err", default = 0) #FIXME impossible to find the lower and upper in the doc https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm
@@ -136,44 +136,52 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
+  browser()
   dots = list(...)
   # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
-  variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for formula arguments
-  variogram.names = c("object", "locations", "beta.variogram")
-  #variogram.names = replace(names(formals(gstat::variogram)), variogram.names == "beta", "beta.variogram")
+  variogram.names = names(formals(gstat::variogram)) # FIXME cannot retrieve the S3 method for default arguments
+  variogram.names = c("object", "locations", "beta.variogram") #
+  # variogram.names = replace(names(formals(gstat::variogram)), variogram.names == "beta", "beta.variogram")
   fit.variogram.names = names(formals(gstat::fit.variogram))
   gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
 
   d = getTaskData(.task, .subset)
-  f = getTaskFormula(.task, explicit.features = TRUE)
+
+  fml = getTaskFormula(.task, explicit.features = TRUE)
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
-  f = update(f, .~.-y-x) # users must provide longitude and latitude in columns respectively named y and x
+  fml = update(fml, .~.-y-x) # user must name lat and lon columns y and x respectively
+  # if degree = 0 and no psill provided, we are in a deterministic case and only x, y and the target vars should be kept
+  if (is.null(dots$psill)) {
+    fml = update(fml, .~1) #https://stackoverflow.com/questions/18070131/update-formula-in-r
+  }
   # check if a variogram model is passed
-  if (!is.na(dots$psill)) {
+  if (!is.null(dots$psill)) {
     # build the samples variogram
-    v = do.call(gstat::variogram, c(list(object = f, data = d), dots[ names(dots) %in% variogram.names] ))
+    v = do.call(gstat::variogram, c(list(object = fml, data = d), dots[ names(dots) %in% variogram.names] ))
     # fit the variogram model
     fit = do.call(gstat::fit.variogram,
       c(list(object = v,
         model = gstat::vgm(psill = dots$psill,
-          model = dots$model.vgm,
+          model = dots$model,
           range = dots$range,
           nugget = dots$nugget)),
-        dots[names(dots) %in% fit.variogram.names[fit.variogram.names != "model.vgm"]])
+        dots[names(dots) %in% fit.variogram.names[fit.variogram.names != "model"]])
     )
     # create the gstat object with a model
-    g = do.call(gstat::gstat,
-      c(list(formula = f,
+    g = do.call(browser(), gstat::gstat,
+      c(list(formula = fml,
         data = d,
-        model = fit
-        ),
+        model = fit,
+        locations = ~x+y
+      ),
         dots[names(dots) %in% gstat.names[gstat.names != "model"]])
     )
   } else {
     # create the gstat object without model
     g = do.call(gstat::gstat,
-      c(list(formula = f,
-        data = d),
+      c(list(formula = fml,
+        data = d,
+        locations = ~x+y),
         dots[ names(dots)[names(dots) != "model"] %in% gstat.names ]
       )
     )
@@ -183,6 +191,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
 
 #' @export
 predictLearner.regr.gstat = function(.learner, .model, .newdata, ...) {
+  browser()
   p = predict(
     object = .model$learner.model,
     newdata = .newdata

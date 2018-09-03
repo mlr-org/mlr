@@ -27,13 +27,14 @@ binaryclass.spatial.class.col = 3
 binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
 binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
 
-meuse.univar.task = mlr::dropFeatures(meuse.task, "dist")
-meuse = meuse.univar.task$env$data
+# meuse.univar.task = mlr::dropFeatures(meuse.task, "dist")
+# meuse = meuse.univar.task$env$data
+meuse.df = getTaskData(meuse.task)
 meuse.target = "zinc"
-meuse.train.inds = (1:(nrow(meuse)/2))
-meuse.train = meuse[meuse.train.inds, ]
-meuse.test.inds = (length(meuse.train.inds) + 1):nrow(meuse)
-meuse.test = meuse[meuse.test.inds, ]
+meuse.train.inds = (1:(nrow(meuse.df)/2))
+meuse.train = meuse.df[meuse.train.inds, ]
+meuse.test.inds = (length(meuse.train.inds) + 1):nrow(meuse.df)
+meuse.test = meuse.df[meuse.test.inds, ]
 meuse.formula = zinc~1
 
 multiclass.df = iris
