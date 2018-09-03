@@ -13,14 +13,14 @@ test_that("regr_gstat", {
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
-    list(id = "inverse_distance_weighted"),
-    list(id = "trend_surfaces_degree_1", degree = 1),
-    list(id = "trend_surfaces_degree_2", degree = 2),
-    list(id = "trend_surfaces_degree_3", degree = 3),
     list(id = "ordinary_kriging_manual",
       psill = 1, model = "Sph", range = 900, nugget = 2),
     list(id = "ordinary_kriging_auto",
-      psill = c('Sph','Exp','Gau', 'Mat'))
+      psill = c('Sph','Exp','Gau', 'Mat')),
+    list(id = "inverse_distance_weighted"),
+    list(id = "trend_surfaces_degree_1", degree = 1),
+    list(id = "trend_surfaces_degree_2", degree = 2),
+    list(id = "trend_surfaces_degree_3", degree = 3)
   )
 
   old.predicts.list = list()
