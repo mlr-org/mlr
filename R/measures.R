@@ -1430,12 +1430,37 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
       maxtime = max.time, verbose = FALSE, reference = FALSE)
-    
+
 
     # FIXME: this might be the wrong number!
     crps(perror, times = max.time)[1L, ]
   },
   extra.args = list(max.time = NULL, resolution = 1000L)
+)
+
+#' @export ibrier2
+#' @rdname measures
+#' @format none
+ibrier2 = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.prob", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "Only works for methods for which probabilities are provided via pec::predictSurvProb. Currently these are only coxph and randomForestSRC. To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  fun = function(task, model, pred, feats, newdata, extra.args) {
+  #  requirePackages(c("survival", "pec"))
+
+    probs = getPredictionProbabilities(pred)
+    colnames(probs) = times.train = as.numeric(substr(colnames(probs), 11, 100))
+    truth = getPredictionTruth(pred)
+    times.test = truth[truth[,2] == 1,1]
+    grid = sort(unique(c(times.test)))
+    prob_columns = sapply(grid, function(t) max(which(t >= times.train)))
+    probs = as.matrix(probs[, prob_columns])
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    perror = pec(object = probs, formula = f, data = newdata, times = grid, exact = FALSE, start = min(grid), reference = FALSE) # this should be the perror object in the new ibrier measure
+
+    crps(perror, times = max(grid))[1L]
+  }
 )
 
 ###############################################################################

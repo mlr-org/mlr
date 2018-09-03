@@ -28,8 +28,8 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
-  if (ttype %nin% c("classif", "cluster", "multilabel"))
-    stop("Prediction was not generated from a ClassifTask, MultilabelTask or ClusterTask!")
+  if (ttype %nin% c("classif", "cluster", "multilabel", "surv"))
+    stop("Prediction was not generated from a ClassifTask, SurvTask, MultilabelTask or ClusterTask!")
   if (missing(cl)) {
     if (ttype == "classif") {
       if (length(pred$task.desc$class.levels) == 2L)
@@ -40,6 +40,8 @@ getPredictionProbabilities = function(pred, cl) {
       cl = pred$task.desc$class.levels
     }
   } else {
+    if (ttype == "surv")
+      stopf("You cannot set classes for survival analysis!")
     if (ttype == "cluster")
       stopf("You can only ask for probs of all classes currently in clustering!")
     else
@@ -58,6 +60,8 @@ getPredictionProbabilities = function(pred, cl) {
   } else if (ttype == "cluster") {
     y = pred$data[, stri_detect_regex(cns, "prob\\.")]
     colnames(y) = seq_col(y)
+  } else if (ttype == "surv") {
+    y = pred$data[, stri_detect_regex(cns, "prob\\.")]
   }
   return(y)
 }

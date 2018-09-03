@@ -114,10 +114,12 @@ checkPredictLearnerOutput = function(learner, model, p) {
         stopf("predictLearner for %s has not returned a numeric matrix with 2 columns!", learner$id)
     }
   } else if (learner$type == "surv") {
-    if (learner$predict.type == "prob")
-      stop("Survival does not support prediction of probabilites yet.")
-    if (!is.numeric(p))
-      stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
+    if (learner$predict.type == "prob") {
+      #stop("Survival does not support prediction of probabilites yet.")
+    } else {
+      if (!is.numeric(p))
+        stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
+    }
   } else if (learner$type == "cluster")  {
     if (learner$predict.type == "response") {
       if (cl != "integer")

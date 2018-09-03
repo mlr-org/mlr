@@ -28,11 +28,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, newdata = NULL) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, newdata = newdata)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -42,7 +42,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, newdata = NULL) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -79,6 +79,11 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       feats = task$env$data[pred$data$id, , drop = FALSE]
     else
       assertClass(feats, "data.frame")
+  }
+  if ("req.newdata" %in% props) {
+    if (is.null(newdata))
+      stopf("You need to pass newdata for measure %s!", m$id)
+    assertClass(newdata, classes = "data.frame")
   }
   # we need to find desc somewhere
   td = if (!is.null(pred))
@@ -117,17 +122,17 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       is.train = ss$set == "train"
       if (any(is.train)) {
         pred$data = as.data.frame(ss[is.train, ])
-        perf.train = measure$fun(task, model, pred, feats, m$extra.args)
+        perf.train = measure$fun(task, model, pred, feats, newdata, m$extra.args)
       } else {
         perf.train = NA_real_
       }
       pred$data = as.data.frame(ss[!is.train, ])
-      perf.test = measure$fun(task, model, pred, feats, m$extra.args)
+      perf.test = measure$fun(task, model, pred, feats, newdata, m$extra.args)
       list(perf.train = perf.train, perf.test = perf.test)
     }
     perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
-    measure$fun(task, model, pred, feats, m$extra.args)
+    measure$fun(task, model, pred, feats, newdata, m$extra.args)
   }
 }

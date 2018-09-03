@@ -15,7 +15,7 @@ makeRLearner.surv.coxph = function() {
       makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "y", default = TRUE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "weights"),
+    properties = c("numerics", "factors", "weights", "prob"),
     name = "Cox Proportional Hazard Model",
     short.name = "coxph",
     callees = c("coxph", "coxph.control")
@@ -26,14 +26,24 @@ makeRLearner.surv.coxph = function() {
 trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   data = getTaskData(.task, subset = .subset)
-  if (is.null(.weights)) {
-    survival::coxph(formula = f, data = data, ...)
-  } else  {
+  if (.learner$predict.type == "response") {
     survival::coxph(formula = f, data = data, weights = .weights, ...)
+  } else  {
+    model = survival::coxph(formula = f, data = data, weights = .weights, ...)
+    model$times = data[, getTaskTargetNames(task)[1L]]
+    model
   }
 }
 
 #' @export
 predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
+  if (.learner$predict.type == "response") {
+    predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
+  } else {
+    unique_death_times = c(0, sort(unique(.model$learner.model$time)))
+    probs = pec::predictSurvProb(.model$learner.model, newdata = .newdata, times = unique_death_times)
+    colnames(probs) = unique_death_times
+    preds = predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
+    list(preds = preds, probs = probs)
+  }
 }

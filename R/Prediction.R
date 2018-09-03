@@ -138,7 +138,13 @@ makePrediction.SurvTaskDesc = function(task.desc, row.names, id, truth, predict.
   # FIXME: recode times
   data$truth.time = truth[, 1L]
   data$truth.event = truth[, 2L]
-  data$response = y
+  if (predict.type == "response") {
+    data$response = y
+  } else {
+    data$response = y$preds
+    data$prob = y$probs
+    colnames(data$prob) = c(stri_paste("time.", colnames(y$probs)))
+  }
 
   makeS3Obj(c("PredictionSurv", "Prediction"),
     predict.type = predict.type,
