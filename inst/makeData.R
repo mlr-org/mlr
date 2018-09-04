@@ -127,12 +127,14 @@ use_data(spatial.task, overwrite = TRUE, compress = COMPRESSION)
 
 data(meuse, package = "sp")
 data("meuse.grid", package = "sp")
-meuse = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
+meuse.df = impute(meuse, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
+meuse.df = meuse.df[-13]
 meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = imputeMode()),
   dummy.classes = "integer")$data
-#meuse = meuse[ , c("x","y","zinc","dist")]
-#meuse.grid = meuse.grid[ , c("x","y","dist")]
-meuse.task = makeRegrTask(id = "meuse",  data = meuse[-13], target = "zinc")
+meuse.df = meuse.df[ , c("x","y","zinc","dist")]
+meuse.grid = meuse.grid[ , c("x","y","dist")]
+meuse.task = makeRegrTask(id = "meuse",  data = meuse.df, target = "zinc")
+use_data(meuse.df, overwrite = TRUE, compress = COMPRESSION)
 use_data(meuse.task, overwrite = TRUE, compress = COMPRESSION)
 use_data(meuse.grid, overwrite = TRUE, compress = COMPRESSION)
