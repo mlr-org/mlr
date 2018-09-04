@@ -133,6 +133,6 @@ meuse.grid = impute(meuse.grid, classes = list(numeric = imputeMean(), factor = 
   dummy.classes = "integer")$data
 #meuse = meuse[ , c("x","y","zinc","dist")]
 #meuse.grid = meuse.grid[ , c("x","y","dist")]
-meuse.task = makeRegrTask(id = "meuse",  data = meuse, target = "zinc")
+meuse.task = makeRegrTask(id = "meuse",  data = meuse[-13], target = "zinc")
 use_data(meuse.task, overwrite = TRUE, compress = COMPRESSION)
 use_data(meuse.grid, overwrite = TRUE, compress = COMPRESSION)
