@@ -29,13 +29,13 @@ binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.
 
 # meuse.univar.task = mlr::dropFeatures(meuse.task, "dist")
 # meuse = meuse.univar.task$env$data
-meuse.df = getTaskData(meuse.task) #removing factor column
+meuse.df = getTaskData(meuse.task)
 meuse.target = "zinc"
 meuse.train.inds = (1:(nrow(meuse.df)/2))
 meuse.train = meuse.df[meuse.train.inds, ]
 meuse.test.inds = (length(meuse.train.inds) + 1):nrow(meuse.df)
 meuse.test = meuse.df[meuse.test.inds, ]
-# meuse.formula = zinc~1
+meuse.formula = getTaskFormula(meuse.task, explicit.features = TRUE)
 
 multiclass.df = iris
 multiclass.formula = Species~.
