@@ -142,8 +142,12 @@ makePrediction.SurvTaskDesc = function(task.desc, row.names, id, truth, predict.
     data$response = y
   } else {
     data$response = y$preds
-    data$prob = y$probs
-    colnames(data$prob) = c(stri_paste("time.", colnames(y$probs)))
+    # Extend probs to the truth time points
+    train.times = as.numeric(colnames(y$probs))
+    all.times = sort(unique(c(truth[, 1L], train.times)))
+    prob_columns = sapply(all.times, function(t) max(which(t >= train.times)))
+    data$prob = y$probs[, prob_columns]
+    colnames(data$prob) = c(stri_paste("time.", all.times))
   }
 
   makeS3Obj(c("PredictionSurv", "Prediction"),

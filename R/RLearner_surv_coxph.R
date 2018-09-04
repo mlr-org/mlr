@@ -40,10 +40,10 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
   } else {
+    preds = predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
     unique_death_times = c(0, sort(unique(.model$learner.model$time)))
     probs = pec::predictSurvProb(.model$learner.model, newdata = .newdata, times = unique_death_times)
     colnames(probs) = unique_death_times
-    preds = predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
     list(preds = preds, probs = probs)
   }
 }
