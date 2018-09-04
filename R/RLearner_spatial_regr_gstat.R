@@ -115,7 +115,7 @@ makeRLearner.regr.gstat = function() {
       makeLogicalLearnerParam(id = "fit.kappa", default = FALSE),
       # gstat::vgm params
       makeNumericLearnerParam(id = "psill", lower = 0, upper = Inf), # FIXME default = NA
-      makeUntypedLearnerParam(id = "model.manual"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
+      makeUntypedLearnerParam(id = "model.manual", default = "Sph"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
       makeNumericLearnerParam(id = "range", lower = 0, upper = Inf), # FIXME default = NA),
       makeNumericLearnerParam(id = "kappa", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "nugget", lower = 0, upper = Inf),
@@ -137,64 +137,79 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   pars = list(...)
   # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
   # variogram.names = names(formals(gstat::variogram))
   # variogram.names = replace(names(formals(gstat::variogram)), variogram.names == "beta", "beta.variogram")
   variogram.names = c("object", "locations", "beta.variogram") # FIXME cannot retrieve the S3 method for default arguments using formals
+  vgm.names = names(formals(gstat::vgm))
   fit.variogram.names = names(formals(gstat::fit.variogram))
+  #fit.variogram.names = replace(names(formals(gstat::fit.variogram)), fit.variogram.names == "model", "model.manual")
   gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
-
+  browser()
   d = getTaskData(.task, .subset)
 
   fml = getTaskFormula(.task, explicit.features = TRUE)
-  #browser()
   # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
   fml = update(fml, .~.-y-x) # user must name lat and lon columns y and x respectively
 
+  #browser()
   # if no model is provided, we are in a deterministic case and only x, y and the target vars should be kept to make spatial predictions
-  if (is.null(pars$model.manual) && is.null(pars$model.auto)) { #(is.null(pars$psill)) {
-    fml = update(fml, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
-    fit = NULL
-  } else{
-    # build the samples variogram
-    v = do.call(gstat::variogram, c(list(object = fml, data = d, locations = ~x+y), pars[names(pars) %in% variogram.names]))
+  if (!is.null(pars$model.manual) || !is.null(pars$model.auto)) {
+    # calculate sample variogram (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/variogram)
+    v = do.call(
+      gstat::variogram,
+      c(
+        list(
+          object = fml,
+          data = d,
+          locations = ~x+y))#,
+        #pars[names(pars) %in% variogram.names])
+      )
     # Check for auto-fitting
     if (!is.null(pars$model.auto)) {
       pars$psill = pars$model.auto # this is the way gstat works. If a set of models are passed to the psill argument, gstat performs an autofitting
+      pars = pars[pars != "model.auto"]
     }
-    # (auto)fit the variogram model
-    fit = do.call(gstat::fit.variogram,
-      c(list(object = v,
-        model = gstat::vgm(psill = pars$psill,
+
+    # generate the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm)
+    model = do.call(
+      gstat::vgm,
+      c(
+        list(
+          psill = pars$psill,
           model = pars$model.manual,
           range = pars$range,
-          nugget = pars$nugget)),
-        pars[names(pars) %in% fit.variogram.names])
-      #pars[names(pars) %in% fit.variogram.names[fit.variogram.names != "model"]])
+          nugget = pars$nugget))#,
+        #pars[names(pars) %in% vgm.names[vgm.names != "psill"]])
     )
+    # (auto)fit the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/fit.variogram)
+    fit = do.call(
+      gstat::fit.variogram,
+      c(
+        list(
+          object = v,
+          model = model))#,
+        #pars[names(pars) %in% fit.variogram.names[fit.variogram.names != "model"]])
+      )
+
+  } else{
+    fml = update(fml, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
+    fit = NULL
   }
   # create the gstat object
   g = do.call(gstat::gstat,
-    c(list(formula = fml,
-      data = d,
-      model = fit,
-      locations = ~x+y
-    ),
-   pars[names(pars) %in% gstat.names])
-    #pars[names(pars) %in% gstat.names[gstat.names != "model"]])
+    c(
+      list(
+        formula = fml,
+        data = d,
+        model = fit,
+        locations = ~x+y),
+      pars[names(pars)[names(pars) != "model.auto" || names(pars) != "model.manual"] %in% gstat.names[gstat.names != "model"]]
+      )
   )
-  # } else {
-  #   # create the gstat object without model
-  #   g = do.call(gstat::gstat,
-  #     c(list(formula = fml,
-  #       data = d,
-  #       locations = ~x+y
-  #     ),
-  #       pars[ names(pars)[names(pars) != "model"] %in% gstat.names ]
-  #     )
-  #   )
-  #}
+
   return(g)
 }
 
