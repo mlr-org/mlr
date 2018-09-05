@@ -155,8 +155,8 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   # As some of the gstat functions required to the train the learner use arguments with the same names, we rename these arguments according to the id declared in makeRLearner.regr.gstat.
   gstat.args = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
   variogram.args = replace(names(formals(gstat:::variogram.default)), names(formals(gstat:::variogram.default)) == "beta", "beta.variogram")
-  fit.variogram.args = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model.auto")
-  vgm.args = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model.manual")
+  fit.variogram.args = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model")
+  vgm.args = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model")
 
   # Getting the task formula
   fml = getTaskFormula(.task, explicit.features = TRUE)
@@ -190,14 +190,19 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
     # generate the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm)
     model = do.call(
       gstat::vgm,
-      c(
-        list(
-          psill = pars$psill,
-          model = pars$model,
-          range = pars$range,
-          nugget = pars$nugget),
-        pars[names(pars) %in% vgm.args && !names(pars) %in% c("psill", "model", "locations")])
+        as.list(
+          pars[names(pars) %in% vgm.args]) # passing all the pars corresponding to args of gstat::vgm function
     )
+    # model = do.call(
+    #   gstat::vgm,
+    #   c(
+    #     list(
+    #       psill = pars$psill,
+    #       model = pars$model,
+    #       range = pars$range,
+    #       nugget = pars$nugget),
+    #     pars[names(pars) %in% vgm.args && !names(pars) %in% c("psill", "model", "locations")])
+    # )
     # (auto)fit the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/fit.variogram)
     fit = do.call(
       gstat::fit.variogram,
