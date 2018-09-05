@@ -114,9 +114,9 @@ makeRLearner.regr.gstat = function() {
       makeLogicalLearnerParam(id = "warn.if.neg", default = FALSE),
       makeLogicalLearnerParam(id = "fit.kappa", default = FALSE),
       # gstat::vgm params
-      makeNumericLearnerParam(id = "psill", lower = 0, upper = Inf), # FIXME default = NA
+      makeNumericLearnerParam(id = "psill", default = NA, lower = 0, upper = Inf, special.vals = list(NA)),
       makeUntypedLearnerParam(id = "model.manual", default = "Sph"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
-      makeNumericLearnerParam(id = "range", lower = 0, upper = Inf), # FIXME default = NA),
+      makeNumericLearnerParam(id = "range", default = NA, lower = 0, upper = Inf, special.vals = list(NA)),
       makeNumericLearnerParam(id = "kappa", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "nugget", lower = 0, upper = Inf),
       makeUntypedLearnerParam(id = "add.to"),
