@@ -14,10 +14,10 @@ test_that("regr_gstat", {
   requirePackagesOrSkip("gstat", default.method = "load")
 
   parset.list = list(
-     list(id = "ordinary_kriging_manual",
-      psill = 1, model.manual = "Sph", range = 900, nugget = 2),
-     list(id = "ordinary_kriging_auto",
-      model.auto = c('Sph','Exp','Gau', 'Mat')) ,# was psill
+     # list(id = "ordinary_kriging_manual",
+     #  psill = 1, model.manual = "Sph", range = 900, nugget = 2),
+     # list(id = "ordinary_kriging_auto",
+     #  model.auto = c('Sph','Exp','Gau', 'Mat')) ,# was psill
      list(id = "inverse_distance_weighted"),
     list(id = "trend_surfaces_degree_1", degree = 1),
     list(id = "trend_surfaces_degree_2", degree = 2),
