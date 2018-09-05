@@ -137,26 +137,35 @@ makeRLearner.regr.gstat = function() {
 # https://stackoverflow.com/questions/19075331/passing-a-function-argument-to-other-arguments-which-are-functions-themselves
 # https://stackoverflow.com/questions/16774946/passing-along-ellipsis-arguments-to-two-different-functions
 trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ...) {
-
-  pars = list(...)
-  # https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
-  # variogram.names = names(formals(gstat::variogram))
-  # variogram.names = replace(names(formals(gstat::variogram)), variogram.names == "beta", "beta.variogram")
-  variogram.names = c("object", "locations", "beta.variogram") # FIXME cannot retrieve the S3 method for default arguments using formals
-  vgm.names = names(formals(gstat::vgm))
-  fit.variogram.names = names(formals(gstat::fit.variogram))
-  #fit.variogram.names = replace(names(formals(gstat::fit.variogram)), fit.variogram.names == "model", "model.manual")
-  gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
-  browser()
+  # Getting the dataset passed to the learner
   d = getTaskData(.task, .subset)
 
-  fml = getTaskFormula(.task, explicit.features = TRUE)
-  # remove location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
-  fml = update(fml, .~.-y-x) # user must name lat and lon columns y and x respectively
+  # User must name lat and lon columns y and x respectively otherwise the function stops
+  if (is.null(d$x) || is.null(d$y)) {
+    stop("Longitude and latitude data must be stored in columns named x and y respectively")
+  }
 
-  #browser()
-  # if no model is provided, we are in a deterministic case and only x, y and the target vars should be kept to make spatial predictions
+  # Gettting the list of params passed to the learner
+  pars = list(...)
+
+  # Extracting the names of the parameters that can be passed to the various gstat functions required to train the learner.
+  # These functions are gstat::variogram, gstat::fit.variogram, gstat::vgm and gstat::gstat
+  # To extract the arguments names : https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
+  # To extract the arguments names of S3 method default https://stackoverflow.com/questions/45083015/getting-arguments-of-s3-method-in-r
+  # As some of the gstat functions required to the train the learner use arguments with the same names, we rename these arguments according to the id declared in makeRLearner.regr.gstat.
+  gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
+  variogram.names = names(formals(gstat:::variogram.default))
+  fit.variogram.names = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model.auto")
+  vgm.names = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model.manual")
+
+  # Getting the task formula
+  fml = getTaskFormula(.task, explicit.features = TRUE)
+  # Removing location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
+  fml = update(fml, .~.-y-x)
+
+  # If model.manual or model.auto arguments are passed, we use it to build the variogram model required to perform kriging interpolation
   if (!is.null(pars$model.manual) || !is.null(pars$model.auto)) {
+
     # calculate sample variogram (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/variogram)
     v = do.call(
       gstat::variogram,
@@ -194,7 +203,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
       #pars[names(pars) %in% fit.variogram.names[fit.variogram.names != "model"]])
     )
 
-  } else{
+  } else { # Case where no models are passed. We don't use any predictor to make the spatial interpolation. Se solely use x and y data to interpolate the target var
     fml = update(fml, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
     fit = NULL
   }
