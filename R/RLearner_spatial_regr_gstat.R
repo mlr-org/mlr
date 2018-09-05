@@ -70,58 +70,58 @@ makeRLearner.regr.gstat = function() {
     package = "gstat",
     par.set = makeParamSet(
       # gstat::gstat params
-      makeFunctionLearnerParam(id = "gstat.g"),
-      makeUntypedLearnerParam(id = "gstat.id", tunable = FALSE), # FIXME what should be the type ?
-      makeUntypedLearnerParam(id = "gstat.beta"),
-      makeNumericLearnerParam("gstat.nmax", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
-      makeIntegerLearnerParam(id = "gstat.nmin", default = 0, lower = 0, upper = Inf),
-      makeIntegerLearnerParam(id = "gstat.omax", default = 0, lower = 0, upper = Inf),
-      makeNumericLearnerParam(id = "gstat.maxdist", default = Inf, lower = 0, upper = Inf, allow.inf = TRUE),
-      makeLogicalLearnerParam(id = "gstat.dummy", default = FALSE),
-      makeUntypedLearnerParam(id = "gstat.set"),
-      makeFunctionLearnerParam(id = "gstat.x"),
-      makeLogicalLearnerParam(id = "gstat.fill.all", default = FALSE),
-      makeLogicalLearnerParam(id = "gstat.fill.cross", default = TRUE),
-      makeDiscreteLearnerParam(id = "gstat.variance", values = c("identity", "mu", "mu(1-mu)"), default = "identity"),
-      makeUntypedLearnerParam(id = "gstat.merge"),
-      makeIntegerLearnerParam(id = "gstat.degree", default = 0, lower = 0, upper = 3),
-      makeLogicalLearnerParam(id = "gstat.vdist", default = FALSE),
+      makeFunctionLearnerParam(id = "g"),
+      makeUntypedLearnerParam(id = "id", tunable = FALSE), # FIXME what should be the type ?
+      makeUntypedLearnerParam(id = "beta.gstat"),
+      makeNumericLearnerParam("nmax", allow.inf = TRUE, default = Inf, lower = 0, upper = Inf),
+      makeIntegerLearnerParam(id = "nmin", default = 0, lower = 0, upper = Inf),
+      makeIntegerLearnerParam(id = "omax", default = 0, lower = 0, upper = Inf),
+      makeNumericLearnerParam(id = "maxdist", default = Inf, lower = 0, upper = Inf, allow.inf = TRUE),
+      makeLogicalLearnerParam(id = "dummy", default = FALSE),
+      makeUntypedLearnerParam(id = "set"),
+      makeFunctionLearnerParam(id = "x"),
+      makeLogicalLearnerParam(id = "fill.all", default = FALSE),
+      makeLogicalLearnerParam(id = "fill.cross", default = TRUE),
+      makeDiscreteLearnerParam(id = "variance", values = c("identity", "mu", "mu(1-mu)"), default = "identity"),
+      makeUntypedLearnerParam(id = "merge"),
+      makeIntegerLearnerParam(id = "degree", default = 0, lower = 0, upper = 3),
+      makeLogicalLearnerParam(id = "vdist", default = FALSE),
       # gstat::variogram params
-      makeNumericLearnerParam(id = "variogram.cutoff", lower = 0, upper = Inf), # default value is calculated according to spatial extent of data
-      makeNumericLearnerParam(id = "variogram.width"),
-      makeNumericLearnerParam(id = "variogram.alpha", default = 0, lower = 0, upper = 360),
-      makeNumericLearnerParam(id = "variogram.beta", default = 0, lower = 0, upper = 360),
-      makeNumericLearnerParam(id = "variogram.tol.hor", lower = 0, upper = 360),
-      makeNumericLearnerParam(id = "variogram.tol.ver", lower = 0, upper = 360),
-      makeLogicalLearnerParam(id = "variogram.cressie", default = FALSE),
-      makeNumericLearnerParam(id = "variogram.dX", default = 0),
-      makeLogicalLearnerParam(id = "variogram.cloud", default = FALSE),
-      makeUntypedLearnerParam(id = "variogram.trend.beta", default = NULL),
-      makeIntegerLearnerParam(id = "variogram.debug.level", default = 1, lower = -1, upper = 1),
-      makeLogicalLearnerParam(id = "variogram.cross", default = TRUE),
-      makeLogicalLearnerParam(id = "variogram.map", default = FALSE),
-      makeLogicalLearnerParam(id = "variogram.projected", default = TRUE),
-      makeNumericLearnerParam(id = "variogram.lambda", default = 1.0), # from gstat doc : test feature; not working (yet)
-      makeLogicalLearnerParam(id = "variogram.verbose", default = FALSE),
-      makeLogicalLearnerParam(id = "variogram.covariogram", default = FALSE),
-      makeLogicalLearnerParam(id = "variogram.PR", default = FALSE),
-      makeIntegerLearnerParam(id = "variogram.pseudo", default = -1, lower = -1, upper = 1),
+      makeNumericLearnerParam(id = "cutoff", lower = 0, upper = Inf), # default value is calculated according to spatial extent of data
+      makeNumericLearnerParam(id = "width"),
+      makeNumericLearnerParam(id = "alpha", default = 0, lower = 0, upper = 360),
+      makeNumericLearnerParam(id = "beta.variogram", default = 0, lower = 0, upper = 360),
+      makeNumericLearnerParam(id = "tol.hor", lower = 0, upper = 360),
+      makeNumericLearnerParam(id = "tol.ver", lower = 0, upper = 360),
+      makeLogicalLearnerParam(id = "cressie", default = FALSE),
+      makeNumericLearnerParam(id = "dX", default = 0),
+      makeLogicalLearnerParam(id = "cloud", default = FALSE),
+      makeUntypedLearnerParam(id = "trend.beta", default = NULL),
+      makeIntegerLearnerParam(id = "debug.level", default = 1, lower = -1, upper = 1),
+      makeLogicalLearnerParam(id = "cross", default = TRUE),
+      makeLogicalLearnerParam(id = "map", default = FALSE),
+      makeLogicalLearnerParam(id = "projected", default = TRUE),
+      makeNumericLearnerParam(id = "lambda", default = 1.0), # from gstat doc : test feature; not working (yet)
+      makeLogicalLearnerParam(id = "verbose", default = FALSE),
+      makeLogicalLearnerParam(id = "covariogram", default = FALSE),
+      makeLogicalLearnerParam(id = "PR", default = FALSE),
+      makeIntegerLearnerParam(id = "pseudo", default = -1, lower = -1, upper = 1),
       # gstat::fit.variogram params
-      makeUntypedLearnerParam(id = "fit.variogram.model.auto"), # The types of model you want gstat::fit.variogram to try. Might be any combinations of e.g. "Exp", "Sph", "Gau", "Mat".
-      makeLogicalLearnerParam(id = "fit.variogram.fit.sills", default = TRUE),
-      makeLogicalLearnerParam(id = "fit.variogram.fit.ranges", default = TRUE),
-      makeIntegerLearnerParam(id = "fit.variogram;fit.method", default = 7, lower = 1, upper = 7),
-      makeLogicalLearnerParam(id = "fit.variogram.warn.if.neg", default = FALSE),
-      makeLogicalLearnerParam(id = "fit.variogram.fit.kappa", default = FALSE),
+      makeUntypedLearnerParam(id = "model.auto"), # The types of model you want gstat::fit.variogram to try. Might be any combinations of e.g. "Exp", "Sph", "Gau", "Mat".
+      makeLogicalLearnerParam(id = "fit.sills", default = TRUE),
+      makeLogicalLearnerParam(id = "fit.ranges", default = TRUE),
+      makeIntegerLearnerParam(id = "fit.method", default = 7, lower = 1, upper = 7),
+      makeLogicalLearnerParam(id = "warn.if.neg", default = FALSE),
+      makeLogicalLearnerParam(id = "fit.kappa", default = FALSE),
       # gstat::vgm params
-      makeNumericLearnerParam(id = "vgm.psill", default = NA, lower = 0, upper = Inf, special.vals = list(NA)),
-      makeUntypedLearnerParam(id = "vgm.model.manual", default = "Sph"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
-      makeNumericLearnerParam(id = "vgm.range", default = NA, lower = 0, upper = Inf, special.vals = list(NA)),
-      makeNumericLearnerParam(id = "vgm.kappa", default = 0.5, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "vgm.nugget", lower = 0, upper = Inf),
-      makeUntypedLearnerParam(id = "vgm.add.to"),
-      makeUntypedLearnerParam(id = "vgm.covtable"),
-      makeNumericLearnerParam(id = "vgm.Err", default = 0) #FIXME impossible to find the lower and upper in the doc https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm
+      makeNumericLearnerParam(id = "psill", default = NA, lower = 0, upper = Inf, special.vals = list(NA)),
+      makeUntypedLearnerParam(id = "model.manual", default = "Sph"), # The type of model you want gstat::vgm to generates. Might be e.g. "Exp", "Sph", "Gau", "Mat". See https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm.
+      makeNumericLearnerParam(id = "range", default = NA, lower = 0, upper = Inf, special.vals = list(NA)),
+      makeNumericLearnerParam(id = "kappa", default = 0.5, lower = 0, upper = 1),
+      makeNumericLearnerParam(id = "nugget", lower = 0, upper = Inf),
+      makeUntypedLearnerParam(id = "add.to"),
+      makeUntypedLearnerParam(id = "covtable"),
+      makeNumericLearnerParam(id = "Err", default = 0) #FIXME impossible to find the lower and upper in the doc https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm
     ),
     properties = c("numerics", "factors" , "se", "weights", "missings"),
     name = "Multivariable Geostatistical Prediction And Simulation",
@@ -165,8 +165,8 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
           object = fml,
           data = d,
           locations = ~x+y))#,
-        #pars[names(pars) %in% variogram.names])
-      )
+      #pars[names(pars) %in% variogram.names])
+    )
     # Check for auto-fitting
     if (!is.null(pars$model.auto)) {
       pars$psill = pars$model.auto # this is the way gstat works. If a set of models are passed to the psill argument, gstat performs an autofitting
@@ -182,7 +182,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
           model = pars$model.manual,
           range = pars$range,
           nugget = pars$nugget))#,
-        #pars[names(pars) %in% vgm.names[vgm.names != "psill"]])
+      #pars[names(pars) %in% vgm.names[vgm.names != "psill"]])
     )
     # (auto)fit the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/fit.variogram)
     fit = do.call(
@@ -191,8 +191,8 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         list(
           object = v,
           model = model))#,
-        #pars[names(pars) %in% fit.variogram.names[fit.variogram.names != "model"]])
-      )
+      #pars[names(pars) %in% fit.variogram.names[fit.variogram.names != "model"]])
+    )
 
   } else{
     fml = update(fml, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
@@ -207,7 +207,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         model = fit,
         locations = ~x+y),
       pars[names(pars)[names(pars) != "model.auto" || names(pars) != "model.manual"] %in% gstat.names[gstat.names != "model"]]
-      )
+    )
   )
 
   return(g)
