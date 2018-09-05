@@ -154,7 +154,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   # To extract the arguments names of S3 method default https://stackoverflow.com/questions/45083015/getting-arguments-of-s3-method-in-r
   # As some of the gstat functions required to the train the learner use arguments with the same names, we rename these arguments according to the id declared in makeRLearner.regr.gstat.
   gstat.args = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
-  variogram.args = names(formals(gstat:::variogram.default))
+  variogram.args = replace(names(formals(gstat:::variogram.default)), names(formals(gstat:::variogram.default)) == "beta", "beta.variogram")
   fit.variogram.args = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model.auto")
   vgm.args = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model.manual")
 
@@ -167,19 +167,21 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   if (!is.null(pars$model.manual) || !is.null(pars$model.auto)) {
 
     # calculate sample variogram (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/variogram)
+    # browser()
     v = do.call(
       gstat::variogram,
       c(
         list(
           object = fml,
           data = d,
-          locations = ~x+y)),
-      pars[names(pars) %in% variogram.args])
+          locations = ~x+y),
+      pars[names(pars) %in% variogram.args && !names(pars) %in% c("object", "data", "locations")])
     )
-    # Check for auto-fitting
+    # Check if we are in auto-fitting mode (i.e. vector of model types to be tested passed to model.auto argument) and re-assigning the pars to the proper args
     if (!is.null(pars$model.auto)) {
-      pars$psill = pars$model.auto # this is the way gstat works. If a set of models are passed to the psill argument, gstat performs an autofitting
-      pars = pars[pars != "model.auto"]
+      pars$psill = pars$model.auto # this is the way gstat works ! If a set of models are passed to the psill argument, gstat performs an autofitting by testing all the kind of models passed
+      pars$model = pars$model.manual
+      pars = pars[pars != c("model.auto", "model.manual")]
     }
 
     # generate the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm)
@@ -190,8 +192,8 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
           psill = pars$psill,
           model = pars$model.manual,
           range = pars$range,
-          nugget = pars$nugget))#,
-      #pars[names(pars) %in% vgm.args[vgm.args != "psill"]])
+          nugget = pars$nugget),
+        pars[names(pars) %in% vgm.args && !names(pars) %in% c("psill", "model", "locations")])
     )
     # (auto)fit the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/fit.variogram)
     fit = do.call(
@@ -199,7 +201,8 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
       c(
         list(
           object = v,
-          model = model))#,
+          model = model),
+        pars[names(pars) %in% fit.variogram.args && !names(pars) %in% c("object", "model")])
       #pars[names(pars) %in% fit.variogram.args[fit.variogram.args != "model"]])
     )
 
@@ -215,8 +218,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         data = d,
         model = fit,
         locations = ~x+y),
-      pars[names(pars)[names(pars) != "model.auto" || names(pars) != "model.manual"] %in% gstat.args[gstat.args != "model"]]
-    )
+      pars[names(pars) %in% gstat.args && !names(pars) %in% c("formula", "data", "model", "locations")])
   )
 
   return(g)
