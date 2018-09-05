@@ -65,7 +65,7 @@ test_that("regr_gstat", {
         pars$formula = update(pars$formula, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
         pars$model = NULL
     }
-    browser()
+    #browser()
     g = do.call(
       gstat::gstat,
       pars
@@ -73,7 +73,7 @@ test_that("regr_gstat", {
     p = predict(g, newdata = meuse.test)
     old.predicts.list[[i]] = p[,3]
   }
-  browser()
+  #browser()
   #testSimpleParsets(t.name = "regr.gstat", df = meuse.task$env$data, target = meuse.target,
   testSimpleParsets(t.name = "regr.gstat", df = meuse.df, target = meuse.target,
     train.inds = meuse.train.inds, old.predicts.list = old.predicts.list, parset.list = parset.list)

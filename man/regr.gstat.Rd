@@ -34,7 +34,7 @@ task = makeRegrTask(id = "meuse",  data = meuse, target = "log_zinc")
 task.krg = dropFeatures(task = task, features = getTaskFeatureNames(task)[-c(1,2)])
 # defining the learner with manual variogram fitting
 lrn.krg = makeLearner(cl = "regr.gstat", id = "ln(zn) mlr ordinary kriging", predict.type = "response", psill = 1, model = "Sph", range = 900, nugget = 1)
-# in case, you xant to define the same learner but with automatic variogram fitting use this line instead
+# in case, you want to define the same learner but with automatic variogram fitting use this line instead
 lrn.krg.auto = makeLearner(cl = 'regr.gstat', id = 'ln(zn) mlr ordinary kriging autofit',  predict.type = "response", psill = c('Sph','Exp','Gau', 'Mat'))
 # training the model
 mod.krg = train(lrn.krg, task.krg)
