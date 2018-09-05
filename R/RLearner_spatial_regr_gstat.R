@@ -153,10 +153,10 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   # To extract the arguments names : https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
   # To extract the arguments names of S3 method default https://stackoverflow.com/questions/45083015/getting-arguments-of-s3-method-in-r
   # As some of the gstat functions required to the train the learner use arguments with the same names, we rename these arguments according to the id declared in makeRLearner.regr.gstat.
-  gstat.names = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
-  variogram.names = names(formals(gstat:::variogram.default))
-  fit.variogram.names = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model.auto")
-  vgm.names = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model.manual")
+  gstat.args = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
+  variogram.args = names(formals(gstat:::variogram.default))
+  fit.variogram.args = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model.auto")
+  vgm.args = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model.manual")
 
   # Getting the task formula
   fml = getTaskFormula(.task, explicit.features = TRUE)
@@ -173,8 +173,8 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         list(
           object = fml,
           data = d,
-          locations = ~x+y))#,
-      #pars[names(pars) %in% variogram.names])
+          locations = ~x+y)),
+      pars[names(pars) %in% variogram.args])
     )
     # Check for auto-fitting
     if (!is.null(pars$model.auto)) {
@@ -191,7 +191,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
           model = pars$model.manual,
           range = pars$range,
           nugget = pars$nugget))#,
-      #pars[names(pars) %in% vgm.names[vgm.names != "psill"]])
+      #pars[names(pars) %in% vgm.args[vgm.args != "psill"]])
     )
     # (auto)fit the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/fit.variogram)
     fit = do.call(
@@ -200,7 +200,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         list(
           object = v,
           model = model))#,
-      #pars[names(pars) %in% fit.variogram.names[fit.variogram.names != "model"]])
+      #pars[names(pars) %in% fit.variogram.args[fit.variogram.args != "model"]])
     )
 
   } else { # Case where no models are passed. We don't use any predictor to make the spatial interpolation. Se solely use x and y data to interpolate the target var
@@ -215,7 +215,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         data = d,
         model = fit,
         locations = ~x+y),
-      pars[names(pars)[names(pars) != "model.auto" || names(pars) != "model.manual"] %in% gstat.names[gstat.names != "model"]]
+      pars[names(pars)[names(pars) != "model.auto" || names(pars) != "model.manual"] %in% gstat.args[gstat.args != "model"]]
     )
   )
 
