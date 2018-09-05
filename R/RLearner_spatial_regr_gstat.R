@@ -168,7 +168,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
 
     # calculate sample variogram (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/variogram)
     browser()
-    v = do.call(
+    pars$object = do.call(
       gstat::variogram,
       c(
         list(
@@ -188,31 +188,27 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
     }
 
     # generate the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm)
-    model = do.call(
+    pars$model = do.call(
       gstat::vgm,
         as.list(
           pars[names(pars) %in% vgm.args]) # passing all the pars corresponding to args of gstat::vgm function
     )
-    # model = do.call(
-    #   gstat::vgm,
-    #   c(
-    #     list(
-    #       psill = pars$psill,
-    #       model = pars$model,
-    #       range = pars$range,
-    #       nugget = pars$nugget),
-    #     pars[names(pars) %in% vgm.args && !names(pars) %in% c("psill", "model", "locations")])
-    # )
+
     # (auto)fit the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/fit.variogram)
     fit = do.call(
       gstat::fit.variogram,
-      c(
-        list(
-          object = v,
-          model = model),
-        pars[names(pars) %in% fit.variogram.args && !names(pars) %in% c("object", "model")])
-      #pars[names(pars) %in% fit.variogram.args[fit.variogram.args != "model"]])
+        as.list(
+          pars[names(pars) %in% fit.variogram.args])
     )
+    # fit = do.call(
+    #   gstat::fit.variogram,
+    #   c(
+    #     list(
+    #       object = v,
+    #       model = model),
+    #     pars[names(pars) %in% fit.variogram.args && !names(pars) %in% c("object", "model")])
+    #   #pars[names(pars) %in% fit.variogram.args[fit.variogram.args != "model"]])
+    # )
 
   } else { # Case where no models are passed. We don't use any predictor to make the spatial interpolation. Se solely use x and y data to interpolate the target var
     fml = update(fml, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
