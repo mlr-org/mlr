@@ -167,7 +167,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
   if (!is.null(pars$model.manual) || !is.null(pars$model.auto)) {
 
     # calculate sample variogram (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/variogram)
-    # browser()
+    browser()
     v = do.call(
       gstat::variogram,
       c(
@@ -180,8 +180,11 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
     # Check if we are in auto-fitting mode (i.e. vector of model types to be tested passed to model.auto argument) and re-assigning the pars to the proper args
     if (!is.null(pars$model.auto)) {
       pars$psill = pars$model.auto # this is the way gstat works ! If a set of models are passed to the psill argument, gstat performs an autofitting by testing all the kind of models passed
+      pars = pars[names(pars) != "model.auto"]
+    }
+    if (!is.null(pars$model.manual)) {
       pars$model = pars$model.manual
-      pars = pars[pars != c("model.auto", "model.manual")]
+      pars = pars[names(pars) != "model.manual"]
     }
 
     # generate the variogram model (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/vgm)
@@ -190,7 +193,7 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
       c(
         list(
           psill = pars$psill,
-          model = pars$model.manual,
+          model = pars$model,
           range = pars$range,
           nugget = pars$nugget),
         pars[names(pars) %in% vgm.args && !names(pars) %in% c("psill", "model", "locations")])
