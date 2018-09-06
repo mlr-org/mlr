@@ -145,7 +145,7 @@ makePrediction.SurvTaskDesc = function(task.desc, row.names, id, truth, predict.
     # Extend probs to the truth time points
     train.times = as.numeric(colnames(y$probs))
     all.times = sort(unique(c(truth[, 1L], train.times)))
-    prob_columns = sapply(all.times, function(t) max(which(t >= train.times)))
+    prob_columns = sapply(all.times, function(t) max(which(train.times <= t)))
     data$prob = y$probs[, prob_columns]
     colnames(data$prob) = c(stri_paste("time.", all.times))
   }

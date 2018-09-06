@@ -41,9 +41,9 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
     predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
   } else {
     preds = predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
-    unique_death_times = c(0, sort(unique(.model$learner.model$time)))
-    probs = pec::predictSurvProb(.model$learner.model, newdata = .newdata, times = unique_death_times)
-    colnames(probs) = unique_death_times
+    train.times = c(0, sort(unique(.model$learner.model$time)))
+    probs = pec::predictSurvProb(.model$learner.model, newdata = .newdata, times = train.times)
+    colnames(probs) = train.times
     list(preds = preds, probs = probs)
   }
 }
