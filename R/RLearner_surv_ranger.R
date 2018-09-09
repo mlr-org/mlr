@@ -11,7 +11,6 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L, default = 3L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
-      makeNumericVectorLearnerParam(id = "case.weights"),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeDiscreteLearnerParam("respect.unordered.factors", values = c("ignore", "order", "partition"), default = "ignore"),
@@ -29,7 +28,7 @@ makeRLearner.surv.ranger = function() {
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
-    properties = c("numerics", "factors", "ordered", "featimp"),
+    properties = c("numerics", "factors", "ordered", "featimp", "weights"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable.",
@@ -38,10 +37,10 @@ makeRLearner.surv.ranger = function() {
 }
 
 #' @export
-trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.surv.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
-    status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
+   status.variable.name = tn[2L], data = getTaskData(.task, .subset), case.weights = .weights, ...)
 }
 
 #' @export

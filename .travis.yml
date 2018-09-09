@@ -50,7 +50,7 @@ jobs:
         - git config user.name $GN
         - git config user.email $GM
         - git config credential.helper "store --file=.git/credentials"
-        - bash inst/convert_to_ascii_news.sh
+        - bash addon/convert_to_ascii_news.sh
         - echo "https://$GT:@github.com" >> .git/credentials
         - git config push.default matching
         - git add --force NEWS
@@ -80,13 +80,13 @@ jobs:
       script:  R -q -e 'tic::script()'
       after_script: R -q -e 'tic::after_script()'
       before_deploy: R -q -e 'tic::before_deploy()'
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           branch: master
-           condition:
-             - $TRAVIS_EVENT_TYPE != cron
+      # deploy:
+         # provider: script
+         # script: R -q -e 'tic::deploy()'
+         # on:
+           # branch: master
+           # condition:
+             # - $TRAVIS_EVENT_TYPE != cron
 
 notifications:
   email:
