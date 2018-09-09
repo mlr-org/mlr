@@ -26,7 +26,7 @@ jobs:
       before_install: R -q -e 'install.packages("remotes"); remotes::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script: true
-      before_cache: rm -rf $HOME/R/Library/00LOCK-*
+      after_script: R -q -e 'tic::after_script()'
     - stage: check
       env: RCMDCHECK=TRUE
       addons:
@@ -42,24 +42,12 @@ jobs:
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script: R -q -e 'tic::script()'
-      after_success:
-        - git checkout master
-        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-        - R --no-save <<< "devtools::document(roclets=c('rd', 'collate', 'namespace'))"
-        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-        - git config user.name $GN
-        - git config user.email $GM
-        - git config credential.helper "store --file=.git/credentials"
-        - bash addon/convert_to_ascii_news.sh
-        - echo "https://$GT:@github.com" >> .git/credentials
-        - git config push.default matching
-        - git add --force NEWS
-        - git add --force man/*
-        - git add --force NAMESPACE
-        - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
-        - git push
-        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-      before_cache: rm -rf $HOME/R/Library/00LOCK-*
+      after_script: R -q -e 'tic::after_script()'
+      deploy:
+         provider: script
+         script: R -q -e 'tic::deploy()'
+         on:
+           branch: all
 
     - stage: Tutorial
       env: TUTORIAL=HTML
@@ -80,13 +68,11 @@ jobs:
       script:  R -q -e 'tic::script()'
       after_script: R -q -e 'tic::after_script()'
       before_deploy: R -q -e 'tic::before_deploy()'
-      # deploy:
-         # provider: script
-         # script: R -q -e 'tic::deploy()'
-         # on:
-           # branch: master
-           # condition:
-             # - $TRAVIS_EVENT_TYPE != cron
+      deploy:
+         provider: script
+         script: R -q -e 'tic::deploy()'
+         on:
+           branch: all
 
 notifications:
   email:

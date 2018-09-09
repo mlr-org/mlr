@@ -1,3 +1,8 @@
+# remove possible lock files of packages in every stage
+
+get_stage("after_script") %>%
+  add_code_step(system("rm -rf $HOME/R/Library/00LOCK-*"))
+
 # condition on env variable
 
 if (Sys.getenv("RCMDCHECK") == "TRUE") {
@@ -9,16 +14,18 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                            "-install-package", "thirdparty/XMeans1.0.4.zip")))
 
-  get_stage("before_script") %>%
-    add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
-                                           "-install-package", "thirdparty/XMeans1.0.4.zip")))
-
-  get_stage("before_deploy") %>%
-    add_step(step_setup_ssh())
-
-get_stage("script") %>%
+  get_stage("script") %>%
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck(notes_are_errors = FALSE))
+
+  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
+
+    get_stage("before_deploy") %>%
+      add_step(step_setup_ssh())
+
+    get_stage("deploy") %>%
+      add_step(step_push_deploy(commit_paths = c("NEWS", "man/", "NAMESPACE")))
+  }
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
@@ -31,16 +38,19 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("install") %>%
     add_step(step_install_cran("magick")) %>% # favicon creation
-    add_step(step_install_cran("pander")) #%>%
-    #add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+    add_step(step_install_cran("pander"))
 
   get_stage("after_script") %>%
     add_code_step(devtools::document(roclets=c('rd', 'collate', 'namespace'))) %>%
     add_step(step_build_pkgdown())
 
-  get_stage("before_deploy") %>%
-    add_step(step_setup_ssh())
+  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
 
-  # get_stage("deploy") %>%
-    # add_step(step_push_deploy())
+    get_stage("before_deploy") %>%
+      add_step(step_setup_ssh())
+
+    get_stage("deploy") %>%
+      add_step(step_push_deploy(commit_paths = "docs/"))
+
+  }
 }
