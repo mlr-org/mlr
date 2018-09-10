@@ -16,7 +16,7 @@ test_that("performance", {
   # custom measure
   res = makeResampleDesc("CV", iters = 3)
   mymeasure = makeMeasure(id = "mym", minimize = TRUE, properties = c("classif", "classif.multi", "predtype.response"),
-    fun = function(task, model, pred, feats, extra.args) {
+    fun = function(task, model, pred, feats, newdata, extra.args) {
       # normal test error
       e1 = mean(pred$data$truth != pred$data$response)
       # we do this manually
@@ -41,7 +41,7 @@ test_that("performance", {
   # custom measure
   mymeasure = makeCustomResampledMeasure(measure.id = "mym", aggregation.id = "train.mean",
     properties = c("classif", "predtype.response"),
-    fun = function(task, group, pred, feats, extra.args) {
+    fun = function(task, model, pred, feats, newdata, extra.args) {
       mean(pred$data$truth != pred$data$response)
     })
   rdesc = makeResampleDesc("Holdout")
