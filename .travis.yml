@@ -38,7 +38,7 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script: R -q -e 'tic::script()'
