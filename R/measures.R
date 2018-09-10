@@ -1425,8 +1425,8 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     colnames(probs) = times.train = as.numeric(substr(colnames(probs), 11, 100))
     truth = getPredictionTruth(pred)
     times.test = truth[truth[,2] == 1,1]
-    grid = sort(unique(c(times.test)))
-    prob_columns = sapply(grid, function(t) max(which(t >= times.train)))
+    grid = c(sort(unique(c(times.test))))
+    prob_columns = sapply(grid, function(t) max(which(t >= times.train - 10^(-13))))
     probs = as.matrix(probs[, prob_columns])
     tn = getTaskTargetNames(task)
     f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))

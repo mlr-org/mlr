@@ -47,11 +47,17 @@ test_that("hand constructed tests", {
   time = sort(rexp(n, 0.1)) + 1
   data = data.frame(time = time, status = 1, x1 = order(time))
   task = makeSurvTask(id = "dummy", data = data, target = c("time", "status"))
-  mod = suppressWarnings(train("surv.coxph", task))
+  lrn = makeLearner("surv.coxph", predict.type = "prob")
+  mod = suppressWarnings(train(lrn, task))
 
   pred = predict(mod, task)
   expect_numeric(-getPredictionResponse(pred), sorted = TRUE, any.missing = FALSE) # perfect predictor
 
   perf = performance(pred = pred, model = mod, task = task, measures = list(cindex, cindex.uno, iauc.uno))
   expect_equal(unname(perf), c(1, 1, 0.99))
+
+  expect_data_frame(getPredictionProbabilities(pred), types = "numeric", any.missing = FALSE)
+  perf = performance(pred = pred, model = mod, task = task, measures = list(ibrier), newdata = getTaskData(task))
+  expect_lte(unname(perf), 1)
+  expect_gte(unname(perf), 0)
 })
