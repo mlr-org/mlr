@@ -26,6 +26,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
+      add_code_step(devtools::document()) %>%
       add_step(step_push_deploy(commit_paths = c("NEWS", "man/*", "NAMESPACE")))
   }
 }
@@ -42,16 +43,13 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_install_cran("magick")) %>% # favicon creation
     add_step(step_install_cran("pander"))
 
-  get_stage("after_script") %>%
-    add_code_step(devtools::document(roclets=c('rd', 'collate', 'namespace'))) %>%
-    add_step(step_build_pkgdown())
-
   if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
+      add_step(step_build_pkgdown()) %>%
       add_step(step_push_deploy(commit_paths = "docs/*"))
 
   }
