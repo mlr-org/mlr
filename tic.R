@@ -26,7 +26,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_step(step_push_deploy(commit_paths = c("NEWS", "man/", "NAMESPACE")))
+      add_step(step_push_deploy(commit_paths = c("NEWS", "man/*", "NAMESPACE")))
   }
 }
 
@@ -52,7 +52,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_step(step_push_deploy(commit_paths = "docs/"))
+      add_step(step_push_deploy(commit_paths = "docs/*"))
 
   }
 }
