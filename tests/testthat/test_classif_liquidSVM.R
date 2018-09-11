@@ -24,10 +24,8 @@ test_that("classif_liquidSVM", {
     pars = list(x = multiclass.formula, y = multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    set.seed(123)
     m = do.call(liquidSVM::svm, pars)
     set.seed(getOption("mlr.debug.seed"))
-    set.seed(123)
     p = predict(m, newdata = multiclass.test, type = "response")
     old.predicts.list[[i]] = p
   }

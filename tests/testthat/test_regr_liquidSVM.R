@@ -2,7 +2,6 @@ context("regr_liquidSVM")
 
 test_that("regr_liquidSVM", {
   requirePackagesOrSkip("liquidSVM", default.method = "load")
-
   parset.list = list(
     list(),
     list(partition_choice = 6),
@@ -17,6 +16,7 @@ test_that("regr_liquidSVM", {
     list(useCells = TRUE),
     list(gammas = c(0.1,1,10), lambdas = c(0.1,1,10), c_values = c(0.1,1,10))
   )
+
   old.predicts.list = list()
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
@@ -24,6 +24,7 @@ test_that("regr_liquidSVM", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(liquidSVM::svm, pars)
+    set.seed(getOption("mlr.debug.seed"))
     p  = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }
