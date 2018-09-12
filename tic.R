@@ -20,15 +20,15 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck(notes_are_errors = FALSE))
 
-  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
+  # if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
 
-    get_stage("before_deploy") %>%
-      add_step(step_setup_ssh())
+  #   get_stage("before_deploy") %>%
+  #     add_step(step_setup_ssh())
 
-    get_stage("deploy") %>%
-      add_code_step(devtools::document()) %>%
-      add_step(step_push_deploy(commit_paths = c("NEWS", "man/*", "NAMESPACE")))
-  }
+  #   get_stage("deploy") %>%
+  #     add_code_step(devtools::document()) %>%
+  #     add_step(step_push_deploy(commit_paths = c("NEWS", "man/*", "NAMESPACE")))
+  # }
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
