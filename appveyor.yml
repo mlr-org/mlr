@@ -10,6 +10,7 @@ install:
   - ps: Bootstrap
   - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
   - cmd: R -q -e "getOption('repos')"
+  - cmd: rm -rf C:\RLibrary\00LOCK-*
   - cmd: R -q -e "install.packages('devtools'); devtools::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
 
 
