@@ -94,6 +94,11 @@ measureTime = function(expr, ee = parent.frame()) {
   proc.time()[[3L]] - before
 }
 
+attachTrainingTime = function(model, task, data) {
+  model$times = data[, getTaskTargetNames(task)[1L]]
+  model
+}
+
 # find duplicate measure names or ids and paste together those
 # with the associated aggregation ids or names
 replaceDupeMeasureNames = function(measures, x = "id") {
