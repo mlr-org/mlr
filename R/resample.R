@@ -176,13 +176,13 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     }
     pred.train = predict(m, train.task, subset = train.i)
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
-    ms.train = performance(task = task, model = m, pred = pred.train, measures = measures, newdata = getTaskData(task, subset = train.i))
+    ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
-    ms.test = performance(task = task, model = m, pred = pred.test, measures = measures, newdata = getTaskData(task, subset = test.i))
+    ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
     err.dumps$predict.test = getPredictionDump(pred.test)
   } else { # "both"
@@ -194,13 +194,13 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     }
     pred.train = predict(m, train.task, subset = train.i)
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
-    ms.train = performance(task = task, model = m, pred = pred.train, measures = measures, newdata = getTaskData(task, subset = train.i))
+    ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
 
     pred.test = predict(m, task, subset = test.i)
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
-    ms.test = performance(task = task, model = m, pred = pred.test, measures = measures, newdata = getTaskData(task, subset = test.i))
+    ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
     err.dumps$predict.test = getPredictionDump(pred.test)
   }

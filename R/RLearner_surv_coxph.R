@@ -41,7 +41,7 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
     predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
   } else {
     preds = predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
-    train.times = c(0, sort(unique(.model$learner.model$time)))
+    train.times = c(0, sort(unique(.model$learner.model$times)))
     probs = pec::predictSurvProb(.model$learner.model, newdata = .newdata, times = train.times)
     list(preds = preds, probs = probs, train.times = train.times)
   }

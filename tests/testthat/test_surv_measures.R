@@ -57,7 +57,11 @@ test_that("hand constructed tests", {
   expect_equal(unname(perf), c(1, 1, 0.99))
 
   expect_data_frame(getPredictionProbabilities(pred), types = "numeric", any.missing = FALSE)
-  perf = performance(pred = pred, model = mod, task = task, measures = list(ibrier), newdata = getTaskData(task))
+
+  newdata = getTaskData(task)
+  truth_columns = which(colnames(lung) %in% getTaskTargetNames(task))
+  feats = data[101:120, -truth_columns]
+  perf = performance(pred = pred, model = mod, task = task, measures = list(ibrier), feats = feats)
   expect_lte(unname(perf), 1)
   expect_gte(unname(perf), 0)
 })
