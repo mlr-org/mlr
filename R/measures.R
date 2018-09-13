@@ -1415,7 +1415,7 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
-  properties = c("surv", "req.prob", "req.task", "req.feats"),
+  properties = c("surv", "req.prob", "req.feats"),
   name = "Integrated brier score using Kaplan-Meier estimator for weighting",
   note = "Only works for methods for which probabilities are provided via pec::predictSurvProb. Currently these are only coxph and randomForestSRC. To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1430,8 +1430,7 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     grid = c(sort(unique(c(times.test))))
     prob_columns = sapply(grid, function(t) max(which(t >= times.train - 10^(-13))))
     probs = as.matrix(probs[, prob_columns])
-    tn = getTaskTargetNames(task)
-    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", target[1L], target[2L]))
     perror = pec(object = probs, formula = f, data = newdata, times = grid, exact = FALSE, start = min(grid), reference = FALSE) # this should be the perror object in the new ibrier measure
     crps(perror, times = max(grid))[1L]
   }
