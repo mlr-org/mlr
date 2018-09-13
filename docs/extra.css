@@ -76,3 +76,44 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 .contents h1, .contents h2, .contents h3, .contents h4 {
     margin-top: -40px;
 }
+
+/* Syntax highlighting theme */
+
+.fl      {color: #1514b5;}
+.co      {color: #888888;}    /* comments */
+.ch, .st {color: green;}      /* strings */
+.dv, .ot {color: darkblue;}   /* numbers, logicals */
+.sourceCode.r .op {color: #505050;}  /* operators */
+.sourceCode.r .dt {color: #303030;}  /* function argument names,  #303030 - darkgray */
+.sourceCode.r .kw, .fu, .cf,   /* function names */
+    .sourceCode a:link,
+    .sourceCode a:active,
+    .sourceCode a:visited {color:darkred;}
+
+/*
+.message {color: darkgreen;}
+.warning {color: orange;}
+.error   {color: red;}
+*/
+
+
+/*  LEGEND for highlighting:
+
+.co comments
+.ch string (character?)
+.st string
+.dv numbers
+.ot logical values
+.op operator
+.dt function argument name
+.kw keyword
+.fu function name
+.cf function name.
+.sourceCode a:link - links in code blocs (they are function names)
+
+.cf was a present as function name `function` in this example:
+ps_ksvm = makeParamSet(
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+*/
+

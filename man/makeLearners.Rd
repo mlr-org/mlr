@@ -23,7 +23,7 @@ Optional named (hyper)parameters.
 Alternatively these can be given using the \code{par.vals} argument.}
 }
 \value{
-[named list of \link{Learner}). Named by \code{ids}.
+(named list of \link{Learner}). Named by \code{ids}.
 }
 \description{
 Small helper function that can save some typing when creating mutiple learner objects.
