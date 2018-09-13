@@ -92,7 +92,7 @@ Object slots:
 \describe{
   \item{id (character(1))}{See argument.}
   \item{minimize (logical(1))}{See argument.}
-  \item{properties ([character])}{See argument.}
+  \item{properties (character)}{See argument.}
   \item{fun (function)}{See argument.}
   \item{extra.args (list)}{See argument.}
   \item{aggr (Aggregation)}{See argument.}
