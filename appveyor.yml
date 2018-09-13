@@ -15,7 +15,7 @@ install:
 
 
 cache:
-  #- C:\RLibrary
+  - C:\RLibrary
   - C:\Program Files (x86)\Pandoc\
 
 before_build: R -q -e "tic::before_install()"
