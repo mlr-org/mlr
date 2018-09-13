@@ -75,7 +75,7 @@ jobs:
            - libudunits2-dev # for sf
       latex: false
       pandoc_version: 2.2.1
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       after_script: R -q -e 'tic::after_script()'
