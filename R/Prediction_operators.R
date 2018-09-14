@@ -58,10 +58,10 @@ getPredictionProbabilities = function(pred, cl) {
     if (length(cl) > 1L)
       colnames(y) = cl
   } else if (ttype == "cluster") {
-    y = pred$data[, stri_detect_regex(cns, "prob\\.")]
+    y = pred$data[, stri_startswith_fixed(cns, "prob.")]
     colnames(y) = seq_col(y)
   } else if (ttype == "surv") {
-    y = pred$data[, stri_detect_regex(cns, "prob\\.")]
+    y = pred$data[, stri_startswith_fixed(cns, "prob.")]
   }
   return(y)
 }
