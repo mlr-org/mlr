@@ -18,7 +18,7 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
     makeResampleInstanceInternal(desc, size, test.inds = test.inds)
   } else {
 
-    # CV with only predefined indices ("grouping")
+    # CV with only predefined indices ("fixed")
 
     if(is.null(task$blocking)) {
       stopf("To use blocking in resampling, you need to pass a factor variable when creating the task!")
