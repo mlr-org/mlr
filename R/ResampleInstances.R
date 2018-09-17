@@ -31,7 +31,7 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
       warningf("Adjusting levels to match number of blocking levels.")
     }
     levs = levels(task$blocking)
-    n_levels = length(levels(task$blocking))
+    n_levels = length(levs)
 
     # Why do we need the helper desc? If we would call 'instantiateResampleInstance()' here,
     # we would call the function within itself and will receive an 'error-c-stack-usage-is-too-close-to-the-limit' error
