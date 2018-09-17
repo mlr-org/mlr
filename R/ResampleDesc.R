@@ -69,7 +69,9 @@
 #'     they will be used following the 'blocking' approach.
 #'     'fixed' only works with ResampleDesc 'CV' and the supplied indices must match
 #'     the number of observations.}
-#'   \item{blocking.cv (`logical(1)`)}{Should 'blocking' be used in 'CV'? Default to `FALSE`}
+#'   \item{blocking.cv (`logical(1)`)}{Should 'blocking' be used in 'CV'? Default to `FALSE`.
+#'     This is different to 'fixed = TRUE' and cannot be combined. Please check the tutorial
+#'     for a more detailed comparison.}
 #'   }
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
@@ -99,7 +101,7 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE,
-  stratify.cols = NULL) {
+  stratify.cols = NULL, fixed = FALSE, blocking.cv = FALSE) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
                                    "Subsample", "Bootstrap", "SpCV", "SpRepCV",
                                    "GrowingWindowCV", "FixedWindowCV"))

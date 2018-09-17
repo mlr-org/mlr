@@ -63,24 +63,15 @@ makeResampleInstance = function(desc, task, size, ...) {
 
   # 'fixed' only exists by default for 'CV' -> is.null(desc$fixed)
   # only use this way of blocking if 'fixed = FALSE' -> is.null(desc$fixed)
-  if(is.null(desc$fixed)) {
-    fixed = FALSE
-  } else {
-    if(desc$fixed == FALSE) {
-      fixed = FALSE
-      ### check if blocking should be used or not
-      # set to FALSE for all rdesc that do not have the arg
-      if(is.null(desc$blocking.cv)) {
-        blocking.cv = FALSE
-      } else {
-        blocking.cv = desc$blocking.cv
-      }
-    } else {
-      fixed = TRUE
-    }
+
+  fixed = desc$fixed
+  blocking.cv = desc$blocking.cv
+  if (fixed == FALSE) {
+    ### check if blocking should be used or not
+    blocking.cv = desc$blocking.cv
   }
 
-  if (length(blocking) && !fixed && blocking.cv) {
+  if (length(blocking) > 0 && !fixed && blocking.cv) {
     if (is.null(task))
       stop("Blocking always needs the task!")
     levs = levels(blocking)
