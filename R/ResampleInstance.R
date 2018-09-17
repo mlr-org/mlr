@@ -11,7 +11,7 @@
 #' \item{train.inds (list of [integer])}{List of of training indices for all iterations.}
 #' \item{test.inds (list of [integer])}{List of of test indices for all iterations.}
 #' \item{group ([factor])}{Optional grouping of resampling iterations. This encodes whether
-#'   specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
+#'   specific iterations 'belong together' (e.g. repeated CV), and it can later be used to
 #'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
@@ -61,8 +61,8 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (length(blocking) && desc$stratify)
     stop("Blocking can currently not be mixed with stratification in resampling!")
 
-  # 'fixed' only exists by default for 'CV' -> is.null(desc$grouping)
-  # only use this way of blocking of 'fixed = FALSE' -> is.null(desc$grouping)
+  # 'fixed' only exists by default for 'CV' -> is.null(desc$fixed)
+  # only use this way of blocking if 'fixed = FALSE' -> is.null(desc$fixed)
   if(is.null(desc$fixed)) {
     fixed = FALSE
   } else {
