@@ -8,15 +8,17 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
 
-Interface to a large number of classification and regression
-    techniques, including machine-readable parameter descriptions. There is
-    also an experimental extension for survival analysis, clustering and
-    general, example-specific cost-sensitive learning. Generic resampling,
-    including cross-validation, bootstrapping and subsampling. Hyperparameter
-    tuning with modern optimization techniques, for single- and multi-objective
-    problems. Filter and wrapper methods for feature selection. Extension of
-    basic learners with additional operations common in machine learning, also
-    allowing for easy nested resampling. Most operations can be parallelized.
+Interface to a large number of classification and
+    regression techniques, including machine-readable parameter
+    descriptions. There is also an experimental extension for survival
+    analysis, clustering and general, example-specific cost-sensitive
+    learning. Generic resampling, including cross-validation,
+    bootstrapping and subsampling. Hyperparameter tuning with modern
+    optimization techniques, for single- and multi-objective problems.
+    Filter and wrapper methods for feature selection. Extension of basic
+    learners with additional operations common in machine learning, also
+    allowing for easy nested resampling. Most operations can be
+    parallelized.
 }
 \seealso{
 Useful links:
@@ -27,10 +29,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Bernd Bischl \email{bernd_bischl@gmx.net} (0000-0001-6002-6980)
+\strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (0000-0003-0748-6624)
 
 Authors:
 \itemize{
+  \item Bernd Bischl \email{bernd_bischl@gmx.net} (0000-0001-6002-6980)
   \item Michel Lang \email{michellang@gmail.com} (0000-0001-9754-0393)
   \item Lars Kotthoff \email{larsko@uwyo.edu}
   \item Julia Schiffner \email{schiffner@math.uni-duesseldorf.de}
@@ -38,7 +41,6 @@ Authors:
   \item Zachary Jones \email{zmj@zmjones.com}
   \item Giuseppe Casalicchio \email{giuseppe.casalicchio@stat.uni-muenchen.de} (0000-0001-5324-5966)
   \item Mason Gallo \email{masonagallo@gmail.com}
-  \item Patrick Schratz \email{patrick.schratz@gmail.com} (0000-0003-0748-6624)
 }
 
 Other contributors:
