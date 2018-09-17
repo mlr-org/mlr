@@ -13,14 +13,16 @@ test_that("fixed in single resampling", {
 
   # check if all test.inds are unique
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
+  # check if correct indices are together (one fold is enough)
+  expect_equal(p$instance$test.inds[[1]], c(18, 48, 78, 108, 138))
 
 })
 
 test_that("fixed in nested resampling", {
   df = multiclass.df
-  fixed = as.factor(rep(1:5, rep(30, 5)))
+  fixed_inds = as.factor(rep(1:5, rep(30, 5)))
   ct = makeClassifTask(target = multiclass.target, data = df,
-   blocking = fixed)
+   blocking = fixed_inds)
 
   # test fixed in nested resampling
   lrn = makeLearner("classif.lda")
@@ -45,12 +47,6 @@ test_that("fixed in nested resampling", {
 
   # check if we have the correct number of tuning results
   expect_length(p$extract, 5)
-
-  # expect warning if the level of the inner inds is not reduced by one
-  inner = makeResampleDesc("CV", fixed = TRUE)
-  outer = makeResampleDesc("CV", fixed = TRUE)
-  tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
-    control = ctrl, show.info = FALSE)
 
   # check that a combination of fixed and normal random sampling works
   inner = makeResampleDesc("CV", iters = 6)
