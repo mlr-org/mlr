@@ -115,6 +115,8 @@ makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE,
   d$predict = predict
   d$stratify = stratify
   d$stratify.cols = stratify.cols
+  d$fixed = fixed
+  d$blocking.cv = blocking.cv
   addClasses(d, stri_paste(method, "Desc"))
 }
 
