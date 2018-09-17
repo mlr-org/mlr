@@ -49,19 +49,19 @@ test_that("hand constructed tests", {
   task = makeSurvTask(id = "dummy", data = data, target = c("time", "status"))
   lrn = makeLearner("surv.coxph", predict.type = "prob")
   mod = suppressWarnings(train(lrn, task))
-
   pred = predict(mod, task)
   expect_numeric(-getPredictionResponse(pred), sorted = TRUE, any.missing = FALSE) # perfect predictor
 
   perf = performance(pred = pred, model = mod, task = task, measures = list(cindex, cindex.uno, iauc.uno))
   expect_equal(unname(perf), c(1, 1, 0.99))
-
   expect_data_frame(getPredictionProbabilities(pred), types = "numeric", any.missing = FALSE)
 
-  newdata = getTaskData(task)
   truth_columns = which(colnames(lung) %in% getTaskTargetNames(task))
-  feats = data[101:120, -truth_columns]
-  perf = performance(pred = pred, model = mod, task = task, measures = list(ibrier), feats = feats)
+  feats = data[, -truth_columns, drop = F]
+  perf = performance(pred = pred, task = task, model = mod, measures = list(ibrier))
+  expect_lte(unname(perf), 1)
+  expect_gte(unname(perf), 0)
+  perf = performance(pred = pred, model = mod, measures = list(ibrier), feats = feats)
   expect_lte(unname(perf), 1)
   expect_gte(unname(perf), 0)
 })
