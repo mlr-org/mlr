@@ -2,6 +2,7 @@ language: r
 sudo: false
 dist: trusty
 cache: packages
+latex: true
 env:
   global:
     - _R_CHECK_TIMINGS_=0
