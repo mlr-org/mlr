@@ -30,7 +30,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
     survival::coxph(formula = f, data = data, weights = .weights, ...)
   } else  {
     model = survival::coxph(formula = f, data = data, weights = .weights, ...)
-    model = attachTrainingTime(model, task, data)
+    model = attachTrainingTime(model, .task, data)
     model
   }
 }
