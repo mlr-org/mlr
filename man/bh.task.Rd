@@ -8,6 +8,6 @@
 Contains the task (\code{bh.task}).
 }
 \references{
-See \code{\link[mlbench]{BostonHousing}}.
+See \link[mlbench:BostonHousing]{mlbench::BostonHousing}.
 }
 \keyword{data}

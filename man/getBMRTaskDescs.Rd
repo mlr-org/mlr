@@ -7,14 +7,14 @@
 getBMRTaskDescs(bmr)
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 }
 \value{
-[\code{list}].
+(\link{list}).
 }
 \description{
-A list containing all \code{\link{TaskDesc}}s for each task contained in the benchmark experiment.
+A list containing all \link{TaskDesc}s for each task contained in the benchmark experiment.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -41,3 +41,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}

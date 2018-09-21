@@ -1,16 +1,16 @@
 #' @title Show and visualize the steps of feature selection.
 #'
 #' @description
-#' This function prints the steps \code{\link{selectFeatures}} took to find its optimal set
+#' This function prints the steps [selectFeatures] took to find its optimal set
 #' of features and the reason why it stopped.
 #' It can also print information about all calculations done in each intermediate step.
 #'
 #' Currently only implemented for sequential feature selection.
 #'
 #' @template arg_fsres
-#' @param reduce [\code{logical(1)}]\cr
+#' @param reduce (`logical(1)`)\cr
 #'   Per iteration: Print only the selected feature (or all features that were evaluated)?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template ret_inv_null
 #' @family featsel
 #' @export

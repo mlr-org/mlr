@@ -7,11 +7,11 @@
 getTaskSize(x)
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{(\link{Task} | \link{TaskDesc})\cr
 Task or its description object.}
 }
 \value{
-[\code{integer(1)}].
+(\code{integer(1)}).
 }
 \description{
 See title.
@@ -27,3 +27,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
+\concept{task}

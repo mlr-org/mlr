@@ -8,21 +8,21 @@ plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE,
   facet.learner = FALSE)
 }
 \arguments{
-\item{obj}{[\code{ThreshVsPerfData}]\cr
-Result of \code{\link{generateThreshVsPerfData}}.}
+\item{obj}{(\link{ThreshVsPerfData})\cr
+Result of \link{generateThreshVsPerfData}.}
 
-\item{measures}{[\code{list(2)} of \code{\link{Measure}}]\cr
-Default is the first 2 measures passed to \code{\link{generateThreshVsPerfData}}.}
+\item{measures}{([list(2)` of \link{Measure})\cr
+Default is the first 2 measures passed to \link{generateThreshVsPerfData}.}
 
-\item{diagonal}{[\code{logical(1)}]\cr
+\item{diagonal}{(\code{logical(1)})\cr
 Whether to plot a dashed diagonal line.
 Default is \code{TRUE}.}
 
-\item{pretty.names}{[\code{logical(1)}]\cr
-Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+\item{pretty.names}{(\code{logical(1)})\cr
+Whether to use the \link{Measure} name instead of the id in the plot.
 Default is \code{TRUE}.}
 
-\item{facet.learner}{[\code{logical(1)}]\cr
+\item{facet.learner}{(\code{logical(1)})\cr
 Weather to use facetting or different colors to compare multiple learners.
 Default is \code{FALSE}.}
 }
@@ -50,21 +50,19 @@ plotROCCurves(roc_l)
 }
 }
 \seealso{
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{plot}
+\concept{thresh_vs_perf}

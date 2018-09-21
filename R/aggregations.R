@@ -2,34 +2,34 @@
 #'
 #' @description
 #' \itemize{
-#'   \item{\bold{test.mean}}{\cr Mean of performance values on test sets.}
-#'   \item{\bold{test.sd}}{\cr Standard deviation of performance values on test sets.}
-#'   \item{\bold{test.median}}{\cr Median of performance values on test sets.}
-#'   \item{\bold{test.min}}{\cr Minimum of performance values on test sets.}
-#'   \item{\bold{test.max}}{\cr Maximum of performance values on test sets.}
-#'   \item{\bold{test.sum}}{\cr Sum of performance values on test sets.}
-#'   \item{\bold{train.mean}}{\cr Mean of performance values on training sets.}
-#'   \item{\bold{train.sd}}{\cr Standard deviation of performance values on training sets.}
-#'   \item{\bold{train.median}}{\cr Median of performance values on training sets.}
-#'   \item{\bold{train.min}}{\cr Minimum of performance values on training sets.}
-#'   \item{\bold{train.max}}{\cr Maximum of performance values on training sets.}
-#'   \item{\bold{train.sum}}{\cr Sum of performance values on training sets.}
-#'   \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
-#'   \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
-#'   \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
+#'   \item{**test.mean**}{\cr Mean of performance values on test sets.}
+#'   \item{**test.sd**}{\cr Standard deviation of performance values on test sets.}
+#'   \item{**test.median**}{\cr Median of performance values on test sets.}
+#'   \item{**test.min**}{\cr Minimum of performance values on test sets.}
+#'   \item{**test.max**}{\cr Maximum of performance values on test sets.}
+#'   \item{**test.sum**}{\cr Sum of performance values on test sets.}
+#'   \item{**train.mean**}{\cr Mean of performance values on training sets.}
+#'   \item{**train.sd**}{\cr Standard deviation of performance values on training sets.}
+#'   \item{**train.median**}{\cr Median of performance values on training sets.}
+#'   \item{**train.min**}{\cr Minimum of performance values on training sets.}
+#'   \item{**train.max**}{\cr Maximum of performance values on training sets.}
+#'   \item{**train.sum**}{\cr Sum of performance values on training sets.}
+#'   \item{**b632**}{\cr Aggregation for B632 bootstrap.}
+#'   \item{**b632plus**}{\cr Aggregation for B632+ bootstrap.}
+#'   \item{**testgroup.mean**}{\cr Performance values on test sets are grouped according
 #'     to resampling method. The mean for every group is calculated, then the mean of those means.
 #'     Mainly used for repeated CV.}
-#'   \item{\bold{testgroup.sd}}{\cr Similar to \bold{testgroup.mean} - after
+#'   \item{**testgroup.sd**}{\cr Similar to **testgroup.mean** - after
 #'     the mean for every group is calculated, the standard deviation of those means is obtained.
 #'     Mainly used for repeated CV.}
-#'   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
+#'   \item{**test.join**}{\cr Performance measure on joined test sets.
 #'     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
 #'     on the aggregation, especially for cross-validation test.join might make sense now.
 #'     For the repeated CV, the performance is calculated on each repetition and then aggregated
 #'     with the arithmetic mean.}
 #' }
 #' @format None
-#' @seealso \code{\link{Aggregation}}
+#' @seealso [Aggregation]
 #' @name aggregations
 #' @rdname aggregations
 NULL

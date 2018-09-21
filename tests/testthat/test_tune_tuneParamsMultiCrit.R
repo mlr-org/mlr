@@ -7,7 +7,9 @@ test_that("tuneParamsMultiCrit", {
     makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
   ctrl = makeTuneMultiCritControlRandom(maxit = 2)
-  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps, measures = mmce, control = ctrl))
+  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
+    par.set = ps, measures = mmce, control = ctrl),
+    ".* May only contain the following types: Measure.")
 
   mycheck = function(res, k) {
     expect_output(print(res), "Points on front")
@@ -25,8 +27,6 @@ test_that("tuneParamsMultiCrit", {
   # and check plotting
   print(plotTuneMultiCritResult(res, path = TRUE))
   print(plotTuneMultiCritResult(res, path = FALSE))
-  plotTuneMultiCritResultGGVIS(res, path = TRUE)
-  plotTuneMultiCritResultGGVIS(res, path = FALSE)
 
   # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 2L)
@@ -39,6 +39,34 @@ test_that("tuneParamsMultiCrit", {
   res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
     measures = list(tpr, fpr), control = ctrl)
   mycheck(res, 8L)
+
+  # MBO
+  ctrl = makeTuneMultiCritControlMBO(2L, budget = 4L * length(ps$pars) + 1L)
+  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl)
+  mycheck(res, 4L * length(ps$pars) + 1L)
+
+  # MBO with mbo.control
+  # Size of init design is 4 * length(ps$pars) by default of mlrMBO
+  mbo.control = mlrMBO::makeMBOControl(n.objectives = 2L)
+  mbo.control = mlrMBO::setMBOControlInfill(mbo.control,
+    crit = mlrMBO::makeMBOInfillCritDIB())
+  mbo.control = mlrMBO::setMBOControlMultiObj(mbo.control)
+  mbo.control = mlrMBO::setMBOControlTermination(mbo.control, iters = 1)
+  ctrl = makeTuneMultiCritControlMBO(mbo.control = mbo.control)
+  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl)
+  mycheck(res, 4L * length(ps$pars) + 1L)
+
+  # MBO with dependent param set
+  lrn = makeLearner("classif.ksvm")
+  ps = makeParamSet(makeDiscreteParam("kernel", c("polydot", "rbfdot")),
+    makeNumericParam("sigma", lower = -12, upper = 12,
+      trafo = function(x) 2^x, requires = quote(kernel == "rbfdot")))
+  ctrl = makeTuneMultiCritControlMBO(2L, budget = 4L * length(ps$pars) + 1L)
+  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl)
+  mycheck(res, 4L * length(ps$pars) + 1L)
 })
 
 
@@ -101,7 +129,8 @@ test_that("tuneParamsMultiCrit with budget", {
   mycheck(ctrl, ctrl$extra.args$maxit)
   ctrl = makeTuneMultiCritControlRandom(maxit = 3L, budget = 3L)
   mycheck(ctrl, ctrl$extra.args$maxit)
-  expect_error(makeTuneMultiCritControlRandom(maxit = 3L, budget = 5L))
+  expect_error(makeTuneMultiCritControlRandom(maxit = 3L, budget = 5L),
+    "The parameters .* differ.")
 
   # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 3)
@@ -110,13 +139,16 @@ test_that("tuneParamsMultiCrit with budget", {
   mycheck(ctrl, ctrl$extra.args$resolution^2)
   ctrl = makeTuneMultiCritControlGrid(resolution = 3, budget = 10L)
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl))
+    measures = list(tpr, fpr), control = ctrl),
+    ".* does not fit to the size of the grid .*")
 
   # nsga2
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
   mycheck(ctrl, ctrl$extra.args$popsize * (ctrl$extra.args$generations + 1))
-  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L))
-  expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L))
+  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L),
+    ".* contradicts the product of .*")
+  expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L),
+    ".* contradicts the product of .*")
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, budget = 12L)
   expect_equal(ctrl$extra.args$generations, 2L)
   mycheck(ctrl, 12L)
@@ -158,4 +190,31 @@ test_that("tuneParamsMultiCrit with resample.fun", {
   res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
     measures = list(tpr, fpr), control = ctrl, resample.fun = constant05Resample)
   expect_true(all(getOptPathY(res$opt.path) == 0.5))
+
+  # MBO
+  ctrl = makeTuneMultiCritControlMBO(2L, budget = 4L * length(ps$pars) + 1L, learner = "regr.lm")
+  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(res$opt.path) == 0.5))
+})
+
+test_that("check n.objectives for MBO multi crit", {
+  lrn =  makeLearner("classif.rpart")
+  rdesc = makeResampleDesc("Holdout")
+  ps = makeParamSet(
+    makeIntegerParam("minsplit", lower = 1, upper = 50)
+  )
+
+  expect_error(makeTuneMultiCritControlMBO(1L),
+    ".* >= 2")
+  expect_error(makeTuneMultiCritControlMBO(1.5),
+    ".* Must be of type 'single integerish value', not 'double'.")
+  ctrl = makeTuneMultiCritControlMBO(2L)
+
+  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, measures = list(mmce),
+    par.set = ps, control = ctrl),
+    ".* Must have length >= 2, but has length 1.")
+  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, measures = list(mmce, tpr, fpr),
+    par.set = ps, control = ctrl),
+    ".* Must have length 2, but has length 3.")
 })
