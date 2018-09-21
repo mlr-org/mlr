@@ -219,7 +219,7 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
     name = "h2o.deeplearning",
     short.name = "h2o.dl",
     callees = "h2o.deeplearning"
@@ -264,4 +264,10 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
     p.df$predict = NULL
     return(as.matrix(p.df))
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.h2o.deeplearning = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
+  extractH2OVarImp(mod, ...)
 }
