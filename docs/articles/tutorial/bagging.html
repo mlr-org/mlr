@@ -299,13 +299,13 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">## mmce.test.mean </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">##      0.2697619</a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5">##      0.2359524</a></code></pre></div>
 <p>And now with bagging:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">result =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> bag.lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">result<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">## mmce.test.mean </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">##      0.2071429</a></code></pre></div>
+<a class="sourceLine" id="cb3-5" data-line-number="5">##      0.2257143</a></code></pre></div>
 <p>Training more learners takes more time, but can outperform pure learners on noisy data with many features.</p>
 <div id="changing-the-type-of-prediction" class="section level1">
 <h1 class="hasAnchor">
@@ -335,13 +335,13 @@
 <p>Predict the response and calculate the standard deviation:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.inds)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(pred))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">##   id truth response        se</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">## 2  2  21.6 21.52938 0.7451845</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">## 3  3  34.7 33.81910 5.9551658</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## 5  5  36.2 33.11724 3.0164137</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## 6  6  28.7 23.17627 1.3531522</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 8  8  27.1 15.21181 2.5794293</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## 9  9  16.5 13.68603 3.7685738</a></code></pre></div>
+<a class="sourceLine" id="cb7-3" data-line-number="3">##   id truth response       se</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">## 2  2  21.6 22.34241 2.262096</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">## 3  3  34.7 34.93531 4.170542</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">## 5  5  36.2 33.78692 1.243819</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## 6  6  28.7 24.32912 1.511015</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## 8  8  27.1 15.40753 3.642329</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## 9  9  16.5 14.93643 4.251273</a></code></pre></div>
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>
 <p>Let’s visualise this a bit using <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot2-package">ggplot2::ggplot2()</a></code>. Here we plot the percentage of lower status of the population (<code>lstat</code>) against the prediction.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)</a>

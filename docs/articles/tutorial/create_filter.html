@@ -306,7 +306,7 @@
 <a class="sourceLine" id="cb1-22" data-line-number="22">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", </a>
 <a class="sourceLine" id="cb1-23" data-line-number="23">##         method = "spearman")[, 1L])</a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">## }</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0xcd3f308&gt;</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0xbba3b48&gt;</a>
 <a class="sourceLine" id="cb1-26" data-line-number="26">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
 <p>The core element is <code>$fun</code> which calculates the feature importance. For the <code>"rank.correlation"</code> filter it just extracts the data and formula from the <code>task</code> and passes them on to the <code>base::cor()</code> function.</p>
 <p>Additionally, each Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object has a <code>$name</code>, which should be short and is for example used to annotate graphics (cp. <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>), and a slightly more detailed description in slot <code>$desc</code>. If the filter method is implemented by another package its name is given in the <code>$pkg</code> member. Moreover, the supported task types and feature types are listed.</p>

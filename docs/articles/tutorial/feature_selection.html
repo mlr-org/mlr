@@ -358,7 +358,7 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> iris.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">## mmce.test.mean </a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">##           0.04</a></code></pre></div>
+<a class="sourceLine" id="cb6-6" data-line-number="6">##     0.04666667</a></code></pre></div>
 <p>You may want to know which features have been used. Luckily, we have called <code><a href="../../reference/resample.html">resample()</a></code> with the argument <code>models = TRUE</code>, which means that <code>r$models</code> contains a <code>list</code> of models (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) fitted in the individual resampling iterations. In order to access the selected feature subsets we can call <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code> on each model.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw">sapply</span>(r<span class="op">$</span>models, getFilteredFeatures)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">table</span>(sfeats)</a>
@@ -383,48 +383,48 @@
 <a class="sourceLine" id="cb8-9" data-line-number="9">## With control class: TuneControlGrid</a>
 <a class="sourceLine" id="cb8-10" data-line-number="10">## Imputation value: Inf</a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">## [Tune-x] 1: fw.perc=0.2</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">## [Tune-y] 1: mse.test.mean=32.6298648; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## [Tune-y] 1: mse.test.mean=30.2781165; time: 0.0 min</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">## [Tune-x] 2: fw.perc=0.25</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">## [Tune-y] 2: mse.test.mean=32.6298648; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">## [Tune-y] 2: mse.test.mean=30.2781165; time: 0.0 min</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15">## [Tune-x] 3: fw.perc=0.3</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">## [Tune-y] 3: mse.test.mean=32.3888241; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">## [Tune-y] 3: mse.test.mean=29.7827060; time: 0.0 min</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">## [Tune-x] 4: fw.perc=0.35</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">## [Tune-y] 4: mse.test.mean=32.2248584; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">## [Tune-y] 4: mse.test.mean=28.6480643; time: 0.0 min</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19">## [Tune-x] 5: fw.perc=0.4</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">## [Tune-y] 5: mse.test.mean=32.2248584; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">## [Tune-y] 5: mse.test.mean=28.6480643; time: 0.0 min</a>
 <a class="sourceLine" id="cb8-21" data-line-number="21">## [Tune-x] 6: fw.perc=0.45</a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">## [Tune-y] 6: mse.test.mean=28.8205081; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">## [Tune-y] 6: mse.test.mean=28.1065042; time: 0.0 min</a>
 <a class="sourceLine" id="cb8-23" data-line-number="23">## [Tune-x] 7: fw.perc=0.5</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">## [Tune-y] 7: mse.test.mean=28.8205081; time: 0.0 min</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">## [Tune] Result: fw.perc=0.45 : mse.test.mean=28.8205081</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">## [Tune-y] 7: mse.test.mean=28.1065042; time: 0.0 min</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">## [Tune] Result: fw.perc=0.5 : mse.test.mean=28.1065042</a>
 <a class="sourceLine" id="cb8-26" data-line-number="26">res</a>
 <a class="sourceLine" id="cb8-27" data-line-number="27">## Tune result:</a>
-<a class="sourceLine" id="cb8-28" data-line-number="28">## Op. pars: fw.perc=0.45</a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">## mse.test.mean=28.8205081</a></code></pre></div>
+<a class="sourceLine" id="cb8-28" data-line-number="28">## Op. pars: fw.perc=0.5</a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">## mse.test.mean=28.1065042</a></code></pre></div>
 <p>The performance of all percentage values visited during tuning is:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">##   fw.perc mse.test.mean dob eol error.message exec.time</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">## 1     0.2      32.62986   1  NA          &lt;NA&gt;     0.431</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">## 2    0.25      32.62986   2  NA          &lt;NA&gt;     0.232</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">## 3     0.3      32.38882   3  NA          &lt;NA&gt;     0.216</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">## 4    0.35      32.22486   4  NA          &lt;NA&gt;     0.207</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">## 5     0.4      32.22486   5  NA          &lt;NA&gt;     0.210</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">## 6    0.45      28.82051   6  NA          &lt;NA&gt;     0.239</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">## 7     0.5      28.82051   7  NA          &lt;NA&gt;     0.255</a></code></pre></div>
+<a class="sourceLine" id="cb9-3" data-line-number="3">## 1     0.2      30.27812   1  NA          &lt;NA&gt;     0.317</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">## 2    0.25      30.27812   2  NA          &lt;NA&gt;     0.256</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">## 3     0.3      29.78271   3  NA          &lt;NA&gt;     0.229</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">## 4    0.35      28.64806   4  NA          &lt;NA&gt;     0.237</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">## 5     0.4      28.64806   5  NA          &lt;NA&gt;     0.228</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">## 6    0.45      28.10650   6  NA          &lt;NA&gt;     0.227</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">## 7     0.5      28.10650   7  NA          &lt;NA&gt;     0.213</a></code></pre></div>
 <p>The optimal percentage and the corresponding performance can be accessed as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">res<span class="op">$</span>x</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">## $fw.perc</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">## [1] 0.45</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">## [1] 0.5</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">res<span class="op">$</span>y</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">## mse.test.mean </a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">##      28.82051</a></code></pre></div>
+<a class="sourceLine" id="cb10-6" data-line-number="6">##       28.1065</a></code></pre></div>
 <p>After tuning we can generate a new wrapped learner with the optimal percentage value for further use.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"chi.squared"</span>, <span class="dt">fw.perc =</span> res<span class="op">$</span>x<span class="op">$</span>fw.perc)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task)</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">mod</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4">## Model for learner.id=regr.lm.filtered; learner.class=FilterWrapper</a>
 <a class="sourceLine" id="cb11-5" data-line-number="5">## Trained on: task.id = BostonHousing-example; obs = 506; features = 13</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">## Hyperparameters: fw.method=chi.squared,fw.perc=0.45</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">## Hyperparameters: fw.method=chi.squared,fw.perc=0.5</a>
 <a class="sourceLine" id="cb11-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb11-8" data-line-number="8"><span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(mod)</a>
 <a class="sourceLine" id="cb11-9" data-line-number="9">## [1] "crim"  "zn"    "rm"    "dis"   "rad"   "lstat"</a></code></pre></div>
@@ -437,15 +437,15 @@
 <a class="sourceLine" id="cb12-6" data-line-number="6">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">res</a>
 <a class="sourceLine" id="cb12-8" data-line-number="8">## Tune multicrit result:</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">## Points on front: 4</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">## Points on front: 14</a>
 <a class="sourceLine" id="cb12-10" data-line-number="10"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path))</a>
 <a class="sourceLine" id="cb12-11" data-line-number="11">##   fw.threshold fpr.test.mean fnr.test.mean dob eol error.message exec.time</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">## 1    0.8492001     0.5168318     0.4938600   1  NA          &lt;NA&gt;     1.879</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">## 2    0.8630351     0.3806910     0.4662979   2  NA          &lt;NA&gt;     1.397</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">## 3    0.6832821     0.4854734     0.4975133   3  NA          &lt;NA&gt;     1.785</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">## 4    0.8687033     0.5735728     0.4351313   4  NA          &lt;NA&gt;     2.149</a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">## 5    0.2856306     0.2600167     0.2208208   5  NA          &lt;NA&gt;     1.526</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17">## 6    0.8900875     0.4968873     0.4141933   6  NA          &lt;NA&gt;     1.600</a></code></pre></div>
+<a class="sourceLine" id="cb12-12" data-line-number="12">## 1    0.4350362     0.2880769     0.2419095   1  NA          &lt;NA&gt;     2.108</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">## 2    0.4824084     0.3116880     0.2314394   2  NA          &lt;NA&gt;     2.670</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">## 3    0.2984255     0.2752991     0.2442599   3  NA          &lt;NA&gt;     2.719</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">## 4    0.8941828     0.4784829     0.5177253   4  NA          &lt;NA&gt;     2.586</a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">## 5    0.6077005     0.5317094     0.4737859   5  NA          &lt;NA&gt;     2.664</a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">## 6    0.3230939     0.2584402     0.2848679   6  NA          &lt;NA&gt;     2.703</a></code></pre></div>
 <p>The results can be visualized with function <code><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult()</a></code>. The plot shows the false positive and false negative rates for all parameter values visited during tuning. The size of the points on the Pareto front is slightly increased.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</a></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
@@ -492,18 +492,18 @@
 <a class="sourceLine" id="cb15-6" data-line-number="6">  <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb15-7" data-line-number="7">sfeats</a>
 <a class="sourceLine" id="cb15-8" data-line-number="8">## FeatSel result:</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9">## Features (13): mean_perimeter, mean_smoothness, mean_fractaldim, SE_texture, SE_perimeter, SE_compactness, SE_concavity, SE_fractaldim, worst_radius, worst_perimeter, worst_symmetry, tsize, pnodes</a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">## cindex.test.mean=0.6292271</a></code></pre></div>
+<a class="sourceLine" id="cb15-9" data-line-number="9">## Features (14): mean_perimeter, mean_smoothness, mean_fractaldim, SE_radius, SE_perimeter, SE_smoothness, SE_compactness, SE_concavity, worst_radius, worst_texture, worst_area, worst_smoothness, worst_concavepoints, pnodes</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">## cindex.test.mean=0.7288136</a></code></pre></div>
 <p><code>sfeats</code>is a <code>FeatSelResult</code> (<code><a href="../../reference/selectFeatures.html">selectFeatures()</a></code>) object. The selected features and the corresponding performance can be accessed as follows:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">sfeats<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">##  [1] "mean_perimeter"  "mean_smoothness" "mean_fractaldim"</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">##  [4] "SE_texture"      "SE_perimeter"    "SE_compactness" </a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">##  [7] "SE_concavity"    "SE_fractaldim"   "worst_radius"   </a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">## [10] "worst_perimeter" "worst_symmetry"  "tsize"          </a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">## [13] "pnodes"</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">##  [1] "mean_perimeter"      "mean_smoothness"     "mean_fractaldim"    </a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">##  [4] "SE_radius"           "SE_perimeter"        "SE_smoothness"      </a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">##  [7] "SE_compactness"      "SE_concavity"        "worst_radius"       </a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">## [10] "worst_texture"       "worst_area"          "worst_smoothness"   </a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">## [13] "worst_concavepoints" "pnodes"</a>
 <a class="sourceLine" id="cb16-7" data-line-number="7">sfeats<span class="op">$</span>y</a>
 <a class="sourceLine" id="cb16-8" data-line-number="8">## cindex.test.mean </a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">##        0.6292271</a></code></pre></div>
+<a class="sourceLine" id="cb16-9" data-line-number="9">##        0.7288136</a></code></pre></div>
 <p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="http://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># Specify the search strategy</span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlSequential</a></span>(<span class="dt">method =</span> <span class="st">"sfs"</span>, <span class="dt">alpha =</span> <span class="fl">0.02</span>)</a>
@@ -515,26 +515,26 @@
 <a class="sourceLine" id="cb17-8" data-line-number="8">sfeats</a>
 <a class="sourceLine" id="cb17-9" data-line-number="9">## FeatSel result:</a>
 <a class="sourceLine" id="cb17-10" data-line-number="10">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">## mse.test.mean=23.2098351</a></code></pre></div>
+<a class="sourceLine" id="cb17-11" data-line-number="11">## mse.test.mean=23.5277174</a></code></pre></div>
 <p>Further information about the sequential feature selection process can be obtained by function <code><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult</a></span>(sfeats)</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">## Features         : 11</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">## Performance      : mse.test.mean=23.2098351</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">## Performance      : mse.test.mean=23.5277174</a>
 <a class="sourceLine" id="cb18-4" data-line-number="4">## crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
 <a class="sourceLine" id="cb18-5" data-line-number="5">## </a>
 <a class="sourceLine" id="cb18-6" data-line-number="6">## Path to optimum:</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">## - Features:    0  Init   :                       Perf = 84.96  Diff: NA  *</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">## - Features:    1  Add    : lstat                 Perf = 38.841  Diff: 46.118  *</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9">## - Features:    2  Add    : rm                    Perf = 31.02  Diff: 7.8208  *</a>
-<a class="sourceLine" id="cb18-10" data-line-number="10">## - Features:    3  Add    : ptratio               Perf = 27.721  Diff: 3.2996  *</a>
-<a class="sourceLine" id="cb18-11" data-line-number="11">## - Features:    4  Add    : dis                   Perf = 26.894  Diff: 0.82643  *</a>
-<a class="sourceLine" id="cb18-12" data-line-number="12">## - Features:    5  Add    : nox                   Perf = 25.484  Diff: 1.41  *</a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">## - Features:    6  Add    : b                     Perf = 24.916  Diff: 0.56816  *</a>
-<a class="sourceLine" id="cb18-14" data-line-number="14">## - Features:    7  Add    : chas                  Perf = 24.564  Diff: 0.35261  *</a>
-<a class="sourceLine" id="cb18-15" data-line-number="15">## - Features:    8  Add    : zn                    Perf = 24.214  Diff: 0.34922  *</a>
-<a class="sourceLine" id="cb18-16" data-line-number="16">## - Features:    9  Add    : rad                   Perf = 24.179  Diff: 0.035754  *</a>
-<a class="sourceLine" id="cb18-17" data-line-number="17">## - Features:   10  Add    : crim                  Perf = 23.701  Diff: 0.47735  *</a>
-<a class="sourceLine" id="cb18-18" data-line-number="18">## - Features:   11  Add    : tax                   Perf = 23.21  Diff: 0.49138  *</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7">## - Features:    0  Init   :                       Perf = 84.842  Diff: NA  *</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">## - Features:    1  Add    : lstat                 Perf = 39.008  Diff: 45.834  *</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">## - Features:    2  Add    : rm                    Perf = 31.098  Diff: 7.9102  *</a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">## - Features:    3  Add    : ptratio               Perf = 27.702  Diff: 3.3961  *</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">## - Features:    4  Add    : dis                   Perf = 26.88  Diff: 0.82124  *</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12">## - Features:    5  Add    : nox                   Perf = 25.497  Diff: 1.383  *</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13">## - Features:    6  Add    : b                     Perf = 25.057  Diff: 0.44059  *</a>
+<a class="sourceLine" id="cb18-14" data-line-number="14">## - Features:    7  Add    : zn                    Perf = 24.744  Diff: 0.31251  *</a>
+<a class="sourceLine" id="cb18-15" data-line-number="15">## - Features:    8  Add    : chas                  Perf = 24.564  Diff: 0.18041  *</a>
+<a class="sourceLine" id="cb18-16" data-line-number="16">## - Features:    9  Add    : rad                   Perf = 24.425  Diff: 0.13903  *</a>
+<a class="sourceLine" id="cb18-17" data-line-number="17">## - Features:   10  Add    : tax                   Perf = 23.953  Diff: 0.47191  *</a>
+<a class="sourceLine" id="cb18-18" data-line-number="18">## - Features:   11  Add    : crim                  Perf = 23.528  Diff: 0.42518  *</a>
 <a class="sourceLine" id="cb18-19" data-line-number="19">## </a>
 <a class="sourceLine" id="cb18-20" data-line-number="20">## Stopped, because no improving feature was found.</a></code></pre></div>
 </div>
@@ -554,15 +554,14 @@
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/getFeatSelResult.html">getFeatSelResult</a></span>(mod)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2">sfeats</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">## FeatSel result:</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">## Features (15): mean_texture, mean_area, mean_concavepoints, mean_symmetry, SE_perimeter, SE_area, SE_smoothness, SE_symmetry, SE_fractaldim, worst_perimeter, worst_area, worst_smoothness, worst_concavity, worst_fractaldim, tsize</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">## cindex.test.mean=0.5798606</a></code></pre></div>
+<a class="sourceLine" id="cb20-4" data-line-number="4">## Features (10): mean_radius, mean_texture, mean_symmetry, mean_fractaldim, SE_texture, SE_compactness, SE_concavity, SE_concavepoints, worst_fractaldim, pnodes</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">## cindex.test.mean=0.6575303</a></code></pre></div>
 <p>The selected features are:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">sfeats<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">##  [1] "mean_texture"       "mean_area"          "mean_concavepoints"</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">##  [4] "mean_symmetry"      "SE_perimeter"       "SE_area"           </a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">##  [7] "SE_smoothness"      "SE_symmetry"        "SE_fractaldim"     </a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">## [10] "worst_perimeter"    "worst_area"         "worst_smoothness"  </a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">## [13] "worst_concavity"    "worst_fractaldim"   "tsize"</a></code></pre></div>
+<a class="sourceLine" id="cb21-2" data-line-number="2">##  [1] "mean_radius"      "mean_texture"     "mean_symmetry"   </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">##  [4] "mean_fractaldim"  "SE_texture"       "SE_compactness"  </a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">##  [7] "SE_concavity"     "SE_concavepoints" "worst_fractaldim"</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">## [10] "pnodes"</a></code></pre></div>
 <p>The 5-fold cross-validated performance of the learner specified above can be computed as follows:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">out.rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"></a>
@@ -570,33 +569,33 @@
 <a class="sourceLine" id="cb22-4" data-line-number="4">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb22-5" data-line-number="5">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb22-6" data-line-number="6">## cindex.test.mean </a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">##        0.5764957</a></code></pre></div>
+<a class="sourceLine" id="cb22-7" data-line-number="7">##        0.6142719</a></code></pre></div>
 <p>The selected feature sets in the individual resampling iterations can be extracted as follows:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">lapply</span>(r<span class="op">$</span>models, getFeatSelResult)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb23-3" data-line-number="3">## FeatSel result:</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">## Features (15): mean_radius, mean_perimeter, mean_compactness, mean_concavity, mean_fractaldim, SE_texture, SE_perimeter, SE_smoothness, SE_compactness, SE_concavity, SE_concavepoints, SE_symmetry, worst_radius, worst_concavepoints, pnodes</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5">## cindex.test.mean=0.6758499</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">## Features (13): mean_perimeter, mean_compactness, mean_concavity, SE_radius, SE_smoothness, SE_compactness, SE_concavity, SE_concavepoints, SE_symmetry, worst_perimeter, worst_symmetry, worst_fractaldim, pnodes</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">## cindex.test.mean=0.6016272</a>
 <a class="sourceLine" id="cb23-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb23-7" data-line-number="7">## [[2]]</a>
 <a class="sourceLine" id="cb23-8" data-line-number="8">## FeatSel result:</a>
-<a class="sourceLine" id="cb23-9" data-line-number="9">## Features (16): mean_radius, mean_texture, mean_compactness, mean_concavepoints, mean_fractaldim, SE_perimeter, SE_area, SE_smoothness, SE_compactness, SE_symmetry, SE_fractaldim, worst_perimeter, worst_smoothness, worst_compactness, worst_concavity, pnodes</a>
-<a class="sourceLine" id="cb23-10" data-line-number="10">## cindex.test.mean=0.6437120</a>
+<a class="sourceLine" id="cb23-9" data-line-number="9">## Features (14): mean_perimeter, mean_compactness, mean_concavity, mean_concavepoints, mean_fractaldim, SE_texture, SE_perimeter, SE_concavepoints, SE_symmetry, SE_fractaldim, worst_smoothness, worst_concavepoints, worst_symmetry, tsize</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">## cindex.test.mean=0.6108757</a>
 <a class="sourceLine" id="cb23-11" data-line-number="11">## </a>
 <a class="sourceLine" id="cb23-12" data-line-number="12">## [[3]]</a>
 <a class="sourceLine" id="cb23-13" data-line-number="13">## FeatSel result:</a>
-<a class="sourceLine" id="cb23-14" data-line-number="14">## Features (16): mean_radius, mean_compactness, mean_concavity, mean_fractaldim, SE_perimeter, SE_smoothness, SE_compactness, worst_radius, worst_texture, worst_perimeter, worst_smoothness, worst_compactness, worst_concavepoints, worst_symmetry, tsize, pnodes</a>
-<a class="sourceLine" id="cb23-15" data-line-number="15">## cindex.test.mean=0.6338994</a>
+<a class="sourceLine" id="cb23-14" data-line-number="14">## Features (23): mean_radius, mean_perimeter, mean_area, mean_smoothness, mean_compactness, mean_concavepoints, mean_symmetry, mean_fractaldim, SE_radius, SE_perimeter, SE_smoothness, SE_compactness, SE_concavity, SE_fractaldim, worst_radius, worst_texture, worst_area, worst_compactness, worst_concavity, worst_concavepoints, worst_fractaldim, tsize, pnodes</a>
+<a class="sourceLine" id="cb23-15" data-line-number="15">## cindex.test.mean=0.6152209</a>
 <a class="sourceLine" id="cb23-16" data-line-number="16">## </a>
 <a class="sourceLine" id="cb23-17" data-line-number="17">## [[4]]</a>
 <a class="sourceLine" id="cb23-18" data-line-number="18">## FeatSel result:</a>
-<a class="sourceLine" id="cb23-19" data-line-number="19">## Features (15): mean_radius, mean_area, mean_smoothness, mean_concavity, mean_concavepoints, mean_symmetry, SE_texture, SE_area, SE_smoothness, SE_concavepoints, worst_radius, worst_area, worst_concavity, worst_symmetry, pnodes</a>
-<a class="sourceLine" id="cb23-20" data-line-number="20">## cindex.test.mean=0.6377375</a>
+<a class="sourceLine" id="cb23-19" data-line-number="19">## Features (17): mean_perimeter, mean_area, mean_fractaldim, SE_area, SE_smoothness, SE_compactness, SE_concavity, SE_concavepoints, SE_fractaldim, worst_radius, worst_perimeter, worst_smoothness, worst_concavity, worst_concavepoints, worst_symmetry, tsize, pnodes</a>
+<a class="sourceLine" id="cb23-20" data-line-number="20">## cindex.test.mean=0.6646583</a>
 <a class="sourceLine" id="cb23-21" data-line-number="21">## </a>
 <a class="sourceLine" id="cb23-22" data-line-number="22">## [[5]]</a>
 <a class="sourceLine" id="cb23-23" data-line-number="23">## FeatSel result:</a>
-<a class="sourceLine" id="cb23-24" data-line-number="24">## Features (16): mean_texture, mean_perimeter, mean_concavity, mean_symmetry, mean_fractaldim, SE_radius, SE_perimeter, SE_area, SE_compactness, SE_concavity, worst_area, worst_smoothness, worst_compactness, worst_concavity, worst_symmetry, tsize</a>
-<a class="sourceLine" id="cb23-25" data-line-number="25">## cindex.test.mean=0.6156681</a></code></pre></div>
+<a class="sourceLine" id="cb23-24" data-line-number="24">## Features (22): mean_radius, mean_perimeter, mean_area, mean_smoothness, mean_compactness, mean_concavity, mean_concavepoints, mean_symmetry, mean_fractaldim, SE_radius, SE_texture, SE_perimeter, SE_smoothness, SE_concavity, SE_symmetry, SE_fractaldim, worst_radius, worst_compactness, worst_concavity, worst_concavepoints, worst_symmetry, pnodes</a>
+<a class="sourceLine" id="cb23-25" data-line-number="25">## cindex.test.mean=0.6686105</a></code></pre></div>
 </div>
 </div>
   </div>
