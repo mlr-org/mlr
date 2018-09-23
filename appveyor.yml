@@ -11,12 +11,13 @@ install:
   - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
   - cmd: R -q -e "getOption('repos')"
   - cmd: rm -rf C:\RLibrary\00LOCK-*
-  - cmd: R -q -e "install.packages('devtools'); devtools::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
+  - cmd: R -q -e "install.packages('remotes'); remotes::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
 
 
 cache:
   - C:\RLibrary
   - C:\Program Files (x86)\Pandoc\
+  - C:\miktex -> appveyor.yml
 
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
@@ -28,6 +29,13 @@ before_test:
       }
  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
  - pandoc -v
+ # Install miktex to get pdflatex, if we don't get it from the cache
+ - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x86/miktex-portable-2.9.6753.exe
+ - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable-2.9.6753.exe -oC:\miktex >NUL
+ - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
+ # autoinstall latex packages (0=no, 1=autoinstall, 2=ask)
+ # this adds this to the registry!
+ - initexmf --set-config-value "[MPM]AutoInstall=1"
  - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
 on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
