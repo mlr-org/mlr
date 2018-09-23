@@ -57,7 +57,6 @@ environment:
   GITHUB_PAT:
     secure: VXO22OHLkl4YhVIomSMwCZyOTx03Xf2WICaVng9xH7gISlAg8a+qrt1DtFtk8sK5
   R_ARCH: x64
-  USE_RTOOLS: true
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
   WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2'
