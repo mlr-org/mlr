@@ -16,7 +16,7 @@ install:
 
 cache:
   - C:\RLibrary
-  - C:\Program Files (x86)\Pandoc\
+  - C:\Program Files\Pandoc\
   - C:\miktex -> appveyor.yml
 
 before_build: R -q -e "tic::before_install()"
@@ -24,10 +24,10 @@ build_script: R -q -e "tic::install()"
 # after_build: R -q -e "tic::after_install()"
 before_test:
  - ps: >-
-      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
+      if (-Not (Test-Path "C:\Program Files\Pandoc\")) {
         cinst pandoc
       }
- - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+ - ps: $env:Path += ";C:\Program Files\Pandoc\"
  - pandoc -v
  # Install miktex to get pdflatex, if we don't get it from the cache
  - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x86/miktex-portable-2.9.6753.exe
@@ -38,7 +38,7 @@ before_test:
  - initexmf --set-config-value "[MPM]AutoInstall=1"
  - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
-on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
+# on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
 # on_failure: R -q -e "tic::after_failure()"
 before_deploy: R -q -e "tic::before_deploy()"
 deploy_script: R -q -e "tic::deploy()"
