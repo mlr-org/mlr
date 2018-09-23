@@ -13,7 +13,6 @@
 <script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
 <script src="../../extra.js"></script><meta property="og:title" content="Out-of-Bag Predictions">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -298,17 +297,17 @@
 <a class="sourceLine" id="cb2-7" data-line-number="7">## threshold: M=0.60,R=0.40</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">## time: NA</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">##   id truth    prob.M    prob.R response</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.5424267 0.4575733        R</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.5495323 0.4504677        R</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.5854023 0.4145977        R</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.5099668 0.4900332        R</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.5562287 0.4437713        R</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.4824586 0.5175414        R</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.6093568 0.3906432        M</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.5740004 0.4259996        R</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.6111769 0.3888231        M</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.4035249 0.5964751        R</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.4991676 0.5008324        R</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.4335948 0.5664052        R</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16">## ... (#rows: 208, #cols: 5)</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(oob, <span class="dt">measures =</span> <span class="kw">list</span>(auc, mmce))</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">##       auc      mmce </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9286709 0.1634615</a></code></pre></div>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9351723 0.1730769</a></code></pre></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>
   </div>
 
