@@ -9,6 +9,7 @@ init:
 install:
   - ps: Bootstrap
   - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
+  - cmd: R -q -e "writeLines(c('src/*.o', 'src/*.so'), sep = '\n', '.Rbuildignore')"
   - cmd: R -q -e "getOption('repos')"
   - cmd: rm -rf C:\RLibrary\00LOCK-*
   - cmd: R -q -e "install.packages('remotes'); remotes::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
@@ -17,7 +18,7 @@ install:
 cache:
   - C:\RLibrary
   - C:\Program Files\Pandoc\
-  - C:\miktex -> appveyor.yml
+  - C:\miktex
 
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
