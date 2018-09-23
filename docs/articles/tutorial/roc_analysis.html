@@ -320,8 +320,8 @@
 <p><img src="roc_analysis_files/figure-html/unnamed-chunk-4-1.png" width="75%"></p>
 <p>The corresponding area under curve (<a href="measures.html" target="_blank">auc</a>) can be calculated as usual by calling <code><a href="../../reference/performance.html">performance()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mlr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mlr/topics/performance">performance</a></span>(pred1, mlr<span class="op">::</span>auc)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">##      auc </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## 0.804007</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">##       auc </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">## 0.8429054</a></code></pre></div>
 <p><code><a href="../../reference/plotROCCurves.html">plotROCCurves()</a></code> always requires a pair of performance measures that are plotted against each other. If you want to plot individual measures versus the decision threshold you can use function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span>(df)</a></code></pre></div>
 <p><img src="roc_analysis_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -335,8 +335,8 @@
 <p><img src="roc_analysis_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>It’s clear from the plot above that <code><a href="http://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code> has a slightly higher AUC than lda (<code><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code>).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">mlr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mlr/topics/performance">performance</a></span>(pred2, mlr<span class="op">::</span>auc)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">##       auc </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">## 0.9198606</a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2">##      auc </a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">## 0.941723</a></code></pre></div>
 <p>Based on the <code>$data</code> member of <code>df</code> you can easily generate custom plots. Below the curves for the two learners are superposed.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">qplot</span>(<span class="dt">x =</span> fpr, <span class="dt">y =</span> tpr, <span class="dt">color =</span> learner, <span class="dt">data =</span> df<span class="op">$</span>data, <span class="dt">geom =</span> <span class="st">"path"</span>)</a></code></pre></div>
 <p><img src="roc_analysis_files/figure-html/unnamed-chunk-10-1.png" width="75%"></p>
@@ -371,8 +371,8 @@
 <a class="sourceLine" id="cb12-5" data-line-number="5">bmr =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns, <span class="dt">tasks =</span> sonar.task, <span class="dt">resampling =</span> rdesc.outer, <span class="dt">measures =</span> ms, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6">bmr</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">##         task.id         learner.id auc.test.mean mmce.test.mean</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">## 1 Sonar-example        classif.lda     0.8121640      0.2354239</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">## 2 Sonar-example classif.ksvm.tuned     0.9249361      0.1824623</a></code></pre></div>
+<a class="sourceLine" id="cb12-8" data-line-number="8">## 1 Sonar-example        classif.lda     0.7943983      0.2880372</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">## 2 Sonar-example classif.ksvm.tuned     0.9266294      0.1678281</a></code></pre></div>
 <p>Calling <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> and <code><a href="../../reference/plotROCCurves.html">plotROCCurves()</a></code> on the benchmark result (<code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>) produces a plot with ROC curves for all learners in the experiment.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">df =<span class="st"> </span><span class="kw"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span>(bmr, <span class="dt">measures =</span> <span class="kw">list</span>(fpr, tpr, mmce))</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="../../reference/plotROCCurves.html">plotROCCurves</a></span>(df)</a></code></pre></div>

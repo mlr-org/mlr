@@ -299,12 +299,12 @@
 <a class="sourceLine" id="cb1-11" data-line-number="11">## threshold: </a>
 <a class="sourceLine" id="cb1-12" data-line-number="12">## time: 0.00</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13">##    id truth response</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## 2   2  21.6 22.07923</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">## 4   4  33.4 37.90340</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">## 6   6  28.7 25.71661</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">## 8   8  27.1 16.68005</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">## 10 10  18.9 18.13146</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">## 12 12  18.9 20.61980</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## 2   2  21.6 23.70737</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## 4   4  33.4 36.52804</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 6   6  28.7 24.60088</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 8   8  27.1 15.67053</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## 10 10  18.9 17.42551</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## 12 12  18.9 19.84210</a>
 <a class="sourceLine" id="cb1-20" data-line-number="20">## ... (#rows: 253, #cols: 3)</a></code></pre></div>
 <p>The second way is useful if you want to predict data not included in the <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>Here we cluster the <code>iris</code> data set without the target variable. All observations with an odd index are included in the <code><a href="../../reference/Task.html">Task()</a></code> and used for training. Predictions are made for the remaining observations.</p>
@@ -337,12 +337,12 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">### Result of predict with data passed via task argument</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(task.pred))</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">##    id truth response</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## 2   2  21.6 22.07923</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">## 4   4  33.4 37.90340</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">## 6   6  28.7 25.71661</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">## 8   8  27.1 16.68005</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">## 10 10  18.9 18.13146</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## 12 12  18.9 20.61980</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">## 2   2  21.6 23.70737</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## 4   4  33.4 36.52804</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">## 6   6  28.7 24.60088</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">## 8   8  27.1 15.67053</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## 10 10  18.9 17.42551</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## 12 12  18.9 19.84210</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">### Result of predict with data passed via newdata argument</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(newdata.pred))</a>
@@ -359,7 +359,7 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">## [1] 21.6 33.4 28.7 27.1 18.9 18.9</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(task.pred))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">## [1] 22.07923 37.90340 25.71661 16.68005 18.13146 20.61980</a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5">## [1] 23.70737 36.52804 24.60088 15.67053 17.42551 19.84210</a></code></pre></div>
 <div id="regression-extracting-standard-errors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression-extracting-standard-errors" class="anchor"></a>Regression: Extracting standard errors</h2>
@@ -412,12 +412,12 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> mtcars.task)</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">##                             1          2</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.020406544 0.97959346</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.020366326 0.97963367</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.007339485 0.99266051</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.457088947 0.54291105</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.981294706 0.01870529</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.242542250 0.75745775</a></code></pre></div>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.020402354 0.97959765</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.020362137 0.97963786</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.007340776 0.99265922</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.457061383 0.54293862</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.981292064 0.01870794</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.242521321 0.75747868</a></code></pre></div>
 <p>For <em>classification problems</em> there are some more things worth mentioning. By default, class labels are predicted.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">### Linear discriminant analysis on the iris data set</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, <span class="dt">task =</span> iris.task)</a>
