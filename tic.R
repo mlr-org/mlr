@@ -18,7 +18,8 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("script") %>%
     add_code_step(devtools::document()) %>%
-    add_step(step_rcmdcheck(args = "--as-cran", notes_are_errors = FALSE))
+    add_step(step_rcmdcheck(args = "--as-cran", notes_are_errors = FALSE,
+                            build_args = "--no-build-vignettes"))
 
   if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
 
