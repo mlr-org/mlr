@@ -70,11 +70,11 @@
 #'   fully pre-defined indices. Default is `FALSE` which means
 #'   they will be used following the 'blocking' approach.
 #'   'fixed' only works with ResampleDesc 'CV' and the supplied indices must match
-#'   the number of observations.}
+#'   the number of observations.
 #' @param blocking.cv (`logical(1)`)
 #'   Should 'blocking' be used in 'CV'? Default to `FALSE`.
 #'   This is different to 'fixed = TRUE' and cannot be combined. Please check the tutorial
-#'   for a more detailed comparison.}
+#'   for a more detailed comparison.
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
