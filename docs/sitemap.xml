@@ -121,6 +121,9 @@
     <loc>https://mlr-org.github.io/mlr/reference/createDummyFeatures.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/createSpatialResamplingPlots.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/crossover.html</loc>
   </url>
   <url>
@@ -808,126 +811,126 @@
     <loc>https://mlr-org.github.io/mlr/reference/yeast.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/advanced_tune.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/bagging.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/benchmark_experiments.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/classifier_calibration.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/configureMlr.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/cost_sensitive_classif.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/create_filter.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/create_imputation.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/create_learner.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/create_measure.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/example_tasks.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/feature_selection.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/filter_methods.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/functional_data.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/handling_of_spatial_data.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/hyperpar_tuning_effects.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/impute.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/integrated_learners.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/learner.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/learning_curve.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/measures.html</loc>
-  </url>
-  <url>
     <loc>https://mlr-org.github.io/mlr/articles/mlr.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/mlr_publications.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/advanced_tune.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/multilabel.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/bagging.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/nested_resampling.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/benchmark_experiments.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/out_of_bag_predictions.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/classifier_calibration.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/over_and_undersampling.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/configureMlr.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/parallelization.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/cost_sensitive_classif.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/partial_dependence.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_filter.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/performance.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_imputation.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/predict.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_learner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/preproc.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_measure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/resample.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/example_tasks.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/roc_analysis.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/feature_selection.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/talks_videos_workshops.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/filter_methods.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/task.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/functional_data.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/train.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/handling_of_spatial_data.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tune.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/hyperpar_tuning_effects.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/usecase_regression.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/impute.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/visualization.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/integrated_learners.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/wrapper.html</loc>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/learner.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/learning_curve.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/measures.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/mlr_publications.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/multilabel.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/nested_resampling.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/out_of_bag_predictions.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/over_and_undersampling.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/parallelization.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/partial_dependence.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/performance.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/predict.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/preproc.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/resample.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/roc_analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/talks_videos_workshops.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/task.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/train.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/tune.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/usecase_regression.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/visualization.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/articles/tutorial/wrapper.html</loc>
   </url>
 </urlset>
