@@ -64,15 +64,17 @@
 #'     else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
 #'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
 #'      of test indices.}
-#'   \item{fixed (`logical(1)`)}{Whether indices supplied via argument 'blocking'
-#'     in the task should be used as fully pre-defined indices. Default is `FALSE` which means
-#'     they will be used following the 'blocking' approach.
-#'     'fixed' only works with ResampleDesc 'CV' and the supplied indices must match
-#'     the number of observations.}
-#'   \item{blocking.cv (`logical(1)`)}{Should 'blocking' be used in 'CV'? Default to `FALSE`.
-#'     This is different to 'fixed = TRUE' and cannot be combined. Please check the tutorial
-#'     for a more detailed comparison.}
 #'   }
+#' @param fixed (`logical(1)`)
+#'   Whether indices supplied via argument 'blocking' in the task should be used as
+#'   fully pre-defined indices. Default is `FALSE` which means
+#'   they will be used following the 'blocking' approach.
+#'   'fixed' only works with ResampleDesc 'CV' and the supplied indices must match
+#'   the number of observations.}
+#' @param blocking.cv (`logical(1)`)
+#'   Should 'blocking' be used in 'CV'? Default to `FALSE`.
+#'   This is different to 'fixed = TRUE' and cannot be combined. Please check the tutorial
+#'   for a more detailed comparison.}
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
