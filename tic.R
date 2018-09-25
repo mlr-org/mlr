@@ -23,7 +23,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_code_step(rcmdcheck::rcmdcheck(path = "../mlr_2.13.tar.gz", args = "--as-cran",
                                        error_on = "error"))
 
-  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
+  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
@@ -46,7 +46,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_install_cran("magick")) %>% # favicon creation
     add_step(step_install_cran("pander"))
 
-  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
+  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())

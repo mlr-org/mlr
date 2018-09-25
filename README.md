@@ -1,4 +1,4 @@
-# Machine Learning in R <img src="addon/imgs/logo_navbar.png" align="right" />
+# Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![Build status](https://ci.appveyor.com/api/projects/status/8predl48o55f2do2/branch/master?svg=true)](https://ci.appveyor.com/project/pat-s/mlr/branch/master)
