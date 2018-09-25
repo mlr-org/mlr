@@ -1,3 +1,9 @@
+# mlr 2.14:
+
+## learners - new
+* classif.liquidSVM
+* regr.liquidSVM
+
 # mlr 2.13:
 
 ## general
