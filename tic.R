@@ -19,7 +19,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   get_stage("script") %>%
     add_code_step(devtools::document()) %>%
     add_code_step(devtools::build(manual = TRUE)) %>%
-    add_code_step(rcmdcheck::rcmdcheck(path = "mlr_2.13.tar.gz", check_args = "--as-cran",
+    add_code_step(rcmdcheck::rcmdcheck(path = "mlr_2.13.tar.gz", args = "--as-cran",
                                        error_on = "error"))
 
   if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
