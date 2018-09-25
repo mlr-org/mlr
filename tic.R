@@ -18,6 +18,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("script") %>%
     add_code_step(devtools::document()) %>%
+    # manual approch until https://github.com/r-lib/rcmdcheck/issues/83#issuecomment-424314978 is solved
     add_code_step(devtools::build(manual = TRUE)) %>%
     add_code_step(rcmdcheck::rcmdcheck(path = "../mlr_2.13.tar.gz", args = "--as-cran",
                                        error_on = "error"))
