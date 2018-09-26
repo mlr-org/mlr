@@ -131,6 +131,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    surv        \tab cindex\cr
 #'    costsens    \tab mcp\cr
 #'    multilabel  \tab multilabel.hamloss\cr
+#'    fcregr      \tab mse
 #' }
 #'
 #' @param x ([character(1)` | [Task] | [TaskDesc] | [Learner])\cr
@@ -154,7 +155,9 @@ getDefaultMeasure = function(x) {
     regr = mse,
     surv = cindex,
     costsens = mcp,
-    multilabel = multilabel.hamloss
+    multilabel = multilabel.hamloss,
+    fcregr = mse,
+    mfcregr = multivar.mase
   )
 }
 

@@ -16,7 +16,8 @@ Converts predictions to a format package ROCR can handle.
 \seealso{
 Other roc: \code{\link{calculateROCMeasures}}
 
-Other predict: \code{\link{getPredictionProbabilities}},
+Other predict: \code{\link{forecast.WrappedModel}},
+  \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
   \code{\link{predict.WrappedModel}},

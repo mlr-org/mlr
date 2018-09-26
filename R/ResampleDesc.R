@@ -100,7 +100,7 @@ makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, str
   assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
-  if (stratify && ! is.null(stratify.cols))
+  if (stratify && !is.null(stratify.cols))
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
   d = do.call(stri_paste("makeResampleDesc", method), list(...))
   d$predict = predict
@@ -170,7 +170,6 @@ makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
   folds = asInt(folds, lower = 2L)
   makeResampleDescInternal("repeated spatial cross-validation", iters = folds * reps, folds = folds, reps = reps)
 }
-
 
 makeResampleDescFixedWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
   assertNumeric(horizon, lower = 0)

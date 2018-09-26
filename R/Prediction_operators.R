@@ -106,6 +106,7 @@ getProbabilities = function(pred, cl) {
 #'    cluster     \tab integer\cr
 #'    surv        \tab numeric\cr
 #'    multilabel  \tab logical matrix, columns named with labels\cr
+#'    fcregr      \tab numeric\cr
 #' }
 #'
 #' @template arg_pred
@@ -127,6 +128,18 @@ getPredictionResponse.PredictionMultilabel = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^response\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @export
+getPredictionResponse.PredictionMultiForecastRegr = function(pred) {
+  if (!any(stri_detect_regex(colnames(pred$data), "^response\\."))) {
+    m = as.matrix(pred$data[["response"]])
+    setColNames(m, pred$task.desc$target)
+  } else {
+    i = stri_detect_regex(colnames(pred$data), "^response\\.")
+    m = as.matrix(pred$data[, i])
+    setColNames(m, pred$task.desc$col.names)
+  }
 }
 
 #' @rdname getPredictionResponse
@@ -182,3 +195,15 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 getPredictionDump = function(pred) {
   pred$dump
 }
+
+#' @export
+getPredictionTruth.PredictionMultiForecastRegr = function(pred) {
+  if (!any(stri_detect_regex(colnames(pred$data), "^truth\\."))) {
+    m = as.matrix(pred$data[["truth"]])
+  } else {
+    i = stri_detect_regex(colnames(pred$data), "^truth\\.")
+    m = as.matrix(pred$data[, i])
+  }
+  setColNames(m, pred$task.desc$target)
+}
+

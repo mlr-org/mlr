@@ -59,6 +59,7 @@ For constant features most methods fail, special behaviour for this case is impl
 
 Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{createDummyFeatures}},
+  \code{\link{createLagDiffFeatures}},
   \code{\link{dropFeatures}},
   \code{\link{mergeSmallFactorLevels}},
   \code{\link{removeConstantFeatures}},

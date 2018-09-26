@@ -77,4 +77,3 @@ instantiateResampleInstance.FixedWindowCVDesc = function(desc, size, task = NULL
 instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NULL, coords) {
   makeResamplingWindow(desc, size, task, coords, "GrowingWindowCV")
 }
-

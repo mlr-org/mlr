@@ -34,6 +34,7 @@ Merges factor levels that occur only infrequently into combined levels with a hi
 \seealso{
 Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{createDummyFeatures}},
+  \code{\link{createLagDiffFeatures}},
   \code{\link{dropFeatures}},
   \code{\link{normalizeFeatures}},
   \code{\link{removeConstantFeatures}},

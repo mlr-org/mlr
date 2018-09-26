@@ -151,12 +151,14 @@ Imports:
     stringi,
     survival,
     utils,
-    XML
+    XML,
+    xts
 Suggests:
     ada,
     adabag,
     bartMachine,
     batchtools,
+    BigVAR,
     brnn,
     bst,
     C50,
@@ -185,6 +187,7 @@ Suggests:
     FDboost,
     flare,
     FNN,
+    forecast,
     fpc,
     frbs,
     FSelector,
@@ -200,6 +203,8 @@ Suggests:
     kknn,
     klaR,
     knitr,
+    kohonen,
+    LambertW,
     laGP,
     LiblineaR,
     lintr (>= 1.0.0.9001),
@@ -239,7 +244,9 @@ Suggests:
     rrlda,
     rsm,
     RSNNS,
+    rugarch,
     RWeka,
+    R.utils,
     sda,
     sf,
     smoof,
@@ -251,6 +258,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    TTR,
     wavelets,
     xgboost (>= 0.6-2)
 VignetteBuilder: 

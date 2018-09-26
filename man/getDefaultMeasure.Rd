@@ -23,5 +23,6 @@ cluster     \tab db\cr
 surv        \tab cindex\cr
 costsens    \tab mcp\cr
 multilabel  \tab multilabel.hamloss\cr
+fcregr      \tab mse
 }
 }

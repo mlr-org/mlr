@@ -42,6 +42,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
     tab = tab[i]
   }
 
+
   return(tab)
 }
 

@@ -40,6 +40,7 @@ Non factor features will be left untouched and passed to the result.
 }
 \seealso{
 Other eda_and_preprocess: \code{\link{capLargeValues}},
+  \code{\link{createLagDiffFeatures}},
   \code{\link{dropFeatures}},
   \code{\link{mergeSmallFactorLevels}},
   \code{\link{normalizeFeatures}},

@@ -51,11 +51,11 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     assertClass(task, classes = "Task")
     size = getTaskSize(task)
   } else {
-    assertDataFrame(newdata, min.rows = 1L)
     if (class(newdata)[1] != "data.frame") {
-      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
-      newdata = as.data.frame(newdata)
-    }
+        warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
+        newdata = as.data.frame(newdata)
+      }
+    assertDataFrame(newdata, min.rows = 1L)
     size = nrow(newdata)
   }
   subset = checkTaskSubset(subset, size)
@@ -83,7 +83,9 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     truth = newdata[, t.col, drop = TRUE]
     if (is.list(truth))
       truth = data.frame(truth)
-    newdata = newdata[, -t.col, drop = FALSE]
+     if (learner$type != "fcregr") {
+      newdata = newdata[, -t.col, drop = FALSE]
+     }
   } else {
     truth = NULL
   }

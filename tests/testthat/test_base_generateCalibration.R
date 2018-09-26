@@ -52,7 +52,7 @@ test_that("generateCalibrationData", {
 
   # facetting works:
   q = q = plotCalibration(cd, facet.wrap.nrow = 2L)
-  testFacetting(q, 2L)
+  testFacetting(q, nrow = 2L)
   q = q = plotCalibration(cd, facet.wrap.ncol = 2L)
   testFacetting(q, ncol = 2L)
 })

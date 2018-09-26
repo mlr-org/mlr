@@ -28,10 +28,12 @@ se          \tab numeric\cr
 cluster     \tab integer\cr
 surv        \tab numeric\cr
 multilabel  \tab logical matrix, columns named with labels\cr
+fcregr      \tab numeric\cr
 }
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{forecast.WrappedModel}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionTaskDesc}},
   \code{\link{predict.WrappedModel}},

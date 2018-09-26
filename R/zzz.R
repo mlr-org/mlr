@@ -10,6 +10,7 @@
 #' @import stats
 #' @import stringi
 #' @import data.table
+#' @importFrom xts xts
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
@@ -32,9 +33,12 @@ mlr$learner.properties = list(
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "functionals",
     "single.functional"),
   surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds", "functionals", "single.functional"),
-  costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass", "functionals", "single.functional")
+  costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass", "functionals", "single.functional"),
+  fcregr     = c("numerics", "quantile", "weights", "functionals", "single.functional"),
+  mfcregr    = c("numerics", "quantile", "functionals", "single.functional")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 
 ### Measure properties
-mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster", "costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
+mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster" ,"costsens", "fcregr", "mfcregr", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
+

@@ -50,6 +50,7 @@ capLargeValues(iris, threshold = 5, impute = 5)
 }
 \seealso{
 Other eda_and_preprocess: \code{\link{createDummyFeatures}},
+  \code{\link{createLagDiffFeatures}},
   \code{\link{dropFeatures}},
   \code{\link{mergeSmallFactorLevels}},
   \code{\link{normalizeFeatures}},

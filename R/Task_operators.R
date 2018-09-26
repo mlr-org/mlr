@@ -9,7 +9,6 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
-
 #' @export
 getTaskDesc.default = function(x) {
   # FIXME: would be much cleaner to specialize here
@@ -235,6 +234,12 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
   stop("There is no target available for costsens tasks.")
 }
 
+#' @export
+getTaskTargets.MultiForecastRegrTask = function(task, recode.target = "no") {
+  y = task$env$data[, task$task.desc$target, drop = TRUE]
+  y
+}
+
 
 #' @title Extract data in task.
 #'
@@ -396,7 +401,13 @@ subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   # Keep functionals here as they are (matrix)
-  task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+  if (!is.null(task$task.desc$pre.proc)) {
+    pre.proc = task$task.desc$pre.proc
+    task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+    task$task.desc$pre.proc = pre.proc
+  } else {
+    task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+  }
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
@@ -439,6 +450,8 @@ changeData = function(task, data, costs, weights, coordinates) {
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, task$coordinates),
+    "fcregr" = makeForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$is.spatial, td$frequency, td$dates),
+    "mfcregr" = makeMultiForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$is.spatial, td$frequency, td$dates),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, task$coordinates),
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
@@ -459,4 +472,15 @@ getTaskFactorLevels = function(task) {
 
 getTaskWeights = function(task) {
   task$weights
+}
+
+#' @title Get the dates of the task.
+#'
+#' @description Returns the dates from a task if they exist.
+#' @template arg_task_or_desc
+#' @return [\code{character(1)}]
+#' @export
+#' @family task
+getTaskDates = function(x) {
+  getTaskDesc(x)$dates
 }

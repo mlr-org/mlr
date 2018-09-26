@@ -41,7 +41,8 @@ predictLearner = function(.learner, .model, .newdata, ...) {
   if (inherits(lmod, "NoFeaturesModel")) {
     predictNofeatures(.model, .newdata)
   } else {
-    assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
+    if (.learner$type != "fcregr" && .learner$type != "mfcregr")
+      assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
     UseMethod("predictLearner")
   }
 }
@@ -112,6 +113,25 @@ checkPredictLearnerOutput = function(learner, model, p) {
         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
       if (ncol(p) != 2L)
         stopf("predictLearner for %s has not returned a numeric matrix with 2 columns!", learner$id)
+    }
+  } else if (learner$type == "fcregr") {
+    if (learner$predict.type == "response" && cl != "numeric" && cl != "ts") {
+        stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
+    } else if (learner$predict.type == "quantile") {
+      if (!is.matrix(p))
+        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+      if (ncol(p) < 2L)
+        stopf("predictLearner for %s has not returned a numeric matrix with more than 2 columns!", learner$id)
+    }
+  } else if (learner$type == "mfcregr") {
+    if (learner$predict.type == "response") {
+      if (cl != "matrix" & cl != "numeric")
+        stopf("predictLearner for %s has returned a class %s instead of numeric or matrix!", learner$id, cl)
+    } else if (learner$predict.type == "quantile") {
+      if (!is.matrix(p))
+        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+      if (ncol(p) < 2L)
+        stopf("predictLearner for %s has not returned a numeric matrix with more than 2 columns!", learner$id)
     }
   } else if (learner$type == "surv") {
     if (learner$predict.type == "prob")
