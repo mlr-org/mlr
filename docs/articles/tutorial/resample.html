@@ -368,19 +368,19 @@ Resampling Figure
 <a class="sourceLine" id="cb4-5" data-line-number="5">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.lm"</span>, bh.task, rdesc)</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7">## Measures:             mse</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## [Resample] iter 1:    28.5024706</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## [Resample] iter 2:    24.2179536</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## [Resample] iter 3:    17.9904670</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">## [Resample] iter 1:    24.1253343</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">## [Resample] iter 2:    20.2914355</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## [Resample] iter 3:    26.9697559</a>
 <a class="sourceLine" id="cb4-11" data-line-number="11">## </a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## Aggregated Result: mse.test.mean=23.5702970</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## Aggregated Result: mse.test.mean=23.7955086</a>
 <a class="sourceLine" id="cb4-13" data-line-number="13">## </a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15">r</a>
 <a class="sourceLine" id="cb4-16" data-line-number="16">## Resample Result</a>
 <a class="sourceLine" id="cb4-17" data-line-number="17">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb4-18" data-line-number="18">## Learner: regr.lm</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## Aggr perf: mse.test.mean=23.5702970</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## Runtime: 0.0428841</a></code></pre></div>
+<a class="sourceLine" id="cb4-19" data-line-number="19">## Aggr perf: mse.test.mean=23.7955086</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">## Runtime: 0.0421073</a></code></pre></div>
 <p>The result <code>r</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> result. It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Peak into r</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">names</span>(r)</a>
@@ -390,13 +390,13 @@ Resampling Figure
 <a class="sourceLine" id="cb5-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">## mse.test.mean </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">##       23.5703</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">##      23.79551</a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11">r<span class="op">$</span>measures.test</a>
 <a class="sourceLine" id="cb5-12" data-line-number="12">##   iter      mse</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## 1    1 28.50247</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## 2    2 24.21795</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## 3    3 17.99047</a></code></pre></div>
+<a class="sourceLine" id="cb5-13" data-line-number="13">## 1    1 24.12533</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">## 2    2 20.29144</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">## 3    3 26.96976</a></code></pre></div>
 <p><code>r$measures.test</code> gives the performance on each of the 3 test data sets. <code>r$aggr</code> shows the aggregated performance value. Its name <code>"mse.test.mean"</code> indicates the performance measure, <a href="measures.html" target="_blank">mse</a>, and the method, <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), used to aggregate the 3 individual performances. <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>) is the default aggregation scheme for most performance measures and, as the name implies, takes the mean over the performances on the test data sets.</p>
 <p>Resampling in <code>mlr</code> works the same way for all types of learning problems and learners. Below is a classification example where a classification tree (rpart) (<code><a href="http://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code>) is evaluated on the <code>Sonar</code> (<code>mlbench::sonar()</code>) data set by subsampling with 5 iterations.</p>
 <p>In each subsampling iteration the data set <span class="math inline">\(D\)</span> is randomly partitioned into a training and a test set according to a given percentage, e.g., 2/3 training and 1/3 test set. If there is just one iteration, the strategy is commonly called <em>holdout</em> or <em>test sample estimation</em>.</p>
@@ -414,29 +414,29 @@ Resampling Figure
 <a class="sourceLine" id="cb6-11" data-line-number="11">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, sonar.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, fpr, fnr, timetrain))</a>
 <a class="sourceLine" id="cb6-12" data-line-number="12">## Resampling: subsampling</a>
 <a class="sourceLine" id="cb6-13" data-line-number="13">## Measures:             mmce        fpr         fnr         timetrain</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">## [Resample] iter 1:    0.2619048   0.3500000   0.1818182   0.0180000</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">## [Resample] iter 2:    0.2380952   0.2105263   0.2608696   0.0150000</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">## [Resample] iter 3:    0.2380952   0.4444444   0.0833333   0.0160000</a>
-<a class="sourceLine" id="cb6-17" data-line-number="17">## [Resample] iter 4:    0.3095238   0.2727273   0.3500000   0.0150000</a>
-<a class="sourceLine" id="cb6-18" data-line-number="18">## [Resample] iter 5:    0.1904762   0.2941176   0.1200000   0.0140000</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">## [Resample] iter 1:    0.2619048   0.1818182   0.3500000   0.0170000</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">## [Resample] iter 2:    0.2142857   0.2941176   0.1600000   0.0150000</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">## [Resample] iter 3:    0.1428571   0.1428571   0.1428571   0.0160000</a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">## [Resample] iter 4:    0.4047619   0.5238095   0.2857143   0.0150000</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">## [Resample] iter 5:    0.2142857   0.0526316   0.3478261   0.0150000</a>
 <a class="sourceLine" id="cb6-19" data-line-number="19">## </a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">## Aggregated Result: mmce.test.mean=0.2476190,fpr.test.mean=0.3143631,fnr.test.mean=0.1992042,timetrain.test.mean=0.0156000</a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">## Aggregated Result: mmce.test.mean=0.2476190,fpr.test.mean=0.2390468,fnr.test.mean=0.2572795,timetrain.test.mean=0.0156000</a>
 <a class="sourceLine" id="cb6-21" data-line-number="21">## </a>
 <a class="sourceLine" id="cb6-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb6-23" data-line-number="23">r</a>
 <a class="sourceLine" id="cb6-24" data-line-number="24">## Resample Result</a>
 <a class="sourceLine" id="cb6-25" data-line-number="25">## Task: Sonar-example</a>
 <a class="sourceLine" id="cb6-26" data-line-number="26">## Learner: classif.rpart</a>
-<a class="sourceLine" id="cb6-27" data-line-number="27">## Aggr perf: mmce.test.mean=0.2476190,fpr.test.mean=0.3143631,fnr.test.mean=0.1992042,timetrain.test.mean=0.0156000</a>
-<a class="sourceLine" id="cb6-28" data-line-number="28">## Runtime: 0.139542</a></code></pre></div>
+<a class="sourceLine" id="cb6-27" data-line-number="27">## Aggr perf: mmce.test.mean=0.2476190,fpr.test.mean=0.2390468,fnr.test.mean=0.2572795,timetrain.test.mean=0.0156000</a>
+<a class="sourceLine" id="cb6-28" data-line-number="28">## Runtime: 0.14005</a></code></pre></div>
 <p>If you want to add further measures afterwards, use <code><a href="../../reference/addRRMeasure.html">addRRMeasure()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Add balanced error rate (ber) and time used to predict</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../../reference/addRRMeasure.html">addRRMeasure</a></span>(r, <span class="kw">list</span>(ber, timepredict))</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">## Resample Result</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">## Task: Sonar-example</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">## Learner: classif.rpart</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## Aggr perf: mmce.test.mean=0.2476190,fpr.test.mean=0.3143631,fnr.test.mean=0.1992042,timetrain.test.mean=0.0156000,ber.test.mean=0.2567837,timepredict.test.mean=0.0056000</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## Runtime: 0.139542</a></code></pre></div>
+<a class="sourceLine" id="cb7-6" data-line-number="6">## Aggr perf: mmce.test.mean=0.2476190,fpr.test.mean=0.2390468,fnr.test.mean=0.2572795,timetrain.test.mean=0.0156000,ber.test.mean=0.2481632,timepredict.test.mean=0.0058000</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## Runtime: 0.14005</a></code></pre></div>
 <p>By default, <code><a href="../../reference/resample.html">resample()</a></code> prints progress messages and intermediate results. You can turn this off by setting <code>show.info = FALSE</code>, as done in the code chunk below. (If you are interested in suppressing these messages permanently have a look at the tutorial page about <a href="configureMlr.html" target="_blank">configuring mlr</a>.)</p>
 <p>In the above example, the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) was explicitly constructed. For convenience you can also specify the learner as a string and pass any learner parameters via the <code>...</code> argument of <code><a href="../../reference/resample.html">resample()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">"information"</span>), sonar.task, rdesc,</a>
@@ -446,8 +446,8 @@ Resampling Figure
 <a class="sourceLine" id="cb8-5" data-line-number="5">## Resample Result</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">## Task: Sonar-example</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">## Learner: classif.rpart</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## Aggr perf: mmce.test.mean=0.2857143,fpr.test.mean=0.2974200,fnr.test.mean=0.2785093,timetrain.test.mean=0.0156000</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## Runtime: 0.124804</a></code></pre></div>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## Aggr perf: mmce.test.mean=0.2523810,fpr.test.mean=0.2649162,fnr.test.mean=0.2502185,timetrain.test.mean=0.0156000</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## Runtime: 0.126121</a></code></pre></div>
 </div>
 <div id="accessing-resample-results" class="section level1">
 <h1 class="hasAnchor">
@@ -467,12 +467,12 @@ Resampling Figure
 <a class="sourceLine" id="cb9-7" data-line-number="7">## threshold: </a>
 <a class="sourceLine" id="cb9-8" data-line-number="8">## time (mean): 0.00</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">##    id truth response iter  set</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">## 1 204     M        M    1 test</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">## 2 120     M        M    1 test</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">## 3 195     M        M    1 test</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">## 4 135     M        R    1 test</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">## 5  15     R        R    1 test</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">## 6 114     M        R    1 test</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">## 1 177     M        M    1 test</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">## 2  68     R        R    1 test</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">## 3 173     M        M    1 test</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">## 4  95     R        R    1 test</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">## 5  74     R        R    1 test</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">## 6  81     R        R    1 test</a>
 <a class="sourceLine" id="cb9-16" data-line-number="16">## ... (#rows: 210, #cols: 5)</a>
 <a class="sourceLine" id="cb9-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb9-18" data-line-number="18">pred =<span class="st"> </span><span class="kw"><a href="../../reference/getRRPredictions.html">getRRPredictions</a></span>(r)</a>
@@ -485,29 +485,29 @@ Resampling Figure
 <a class="sourceLine" id="cb9-25" data-line-number="25">## threshold: </a>
 <a class="sourceLine" id="cb9-26" data-line-number="26">## time (mean): 0.00</a>
 <a class="sourceLine" id="cb9-27" data-line-number="27">##    id truth response iter  set</a>
-<a class="sourceLine" id="cb9-28" data-line-number="28">## 1 204     M        M    1 test</a>
-<a class="sourceLine" id="cb9-29" data-line-number="29">## 2 120     M        M    1 test</a>
-<a class="sourceLine" id="cb9-30" data-line-number="30">## 3 195     M        M    1 test</a>
-<a class="sourceLine" id="cb9-31" data-line-number="31">## 4 135     M        R    1 test</a>
-<a class="sourceLine" id="cb9-32" data-line-number="32">## 5  15     R        R    1 test</a>
-<a class="sourceLine" id="cb9-33" data-line-number="33">## 6 114     M        R    1 test</a>
+<a class="sourceLine" id="cb9-28" data-line-number="28">## 1 177     M        M    1 test</a>
+<a class="sourceLine" id="cb9-29" data-line-number="29">## 2  68     R        R    1 test</a>
+<a class="sourceLine" id="cb9-30" data-line-number="30">## 3 173     M        M    1 test</a>
+<a class="sourceLine" id="cb9-31" data-line-number="31">## 4  95     R        R    1 test</a>
+<a class="sourceLine" id="cb9-32" data-line-number="32">## 5  74     R        R    1 test</a>
+<a class="sourceLine" id="cb9-33" data-line-number="33">## 6  81     R        R    1 test</a>
 <a class="sourceLine" id="cb9-34" data-line-number="34">## ... (#rows: 210, #cols: 5)</a></code></pre></div>
 <p><code>pred</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> Prediction. Just as a <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (see the tutorial page on making <a href="predict.html" target="_blank">predictions</a> it has an element <code>$data</code> which is a <code>data.frame</code> that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s). You can use <code>as.data.frame</code> (<code><a href="../../reference/Prediction.html">Prediction()</a></code> to directly access the <code>$data</code> slot. Moreover, all getter functions for <code><a href="../../reference/Prediction.html">Prediction()</a></code> objects like <code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code> or <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> are applicable.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(pred))</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">##    id truth response iter  set</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">## 1 204     M        M    1 test</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">## 2 120     M        M    1 test</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">## 3 195     M        M    1 test</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## 4 135     M        R    1 test</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## 5  15     R        R    1 test</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">## 6 114     M        R    1 test</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">## 1 177     M        M    1 test</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">## 2  68     R        R    1 test</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">## 3 173     M        M    1 test</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">## 4  95     R        R    1 test</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## 5  74     R        R    1 test</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">## 6  81     R        R    1 test</a>
 <a class="sourceLine" id="cb10-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">## [1] M M M M R M</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">## [1] M R M R R R</a>
 <a class="sourceLine" id="cb10-12" data-line-number="12">## Levels: M R</a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred))</a>
-<a class="sourceLine" id="cb10-15" data-line-number="15">## [1] M M M R R R</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">## [1] M R M R R R</a>
 <a class="sourceLine" id="cb10-16" data-line-number="16">## Levels: M R</a></code></pre></div>
 <p>The columns <code>iter</code> and <code>set</code> in the <code>data.frame</code> indicate the resampling iteration and the data set (<code>train</code> or <code>test</code>) for which the prediction was made.</p>
 <p>By default, predictions are made for the test sets only. If predictions for the training set are required, set <code>predict = "train"</code> (for predictions on the train set only) or <code>predict = "both"</code> (for predictions on both train and test sets) in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>. In any case, this is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and some examples are shown later on.</p>
@@ -520,12 +520,12 @@ Resampling Figure
 <a class="sourceLine" id="cb11-6" data-line-number="6">## Resample Result</a>
 <a class="sourceLine" id="cb11-7" data-line-number="7">## Task: iris-example</a>
 <a class="sourceLine" id="cb11-8" data-line-number="8">## Learner: classif.lda</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">## Aggr perf: mmce.test.mean=0.0200000</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">## Runtime: 0.0135126</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">## Aggr perf: mmce.test.mean=0.0400000</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">## Runtime: 0.0133979</a>
 <a class="sourceLine" id="cb11-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb11-12" data-line-number="12">r<span class="op">$</span>measures.train</a>
 <a class="sourceLine" id="cb11-13" data-line-number="13">##   iter mmce</a>
-<a class="sourceLine" id="cb11-14" data-line-number="14">## 1    1 0.03</a></code></pre></div>
+<a class="sourceLine" id="cb11-14" data-line-number="14">## 1    1 0.02</a></code></pre></div>
 <p>(Please note that nonetheless the misclassification rate <code>r$aggr</code> is estimated on the test data only. How to calculate performance measures on the training sets is shown below.)</p>
 <p>A second function to extract predictions from resample results is <code><a href="../../reference/getRRPredictionList.html">getRRPredictionList()</a></code> which returns a <code>list</code> of predictions split by data set (train/test) and resampling iteration.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">predList =<span class="st"> </span><span class="kw"><a href="../../reference/getRRPredictionList.html">getRRPredictionList</a></span>(r)</a>
@@ -536,13 +536,13 @@ Resampling Figure
 <a class="sourceLine" id="cb12-6" data-line-number="6">## predict.type: response</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">## threshold: </a>
 <a class="sourceLine" id="cb12-8" data-line-number="8">## time: 0.00</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">##      id      truth   response</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">## 13   13     setosa     setosa</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">## 135 135  virginica  virginica</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">## 59   59 versicolor versicolor</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">## 39   39     setosa     setosa</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">## 98   98 versicolor versicolor</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">## 55   55 versicolor versicolor</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">##      id     truth  response</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">## 3     3    setosa    setosa</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">## 102 102 virginica virginica</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">## 49   49    setosa    setosa</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">## 143 143 virginica virginica</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">## 20   20    setosa    setosa</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">## 10   10    setosa    setosa</a>
 <a class="sourceLine" id="cb12-16" data-line-number="16">## ... (#rows: 100, #cols: 3)</a>
 <a class="sourceLine" id="cb12-17" data-line-number="17">## </a>
 <a class="sourceLine" id="cb12-18" data-line-number="18">## </a>
@@ -552,13 +552,13 @@ Resampling Figure
 <a class="sourceLine" id="cb12-22" data-line-number="22">## predict.type: response</a>
 <a class="sourceLine" id="cb12-23" data-line-number="23">## threshold: </a>
 <a class="sourceLine" id="cb12-24" data-line-number="24">## time: 0.00</a>
-<a class="sourceLine" id="cb12-25" data-line-number="25">##      id      truth   response</a>
-<a class="sourceLine" id="cb12-26" data-line-number="26">## 27   27     setosa     setosa</a>
-<a class="sourceLine" id="cb12-27" data-line-number="27">## 86   86 versicolor versicolor</a>
-<a class="sourceLine" id="cb12-28" data-line-number="28">## 109 109  virginica  virginica</a>
-<a class="sourceLine" id="cb12-29" data-line-number="29">## 127 127  virginica  virginica</a>
-<a class="sourceLine" id="cb12-30" data-line-number="30">## 6     6     setosa     setosa</a>
-<a class="sourceLine" id="cb12-31" data-line-number="31">## 120 120  virginica versicolor</a>
+<a class="sourceLine" id="cb12-25" data-line-number="25">##    id      truth   response</a>
+<a class="sourceLine" id="cb12-26" data-line-number="26">## 23 23     setosa     setosa</a>
+<a class="sourceLine" id="cb12-27" data-line-number="27">## 18 18     setosa     setosa</a>
+<a class="sourceLine" id="cb12-28" data-line-number="28">## 38 38     setosa     setosa</a>
+<a class="sourceLine" id="cb12-29" data-line-number="29">## 66 66 versicolor versicolor</a>
+<a class="sourceLine" id="cb12-30" data-line-number="30">## 83 83 versicolor versicolor</a>
+<a class="sourceLine" id="cb12-31" data-line-number="31">## 31 31     setosa     setosa</a>
 <a class="sourceLine" id="cb12-32" data-line-number="32">## ... (#rows: 50, #cols: 3)</a></code></pre></div>
 </div>
 <div id="learner-models" class="section level2">
@@ -572,12 +572,12 @@ Resampling Figure
 <a class="sourceLine" id="cb13-5" data-line-number="5">r<span class="op">$</span>models</a>
 <a class="sourceLine" id="cb13-6" data-line-number="6">## [[1]]</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">## Model for learner.id=surv.coxph; learner.class=surv.coxph</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8">## Trained on: task.id = lung-example; obs = 112; features = 8</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">## Trained on: task.id = lung-example; obs = 111; features = 8</a>
 <a class="sourceLine" id="cb13-9" data-line-number="9">## Hyperparameters: </a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">## </a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">## [[2]]</a>
 <a class="sourceLine" id="cb13-12" data-line-number="12">## Model for learner.id=surv.coxph; learner.class=surv.coxph</a>
-<a class="sourceLine" id="cb13-13" data-line-number="13">## Trained on: task.id = lung-example; obs = 111; features = 8</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">## Trained on: task.id = lung-example; obs = 112; features = 8</a>
 <a class="sourceLine" id="cb13-14" data-line-number="14">## Hyperparameters: </a>
 <a class="sourceLine" id="cb13-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb13-16" data-line-number="16">## [[3]]</a>
@@ -603,30 +603,34 @@ Resampling Figure
 <a class="sourceLine" id="cb14-11" data-line-number="11">## For a complete list of functions, use 'library(help = "modeest")' or 'help.start()'.</a>
 <a class="sourceLine" id="cb14-12" data-line-number="12">r<span class="op">$</span>extract</a>
 <a class="sourceLine" id="cb14-13" data-line-number="13">## [[1]]</a>
-<a class="sourceLine" id="cb14-14" data-line-number="14">##      mpg cyl    disp      hp  drat       wt   qsec  vs    am  gear carb</a>
-<a class="sourceLine" id="cb14-15" data-line-number="15">## 1 15.175   8 338.325 193.625 3.260 3.770625 16.835 0.0 0.125 3.250  3.0</a>
-<a class="sourceLine" id="cb14-16" data-line-number="16">## 2 27.675   4  96.175  82.375 4.120 2.168500 19.225 1.0 0.875 4.125  1.5</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">## 3 19.600   6 191.120 124.600 3.456 3.152000 18.216 0.6 0.400 3.800  3.2</a>
-<a class="sourceLine" id="cb14-18" data-line-number="18">## </a>
-<a class="sourceLine" id="cb14-19" data-line-number="19">## [[2]]</a>
-<a class="sourceLine" id="cb14-20" data-line-number="20">##        mpg      cyl     disp        hp     drat       wt     qsec</a>
-<a class="sourceLine" id="cb14-21" data-line-number="21">## 1 14.77500 8.000000 372.5000 232.37500 3.346250 4.035500 16.18875</a>
-<a class="sourceLine" id="cb14-22" data-line-number="22">## 2 19.08571 6.285714 199.8571 132.28571 3.467143 3.287857 18.03143</a>
-<a class="sourceLine" id="cb14-23" data-line-number="23">## 3 25.40000 4.000000 113.7667  77.16667 4.125000 2.415833 19.50500</a>
-<a class="sourceLine" id="cb14-24" data-line-number="24">##          vs        am     gear     carb</a>
-<a class="sourceLine" id="cb14-25" data-line-number="25">## 1 0.0000000 0.2500000 3.500000 4.000000</a>
-<a class="sourceLine" id="cb14-26" data-line-number="26">## 2 0.5714286 0.2857143 3.714286 3.285714</a>
-<a class="sourceLine" id="cb14-27" data-line-number="27">## 3 0.8333333 0.5000000 4.000000 1.666667</a>
-<a class="sourceLine" id="cb14-28" data-line-number="28">## </a>
-<a class="sourceLine" id="cb14-29" data-line-number="29">## [[3]]</a>
-<a class="sourceLine" id="cb14-30" data-line-number="30">##        mpg cyl     disp        hp     drat       wt     qsec        vs</a>
-<a class="sourceLine" id="cb14-31" data-line-number="31">## 1 26.91429 4.0 102.0429  90.57143 4.022857 2.179000 18.59857 0.8571429</a>
-<a class="sourceLine" id="cb14-32" data-line-number="32">## 2 21.40000 5.5 158.5750 101.25000 3.852500 3.031250 17.94500 0.5000000</a>
-<a class="sourceLine" id="cb14-33" data-line-number="33">## 3 15.16364 8.0 356.7636 206.36364 3.136364 4.132636 17.09364 0.0000000</a>
-<a class="sourceLine" id="cb14-34" data-line-number="34">##           am     gear     carb</a>
-<a class="sourceLine" id="cb14-35" data-line-number="35">## 1 0.85714286 4.142857 1.428571</a>
-<a class="sourceLine" id="cb14-36" data-line-number="36">## 2 0.50000000 4.000000 3.500000</a>
-<a class="sourceLine" id="cb14-37" data-line-number="37">## 3 0.09090909 3.181818 3.545455</a></code></pre></div>
+<a class="sourceLine" id="cb14-14" data-line-number="14">##        mpg      cyl     disp       hp     drat       wt     qsec        vs</a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">## 1 24.90909 4.545455 123.1182 100.1818 3.955455 2.541636 18.48545 0.7272727</a>
+<a class="sourceLine" id="cb14-16" data-line-number="16">## 2 17.11667 7.333333 276.1000 145.8333 2.981667 3.523333 18.23833 0.3333333</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">## 3 14.06000 8.000000 388.8000 238.8000 3.368000 4.170800 16.38400 0.0000000</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18">##          am     gear     carb</a>
+<a class="sourceLine" id="cb14-19" data-line-number="19">## 1 0.7272727 4.272727 2.454545</a>
+<a class="sourceLine" id="cb14-20" data-line-number="20">## 2 0.0000000 3.000000 2.000000</a>
+<a class="sourceLine" id="cb14-21" data-line-number="21">## 3 0.4000000 3.800000 4.400000</a>
+<a class="sourceLine" id="cb14-22" data-line-number="22">## </a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">## [[2]]</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">##        mpg      cyl     disp        hp     drat       wt     qsec</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">## 1 14.61667 8.000000 393.5000 229.00000 3.411667 4.199000 16.34000</a>
+<a class="sourceLine" id="cb14-26" data-line-number="26">## 2 23.91818 4.545455 119.6545  97.90909 4.049091 2.517273 18.64818</a>
+<a class="sourceLine" id="cb14-27" data-line-number="27">## 3 17.05000 7.500000 278.4000 155.00000 3.092500 3.625000 18.03500</a>
+<a class="sourceLine" id="cb14-28" data-line-number="28">##          vs        am     gear     carb</a>
+<a class="sourceLine" id="cb14-29" data-line-number="29">## 1 0.0000000 0.1666667 3.333333 3.666667</a>
+<a class="sourceLine" id="cb14-30" data-line-number="30">## 2 0.7272727 0.7272727 4.090909 2.363636</a>
+<a class="sourceLine" id="cb14-31" data-line-number="31">## 3 0.2500000 0.0000000 3.000000 2.250000</a>
+<a class="sourceLine" id="cb14-32" data-line-number="32">## </a>
+<a class="sourceLine" id="cb14-33" data-line-number="33">## [[3]]</a>
+<a class="sourceLine" id="cb14-34" data-line-number="34">##        mpg      cyl     disp        hp     drat       wt     qsec</a>
+<a class="sourceLine" id="cb14-35" data-line-number="35">## 1 15.78571 8.000000 320.0857 215.71429 3.218571 3.677143 16.39143</a>
+<a class="sourceLine" id="cb14-36" data-line-number="36">## 2 14.76667 8.000000 437.3333 203.33333 3.080000 4.813333 17.48333</a>
+<a class="sourceLine" id="cb14-37" data-line-number="37">## 3 24.09091 4.909091 133.4455  93.27273 3.890000 2.580727 18.64818</a>
+<a class="sourceLine" id="cb14-38" data-line-number="38">##          vs        am     gear     carb</a>
+<a class="sourceLine" id="cb14-39" data-line-number="39">## 1 0.0000000 0.1428571 3.285714 3.714286</a>
+<a class="sourceLine" id="cb14-40" data-line-number="40">## 2 0.0000000 0.0000000 3.000000 3.333333</a>
+<a class="sourceLine" id="cb14-41" data-line-number="41">## 3 0.8181818 0.5454545 3.909091 2.363636</a></code></pre></div>
 <p>As a second example, we extract the variable importances from fitted regression trees using function <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code>. (For more detailed information on this topic see the <a href="feature_selection.html" target="_blank">feature selection</a> page.)</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Extract the variable importance in a regression tree</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.rpart"</span>, bh.task, rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">extract =</span> getFeatureImportance)</a>
@@ -642,10 +646,10 @@ Resampling Figure
 <a class="sourceLine" id="cb15-12" data-line-number="12">## Replace: NA</a>
 <a class="sourceLine" id="cb15-13" data-line-number="13">## Number of Monte-Carlo iterations: NA</a>
 <a class="sourceLine" id="cb15-14" data-line-number="14">## Local: FALSE</a>
-<a class="sourceLine" id="cb15-15" data-line-number="15">##       crim       zn    indus chas      nox       rm      age      dis rad</a>
-<a class="sourceLine" id="cb15-16" data-line-number="16">## 1 7621.035 5339.139 9584.785    0 8777.666 12558.89 2493.534 3282.907   0</a>
-<a class="sourceLine" id="cb15-17" data-line-number="17">##        tax  ptratio b    lstat</a>
-<a class="sourceLine" id="cb15-18" data-line-number="18">## 1 1980.741 1045.975 0 16473.29</a>
+<a class="sourceLine" id="cb15-15" data-line-number="15">##       crim      zn    indus     chas      nox       rm      age      dis</a>
+<a class="sourceLine" id="cb15-16" data-line-number="16">## 1 3878.023 513.186 1925.563 30.67638 3590.893 15206.88 3556.162 3351.578</a>
+<a class="sourceLine" id="cb15-17" data-line-number="17">##   rad      tax  ptratio        b    lstat</a>
+<a class="sourceLine" id="cb15-18" data-line-number="18">## 1   0 3537.343 2298.465 44.05093 11455.84</a>
 <a class="sourceLine" id="cb15-19" data-line-number="19">## </a>
 <a class="sourceLine" id="cb15-20" data-line-number="20">## [[2]]</a>
 <a class="sourceLine" id="cb15-21" data-line-number="21">## FeatureImportance:</a>
@@ -658,10 +662,10 @@ Resampling Figure
 <a class="sourceLine" id="cb15-28" data-line-number="28">## Replace: NA</a>
 <a class="sourceLine" id="cb15-29" data-line-number="29">## Number of Monte-Carlo iterations: NA</a>
 <a class="sourceLine" id="cb15-30" data-line-number="30">## Local: FALSE</a>
-<a class="sourceLine" id="cb15-31" data-line-number="31">##     crim       zn    indus chas      nox      rm      age      dis</a>
-<a class="sourceLine" id="cb15-32" data-line-number="32">## 1 3012.2 1422.085 3912.995    0 2742.971 17251.9 2122.892 2137.336</a>
-<a class="sourceLine" id="cb15-33" data-line-number="33">##        rad      tax  ptratio       b    lstat</a>
-<a class="sourceLine" id="cb15-34" data-line-number="34">## 1 976.6615 1384.628 3688.324 170.165 11073.33</a>
+<a class="sourceLine" id="cb15-31" data-line-number="31">##       crim       zn    indus     chas      nox       rm      age      dis</a>
+<a class="sourceLine" id="cb15-32" data-line-number="32">## 1 8305.773 57.40349 9909.397 263.7635 7355.365 13111.75 7380.453 881.2263</a>
+<a class="sourceLine" id="cb15-33" data-line-number="33">##        rad      tax ptratio b    lstat</a>
+<a class="sourceLine" id="cb15-34" data-line-number="34">## 1 1059.574 1677.503 1415.93 0 16093.32</a>
 <a class="sourceLine" id="cb15-35" data-line-number="35">## </a>
 <a class="sourceLine" id="cb15-36" data-line-number="36">## [[3]]</a>
 <a class="sourceLine" id="cb15-37" data-line-number="37">## FeatureImportance:</a>
@@ -674,116 +678,116 @@ Resampling Figure
 <a class="sourceLine" id="cb15-44" data-line-number="44">## Replace: NA</a>
 <a class="sourceLine" id="cb15-45" data-line-number="45">## Number of Monte-Carlo iterations: NA</a>
 <a class="sourceLine" id="cb15-46" data-line-number="46">## Local: FALSE</a>
-<a class="sourceLine" id="cb15-47" data-line-number="47">##      crim      zn    indus     chas      nox       rm      age      dis</a>
-<a class="sourceLine" id="cb15-48" data-line-number="48">## 1 1294.04 1236.81 4715.259 350.7777 3495.693 15958.96 3165.177 3514.462</a>
+<a class="sourceLine" id="cb15-47" data-line-number="47">##       crim       zn  indus chas      nox      rm      age      dis</a>
+<a class="sourceLine" id="cb15-48" data-line-number="48">## 1 3734.205 1675.755 3956.1    0 3434.296 16597.7 2799.915 1520.819</a>
 <a class="sourceLine" id="cb15-49" data-line-number="49">##        rad      tax  ptratio        b    lstat</a>
-<a class="sourceLine" id="cb15-50" data-line-number="50">## 1 96.70578 3393.715 2953.442 728.5895 11951.06</a></code></pre></div>
+<a class="sourceLine" id="cb15-50" data-line-number="50">## 1 115.6768 2940.397 3099.932 610.4233 12099.62</a></code></pre></div>
 <p>There is also an convenience function <code><a href="../../reference/getResamplingIndices.html">getResamplingIndices()</a></code> to extract the resampling indices from the <code>ResampleResult</code> object:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span>(r)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">## $train.inds</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3">## $train.inds[[1]]</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">##   [1] 174 163  80  44  33  47 429  25 211   7 260  13 361 378 501 232 315</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">##  [18] 448 381  46 207 408 333 435 463 458 161 188 486  75 416 135 492 485</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">##  [35] 469  94 205 263 441 406 240 213 365 447  85 233   1 132   2  28 162</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">##  [52] 440  59  69 337  51 167 309  26  45 289 442 246  24 319 334 143 124</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">##  [69] 391 192 453 400 224 212 222 237 468 467 150 235 102 479 342 376 141</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">##  [86] 147 368 362 269 166 208  16 194 311 172 422 178 490  30 482 470 119</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10">## [103] 380 503 466 209 148  90 339 363 483 372 445 455 502  84 183 421 335</a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">## [120] 341 189  77 154 278 256 427 491 384 313 405  39 415  41 418 158 484</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">## [137] 223  64 303  21 206 385 356 354 101 382 328   8 228 338 126 144 359</a>
-<a class="sourceLine" id="cb16-13" data-line-number="13">## [154] 351 397  57 352 261 145 401 480 496  78 111 437  19 136 394 426 198</a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">## [171] 229 130 390 412 366 216 113 316 210 438 251 498 430 349 264 411 257</a>
-<a class="sourceLine" id="cb16-15" data-line-number="15">## [188]  11 129 244  95 432 396   4 184 374 277 300 177 329 459 414  65  15</a>
-<a class="sourceLine" id="cb16-16" data-line-number="16">## [205]  86 489 355 301  63 388   3 399  36 180 217 159 423 324 176 227  14</a>
-<a class="sourceLine" id="cb16-17" data-line-number="17">## [222] 226 504 266 186  22 137 286  74 201 364  62 310 332  38 116 114  53</a>
-<a class="sourceLine" id="cb16-18" data-line-number="18">## [239] 326 350 107  71 343 238 179 488 410 307 268 478 138 345 373 493 225</a>
-<a class="sourceLine" id="cb16-19" data-line-number="19">## [256]  34 170 151  23 451 168 402  87 347  32 255  54 108 371 262 444 146</a>
-<a class="sourceLine" id="cb16-20" data-line-number="20">## [273] 292 443 157  97 495  37 409   5 121 407 293  43 369 252 465 477 320</a>
-<a class="sourceLine" id="cb16-21" data-line-number="21">## [290]  31 336 142 386 474 241 358 152 299   6 133 291 417 325  66 346 420</a>
-<a class="sourceLine" id="cb16-22" data-line-number="22">## [307] 248 259  58  89 450 370 105 239  93 203 395 360 140  56 302 153  68</a>
-<a class="sourceLine" id="cb16-23" data-line-number="23">## [324] 243 475 249 306 506  49 117 236 204 457 452 321 193 304</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">##   [1] 160 166 294 361 325 183 427 145 259  76 131  87 352 450 158  88 406</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">##  [18] 466 282 420 395  36  93  14  60  77 153 478 229 273 244 423 102 228</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">##  [35] 506 286 488 163  42  24  63   5 249 232  46  89 266 218 103 216 277</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">##  [52] 208 441 239 414  11 330 387  95 463 151  43 262 464 203 504 185 177</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">##  [69] 159 422 460 213 141 154 265 412 496 124 180 355 167  28 402  65 312</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">##  [86] 247  75 502 315 410 149 207   3  81 221 250 242 469 453 110 233 365</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">## [103] 205 482 133 199 171 253 298 388  56 439 271  86  82 487 143 224 440</a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">## [120]  31 243 234 142 386 448  19 111 485  12 408 468  66   9   8  71  32</a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">## [137] 379  57  68 152 181 380  62 475 354 429  97 174 378 169 434 252 329</a>
+<a class="sourceLine" id="cb16-13" data-line-number="13">## [154] 300 251 235 336 318 186 222 367 212   2 178 335 223 452 194 359 394</a>
+<a class="sourceLine" id="cb16-14" data-line-number="14">## [171] 147 417 391 302 148 362  99  45 393 457  53 260 398 291 418 295 122</a>
+<a class="sourceLine" id="cb16-15" data-line-number="15">## [188] 161  98 114 112 165 310 364  85 381 366 188  29  37 481 101 470 449</a>
+<a class="sourceLine" id="cb16-16" data-line-number="16">## [205] 349 139 368  79 104 360 162 327  54 491 206 331 320 377  47 106 175</a>
+<a class="sourceLine" id="cb16-17" data-line-number="17">## [222] 363 176 126 305 125 292 184  80 493 246 195 129 281  18 436 276 353</a>
+<a class="sourceLine" id="cb16-18" data-line-number="18">## [239] 231  67 357 240  30 444 280 407 446  58 137 297 333  96  16 425 193</a>
+<a class="sourceLine" id="cb16-19" data-line-number="19">## [256]  48 385 479  69 428 323 120 196 144 343 130 256  40 500  15 340 173</a>
+<a class="sourceLine" id="cb16-20" data-line-number="20">## [273] 472 201 442 458 182 267 168 289 157 227 115 356  21 399 313 109 437</a>
+<a class="sourceLine" id="cb16-21" data-line-number="21">## [290] 375 484 274 505  70 392 136 283 113 409 170 447 189 275 117 258 140</a>
+<a class="sourceLine" id="cb16-22" data-line-number="22">## [307]  59 309 424 433 370 383 373 287 307 238 268 156  55 492  33 403 426</a>
+<a class="sourceLine" id="cb16-23" data-line-number="23">## [324] 438 371  72 455 401 430  73 384 397 303 319 197  74 321 432</a>
 <a class="sourceLine" id="cb16-24" data-line-number="24">## </a>
 <a class="sourceLine" id="cb16-25" data-line-number="25">## $train.inds[[2]]</a>
-<a class="sourceLine" id="cb16-26" data-line-number="26">##   [1] 305 461 174 163  80 271 187 234 392  33 431  47 247   9 499 211  82</a>
-<a class="sourceLine" id="cb16-27" data-line-number="27">##  [18]  35 155   7 260 361 312  40 315 448 298  12  46 207 221 435 463  17</a>
-<a class="sourceLine" id="cb16-28" data-line-number="28">##  [35] 188 486 284  20  75 135 128 156 469 383 205 434  60 213 365 283  85</a>
-<a class="sourceLine" id="cb16-29" data-line-number="29">##  [52] 403 132   2 446 440 318 337 167 218  10 500  45 289 164 280 190 200</a>
-<a class="sourceLine" id="cb16-30" data-line-number="30">##  [69]  27 319 334 134 143 124 192 253 505 433 285 453 425 215 294 212 222</a>
-<a class="sourceLine" id="cb16-31" data-line-number="31">##  [86] 237  50 468 202  70 150 102 479 376 279 147 368 106 245 127 322 449</a>
-<a class="sourceLine" id="cb16-32" data-line-number="32">## [103] 131 166 288 173  16 379 276 115 194 311 462 274 481 456  30 482 119</a>
-<a class="sourceLine" id="cb16-33" data-line-number="33">## [120] 380 220 503 191  90 339 169  42 363 502 341 389 154 278 256  67 472</a>
-<a class="sourceLine" id="cb16-34" data-line-number="34">## [137] 427 195 405 272  99 197 348 460  76 158 484 223  81  21 287 476 356</a>
-<a class="sourceLine" id="cb16-35" data-line-number="35">## [154] 112 354 101 382 375 338 126 494 144 327 359  91 393  52 436 352 357</a>
-<a class="sourceLine" id="cb16-36" data-line-number="36">## [171] 139 145 109 480 111 437 424 136 160 308 198  88 267 295 353  18 413</a>
-<a class="sourceLine" id="cb16-37" data-line-number="37">## [188]  92 390  55 199 412 366 419 113 316 296  83 210 438 219 498 430 270</a>
-<a class="sourceLine" id="cb16-38" data-line-number="38">## [205] 349 314 264 411 257   4 184 497 374 277 300 177 254 317 459 487  73</a>
-<a class="sourceLine" id="cb16-39" data-line-number="39">## [222] 330 122 367  63 377 323 104 399  36 180 217 103 324 120 186 250 281</a>
-<a class="sourceLine" id="cb16-40" data-line-number="40">## [239]  74 201 125 231 175 273 149 171 196  29 116 123 297 350 343  96 238</a>
-<a class="sourceLine" id="cb16-41" data-line-number="41">## [256] 179 428 410 307 268 478 454 282 138  98 345 373 493 275  72 225 344</a>
-<a class="sourceLine" id="cb16-42" data-line-number="42">## [273] 170  61 151  23 402  79  32 255 185  54 108 371 262 464 444  48 292</a>
-<a class="sourceLine" id="cb16-43" data-line-number="43">## [290] 258 471 157  97  37 409 473   5 121 407 252 320 336 230 165 241 439</a>
-<a class="sourceLine" id="cb16-44" data-line-number="44">## [307] 214 299 133 346 420 248  89 181 182 398 450 290 370 105 404 395 360</a>
-<a class="sourceLine" id="cb16-45" data-line-number="45">## [324] 265 140 302 340 387 306 110 117 236 204 118 100 242 331</a>
+<a class="sourceLine" id="cb16-26" data-line-number="26">##   [1] 160 314 411 294 361 486 325 183 145 259 217 404 278 123 416 215  88</a>
+<a class="sourceLine" id="cb16-27" data-line-number="27">##  [18] 406 466 282  36  23  77 478 499 150 244  49 102 506 116 308 286 488</a>
+<a class="sourceLine" id="cb16-28" data-line-number="28">##  [35] 163 413  42  24  61 497 451  46  83 179  34 134  89 376  64 103 200</a>
+<a class="sourceLine" id="cb16-29" data-line-number="29">##  [52] 459  52  41 216 414  11 151  43 262 464 203 299 504 396 415 422 460</a>
+<a class="sourceLine" id="cb16-30" data-line-number="30">##  [69] 213 187 141 265 503 412 124 346 180 105 338 465 167 341  28 317 402</a>
+<a class="sourceLine" id="cb16-31" data-line-number="31">##  [86]  84 290 489 490 312 476 502 315 288 337 149 207   3  81 250 242 469</a>
+<a class="sourceLine" id="cb16-32" data-line-number="32">## [103] 236 326 110 351 233 365 482 211  94 332 279 389 306 347 350 164 342</a>
+<a class="sourceLine" id="cb16-33" data-line-number="33">## [120] 456  90 253 439  13 454 301 443 487 204  50   6 440  35  31 243  26</a>
+<a class="sourceLine" id="cb16-34" data-line-number="34">## [137] 142 386 209 448 111 121  12 408  66  32 119  57 380  62 128 494 369</a>
+<a class="sourceLine" id="cb16-35" data-line-number="35">## [154] 354 390 264 191 429 107 296 174 378 434 329 300 220 261 461 467 374</a>
+<a class="sourceLine" id="cb16-36" data-line-number="36">## [171] 474 222 501 367 214 219 190 194 359 394 147  17 302  10 135 405  53</a>
+<a class="sourceLine" id="cb16-37" data-line-number="37">## [188]  51 260 230 291 418 112 165 310 400  85 270 381 101 138 449 285 269</a>
+<a class="sourceLine" id="cb16-38" data-line-number="38">## [205] 118 345 368 155  39 360 162 327 431 206 272 320  22 106 132 175 363</a>
+<a class="sourceLine" id="cb16-39" data-line-number="39">## [222] 348 176 126 305 339 125 255 435 210 293 322 198 311  80 129  20  18</a>
+<a class="sourceLine" id="cb16-40" data-line-number="40">## [239] 276 226 353 231 324  67 248 495  30 372 407 358 297 333 284 425 193</a>
+<a class="sourceLine" id="cb16-41" data-line-number="41">## [256] 480 479 428 196 343 225 202 100 127 130 421  40 500 340 173 201 442</a>
+<a class="sourceLine" id="cb16-42" data-line-number="42">## [273] 458 182 267 498 157  25  44 115 356 477 399 192   7 313 344  38 263</a>
+<a class="sourceLine" id="cb16-43" data-line-number="43">## [290] 109 237 437 473 274  92 483 392 136 113 334 241 471 275 140  59 146</a>
+<a class="sourceLine" id="cb16-44" data-line-number="44">## [307] 328 108 445   4  78 373 287 316 238 382 304 156   1 257 462  33 403</a>
+<a class="sourceLine" id="cb16-45" data-line-number="45">## [324] 426 438 172  72  27 245 430 397 303  91 319 197 254 419</a>
 <a class="sourceLine" id="cb16-46" data-line-number="46">## </a>
 <a class="sourceLine" id="cb16-47" data-line-number="47">## $train.inds[[3]]</a>
-<a class="sourceLine" id="cb16-48" data-line-number="48">##   [1] 305 461 271 187 234 392  44 431 429 247   9  25 499  82  35 155  13</a>
-<a class="sourceLine" id="cb16-49" data-line-number="49">##  [18] 378 312  40 501 232 298  12 381 408 221 333  17 458 161 284  20 416</a>
-<a class="sourceLine" id="cb16-50" data-line-number="50">##  [35] 492 485 128 156 383  94 263 441 406 240 434  60 283 447 233   1 403</a>
-<a class="sourceLine" id="cb16-51" data-line-number="51">##  [52] 446  28 162 318  59  69  51 218 309  10 500  26 164 442 246 280 190</a>
-<a class="sourceLine" id="cb16-52" data-line-number="52">##  [69] 200  24  27 134 391 253 505 433 285 400 425 215 224 294  50 467 202</a>
-<a class="sourceLine" id="cb16-53" data-line-number="53">##  [86]  70 235 342 279 141 106 245 127 322 362 449 131 269 208 288 173 379</a>
-<a class="sourceLine" id="cb16-54" data-line-number="54">## [103] 276 115 172 422 462 178 274 481 490 456 470 220 191 466 209 148 169</a>
-<a class="sourceLine" id="cb16-55" data-line-number="55">## [120]  42 483 372 445 455  84 183 421 335 189 389  77  67 472 491 384 195</a>
-<a class="sourceLine" id="cb16-56" data-line-number="56">## [137] 313 272  99 197 348 460  39 415  76  41 418  64  81 303 287 476 206</a>
-<a class="sourceLine" id="cb16-57" data-line-number="57">## [154] 385 112 375 328   8 228 494 327  91 351 397 393  57  52 436 357 139</a>
-<a class="sourceLine" id="cb16-58" data-line-number="58">## [171] 261 401 109 496  78 424  19 394 160 308 426  88 229 130 267 295 353</a>
-<a class="sourceLine" id="cb16-59" data-line-number="59">## [188]  18 413  92  55 199 216 419 296  83 219 251 270 314  11 129 244  95</a>
-<a class="sourceLine" id="cb16-60" data-line-number="60">## [205] 432 396 497 329 254 317 414  65  15 487  86 489  73 355 330 301 122</a>
-<a class="sourceLine" id="cb16-61" data-line-number="61">## [222] 367 388 377   3 323 104 159 423 103 176 227  14 226 504 266 120 250</a>
-<a class="sourceLine" id="cb16-62" data-line-number="62">## [239] 281  22 137 286 125 364 231 175  62 273 149 310 332 171 196  29  38</a>
-<a class="sourceLine" id="cb16-63" data-line-number="63">## [256] 114 123  53 297 326 107  71  96 428 488 454 282  98 275  72  34 344</a>
-<a class="sourceLine" id="cb16-64" data-line-number="64">## [273]  61 451 168  87 347  79 185 464 146  48 443 258 471 495 473 293  43</a>
-<a class="sourceLine" id="cb16-65" data-line-number="65">## [290] 369 465 477  31 230 165 142 386 474 439 358 152 214   6 291 417 325</a>
-<a class="sourceLine" id="cb16-66" data-line-number="66">## [307]  66 259  58 181 182 398 290 239 404  93 203 265  56 153  68 340 243</a>
-<a class="sourceLine" id="cb16-67" data-line-number="67">## [324] 475 249 387 506 110  49 118 457 452 321 193 100 242 331 304</a>
+<a class="sourceLine" id="cb16-48" data-line-number="48">##   [1] 166 314 411 486 427 217  76 131 404  87 352 450 158 278 123 416 215</a>
+<a class="sourceLine" id="cb16-49" data-line-number="49">##  [18] 420 395  93  23  14  60 153 499 229 273 150 423  49 228 116 308 413</a>
+<a class="sourceLine" id="cb16-50" data-line-number="50">##  [35]  63   5  61 497 249 451 232  83 179  34 134 266 376 218  64 200 459</a>
+<a class="sourceLine" id="cb16-51" data-line-number="51">##  [52]  52  41 277 208 441 239 330 387  95 463 299 396 185 177 415 159 187</a>
+<a class="sourceLine" id="cb16-52" data-line-number="52">##  [69] 154 503 496 346 105 338 355 465 341 317  84 290 489 490  65 476 247</a>
+<a class="sourceLine" id="cb16-53" data-line-number="53">##  [86]  75 288 410 337 221 236 326 453 351 205 211  94 133 332 199 279 389</a>
+<a class="sourceLine" id="cb16-54" data-line-number="54">## [103] 306 347 171 350 164 342 456  90 298 388  56  13 271  86 454  82 301</a>
+<a class="sourceLine" id="cb16-55" data-line-number="55">## [120] 443 204 143  50   6 224  35  26 234 209  19 485 121 468   9   8  71</a>
+<a class="sourceLine" id="cb16-56" data-line-number="56">## [137] 379 119  68 152 181 128 494 369 475 390 264 191 107  97 296 169 252</a>
+<a class="sourceLine" id="cb16-57" data-line-number="57">## [154] 251 235 336 220 261 318 461 467 374 186 474 501 212   2 178 335 214</a>
+<a class="sourceLine" id="cb16-58" data-line-number="58">## [171] 223 219 452 190  17 417 391  10 148 362  99  45 393 135 405 457  51</a>
+<a class="sourceLine" id="cb16-59" data-line-number="59">## [188] 398 230 295 122 161  98 114 364 400 270 366 188  29  37 481 470 138</a>
+<a class="sourceLine" id="cb16-60" data-line-number="60">## [205] 285 269 118 345 349 139 155  79  39 104  54 431 491 331 272 377  22</a>
+<a class="sourceLine" id="cb16-61" data-line-number="61">## [222]  47 132 348 339 255 292 435 184 210 293 322 198 311 493 246 195 281</a>
+<a class="sourceLine" id="cb16-62" data-line-number="62">## [239]  20 436 226 324 357 240 248 495 372 444 280 358 446  58 137  96  16</a>
+<a class="sourceLine" id="cb16-63" data-line-number="63">## [256] 284  48 480 385  69 323 120 144 225 202 100 127 421 256  15 472 168</a>
+<a class="sourceLine" id="cb16-64" data-line-number="64">## [273] 289 498  25 227  44 477  21 192   7 344  38 263 237 473 375 484  92</a>
+<a class="sourceLine" id="cb16-65" data-line-number="65">## [290] 505 483  70 283 409 334 241 471 170 447 189 117 258 146 328 108 309</a>
+<a class="sourceLine" id="cb16-66" data-line-number="66">## [307] 424 433 370 445 383   4  78 316 307 382 268 304   1  55 257 462 492</a>
+<a class="sourceLine" id="cb16-67" data-line-number="67">## [324] 371 172  27 245 455 401  73 384  91  74 254 321 432 419</a>
 <a class="sourceLine" id="cb16-68" data-line-number="68">## </a>
 <a class="sourceLine" id="cb16-69" data-line-number="69">## </a>
 <a class="sourceLine" id="cb16-70" data-line-number="70">## $test.inds</a>
 <a class="sourceLine" id="cb16-71" data-line-number="71">## $test.inds[[1]]</a>
-<a class="sourceLine" id="cb16-72" data-line-number="72">##   [1]   9  10  12  17  18  20  27  29  35  40  42  48  50  52  55  60  61</a>
-<a class="sourceLine" id="cb16-73" data-line-number="73">##  [18]  67  70  72  73  76  79  81  82  83  88  91  92  96  98  99 100 103</a>
-<a class="sourceLine" id="cb16-74" data-line-number="74">##  [35] 104 106 109 110 112 115 118 120 122 123 125 127 128 131 134 139 149</a>
-<a class="sourceLine" id="cb16-75" data-line-number="75">##  [52] 155 156 160 164 165 169 171 173 175 181 182 185 187 190 191 195 196</a>
-<a class="sourceLine" id="cb16-76" data-line-number="76">##  [69] 197 199 200 202 214 215 218 219 220 221 230 231 234 242 245 247 250</a>
-<a class="sourceLine" id="cb16-77" data-line-number="77">##  [86] 253 254 258 265 267 270 271 272 273 274 275 276 279 280 281 282 283</a>
-<a class="sourceLine" id="cb16-78" data-line-number="78">## [103] 284 285 287 288 290 294 295 296 297 298 305 308 312 314 317 318 322</a>
-<a class="sourceLine" id="cb16-79" data-line-number="79">## [120] 323 327 330 331 340 344 348 353 357 367 375 377 379 383 387 389 392</a>
-<a class="sourceLine" id="cb16-80" data-line-number="80">## [137] 393 398 403 404 413 419 424 425 428 431 433 434 436 439 446 449 454</a>
-<a class="sourceLine" id="cb16-81" data-line-number="81">## [154] 456 460 461 462 464 471 472 473 476 481 487 494 497 499 500 505</a>
+<a class="sourceLine" id="cb16-72" data-line-number="72">##   [1]   1   4   6   7  10  13  17  20  22  23  25  26  27  34  35  38  39</a>
+<a class="sourceLine" id="cb16-73" data-line-number="73">##  [18]  41  44  49  50  51  52  61  64  78  83  84  90  91  92  94 100 105</a>
+<a class="sourceLine" id="cb16-74" data-line-number="74">##  [35] 107 108 116 118 119 121 123 127 128 132 134 135 138 146 150 155 164</a>
+<a class="sourceLine" id="cb16-75" data-line-number="75">##  [52] 172 179 187 190 191 192 198 200 202 204 209 210 211 214 215 217 219</a>
+<a class="sourceLine" id="cb16-76" data-line-number="76">##  [69] 220 225 226 230 236 237 241 245 248 254 255 257 261 263 264 269 270</a>
+<a class="sourceLine" id="cb16-77" data-line-number="77">##  [86] 272 278 279 284 285 288 290 293 296 299 301 304 306 308 311 314 316</a>
+<a class="sourceLine" id="cb16-78" data-line-number="78">## [103] 317 322 324 326 328 332 334 337 338 339 341 342 344 345 346 347 348</a>
+<a class="sourceLine" id="cb16-79" data-line-number="79">## [120] 350 351 358 369 372 374 376 382 389 390 396 400 404 405 411 413 415</a>
+<a class="sourceLine" id="cb16-80" data-line-number="80">## [137] 416 419 421 431 435 443 445 451 454 456 459 461 462 465 467 471 473</a>
+<a class="sourceLine" id="cb16-81" data-line-number="81">## [154] 474 476 477 480 483 486 489 490 494 495 497 498 499 501 503</a>
 <a class="sourceLine" id="cb16-82" data-line-number="82">## </a>
 <a class="sourceLine" id="cb16-83" data-line-number="83">## $test.inds[[2]]</a>
-<a class="sourceLine" id="cb16-84" data-line-number="84">##   [1]   1   3   6   8  11  13  14  15  19  22  24  25  26  28  31  34  38</a>
-<a class="sourceLine" id="cb16-85" data-line-number="85">##  [18]  39  41  43  44  49  51  53  56  57  58  59  62  64  65  66  68  69</a>
-<a class="sourceLine" id="cb16-86" data-line-number="86">##  [35]  71  77  78  84  86  87  93  94  95 107 114 129 130 137 141 142 146</a>
-<a class="sourceLine" id="cb16-87" data-line-number="87">##  [52] 148 152 153 159 161 162 168 172 176 178 183 189 193 203 206 208 209</a>
-<a class="sourceLine" id="cb16-88" data-line-number="88">##  [69] 216 224 226 227 228 229 232 233 235 239 240 243 244 246 249 251 259</a>
-<a class="sourceLine" id="cb16-89" data-line-number="89">##  [86] 261 263 266 269 286 291 293 301 303 304 309 310 313 321 325 326 328</a>
-<a class="sourceLine" id="cb16-90" data-line-number="90">## [103] 329 332 333 335 342 347 351 355 358 362 364 369 372 378 381 384 385</a>
-<a class="sourceLine" id="cb16-91" data-line-number="91">## [120] 386 388 391 394 396 397 400 401 406 408 414 415 416 417 418 421 422</a>
-<a class="sourceLine" id="cb16-92" data-line-number="92">## [137] 423 426 429 432 441 442 443 445 447 451 452 455 457 458 465 466 467</a>
-<a class="sourceLine" id="cb16-93" data-line-number="93">## [154] 470 474 475 477 483 485 488 489 490 491 492 495 496 501 504 506</a>
+<a class="sourceLine" id="cb16-84" data-line-number="84">##   [1]   2   5   8   9  14  15  16  19  21  29  37  45  47  48  54  55  56</a>
+<a class="sourceLine" id="cb16-85" data-line-number="85">##  [18]  58  60  63  65  68  69  70  71  73  74  75  76  79  82  86  87  93</a>
+<a class="sourceLine" id="cb16-86" data-line-number="86">##  [35]  95  96  97  98  99 104 114 117 120 122 131 133 137 139 143 144 148</a>
+<a class="sourceLine" id="cb16-87" data-line-number="87">##  [52] 152 153 154 158 159 161 166 168 169 170 171 177 178 181 184 185 186</a>
+<a class="sourceLine" id="cb16-88" data-line-number="88">##  [69] 188 189 195 199 205 208 212 218 221 223 224 227 228 229 232 234 235</a>
+<a class="sourceLine" id="cb16-89" data-line-number="89">##  [86] 239 240 246 247 249 251 252 256 258 266 268 271 273 277 280 281 283</a>
+<a class="sourceLine" id="cb16-90" data-line-number="90">## [103] 289 292 295 298 307 309 318 321 323 330 331 335 336 349 352 355 357</a>
+<a class="sourceLine" id="cb16-91" data-line-number="91">## [120] 362 364 366 370 371 375 377 379 383 384 385 387 388 391 393 395 398</a>
+<a class="sourceLine" id="cb16-92" data-line-number="92">## [137] 401 409 410 417 420 423 424 427 432 433 436 441 444 446 447 450 452</a>
+<a class="sourceLine" id="cb16-93" data-line-number="93">## [154] 453 455 457 463 468 470 472 475 481 484 485 491 492 493 496 505</a>
 <a class="sourceLine" id="cb16-94" data-line-number="94">## </a>
 <a class="sourceLine" id="cb16-95" data-line-number="95">## $test.inds[[3]]</a>
-<a class="sourceLine" id="cb16-96" data-line-number="96">##   [1]   2   4   5   7  16  21  23  30  32  33  36  37  45  46  47  54  63</a>
-<a class="sourceLine" id="cb16-97" data-line-number="97">##  [18]  74  75  80  85  89  90  97 101 102 105 108 111 113 116 117 119 121</a>
-<a class="sourceLine" id="cb16-98" data-line-number="98">##  [35] 124 126 132 133 135 136 138 140 143 144 145 147 150 151 154 157 158</a>
-<a class="sourceLine" id="cb16-99" data-line-number="99">##  [52] 163 166 167 170 174 177 179 180 184 186 188 192 194 198 201 204 205</a>
-<a class="sourceLine" id="cb16-100" data-line-number="100">##  [69] 207 210 211 212 213 217 222 223 225 236 237 238 241 248 252 255 256</a>
-<a class="sourceLine" id="cb16-101" data-line-number="101">##  [86] 257 260 262 264 268 277 278 289 292 299 300 302 306 307 311 315 316</a>
-<a class="sourceLine" id="cb16-102" data-line-number="102">## [103] 319 320 324 334 336 337 338 339 341 343 345 346 349 350 352 354 356</a>
-<a class="sourceLine" id="cb16-103" data-line-number="103">## [120] 359 360 361 363 365 366 368 370 371 373 374 376 380 382 390 395 399</a>
-<a class="sourceLine" id="cb16-104" data-line-number="104">## [137] 402 405 407 409 410 411 412 420 427 430 435 437 438 440 444 448 450</a>
-<a class="sourceLine" id="cb16-105" data-line-number="105">## [154] 453 459 463 468 469 478 479 480 482 484 486 493 498 502 503</a></code></pre></div>
+<a class="sourceLine" id="cb16-96" data-line-number="96">##   [1]   3  11  12  18  24  28  30  31  32  33  36  40  42  43  46  53  57</a>
+<a class="sourceLine" id="cb16-97" data-line-number="97">##  [18]  59  62  66  67  72  77  80  81  85  88  89 101 102 103 106 109 110</a>
+<a class="sourceLine" id="cb16-98" data-line-number="98">##  [35] 111 112 113 115 124 125 126 129 130 136 140 141 142 145 147 149 151</a>
+<a class="sourceLine" id="cb16-99" data-line-number="99">##  [52] 156 157 160 162 163 165 167 173 174 175 176 180 182 183 193 194 196</a>
+<a class="sourceLine" id="cb16-100" data-line-number="100">##  [69] 197 201 203 206 207 213 216 222 231 233 238 242 243 244 250 253 259</a>
+<a class="sourceLine" id="cb16-101" data-line-number="101">##  [86] 260 262 265 267 274 275 276 282 286 287 291 294 297 300 302 303 305</a>
+<a class="sourceLine" id="cb16-102" data-line-number="102">## [103] 310 312 313 315 319 320 325 327 329 333 340 343 353 354 356 359 360</a>
+<a class="sourceLine" id="cb16-103" data-line-number="103">## [120] 361 363 365 367 368 373 378 380 381 386 392 394 397 399 402 403 406</a>
+<a class="sourceLine" id="cb16-104" data-line-number="104">## [137] 407 408 412 414 418 422 425 426 428 429 430 434 437 438 439 440 442</a>
+<a class="sourceLine" id="cb16-105" data-line-number="105">## [154] 448 449 458 460 464 466 469 478 479 482 487 488 500 502 504 506</a></code></pre></div>
 </div>
 </div>
 <div id="stratification-blocking-and-grouping" class="section level1">
@@ -806,8 +810,8 @@ Resampling Figure
 <a class="sourceLine" id="cb17-6" data-line-number="6">## Resample Result</a>
 <a class="sourceLine" id="cb17-7" data-line-number="7">## Task: iris-example</a>
 <a class="sourceLine" id="cb17-8" data-line-number="8">## Learner: classif.lda</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">## Aggr perf: mmce.test.mean=0.0200163</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">## Runtime: 0.224637</a></code></pre></div>
+<a class="sourceLine" id="cb17-9" data-line-number="9">## Aggr perf: mmce.test.mean=0.0266667</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">## Runtime: 0.223791</a></code></pre></div>
 <p>Stratification is also available for survival tasks. Here the stratification balances the censoring rate.</p>
 </div>
 <div id="stratification-with-respect-to-explanatory-variables" class="section level2">
@@ -821,8 +825,8 @@ Resampling Figure
 <a class="sourceLine" id="cb18-5" data-line-number="5">## Resample Result</a>
 <a class="sourceLine" id="cb18-6" data-line-number="6">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb18-7" data-line-number="7">## Learner: regr.rpart</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">## Aggr perf: mse.test.mean=23.8023330</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9">## Runtime: 0.0288064</a></code></pre></div>
+<a class="sourceLine" id="cb18-8" data-line-number="8">## Aggr perf: mse.test.mean=23.8064861</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">## Runtime: 0.0281782</a></code></pre></div>
 </div>
 <div id="blocking-cv-with-flexible-predefined-indices" class="section level2">
 <h2 class="hasAnchor">
@@ -1047,13 +1051,13 @@ Resampling Figure
 <a class="sourceLine" id="cb21-16" data-line-number="16">##   ..- attr(*, "class")= chr [1:2] "CVDesc" "ResampleDesc"</a>
 <a class="sourceLine" id="cb21-17" data-line-number="17">##  $ size      : int 150</a>
 <a class="sourceLine" id="cb21-18" data-line-number="18">##  $ train.inds:List of 3</a>
-<a class="sourceLine" id="cb21-19" data-line-number="19">##   ..$ : int [1:100] 116 14 121 42 84 6 148 120 85 56 ...</a>
-<a class="sourceLine" id="cb21-20" data-line-number="20">##   ..$ : int [1:100] 118 14 121 89 106 84 6 148 120 76 ...</a>
-<a class="sourceLine" id="cb21-21" data-line-number="21">##   ..$ : int [1:100] 118 116 89 106 42 76 85 56 146 5 ...</a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">##   ..$ : int [1:100] 47 80 63 6 40 20 89 33 64 85 ...</a>
+<a class="sourceLine" id="cb21-20" data-line-number="20">##   ..$ : int [1:100] 35 121 42 45 80 63 6 40 68 89 ...</a>
+<a class="sourceLine" id="cb21-21" data-line-number="21">##   ..$ : int [1:100] 35 121 47 42 45 20 68 74 64 85 ...</a>
 <a class="sourceLine" id="cb21-22" data-line-number="22">##  $ test.inds :List of 3</a>
-<a class="sourceLine" id="cb21-23" data-line-number="23">##   ..$ : int [1:50] 4 9 11 12 15 17 20 26 28 29 ...</a>
-<a class="sourceLine" id="cb21-24" data-line-number="24">##   ..$ : int [1:50] 1 2 3 5 8 10 18 21 23 25 ...</a>
-<a class="sourceLine" id="cb21-25" data-line-number="25">##   ..$ : int [1:50] 6 7 13 14 16 19 22 24 30 32 ...</a>
+<a class="sourceLine" id="cb21-23" data-line-number="23">##   ..$ : int [1:50] 1 4 9 10 17 19 23 29 30 31 ...</a>
+<a class="sourceLine" id="cb21-24" data-line-number="24">##   ..$ : int [1:50] 5 7 8 13 15 16 20 21 25 26 ...</a>
+<a class="sourceLine" id="cb21-25" data-line-number="25">##   ..$ : int [1:50] 2 3 6 11 12 14 18 22 24 32 ...</a>
 <a class="sourceLine" id="cb21-26" data-line-number="26">##  $ group     : Factor w/ 0 levels: </a>
 <a class="sourceLine" id="cb21-27" data-line-number="27">##  - attr(*, "class")= chr "ResampleInstance"</a>
 <a class="sourceLine" id="cb21-28" data-line-number="28"></a>
@@ -1069,24 +1073,24 @@ Resampling Figure
 <a class="sourceLine" id="cb21-38" data-line-number="38">##   ..- attr(*, "class")= chr [1:2] "CVDesc" "ResampleDesc"</a>
 <a class="sourceLine" id="cb21-39" data-line-number="39">##  $ size      : int 150</a>
 <a class="sourceLine" id="cb21-40" data-line-number="40">##  $ train.inds:List of 3</a>
-<a class="sourceLine" id="cb21-41" data-line-number="41">##   ..$ : int [1:100] 32 45 84 20 63 50 11 18 22 146 ...</a>
-<a class="sourceLine" id="cb21-42" data-line-number="42">##   ..$ : int [1:100] 32 56 100 63 109 11 18 53 22 136 ...</a>
-<a class="sourceLine" id="cb21-43" data-line-number="43">##   ..$ : int [1:100] 45 56 100 84 20 109 50 53 146 136 ...</a>
+<a class="sourceLine" id="cb21-41" data-line-number="41">##   ..$ : int [1:100] 114 27 77 140 45 134 127 10 12 18 ...</a>
+<a class="sourceLine" id="cb21-42" data-line-number="42">##   ..$ : int [1:100] 114 48 140 45 8 10 61 33 36 110 ...</a>
+<a class="sourceLine" id="cb21-43" data-line-number="43">##   ..$ : int [1:100] 27 48 77 8 134 127 12 18 36 60 ...</a>
 <a class="sourceLine" id="cb21-44" data-line-number="44">##  $ test.inds :List of 3</a>
-<a class="sourceLine" id="cb21-45" data-line-number="45">##   ..$ : int [1:50] 5 6 8 9 10 16 19 24 29 39 ...</a>
-<a class="sourceLine" id="cb21-46" data-line-number="46">##   ..$ : int [1:50] 3 4 7 12 14 15 20 21 23 25 ...</a>
-<a class="sourceLine" id="cb21-47" data-line-number="47">##   ..$ : int [1:50] 1 2 11 13 17 18 22 26 27 28 ...</a>
+<a class="sourceLine" id="cb21-45" data-line-number="45">##   ..$ : int [1:50] 4 5 7 8 9 14 15 20 21 25 ...</a>
+<a class="sourceLine" id="cb21-46" data-line-number="46">##   ..$ : int [1:50] 2 6 11 12 16 17 18 19 22 27 ...</a>
+<a class="sourceLine" id="cb21-47" data-line-number="47">##   ..$ : int [1:50] 1 3 10 13 23 24 33 38 39 41 ...</a>
 <a class="sourceLine" id="cb21-48" data-line-number="48">##  $ group     : Factor w/ 0 levels: </a>
 <a class="sourceLine" id="cb21-49" data-line-number="49">##  - attr(*, "class")= chr "ResampleInstance"</a>
 <a class="sourceLine" id="cb21-50" data-line-number="50"></a>
 <a class="sourceLine" id="cb21-51" data-line-number="51"><span class="co"># Access the indices of the training observations in iteration 3</span></a>
 <a class="sourceLine" id="cb21-52" data-line-number="52">rin<span class="op">$</span>train.inds[[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb21-53" data-line-number="53">##   [1]  45  56 100  84  20 109  50  53 146 136  86   9  62  25  41  95 103</a>
-<a class="sourceLine" id="cb21-54" data-line-number="54">##  [18]  78  57  76 129 112   6 104  29  23  51  21 118  67  12   7  55 107</a>
-<a class="sourceLine" id="cb21-55" data-line-number="55">##  [35]  73 138   4   5 122  98  75  90   3 143  14  40 125   8  89 141  16</a>
-<a class="sourceLine" id="cb21-56" data-line-number="56">##  [52]  91 139  43  82  92  35 140  94  68  87  42  46  88 126 115  77  64</a>
-<a class="sourceLine" id="cb21-57" data-line-number="57">##  [69]  70  10  37 149  44  83  47  97 134  39  24 101  59 121  15 119 131</a>
-<a class="sourceLine" id="cb21-58" data-line-number="58">##  [86] 113 110 117  60  72  85 135  19  34 133 137 127 102  81 128</a></code></pre></div>
+<a class="sourceLine" id="cb21-53" data-line-number="53">##   [1]  27  48  77   8 134 127  12  18  36  60  65 149  30 129  66 116  81</a>
+<a class="sourceLine" id="cb21-54" data-line-number="54">##  [18]  90 120 141  96 118 144  85 101  32 100 143 132  88  97   2  47   6</a>
+<a class="sourceLine" id="cb21-55" data-line-number="55">##  [35]  15  92  72  99  57  28  46  22  73  40   9  82  89  17  34  87  70</a>
+<a class="sourceLine" id="cb21-56" data-line-number="56">##  [52]  75  25  14  20  83 121  95  84 126 108  31  68  16 103  29 150 146</a>
+<a class="sourceLine" id="cb21-57" data-line-number="57">##  [69] 122  69  11  56  21  79  35 112  43   4 111  71  86  19  94 137 102</a>
+<a class="sourceLine" id="cb21-58" data-line-number="58">##  [86]  37 119   5 133 136  26   7  93  52  64  62  44  42  50  91</a></code></pre></div>
 <p>The result <code>rin</code> inherits from class <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) and contains <code>list</code>s of index vectors for the train and test sets.</p>
 <p>If a <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) is passed to <code><a href="../../reference/resample.html">resample()</a></code>, it is instantiated internally. Naturally, it is also possible to pass a <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) directly.</p>
 <p>While the separation between resample descriptions, resample instances, and the <code><a href="../../reference/resample.html">resample()</a></code> function itself seems overly complicated, it has several advantages:</p>
@@ -1130,7 +1134,7 @@ Resampling Figure
 <a class="sourceLine" id="cb24-5" data-line-number="5">mmce<span class="op">$</span>aggr<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb24-6" data-line-number="6">## function (task, perf.test, perf.train, measure, group, pred) </a>
 <a class="sourceLine" id="cb24-7" data-line-number="7">## mean(perf.test)</a>
-<a class="sourceLine" id="cb24-8" data-line-number="8">## &lt;bytecode: 0xcc1c7a0&gt;</a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">## &lt;bytecode: 0xbe149b0&gt;</a>
 <a class="sourceLine" id="cb24-9" data-line-number="9">## &lt;environment: namespace:mlr&gt;</a>
 <a class="sourceLine" id="cb24-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co"># Root mean square error</span></a>
@@ -1140,7 +1144,7 @@ Resampling Figure
 <a class="sourceLine" id="cb24-15" data-line-number="15">rmse<span class="op">$</span>aggr<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb24-16" data-line-number="16">## function (task, perf.test, perf.train, measure, group, pred) </a>
 <a class="sourceLine" id="cb24-17" data-line-number="17">## sqrt(mean(perf.test^2))</a>
-<a class="sourceLine" id="cb24-18" data-line-number="18">## &lt;bytecode: 0x14456b98&gt;</a>
+<a class="sourceLine" id="cb24-18" data-line-number="18">## &lt;bytecode: 0x13638ad8&gt;</a>
 <a class="sourceLine" id="cb24-19" data-line-number="19">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
 <p>You can change the aggregation method of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. All available aggregation schemes are listed on the <code><a href="../../reference/aggregations.html">aggregations()</a></code> documentation page.</p>
 <div id="example-one-measure-with-different-aggregations" class="section level2">
@@ -1165,23 +1169,23 @@ Resampling Figure
 <a class="sourceLine" id="cb25-16" data-line-number="16">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.lm"</span>, bh.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(mse, mseTestMedian, mseTestMin, mseTestMax))</a>
 <a class="sourceLine" id="cb25-17" data-line-number="17">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb25-18" data-line-number="18">## Measures:             mse       mse       mse       mse</a>
-<a class="sourceLine" id="cb25-19" data-line-number="19">## [Resample] iter 1:    30.934915130.934915130.934915130.9349151</a>
-<a class="sourceLine" id="cb25-20" data-line-number="20">## [Resample] iter 2:    24.672065324.672065324.672065324.6720653</a>
-<a class="sourceLine" id="cb25-21" data-line-number="21">## [Resample] iter 3:    20.287048220.287048220.287048220.2870482</a>
+<a class="sourceLine" id="cb25-19" data-line-number="19">## [Resample] iter 1:    29.684514829.684514829.684514829.6845148</a>
+<a class="sourceLine" id="cb25-20" data-line-number="20">## [Resample] iter 2:    22.242719622.242719622.242719622.2427196</a>
+<a class="sourceLine" id="cb25-21" data-line-number="21">## [Resample] iter 3:    18.982917618.982917618.982917618.9829176</a>
 <a class="sourceLine" id="cb25-22" data-line-number="22">## </a>
-<a class="sourceLine" id="cb25-23" data-line-number="23">## Aggregated Result: mse.test.mean=25.2980095,mse.test.median=24.6720653,mse.test.min=20.2870482,mse.test.max=30.9349151</a>
+<a class="sourceLine" id="cb25-23" data-line-number="23">## Aggregated Result: mse.test.mean=23.6367173,mse.test.median=22.2427196,mse.test.min=18.9829176,mse.test.max=29.6845148</a>
 <a class="sourceLine" id="cb25-24" data-line-number="24">## </a>
 <a class="sourceLine" id="cb25-25" data-line-number="25"></a>
 <a class="sourceLine" id="cb25-26" data-line-number="26">r</a>
 <a class="sourceLine" id="cb25-27" data-line-number="27">## Resample Result</a>
 <a class="sourceLine" id="cb25-28" data-line-number="28">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb25-29" data-line-number="29">## Learner: regr.lm</a>
-<a class="sourceLine" id="cb25-30" data-line-number="30">## Aggr perf: mse.test.mean=25.2980095,mse.test.median=24.6720653,mse.test.min=20.2870482,mse.test.max=30.9349151</a>
-<a class="sourceLine" id="cb25-31" data-line-number="31">## Runtime: 0.0238559</a>
+<a class="sourceLine" id="cb25-30" data-line-number="30">## Aggr perf: mse.test.mean=23.6367173,mse.test.median=22.2427196,mse.test.min=18.9829176,mse.test.max=29.6845148</a>
+<a class="sourceLine" id="cb25-31" data-line-number="31">## Runtime: 0.0240495</a>
 <a class="sourceLine" id="cb25-32" data-line-number="32"></a>
 <a class="sourceLine" id="cb25-33" data-line-number="33">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb25-34" data-line-number="34">##   mse.test.mean mse.test.median    mse.test.min    mse.test.max </a>
-<a class="sourceLine" id="cb25-35" data-line-number="35">##        25.29801        24.67207        20.28705        30.93492</a></code></pre></div>
+<a class="sourceLine" id="cb25-35" data-line-number="35">##        23.63672        22.24272        18.98292        29.68451</a></code></pre></div>
 </div>
 <div id="example-calculating-the-training-error" class="section level2">
 <h2 class="hasAnchor">
@@ -1192,22 +1196,22 @@ Resampling Figure
 <a class="sourceLine" id="cb26-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, mmceTrainMean))</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb26-5" data-line-number="5">## Measures:             mmce.train   mmce.test</a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">## [Resample] iter 1:    0.0300000    0.0600000</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7">## [Resample] iter 2:    0.0300000    0.0800000</a>
-<a class="sourceLine" id="cb26-8" data-line-number="8">## [Resample] iter 3:    0.0300000    0.0600000</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">## [Resample] iter 1:    0.0200000    0.1000000</a>
+<a class="sourceLine" id="cb26-7" data-line-number="7">## [Resample] iter 2:    0.0500000    0.0200000</a>
+<a class="sourceLine" id="cb26-8" data-line-number="8">## [Resample] iter 3:    0.0400000    0.1200000</a>
 <a class="sourceLine" id="cb26-9" data-line-number="9">## </a>
-<a class="sourceLine" id="cb26-10" data-line-number="10">## Aggregated Result: mmce.test.mean=0.0666667,mmce.train.mean=0.0300000</a>
+<a class="sourceLine" id="cb26-10" data-line-number="10">## Aggregated Result: mmce.test.mean=0.0800000,mmce.train.mean=0.0366667</a>
 <a class="sourceLine" id="cb26-11" data-line-number="11">## </a>
 <a class="sourceLine" id="cb26-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb26-13" data-line-number="13">r<span class="op">$</span>measures.train</a>
 <a class="sourceLine" id="cb26-14" data-line-number="14">##   iter mmce mmce</a>
-<a class="sourceLine" id="cb26-15" data-line-number="15">## 1    1 0.03 0.03</a>
-<a class="sourceLine" id="cb26-16" data-line-number="16">## 2    2 0.03 0.03</a>
-<a class="sourceLine" id="cb26-17" data-line-number="17">## 3    3 0.03 0.03</a>
+<a class="sourceLine" id="cb26-15" data-line-number="15">## 1    1 0.02 0.02</a>
+<a class="sourceLine" id="cb26-16" data-line-number="16">## 2    2 0.05 0.05</a>
+<a class="sourceLine" id="cb26-17" data-line-number="17">## 3    3 0.04 0.04</a>
 <a class="sourceLine" id="cb26-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb26-19" data-line-number="19">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb26-20" data-line-number="20">##  mmce.test.mean mmce.train.mean </a>
-<a class="sourceLine" id="cb26-21" data-line-number="21">##      0.06666667      0.03000000</a></code></pre></div>
+<a class="sourceLine" id="cb26-21" data-line-number="21">##      0.08000000      0.03666667</a></code></pre></div>
 </div>
 <div id="example-bootstrap" class="section level2">
 <h2 class="hasAnchor">
@@ -1240,17 +1244,17 @@ Resampling Figure
 <a class="sourceLine" id="cb27-19" data-line-number="19">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb27-20" data-line-number="20"><span class="kw">head</span>(r<span class="op">$</span>measures.train)</a>
 <a class="sourceLine" id="cb27-21" data-line-number="21">##   iter       mmce       mmce       mmce</a>
-<a class="sourceLine" id="cb27-22" data-line-number="22">## 1    1 0.02666667 0.02666667 0.02666667</a>
-<a class="sourceLine" id="cb27-23" data-line-number="23">## 2    2 0.01333333 0.01333333 0.01333333</a>
-<a class="sourceLine" id="cb27-24" data-line-number="24">## 3    3 0.02666667 0.02666667 0.02666667</a>
-<a class="sourceLine" id="cb27-25" data-line-number="25">## 4    4 0.02666667 0.02666667 0.02666667</a>
-<a class="sourceLine" id="cb27-26" data-line-number="26">## 5    5 0.02000000 0.02000000 0.02000000</a>
-<a class="sourceLine" id="cb27-27" data-line-number="27">## 6    6 0.05333333 0.05333333 0.05333333</a>
+<a class="sourceLine" id="cb27-22" data-line-number="22">## 1    1 0.02000000 0.02000000 0.02000000</a>
+<a class="sourceLine" id="cb27-23" data-line-number="23">## 2    2 0.04000000 0.04000000 0.04000000</a>
+<a class="sourceLine" id="cb27-24" data-line-number="24">## 3    3 0.03333333 0.03333333 0.03333333</a>
+<a class="sourceLine" id="cb27-25" data-line-number="25">## 4    4 0.02000000 0.02000000 0.02000000</a>
+<a class="sourceLine" id="cb27-26" data-line-number="26">## 5    5 0.04000000 0.04000000 0.04000000</a>
+<a class="sourceLine" id="cb27-27" data-line-number="27">## 6    6 0.02666667 0.02666667 0.02666667</a>
 <a class="sourceLine" id="cb27-28" data-line-number="28"></a>
 <a class="sourceLine" id="cb27-29" data-line-number="29"><span class="co"># Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap</span></a>
 <a class="sourceLine" id="cb27-30" data-line-number="30">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb27-31" data-line-number="31">## mmce.test.mean      mmce.b632  mmce.b632plus </a>
-<a class="sourceLine" id="cb27-32" data-line-number="32">##     0.04811318     0.04218353     0.04260017</a></code></pre></div>
+<a class="sourceLine" id="cb27-32" data-line-number="32">##     0.05617634     0.04531678     0.04593813</a></code></pre></div>
 </div>
 </div>
 <div id="convenience-functions" class="section level1">
@@ -1260,33 +1264,32 @@ Resampling Figure
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw"><a href="../../reference/resample.html">crossval</a></span>(<span class="st">"classif.lda"</span>, iris.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber))</a>
 <a class="sourceLine" id="cb28-2" data-line-number="2">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb28-3" data-line-number="3">## Measures:             mmce      ber</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4">## [Resample] iter 1:    0.0400000 0.0392157</a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">## [Resample] iter 2:    0.0200000 0.0185185</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">## [Resample] iter 3:    0.0000000 0.0000000</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">## [Resample] iter 1:    0.0000000 0.0000000</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">## [Resample] iter 2:    0.0400000 0.0350877</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">## [Resample] iter 3:    0.0200000 0.0196078</a>
 <a class="sourceLine" id="cb28-7" data-line-number="7">## </a>
-<a class="sourceLine" id="cb28-8" data-line-number="8">## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0192447</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0182319</a>
 <a class="sourceLine" id="cb28-9" data-line-number="9">## </a>
 <a class="sourceLine" id="cb28-10" data-line-number="10">## Resample Result</a>
 <a class="sourceLine" id="cb28-11" data-line-number="11">## Task: iris-example</a>
 <a class="sourceLine" id="cb28-12" data-line-number="12">## Learner: classif.lda</a>
-<a class="sourceLine" id="cb28-13" data-line-number="13">## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0192447</a>
-<a class="sourceLine" id="cb28-14" data-line-number="14">## Runtime: 0.0231464</a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0182319</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">## Runtime: 0.0222394</a>
 <a class="sourceLine" id="cb28-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb28-16" data-line-number="16"><span class="kw"><a href="../../reference/resample.html">bootstrapB632plus</a></span>(<span class="st">"regr.lm"</span>, bh.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw">list</span>(mse, mae))</a>
 <a class="sourceLine" id="cb28-17" data-line-number="17">## Resampling: OOB bootstrapping</a>
 <a class="sourceLine" id="cb28-18" data-line-number="18">## Measures:             mse.train   mae.train   mse.test    mae.test</a>
-<a class="sourceLine" id="cb28-19" data-line-number="19">## [Resample] iter 1:    20.6217897  3.1545384   23.8673977  3.5476986</a>
-<a class="sourceLine" id="cb28-20" data-line-number="20">## [Resample] iter 2:    18.4223275  2.9912441   32.2443749  3.7558772</a>
-<a class="sourceLine" id="cb28-21" data-line-number="21">## [Resample] iter 3:    21.3428202  3.2037218   21.7386647  3.2936039</a>
+<a class="sourceLine" id="cb28-19" data-line-number="19">## [Resample] iter 1:    18.8103738  3.1957831   28.4299634  3.6126278</a>
+<a class="sourceLine" id="cb28-20" data-line-number="20">## [Resample] iter 2:    25.7375773  3.6272819   22.5360259  3.4982402</a>
+<a class="sourceLine" id="cb28-21" data-line-number="21">## [Resample] iter 3:    21.3416337  3.2312280   20.3499453  3.1927475</a>
 <a class="sourceLine" id="cb28-22" data-line-number="22">## </a>
-<a class="sourceLine" id="cb28-23" data-line-number="23">## Aggregated Result: mse.b632plus=23.9414740,mae.b632plus=3.3891149</a>
+<a class="sourceLine" id="cb28-23" data-line-number="23">## Aggregated Result: mse.b632plus=23.1746269,mae.b632plus=3.4065466</a>
 <a class="sourceLine" id="cb28-24" data-line-number="24">## </a>
 <a class="sourceLine" id="cb28-25" data-line-number="25">## Resample Result</a>
 <a class="sourceLine" id="cb28-26" data-line-number="26">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb28-27" data-line-number="27">## Learner: regr.lm</a>
-<a class="sourceLine" id="cb28-28" data-line-number="28">## Aggr perf: mse.b632plus=23.9414740,mae.b632plus=3.3891149</a>
-<a class="sourceLine" id="cb28-29" data-line-number="29">## Runtime: 0.0367162</a></code></pre></div>
-</div>
+<a class="sourceLine" id="cb28-28" data-line-number="28">## Aggr perf: mse.b632plus=23.1746269,mae.b632plus=3.4065466</a>
+<a class="sourceLine" id="cb28-29" data-line-number="29">## Runtime: 0.0360167</a></code></pre></div>
 </div>
   </div>
 
