@@ -65,16 +65,17 @@
 #'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
 #'      of test indices.}
 #'   }
-#' @param fixed (`logical(1)`)
+#' @param fixed (`logical(1)`)\cr
 #'   Whether indices supplied via argument 'blocking' in the task should be used as
 #'   fully pre-defined indices. Default is `FALSE` which means
 #'   they will be used following the 'blocking' approach.
-#'   'fixed' only works with ResampleDesc 'CV' and the supplied indices must match
-#'   the number of observations.
-#' @param blocking.cv (`logical(1)`)
-#'   Should 'blocking' be used in 'CV'? Default to `FALSE`.
-#'   This is different to 'fixed = TRUE' and cannot be combined. Please check the tutorial
-#'   for a more detailed comparison.
+#'   `fixed` only works with ResampleDesc `CV` and the supplied indices must match
+#'   the number of observations. When `fixed = TRUE`, the `iters` argument will be ignored
+#'   and is interally set to the number of supplied factor levels in `blocking`.
+#' @param blocking.cv (`logical(1)`)\cr
+#'   Should 'blocking' be used in `CV`? Default to `FALSE`.
+#'   This is different to `fixed = TRUE` and cannot be combined. Please check the mlr online tutorial
+#'   for more details.
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
