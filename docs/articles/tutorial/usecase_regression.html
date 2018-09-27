@@ -265,18 +265,30 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Use case: Regression</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/usecase_regression.Rmd"><code>vignettes/tutorial/usecase_regression.Rmd</code></a></small>
-      <div class="hidden name"><code>usecase_regression.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#define-a-task">Define a task</a></li>
+      <li><a href="#tuning">Tuning</a></li>
+      <li><a href="#benchmark-experiment">Benchmark Experiment</a></li>
+      <li><a href="#performance">Performance</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/usecase_regression.Rmd"><code>vignettes/tutorial/usecase_regression.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>For the regression use case we use the well-known <code><a href="http://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code> dataset. The road map is as follows:</p>
 <ul>
 <li>define the learning task (<a href="task.html">here</a>),</li>
@@ -400,6 +412,7 @@
 <p>A closer look at the boxplot reveals that RF outperforms the other learners for this specific task. Despite the tuning procedure performed before, the benchmark experiment for linear and lasso regression yields similar but poor results.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr)</a></code></pre></div>
 <p><img src="usecase_regression_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
 </div>
   </div>
 

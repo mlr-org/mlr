@@ -265,18 +265,32 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Integrated Learners</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/integrated_learners.Rmd"><code>vignettes/tutorial/integrated_learners.Rmd</code></a></small>
-      <div class="hidden name"><code>integrated_learners.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#classification-83">Classification (83)</a></li>
+      <li><a href="#regression-60">Regression (60)</a></li>
+      <li><a href="#survival-analysis-12">Survival analysis (12)</a></li>
+      <li><a href="#cluster-analysis-9">Cluster analysis (9)</a></li>
+      <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
+      <li><a href="#multilabel-classification-3">Multilabel classification (3)</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/integrated_learners.Rmd"><code>vignettes/tutorial/integrated_learners.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>This page lists the learning methods already integrated in <code>mlr</code>.</p>
 <p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>Ord.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods specific to the type of learning task. See also <code><a href="../../reference/RLearner.html">RLearner()</a></code> for details.</p>
@@ -2539,6 +2553,7 @@
 </tbody>
 </table>
 <p>Moreover, you can use the binary relevance method to apply ordinary classification learners to the multilabel problem. See the documentation of function <code><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper()</a></code> and the tutorial section on <a href="multilabel.html" target="_blank">multilabel classification</a> for details.</p>
+</div>
 </div>
   </div>
 

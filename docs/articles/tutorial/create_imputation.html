@@ -265,18 +265,28 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Creating an Imputation Method</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/create_imputation.Rmd"><code>vignettes/tutorial/create_imputation.Rmd</code></a></small>
-      <div class="hidden name"><code>create_imputation.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#example-imputation-using-the-mean">Example: Imputation using the mean</a></li>
+      <li><a href="#writing-your-own-imputation-method">Writing your own imputation method</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/create_imputation.Rmd"><code>vignettes/tutorial/create_imputation.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>Function <code><a href="../../reference/makeImputeMethod.html">makeImputeMethod()</a></code> permits to create your own imputation method. For this purpose you need to specify a <em>learn</em> function that extracts the necessary information and an <em>impute</em> function that does the actual imputation. The <em>learn</em> and <em>impute</em> functions both have at least the following formal arguments:</p>
 <ul>
 <li>
@@ -351,6 +361,7 @@
 <a class="sourceLine" id="cb4-13" data-line-number="13">## 8     19      99 13.8   59     5   8       FALSE         FALSE</a>
 <a class="sourceLine" id="cb4-14" data-line-number="14">## 9      8      19 20.1   61     5   9       FALSE         FALSE</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15">## 10     8     194  8.6   69     5  10        TRUE         FALSE</a></code></pre></div>
+</div>
 </div>
   </div>
 

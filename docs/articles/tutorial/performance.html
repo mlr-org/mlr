@@ -265,18 +265,40 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Evaluating Learner Performance</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/performance.Rmd"><code>vignettes/tutorial/performance.Rmd</code></a></small>
-      <div class="hidden name"><code>performance.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#available-performance-measures">Available performance measures</a></li>
+      <li><a href="#listing-measures">Listing measures</a></li>
+      <li>
+<a href="#calculate-performance-measures">Calculate performance measures</a><ul>
+<li><a href="#requirements-of-performance-measures">Requirements of performance measures</a></li>
+      </ul>
+</li>
+      <li><a href="#access-a-performance-measure">Access a performance measure</a></li>
+      <li>
+<a href="#binary-classification">Binary classification</a><ul>
+<li><a href="#plot-performance-versus-threshold">Plot performance versus threshold</a></li>
+      <li><a href="#roc-measures">ROC measures</a></li>
+      </ul>
+</li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/performance.Rmd"><code>vignettes/tutorial/performance.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>The quality of the predictions of a model in <code>mlr</code> can be assessed with respect to a number of different performance measures. In order to calculate the performance measures, call <code><a href="../../reference/performance.html">performance()</a></code> on the object returned by <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and specify the desired performance measures.</p>
 <div id="available-performance-measures" class="section level1">
 <h1 class="hasAnchor">
@@ -341,17 +363,17 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> <span class="kw">seq</span>(<span class="dv">2</span>, n, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##     mse </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">## 14.1196</a></code></pre></div>
+<a class="sourceLine" id="cb3-7" data-line-number="7">##      mse </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## 14.10639</a></code></pre></div>
 <p>The following code computes the median of squared errors (<a href="measures.html" target="_blank">medse</a>) instead.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> medse)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">##    medse </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## 3.514966</a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3">## 4.218493</a></code></pre></div>
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a list of measures which can also include <a href="create_measure.html" target="_blank">your own measure</a>.</p>
 <p>Calculate the mean squared error, median squared error and mean absolute error (<a href="measures.html" target="_blank">mae</a>).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(mse, medse, mae))</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">##       mse     medse       mae </a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## 14.119602  3.514966  2.652351</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## 14.106386  4.218493  2.732194</a></code></pre></div>
 <p>For the other types of learning problems and measures, calculating the performance basically works in the same way.</p>
 <div id="requirements-of-performance-measures" class="section level2">
 <h2 class="hasAnchor">
@@ -360,7 +382,7 @@
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> timetrain, <span class="dt">model =</span> mod)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">## timetrain </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">##     0.097</a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3">##     0.076</a></code></pre></div>
 <p>For many performance measures in cluster analysis the <code><a href="../../reference/Task.html">Task()</a></code> is required.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</a>
@@ -369,7 +391,7 @@
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># Calculate the Dunn index</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> dunn, <span class="dt">task =</span> mtcars.task)</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">##      dunn </a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 0.1178415</a></code></pre></div>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## 0.2278991</a></code></pre></div>
 <p>Moreover, some measures require a certain type of prediction. For example in binary classification in order to calculate the AUC (<a href="measures.html" target="_blank">auc</a>) – the area under the ROC (receiver operating characteristic) curve – we have to make sure that posterior probabilities are predicted. For more information on ROC analysis, see the section on <a href="roc_analysis.html" target="_blank">ROC analysis</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</a>
@@ -460,6 +482,7 @@
 <a class="sourceLine" id="cb12-22" data-line-number="22">## lrm - Negative likelihood ratio (LR-)</a>
 <a class="sourceLine" id="cb12-23" data-line-number="23">## dor - Diagnostic odds ratio</a></code></pre></div>
 <p>The top left <span class="math inline">\(2 \times 2\)</span> matrix is the <a href="predict.html" target="_blank">confusion matrix</a>, which shows the relative frequency of correctly and incorrectly classified observations. Below and to the right a large number of performance measures that can be inferred from the confusion matrix are added. By default some additional info about the measures is printed. You can turn this off using the <code>abbreviations</code> argument of the <code>print</code> (<code><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures()</a></code>) method: <code>print(r, abbreviations = FALSE)</code>.</p>
+</div>
 </div>
 </div>
   </div>

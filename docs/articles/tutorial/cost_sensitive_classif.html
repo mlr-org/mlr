@@ -265,18 +265,30 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Cost-Sensitive Classification</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cost_sensitive_classif.Rmd"><code>vignettes/tutorial/cost_sensitive_classif.Rmd</code></a></small>
-      <div class="hidden name"><code>cost_sensitive_classif.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#class-dependent-misclassification-costs">Class-dependent misclassification costs</a></li>
+      <li><a href="#binary-classification-problems">Binary classification problems</a></li>
+      <li><a href="#multi-class-problems">Multi-class problems</a></li>
+      <li><a href="#example-dependent-misclassification-costs">Example-dependent misclassification costs</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cost_sensitive_classif.Rmd"><code>vignettes/tutorial/cost_sensitive_classif.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>In <em>regular classification</em> the aim is to minimize the misclassification rate and thus all types of misclassification errors are deemed equally severe. A more general setting is <em>cost-sensitive classification</em> where the costs caused by different kinds of errors are not assumed to be equal and the objective is to minimize the expected costs.</p>
 <p>In case of <em>class-dependent costs</em> the costs depend on the true and predicted class label. The costs <span class="math inline">\(c(k, l)\)</span> for predicting class <span class="math inline">\(k\)</span> if the true label is <span class="math inline">\(l\)</span> are usually organized into a <span class="math inline">\(K \times K\)</span> cost matrix where <span class="math inline">\(K\)</span> is the number of classes. Naturally, it is assumed that the cost of predicting the correct class label <span class="math inline">\(y\)</span> is minimal (that is <span class="math inline">\(c(y, y) \leq c(k, y)\)</span> for all <span class="math inline">\(k = 1,\ldots,K\)</span>).</p>
 <p>A further generalization of this scenario are <em>example-dependent misclassification costs</em> where each example <span class="math inline">\((x, y)\)</span> is coupled with an individual cost vector of length <span class="math inline">\(K\)</span>. Its <span class="math inline">\(k\)</span>-th component expresses the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. A real-world example is fraud detection where the costs do not only depend on the true and predicted status fraud/non-fraud, but also on the amount of money involved in each case. Naturally, the cost of predicting the true class label <span class="math inline">\(y\)</span> is assumed to be minimum. The true class labels are redundant information, as they can be easily inferred from the cost vectors. Moreover, given the cost vector, the expected costs do not depend on the true class label <span class="math inline">\(y\)</span>. The classification problem is therefore completely defined by the feature values <span class="math inline">\(x\)</span> and the corresponding cost vectors.</p>
@@ -447,13 +459,13 @@
 <a class="sourceLine" id="cb7-6" data-line-number="6">## Resample Result</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8">## Learner: classif.multinom</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## Aggr perf: credit.costs.test.mean=0.5390810,mmce.test.mean=0.3550527</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## Runtime: 0.21583</a></code></pre></div>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## Aggr perf: credit.costs.test.mean=0.5710381,mmce.test.mean=0.3670257</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">## Runtime: 0.320431</a></code></pre></div>
 <p>If we are also interested in the cross-validated performance for the default threshold values we can call <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> on the resample prediction (<code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code>) <code>r$pred</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Cross-validated performance with default thresholds</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(r<span class="op">$</span>pred, <span class="fl">0.5</span>), <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">## credit.costs         mmce </a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">##    0.8779318    0.2579945</a></code></pre></div>
+<a class="sourceLine" id="cb8-4" data-line-number="4">##    0.9359929    0.2680195</a></code></pre></div>
 <p>Theoretical thresholding is only reliable if the predicted posterior probabilities are correct. If there is bias the thresholds have to be shifted accordingly.</p>
 <p>Useful in this regard is function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> that you can use to plot the average costs as well as any other performance measure versus possible threshold values for the positive class in <span class="math inline">\([0,1]\)</span>. The underlying data is generated by <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>.</p>
 <p>The following plots show the cross-validated costs and error rate (<a href="measures.html" target="_blank">mmce</a>). The theoretical threshold <code>th</code> calculated above is indicated by the vertical line. As you can see from the left-hand plot the theoretical threshold seems a bit large.</p>
@@ -474,18 +486,18 @@
 <a class="sourceLine" id="cb10-6" data-line-number="6">## Resample Result</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb10-8" data-line-number="8">## Learner: classif.multinom</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">## Aggr perf: credit.costs.test.mean=0.8779318,mmce.test.mean=0.2579945</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">## Runtime: 0.311584</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">## Aggr perf: credit.costs.test.mean=0.9359929,mmce.test.mean=0.2680195</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">## Runtime: 0.183233</a>
 <a class="sourceLine" id="cb10-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co"># Tune the threshold based on the predicted probabilities on the 3 test data sets</span></a>
 <a class="sourceLine" id="cb10-13" data-line-number="13">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span>(<span class="dt">pred =</span> r<span class="op">$</span>pred, <span class="dt">measure =</span> credit.costs)</a>
 <a class="sourceLine" id="cb10-14" data-line-number="14">tune.res</a>
 <a class="sourceLine" id="cb10-15" data-line-number="15">## $th</a>
-<a class="sourceLine" id="cb10-16" data-line-number="16">## [1] 0.1248591</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">## [1] 0.1116642</a>
 <a class="sourceLine" id="cb10-17" data-line-number="17">## </a>
 <a class="sourceLine" id="cb10-18" data-line-number="18">## $perf</a>
 <a class="sourceLine" id="cb10-19" data-line-number="19">## credit.costs </a>
-<a class="sourceLine" id="cb10-20" data-line-number="20">##     0.516055</a></code></pre></div>
+<a class="sourceLine" id="cb10-20" data-line-number="20">##    0.5340011</a></code></pre></div>
 <p><code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> returns the optimal threshold value for the positive class and the corresponding performance. As expected the tuned threshold is smaller than the theoretical threshold.</p>
 </div>
 </div>
@@ -544,8 +556,8 @@
 <a class="sourceLine" id="cb13-15" data-line-number="15">## Resample Result</a>
 <a class="sourceLine" id="cb13-16" data-line-number="16">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb13-17" data-line-number="17">## Learner: weightedclasses.classif.multinom</a>
-<a class="sourceLine" id="cb13-18" data-line-number="18">## Aggr perf: credit.costs.test.mean=0.5400400,mmce.test.mean=0.3480397</a>
-<a class="sourceLine" id="cb13-19" data-line-number="19">## Runtime: 0.328283</a></code></pre></div>
+<a class="sourceLine" id="cb13-18" data-line-number="18">## Aggr perf: credit.costs.test.mean=0.5550461,mmce.test.mean=0.3550377</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19">## Runtime: 0.285936</a></code></pre></div>
 <p>For classification methods like <code>"classif.ksvm"</code> (the support vector machine <code><a href="http://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code> in package <code>kernlab</code>) that support class weights you can pass them directly.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">class.weights =</span> <span class="kw">c</span>(<span class="dt">Bad =</span> w, <span class="dt">Good =</span> <span class="dv">1</span>))</a></code></pre></div>
 <p>Or, more conveniently, you can again use <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>.</p>
@@ -555,8 +567,8 @@
 <a class="sourceLine" id="cb15-4" data-line-number="4">## Resample Result</a>
 <a class="sourceLine" id="cb15-5" data-line-number="5">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb15-6" data-line-number="6">## Learner: weightedclasses.classif.ksvm</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">## Aggr perf: credit.costs.test.mean=0.5720031,mmce.test.mean=0.3240186</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">## Runtime: 1.75661</a></code></pre></div>
+<a class="sourceLine" id="cb15-7" data-line-number="7">## Aggr perf: credit.costs.test.mean=0.5870331,mmce.test.mean=0.3310286</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">## Runtime: 1.92159</a></code></pre></div>
 <p>Just like the theoretical threshold, the theoretical weights may not always be suitable, therefore you can tune the weight for the positive class as shown in the following example. Calculating the theoretical weight beforehand may help to narrow down the search interval.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn)</a>
@@ -566,28 +578,28 @@
 <a class="sourceLine" id="cb16-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb16-7" data-line-number="7">tune.res</a>
 <a class="sourceLine" id="cb16-8" data-line-number="8">## Tune result:</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">## Op. pars: wcw.weight=6</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10">## credit.costs.test.mean=0.5260320,mmce.test.mean=0.3700437</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">## Op. pars: wcw.weight=7.5</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">## credit.costs.test.mean=0.5250040,mmce.test.mean=0.3850078</a>
 <a class="sourceLine" id="cb16-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw">as.data.frame</span>(tune.res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
 <a class="sourceLine" id="cb16-13" data-line-number="13">##    wcw.weight credit.costs.test.mean mmce.test.mean</a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">## 1           4              0.5420181      0.3260296</a>
-<a class="sourceLine" id="cb16-15" data-line-number="15">## 2         4.5              0.5440381      0.3400376</a>
-<a class="sourceLine" id="cb16-16" data-line-number="16">## 3           5              0.5400400      0.3480397</a>
-<a class="sourceLine" id="cb16-17" data-line-number="17">## 4         5.5              0.5290080      0.3610317</a>
-<a class="sourceLine" id="cb16-18" data-line-number="18">## 5           6              0.5260320      0.3700437</a>
-<a class="sourceLine" id="cb16-19" data-line-number="19">## 6         6.5              0.5350260      0.3790377</a>
-<a class="sourceLine" id="cb16-20" data-line-number="20">## 7           7              0.5330330      0.3850407</a>
-<a class="sourceLine" id="cb16-21" data-line-number="21">## 8         7.5              0.5380410      0.3940407</a>
-<a class="sourceLine" id="cb16-22" data-line-number="22">## 9           8              0.5510421      0.4070418</a>
-<a class="sourceLine" id="cb16-23" data-line-number="23">## 10        8.5              0.5500620      0.4140458</a>
-<a class="sourceLine" id="cb16-24" data-line-number="24">## 11          9              0.5430670      0.4150468</a>
-<a class="sourceLine" id="cb16-25" data-line-number="25">## 12        9.5              0.5360540      0.4200458</a>
-<a class="sourceLine" id="cb16-26" data-line-number="26">## 13         10              0.5400520      0.4240438</a>
-<a class="sourceLine" id="cb16-27" data-line-number="27">## 14       10.5              0.5490461      0.4330378</a>
-<a class="sourceLine" id="cb16-28" data-line-number="28">## 15         11              0.5560501      0.4400418</a>
-<a class="sourceLine" id="cb16-29" data-line-number="29">## 16       11.5              0.5570451      0.4450408</a>
-<a class="sourceLine" id="cb16-30" data-line-number="30">## 17         12              0.5510391      0.4470429</a></code></pre></div>
+<a class="sourceLine" id="cb16-14" data-line-number="14">## 1           4              0.5830351      0.3390306</a>
+<a class="sourceLine" id="cb16-15" data-line-number="15">## 2         4.5              0.5540541      0.3460377</a>
+<a class="sourceLine" id="cb16-16" data-line-number="16">## 3           5              0.5550461      0.3550377</a>
+<a class="sourceLine" id="cb16-17" data-line-number="17">## 4         5.5              0.5510630      0.3630427</a>
+<a class="sourceLine" id="cb16-18" data-line-number="18">## 5           6              0.5540421      0.3740297</a>
+<a class="sourceLine" id="cb16-19" data-line-number="19">## 6         6.5              0.5370400      0.3770237</a>
+<a class="sourceLine" id="cb16-20" data-line-number="20">## 7           7              0.5300180      0.3820138</a>
+<a class="sourceLine" id="cb16-21" data-line-number="21">## 8         7.5              0.5250040      0.3850078</a>
+<a class="sourceLine" id="cb16-22" data-line-number="22">## 9           8              0.5350081      0.3950118</a>
+<a class="sourceLine" id="cb16-23" data-line-number="23">## 10        8.5              0.5410201      0.4050158</a>
+<a class="sourceLine" id="cb16-24" data-line-number="24">## 11          9              0.5430191      0.4110188</a>
+<a class="sourceLine" id="cb16-25" data-line-number="25">## 12        9.5              0.5430191      0.4190148</a>
+<a class="sourceLine" id="cb16-26" data-line-number="26">## 13         10              0.5480061      0.4280059</a>
+<a class="sourceLine" id="cb16-27" data-line-number="27">## 14       10.5              0.5450121      0.4330079</a>
+<a class="sourceLine" id="cb16-28" data-line-number="28">## 15         11              0.5520161      0.4400119</a>
+<a class="sourceLine" id="cb16-29" data-line-number="29">## 16       11.5              0.5520071      0.4440069</a>
+<a class="sourceLine" id="cb16-30" data-line-number="30">## 17         12              0.5550071      0.4470069</a></code></pre></div>
 </div>
 <div id="ii--over--and-undersampling" class="section level4">
 <h4 class="hasAnchor">
@@ -600,7 +612,7 @@
 <a class="sourceLine" id="cb17-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> credit.task)</a>
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb17-6" data-line-number="6">## credit.costs         mmce </a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">##        0.432        0.320</a></code></pre></div>
+<a class="sourceLine" id="cb17-7" data-line-number="7">##        0.439        0.315</a></code></pre></div>
 <p>Note that in the above example the learner was trained on the oversampled task <code>credit.task.over</code>. In order to get the training performance on the original task predictions were calculated for <code>credit.task</code>.</p>
 <p>We usually prefer resampled performance values, but simply calling <code><a href="../../reference/resample.html">resample()</a></code> on the oversampled task does not work since predictions have to be based on the original task. The solution is to create a wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) via function <code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>. Internally, <code><a href="../../reference/oversample.html">oversample()</a></code> is called before training, but predictions are done on the original data.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
@@ -619,8 +631,8 @@
 <a class="sourceLine" id="cb18-14" data-line-number="14">## Resample Result</a>
 <a class="sourceLine" id="cb18-15" data-line-number="15">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb18-16" data-line-number="16">## Learner: classif.multinom.oversampled</a>
-<a class="sourceLine" id="cb18-17" data-line-number="17">## Aggr perf: credit.costs.test.mean=0.5730491,mmce.test.mean=0.3570367</a>
-<a class="sourceLine" id="cb18-18" data-line-number="18">## Runtime: 0.58237</a></code></pre></div>
+<a class="sourceLine" id="cb18-17" data-line-number="17">## Aggr perf: credit.costs.test.mean=0.5500441,mmce.test.mean=0.3580317</a>
+<a class="sourceLine" id="cb18-18" data-line-number="18">## Runtime: 0.530671</a></code></pre></div>
 <p>Of course, we can also tune the oversampling rate. For this purpose we again have to create an OversampleWrapper (<code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>). Optimal values for parameter <code>osw.rate</code> can be obtained using function <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span>(lrn, <span class="dt">osw.cl =</span> <span class="st">"Bad"</span>)</a>
@@ -630,8 +642,8 @@
 <a class="sourceLine" id="cb19-6" data-line-number="6">  <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb19-7" data-line-number="7">tune.res</a>
 <a class="sourceLine" id="cb19-8" data-line-number="8">## Tune result:</a>
-<a class="sourceLine" id="cb19-9" data-line-number="9">## Op. pars: osw.rate=5.5</a>
-<a class="sourceLine" id="cb19-10" data-line-number="10">## credit.costs.test.mean=0.5200290,mmce.test.mean=0.3480486</a></code></pre></div>
+<a class="sourceLine" id="cb19-9" data-line-number="9">## Op. pars: osw.rate=6.25</a>
+<a class="sourceLine" id="cb19-10" data-line-number="10">## credit.costs.test.mean=0.5290290,mmce.test.mean=0.3610167</a></code></pre></div>
 </div>
 </div>
 </div>
@@ -690,8 +702,8 @@
 <a class="sourceLine" id="cb21-5" data-line-number="5">## Resample Result</a>
 <a class="sourceLine" id="cb21-6" data-line-number="6">## Task: waveform</a>
 <a class="sourceLine" id="cb21-7" data-line-number="7">## Learner: classif.rpart</a>
-<a class="sourceLine" id="cb21-8" data-line-number="8">## Aggr perf: wf.costs.test.mean=9.1979775,mmce.test.mean=0.3339947</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">## Runtime: 0.0816112</a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">## Aggr perf: wf.costs.test.mean=8.6445543,mmce.test.mean=0.3159584</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">## Runtime: 0.0527608</a>
 <a class="sourceLine" id="cb21-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co"># Calculate thresholds as 1/(average costs of true classes)</span></a>
 <a class="sourceLine" id="cb21-12" data-line-number="12">th =<span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="kw">rowSums</span>(costs)</a>
@@ -703,7 +715,7 @@
 <a class="sourceLine" id="cb21-18" data-line-number="18">pred.th =<span class="st"> </span><span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(r<span class="op">$</span>pred, <span class="dt">threshold =</span> th)</a>
 <a class="sourceLine" id="cb21-19" data-line-number="19"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred.th, <span class="dt">measures =</span> <span class="kw">list</span>(wf.costs, mmce))</a>
 <a class="sourceLine" id="cb21-20" data-line-number="20">## wf.costs     mmce </a>
-<a class="sourceLine" id="cb21-21" data-line-number="21">## 7.667436 0.387959</a></code></pre></div>
+<a class="sourceLine" id="cb21-21" data-line-number="21">## 7.507828 0.503992</a></code></pre></div>
 <p>The threshold vector <code>th</code> in the above example is chosen according to the average costs of the true classes 55, 4.5 and 9. More exactly, <code>th</code> corresponds to an artificial cost matrix of the structure mentioned above with off-diagonal elements <span class="math inline">\(c(2,1) = c(3,1) = 55\)</span>, <span class="math inline">\(c(1,2) = c(3,2) = 4.5\)</span> and <span class="math inline">\(c(1,3) = c(2,3) = 9\)</span>. This threshold vector may be not optimal but leads to smaller total costs on the data set than the default.</p>
 <div id="ii--empirical-thresholding-1" class="section level4">
 <h4 class="hasAnchor">
@@ -713,10 +725,10 @@
 <a class="sourceLine" id="cb22-2" data-line-number="2">tune.res</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">## $th</a>
 <a class="sourceLine" id="cb22-4" data-line-number="4">##          1          2          3 </a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">## 0.01985795 0.59184280 0.38829926 </a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">## 0.04568174 0.22482587 0.72949239 </a>
 <a class="sourceLine" id="cb22-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb22-7" data-line-number="7">## $perf</a>
-<a class="sourceLine" id="cb22-8" data-line-number="8">## [1] 4.769557</a></code></pre></div>
+<a class="sourceLine" id="cb22-8" data-line-number="8">## [1] 4.920809</a></code></pre></div>
 <p>For comparison we show the standardized version of the theoretically motivated threshold vector chosen above.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">th<span class="op">/</span><span class="kw">sum</span>(th)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">##          1          2          3 </a>
@@ -740,8 +752,8 @@
 <a class="sourceLine" id="cb24-8" data-line-number="8">  <span class="dt">measures =</span> <span class="kw">list</span>(wf.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb24-9" data-line-number="9">tune.res</a>
 <a class="sourceLine" id="cb24-10" data-line-number="10">## Tune result:</a>
-<a class="sourceLine" id="cb24-11" data-line-number="11">## Op. pars: wcw.weight=0.67,0.314,0...</a>
-<a class="sourceLine" id="cb24-12" data-line-number="12">## wf.costs.test.mean=3.4761200,mmce.test.mean=0.2539259</a></code></pre></div>
+<a class="sourceLine" id="cb24-11" data-line-number="11">## Op. pars: wcw.weight=0.607,0.569,...</a>
+<a class="sourceLine" id="cb24-12" data-line-number="12">## wf.costs.test.mean=2.4705889,mmce.test.mean=0.1299930</a></code></pre></div>
 </div>
 </div>
 </div>
@@ -817,7 +829,7 @@
 <a class="sourceLine" id="cb28-3" data-line-number="3">## Prediction: 150 observations</a>
 <a class="sourceLine" id="cb28-4" data-line-number="4">## predict.type: response</a>
 <a class="sourceLine" id="cb28-5" data-line-number="5">## threshold: </a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">## time: 0.15</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">## time: 0.11</a>
 <a class="sourceLine" id="cb28-7" data-line-number="7">##   id response</a>
 <a class="sourceLine" id="cb28-8" data-line-number="8">## 1  1   setosa</a>
 <a class="sourceLine" id="cb28-9" data-line-number="9">## 2  2   setosa</a>
@@ -829,7 +841,8 @@
 <a class="sourceLine" id="cb28-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb28-16" data-line-number="16"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(meancosts, mcp), <span class="dt">task =</span> costsens.task)</a>
 <a class="sourceLine" id="cb28-17" data-line-number="17">## meancosts       mcp </a>
-<a class="sourceLine" id="cb28-18" data-line-number="18">##  126.6657  121.6931</a></code></pre></div>
+<a class="sourceLine" id="cb28-18" data-line-number="18">##  131.3093  126.1800</a></code></pre></div>
+</div>
 </div>
   </div>
 

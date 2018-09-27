@@ -265,18 +265,33 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Implemented Performance Measures</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/measures.Rmd"><code>vignettes/tutorial/measures.Rmd</code></a></small>
-      <div class="hidden name"><code>measures.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#classification">Classification</a></li>
+      <li><a href="#regression">Regression</a></li>
+      <li><a href="#survival-analysis">Survival analysis</a></li>
+      <li><a href="#cluster-analysis">Cluster analysis</a></li>
+      <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
+      <li><a href="#multilabel-classification">Multilabel classification</a></li>
+      <li><a href="#general-performance-measures">General performance measures</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/measures.Rmd"><code>vignettes/tutorial/measures.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>This page shows the performance measures available for the different types of learning problems as well as general performance measures in alphabetical order. (See also the documentation about <code><a href="../../reference/measures.html">measures()</a></code> and <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> for available measures and their properties.)</p>
 <p>If you find that a measure is missing, you can either <a href="https://github.com/mlr-org/mlr/issues">open an issue</a> or try to <a href="create_measure.html" target="_blank">implement a measure yourself</a>.</p>
 <p>Column <strong>Minim.</strong> indicates if the measure is minimized during, e.g., tuning or feature selection. <strong>Best</strong> and <strong>Worst</strong> show the best and worst values the performance measure can attain. For <em>classification</em>, column <strong>Multi</strong> indicates if a measure is suitable for multi-class problems. If not, the measure can only be used for binary classification problems.</p>
@@ -1648,6 +1663,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 </div>
   </div>
 

@@ -265,18 +265,37 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Functional Data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/functional_data.Rmd"><code>vignettes/tutorial/functional_data.Rmd</code></a></small>
-      <div class="hidden name"><code>functional_data.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#how-to-model-functional-data">How to model functional data?</a></li>
+      <li><a href="#creating-a-task-that-contains-functional-features">Creating a task that contains functional features</a></li>
+      <li><a href="#constructing-a-learner">Constructing a learner</a></li>
+      <li><a href="#training-the-learner">Training the learner</a></li>
+      <li>
+<a href="#feature-extraction">Feature extraction</a><ul>
+<li><a href="#wavelets">Wavelets</a></li>
+      <li><a href="#fourier-transformation">Fourier transformation</a></li>
+      </ul>
+</li>
+      <li><a href="#wrappers">Wrappers</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/functional_data.Rmd"><code>vignettes/tutorial/functional_data.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>In (<a href="http://faculty.bscb.cornell.edu/~hooker/ShortCourseHandout.pdf">Hooker, 2017</a>) it is defined, that “Functional data is multivariate data with an ordering on the dimensions”. It means that this type of data consists of curves varying over a continuum, such as time, frequency, or wavelength. Thus, functional data is often present when measurements at various time points are analyzed. The curves of functional data are usually interdependent, which means that the measurement at a point, e.g., <span class="math inline">\(t_{i + 1}\)</span>, depends on measurements at some other points, e.g., <span class="math inline">\({t_1, ..., t_i}; i \in \mathbb{N}\)</span>.</p>
 <p>As the most well-known machine learning techniques generally do not emphasize the interdependence between features, they are often not <em>well suited</em> for such tasks. Application of these techniques can lead to poor performance. Functional data analysis, on the other hand, tries to address this issue either by using algorithms particularly tailored to functional data or by transforming the functional covariates into a continuum (e.g., time, wavelength) nondependent feature space. For a more in-depth introduction to functional data analysis see, e.g. <a href="http://rd.springer.com/article/10.1007/BF02293704">When the data are functions</a> (Ramsay, J.O., 1982).</p>
 <p>Each observation of a functional covariate in the data is an evaluation of a functional, i.e., it consists of measurements of a scalar value at various time (wavelength or another type of continuum) points. A single observation might then look like this:</p>
@@ -509,6 +528,7 @@
 <a class="sourceLine" id="cb17-9" data-line-number="9">## Model for learner.id=regr.rpart.extracted; learner.class=extractFDAFeatsWrapper</a>
 <a class="sourceLine" id="cb17-10" data-line-number="10">## Trained on: task.id = fs.fdf; obs = 129; features = 3</a>
 <a class="sourceLine" id="cb17-11" data-line-number="11">## Hyperparameters: xval=0</a></code></pre></div>
+</div>
 </div>
   </div>
 

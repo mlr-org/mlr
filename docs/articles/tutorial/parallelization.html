@@ -265,18 +265,29 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Parallelization</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/parallelization.Rmd"><code>vignettes/tutorial/parallelization.Rmd</code></a></small>
-      <div class="hidden name"><code>parallelization.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#parallelization-levels">Parallelization levels</a></li>
+      <li><a href="#custom-learners-and-parallelization">Custom learners and parallelization</a></li>
+      <li><a href="#the-end">The end</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/parallelization.Rmd"><code>vignettes/tutorial/parallelization.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="http://www.rdocumentation.org/packages/parallelMap/topics/parallelMap">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="http://www.rdocumentation.org/packages/parallelMap/topics/parallelMap">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code>parallel()</code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
 <p>All you have to do is select a backend by calling one of the <code>parallelStart*</code> (<code><a href="http://www.rdocumentation.org/packages/parallelMap/topics/parallelStart">parallelMap::parallelStart()</a></code>) functions. The first loop <code>mlr</code> encounters which is marked as parallel executable will be automatically parallelized. It is good practice to call <code>parallelStop</code> (<code><a href="http://www.rdocumentation.org/packages/parallelMap/topics/parallelStop">parallelMap::parallelStop()</a></code>) at the end of your script.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"parallelMap"</span>)</a>
@@ -316,6 +327,7 @@
 <h1 class="hasAnchor">
 <a href="#the-end" class="anchor"></a>The end</h1>
 <p>For further details, consult the <a href="https://github.com/berndbischl/parallelMap#parallelmap">parallelMap tutorial</a> and help (<code>?parallelMap()</code>).</p>
+</div>
 </div>
   </div>
 

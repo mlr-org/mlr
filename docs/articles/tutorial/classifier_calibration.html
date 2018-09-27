@@ -265,18 +265,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Classifier Calibration</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/classifier_calibration.Rmd"><code>vignettes/tutorial/classifier_calibration.Rmd</code></a></small>
-      <div class="hidden name"><code>classifier_calibration.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/classifier_calibration.Rmd"><code>vignettes/tutorial/classifier_calibration.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>A classifier is “calibrated” when the predicted probability of a class matches the expected frequency of that class. <code>mlr</code> can visualize this by plotting estimated class probabilities (which are discretized) against the observed frequency of said class in the data using <code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> and <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>.</p>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> takes as input <code><a href="../../reference/Prediction.html">Prediction()</a></code>, <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code>, <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>, or a named list of <code><a href="../../reference/Prediction.html">Prediction()</a></code> or <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects on a classification (multiclass or binary) task with learner(s) that are capable of outputting probabiliites (i.e., learners must be constructed with <code>predict.type = "prob"</code>). The result is an object of class <code>CalibrationData</code> (<code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code>) which has elements <code>proportion</code>, <code>data</code>, and <code>task</code>. <code>proportion</code> gives the proportion of observations labelled with a given class for each predicted probability bin (e.g., for observations which are predicted to have class “A” with probability <span class="math inline">\((0, 0.1]\)</span>, what is the proportion of said observations which have class “A”?).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
@@ -318,6 +320,7 @@
 <a class="sourceLine" id="cb5-8" data-line-number="8">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</a></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

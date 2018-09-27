@@ -265,18 +265,27 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Learning Curve Analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/learning_curve.Rmd"><code>vignettes/tutorial/learning_curve.Rmd</code></a></small>
-      <div class="hidden name"><code>learning_curve.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li><a href="#plotting-the-learning-curve">Plotting the learning curve</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/learning_curve.Rmd"><code>vignettes/tutorial/learning_curve.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>To analyze how the increase of observations in the training set improves the performance of a learner the <em>learning curve</em> is an appropriate visual tool. The experiment is conducted with an increasing subsample size and the performance is measured. In the plot the x-axis represents the relative subsample size whereas the y-axis represents the performance.</p>
 <p>Note that this function internally uses <code><a href="../../reference/benchmark.html">benchmark()</a></code> in combination with <code><a href="../../reference/makeDownsampleWrapper.html">makeDownsampleWrapper()</a></code>, so for every run new observations are drawn. Thus the results are noisy. To reduce noise increase the number of resampling iterations. You can define the resampling method in the <code>resampling</code> argument of <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code>. It is also possible to pass a ResampleInstance (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) (which is a result of <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) to make resampling consistent for all passed learners and each step of increasing the number of observations.</p>
 <div id="plotting-the-learning-curve" class="section level1">
@@ -316,6 +325,7 @@
 <p>There is also an experimental <code>ggvis</code> plotting function, <code>plotLearningCurveGGVIS()</code>. Instead of the <code>facet</code> argument to <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code> there is an argument <code>interaction</code> which plays a similar role. As subplots are not available in <code>ggvis</code>, measures or learners are mapped to an interactive sidebar which allows selection of the displayed measures or learners. The other feature is mapped to color.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">plotLearningCurveGGVIS</span>(lc2, <span class="dt">interaction =</span> <span class="st">"measure"</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">plotLearningCurveGGVIS</span>(lc2, <span class="dt">interaction =</span> <span class="st">"learner"</span>)</a></code></pre></div>
+</div>
 </div>
   </div>
 
