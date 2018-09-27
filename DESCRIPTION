@@ -1,6 +1,6 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.13
+Version: 2.13.9000
 Authors@R: 
     c(person(given = "Bernd",
              family = "Bischl",
@@ -203,6 +203,7 @@ Suggests:
     laGP,
     LiblineaR,
     lintr (>= 1.0.0.9001),
+    liquidSVM,
     MASS,
     mboost,
     mco,

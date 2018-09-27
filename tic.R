@@ -21,7 +21,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_rcmdcheck(args = "--as-cran", notes_are_errors = FALSE,
                             build_args = "--no-build-vignettes"))
 
-  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
+  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
@@ -44,7 +44,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_install_cran("magick")) %>% # favicon creation
     add_step(step_install_cran("pander"))
 
-  if (!Sys.getenv("$TRAVIS_EVENT_TYPE") == "cron") {
+  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
