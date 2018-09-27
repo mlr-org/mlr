@@ -304,13 +304,46 @@
     </div>
 
     <div class="contents">
+    <div id="mlr-2-14" class="section level1">
+<h1 class="page-header">
+<a href="#mlr-2-14" class="anchor"></a>mlr 2.14:<small> Unreleased </small>
+</h1>
+<div id="learners---new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---new" class="anchor"></a>learners - new</h2>
+<ul>
+<li>classif.liquidSVM</li>
+<li>regr.liquidSVM</li>
+</ul>
+</div>
+</div>
     <div id="mlr-2-13" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-13" class="anchor"></a>mlr 2.13:<small> 2018-08-28 </small>
+<a href="#mlr-2-14" class="anchor"></a>mlr 2.14:<small> Unreleased </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>general</h2>
+<ul>
+<li>add option to use fully predefined indices in resampling (<code><a href="../reference/makeResampleDesc.html">makeResampleDesc(fixed = TRUE)</a></code>)</li>
+</ul>
+</div>
+<div id="learners---new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---new" class="anchor"></a>learners - new</h2>
+<ul>
+<li>classif.liquidSVM</li>
+<li>regr.liquidSVM</li>
+</ul>
+</div>
+</div>
+    <div id="mlr-2-13" class="section level1">
+<h1 class="page-header">
+<a href="#mlr-2-13" class="anchor"></a>mlr 2.13:<small> 2018-08-28 </small>
+</h1>
+<div id="general-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general-1" class="anchor"></a>general</h2>
 <ul>
 <li>Disabled unit tests for CRAN, we test on travis only now</li>
 <li>Suppress messages with show.learner.output = FALSE</li>
@@ -353,9 +386,9 @@
 <h1 class="page-header">
 <a href="#mlr-2-12" class="anchor"></a>mlr 2.12:<small> 2018-03-10 </small>
 </h1>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>general</h2>
+<a href="#general-2" class="anchor"></a>general</h2>
 <ul>
 <li>Support for functional data (fda) using matrix columns has been added.</li>
 <li>Relaxed the way wrappers can be nested – the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper</li>
@@ -438,9 +471,9 @@
 <li>h20*: Add support for “missings”</li>
 </ul>
 </div>
-<div id="learners---new" class="section level2">
+<div id="learners---new-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---new" class="anchor"></a>learners - new</h2>
+<a href="#learners---new-1" class="anchor"></a>learners - new</h2>
 <ul>
 <li>classif.adaboostm1</li>
 <li>classif.fdaknn</li>
@@ -482,9 +515,9 @@
 <h1 class="page-header">
 <a href="#mlr-2-11" class="anchor"></a>mlr 2.11:<small> 2017-03-15 </small>
 </h1>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>general</h2>
+<a href="#general-3" class="anchor"></a>general</h2>
 <ul>
 <li>The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.</li>
 <li>New option on.error.dump to include dumps that can be inspected with the debugger with errors</li>
@@ -629,9 +662,9 @@
 <li>adapted {classif,regr,surv}.ranger parameters for new ranger version</li>
 </ul>
 </div>
-<div id="learners---new-1" class="section level2">
+<div id="learners---new-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---new-1" class="anchor"></a>learners - new</h2>
+<a href="#learners---new-2" class="anchor"></a>learners - new</h2>
 <ul>
 <li>multilabel.cforest</li>
 <li>surv.gbm</li>
@@ -729,9 +762,9 @@
 <li>classif.glmboost, regr.glmboost: add parameters stopintern and trace</li>
 </ul>
 </div>
-<div id="learners---new-2" class="section level2">
+<div id="learners---new-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---new-2" class="anchor"></a>learners - new</h2>
+<a href="#learners---new-3" class="anchor"></a>learners - new</h2>
 <ul>
 <li>classif.C50</li>
 <li>classif.gausspr</li>
@@ -1353,6 +1386,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mlr-2-14">2.14</a></li>
         <li><a href="#mlr-2-13">2.13</a></li>
         <li><a href="#mlr-2-12">2.12</a></li>
         <li><a href="#mlr-2-11">2.11</a></li>

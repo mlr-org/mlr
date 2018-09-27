@@ -306,7 +306,7 @@
 <a class="sourceLine" id="cb1-22" data-line-number="22">## {</a>
 <a class="sourceLine" id="cb1-23" data-line-number="23">##     measureMSE(pred$data$truth, pred$data$response)</a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">## }</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0xbe177d0&gt;</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0xd204c00&gt;</a>
 <a class="sourceLine" id="cb1-26" data-line-number="26">## &lt;environment: namespace:mlr&gt;</a>
 <a class="sourceLine" id="cb1-27" data-line-number="27"></a>
 <a class="sourceLine" id="cb1-28" data-line-number="28">measureMSE</a>
@@ -314,7 +314,7 @@
 <a class="sourceLine" id="cb1-30" data-line-number="30">## {</a>
 <a class="sourceLine" id="cb1-31" data-line-number="31">##     mean((response - truth)^2)</a>
 <a class="sourceLine" id="cb1-32" data-line-number="32">## }</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">## &lt;bytecode: 0xc17efb0&gt;</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">## &lt;bytecode: 0xd568400&gt;</a>
 <a class="sourceLine" id="cb1-34" data-line-number="34">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
 <p>See the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) documentation page for a detailed description of the object slots.</p>
 <p>At the core is slot <code>$fun</code> which contains the function that calculates the performance value. The actual work is done by function <code>measureMSE</code> (<code><a href="../../reference/measures.html">measures()</a></code>). Similar functions, generally adhering to the naming scheme <code>measure</code> followed by the capitalized measure ID, exist for most performance measures. See the [<code><a href="../../reference/measures.html">measures()</a></code>] help page for a complete list.</p>
@@ -338,7 +338,7 @@
 <a class="sourceLine" id="cb3-9" data-line-number="9">test.mean<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">## function (task, perf.test, perf.train, measure, group, pred) </a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">## mean(perf.test)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## &lt;bytecode: 0xb810828&gt;</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">## &lt;bytecode: 0xc81a150&gt;</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
 <p>All aggregation schemes are objects of class <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> with the function in slot <code>$fun</code> doing the actual work. The <code>$properties</code> member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.</p>
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>
@@ -441,19 +441,19 @@
 <a class="sourceLine" id="cb7-17" data-line-number="17">perf.data =<span class="st"> </span><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="kw">head</span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</a>
 <a class="sourceLine" id="cb7-19" data-line-number="19">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## 1            0           0            0           0     0.73333333</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## 2            1           0            0           0     0.36000000</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## 3            0           1            0           0     0.50000000</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## 4            0           0            1           0     0.06000000</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">## 1            0           0            0           0     0.64000000</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">## 2            1           0            0           0     0.28666667</a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">## 3            0           1            0           0     0.48666667</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">## 4            0           0            1           0     0.05333333</a>
 <a class="sourceLine" id="cb7-24" data-line-number="24">## 5            0           0            0           1     0.04666667</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## 6            1           1            0           0     0.33333333</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">## 6            1           1            0           0     0.32666667</a>
 <a class="sourceLine" id="cb7-26" data-line-number="26">##   mmce.test.range mmce.test.min mmce.test.max</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## 1            0.14          0.66          0.80</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## 2            0.18          0.26          0.44</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## 3            0.04          0.48          0.52</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## 4            0.04          0.04          0.08</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">## 5            0.06          0.02          0.08</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## 6            0.18          0.26          0.44</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">## 1            0.06          0.62          0.68</a>
+<a class="sourceLine" id="cb7-28" data-line-number="28">## 2            0.08          0.26          0.34</a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">## 3            0.10          0.42          0.52</a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">## 4            0.02          0.04          0.06</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">## 5            0.02          0.04          0.06</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">## 6            0.16          0.24          0.40</a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb7-34" data-line-number="34">pd =<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.005</span>, <span class="dt">height =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb7-35" data-line-number="35">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mmce.test.range, <span class="dt">y =</span> mmce.test.mean, <span class="dt">ymax =</span> mmce.test.max, <span class="dt">ymin =</span> mmce.test.min,</a>

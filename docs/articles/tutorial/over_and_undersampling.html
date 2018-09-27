@@ -331,15 +331,15 @@
 <a class="sourceLine" id="cb2-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## 0.01960784 0.50000000 0.50000000</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 0.02352941 0.50200000 0.49800000</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb2-15" data-line-number="15">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">## 0.02352941 0.50200000 0.64220000</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">## 0.03529412 0.36100000 0.75110000</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">##      mmce       ber       auc </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.0254902 0.5030000 0.6418000</a></code></pre></div>
+<a class="sourceLine" id="cb2-19" data-line-number="19">##       mmce        ber        auc </a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.03333333 0.36000000 0.64000000</a></code></pre></div>
 <p>In this case the <em>performance measure</em> has to be considered very carefully. As the <em>misclassification rate</em> (<a href="measures.html" target="_blank">mmce</a>) evaluates the overall accuracy of the predictions, the <em>balanced error rate</em> (<a href="measures.html" target="_blank">ber</a>) and <em>area under the ROC Curve</em> (<a href="measures.html" target="_blank">auc</a>) might be more suitable here, as the misclassifications within each class are separately taken into account.</p>
 </div>
 <div id="over--and-undersampling-wrappers" class="section level4">
@@ -355,15 +355,15 @@
 <a class="sourceLine" id="cb3-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## 0.01960784 0.50000000 0.50000000</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## 0.02352941 0.50200000 0.49800000</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## 0.02941176 0.50500000 0.64140000</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">## 0.03333333 0.36000000 0.64000000</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">## 0.03137255 0.45700000 0.60380000</a></code></pre></div>
+<a class="sourceLine" id="cb3-17" data-line-number="17">## 0.05490196 0.46900000 0.62160000</a></code></pre></div>
 </div>
 <div id="extensions-to-oversampling" class="section level4">
 <h4 class="hasAnchor">
@@ -389,7 +389,7 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2">mod.smote =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.smote, task)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.smote, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## 0.02745098 0.50400000 0.64140000</a></code></pre></div>
+<a class="sourceLine" id="cb5-5" data-line-number="5">## 0.02745098 0.45500000 0.67230000</a></code></pre></div>
 <p>By default the number of nearest neighbours considered within the algorithm is set to 5.</p>
 </div>
 <div id="overbagging" class="section level5">
@@ -407,14 +407,14 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">r1<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">##     0.02019608     0.49563870     0.50436130</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">##      0.0200000      0.5001998      0.4998002</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(obw.lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">r2 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> obw.lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb7-11" data-line-number="11">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">r2<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">##     0.02901961     0.45576992     0.57646226</a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14">##     0.03372549     0.46205515     0.56025017</a></code></pre></div>
 <p>Now let’s consider a <em>random forest</em> as initial learner:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeOverBaggingWrapper.html">makeOverBaggingWrapper</a></span>(lrn, <span class="dt">obw.rate =</span> <span class="dv">8</span>, <span class="dt">obw.iters =</span> <span class="dv">3</span>)</a>
@@ -424,14 +424,14 @@
 <a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">r1<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">##     0.03196078     0.47323957     0.56349974</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">##      0.0327451      0.4867846      0.5570817</a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(obw.lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">r2 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> obw.lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">r2<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">##     0.04215686     0.47002456     0.54452431</a></code></pre></div>
+<a class="sourceLine" id="cb8-16" data-line-number="16">##     0.04117647     0.47452041     0.54922060</a></code></pre></div>
 <p>While <em>overbagging</em> slighty improves the performance of the <em>decision tree</em>, the AUC decreases in the second example when additional overbagging is applied. As RF itself is already a strong learner (and a bagged one as well), a further bagging step isn’t very helpful here and usually won’t improve the model.</p>
 </div>
 </div>
@@ -455,54 +455,54 @@
 <a class="sourceLine" id="cb9-13" data-line-number="13">## With control class: TuneControlRandom</a>
 <a class="sourceLine" id="cb9-14" data-line-number="14">## Imputation value: 1</a>
 <a class="sourceLine" id="cb9-15" data-line-number="15">## [Tune-x] 1: interaction.depth=2</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">## [Tune-y] 1: mmce.test.mean=0.0606469; time: 0.0 min</a>
-<a class="sourceLine" id="cb9-17" data-line-number="17">## [Tune-x] 2: interaction.depth=3</a>
-<a class="sourceLine" id="cb9-18" data-line-number="18">## [Tune-y] 2: mmce.test.mean=0.0573846; time: 0.0 min</a>
-<a class="sourceLine" id="cb9-19" data-line-number="19">## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0573846</a>
-<a class="sourceLine" id="cb9-20" data-line-number="20">## [Resample] iter 1:    0.0521512</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">## [Tune-y] 1: mmce.test.mean=0.0606258; time: 0.0 min</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">## [Tune-x] 2: interaction.depth=1</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">## [Tune-y] 2: mmce.test.mean=0.0684485; time: 0.0 min</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">## [Tune] Result: interaction.depth=2 : mmce.test.mean=0.0606258</a>
+<a class="sourceLine" id="cb9-20" data-line-number="20">## [Resample] iter 1:    0.0560992</a>
 <a class="sourceLine" id="cb9-21" data-line-number="21">## [Tune] Started tuning learner classif.gbm for parameter set:</a>
 <a class="sourceLine" id="cb9-22" data-line-number="22">##                      Type len Def Constr Req Tunable Trafo</a>
 <a class="sourceLine" id="cb9-23" data-line-number="23">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</a>
 <a class="sourceLine" id="cb9-24" data-line-number="24">## With control class: TuneControlRandom</a>
 <a class="sourceLine" id="cb9-25" data-line-number="25">## Imputation value: 1</a>
 <a class="sourceLine" id="cb9-26" data-line-number="26">## [Tune-x] 1: interaction.depth=1</a>
-<a class="sourceLine" id="cb9-27" data-line-number="27">## [Tune-y] 1: mmce.test.mean=0.0694263; time: 0.0 min</a>
-<a class="sourceLine" id="cb9-28" data-line-number="28">## [Tune-x] 2: interaction.depth=3</a>
-<a class="sourceLine" id="cb9-29" data-line-number="29">## [Tune-y] 2: mmce.test.mean=0.0606258; time: 0.0 min</a>
-<a class="sourceLine" id="cb9-30" data-line-number="30">## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0606258</a>
-<a class="sourceLine" id="cb9-31" data-line-number="31">## [Resample] iter 2:    0.0567515</a>
+<a class="sourceLine" id="cb9-27" data-line-number="27">## [Tune-y] 1: mmce.test.mean=0.0645563; time: 0.0 min</a>
+<a class="sourceLine" id="cb9-28" data-line-number="28">## [Tune-x] 2: interaction.depth=4</a>
+<a class="sourceLine" id="cb9-29" data-line-number="29">## [Tune-y] 2: mmce.test.mean=0.0551024; time: 0.0 min</a>
+<a class="sourceLine" id="cb9-30" data-line-number="30">## [Tune] Result: interaction.depth=4 : mmce.test.mean=0.0551024</a>
+<a class="sourceLine" id="cb9-31" data-line-number="31">## [Resample] iter 2:    0.0547588</a>
 <a class="sourceLine" id="cb9-32" data-line-number="32">## [Tune] Started tuning learner classif.gbm for parameter set:</a>
 <a class="sourceLine" id="cb9-33" data-line-number="33">##                      Type len Def Constr Req Tunable Trafo</a>
 <a class="sourceLine" id="cb9-34" data-line-number="34">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</a>
 <a class="sourceLine" id="cb9-35" data-line-number="35">## With control class: TuneControlRandom</a>
 <a class="sourceLine" id="cb9-36" data-line-number="36">## Imputation value: 1</a>
-<a class="sourceLine" id="cb9-37" data-line-number="37">## [Tune-x] 1: interaction.depth=5</a>
-<a class="sourceLine" id="cb9-38" data-line-number="38">## [Tune-y] 1: mmce.test.mean=0.0567323; time: 0.0 min</a>
-<a class="sourceLine" id="cb9-39" data-line-number="39">## [Tune-x] 2: interaction.depth=1</a>
-<a class="sourceLine" id="cb9-40" data-line-number="40">## [Tune-y] 2: mmce.test.mean=0.0626034; time: 0.0 min</a>
-<a class="sourceLine" id="cb9-41" data-line-number="41">## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0567323</a>
-<a class="sourceLine" id="cb9-42" data-line-number="42">## [Resample] iter 3:    0.0534550</a>
+<a class="sourceLine" id="cb9-37" data-line-number="37">## [Tune-x] 1: interaction.depth=2</a>
+<a class="sourceLine" id="cb9-38" data-line-number="38">## [Tune-y] 1: mmce.test.mean=0.0603203; time: 0.0 min</a>
+<a class="sourceLine" id="cb9-39" data-line-number="39">## [Tune-x] 2: interaction.depth=4</a>
+<a class="sourceLine" id="cb9-40" data-line-number="40">## [Tune-y] 2: mmce.test.mean=0.0599939; time: 0.0 min</a>
+<a class="sourceLine" id="cb9-41" data-line-number="41">## [Tune] Result: interaction.depth=4 : mmce.test.mean=0.0599939</a>
+<a class="sourceLine" id="cb9-42" data-line-number="42">## [Resample] iter 3:    0.0567145</a>
 <a class="sourceLine" id="cb9-43" data-line-number="43">## </a>
-<a class="sourceLine" id="cb9-44" data-line-number="44">## Aggregated Result: mmce.test.mean=0.0541192</a>
+<a class="sourceLine" id="cb9-44" data-line-number="44">## Aggregated Result: mmce.test.mean=0.0558575</a>
 <a class="sourceLine" id="cb9-45" data-line-number="45">## </a>
 <a class="sourceLine" id="cb9-46" data-line-number="46"><span class="kw">print</span>(r<span class="op">$</span>extract)</a>
 <a class="sourceLine" id="cb9-47" data-line-number="47">## [[1]]</a>
 <a class="sourceLine" id="cb9-48" data-line-number="48">## Tune result:</a>
-<a class="sourceLine" id="cb9-49" data-line-number="49">## Op. pars: interaction.depth=3</a>
-<a class="sourceLine" id="cb9-50" data-line-number="50">## Threshold: 0.58</a>
-<a class="sourceLine" id="cb9-51" data-line-number="51">## mmce.test.mean=0.0573846</a>
+<a class="sourceLine" id="cb9-49" data-line-number="49">## Op. pars: interaction.depth=2</a>
+<a class="sourceLine" id="cb9-50" data-line-number="50">## Threshold: 0.53</a>
+<a class="sourceLine" id="cb9-51" data-line-number="51">## mmce.test.mean=0.0606258</a>
 <a class="sourceLine" id="cb9-52" data-line-number="52">## </a>
 <a class="sourceLine" id="cb9-53" data-line-number="53">## [[2]]</a>
 <a class="sourceLine" id="cb9-54" data-line-number="54">## Tune result:</a>
-<a class="sourceLine" id="cb9-55" data-line-number="55">## Op. pars: interaction.depth=3</a>
-<a class="sourceLine" id="cb9-56" data-line-number="56">## Threshold: 0.57</a>
-<a class="sourceLine" id="cb9-57" data-line-number="57">## mmce.test.mean=0.0606258</a>
+<a class="sourceLine" id="cb9-55" data-line-number="55">## Op. pars: interaction.depth=4</a>
+<a class="sourceLine" id="cb9-56" data-line-number="56">## Threshold: 0.52</a>
+<a class="sourceLine" id="cb9-57" data-line-number="57">## mmce.test.mean=0.0551024</a>
 <a class="sourceLine" id="cb9-58" data-line-number="58">## </a>
 <a class="sourceLine" id="cb9-59" data-line-number="59">## [[3]]</a>
 <a class="sourceLine" id="cb9-60" data-line-number="60">## Tune result:</a>
-<a class="sourceLine" id="cb9-61" data-line-number="61">## Op. pars: interaction.depth=5</a>
-<a class="sourceLine" id="cb9-62" data-line-number="62">## Threshold: 0.51</a>
-<a class="sourceLine" id="cb9-63" data-line-number="63">## mmce.test.mean=0.0567323</a></code></pre></div>
+<a class="sourceLine" id="cb9-61" data-line-number="61">## Op. pars: interaction.depth=4</a>
+<a class="sourceLine" id="cb9-62" data-line-number="62">## Threshold: 0.47</a>
+<a class="sourceLine" id="cb9-63" data-line-number="63">## mmce.test.mean=0.0599939</a></code></pre></div>
 <p>In the above script the tuning is (of course) nested. What happens is: The tuner evaluates a certain learner configuration via (inner) two-fold CV. On these predictions then the optimal threshold is selected, for this learner config (by calling <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> on the <code>ResamplePrediction</code> object, which was generated in the configuration evaluation). For the optimal learner config, at the end of tuning, we also know its selected threshold. The model is then trained on the complete outer training data set with the threshold set from the tuning and the prediction is made on the outer test set.</p>
 </div>
 <div id="cost-based-approaches" class="section level3">

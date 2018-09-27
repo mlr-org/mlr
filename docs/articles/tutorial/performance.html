@@ -341,17 +341,17 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> <span class="kw">seq</span>(<span class="dv">2</span>, n, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##      mse </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">## 14.54727</a></code></pre></div>
+<a class="sourceLine" id="cb3-7" data-line-number="7">##     mse </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## 14.1196</a></code></pre></div>
 <p>The following code computes the median of squared errors (<a href="measures.html" target="_blank">medse</a>) instead.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> medse)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">##    medse </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## 4.506964</a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3">## 3.514966</a></code></pre></div>
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a list of measures which can also include <a href="create_measure.html" target="_blank">your own measure</a>.</p>
 <p>Calculate the mean squared error, median squared error and mean absolute error (<a href="measures.html" target="_blank">mae</a>).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(mse, medse, mae))</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">##       mse     medse       mae </a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## 14.547270  4.506964  2.732003</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## 14.119602  3.514966  2.652351</a></code></pre></div>
 <p>For the other types of learning problems and measures, calculating the performance basically works in the same way.</p>
 <div id="requirements-of-performance-measures" class="section level2">
 <h2 class="hasAnchor">
@@ -360,7 +360,7 @@
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> timetrain, <span class="dt">model =</span> mod)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">## timetrain </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">##      0.08</a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3">##     0.097</a></code></pre></div>
 <p>For many performance measures in cluster analysis the <code><a href="../../reference/Task.html">Task()</a></code> is required.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</a>
