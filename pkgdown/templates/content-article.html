@@ -28,6 +28,14 @@ $endfor$
       <h4 class="date">$date$</h4>
       $endif$
 
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+      $if(toc)$
+      <div id="toc">
+      <h3>Table of Contents</h3>
+      $toc$
+      </div>
+      $endif$
+
       {{#source}}<small>{{{.}}}</small>{{/source}}
 
     </div>
