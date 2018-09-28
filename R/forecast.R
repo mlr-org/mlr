@@ -184,7 +184,10 @@ makeForecast = function(.data, .newdata, .proc.vals, .h, .td, .model, ...) {
       .data = .data[get(.proc.vals$grouping) %in% unique(.newdata[, c(.proc.vals$grouping),])]
     }
     group.data = unique(.data[,.proc.vals$grouping, with = FALSE])
+  } else {
+    group.data = NULL
   }
+
   # get lag structure
   lagdiff.func = function(...) {
     createLagDiffFeatures(obj = .data, ...)
@@ -194,7 +197,7 @@ makeForecast = function(.data, .newdata, .proc.vals, .h, .td, .model, ...) {
     times = .data[, .SD[,as.POSIXct("1992-01-14") + 1:.N], by = eval(.proc.vals$grouping)]
     times = times[, c(V1), drop = TRUE]
     .proc.vals$date.col = times
-    if (!is.null(.newdata) & i != 1) {
+    if (length(.newdata) & i != 1) {
       .newdata = data.table(.newdata)
       last_rows = .data[, .I[.N], by = eval(.proc.vals$grouping)]$V1
       new_cols = setdiff(colnames(.newdata), .proc.vals$grouping)
