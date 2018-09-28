@@ -138,7 +138,9 @@ getPredictionResponse.PredictionMultiForecastRegr = function(pred) {
   } else {
     i = stri_detect_regex(colnames(pred$data), "^response\\.")
     m = as.matrix(pred$data[, i])
-    setColNames(m, pred$task.desc$col.names)
+    # FIXME This must be tested for cases where the prediction is made only
+    # for a subset of the target variables
+    setColNames(m, pred$task.desc$target)
   }
 }
 

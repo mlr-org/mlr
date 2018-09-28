@@ -86,7 +86,7 @@ makeMultiForecastRegrTaskDesc = function(id, data, target, weights, blocking, fr
   td = makeTaskDescInternal("mfcregr", id, data, target, weights, blocking, coordinates)
   td$dates = dates
   td$frequency = frequency
-  addClasses(td, c("ForecastRegrTaskDesc", "SupervisedTaskDesc"))
+  addClasses(td, c("MultiForecastRegrTaskDesc", "SupervisedTaskDesc"))
 }
 
 

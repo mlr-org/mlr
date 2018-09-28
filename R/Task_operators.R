@@ -450,11 +450,12 @@ changeData = function(task, data, costs, weights, coordinates) {
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, task$coordinates),
-    "fcregr" = makeForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$is.spatial, td$frequency, td$dates),
-    "mfcregr" = makeMultiForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$is.spatial, td$frequency, td$dates),
+    "fcregr" = makeForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$frequency, td$dates, task$coordinates),
+    "mfcregr" = makeMultiForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$frequency, td$dates, task$coordinates),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, task$coordinates),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking,
+                              task$coordinates),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
   )
