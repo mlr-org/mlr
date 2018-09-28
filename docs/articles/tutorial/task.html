@@ -13,7 +13,6 @@
 <script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
 <script src="../../extra.js"></script><meta property="og:title" content="Learning Tasks">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -580,12 +579,12 @@
 <a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co"># Get the cost matrix in costsens.task</span></a>
 <a class="sourceLine" id="cb10-31" data-line-number="31"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span>(costsens.task))</a>
 <a class="sourceLine" id="cb10-32" data-line-number="32">##      y1        y2        y3</a>
-<a class="sourceLine" id="cb10-33" data-line-number="33">## [1,]  0  865.0604 1046.1874</a>
-<a class="sourceLine" id="cb10-34" data-line-number="34">## [2,]  0  564.7607  697.7895</a>
-<a class="sourceLine" id="cb10-35" data-line-number="35">## [3,]  0 1539.5478 1805.8602</a>
-<a class="sourceLine" id="cb10-36" data-line-number="36">## [4,]  0 1605.9174  606.0776</a>
-<a class="sourceLine" id="cb10-37" data-line-number="37">## [5,]  0 1652.6771  449.2400</a>
-<a class="sourceLine" id="cb10-38" data-line-number="38">## [6,]  0 1265.8523 1714.2139</a></code></pre></div>
+<a class="sourceLine" id="cb10-33" data-line-number="33">## [1,]  0 1135.1701 1364.4761</a>
+<a class="sourceLine" id="cb10-34" data-line-number="34">## [2,]  0 1559.7447 1608.1496</a>
+<a class="sourceLine" id="cb10-35" data-line-number="35">## [3,]  0  733.0448  847.1233</a>
+<a class="sourceLine" id="cb10-36" data-line-number="36">## [4,]  0  515.9768  484.1287</a>
+<a class="sourceLine" id="cb10-37" data-line-number="37">## [5,]  0 1129.5321 1176.4749</a>
+<a class="sourceLine" id="cb10-38" data-line-number="38">## [6,]  0  615.3334 1196.6534</a></code></pre></div>
 <p>Note that <code><a href="../../reference/getTaskData.html">getTaskData()</a></code> offers many options for converting the data set into a convenient format. This especially comes in handy when you <a href="create_learner.html" target="_blank">integrate a new learner</a> from another <strong>R</strong> package into <code>mlr</code>. In this regard function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> is also useful.</p>
 </div>
 <div id="modifying-a-learning-task" class="section level1">

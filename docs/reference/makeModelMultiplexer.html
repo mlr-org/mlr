@@ -42,8 +42,6 @@ The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.
 The getter [getLearnerProperties] returns the properties of the
 selected base learner." />
-
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -407,12 +405,12 @@ List of Learners with unique IDs.</p></td>
 #&gt; 5         classif.ksvm         -3.7577442                         NA
 #&gt; 6 classif.randomForest                 NA                        452
 #&gt;   mmce.test.mean dob eol error.message exec.time
-#&gt; 1     0.04666667   1  NA          &lt;NA&gt;     0.051
-#&gt; 2     0.02666667   2  NA          &lt;NA&gt;     0.090
-#&gt; 3     0.04666667   3  NA          &lt;NA&gt;     0.051
-#&gt; 4     0.67333333   4  NA          &lt;NA&gt;     0.052
-#&gt; 5     0.05333333   5  NA          &lt;NA&gt;     0.050
-#&gt; 6     0.02666667   6  NA          &lt;NA&gt;     0.076</div><div class='input'>
+#&gt; 1     0.04666667   1  NA          &lt;NA&gt;     0.050
+#&gt; 2     0.02666667   2  NA          &lt;NA&gt;     0.067
+#&gt; 3     0.04666667   3  NA          &lt;NA&gt;     0.037
+#&gt; 4     0.67333333   4  NA          &lt;NA&gt;     0.038
+#&gt; 5     0.05333333   5  NA          &lt;NA&gt;     0.037
+#&gt; 6     0.02666667   6  NA          &lt;NA&gt;     0.056</div><div class='input'>
 <span class='co'># more unique and reliable way to construct the param set</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></span>(<span class='no'>lrn</span>,
   <span class='kw'>classif.ksvm</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(

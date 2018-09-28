@@ -13,7 +13,6 @@
 <script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
 <script src="../../extra.js"></script><meta property="og:title" content="Imputation of Missing Values">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -331,8 +330,8 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">airq<span class="op">$</span>Wind =<span class="st"> </span><span class="kw">cut</span>(airq<span class="op">$</span>Wind, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">16</span>,<span class="dv">24</span>))</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">summary</span>(airq)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">##      Ozone           Solar.R           Wind         Temp      </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :51   Min.   :56.00  </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">##  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :85   1st Qu.:72.00  </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :50   Min.   :56.00  </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">##  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :86   1st Qu.:72.00  </a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">##  Median : 31.50   Median :205.0   (16,24]: 7   Median :79.00  </a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">##  Mean   : 42.13   Mean   :185.9   NA's   :10   Mean   :77.88  </a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">##  3rd Qu.: 63.25   3rd Qu.:258.8                3rd Qu.:85.00  </a>
@@ -352,7 +351,7 @@
 <p><code><a href="../../reference/impute.html">impute()</a></code> returns a <code>list</code> where slot <code>$data</code> contains the imputed data set. Per default, the dummy variables are factors with levels <code>"TRUE"</code> and <code>"FALSE"</code>. It is also possible to create numeric zero-one indicator variables.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">head</span>(imp<span class="op">$</span>data, <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">##       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## 1  41.00000 190.0000   (0,8]   67     5   1       FALSE         FALSE</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## 1  41.00000 190.0000  (8,16]   67     5   1       FALSE         FALSE</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">## 2  36.00000 118.0000   (0,8]   72     5   2       FALSE         FALSE</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">## 3  12.00000 149.0000  (8,16]   74     5   3       FALSE         FALSE</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">## 4  18.00000 313.0000  (8,16]   62     5   4       FALSE         FALSE</a>
@@ -384,16 +383,16 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">Wind =</span> <span class="kw"><a href="../../reference/imputations.html">imputeLearner</a></span>(<span class="st">"classif.rpart"</span>)), <span class="dt">dummy.cols =</span> <span class="kw">c</span>(<span class="st">"Solar.R"</span>, <span class="st">"Wind"</span>))</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">summary</span>(imp<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">##      Ozone           Solar.R           Wind         Temp      </a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :36   Min.   :56.00  </a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">##  1st Qu.: 16.00   1st Qu.:100.5   (8,16] :58   1st Qu.:69.00  </a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :34   Min.   :56.00  </a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">##  1st Qu.: 16.00   1st Qu.:100.5   (8,16] :60   1st Qu.:69.00  </a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">##  Median : 34.00   Median :221.5   (16,24]: 6   Median :79.50  </a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">##  Mean   : 41.59   Mean   :191.5                Mean   :76.87  </a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">##  3rd Qu.: 63.00   3rd Qu.:274.0                3rd Qu.:84.00  </a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">##  Mean   : 41.59   Mean   :192.5                Mean   :76.87  </a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">##  3rd Qu.: 63.00   3rd Qu.:274.2                3rd Qu.:84.00  </a>
 <a class="sourceLine" id="cb9-10" data-line-number="10">##  Max.   :135.00   Max.   :334.0                Max.   :93.00  </a>
 <a class="sourceLine" id="cb9-11" data-line-number="11">##  NA's   :31                                                   </a>
 <a class="sourceLine" id="cb9-12" data-line-number="12">##  Solar.R.dummy Wind.dummy</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">##  FALSE:93      FALSE:93  </a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">##  TRUE : 7      TRUE : 7  </a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">##  FALSE:93      FALSE:92  </a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">##  TRUE : 7      TRUE : 8  </a>
 <a class="sourceLine" id="cb9-15" data-line-number="15">##                          </a>
 <a class="sourceLine" id="cb9-16" data-line-number="16">##                          </a>
 <a class="sourceLine" id="cb9-17" data-line-number="17">##                          </a>
@@ -414,7 +413,7 @@
 <a class="sourceLine" id="cb10-4" data-line-number="4">## 1   110     207  (0,8]   90         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">## 2    NA     222 (8,16]   92         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-6" data-line-number="6">## 3    NA     137 (8,16]   86         FALSE      FALSE</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## 4    44     192  (0,8]   86         FALSE       TRUE</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## 4    44     192 (8,16]   86         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-8" data-line-number="8">## 5    28     273 (8,16]   82         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-9" data-line-number="9">## 6    65     157 (8,16]   80         FALSE      FALSE</a></code></pre></div>
 <p>Especially when evaluating a machine learning method by some resampling technique you might want that <code><a href="../../reference/impute.html">impute()</a></code>/<code><a href="../../reference/reimpute.html">reimpute()</a></code> are called automatically each time before training/prediction. This can be achieved by creating an imputation wrapper.</p>
@@ -442,7 +441,7 @@
 <a class="sourceLine" id="cb13-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">## mse.test.mean </a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">##      875.7703</a></code></pre></div>
+<a class="sourceLine" id="cb13-5" data-line-number="5">##      507.9319</a></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">lapply</span>(r<span class="op">$</span>models, getLearnerModel, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">## </a>
@@ -451,11 +450,11 @@
 <a class="sourceLine" id="cb14-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">## Coefficients:</a>
 <a class="sourceLine" id="cb14-8" data-line-number="8">##       (Intercept)            Solar.R         Wind(8,16]  </a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">##         -68.50117            0.08111          -31.11189  </a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">##          -92.9739             0.0718           -24.4650  </a>
 <a class="sourceLine" id="cb14-10" data-line-number="10">##       Wind(16,24]               Temp  Solar.R.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">##         -28.31122            1.50594          -11.34653  </a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">##          -22.9142             1.7424           -15.9146  </a>
 <a class="sourceLine" id="cb14-12" data-line-number="12">##    Wind.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">##          77.55695  </a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">##            0.6424  </a>
 <a class="sourceLine" id="cb14-14" data-line-number="14">## </a>
 <a class="sourceLine" id="cb14-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">## [[2]]</a>
@@ -465,11 +464,11 @@
 <a class="sourceLine" id="cb14-20" data-line-number="20">## </a>
 <a class="sourceLine" id="cb14-21" data-line-number="21">## Coefficients:</a>
 <a class="sourceLine" id="cb14-22" data-line-number="22">##       (Intercept)            Solar.R         Wind(8,16]  </a>
-<a class="sourceLine" id="cb14-23" data-line-number="23">##          -94.8480             0.0456           -17.2401  </a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">##        -101.90992            0.06256          -19.29293  </a>
 <a class="sourceLine" id="cb14-24" data-line-number="24">##       Wind(16,24]               Temp  Solar.R.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-25" data-line-number="25">##          -17.8795             1.7875           -23.7103  </a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">##          -7.19682            1.87721           -5.03695  </a>
 <a class="sourceLine" id="cb14-26" data-line-number="26">##    Wind.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-27" data-line-number="27">##            7.6524  </a>
+<a class="sourceLine" id="cb14-27" data-line-number="27">##          -7.08517  </a>
 <a class="sourceLine" id="cb14-28" data-line-number="28">## </a>
 <a class="sourceLine" id="cb14-29" data-line-number="29">## </a>
 <a class="sourceLine" id="cb14-30" data-line-number="30">## [[3]]</a>
@@ -479,11 +478,11 @@
 <a class="sourceLine" id="cb14-34" data-line-number="34">## </a>
 <a class="sourceLine" id="cb14-35" data-line-number="35">## Coefficients:</a>
 <a class="sourceLine" id="cb14-36" data-line-number="36">##       (Intercept)            Solar.R         Wind(8,16]  </a>
-<a class="sourceLine" id="cb14-37" data-line-number="37">##        -109.00578            0.07874          -18.61148  </a>
+<a class="sourceLine" id="cb14-37" data-line-number="37">##         -75.91582            0.08538          -20.07376  </a>
 <a class="sourceLine" id="cb14-38" data-line-number="38">##       Wind(16,24]               Temp  Solar.R.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-39" data-line-number="39">##           2.76346            1.86472           -4.23754  </a>
+<a class="sourceLine" id="cb14-39" data-line-number="39">##         -18.85647            1.49913          -10.89238  </a>
 <a class="sourceLine" id="cb14-40" data-line-number="40">##    Wind.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-41" data-line-number="41">##           0.95239</a></code></pre></div>
+<a class="sourceLine" id="cb14-41" data-line-number="41">##          -4.92424</a></code></pre></div>
 <p>A second possibility to fuse a learner with imputation is provided by <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>, which is an interface to <code>caret</code>s <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code> function. <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code> only works for numeric features and offers imputation by k-nearest neighbors, bagged trees, and by the median.</p>
 </div>
 </div>
