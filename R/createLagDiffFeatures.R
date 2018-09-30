@@ -41,7 +41,7 @@ globalVariables("dates")
 #' The name of the column to be passed to data.table's \code{by} function. This will take lags and differences wrt the groups.
 #' @param TTR.funcs [\code{list}]\cr
 #' A list of TTR functions such as \code{list(runSum = list(n = 1:10, cumulative = TRUE))}
-#' @param date.col [code{data.frame}]
+#' @param date.col [code{POSIXct}]
 #' The dates for each observation. In the case of a forecasting task, these will be taken from the task description.
 #' @export
 #' @family eda_and_preprocess
@@ -231,7 +231,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     }
   }
 
-  if (!missing(add_dates)) {
+  if (!is.null(add_dates)) {
     for (date_func in add_dates) {
       x[, paste0(date_func, "_dt") := get(date_func)(date.col) - min(get(date_func)(date.col))]
       lag.diff.full.names = c(lag.diff.full.names, paste0(date_func, "_dt"))
