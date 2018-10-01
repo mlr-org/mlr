@@ -330,7 +330,7 @@ testSimpleUpdate = function(t.name, target, train.df, update.df,
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data = train.df)
-  else if (is.POSIXt(df$dates))
+  else if (is.POSIXt(train.df$dates))
     task = makeForecastRegrTask(data = train.df, target = target, date.col = "dates")
   else if (is.numeric(train.df[, target]))
     task = makeRegrTask(data = train.df, target = target)
@@ -368,7 +368,7 @@ testSimpleParsetsUpdate = function(t.name, df, target,update.inds, train.inds,
                                    test.inds, old.predicts.list, parset.list) {
 
   train.df = df[train.inds,]
-  update.df = df[update.inds]
+  update.df = df[update.inds,]
   test.df = df[test.inds,]
 
   for (i in 1:length(parset.list)) {

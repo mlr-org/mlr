@@ -32,7 +32,7 @@ test_that("fcregr_Arima", {
   parset.list[[3]]$h = 1L
   parset.list[[4]]$h = 1L
   parset.list[[5]]$h = 1L
-  testSimpleParsets("fcregr.Arima", fcregr.xts, fcregr.target,
+  testSimpleParsets("fcregr.Arima", fcregr.df, fcregr.target,
                     fcregr.train.inds, old.predicts.list, parset.list)
 })
 
@@ -50,7 +50,7 @@ test_that("fcregr_Arima_update", {
 
   for (i in seq_len(length(parset.list))) {
     parset = parset.list[[i]]
-    pars = list(y = as.ts(fcregr.update.train))
+    pars = list(y = as.ts(fcregr.update.train$test_data))
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output({
@@ -73,7 +73,7 @@ test_that("fcregr_Arima_update", {
   parset.list[[3]]$h = 1L
   parset.list[[4]]$h = 1L
   parset.list[[5]]$h = 1L
-  testSimpleParsetsUpdate("fcregr.Arima", fcregr.update.xts, fcregr.target,
+  testSimpleParsetsUpdate("fcregr.Arima", fcregr.update.df, fcregr.target,
                           fcregr.update.update.inds, fcregr.update.train.inds,
                           fcregr.update.test.inds, old.predicts.list, parset.list)
 })
