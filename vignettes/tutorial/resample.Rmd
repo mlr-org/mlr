@@ -36,7 +36,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/pat-s/mlr/master/vign
 If you want to read up on further details, the paper [Resampling Strategies for Model Assessment and Selection](http://link.springer.com/chapter/10.1007%2F978-0-387-47509-7_8) by Simon is probably not a bad choice.
 Bernd has also published a paper [Resampling methods for meta-model validation with recommendations for evolutionary computation](http://www.mitpressjournals.org/doi/pdf/10.1162/EVCO_a_00069) which contains detailed descriptions and lots of statistical background information on resampling methods.
 
-# Defining the resampling strategy
+## Defining the resampling strategy
 
 In `mlr` the resampling strategy can be defined via function `makeResampleDesc()`.
 It requires a string that specifies the resampling method and, depending on the selected strategy, further information like the number of iterations.
@@ -73,7 +73,7 @@ hout
 cv3
 ```
 
-# Performing the resampling
+## Performing the resampling
 
 Function `resample()` evaluates a Learner (`makeLearner()`) on a given machine learning `Task()` using the selected resampling strategy (`makeResampleDesc()`).
 
@@ -157,11 +157,11 @@ r = resample("classif.rpart", parms = list(split = "information"), sonar.task, r
 r
 ```
 
-# Accessing resample results
+## Accessing resample results
 
 Apart from the learner performance you can extract further information from the resample results, for example predicted values or the models fitted in individual resample iterations.
 
-## Predictions
+### Predictions
 
 Per default, the `resample()` result contains the predictions made during the resampling.
 If you do not want to keep them, e.g., in order to conserve memory, set `keep.pred = FALSE` when calling `resample()`.
@@ -216,7 +216,7 @@ predList = getRRPredictionList(r)
 predList
 ```
 
-## Learner models
+### Learner models
 
 In each resampling iteration a Learner (`makeLearner()`) is fitted on the respective training set.
 By default, the resulting `WrappedModel` (`makeWrappedModel()`)s are not included in the `resample()` result and slot `$models` is empty.
@@ -230,7 +230,7 @@ r = resample("surv.coxph", lung.task, rdesc, show.info = FALSE, models = TRUE)
 r$models
 ```
 
-## The extract option
+### The extract option
 
 Keeping complete fitted models can be memory-intensive if these objects are large or
 the number of resampling iterations is high.
@@ -264,7 +264,7 @@ There is also an convenience function `getResamplingIndices()` to extract the re
 getResamplingIndices(r)
 ```
 
-# Stratification, Blocking and Grouping
+## Stratification, Blocking and Grouping
 
 * *Stratification* with respect to a categorical variable makes sure that all its values are present in each training and test set in approximately the same proportion as in the original data set.
 Stratification is possible with regard to categorical target variables (and thus for supervised classification and survival analysis) or categorical explanatory variables.
@@ -278,7 +278,7 @@ Hence, for one train/test set pair the entire block is either in the training se
   Note the subtle but important difference to "Blocking": 
   In "Blocking" factor levels are respected when splitting into train and test (e.g. the test set could be composed out of two given factor levels) whereas in "Grouping" the folds will strictly follow the factor level grouping (meaning that the test set will always only consist of one factor level).
 
-## Stratification with respect to the target variable(s)
+### Stratification with respect to the target variable(s)
 
 For classification, it is usually desirable to have the same proportion of the classes in
 all of the partitions of the original data set.
@@ -299,7 +299,7 @@ r
 Stratification is also available for survival tasks.
 Here the stratification balances the censoring rate.
 
-## Stratification with respect to explanatory variables
+### Stratification with respect to explanatory variables
 
 Sometimes it is required to also stratify on the input data, e.g., to ensure that all subgroups are represented in all training and test sets.
 To stratify on the input columns, specify `factor` columns of your task data via ``stratify.cols``.
@@ -311,7 +311,7 @@ r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE)
 r
 ```
 
-## Blocking: CV with flexible predefined indices
+### Blocking: CV with flexible predefined indices
  
 If some observations "belong together" and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a `blocking` factor when creating the [task](task.html){target="_blank"}.
 
@@ -340,7 +340,7 @@ lapply(p$pred$instance$train.inds, function(x) length(x))
 
 This is caused by the fact that we supplied five groups that must belong together but only used a three fold resampling strategy here.
 
-## Grouping: CV with fixed predefined indices
+### Grouping: CV with fixed predefined indices
 
 There is a second way of using predefined indices in resampling in `mlr`: Constructing the folds based on the supplied indices in `blocking`.
 We refer to this method here as "grouping" to distinguish it from "blocking".
@@ -393,7 +393,7 @@ Of course you can also use a normal random sampling "CV" description in the inne
 str(getResamplingIndices(p, inner = TRUE))
 ```
 
-# Resample descriptions and resample instances
+## Resample descriptions and resample instances
 
 As already mentioned, you can specify a resampling strategy using function `makeResampleDesc()`.
 
@@ -459,7 +459,7 @@ rin = makeFixedHoldoutInstance(train.inds = 1:100, test.inds = 101:150, size = 1
 rin
 ```
 
-# Aggregating performance values
+## Aggregating performance values
 
 In each resampling iteration $b = 1,\ldots,B$ we get performance values $S(D^{*b}, D \setminus D^{*b})$ (for each measure we wish to calculate), which are then aggregated to an overall performance.
 
@@ -484,7 +484,7 @@ rmse$aggr$fun
 You can change the aggregation method of a `Measure` (`makeMeasure()`) via function `setAggregation()`.
 All available aggregation schemes are listed on the `aggregations()` documentation page.
 
-## Example: One measure with different aggregations
+#### Example: One measure with different aggregations
 
 The aggregation schemes `test.median` (`aggregations()`), `test.min` (`aggregations()`), and `text.max` (`aggregations()`) compute the median, minimum, and maximum of the performance values on the test sets.
 
@@ -503,7 +503,7 @@ r
 r$aggr
 ```
 
-## Example: Calculating the training error
+### Example: Calculating the training error
 
 Below we calculate the mean misclassification error ([mmce](measures.html){target="_blank"}) on the training
 and the test data sets. 
@@ -519,7 +519,7 @@ r$measures.train
 r$aggr
 ```
 
-## Example: Bootstrap
+### Example: Bootstrap
 
 In *out-of-bag bootstrap estimation* $B$ new data sets $D^{*1}, \ldots, D^{*B}$ are drawn
 from the data set $D$ with replacement, each of the same size as $D$.
@@ -552,7 +552,7 @@ head(r$measures.train)
 r$aggr
 ```
 
-# Convenience functions
+## Convenience functions
 
 The functionality described on this page allows for much control and flexibility.
 However, when quickly trying out some learners, it can get tedious to type all the code for defining the resampling strategy, setting the aggregation scheme and so on.
