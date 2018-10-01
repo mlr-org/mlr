@@ -1,3 +1,12 @@
+# mlr 2.14:
+
+## general
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
+
+## learners - new
+* classif.liquidSVM
+* regr.liquidSVM
+
 # mlr 2.13:
 
 ## general
@@ -17,6 +26,8 @@
 
 ## learners - removed
 * {classif,regr}.blackboost: broke API with new release
+* regr.elmNN : package was removed from CRAN
+* classif.lqa : package was removed from CRAN
 
 
 # mlr 2.12:

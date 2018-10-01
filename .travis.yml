@@ -2,6 +2,7 @@ language: r
 sudo: false
 dist: trusty
 cache: packages
+latex: true
 env:
   global:
     - _R_CHECK_TIMINGS_=0
@@ -9,12 +10,6 @@ env:
     - _R_CHECK_TESTS_NLINES_=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
     - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2'
-
-r_github_packages:
-  - berndbischl/BBmisc
-  - berndbischl/parallelMap
-  - berndbischl/ParamHelpers
-  - jimhester/lintr
 
 jobs:
   include:
@@ -29,10 +24,10 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script: true
-      before_cache: rm -rf $HOME/R/Library/00LOCK-*
+      after_script: R -q -e 'tic::after_script()'
     - stage: check
       env: RCMDCHECK=TRUE
       addons:
@@ -44,10 +39,11 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script: R -q -e 'tic::script()'
+      after_script: R -q -e 'tic::after_script()'
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
@@ -65,7 +61,6 @@ jobs:
         - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-      before_cache: rm -rf $HOME/R/Library/00LOCK-*
 
     - stage: Tutorial
       env: TUTORIAL=HTML
@@ -81,7 +76,7 @@ jobs:
            - libudunits2-dev # for sf
       latex: false
       pandoc_version: 2.2.1
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("pat-s/tic@rcmdcheck-build-args"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       after_script: R -q -e 'tic::after_script()'
@@ -90,9 +85,7 @@ jobs:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
-           branch: master
-           condition:
-             - $TRAVIS_EVENT_TYPE != cron
+           all_branches: true
 
 notifications:
   email:

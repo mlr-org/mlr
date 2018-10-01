@@ -5,10 +5,10 @@
 \alias{PartialDependenceData}
 \title{Generate partial dependence.}
 \usage{
-generatePartialDependenceData(obj, input, features, interaction = FALSE,
-  derivative = FALSE, individual = FALSE, fun = mean,
-  bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE, n = c(10,
-  NA), ...)
+generatePartialDependenceData(obj, input, features = NULL,
+  interaction = FALSE, derivative = FALSE, individual = FALSE,
+  fun = mean, bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE,
+  n = c(10, NA), ...)
 }
 \arguments{
 \item{obj}{(\link{WrappedModel})\cr

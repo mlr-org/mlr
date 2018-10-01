@@ -98,10 +98,10 @@ Suggests:
     gbm,
     GenSA,
     glmnet,
-    hrbrthemes,
-    h2o (>= 3.6.0.8),
     GPfit,
+    h2o (>= 3.6.0.8),
     Hmisc,
+    hrbrthemes,
     irace (>= 2.0),
     kernlab,
     kknn,
@@ -110,6 +110,7 @@ Suggests:
     laGP,
     LiblineaR,
     lintr (>= 1.0.0.9001),
+    liquidSVM,
     MASS,
     mboost,
     mco,
@@ -120,9 +121,9 @@ Suggests:
     mmpf,
     modeltools,
     mRMRe,
+    neuralnet,
     nnet,
     nodeHarvest (>= 0.7-3),
-    neuralnet,
     numDeriv,
     pamr,
     party,
@@ -130,18 +131,18 @@ Suggests:
     pls,
     PMCMR (>= 4.1),
     randomForest,
-    randomForestSRC (>= 2.2.0),
+    randomForestSRC (>= 2.7.0),
     ranger (>= 0.8.0),
     refund,
     rex,
     rFerns,
+    rgenoud,
     rknn,
     rmarkdown,
     ROCR,
     rotationForest,
     rpart,
     RRF,
-    rgenoud,
     rrlda,
     rsm,
     RSNNS,
@@ -159,8 +160,15 @@ Suggests:
     TH.data,
     wavelets,
     xgboost (>= 0.6-2)
-LazyData: yes
+VignetteBuilder: 
+    knitr
+Remotes: 
+    berndbischl/BBmisc,
+    berndbischl/parallelMap,
+    berndbischl/ParamHelpers,
+    jimhester/lintr
 ByteCompile: yes
-Version: 2.13
-VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: yes
+Roxygen: list(wrap = FALSE, markdown = TRUE)
 RoxygenNote: 6.1.0
