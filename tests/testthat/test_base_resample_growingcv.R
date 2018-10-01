@@ -2,7 +2,7 @@ context("resample_growingcv")
 
 
 test_that("growing instance works", {
-  rin = makeResampleInstance(makeResampleDesc("GrowingCV", horizon = 2), size = 25)
+  rin = makeResampleInstance(makeResampleDesc("GrowingWindowCV", horizon = 2), size = 25)
 
   for (i in seq_len(length(rin$train.inds))) {
     i1 = rin$train.inds[[i]]

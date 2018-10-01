@@ -1,7 +1,7 @@
 context("resample_fixedcv")
 
 test_that("fixed instance works", {
-  rin = makeResampleInstance(makeResampleDesc("FixedCV"), size = 25)
+  rin = makeResampleInstance(makeResampleDesc("FixedWindowCV"), size = 25)
 
   for (i in seq_len(length(rin$train.inds))) {
     i1 = rin$train.inds[[i]]
