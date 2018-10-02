@@ -26,7 +26,7 @@ To reduce noise increase the number of resampling iterations.
 You can define the resampling method in the `resampling` argument of `generateLearningCurveData()`.
 It is also possible to pass a ResampleInstance (`makeResampleInstance()`) (which is a result of `makeResampleInstance()`) to make resampling consistent for all passed learners and each step of increasing the number of observations.
 
-# Plotting the learning curve
+## Plotting the learning curve
 
 The `mlr` function `generateLearningCurveData()` can generate the data for *learning curves* for [multiple learners](integrated_learners.html){target="_blank"} and multiple [performance measures](measures.html){target="_blank"} at once.
 With `plotLearningCurve()` the result of `generateLearningCurveData()` can be plotted using `ggplot2`.
