@@ -27,7 +27,7 @@ In order to lay more weight on the cases of the minority class, there are numero
 These methods can generally be divided into *cost- and sampling-based approaches*.
 Below all methods supported by `mlr` are introduced.
 
-### Sampling-based approaches
+## Sampling-based approaches
 
 The basic idea of *sampling methods* is to simply adjust the proportion of the classes in order to increase the weight of the minority class observations within the model.
 
@@ -48,7 +48,7 @@ In this way the sampling is done as part of the *preprocesssing* and can therefo
 
 `mlr` currently supports the first two approaches.
 
-#### (Simple) over- and undersampling
+### (Simple) over- and undersampling
 
 As mentioned above *undersampling* always refers to the majority class, while *oversampling* affects the minority class. 
 By the use of *undersampling*, randomly chosen observations of the majority class are eliminated. 
@@ -100,7 +100,7 @@ performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce,
 In this case the *performance measure* has to be considered very carefully.
 As the *misclassification rate* ([mmce](measures.html){target="_blank"}) evaluates the overall accuracy of the predictions, the *balanced error rate* ([ber](measures.html){target="_blank"}) and *area under the ROC Curve* ([auc](measures.html){target="_blank"}) might be more suitable here, as the misclassifications within each class are separately taken into account.
 
-#### Over- and undersampling wrappers
+### Over- and undersampling wrappers
 
 Alternatively, `mlr` also offers the integration of over- and undersampling via a [wrapper approach](wrapper.html){target="_blank"}. 
 This way over- and undersampling can be applied to already [existing learners](learner.html){target="_blank"} to extend their functionality.
@@ -122,11 +122,11 @@ performance(predict(mod.over, newdata = data.imbal.test), measures = list(mmce, 
 performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce, ber, auc))
 ```
 
-#### Extensions to oversampling
+### Extensions to oversampling
 
 Two extensions to (simple) oversampling are available in `mlr`.
 
-##### 1. SMOTE (Synthetic Minority Oversampling Technique)
+#### 1. SMOTE (Synthetic Minority Oversampling Technique)
 
 As the duplicating of the minority class observations can lead to overfitting, within *SMOTE* the "new cases" are constructed in a different way. 
 For each new observation, one randomly chosen minority class observation as well as one of its *randomly chosen next neighbours* are interpolated, so that finally a new *artificial observation* of the minority class is created.
@@ -152,7 +152,7 @@ performance(predict(mod.smote, newdata = data.imbal.test), measures = list(mmce,
 
 By default the number of nearest neighbours considered within the algorithm is set to 5.
 
-##### 2. Overbagging
+#### 2. Overbagging
 
 Another extension of oversampling consists in the combination of sampling with
 the [bagging approach](bagging.html){target="_blank"}. 
@@ -208,7 +208,7 @@ r2$aggr
 While *overbagging* slighty improves the performance of the *decision tree*, the AUC decreases in the second example when additional overbagging is applied.
 As RF itself is already a strong learner (and a bagged one as well), a further bagging step isn't very helpful here and usually won't improve the model.
 
-### Tuning the probability threshold
+## Tuning the probability threshold
 
 In binary classification, the default probability value at which a prediction is either classified as "1" or "0" is 0.50. 
 This means with an estimate of >= 0.50 the observation is put into class "1" while lower values get assigned class "0".
@@ -234,11 +234,11 @@ On these predictions then the optimal threshold is selected, for this learner co
 For the optimal learner config, at the end of tuning, we also know its selected threshold. 
 The model is then trained on the complete outer training data set with the threshold set from the tuning and the prediction is made on the outer test set. 
 
-### Cost-based approaches
+## Cost-based approaches
 
 In contrast to sampling, *cost-based approaches* usually require particular learners, which can deal with different *class-dependent costs* [Cost-Sensitive Classification](cost_sensitive_classif.html){target="_blank"}.
 
-#### Weighted classes wrapper
+### Weighted classes wrapper
 
 Another approach independent of the underlying classifier is to assign the costs as *class weights*, so that each observation receives a weight, depending on the class it belongs to. 
 Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.
