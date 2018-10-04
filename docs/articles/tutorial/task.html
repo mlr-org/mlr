@@ -13,7 +13,6 @@
 <script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
 <script src="../../extra.js"></script><meta property="og:title" content="Learning Tasks">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -265,18 +264,40 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Learning Tasks</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/task.Rmd"><code>vignettes/tutorial/task.Rmd</code></a></small>
-      <div class="hidden name"><code>task.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li>
+<a href="#task-types-and-creation">Task types and creation</a><ul>
+<li><a href="#regression">Regression</a></li>
+      <li><a href="#classification">Classification</a></li>
+      <li><a href="#survival-analysis">Survival analysis</a></li>
+      <li><a href="#multilabel-classification">Multilabel classification</a></li>
+      <li><a href="#cluster-analysis">Cluster analysis</a></li>
+      <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
+      </ul>
+</li>
+      <li><a href="#further-settings">Further settings</a></li>
+      <li><a href="#accessing-a-learning-task">Accessing a learning task</a></li>
+      <li><a href="#modifying-a-learning-task">Modifying a learning task</a></li>
+      <li><a href="#example-tasks-and-convenience-functions">Example tasks and convenience functions</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/task.Rmd"><code>vignettes/tutorial/task.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>Learning tasks encapsulate the data set and further relevant information about a machine learning problem, for example the name of the target variable for supervised problems.</p>
 <div id="task-types-and-creation" class="section level1">
 <h1 class="hasAnchor">
@@ -558,12 +579,12 @@
 <a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co"># Get the cost matrix in costsens.task</span></a>
 <a class="sourceLine" id="cb10-31" data-line-number="31"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span>(costsens.task))</a>
 <a class="sourceLine" id="cb10-32" data-line-number="32">##      y1        y2        y3</a>
-<a class="sourceLine" id="cb10-33" data-line-number="33">## [1,]  0  703.3341 1467.8695</a>
-<a class="sourceLine" id="cb10-34" data-line-number="34">## [2,]  0  517.9223  264.9456</a>
-<a class="sourceLine" id="cb10-35" data-line-number="35">## [3,]  0 1778.8692 1124.8759</a>
-<a class="sourceLine" id="cb10-36" data-line-number="36">## [4,]  0 1010.1520  497.6840</a>
-<a class="sourceLine" id="cb10-37" data-line-number="37">## [5,]  0 1068.8697 1348.9959</a>
-<a class="sourceLine" id="cb10-38" data-line-number="38">## [6,]  0  512.4251  615.7433</a></code></pre></div>
+<a class="sourceLine" id="cb10-33" data-line-number="33">## [1,]  0  426.3357 1042.7343</a>
+<a class="sourceLine" id="cb10-34" data-line-number="34">## [2,]  0 1482.0034  336.6567</a>
+<a class="sourceLine" id="cb10-35" data-line-number="35">## [3,]  0 1828.1749 1249.6863</a>
+<a class="sourceLine" id="cb10-36" data-line-number="36">## [4,]  0 1058.1031  136.0201</a>
+<a class="sourceLine" id="cb10-37" data-line-number="37">## [5,]  0 1848.0204 1005.5444</a>
+<a class="sourceLine" id="cb10-38" data-line-number="38">## [6,]  0  437.4369 1640.9827</a></code></pre></div>
 <p>Note that <code><a href="../../reference/getTaskData.html">getTaskData()</a></code> offers many options for converting the data set into a convenient format. This especially comes in handy when you <a href="create_learner.html" target="_blank">integrate a new learner</a> from another <strong>R</strong> package into <code>mlr</code>. In this regard function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> is also useful.</p>
 </div>
 <div id="modifying-a-learning-task" class="section level1">
@@ -634,6 +655,7 @@
 <a href="#example-tasks-and-convenience-functions" class="anchor"></a>Example tasks and convenience functions</h1>
 <p>For your convenience <code>mlr</code> provides pre-defined <code><a href="../../reference/Task.html">Task()</a></code>s for each type of learning problem. These are also used throughout this tutorial in order to get shorter and more readable code. A list of all <code><a href="../../reference/Task.html">Task()</a></code>s can be found in the <a href="example_tasks.html" target="_blank">Appendix</a>.</p>
 <p>Moreover, <code>mlr</code>’s function <code><a href="../../reference/convertMLBenchObjToTask.html">convertMLBenchObjToTask()</a></code> can generate <code><a href="../../reference/Task.html">Task()</a></code>s from the data sets and data generating functions in package <code>mlbench::mlbench()</code>.</p>
+</div>
 </div>
   </div>
 

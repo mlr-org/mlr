@@ -11,7 +11,7 @@
 \title{Create a description object for a resampling strategy.}
 \usage{
 makeResampleDesc(method, predict = "test", ..., stratify = FALSE,
-  stratify.cols = NULL)
+  stratify.cols = NULL, fixed = FALSE, blocking.cv = FALSE)
 }
 \arguments{
 \item{method}{(\code{character(1)})\cr
@@ -66,6 +66,19 @@ Stratify on specific columns referenced by name. All columns have to be factor o
 Note that you have to ensure yourself that stratification is possible, i.e.
 that each strata contains enough observations.
 This argument and \code{stratify} are mutually exclusive.}
+
+\item{fixed}{(\code{logical(1)})\cr
+Whether indices supplied via argument 'blocking' in the task should be used as
+fully pre-defined indices. Default is \code{FALSE} which means
+they will be used following the 'blocking' approach.
+\code{fixed} only works with ResampleDesc \code{CV} and the supplied indices must match
+the number of observations. When \code{fixed = TRUE}, the \code{iters} argument will be ignored
+and is interally set to the number of supplied factor levels in \code{blocking}.}
+
+\item{blocking.cv}{(\code{logical(1)})\cr
+Should 'blocking' be used in \code{CV}? Default to \code{FALSE}.
+This is different to \code{fixed = TRUE} and cannot be combined. Please check the mlr online tutorial
+for more details.}
 }
 \value{
 (\link{ResampleDesc}).

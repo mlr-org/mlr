@@ -13,7 +13,6 @@
 <script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
 <script src="../../extra.js"></script><meta property="og:title" content="Predicting Outcomes for New Data">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -265,18 +264,35 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Predicting Outcomes for New Data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/predict.Rmd"><code>vignettes/tutorial/predict.Rmd</code></a></small>
-      <div class="hidden name"><code>predict.Rmd</code></div>
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+            <div id="toc">
+      <h3 class="hasAnchor">
+<a href="#toc" class="anchor"></a>Table of Contents</h3>
+      <ul>
+<li>
+<a href="#accessing-the-prediction">Accessing the prediction</a><ul>
+<li><a href="#regression-extracting-standard-errors">Regression: Extracting standard errors</a></li>
+      <li><a href="#classification-and-clustering-extracting-probabilities">Classification and clustering: Extracting probabilities</a></li>
+      <li><a href="#classification-confusion-matrix">Classification: Confusion matrix</a></li>
+      <li><a href="#classification-adjusting-the-decision-threshold">Classification: Adjusting the decision threshold</a></li>
+      </ul>
+</li>
+      <li><a href="#visualizing-the-prediction">Visualizing the prediction</a></li>
+      </ul>
+</div>
+      
+      <small>Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/predict.Rmd"><code>vignettes/tutorial/predict.Rmd</code></a></small>
 
     </div>
 
     
     
+<div class="contents">
 <p>Predicting the target values for new observations is implemented the same way as most of the other predict methods in <strong>R</strong>. In general, all you need to do is call <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) on the object returned by <code><a href="../../reference/train.html">train()</a></code> and pass the data you want predictions for.</p>
 <p>There are two ways to pass the data:</p>
 <ul>
@@ -297,14 +313,14 @@
 <a class="sourceLine" id="cb1-9" data-line-number="9">## Prediction: 253 observations</a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">## predict.type: response</a>
 <a class="sourceLine" id="cb1-11" data-line-number="11">## threshold: </a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">## time: 0.01</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## time: 0.00</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13">##    id truth response</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## 2   2  21.6 22.49874</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">## 4   4  33.4 36.65621</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">## 6   6  28.7 23.85934</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">## 8   8  27.1 15.84898</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">## 10 10  18.9 17.09666</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">## 12 12  18.9 20.80211</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## 2   2  21.6 22.57873</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## 4   4  33.4 35.68529</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 6   6  28.7 25.85857</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 8   8  27.1 16.56303</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## 10 10  18.9 17.64015</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## 12 12  18.9 20.64902</a>
 <a class="sourceLine" id="cb1-20" data-line-number="20">## ... (#rows: 253, #cols: 3)</a></code></pre></div>
 <p>The second way is useful if you want to predict data not included in the <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>Here we cluster the <code>iris</code> data set without the target variable. All observations with an odd index are included in the <code><a href="../../reference/Task.html">Task()</a></code> and used for training. Predictions are made for the remaining observations.</p>
@@ -337,12 +353,12 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">### Result of predict with data passed via task argument</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(task.pred))</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">##    id truth response</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## 2   2  21.6 22.49874</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">## 4   4  33.4 36.65621</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">## 6   6  28.7 23.85934</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">## 8   8  27.1 15.84898</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">## 10 10  18.9 17.09666</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## 12 12  18.9 20.80211</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">## 2   2  21.6 22.57873</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## 4   4  33.4 35.68529</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">## 6   6  28.7 25.85857</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">## 8   8  27.1 16.56303</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## 10 10  18.9 17.64015</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## 12 12  18.9 20.64902</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">### Result of predict with data passed via newdata argument</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(newdata.pred))</a>
@@ -359,7 +375,7 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">## [1] 21.6 33.4 28.7 27.1 18.9 18.9</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(task.pred))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">## [1] 22.49874 36.65621 23.85934 15.84898 17.09666 20.80211</a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5">## [1] 22.57873 35.68529 25.85857 16.56303 17.64015 20.64902</a></code></pre></div>
 <div id="regression-extracting-standard-errors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression-extracting-standard-errors" class="anchor"></a>Regression: Extracting standard errors</h2>
@@ -411,13 +427,13 @@
 <a class="sourceLine" id="cb8-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> mtcars.task)</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">##                            1           2</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.97959318 0.020406817</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.97963340 0.020366598</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.99266060 0.007339401</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.54290926 0.457090740</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.01870512 0.981294878</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.75745639 0.242543611</a></code></pre></div>
+<a class="sourceLine" id="cb8-6" data-line-number="6">##                             1          2</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.020406296 0.97959370</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.020366077 0.97963392</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.007339562 0.99266044</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.457087311 0.54291269</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.981294549 0.01870545</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.242541008 0.75745899</a></code></pre></div>
 <p>For <em>classification problems</em> there are some more things worth mentioning. By default, class labels are predicted.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">### Linear discriminant analysis on the iris data set</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, <span class="dt">task =</span> iris.task)</a>
@@ -628,6 +644,7 @@
 <p>The 2D variant, as in the classification case, generates a scatter plot of 2 features. The fill color of the dots illustrates the value of the target variable <code>"medv"</code>, the background colors show the estimated mean. The plot does not represent the estimated standard error.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="kw">c</span>(<span class="st">"lstat"</span>, <span class="st">"rm"</span>), <span class="dt">task =</span> bh.task)</a></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
+</div>
 </div>
   </div>
 

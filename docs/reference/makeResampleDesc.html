@@ -32,8 +32,6 @@
 
 <meta property="og:description" content="A description of a resampling algorithm contains all necessary information to
 create a ResampleInstance, when given the size of the data set." />
-
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -311,7 +309,7 @@ create a <a href='makeResampleInstance.html'>ResampleInstance</a>, when given th
     
 
     <pre class="usage"><span class='fu'>makeResampleDesc</span>(<span class='no'>method</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"test"</span>, <span class='no'>...</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>stratify.cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>stratify.cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>blocking.cv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -377,6 +375,23 @@ Stratify on specific columns referenced by name. All columns have to be factor o
 Note that you have to ensure yourself that stratification is possible, i.e.
 that each strata contains enough observations.
 This argument and <code>stratify</code> are mutually exclusive.</p></td>
+    </tr>
+    <tr>
+      <th>fixed</th>
+      <td><p>(<code>logical(1)</code>)<br />
+Whether indices supplied via argument 'blocking' in the task should be used as
+fully pre-defined indices. Default is <code>FALSE</code> which means
+they will be used following the 'blocking' approach.
+<code>fixed</code> only works with ResampleDesc <code>CV</code> and the supplied indices must match
+the number of observations. When <code>fixed = TRUE</code>, the <code>iters</code> argument will be ignored
+and is interally set to the number of supplied factor levels in <code>blocking</code>.</p></td>
+    </tr>
+    <tr>
+      <th>blocking.cv</th>
+      <td><p>(<code>logical(1)</code>)<br />
+Should 'blocking' be used in <code>CV</code>? Default to <code>FALSE</code>.
+This is different to <code>fixed = TRUE</code> and cannot be combined. Please check the mlr online tutorial
+for more details.</p></td>
     </tr>
     </table>
     

@@ -1,10 +1,10 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.13
+Version: 2.13.9000
 Authors@R: 
     c(person(given = "Bernd",
              family = "Bischl",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "bernd_bischl@gmx.net",
              comment = c(ORCID = "0000-0001-6002-6980")),
       person(given = "Michel",
@@ -39,7 +39,7 @@ Authors@R:
              email = "masonagallo@gmail.com"),
       person(given = "Patrick",
              family = "Schratz",
-             role = c("aut", "cre"),
+             role = "aut",
              email = "patrick.schratz@gmail.com",
              comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "Jakob",
@@ -147,6 +147,7 @@ Imports:
     ggplot2,
     methods,
     parallelMap (>= 1.3),
+    purrr,
     stats,
     stringi,
     survival,
@@ -203,6 +204,7 @@ Suggests:
     laGP,
     LiblineaR,
     lintr (>= 1.0.0.9001),
+    liquidSVM,
     MASS,
     mboost,
     mco,
@@ -222,7 +224,6 @@ Suggests:
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
-    purrr,
     randomForest,
     randomForestSRC (>= 2.7.0),
     ranger (>= 0.8.0),
