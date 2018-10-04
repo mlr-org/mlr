@@ -1,0 +1,90 @@
+---
+title: "Creating an Imputation Method"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+Function `makeImputeMethod()` permits to create your own imputation method.
+For this purpose you need to specify a *learn* function that extracts the necessary information and an *impute* function that does the actual imputation.
+The *learn* and *impute* functions both have at least the following formal arguments:
+
+* ``data`` is a `base::data.frame()` with missing values in some features.
+* ``col`` indicates the feature to be imputed.
+* ``target`` indicates the target variable(s) in a supervised learning task.
+
+# Example: Imputation using the mean
+
+Let's have a look at function imputeMean (`imputations()`).
+
+```{r, include=FALSE, purl= FALSE}
+showFunctionDef = function(fun, name = sub("^[^:]*:+", "", deparse(substitute(fun)))) {
+  l = deparse(fun)
+  l[1] = paste(name, l[1], sep = " = ")
+  l
+}
+```
+
+```{r, code=showFunctionDef(imputeMean), eval=FALSE, tidy=TRUE, purl = FALSE}
+
+```
+
+imputeMean (`imputations()`) calls the unexported `mlr` function `simpleImpute` which is defined as follows.
+
+```{r, code=showFunctionDef(mlr:::simpleImpute), eval=FALSE, tidy = TRUE, purl= FALSE}
+```
+
+The *learn* function calculates the mean of the non-missing observations in column ``col``.
+The mean is passed via argument ``const`` to the *impute* function that replaces all missing values in feature ``col``.
+
+# Writing your own imputation method
+
+Now let's write a new imputation method:
+A frequently used simple technique for longitudinal data is *last observation carried forward* (LOCF). 
+Missing values are replaced by the most recent observed value.
+
+In the **R** code below the *learn* function determines the last observed value previous to each ``NA`` (``values``) as well as the corresponding number of consecutive ``NA's`` (``times``).
+The *impute* function generates a vector by replicating the entries in ``values``
+according to ``times`` and replaces the ``NA's`` in feature ``col``.
+
+```{r}
+imputeLOCF = function() {
+  makeImputeMethod(
+    learn = function(data, target, col) {
+      x = data[[col]]
+      ind = is.na(x)
+      dind = diff(ind)
+      lastValue = which(dind == 1)  # position of the last observed value previous to NA
+      lastNA = which(dind == -1)    # position of the last of potentially several consecutive NA's
+      values = x[lastValue]         # last observed value previous to NA
+      times = lastNA - lastValue    # number of consecutive NA's
+      return(list(values = values, times = times))
+    },
+    impute = function(data, target, col, values, times) {
+      x = data[[col]]
+      replace(x, is.na(x), rep(values, times))
+    }
+  )
+}
+```
+
+Note that this function is just for demonstration and is lacking some checks for real-world usage (for example 'What should happen if the first value in `x` is already missing?').
+Below it is used to impute the missing values in features ``Ozone`` and ``Solar.R`` in the airquality (`datasets::airquality()`) data set.
+
+```{r}
+data(airquality)
+imp = impute(airquality, cols = list(Ozone = imputeLOCF(), Solar.R = imputeLOCF()),
+  dummy.cols = c("Ozone", "Solar.R"))
+head(imp$data, 10)
+```

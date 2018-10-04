@@ -12,7 +12,8 @@ test_that("learners work: regr ", {
       num_iterations_after_burn_in = 10L),
     regr.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     regr.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
+    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed")),
+    regr.ranger = list(keep.inbag = TRUE)
   )
 
   # Create smaller task: dont use feature 2, it is nearly always 0, don't use feature 4, it is a factor variable
@@ -53,4 +54,8 @@ test_that("learners work: regr ", {
   # regr with oobpreds
   lrns = mylist(task, properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
+
+  # regr with only one feature
+  # min.task = makeRegrTask("oneCol", data.frame(x = 1:10, y = 1:10), target = "y")
+  # lapply(lrns, testBasicLearnerProperties, task = min.task)
 })

@@ -1,3 +1,3 @@
-#' @param aggr [\code{\link{Aggregation}}]\cr
+#' @param aggr ([Aggregation])\cr
 #'   Aggregation function.
-
+#' @md

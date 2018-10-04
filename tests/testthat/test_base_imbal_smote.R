@@ -78,3 +78,21 @@ test_that("smote works with only integer features", {
   task2 = smote(tsk, 2)
   expect_equal(getTaskSize(task2), 1036)
 })
+
+
+# FIXME: Reactivate test, the test is failing on an R CMD check but not test().
+#        Probably due to seeding problems.
+#test_that("smote works with constant factor features", {
+#  # This reproduces the bug from issue #1951
+#  d = data.frame(
+#    x1 = rpois(100, 2),
+#    x2 = gl(5, 20, labels = LETTERS[1:5]),
+#    y = as.factor(c(rep("+", 90), rep("-", 10)))
+#  )
+#
+#  task = makeClassifTask(data = d, target = "y")
+#  task2 = smote(task, rate = 9, nn = 4L)
+#
+#  expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
+#})
+

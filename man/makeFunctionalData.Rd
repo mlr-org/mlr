@@ -7,10 +7,10 @@
 makeFunctionalData(data, fd.features = NULL, exclude.cols = NULL)
 }
 \arguments{
-\item{data}{[\code{data.frame}] \cr
+\item{data}{(\link{data.frame}) \cr
 A data.frame that contains the functional features as numeric columns.}
 
-\item{fd.features}{[\code{list}] \cr
+\item{fd.features}{(\link{list}) \cr
 Named list containing \code{integer} column indices or \code{character} column names.
 Each element defines a functional feature, in the given order of the indices or column names.
 The name of the list element defines the name of the functional feature.
@@ -18,13 +18,13 @@ All selected columns have to correspond to numeric data.frame entries.
 The default is \code{NULL}, which means all numeric features are considered
 to be a single functional \dQuote{fd1}.}
 
-\item{exclude.cols}{[\code{character} | \code{integer}]\cr
+\item{exclude.cols}{(\link{character} | \link{integer})\cr
 Column names or indices to exclude from conversion to functionals, even if they
 are in included in \code{fd.features}.
 Default is not to exclude anything.}
 }
 \value{
-[\code{data.frame}].
+(\link{data.frame}).
 }
 \description{
 To work with functional features, those features need to be

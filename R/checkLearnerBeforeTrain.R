@@ -27,7 +27,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
 
   if (td$n.feat["ordered"] > 0L && !hasLearnerProperties(learner, "ordered")) {
-    wrong.cols = getColNames(task, is.factor)
+    wrong.cols = getColNames(task, function(x) class(x)[1] == "ordered")
     stopf("Task '%s' has ordered factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
 

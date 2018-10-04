@@ -1,16 +1,17 @@
 #' @title Merge different BenchmarkResult objects.
-#' @description The function automatically combines a list of \code{\link{BenchmarkResult}}
-#'   objects into a single \code{\link{BenchmarkResult}} object as long as the full
+#' @description The function automatically combines a list of [BenchmarkResult]
+#'   objects into a single [BenchmarkResult] object as long as the full
 #'   crossproduct of all task-learner combinations are available.
-#' @param bmrs [list of \code{\link{BenchmarkResult}}]\cr
-#'   \code{BenchmarkResult} objects that should be merged.
-#' @return \code{\link{BenchmarkResult}}
-#' @details Note that if you want to merge several \code{\link{BenchmarkResult}}
+#' @param bmrs [list of [BenchmarkResult])\cr
+#'   `BenchmarkResult` objects that should be merged.
+#' @return [BenchmarkResult]
+#' @details Note that if you want to merge several [BenchmarkResult]
 #'   objects, you must ensure that all possible learner and task combinations will be
 #'   contained in the returned object. Otherwise, the user will be notified which
 #'   task-learner combinations are missing or duplicated.
-#'   When merging \code{\link{BenchmarkResult}} objects with different measures,
+#'   When merging [BenchmarkResult] objects with different measures,
 #'   all missing measures will automatically be recomputed.
+#' @noMd
 #' @export
 mergeBenchmarkResults = function(bmrs) {
   # check all objects have the class BenchmarkResult

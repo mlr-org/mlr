@@ -1,0 +1,134 @@
+---
+title: "Integrated Learners"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+urlContribPackages = urlBasePackages = "http://www.rdocumentation.org/packages/"
+
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+This page lists the learning methods already integrated in `mlr`.
+
+Columns **Num.**, **Fac.**, **Ord.**, **NAs**, and **Weights** indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.
+
+Column **Props** shows further properties of the learning methods specific to the type of learning task.
+See also `RLearner()` for details.
+
+```{r include=FALSE}
+library("mlr")
+library("pander")
+# baseR, urlBasePackages, urlContribPackages are defined in build
+linkPkg = function(x) {
+  x = strsplit(x, ",")[[1]]
+  x = mlr:::cleanupPackageNames(x)    # remove exclamation marks
+  if (urlBasePackages != urlContribPackages) {
+    ind = x %in% baseR
+    url = c(urlContribPackages, urlBasePackages)[ind + 1]
+  } else {
+    url = urlContribPackages
+  }
+  collapse(sprintf("[%1$s](%2$s%1$s/)", x, url), sep = "<br />")
+}
+
+getTab = function(type) {
+  cn = function(x) if (is.null(x)) NA else {r = gsub("\\n", " ", x); gsub("(\\$)", "\\\\\\1", r)}
+  lrns = listLearners(type)
+  lrns$note[is.na(lrns$note)] = ""
+  cols = c("class", "type", "package", "short.name", "name", "numerics", "factors", "ordered", "missings", "weights", "note", "installed")
+  props = setdiff(colnames(lrns), cols)
+
+  colNames = c("Class / Short Name / Name", "Packages", "Num.", "Fac.", "Ord.", "NAs", "Weights", "Props", "Note")
+  df = makeDataFrame(nrow = nrow(lrns), ncol = length(colNames),
+    col.types = c("character", "character", "logical", "logical", "logical", "logical", "logical", "character", "character"))
+  names(df) = colNames
+
+  df[1] = apply(lrns[c("class", "short.name", "name")], 1, function(x)
+    paste0("**", x["class"], "** <br /> *", cn(x["short.name"]), "* <br /><br />", cn(x["name"])))
+  df$Packages = sapply(lrns$package, linkPkg)
+  df[3:7] = lrns[c("numerics", "factors", "ordered", "missings", "weights")]
+  df$Props = apply(lrns[props], 1, function(x) collapse(props[x], sep = "<br />"))
+  df$Note = sapply(lrns$note, cn)
+  logicals = vlapply(df, is.logical)
+  df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
+  df
+}
+
+makeTab = function(df) {
+  pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
+    justify = c("left", "left", "center", "center", "center", "center", "center", "left", "left"))
+}
+
+types = c("classif", "multilabel", "regr", "surv", "cluster")
+tables = lapply(types, getTab)
+names(tables) = types
+numbers = sapply(tables, nrow)
+```
+
+# Classification (`r numbers["classif"]`)
+
+For classification the following additional learner properties are relevant and shown in column **Props**:
+
+* *prob*: The method can predict probabilities,
+* *oneclass*, *twoclass*, *multiclass*: One-class, two-class (binary) or multi-class classification problems be handled,
+* *class.weights*: Class weights can be handled.
+
+```{r echo=FALSE,results="asis"}
+makeTab(tables[["classif"]])
+```
+
+# Regression (`r numbers["regr"]`)
+
+Additional learner properties:
+
+* *se*: Standard errors can be predicted.
+
+```{r echo=FALSE,results="asis"}
+makeTab(tables[["regr"]])
+```
+
+# Survival analysis (`r numbers["surv"]`)
+
+Additional learner properties:
+
+* *prob*: Probabilities can be predicted,
+* *rcens*, *lcens*, *icens*: The learner can handle right, left and/or interval censored data.
+
+```{r echo=FALSE,results="asis"}
+makeTab(tables[["surv"]])
+```
+
+# Cluster analysis (`r numbers["cluster"]`)
+
+Additional learner properties:
+
+* *prob*: Probabilities can be predicted.
+
+```{r echo=FALSE,results="asis"}
+makeTab(tables[["cluster"]])
+```
+
+# Cost-sensitive classification
+
+For *ordinary misclassification costs* you can use all the standard classification methods listed above.
+
+For *example-dependent costs* there are several ways to generate cost-sensitive learners from ordinary regression and classification learners.
+See section [cost-sensitive classification](cost_sensitive_classif.html){target="_blank"} and the documentation of `makeCostSensClassifWrapper()`, `makeCostSensRegrWrapper()` and `makeCostSensWeightedPairsWrapper()` for details.
+
+# Multilabel classification (`r numbers["multilabel"]`)
+
+```{r echo=FALSE,results="asis"}
+makeTab(tables[["multilabel"]])
+```
+
+Moreover, you can use the binary relevance method to apply ordinary classification learners to the multilabel problem. 
+See the documentation of function `makeMultilabelBinaryRelevanceWrapper()` and the tutorial section on [multilabel classification](multilabel.html){target="_blank"} for details.

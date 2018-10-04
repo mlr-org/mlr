@@ -8,48 +8,48 @@ generateCritDifferencesData(bmr, measure = NULL, p.value = 0.05,
   baseline = NULL, test = "bd")
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{[\code{\link{Measure}}]\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{p.value}{[\code{numeric}(1)]\cr
+\item{p.value}{(\code{numeric(1)})\cr
 P-value for the critical difference. Default: 0.05}
 
-\item{baseline}{[\code{character(1)}]: [\code{learner.id}] \cr
+\item{baseline}{(\code{character(1)}): (\code{learner.id}) \cr
 Select a \code{learner.id} as baseline for the \code{test = "bd"}
 ("Bonferroni-Dunn") critical differences
-diagram.The critical difference Interval will then be positioned arround this learner.
+diagram. The critical difference interval will then be positioned arround this learner.
 Defaults to best performing algorithm. \cr
-For \code{test = "nemenyi"}, no baseline is needed as it performs \code{all pairwise
-comparisons.}}
+For \code{test = "nemenyi"}, no baseline is needed as it performs \emph{all pairwise
+comparisons}.}
 
-\item{test}{[\code{character(1)}] \cr
+\item{test}{(\code{character(1)}) \cr
 Test for which the critical differences are computed. \cr
 \dQuote{bd} for the Bonferroni-Dunn Test, which is comparing all
 classifiers to a \code{baseline}, thus performing a comparison
 of one classifier to all others. \cr
-Algorithms not connected by a single line are statistically different.
-then the baseline. \cr
-\dQuote{nemenyi} for the \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}}
+Algorithms not connected by a single line are statistically different
+from the baseline. \cr
+\dQuote{nemenyi} for the \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test}
 which is comparing all classifiers to each other. The null hypothesis that
 there is a difference between the classifiers can not be rejected for all
 classifiers that have a single grey bar connecting them.}
 }
 \value{
-[\code{critDifferencesData}]. List containing:
-\item{data}{[\code{data.frame}] containing the info for the descriptive
-               part of the plot}
-\item{friedman.nemenyi.test}{[\code{list}] of class \code{pairwise.htest} \cr
-                               contains the calculated
-                               \link[PMCMR]{posthoc.friedman.nemenyi.test}}
-\item{cd.info}{[\code{list}] containing info on the critical difference
-                 and its positioning}
+(\code{critDifferencesData}). List containing:
+\item{data}{(data.frame) containing the info for the descriptive
+part of the plot}
+\item{friedman.nemenyi.test}{(list) of class \code{pairwise.htest} \cr
+contains the calculated
+\link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test}}
+\item{cd.info}{(list) containing info on the critical difference
+and its positioning}
 \item{baseline}{\code{baseline} chosen for plotting}
-\item{p.value}{p.value used for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
-                 and for computation of the critical difference}
+\item{p.value}{p.value used for the \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test}
+and for computation of the critical difference}
 }
 \description{
 Generates data that can be used to plot a
@@ -63,18 +63,17 @@ Learners are drawn on the y-axis according to their average rank. \cr
 For \code{test = "nemenyi"} a bar is drawn, connecting all groups of not
 significantly different learners.\cr
 For \code{test = "bd"} an interval is drawn arround the algorithm selected
-as baseline. All learners within this interval are not signifcantly different
+as a baseline. All learners within this interval are not signifcantly different
 from the baseline. \cr
 Calculation:
-\deqn{ CD = q_{\alpha} \sqrt{(\frac{k(k+1)}{6N})}}{CD = q_alpha sqrt(k(k+1)/(6N))} \cr
-Where \eqn{q_\alpha} is based on the  studentized range statistic.
+\deqn{CD = q_{\alpha} \sqrt{\left(\frac{k(k+1)}{6N}\right)}}{CD = q_alpha sqrt(k(k+1)/(6N))} \cr
+Where \eqn{q_\alpha} is based on the studentized range statistic.
 See references for details.
 }
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
@@ -105,3 +104,5 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}
+\concept{generate_plot_data}

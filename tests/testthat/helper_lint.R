@@ -56,6 +56,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
   left.assign.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
         parsed = lintr:::with_id(source_file, id)
+        if (parsed$text == ":=") return(NULL)  # ':=' is also a LEFT_ASSIGN token for some reason
         Lint(filename = source_file$filename, line_number = parsed$line1,
           column_number = parsed$col1, type = "style", message = "Use =, not <-, for assignment.",
           line = source_file$lines[as.character(parsed$line1)],
@@ -237,6 +238,9 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
       # we check for LEFT_ASSIGN and EQ_ASSIGN since here we are LEFT_ASSIGN tolerant
       return(NULL)
     }
+    if (sp$text[1] == ":=") {
+      return(NULL)  # ':=' is parsed as LEFT_ASSIGN but does no actual assignment.
+    }
     style = ifelse(sp$token[2] == "FUNCTION", "functionCamel.case", "dotted.case")
     name = lintr:::unquote(token[["text"]])
     if (nchar(name) <= 1) {
@@ -261,15 +265,19 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
     left.assign = left.assign.linter,
     right.assign = right.assign.linter,
     no.tab = lintr::no_tab_linter,
-    T.and.F.symbol = lintr::T_and_F_symbol_linter,
-    semicolon.terminator = lintr::semicolon_terminator_linter,
-    seq = lintr::seq_linter,
-    unneeded.concatenation = lintr::unneeded_concatenation_linter,
     trailing.whitespace = lintr::trailing_whitespace_linter,
     #todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive
     spaces.inside = lintr::spaces_inside_linter,
     infix.spaces = infix.spaces.linter,
     object.naming = object.naming.linter)
+    if (exists("T_and_F_symbol_linter", where = "package:lintr"))
+      linters$T.and.F.symbol = lintr::T_and_F_symbol_linter
+    if (exists("semicolon_terminator_linter", where = "package:lintr"))
+      linters$semicolon.terminator = lintr::semicolon_terminator_linter
+    if (exists("seq_lintr", where = "package:lintr"))
+      linters$seq = lintr::seq_lintr
+    if (exists("unneeded_concatenation_linter", where = "package:lintr"))
+      linters$unneeded.concatenation = lintr::unneeded_concatenation_linter
 } else {
   # everything that uses `linters` should check `isLintrVersionOk` first, so the
   # following should never be used. Make sure that it is an error if it IS used.

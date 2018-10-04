@@ -4,15 +4,15 @@
 #'
 #' @template arg_pred
 #' @template arg_measures
-#' @param task [\code{\link{Task}}]\cr
+#' @param task ([Task])\cr
 #'   Learning task, might be requested by performance measure, usually not needed except for clustering or survival.
-#' @param model [\code{\link{WrappedModel}}]\cr
+#' @param model ([WrappedModel])\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed except for survival.
-#' @param feats [\code{data.frame}]\cr
+#' @param feats ([data.frame])\cr
 #'   Features of predicted data, usually not needed except for clustering.
-#'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
+#'   If the prediction was generated from a `task`, you can also pass this instead and the features
 #'   are extracted from it.
-#' @return [named \code{numeric}]. Performance value(s), named by measure(s).
+#' @return (named [numeric]). Performance value(s), named by measure(s).
 #' @export
 #' @family performance
 #' @examples

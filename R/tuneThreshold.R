@@ -3,27 +3,27 @@
 #' @description
 #' Optimizes the threshold of predictions based on probabilities.
 #' Works for classification and multilabel tasks.
-#' Uses \code{\link[BBmisc]{optimizeSubInts}} for normal binary class problems and \code{\link[cmaes]{cma_es}}
+#' Uses [BBmisc::optimizeSubInts] for normal binary class problems and [cmaes::cma_es]
 #' for multiclass and multilabel problems.
 #'
 #' @template arg_pred
-#' @param measure [\code{\link{Measure}}]\cr
+#' @param measure ([Measure])\cr
 #'   Performance measure to optimize.
 #'   Default is the default measure for the task.
-#' @param task [\code{\link{Task}}]\cr
+#' @param task ([Task])\cr
 #'   Learning task. Rarely neeeded,
 #'   only when required for the performance measure.
-#' @param model [\code{\link{WrappedModel}}]\cr
+#' @param model ([WrappedModel])\cr
 #'   Fitted model. Rarely neeeded,
 #'   only when required for the performance measure.
-#' @param nsub [\code{integer(1)}]\cr
-#'   Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.
+#' @param nsub (`integer(1)`)\cr
+#'   Passed to [BBmisc::optimizeSubInts] for 2class problems.
 #'   Default is 20.
-#' @param control [\code{list}]\cr
-#'   Control object for \code{\link[cmaes]{cma_es}} when used.
+#' @param control ([list])\cr
+#'   Control object for [cmaes::cma_es] when used.
 #'   Default is empty list.
-#' @return [\code{list}]. A named list with with the following components:
-#'   \code{th} is the optimal threshold, \code{perf} the performance value.
+#' @return ([list]). A named list with with the following components:
+#'   `th` is the optimal threshold, `perf` the performance value.
 #' @family tune
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {

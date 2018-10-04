@@ -14,21 +14,21 @@
 \item{fda_featextractor}{extractFDAFourier, extractFDAWavelets, extractFDAFPCA, extractFDAMultiResFeatures}
 \item{fda}{makeExtractFDAFeatMethod, extractFDAFeatures}
 \item{featsel}{analyzeFeatSelResult, makeFeatSelControl, getFeatSelResult, selectFeatures}
-\item{filter}{filterFeatures, makeFilter, listFilterMethods, getFilteredFeatures, generateFilterValuesData, getFilterValues, plotFilterValuesGGVIS}
-\item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData, generateFunctionalANOVAData}
+\item{filter}{filterFeatures, makeFilter, listFilterMethods, getFilteredFeatures, generateFilterValuesData, getFilterValues}
+\item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData}
 \item{help}{helpLearner, helpLearnerParam}
 \item{imbalancy}{oversample, smote}
 \item{impute}{makeImputeMethod, imputeConstant, impute, reimpute}
 \item{learner}{getClassWeightParam, getHyperPars, getParamSet.Learner, getLearnerType, getLearnerId, getLearnerPredictType, getLearnerPackages, getLearnerParamSet, getLearnerParVals, setLearnerId, getLearnerShortName, getLearnerProperties, makeLearner, makeLearners, removeHyperPars, setHyperPars, setId, setPredictThreshold, setPredictType}
-\item{learning_curve}{generateLearningCurveData, plotLearningCurveGGVIS}
+\item{learning_curve}{generateLearningCurveData}
 \item{multilabel}{getMultilabelBinaryPerformances, makeMultilabelBinaryRelevanceWrapper, makeMultilabelClassifierChainsWrapper, makeMultilabelDBRWrapper, makeMultilabelNestedStackingWrapper, makeMultilabelStackingWrapper}
 \item{performance}{calculateConfusionMatrix, calculateROCMeasures, makeCustomResampledMeasure, makeCostMeasure, setMeasurePars, setAggregation, makeMeasure, featperc, performance, estimateRelativeOverfitting}
-\item{plot}{plotLearningCurve, plotPartialDependence, plotPartialDependenceGGVIS, plotBMRSummary, plotResiduals}
-\item{predict}{asROCRPrediction, plotViperCharts, getPredictionProbabilities, getPredictionTaskDesc, getPredictionResponse, predict.WrappedModel}
+\item{plot}{createSpatialResamplingPlots, plotLearningCurve, plotPartialDependence, plotBMRSummary, plotResiduals}
+\item{predict}{asROCRPrediction, getPredictionProbabilities, getPredictionTaskDesc, getPredictionResponse, predict.WrappedModel}
 \item{resample}{makeResampleDesc, makeResampleInstance, makeResamplePrediction, resample, getRRPredictions, getRRTaskDescription, getRRTaskDesc, getRRPredictionList, addRRMeasure}
 \item{task}{getTaskDesc, getTaskType, getTaskId, getTaskTargetNames, getTaskClassLevels, getTaskFeatureNames, getTaskNFeats, getTaskSize, getTaskFormula, getTaskTargets, getTaskData, getTaskCosts, subsetTask}
-\item{thresh_vs_perf}{generateThreshVsPerfData, plotThreshVsPerf, plotThreshVsPerfGGVIS, plotROCCurves}
-\item{tune}{getNestedTuneResultsX, getNestedTuneResultsOptPathDf, getTuneResult, makeModelMultiplexerParamSet, makeModelMultiplexer, makeTuneControlCMAES, makeTuneControlDesign, makeTuneControlGenSA, makeTuneControlGrid, makeTuneControlIrace, makeTuneControlMBO, makeTuneControl, makeTuneControlRandom, tuneParams, tuneThreshold}
-\item{tune_multicrit}{plotTuneMultiCritResult, plotTuneMultiCritResultGGVIS, makeTuneMultiCritControl, tuneParamsMultiCrit}
+\item{thresh_vs_perf}{generateThreshVsPerfData, plotThreshVsPerf, plotROCCurves}
+\item{tune}{getNestedTuneResultsX, getNestedTuneResultsOptPathDf, getResamplingIndices, getTuneResult, makeModelMultiplexerParamSet, makeModelMultiplexer, makeTuneControlCMAES, makeTuneControlDesign, makeTuneControlGenSA, makeTuneControlGrid, makeTuneControlIrace, makeTuneControlMBO, makeTuneControl, makeTuneControlRandom, tuneParams, tuneThreshold}
+\item{tune_multicrit}{plotTuneMultiCritResult, makeTuneMultiCritControl, tuneParamsMultiCrit}
 \item{wrapper}{makeBaggingWrapper, makeClassificationViaRegressionWrapper, makeConstantClassWrapper, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeDownsampleWrapper, makeDummyFeaturesWrapper, makeExtractFDAFeatsWrapper, makeFeatSelWrapper, makeFilterWrapper, makeImputeWrapper, makeMulticlassWrapper, makeOverBaggingWrapper, makeUndersampleWrapper, makePreprocWrapperCaret, makePreprocWrapper, makeRemoveConstantFeaturesWrapper, makeSMOTEWrapper, makeTuneWrapper, makeWeightedClassesWrapper}
 }

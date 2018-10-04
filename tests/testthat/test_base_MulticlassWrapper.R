@@ -20,7 +20,7 @@ test_that("MulticlassWrapper", {
   }
 
   lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeLearner("classif.lqa")
+  lrn2 = makeLearner("classif.earth")
   lrn3 = makeBaggingWrapper(learner = lrn1, bw.iters = 2)
   lrn1.w = makeMulticlassWrapper(lrn1)
   lrn2.w = makeMulticlassWrapper(lrn2, mcw.method = "onevsone")

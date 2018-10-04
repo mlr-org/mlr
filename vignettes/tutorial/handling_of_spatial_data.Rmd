@@ -1,0 +1,154 @@
+---
+title: "Handling of Spatial Data"
+author: "Patrick Schratz"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# Introduction
+
+Spatial data is different from non-spatial data by having a spatial reference information attached to each observation. 
+This information is usually stored as coordinates, often named `x` and `y`. 
+Coordinates are either stored in UTM (Universal Transverse Mercator) or latitude/longitude format. 
+
+Treating spatial data sets like non-spatial ones leads to overoptimistic results in predictive accuracy of models ([Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/)). 
+This is due to the underlying spatial autocorrelation in the data.
+Spatial autocorrelation does occur in all spatial data sets.
+Magnitude varies depending on the characteristics of the data set. 
+The closer observations are located to each other, the more similar they are. 
+
+If common validation procedures like cross-validation are applied to such data sets, they assume independence of the observation upfront to provide unbiased estimates.
+However, this assumption is violated in the spatial case due to spatial autocorrelation.
+Subsequently, non-spatial cross-validation will fail to provide accurate performance estimates. 
+
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Nested Spatial and Non-Spatial Cross-Validation", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") == "latex"}
+knitr::include_graphics("img/spatial_cross_validation.png")
+```
+
+```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Nested Spatial and Non-Spatial Cross-Validation", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
+knitr::include_graphics("https://raw.githubusercontent.com/pat-s/mlr/master/vignettes/tutorial/devel/pdf/img/spatial_cross_validation.png")
+```
+
+By doing a random sampling of the data set (i.e., non-spatial sampling), training and test set data are often located directly next to each other (in geographical space).
+Hence, the test set will contain observations which are somewhat similar (due to spatial autocorrelation) to observations in the training set. 
+This leads to the effect that the model, which was trained on the training set, performs quite well on the test data because it already knows it to some degree. 
+
+To reduce this bias on the resulting predictive accuracy estimate, [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/) suggested using spatial partitioning in favor of random partitioning (see Figure 1). 
+Here, spatial clusters are equal to the number of folds chosen. 
+These spatially disjoint subsets of the data introduce a spatial distance between training and test set. 
+This reduces the influence of spatial autocorrelation and subsequently also the overoptimistic predictive accuracy estimates.
+The example in Figure 1 shows a five-fold nested cross-validation setting and exhibits the difference between spatial and non-spatial partitioning.
+The nested approach is used when hyperparameter tuning is performed.
+
+# How to use spatial partitioning in mlr
+
+Spatial partitioning can be used when performing cross-validation. 
+In any `resample()` call you can choose `SpCV` or `SpRepCV` to use it. 
+While `SpCV` will perform a spatial cross-validation with only one repetition, `SpRepCV` gives you the option to choose any number of repetitions. 
+As a rule of thumb, usually 100 repetitions are used with the aim to reduce variance introduced by partitioning.   
+
+There are some prerequisites for this:
+
+When specifying the [task](task.html){target="_blank"}, you need to provide spatial coordinates through argument `coordinates`.
+The supplied `data.frame` needs to have the same number of rows as the data and at least two dimensions need to be supplied.
+This means that a 3-D partitioning might also work but we have not tested this explicitly.
+Coordinates need to be numeric so it is suggested to use a UTM projection.
+If this applies, the coordinates will be used for spatial partitioning if `SpCV` or `SpRepCV` is selected as resampling strategy. 
+
+# Examples
+
+The `spatial.task` data set serves as an example data set for spatial modeling tasks in `mlr`.
+The [task](task.html){target="_blank"} argument `coordinates` is a `data.frame` with two coordinates that will later be used for the spatial partitioning of the data set.
+
+In this example, the "Random Forest" algorithm (package [ranger](&ranger::ranger)) is used to model a binomial response variable.
+
+For performance assessment, a repeated spatial cross-validation with 5 folds and 5 repetitions is chosen.
+
+## Spatial Cross-Validation
+
+```{r, eval = TRUE}
+data("spatial.task")
+spatial.task
+
+learner.rf = makeLearner("classif.ranger", predict.type = "prob")
+
+resampling = makeResampleDesc("SpRepCV", fold = 5, reps = 5)
+
+set.seed(123)
+out = resample(learner = learner.rf, task = spatial.task,
+  resampling = resampling, measures = list(auc))
+
+mean(out$measures.test$auc)
+```
+
+We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting.
+To do so, we simply choose `RepCV` instead of `SpRepCV`.
+There is no need to remove `coordinates` from the task as it is only used if `SpCV` or `SpRepCV` is selected as the resampling strategy.
+
+## Non-Spatial Cross-Validation
+
+```{r, eval = TRUE}
+learner.rf = makeLearner("classif.ranger", predict.type = "prob")
+
+resampling = makeResampleDesc("RepCV", fold = 5, reps = 5)
+
+set.seed(123)
+out = resample(learner = learner.rf, task = spatial.task,
+  resampling = resampling, measures = list(auc))
+
+mean(out$measures.test$auc)
+```
+
+The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC. 
+
+# Visualization of spatial partitions
+ 
+You can visualize the spatial partitioning using `createSpatialResamplingPlots()`.
+This function creates multiple `ggplot2` objects that can then be visualized in a gridded way using your favorite "plot arrangement" function 
+We recommend to use `cowplot::plot_grid()` and `cowplot::save_plot()` for this. 
+ 
+You can pass multiple `resample` result objects as inputs. 
+This is useful to visualize the differences between a spatial and non-spatial partitioning.
+If you pass the `resample` objects in a named list, those names will be populated as plot titles. 
+By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument `datum`.
+If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using `purrr::map()`, `base::lapply()` or similar functions.
+ 
+```{r out.width = "800px", fig.align='center'}
+library(mlr)
+library(cowplot)
+ 
+rdesc1 = makeResampleDesc("SpRepCV", folds = 5, reps = 4)
+r1 = resample(makeLearner("classif.qda"), spatial.task, rdesc1, show.info = FALSE)
+rdesc2 = makeResampleDesc("RepCV", folds = 5, reps = 4)
+r2 = resample(makeLearner("classif.qda"), spatial.task, rdesc2, show.info = FALSE)
+ 
+plots = createSpatialResamplingPlots(spatial.task,
+  list("SpRepCV" = r1, "RepCV" = r2), crs = 32717, repetitions = 1,
+  x.axis.breaks = c(-79.075), y.axis.breaks = c(-3.975))
+plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
+  labels = plots[["Labels"]], label_size = 8)
+```
+ 
+# Notes
+ 
+* Some models are more affected by spatial autocorrelation than others. 
+In general, it can be said that the more flexible a model is, the more it will profit from underlying spatial autocorrelation.
+Simpler models (e.g., GLM) will show less overoptimistic performance estimates.
+
+* The concept of spatial cross-validation was originally implemented in package [sperrorest](https://pat-s.github.io/sperrorest/index.html){target="_blank"}.
+This package comes with even more partitioning options and the ability to visualize the spatial grouping of folds. 
+We plan to integrate more functions from [sperrorest](https://pat-s.github.io/sperrorest/index.html){target="_blank"} into `mlr` so stay tuned!
+
+* For more detailed information, see [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/) and [Brenning2012](http://ieeexplore.ieee.org/document/6352393/).

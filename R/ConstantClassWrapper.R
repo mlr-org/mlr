@@ -6,7 +6,7 @@
 #' Probabilities can be predicted and will be 1 or 0 depending on whether the label matches the majority class or not.
 #'
 #' @template arg_learner
-#' @param frac [numeric(1)]\cr
+#' @param frac `numeric(1)`\cr
 #' The fraction of labels in [0, 1) that can be different from the majority label. Default is 0, which means that constant labels are only predicted if there is exactly one label in the data.
 #' @template ret_learner
 #' @family wrapper

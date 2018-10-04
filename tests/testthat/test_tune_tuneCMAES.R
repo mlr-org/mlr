@@ -9,6 +9,7 @@ test_that("tuneCMAES", {
   ctrl1 = makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
+  expect_number(tr1$y, lower = 0, upper = 0.2)
 
   ps2 = makeParamSet(
     makeNumericVectorParam("cutoff", lower = 0.0001, upper = 1, len = 3,
@@ -19,9 +20,9 @@ test_that("tuneCMAES", {
   ctrl2 = makeTuneControlCMAES(start = list(cutoff = c(1 / 3, 1 / 3, 1 / 3), ntree = 200L),
     maxit = 5, sigma = 2)
   tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res,
-    par.set = ps2, control = ctrl2)
+    par.set = ps2, control = ctrl2, measures = acc)
   expect_equal(ncol(as.data.frame(tr2$opt.path)), 4 + 1 + 2 + 2)
-  expect_true(is.numeric(tr2$y))
+  expect_number(tr2$y, lower = 0.8, upper = 1)
   expect_equal(length(tr2$y), 1)
   expect_true(is.list(tr2$x))
   expect_equal(length(tr2$x), 2)
