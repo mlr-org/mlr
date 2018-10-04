@@ -3,6 +3,9 @@
 ## general
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
 
+## functions - general
+* getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+
 ## learners - new
 * classif.liquidSVM
 * regr.liquidSVM
