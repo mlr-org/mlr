@@ -299,17 +299,17 @@
 <a class="sourceLine" id="cb2-7" data-line-number="7">## threshold: M=0.60,R=0.40</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">## time: NA</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">##   id truth    prob.M    prob.R response</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.6242345 0.3757655        M</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.5862364 0.4137636        R</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.5711640 0.4288360        R</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.4841989 0.5158011        R</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.6201279 0.3798721        M</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.5002427 0.4997573        R</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.4805616 0.5194384        R</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.5966917 0.4033083        R</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.6293793 0.3706207        M</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.4384298 0.5615702        R</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.5565193 0.4434807        R</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.4395511 0.5604489        R</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16">## ... (#rows: 208, #cols: 5)</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(oob, <span class="dt">measures =</span> <span class="kw">list</span>(auc, mmce))</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">##       auc      mmce </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9352652 0.1538462</a></code></pre></div>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9292282 0.1778846</a></code></pre></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>
 </div>
   </div>

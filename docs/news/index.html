@@ -312,6 +312,13 @@
 <li>add option to use fully predefined indices in resampling (<code><a href="../reference/makeResampleDesc.html">makeResampleDesc(fixed = TRUE)</a></code>)</li>
 </ul>
 </div>
+<div id="functions---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functions---general" class="anchor"></a>functions - general</h2>
+<ul>
+<li>getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)</li>
+</ul>
+</div>
 <div id="learners---new" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learners---new" class="anchor"></a>learners - new</h2>
@@ -333,9 +340,9 @@
 <li>Suppress messages with show.learner.output = FALSE</li>
 </ul>
 </div>
-<div id="functions---general" class="section level2">
+<div id="functions---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-1" class="anchor"></a>functions - general</h2>
 <ul>
 <li>plotHyperParsEffect: add colors</li>
 </ul>
@@ -387,9 +394,9 @@
 <li>Added support for growing and fixed window cross-validation for forecasting through new resample methods “GrowingWindowCV” and “FixedWindowCV”.</li>
 </ul>
 </div>
-<div id="functions---general-1" class="section level2">
+<div id="functions---general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-1" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-2" class="anchor"></a>functions - general</h2>
 <ul>
 <li>generatePartialDependenceData: depends now on the “mmpf” package, removed parameter: “center”, “resample”, “fmin”, “fmax” and “gridsize” added parameter: “uniform” and “n” to configure the grid for the partial dependence plot</li>
 <li>batchmark: allow resample instances and reduction of partial results</li>
@@ -508,9 +515,9 @@
 <li>mlr now supports tuning with Bayesian optimization with mlrMBO</li>
 </ul>
 </div>
-<div id="functions---general-2" class="section level2">
+<div id="functions---general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-2" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-3" class="anchor"></a>functions - general</h2>
 <ul>
 <li>tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets</li>
 <li>getBMR-operators: now support “drop” argument that simplifies the resulting list</li>
@@ -564,9 +571,9 @@
 <h1 class="page-header">
 <a href="#mlr-2-10" class="anchor"></a>mlr 2.10:<small> 2017-02-07 </small>
 </h1>
-<div id="functions---general-3" class="section level2">
+<div id="functions---general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-3" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-4" class="anchor"></a>functions - general</h2>
 <ul>
 <li>fixed bug in resample when using predict = “train” (issue <a href='https://github.com/mlr-org/mlr/issues/1284'>#1284</a>)</li>
 <li>update to irace 2.0 – there are algorithmic changes in irace that may affect performance</li>
@@ -681,9 +688,9 @@
 <h1 class="page-header">
 <a href="#mlr-2-9" class="anchor"></a>mlr 2.9:<small> 2016-08-03 </small>
 </h1>
-<div id="functions---general-4" class="section level2">
+<div id="functions---general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-4" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-5" class="anchor"></a>functions - general</h2>
 <ul>
 <li>various cleanups that removed unused code</li>
 <li>subsetTask, getTaskData: arg “features” now also accepts logical and integer</li>

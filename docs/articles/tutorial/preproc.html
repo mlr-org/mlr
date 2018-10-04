@@ -431,8 +431,8 @@
 <a class="sourceLine" id="cb6-2" data-line-number="2">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="kw">list</span>(<span class="st">"classif.qda"</span>, lrn), sonar.task, rin, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">res</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">##         task.id          learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">## 1 Sonar-example         classif.qda      0.3605245</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">## 2 Sonar-example classif.qda.preproc      0.2358178</a></code></pre></div>
+<a class="sourceLine" id="cb6-5" data-line-number="5">## 1 Sonar-example         classif.qda      0.4278813</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">## 2 Sonar-example classif.qda.preproc      0.2355418</a></code></pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
 <div id="joint-tuning-of-preprocessing-options-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -509,31 +509,31 @@
 <a class="sourceLine" id="cb8-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, sonar.task, rin, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">res</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8">## Tune result:</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## Op. pars: ppc.pcaComp=14; predict.method=plug-in</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## mmce.test.mean=0.2115942</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## Op. pars: ppc.pcaComp=27; predict.method=plug-in</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## mmce.test.mean=0.2162181</a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">##    ppc.pcaComp predict.method mmce.test.mean</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">## 1            1        plug-in      0.4999310</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">## 2            8        plug-in      0.2596273</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">## 3           14        plug-in      0.2115942</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">## 4           21        plug-in      0.2405797</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">## 5           27        plug-in      0.2453416</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">## 6           34        plug-in      0.2501725</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">## 7           40        plug-in      0.2837129</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">## 8           47        plug-in      0.2449965</a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">## 9           53        plug-in      0.2980676</a>
-<a class="sourceLine" id="cb8-23" data-line-number="23">## 10          60        plug-in      0.3605245</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">## 11           1       debiased      0.5004141</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">## 12           8       debiased      0.2741201</a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">## 13          14       debiased      0.2598344</a>
-<a class="sourceLine" id="cb8-27" data-line-number="27">## 14          21       debiased      0.3030366</a>
-<a class="sourceLine" id="cb8-28" data-line-number="28">## 15          27       debiased      0.2888199</a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">## 16          34       debiased      0.2645273</a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">## 17          40       debiased      0.2693582</a>
-<a class="sourceLine" id="cb8-31" data-line-number="31">## 18          47       debiased      0.2886128</a>
-<a class="sourceLine" id="cb8-32" data-line-number="32">## 19          53       debiased      0.2737060</a>
-<a class="sourceLine" id="cb8-33" data-line-number="33">## 20          60       debiased      0.3126294</a></code></pre></div>
+<a class="sourceLine" id="cb8-14" data-line-number="14">## 1            1        plug-in      0.5624569</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">## 2            8        plug-in      0.2212560</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">## 3           14        plug-in      0.2355418</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">## 4           21        plug-in      0.2355418</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">## 5           27        plug-in      0.2162181</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">## 6           34        plug-in      0.2690821</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">## 7           40        plug-in      0.2690131</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">## 8           47        plug-in      0.2549344</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">## 9           53        plug-in      0.2884058</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">## 10          60        plug-in      0.4278813</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">## 11           1       debiased      0.5286404</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">## 12           8       debiased      0.2741891</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">## 13          14       debiased      0.2835059</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">## 14          21       debiased      0.2690131</a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">## 15          27       debiased      0.2645273</a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">## 16          34       debiased      0.2691511</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">## 17          40       debiased      0.2835059</a>
+<a class="sourceLine" id="cb8-31" data-line-number="31">## 18          47       debiased      0.2691511</a>
+<a class="sourceLine" id="cb8-32" data-line-number="32">## 19          53       debiased      0.2739821</a>
+<a class="sourceLine" id="cb8-33" data-line-number="33">## 20          60       debiased      0.3606625</a></code></pre></div>
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
@@ -633,8 +633,8 @@
 <a class="sourceLine" id="cb12-5" data-line-number="5">## Resample Result</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">## Learner: regr.nnet.preproc</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">## Aggr perf: mse.test.mean=18.5925001</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">## Runtime: 0.139627</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">## Aggr perf: mse.test.mean=23.7694212</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">## Runtime: 0.131923</a>
 <a class="sourceLine" id="cb12-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb12-11" data-line-number="11">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
 <a class="sourceLine" id="cb12-12" data-line-number="12">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
@@ -642,8 +642,8 @@
 <a class="sourceLine" id="cb12-14" data-line-number="14">## Resample Result</a>
 <a class="sourceLine" id="cb12-15" data-line-number="15">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb12-16" data-line-number="16">## Learner: regr.nnet</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17">## Aggr perf: mse.test.mean=38.6557168</a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">## Runtime: 0.0962114</a></code></pre></div>
+<a class="sourceLine" id="cb12-17" data-line-number="17">## Aggr perf: mse.test.mean=45.6395159</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">## Runtime: 0.0743032</a></code></pre></div>
 </div>
 <div id="joint-tuning-of-preprocessing-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -694,23 +694,23 @@
 <a class="sourceLine" id="cb14-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10">res</a>
 <a class="sourceLine" id="cb14-11" data-line-number="11">## Tune result:</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">## Op. pars: decay=0.05; center=FALSE; scale=TRUE</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">## mse.test.mean=13.3251893</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">## Op. pars: decay=0.1; center=FALSE; scale=TRUE</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">## mse.test.mean=14.4568006</a>
 <a class="sourceLine" id="cb14-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb14-15" data-line-number="15"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">##    decay center scale mse.test.mean dob eol error.message exec.time</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">## 1      0   TRUE  TRUE      31.95984   1  NA          &lt;NA&gt;     0.040</a>
-<a class="sourceLine" id="cb14-18" data-line-number="18">## 2   0.05   TRUE  TRUE      14.87364   2  NA          &lt;NA&gt;     0.047</a>
-<a class="sourceLine" id="cb14-19" data-line-number="19">## 3    0.1   TRUE  TRUE      25.73480   3  NA          &lt;NA&gt;     0.051</a>
-<a class="sourceLine" id="cb14-20" data-line-number="20">## 4      0  FALSE  TRUE      15.42933   4  NA          &lt;NA&gt;     0.039</a>
-<a class="sourceLine" id="cb14-21" data-line-number="21">## 5   0.05  FALSE  TRUE      13.32519   5  NA          &lt;NA&gt;     0.041</a>
-<a class="sourceLine" id="cb14-22" data-line-number="22">## 6    0.1  FALSE  TRUE      18.62283   6  NA          &lt;NA&gt;     0.041</a>
-<a class="sourceLine" id="cb14-23" data-line-number="23">## 7      0   TRUE FALSE      65.44185   7  NA          &lt;NA&gt;     0.025</a>
-<a class="sourceLine" id="cb14-24" data-line-number="24">## 8   0.05   TRUE FALSE      47.54358   8  NA          &lt;NA&gt;     0.045</a>
-<a class="sourceLine" id="cb14-25" data-line-number="25">## 9    0.1   TRUE FALSE      58.28660   9  NA          &lt;NA&gt;     0.046</a>
-<a class="sourceLine" id="cb14-26" data-line-number="26">## 10     0  FALSE FALSE      86.68209  10  NA          &lt;NA&gt;     0.021</a>
-<a class="sourceLine" id="cb14-27" data-line-number="27">## 11  0.05  FALSE FALSE      18.96339  11  NA          &lt;NA&gt;     0.042</a>
-<a class="sourceLine" id="cb14-28" data-line-number="28">## 12   0.1  FALSE FALSE      43.40954  12  NA          &lt;NA&gt;     0.046</a></code></pre></div>
+<a class="sourceLine" id="cb14-17" data-line-number="17">## 1      0   TRUE  TRUE      17.68046   1  NA          &lt;NA&gt;     0.045</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18">## 2   0.05   TRUE  TRUE      26.54519   2  NA          &lt;NA&gt;     0.038</a>
+<a class="sourceLine" id="cb14-19" data-line-number="19">## 3    0.1   TRUE  TRUE      26.00006   3  NA          &lt;NA&gt;     0.045</a>
+<a class="sourceLine" id="cb14-20" data-line-number="20">## 4      0  FALSE  TRUE      77.35584   4  NA          &lt;NA&gt;     0.017</a>
+<a class="sourceLine" id="cb14-21" data-line-number="21">## 5   0.05  FALSE  TRUE      15.94532   5  NA          &lt;NA&gt;     0.039</a>
+<a class="sourceLine" id="cb14-22" data-line-number="22">## 6    0.1  FALSE  TRUE      14.45680   6  NA          &lt;NA&gt;     0.042</a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">## 7      0   TRUE FALSE      50.11912   7  NA          &lt;NA&gt;     0.038</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">## 8   0.05   TRUE FALSE      52.94397   8  NA          &lt;NA&gt;     0.039</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">## 9    0.1   TRUE FALSE      40.24185   9  NA          &lt;NA&gt;     0.046</a>
+<a class="sourceLine" id="cb14-26" data-line-number="26">## 10     0  FALSE FALSE      18.57085  10  NA          &lt;NA&gt;     0.033</a>
+<a class="sourceLine" id="cb14-27" data-line-number="27">## 11  0.05  FALSE FALSE      21.59657  11  NA          &lt;NA&gt;     0.039</a>
+<a class="sourceLine" id="cb14-28" data-line-number="28">## 12   0.1  FALSE FALSE      19.89083  12  NA          &lt;NA&gt;     0.045</a></code></pre></div>
 </div>
 <div id="preprocessing-wrapper-functions" class="section level2">
 <h2 class="hasAnchor">
