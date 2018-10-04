@@ -62,7 +62,7 @@ test_that("getResamplingIndices(inner = TRUE) correctly translates the inner ind
   p = resample(tune_wrapper, ct, outer, show.info = FALSE,
     extract = getTuneResult)
 
-  inner_inds = getResamplingIndicesNew(p, inner = TRUE)
+  inner_inds = getResamplingIndices(p, inner = TRUE)
 
   # to test we expect that any inner fold contains indices that exceed $obs - (obs / nfolds)$ = 150 - 30 = 120
   # 120 is the max index number that is used in the inner resampling (in the case of 150 obs and 5 folds) because we have one fold less than in the outer level
