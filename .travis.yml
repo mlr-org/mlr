@@ -52,7 +52,7 @@ jobs:
         - git config user.name $GN
         - git config user.email $GM
         - git config credential.helper "store --file=.git/credentials"
-        - bash inst/convert_to_ascii_news.sh
+        - bash addon/convert_to_ascii_news.sh
         - echo "https://$GT:@github.com" >> .git/credentials
         - git config push.default matching
         - git add --force NEWS
