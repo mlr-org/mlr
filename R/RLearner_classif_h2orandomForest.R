@@ -66,8 +66,14 @@ getFeatureImportanceLearner.classif.h2o.randomForest = function(.learner, .model
 }
 
 extractH2OVarImp = function(.learner.model, ...) {
-  imp = as.data.frame(h2o::h2o.varimp(.learner.model))
-  res = imp$relative_importance
-  names(res) = imp$variable
+  imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
+  if (isTRUE(class(.learner.model) == "H2OBinomialModel")) {
+    res = imp$coefficients
+    names(res) = imp$names
+  } else {
+    res = imp$relative_importance
+    names(res) = imp$variable
+  }
+
   res
 }
