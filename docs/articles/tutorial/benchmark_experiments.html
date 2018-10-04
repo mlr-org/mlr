@@ -459,7 +459,7 @@
 <a class="sourceLine" id="cb6-24" data-line-number="24">## Stratification: FALSE</a>
 <a class="sourceLine" id="cb6-25" data-line-number="25">## predict.type: response</a>
 <a class="sourceLine" id="cb6-26" data-line-number="26">## threshold: </a>
-<a class="sourceLine" id="cb6-27" data-line-number="27">## time (mean): 0.01</a>
+<a class="sourceLine" id="cb6-27" data-line-number="27">## time (mean): 0.00</a>
 <a class="sourceLine" id="cb6-28" data-line-number="28">##    id truth response iter  set</a>
 <a class="sourceLine" id="cb6-29" data-line-number="29">## 1 110     M        R    1 test</a>
 <a class="sourceLine" id="cb6-30" data-line-number="30">## 2  87     R        R    1 test</a>
@@ -682,32 +682,32 @@
 <a class="sourceLine" id="cb13-31" data-line-number="31">## 14               Sonar-example        rpart     0.30785714    0.31153361</a>
 <a class="sourceLine" id="cb13-32" data-line-number="32">## 15               Sonar-example randomForest     0.16809524    0.16470474</a>
 <a class="sourceLine" id="cb13-33" data-line-number="33">##    timetrain.test.mean</a>
-<a class="sourceLine" id="cb13-34" data-line-number="34">## 1               0.0022</a>
-<a class="sourceLine" id="cb13-35" data-line-number="35">## 2               0.0037</a>
-<a class="sourceLine" id="cb13-36" data-line-number="36">## 3               0.0276</a>
-<a class="sourceLine" id="cb13-37" data-line-number="37">## 4               0.0066</a>
-<a class="sourceLine" id="cb13-38" data-line-number="38">## 5               0.0087</a>
-<a class="sourceLine" id="cb13-39" data-line-number="39">## 6               0.3786</a>
-<a class="sourceLine" id="cb13-40" data-line-number="40">## 7               0.0067</a>
-<a class="sourceLine" id="cb13-41" data-line-number="41">## 8               0.0094</a>
-<a class="sourceLine" id="cb13-42" data-line-number="42">## 9               0.4014</a>
-<a class="sourceLine" id="cb13-43" data-line-number="43">## 10              0.0037</a>
-<a class="sourceLine" id="cb13-44" data-line-number="44">## 11              0.0053</a>
-<a class="sourceLine" id="cb13-45" data-line-number="45">## 12              0.3573</a>
-<a class="sourceLine" id="cb13-46" data-line-number="46">## 13              0.0138</a>
-<a class="sourceLine" id="cb13-47" data-line-number="47">## 14              0.0119</a>
-<a class="sourceLine" id="cb13-48" data-line-number="48">## 15              0.2634</a></code></pre></div>
+<a class="sourceLine" id="cb13-34" data-line-number="34">## 1               0.0024</a>
+<a class="sourceLine" id="cb13-35" data-line-number="35">## 2               0.0055</a>
+<a class="sourceLine" id="cb13-36" data-line-number="36">## 3               0.0409</a>
+<a class="sourceLine" id="cb13-37" data-line-number="37">## 4               0.0087</a>
+<a class="sourceLine" id="cb13-38" data-line-number="38">## 5               0.0108</a>
+<a class="sourceLine" id="cb13-39" data-line-number="39">## 6               0.3542</a>
+<a class="sourceLine" id="cb13-40" data-line-number="40">## 7               0.0107</a>
+<a class="sourceLine" id="cb13-41" data-line-number="41">## 8               0.0120</a>
+<a class="sourceLine" id="cb13-42" data-line-number="42">## 9               0.3912</a>
+<a class="sourceLine" id="cb13-43" data-line-number="43">## 10              0.0038</a>
+<a class="sourceLine" id="cb13-44" data-line-number="44">## 11              0.0064</a>
+<a class="sourceLine" id="cb13-45" data-line-number="45">## 12              0.4280</a>
+<a class="sourceLine" id="cb13-46" data-line-number="46">## 13              0.0137</a>
+<a class="sourceLine" id="cb13-47" data-line-number="47">## 14              0.0136</a>
+<a class="sourceLine" id="cb13-48" data-line-number="48">## 15              0.3254</a></code></pre></div>
 <p>From the aggregated performance values we can see that for the iris- and PimaIndiansDiabetes-example linear discriminant analysis (<code><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code>) performs well while for all other tasks the <code><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code> seems superior. Training takes longer for the <code><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code> than for the other learners.</p>
 <p>In order to draw any conclusions from the average performances at least their variability has to be taken into account or, preferably, the distribution of performance values across resampling iterations.</p>
 <p>The individual performances on the 10 folds for every task, learner, and measure are retrieved below.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">perf =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">head</span>(perf)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">##        task.id learner.id iter      mmce       ber timetrain</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">## 1 iris-example        lda    1 0.0000000 0.0000000     0.002</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">## 1 iris-example        lda    1 0.0000000 0.0000000     0.003</a>
 <a class="sourceLine" id="cb14-5" data-line-number="5">## 2 iris-example        lda    2 0.1333333 0.1666667     0.002</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">## 3 iris-example        lda    3 0.0000000 0.0000000     0.002</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">## 3 iris-example        lda    3 0.0000000 0.0000000     0.003</a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">## 4 iris-example        lda    4 0.0000000 0.0000000     0.002</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">## 5 iris-example        lda    5 0.0000000 0.0000000     0.003</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">## 5 iris-example        lda    5 0.0000000 0.0000000     0.002</a>
 <a class="sourceLine" id="cb14-9" data-line-number="9">## 6 iris-example        lda    6 0.0000000 0.0000000     0.002</a></code></pre></div>
 <p>A closer look at the result reveals that the <code><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code> outperforms the classification tree (<code><a href="http://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code>) in every instance, while linear discriminant analysis (<code><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code>) performs better than <code><a href="http://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code> most of the time. Additionally <code><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code> sometimes even beats the <code><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code>. With increasing size of such <code><a href="../../reference/benchmark.html">benchmark()</a></code> experiments, those tables become almost unreadable and hard to comprehend.</p>
 <p><code>mlr</code> features some plotting functions to visualize results of benchmark experiments that you might find useful. Moreover, <code>mlr</code> offers statistical hypothesis tests to assess performance differences between learners.</p>
@@ -745,11 +745,11 @@
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr, <span class="dt">measure =</span> mmce, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">head</span>(plt<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb18-3" data-line-number="3">##        task.id learner.id iter      mmce       ber timetrain</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">## 1 iris-example        lda    1 0.0000000 0.0000000     0.002</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">## 1 iris-example        lda    1 0.0000000 0.0000000     0.003</a>
 <a class="sourceLine" id="cb18-5" data-line-number="5">## 2 iris-example        lda    2 0.1333333 0.1666667     0.002</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">## 3 iris-example        lda    3 0.0000000 0.0000000     0.002</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">## 3 iris-example        lda    3 0.0000000 0.0000000     0.003</a>
 <a class="sourceLine" id="cb18-7" data-line-number="7">## 4 iris-example        lda    4 0.0000000 0.0000000     0.002</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">## 5 iris-example        lda    5 0.0000000 0.0000000     0.003</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">## 5 iris-example        lda    5 0.0000000 0.0000000     0.002</a>
 <a class="sourceLine" id="cb18-9" data-line-number="9">## 6 iris-example        lda    6 0.0000000 0.0000000     0.002</a>
 <a class="sourceLine" id="cb18-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb18-11" data-line-number="11"><span class="kw">levels</span>(plt<span class="op">$</span>data<span class="op">$</span>task.id) =<span class="st"> </span><span class="kw">c</span>(<span class="st">"Iris"</span>, <span class="st">"Ringnorm"</span>, <span class="st">"Waveform"</span>, <span class="st">"Diabetes"</span>, <span class="st">"Sonar"</span>)</a>
