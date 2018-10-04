@@ -314,32 +314,32 @@
 <a class="sourceLine" id="cb1-11" data-line-number="11">## Interaction: FALSE</a>
 <a class="sourceLine" id="cb1-12" data-line-number="12">## Individual: FALSE</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13">##     Class Probability Petal.Width</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## 1: setosa   0.4936343   0.1000000</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">## 2: setosa   0.4603197   0.3666667</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">## 3: setosa   0.3967636   0.6333333</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">## 4: setosa   0.3139710   0.9000000</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">## 5: setosa   0.2160180   1.1666667</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">## 6: setosa   0.1436392   1.4333333</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## 1: setosa   0.4921443   0.1000000</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## 2: setosa   0.4474895   0.3666667</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 3: setosa   0.3837084   0.6333333</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 4: setosa   0.3190156   0.9000000</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## 5: setosa   0.2407151   1.1666667</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## 6: setosa   0.1655064   1.4333333</a>
 <a class="sourceLine" id="cb1-20" data-line-number="20">## ... (#rows: 30, #cols: 3)</a></code></pre></div>
 <p>As noted above, <span class="math inline">\(X_s\)</span> does not have to be unidimensional. If it is not, the <code>interaction</code> flag must be set to <code>TRUE</code>. Then the individual feature grids are combined using the Cartesian product, and the estimator above is applied, producing the partial dependence for every combination of unique feature values. If the <code>interaction</code> flag is <code>FALSE</code> (the default) then by default <span class="math inline">\(X_s\)</span> is assumed unidimensional, and partial dependencies are generated for each feature separately. The resulting output when <code>interaction = FALSE</code> has a column for each feature, and <code>NA</code> where the feature was not used.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">pd.lst =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.classif, iris.task, <span class="kw">c</span>(<span class="st">"Petal.Width"</span>, <span class="st">"Petal.Length"</span>), <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">head</span>(pd.lst<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">##     Class Probability Petal.Width Petal.Length</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">## 1: setosa   0.4936343   0.1000000           NA</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## 2: setosa   0.4603197   0.3666667           NA</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">## 3: setosa   0.3967636   0.6333333           NA</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">## 4: setosa   0.3139710   0.9000000           NA</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">## 5: setosa   0.2160180   1.1666667           NA</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">## 6: setosa   0.1436392   1.4333333           NA</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## 1: setosa   0.4921443   0.1000000           NA</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## 2: setosa   0.4474895   0.3666667           NA</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## 3: setosa   0.3837084   0.6333333           NA</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## 4: setosa   0.3190156   0.9000000           NA</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## 5: setosa   0.2407151   1.1666667           NA</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">## 6: setosa   0.1655064   1.4333333           NA</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">tail</span>(pd.lst<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">##        Class Probability Petal.Width Petal.Length</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## 1: virginica   0.2181657          NA     3.622222</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## 2: virginica   0.3203292          NA     4.277778</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## 3: virginica   0.4322530          NA     4.933333</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">## 4: virginica   0.5759990          NA     5.588889</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">## 5: virginica   0.6794129          NA     6.244444</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">## 6: virginica   0.6710953          NA     6.900000</a></code></pre></div>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## 1: virginica   0.2067446          NA     3.622222</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## 2: virginica   0.3164093          NA     4.277778</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## 3: virginica   0.4362724          NA     4.933333</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">## 4: virginica   0.5884231          NA     5.588889</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">## 5: virginica   0.7027623          NA     6.244444</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">## 6: virginica   0.7166505          NA     6.900000</a></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">pd.int =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.classif, iris.task, <span class="kw">c</span>(<span class="st">"Petal.Width"</span>, <span class="st">"Petal.Length"</span>), <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">pd.int</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">## PartialDependenceData</a>
@@ -350,12 +350,12 @@
 <a class="sourceLine" id="cb3-8" data-line-number="8">## Interaction: TRUE</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">## Individual: FALSE</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">##     Class Probability Petal.Width Petal.Length</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## 1: setosa   0.6107937         0.1     1.000000</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## 2: setosa   0.6127137         0.1     1.655556</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## 3: setosa   0.5741958         0.1     2.311111</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">## 4: setosa   0.4819409         0.1     2.966667</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">## 5: setosa   0.3604595         0.1     3.622222</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">## 6: setosa   0.2843747         0.1     4.277778</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">## 1: setosa   0.6489135         0.1     1.000000</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">## 2: setosa   0.6468894         0.1     1.655556</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">## 3: setosa   0.6074174         0.1     2.311111</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">## 4: setosa   0.5230849         0.1     2.966667</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">## 5: setosa   0.4056517         0.1     3.622222</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">## 6: setosa   0.3098884         0.1     4.277778</a>
 <a class="sourceLine" id="cb3-17" data-line-number="17">## ... (#rows: 300, #cols: 4)</a></code></pre></div>
 <p>At each step in the estimation of <span class="math inline">\(\hat{f}_{X_s}\)</span> a set of predictions of length <span class="math inline">\(N\)</span> is generated. By default the mean prediction is used. For classification where <code>predict.type = "prob"</code> this entails the mean class probabilities. However, other summaries of the predictions may be used. For regression and survival tasks the function used here must either return one number or three, and, if the latter, the numbers must be sorted lowest to highest. For classification tasks the function must return a number for each level of the target feature.</p>
 <p>As noted, the <code>fun</code> argument can be a function which returns three numbers (sorted low to high) for a regression task. This allows further exploration of relative feature importance. If a feature is relatively important, the bounds are necessarily tighter because the feature accounts for more of the variance of the predictions, i.e., it is “used” more by the learner. More directly setting <code>fun = var</code> identifies regions of interaction between <span class="math inline">\(X_s\)</span> and <span class="math inline">\(X_c\)</span>.</p>
@@ -371,12 +371,12 @@
 <a class="sourceLine" id="cb4-10" data-line-number="10">## Interaction: FALSE</a>
 <a class="sourceLine" id="cb4-11" data-line-number="11">## Individual: FALSE</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12">##        medv     lstat</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## 1: 24.88278  1.730000</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## 2: 23.75758  5.756667</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## 3: 22.35693  9.783333</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">## 4: 20.67853 13.810000</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## 5: 19.61200 17.836667</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## 6: 19.01058 21.863333</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">## 1: 24.76721  1.730000</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">## 2: 23.74026  5.756667</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">## 3: 22.35083  9.783333</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">## 4: 20.69067 13.810000</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">## 5: 19.57282 17.836667</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">## 6: 19.16226 21.863333</a>
 <a class="sourceLine" id="cb4-19" data-line-number="19">## ... (#rows: 10, #cols: 2)</a></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">pd.ci =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.regr, bh.task, <span class="st">"lstat"</span>,</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="kw">quantile</span>(x, <span class="kw">c</span>(.<span class="dv">25</span>, <span class="fl">.5</span>, <span class="fl">.75</span>)))</a>
@@ -389,12 +389,12 @@
 <a class="sourceLine" id="cb5-9" data-line-number="9">## Interaction: FALSE</a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">## Individual: FALSE</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11">##        medv Function     lstat</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## 1: 21.33459 medv.25%  1.730000</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## 2: 20.81833 medv.25%  5.756667</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## 3: 19.89646 medv.25%  9.783333</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## 4: 18.67877 medv.25% 13.810000</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">## 5: 16.53498 medv.25% 17.836667</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">## 6: 14.89259 medv.25% 21.863333</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## 1: 21.32514 medv.25%  1.730000</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">## 2: 20.78526 medv.25%  5.756667</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">## 3: 19.99560 medv.25%  9.783333</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">## 4: 18.67246 medv.25% 13.810000</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">## 5: 16.52366 medv.25% 17.836667</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">## 6: 15.00303 medv.25% 21.863333</a>
 <a class="sourceLine" id="cb5-18" data-line-number="18">## ... (#rows: 30, #cols: 3)</a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">pd.classif =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.classif, iris.task, <span class="st">"Petal.Length"</span>, <span class="dt">fun =</span> median)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">pd.classif</a>
@@ -406,33 +406,33 @@
 <a class="sourceLine" id="cb6-8" data-line-number="8">## Interaction: FALSE</a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">## Individual: FALSE</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">##     Class Probability Petal.Length</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">## 1: setosa  0.26872027     1.000000</a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">## 2: setosa  0.25039585     1.655556</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">## 3: setosa  0.20899739     2.311111</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">## 4: setosa  0.14206473     2.966667</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">## 5: setosa  0.07168248     3.622222</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">## 6: setosa  0.03295131     4.277778</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">## 1: setosa  0.28504642     1.000000</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">## 2: setosa  0.23738255     1.655556</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">## 3: setosa  0.17822084     2.311111</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">## 4: setosa  0.10381746     2.966667</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">## 5: setosa  0.05165871     3.622222</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">## 6: setosa  0.02455706     4.277778</a>
 <a class="sourceLine" id="cb6-17" data-line-number="17">## ... (#rows: 30, #cols: 3)</a></code></pre></div>
 <p>In addition to bounds based on a summary of the distribution of the conditional expectation of each observation, learners which can estimate the variance of their predictions can also be used. The argument <code>bounds</code> is a numeric vector of length two which is added (so the first number should be negative) to the point prediction to produce a confidence interval for the partial dependence. The default is the .025 and .975 quantiles of the Gaussian distribution.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fit.se =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.randomForest"</span>, <span class="dt">predict.type =</span> <span class="st">"se"</span>), bh.task)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">pd.se =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.se, bh.task, <span class="kw">c</span>(<span class="st">"lstat"</span>, <span class="st">"crim"</span>))</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">head</span>(pd.se<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">##       lower     medv    upper     lstat crim</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">## 1: 12.59950 31.43389 50.26828  1.730000   NA</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## 2: 14.48651 26.05838 37.63025  5.756667   NA</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## 3: 13.47761 23.63228 33.78694  9.783333   NA</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 4: 14.19129 22.13455 30.07782 13.810000   NA</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## 5: 12.84448 20.42052 27.99656 17.836667   NA</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## 6: 11.69925 19.78705 27.87485 21.863333   NA</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">## 1: 12.47768 31.29641 50.11514  1.730000   NA</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">## 2: 14.36388 26.13938 37.91488  5.756667   NA</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## 3: 13.49371 23.53091 33.56811  9.783333   NA</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## 4: 14.32505 22.09351 29.86197 13.810000   NA</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## 5: 12.98853 20.41850 27.84848 17.836667   NA</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">## 6: 11.84043 19.77857 27.71670 21.863333   NA</a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="kw">tail</span>(pd.se<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">##       lower     medv    upper lstat     crim</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">## 1: 10.70152 21.95894 33.21636    NA 39.54849</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">## 2: 10.68646 21.95308 33.21970    NA 49.43403</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">## 3: 10.66341 21.94169 33.21998    NA 59.31957</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">## 4: 10.59496 21.92702 33.25908    NA 69.20512</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">## 5: 10.61147 21.92890 33.24634    NA 79.09066</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">## 6: 10.61206 21.92915 33.24624    NA 88.97620</a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14">## 1: 10.67121 21.65714 32.64306    NA 39.54849</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">## 2: 10.61158 21.63905 32.66653    NA 49.43403</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">## 3: 10.56471 21.61880 32.67290    NA 59.31957</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">## 4: 10.51928 21.60529 32.69129    NA 69.20512</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">## 5: 10.52547 21.60828 32.69108    NA 79.09066</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">## 6: 10.52662 21.60901 32.69139    NA 88.97620</a></code></pre></div>
 <p>As previously mentioned if the aggregation function is not used, i.e., it is the identity, then the conditional expectation of <span class="math inline">\(\hat{f}^{(i)}_{X_s}\)</span> is estimated. If <code>individual = TRUE</code> then <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> returns <span class="math inline">\(n\)</span> partial dependence estimates made at each point in the prediction grid constructed from the features.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">pd.ind.regr =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.regr, bh.task, <span class="st">"lstat"</span>, <span class="dt">individual =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">pd.ind.regr</a>
@@ -444,12 +444,12 @@
 <a class="sourceLine" id="cb8-8" data-line-number="8">## Interaction: FALSE</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9">## Individual: TRUE</a>
 <a class="sourceLine" id="cb8-10" data-line-number="10">##        medv n     lstat</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">## 1: 35.86849 1  1.730000</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">## 2: 34.33387 1  5.756667</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">## 3: 31.96090 1  9.783333</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">## 4: 29.22726 1 13.810000</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">## 5: 26.61898 1 17.836667</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">## 6: 24.49150 1 21.863333</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## 1: 50.25933 1  1.730000</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## 2: 49.94005 1  5.756667</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">## 3: 47.24765 1  9.783333</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">## 4: 42.83563 1 13.810000</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">## 5: 37.68294 1 17.836667</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">## 6: 32.74264 1 21.863333</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">## ... (#rows: 5060, #cols: 3)</a></code></pre></div>
 <p>The resulting output, particularly the element <code>data</code> in the returned object, has an additional column <code>idx</code> which gives the index of the observation to which the row pertains.</p>
 <p>For classification tasks this index references both the class and the observation index.</p>
@@ -463,52 +463,52 @@
 <a class="sourceLine" id="cb9-8" data-line-number="8">## Interaction: FALSE</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">## Individual: TRUE</a>
 <a class="sourceLine" id="cb9-10" data-line-number="10">##     Class Probability n Petal.Length</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">## 1: setosa   0.9807564 1     1.000000</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">## 2: setosa   0.9815774 1     1.655556</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">## 3: setosa   0.9511454 1     2.311111</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">## 4: setosa   0.8143909 1     2.966667</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">## 5: setosa   0.5457100 1     3.622222</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">## 6: setosa   0.3551818 1     4.277778</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">## 1: setosa  0.28902745 1     1.000000</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">## 2: setosa  0.19908079 1     1.655556</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">## 3: setosa  0.08665324 1     2.311111</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">## 4: setosa  0.02872133 1     2.966667</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">## 5: setosa  0.01212188 1     3.622222</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">## 6: setosa  0.00936379 1     4.277778</a>
 <a class="sourceLine" id="cb9-17" data-line-number="17">## ... (#rows: 4500, #cols: 4)</a></code></pre></div>
 <p>Partial derivatives can also be computed for individual partial dependence estimates and aggregate partial dependence. This is restricted to a single feature at a time. The derivatives of individual partial dependence estimates can be useful in finding regions of interaction between the feature for which the derivative is estimated and the features excluded.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">pd.regr.der =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.regr, bh.task, <span class="st">"lstat"</span>, <span class="dt">derivative =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">head</span>(pd.regr.der<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">##          medv     lstat</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">## 1: -0.2384003  1.730000</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">## 2: -0.3549797  5.756667</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## 3: -0.4214418  9.783333</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## 4: -0.4283500 13.810000</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">## 5: -0.3795486 17.836667</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">## 6: -0.2880912 21.863333</a></code></pre></div>
+<a class="sourceLine" id="cb10-4" data-line-number="4">## 1: -0.2165387  1.730000</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">## 2: -0.3546556  5.756667</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">## 3: -0.4321582  9.783333</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## 4: -0.4377085 13.810000</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">## 5: -0.3801430 17.836667</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">## 6: -0.2790853 21.863333</a></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pd.regr.der.ind =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.regr, bh.task, <span class="st">"lstat"</span>, <span class="dt">derivative =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="dt">individual =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">head</span>(pd.regr.der.ind<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">##          medv  n     lstat</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">## 1: -0.1532576 18  1.730000</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">## 2: -0.1378616 18  5.756667</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">## 3: -0.1361048 18  9.783333</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">## 4: -0.1503138 18 13.810000</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">## 5: -0.1662153 18 17.836667</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">## 6: -0.1595069 18 21.863333</a></code></pre></div>
+<a class="sourceLine" id="cb11-4" data-line-number="4">##          medv   n     lstat</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">## 1: -0.2477430 276  1.730000</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">## 2: -0.4835166 276  5.756667</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">## 3: -0.6043917 276  9.783333</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">## 4: -0.5998403 276 13.810000</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">## 5: -0.5020937 276 17.836667</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">## 6: -0.3616423 276 21.863333</a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">pd.classif.der =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.classif, iris.task, <span class="st">"Petal.Width"</span>, <span class="dt">derivative =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">head</span>(pd.classif.der<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">##     Class Probability Petal.Width</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">## 1: setosa -0.06346642   0.1000000</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">## 2: setosa -0.18769627   0.3666667</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">## 3: setosa -0.27722060   0.6333333</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">## 4: setosa -0.34986473   0.9000000</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">## 5: setosa -0.34946895   1.1666667</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">## 6: setosa -0.18563298   1.4333333</a></code></pre></div>
+<a class="sourceLine" id="cb12-4" data-line-number="4">## 1: setosa  -0.1021871   0.1000000</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">## 2: setosa  -0.2227577   0.3666667</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">## 3: setosa  -0.2393940   0.6333333</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">## 4: setosa  -0.2609461   0.9000000</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">## 5: setosa  -0.3133541   1.1666667</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">## 6: setosa  -0.2292055   1.4333333</a></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">pd.classif.der.ind =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(fit.classif, iris.task, <span class="st">"Petal.Width"</span>, <span class="dt">derivative =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="dt">individual =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw">head</span>(pd.classif.der.ind<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">##     Class Probability  n Petal.Width</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">## 1: setosa  0.02329095 14   0.1000000</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">## 2: setosa -0.10173479 14   0.3666667</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">## 3: setosa -0.41933092 14   0.6333333</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8">## 4: setosa -0.89257523 14   0.9000000</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">## 5: setosa -0.74651728 14   1.1666667</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10">## 6: setosa -0.33764645 14   1.4333333</a></code></pre></div>
+<a class="sourceLine" id="cb13-4" data-line-number="4">##     Class   Probability  n Petal.Width</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">## 1: setosa -0.3832905033 61   0.1000000</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">## 2: setosa -0.4387867702 61   0.3666667</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">## 3: setosa -0.2132735710 61   0.6333333</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">## 4: setosa -0.0622156706 61   0.9000000</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">## 5: setosa -0.0004566024 61   1.1666667</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">## 6: setosa  0.0499558421 61   1.4333333</a></code></pre></div>
 </div>
 <div id="plotting-partial-dependences" class="section level2">
 <h2 class="hasAnchor">
