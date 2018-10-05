@@ -16,6 +16,9 @@ development:
   version_label: default
   version_tooltip: "Github version"
 
+toc:
+  depth: 3
+
 home:
   links:
   - text: Cheatsheet
