@@ -308,3 +308,16 @@ The selected feature sets in the individual resampling iterations can be extract
 ```{r}
 lapply(r$models, getFeatSelResult)
 ```
+
+# Feature importance from trained models
+
+Some algorithms internally compute a feature importance during training. 
+By using `getFeatureImportance()` it is possible to extract this part from the trained model.
+
+```{r}
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.ranger", importance = c("permutation"))
+mod = train(lrn, task)
+
+getFeatureImportance(mod)
+```
