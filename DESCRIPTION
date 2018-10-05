@@ -136,6 +136,7 @@ Suggests:
     refund,
     rex,
     rFerns,
+    riskRegression,
     rknn,
     rmarkdown,
     ROCR,
