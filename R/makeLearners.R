@@ -13,7 +13,7 @@
 #'   Shortcut to prepend type string to `cls` so one can set `cls = "rpart"`.
 #'   Default is `NULL`, i.e., this is not used.
 #' @inheritParams makeLearner
-#' @return [named list of [Learner]). Named by `ids`.
+#' @return (named list of [Learner]). Named by `ids`.
 #' @family learner
 #' @export
 #' @examples
