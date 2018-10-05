@@ -52,8 +52,12 @@ predictFailureModel = function(model, newdata) {
   } else if (type == "surv") {
     if (ptype == "response")
       res = rep.int(NA_real_, n)
-    else
-      stop("Predict type 'prob' for survival not yet supported")
+    else {
+      preds = rep(NA_character_, n)
+      probs = matrix(rep(NA_real_, n), nrow = n, ncol = 1)
+      train.times = 0
+      res = list(preds = preds, probs = probs, train.times = train.times)
+    }
   } else if (type == "costsens") {
     levs = model$task.desc$class.levels
     res = factor(rep(NA_character_, n), levels = levs)
