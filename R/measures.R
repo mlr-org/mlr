@@ -1431,8 +1431,8 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     prob_columns = sapply(grid, function(t) max(which(t >= times.train - 10^(-13))))
     probs = as.matrix(probs[, prob_columns])
     f = as.formula(sprintf("Surv(%s, %s) ~ 1", target[1L], target[2L]))
-    perror = pec(object = probs, formula = f, data = newdata, times = grid, exact = FALSE, start = min(grid), reference = FALSE)
-    crps(perror, times = max(grid))[1L]
+    perror = pec::pec(object = probs, formula = f, data = newdata, times = grid, exact = FALSE, start = min(grid), reference = FALSE)
+    pec::crps(perror, times = max(grid))[1L]
   }
 )
 
