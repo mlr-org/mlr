@@ -188,6 +188,7 @@ Suggests:
     FNN,
     fpc,
     frbs,
+    FSelector,
     FSelectorRcpp (>= 0.2.1),
     gbm,
     GenSA,
