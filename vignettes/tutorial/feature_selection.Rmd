@@ -70,7 +70,7 @@ fv2$data
 
 A bar plot of importance values for the individual features can be obtained using function `plotFilterValues()`.
 
-```{r}
+```{r, fig.width=10}
 plotFilterValues(fv2) + ggpubr::theme_pubr()
 ```
 
