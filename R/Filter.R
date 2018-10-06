@@ -344,44 +344,6 @@ makeFilter(
   }
 )
 
-#' Filter \dQuote{information.gain} uses the entropy-based information gain
-#' between each feature and target individually as an importance measure.
-#'
-#' @rdname makeFilter
-#' @name makeFilter
-NULL
-
-makeFilter(
-  name = "information.gain",
-  desc = "Entropy-based information gain between feature and target",
-  pkg  = "FSelector",
-  supported.tasks = c("classif", "regr"),
-  supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
-    y = FSelector::information.gain(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
-  }
-)
-
-#' Filter \dQuote{gain.ratio} uses the entropy-based information gain ratio
-#' between each feature and target individually as an importance measure.
-#'
-#' @rdname makeFilter
-#' @name makeFilter
-NULL
-
-makeFilter(
-  name = "gain.ratio",
-  desc = "Entropy-based gain ratio between feature and target",
-  pkg  = "FSelector",
-  supported.tasks = c("classif", "regr"),
-  supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
-    y = FSelector::gain.ratio(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
-  }
-)
-
 #' Filter \dQuote{symmetrical.uncertainty} uses the entropy-based symmetrical uncertainty
 #' between each feature and target individually as an importance measure.
 #'
