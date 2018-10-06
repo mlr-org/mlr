@@ -741,7 +741,7 @@ makeFilter(
   name = "FSelectorRcpp.infogain",
   desc = "info.gain: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
   fun = FSelectorRcpp.filter("infogain")
 )
@@ -750,7 +750,7 @@ makeFilter(
   name = "FSelectorRcpp.gainratio",
   desc = "gain.ratio: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
   fun = FSelectorRcpp.filter("gainratio")
 )
@@ -759,7 +759,7 @@ makeFilter(
   name = "FSelectorRcpp.symuncert",
   desc = "symmetric uncertainty: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
   fun = FSelectorRcpp.filter("symuncert")
 )
