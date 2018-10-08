@@ -344,25 +344,6 @@ makeFilter(
   }
 )
 
-#' Filter \dQuote{symmetrical.uncertainty} uses the entropy-based symmetrical uncertainty
-#' between each feature and target individually as an importance measure.
-#'
-#' @rdname makeFilter
-#' @name makeFilter
-NULL
-
-makeFilter(
-  name = "symmetrical.uncertainty",
-  desc = "Entropy-based symmetrical uncertainty between feature and target",
-  pkg  = "FSelector",
-  supported.tasks = c("classif", "regr"),
-  supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
-    y = FSelector::symmetrical.uncertainty(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
-  }
-)
-
 #' The chi-square test is a statistical test of independence to determine whether
 #' two variables are independent. Filter \dQuote{chi.squared} applies this
 #' test in the following way. For each feature the chi-square test statistic is
