@@ -14,7 +14,6 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
     }
     ) %>%
-    add_step(step_install_cran("testthat")) %>%
     add_code_step(devtools::update_packages(TRUE))
 
   if (inherits(ci(), "TravisCI")) {
