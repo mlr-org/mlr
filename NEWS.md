@@ -7,7 +7,7 @@
 * getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
 
 ## filter - new
-* pranznik.JMI
+* praznik.JMI
 * praznik.DISR
 * praznik.JMIM
 * praznik.MIM
