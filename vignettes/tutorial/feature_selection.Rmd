@@ -120,7 +120,7 @@ We use `information.gain` as importance measure with the aim to subset the datas
 In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain", fw.abs = 2)
+lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "FSelectorRcpp.infogain", fw.abs = 2)
 rdesc = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
