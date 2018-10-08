@@ -9,12 +9,11 @@ init:
 install:
   - ps: Bootstrap
   - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
-  - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
-  - cmd: R -q -e "dir.create('~\\.R'); file.create('~\\.R\\Makevars')"
-  - cmd: R -q -e "writeLines('CXXFLAGS=-std=c99', '~\\.R\\Makevars')" # c++ flags
   - cmd: R -q -e "getOption('repos')"
   - cmd: rm -rf C:\RLibrary\00LOCK-*
-  - cmd: R -q -e "install.packages('remotes'); remotes::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
+  - cmd: R -q -e "if (!requireNamespace('devtools')) install.packages('devtools')"
+  - cmd: R -q -e "if (!requireNamespace('curl')) install.packages('curl')"
+  - cmd: R -q -e "devtools::install_github('ropenscilabs/tic@rcmdcheck'); tic::prepare_all_stages()"
 
 
 cache:
@@ -41,8 +40,6 @@ before_test:
  - initexmf --set-config-value "[MPM]AutoInstall=1"
  - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
-# on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
-# on_failure: R -q -e "tic::after_failure()"
 before_deploy: R -q -e "tic::before_deploy()"
 deploy_script: R -q -e "tic::deploy()"
 after_deploy: R -q -e "tic::after_deploy()"
@@ -55,31 +52,8 @@ image: Visual Studio 2017
 
 environment:
   GITHUB_PAT:
-    secure: VXO22OHLkl4YhVIomSMwCZyOTx03Xf2WICaVng9xH7gISlAg8a+qrt1DtFtk8sK5
+    secure: V55U9UnApb09OaMrW7myVV2Rnfb1RDeWEjFtfC49qu7Nm/1yqzYTOv0gu88UNVCi
   R_ARCH: x64
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
-  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2'
-
-#  matrix:
-#    - R_VERSION: devel
-#    - R_VERSION: release
-
-artifacts:
-  - path: '*.Rcheck\**\*.log'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.out'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.fail'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.Rout'
-    name: Logs
-
-  - path: '\*_*.tar.gz'
-    name: Bits
-
-  - path: '\*_*.zip'
-    name: Bits
+  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 testthat'
