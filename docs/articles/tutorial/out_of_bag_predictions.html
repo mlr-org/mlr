@@ -215,10 +215,10 @@
       <a href="https://github.com/mlr-org/mlrCPO">mlrCPO</a>
     </li>
     <li>
-      <a href="http://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
+      <a href="https://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
     </li>
   </ul>
 </li>
@@ -299,17 +299,17 @@
 <a class="sourceLine" id="cb2-7" data-line-number="7">## threshold: M=0.60,R=0.40</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">## time: NA</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">##   id truth    prob.M    prob.R response</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.5605231 0.4394769        R</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.6161302 0.3838698        M</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.5513111 0.4486889        R</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.4099016 0.5900984        R</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.5726309 0.4273691        R</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.4458878 0.5541122        R</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.5585255 0.4414745        R</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.5735750 0.4264250        R</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.5596821 0.4403179        R</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.4707890 0.5292110        R</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.6078598 0.3921402        M</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.4733793 0.5266207        R</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16">## ... (#rows: 208, #cols: 5)</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(oob, <span class="dt">measures =</span> <span class="kw">list</span>(auc, mmce))</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">##       auc      mmce </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9296926 0.1875000</a></code></pre></div>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9300641 0.1682692</a></code></pre></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>
 </div>
   </div>

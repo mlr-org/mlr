@@ -251,10 +251,10 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
       <a href="https://github.com/mlr-org/mlrCPO">mlrCPO</a>
     </li>
     <li>
-      <a href="http://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
+      <a href="https://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
     </li>
   </ul>
 </li>
@@ -427,18 +427,18 @@ the measure. See example code below.</p>
 <span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
 #&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.033
 #&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.031
-#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.033
-#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.052</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
+#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.034
+#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.031</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
 #&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.033
 #&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.031
-#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.033
-#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.052</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
+#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.034
+#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.031</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
 <span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)))</div><div class='output co'>#&gt; $data
 #&gt;     C sigma mmce.test.mean iteration exec.time
 #&gt; 1 -12   -12     0.64000000         1     0.033
 #&gt; 2  12   -12     0.04666667         2     0.031
-#&gt; 3 -12    12     0.64666667         3     0.033
-#&gt; 4  12    12     0.71333333         4     0.052
+#&gt; 3 -12    12     0.64666667         3     0.034
+#&gt; 4  12    12     0.71333333         4     0.031
 #&gt; 
 #&gt; $measures
 #&gt; [1] "mmce.test.mean"
@@ -458,8 +458,8 @@ the measure. See example code below.</p>
 #&gt;              C        sigma mmce.test.mean iteration exec.time
 #&gt; 1 2.441406e-04 2.441406e-04     0.64000000         1     0.033
 #&gt; 2 4.096000e+03 2.441406e-04     0.04666667         2     0.031
-#&gt; 3 2.441406e-04 4.096000e+03     0.64666667         3     0.033
-#&gt; 4 4.096000e+03 4.096000e+03     0.71333333         4     0.052
+#&gt; 3 2.441406e-04 4.096000e+03     0.64666667         3     0.034
+#&gt; 4 4.096000e+03 4.096000e+03     0.71333333         4     0.031
 #&gt; 
 #&gt; $measures
 #&gt; [1] "mmce.test.mean"
