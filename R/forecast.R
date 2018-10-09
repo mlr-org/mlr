@@ -24,17 +24,17 @@ forecast = function(object, ...) {
 #'
 #' The row names of the input \code{task} or \code{newdata} are preserved in the output.
 #'
-#' @param object [\code{\link{WrappedModel}}]\cr
-#'   Wrapped model, result of \code{\link{train}}.
-#' @param task [\code{\link{Task}}]\cr
+#' @param object [`WrappedModel`]\cr
+#'   Wrapped model, result of `train`.
+#' @param task [`Task`]\cr
 #'   The task. This is only used for fcregr and mfcregr, in which it's used to gather date information
-#' @param newdata [\code{data.frame}]\cr
+#' @param newdata [`data.frame`]\cr
 #'   Optional: A data frame of external regressors which must have the same number of rows as your forecast length h
-#' @param h [\code{integer(1)}]
+#' @param h [`integer`]
 #'   An integer specifying the forecast horizon
 #' @param ... [any]\cr
 #'   Currently ignored.
-#' @return [\code{\link{Prediction}}].
+#' @return `Prediction`.
 #' @family predict
 #' @export
 #' @examples

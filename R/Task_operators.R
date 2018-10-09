@@ -478,7 +478,7 @@ getTaskWeights = function(task) {
 #'
 #' @description Returns the dates from a task if they exist.
 #' @template arg_task_or_desc
-#' @return [\code{character(1)}]
+#' @return [`character`]
 #' @export
 #' @family task
 getTaskDates = function(x) {

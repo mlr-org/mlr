@@ -11,6 +11,7 @@
 #' @import stringi
 #' @import data.table
 #' @importFrom xts xts
+#' @importFrom zoo index
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {

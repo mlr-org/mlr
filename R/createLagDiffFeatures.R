@@ -1,55 +1,56 @@
 # dates has to be defined to avoid a warning in R CMD CHECK
-globalVariables("dates")
+globalVariables(c("dates", "..data_cols", "V1"))
 #' @title Generate lags and differences for feature variables
 #'
 #' @description Replace all variables with their generated lagged and differenced variables.
 #'
 #' @template arg_taskdf
 #' @template arg_taskdf_target
-#' @param lag [\code{integer}]\cr
+#' @param lag [`integer`]\cr
 #' An integer vector of lag lengths.
-#' @param difference [\code{integer}]\cr
+#' @param difference [`integer`]\cr
 #' An integer of the order of differencing
-#' @param cols [\code{character}]\cr
+#' @param cols [`integer`]\cr
 #' A character vector of columns to create lag features for.
 #' Default is to use all columns.
-#' @param seasonal.cols [\code{character}]\cr
+#' @param seasonal.cols [`character`]\cr
 #' A character vector of columns to create seasonal lag features for. Defaults to all columns
-#' @param seasonal.lag [\code{integer}]\cr
+#' @param seasonal.lag [`integer`]\cr
 #' An integer vector of seasonal lag lengths, made as \code{seasonal.lag * frequency}
-#' @param seasonal.difference [\code{integer}]\cr
+#' @param seasonal.difference [`integer`]\cr
 #' An integer of the seasonal order of difference, made as \code{seasonal.difference * frequency}
-#' @param add_var [\code{logical}]
+#' @param add_var [`logical`]
 #' When TRUE, creates the lagged rolling variance based on the \code{lag}
-#' @param frequency [\code{integer}]\cr
+#' @param frequency [`integer`]\cr
 #' An integer representing the periodicity in the time series. If frequency is declared in the task,
 #' the task frequency will be used.
-#' @param add_dates [\code{character()}]\cr
+#' @param add_dates [`character`]\cr
 #' A character vector of \code{data.table} date functions used to create date variables
-#' @param na.pad [\code{logical}]\cr
+#' @param na.pad [`logical`]\cr
 #' A logical to denote whether the data should be padded to the original size with NAs
-#' @param difference.lag [\code{integer}]\cr
+#' @param difference.lag [`integer`]\cr
 #' An integer denoting the period to difference over
-#' @param momentum [\code{integer}] \cr
-#' An vector of integers denoting the lags for momentum calculation
-#' @param seasonal.difference.lag [\code{integer}]\cr
+#' @param seasonal.difference.lag [`integer`]\cr
 #' An integer denoting the period to seasonaly difference over
-#' @param return.nonlag [\code{logical}]\cr
+#' @param return.nonlag [`logical`]\cr
 #' A logical to denote whether the original unlagged features should be returned
-#' @param grouping [\code{character}]\cr
+#' @param grouping [`character`]\cr
 #' The name of the column to be passed to data.table's \code{by} function. This will take lags and differences wrt the groups.
-#' @param TTR.funcs [\code{list}]\cr
+#' @param TTR.funcs [`list`]\cr
 #' A list of TTR functions such as \code{list(runSum = list(n = 1:10, cumulative = TRUE))}
-#' @param date.col [code{data.frame}]
+#' @param date.col [`data.frame`]
 #' The dates for each observation. In the case of a forecasting task, these will be taken from the task description.
 #' @export
 #' @family eda_and_preprocess
 #' @examples
 #' set.seed(1234)
-#' dat = data.frame(arma_test = as.numeric(arima.sim(model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 2000)))
+#' dat = data.frame(arma_test = as.numeric(arima.sim(
+#'   model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 2000)
+#'   ))
 #' times = as.POSIXct("1992-01-14") + 0:1999
 #' regr.task = makeRegrTask(id = "Lagged ML model", data = dat, target = "arma_test")
-#' regr.task.lag = createLagDiffFeatures(regr.task, lag = 1L:200L, difference = 0L, date.col = times, add_var = TRUE)
+#' regr.task.lag = createLagDiffFeatures(regr.task, lag = 1L:200L,
+#'   difference = 0L, date.col = times, add_var = TRUE)
 #' lrn = makeLearner("regr.lm")
 #' trn = train(lrn,regr.task.lag)
 #' forecast(trn, h = 5)
@@ -98,7 +99,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   }
   if (!is.null(seasonal.cols)) {
     if (!(target %in% seasonal.cols))
-      #seasonal.cols = c(seasonal.cols, target)
+      work.seasonal.cols = c(seasonal.cols, target)
       assertSubset(seasonal.cols, work.seasonal.cols)
     x = data[, c(seasonal.cols, grouping), with = FALSE]
   } else {

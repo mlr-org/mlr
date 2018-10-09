@@ -4,14 +4,14 @@
 #' Takes numeric data and "Gaussianizes" it using an h, hh, or s Lambert W transform.
 #'
 #' @template arg_learner
-#' @param type [\code{character(1)}] \cr
+#' @param type [`character`] \cr
 #' What type of non-normality: symmetric heavy-tails "h" (default),
 #'  skewed heavy-tails "hh", or just skewed "s".
-#' @param methods [\code{character(1)}] \cr
+#' @param methods [`character`] \cr
 #'  What estimator should be used: "MLE" or "IGMM". "IGMM" gives exactly
 #' Gaussian characteristics (kurtosis = 3 for "h" or skewness = 0 for "s"),
 #' "MLE" comes close to this. Default: "IGMM" since it is much faster than "MLE".
-#' @param verbose [\code{logical(1)}] \cr
+#' @param verbose [`logical`] \cr
 #' If TRUE, it prints out progress information in the console. Default: FALSE.
 #' @export
 #' @family wrapper

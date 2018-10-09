@@ -24,9 +24,9 @@
 #'   Vector of the true class.
 #' @param response ([factor])\cr
 #'   Vector of the predicted class.
-#' @param negative (`character(1)`)\cr
+#' @param negative (`character`)\cr
 #'   The name of the negative class.
-#' @param positive (`character(1)`)\cr
+#' @param positive (`character`)\cr
 #'   The name of the positive class.
 #' @param probabilities ([numeric] | [matrix])\cr
 #'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
@@ -103,7 +103,6 @@ sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
 
 #' @export mase
 #' @rdname measures
-#' @usage  none
 #' @format none
 mase = makeMeasure(
   id = "mase",
@@ -123,17 +122,13 @@ mase = makeMeasure(
 
 #' @export measureMASE
 #' @rdname measures
-#' @param target [character(1)]
-#' The target variable from the training data
-#' @param frequency
-#' The seasonality of the data
 #' @format none
-measureMASE = function(truth, response, target, frequency) {
+measureMASE = function(truth, response, target, extra.args) {
   error  = truth - response
   if (is.null(frequency)) {
     naive.forecast = diff(target)
   } else {
-    naive.forecast = diff(target, lag = frequency)
+    naive.forecast = diff(target, lag = extra.args$frequency)
   }
   scale = mean(abs(naive.forecast))
   mean(abs(error / scale))
@@ -1468,7 +1463,7 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
       maxtime = max.time, verbose = FALSE, reference = FALSE)
-    
+
 
     # FIXME: this might be the wrong number!
     crps(perror, times = max.time)[1L, ]

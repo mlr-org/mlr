@@ -4,13 +4,13 @@
 #' Update a fitted model with new data.
 #' The row names of the input \code{task} or \code{newdata} are preserved in the output.
 #'
-#' @param object [\code{\link{WrappedModel}}]\cr
+#' @param object WrappedModel \cr
 #'   Wrapped model, result of \code{\link{train}}.
-#' @param task [\code{\link{Task}}]\cr
+#' @param task [`Task`]\cr
 #'   The task.
-#' @param newdata [\code{data.frame}]\cr
+#' @param newdata [`data.frame`]\cr
 #'   New observations to update the model
-#' @param weights [\code{numeric}]\cr
+#' @param weights [`numeric`]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
@@ -18,7 +18,7 @@
 #' @template arg_subset
 #' @param ... [any]\cr
 #'   Currently ignored.
-#' @return [\code{\link{WrappedModel}}].
+#' @return WrappedModel.
 #' @export
 #' @examples
 #' dat = data.frame(arma_test = arima.sim(model = list(ar = c(.5,.2),
@@ -150,17 +150,17 @@ updateModel = function(object, task, newdata, subset, weights = NULL, ...) {
 #' model (\code{.model$learner.model}).
 #' All parameters in \code{...} must be passed to the underlying predict function.
 #'
-#' @param .learner [\code{\link{RLearner}}]\cr
+#' @param .learner [`RLearner`]\cr
 #'   Wrapped learner.
-#' @param .model [\code{\link{WrappedModel}}]\cr
+#' @param .model [\code{`WrappedModel`}]\cr
 #'   Model produced by training.
-#' @param .newdata [\code{data.frame}]\cr
+#' @param .newdata [`data.frame`]\cr
 #'   New data to predict. Does not include target column.
-#' @param .task [\code{Task}]
+#' @param .task [`Task`]
 #'   The model's task
-#' @param .truth [\code{data.frame}]
+#' @param .truth [`data.frame`]
 #'   A vector of data that is to be predicted.
-#' @param .weights [\code{data.frame}]
+#' @param .weights [`data.frame`]
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).

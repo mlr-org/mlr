@@ -14,7 +14,7 @@ test_that("fcregr_arfima", {
   for (i in seq_len(length(parset.list))) {
     parset = parset.list[[i]]
     # NOTE: This function only accepts positive values
-    pars = list(y = ts(abs(fcregr.train), start = 1, frequency = 1L))
+    pars = list(y = ts(abs(fcregr.train[,1]), start = 1, frequency = 1L))
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output({

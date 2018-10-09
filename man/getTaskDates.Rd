@@ -11,7 +11,7 @@ getTaskDates(x)
 Task or its description object.}
 }
 \value{
-\link{\code{character(1)}}
+\code{\link{character}}
 }
 \description{
 Returns the dates from a task if they exist.

@@ -153,7 +153,8 @@ Imports:
     survival,
     utils,
     XML,
-    xts
+    xts,
+    zoo
 Suggests:
     ada,
     adabag,

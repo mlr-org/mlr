@@ -8,23 +8,23 @@
   ...)
 }
 \arguments{
-\item{object}{\link{\code{\link{WrappedModel}}}\cr
-Wrapped model, result of \code{\link{train}}.}
+\item{object}{\code{\link{WrappedModel}}\cr
+Wrapped model, result of \code{`train`}.}
 
-\item{newdata}{\link{\code{data.frame}}\cr
+\item{newdata}{\code{\link{data.frame}}\cr
 Optional: A data frame of external regressors which must have the same number of rows as your forecast length h}
 
-\item{task}{\link{\code{\link{Task}}}\cr
+\item{task}{\code{\link{Task}}\cr
 The task. This is only used for fcregr and mfcregr, in which it's used to gather date information}
 
-\item{h}{\link{\code{integer(1)}}
+\item{h}{\code{\link{integer}}
 An integer specifying the forecast horizon}
 
 \item{...}{\link{any}\cr
 Currently ignored.}
 }
 \value{
-\link{\code{\link{Prediction}}}.
+\code{\link{Prediction}}.
 }
 \description{
 Forecast the target variable of new data using a fitted model.

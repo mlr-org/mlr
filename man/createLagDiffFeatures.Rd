@@ -24,68 +24,68 @@ For multilabel classification these are the names of logical columns that indica
 a class label is present and the number of target variables corresponds to the number of
 classes.}
 
-\item{lag}{\link{\code{integer}}\cr
+\item{lag}{\code{\link{integer}}\cr
 An integer vector of lag lengths.}
 
-\item{difference}{\link{\code{integer}}\cr
+\item{difference}{\code{\link{integer}}\cr
 An integer of the order of differencing}
 
-\item{difference.lag}{\link{\code{integer}}\cr
+\item{difference.lag}{\code{\link{integer}}\cr
 An integer denoting the period to difference over}
 
-\item{cols}{\link{\code{character}}\cr
+\item{cols}{\code{\link{integer}}\cr
 A character vector of columns to create lag features for.
 Default is to use all columns.}
 
-\item{seasonal.cols}{\link{\code{character}}\cr
+\item{seasonal.cols}{\code{\link{character}}\cr
 A character vector of columns to create seasonal lag features for. Defaults to all columns}
 
-\item{seasonal.lag}{\link{\code{integer}}\cr
+\item{seasonal.lag}{\code{\link{integer}}\cr
 An integer vector of seasonal lag lengths, made as \code{seasonal.lag * frequency}}
 
-\item{seasonal.difference}{\link{\code{integer}}\cr
+\item{seasonal.difference}{\code{\link{integer}}\cr
 An integer of the seasonal order of difference, made as \code{seasonal.difference * frequency}}
 
-\item{seasonal.difference.lag}{\link{\code{integer}}\cr
+\item{seasonal.difference.lag}{\code{\link{integer}}\cr
 An integer denoting the period to seasonaly difference over}
 
-\item{frequency}{\link{\code{integer}}\cr
+\item{frequency}{\code{\link{integer}}\cr
 An integer representing the periodicity in the time series. If frequency is declared in the task,
 the task frequency will be used.}
 
-\item{add_dates}{\link{\code{character()}}\cr
+\item{add_dates}{\code{\link{character}}\cr
 A character vector of \code{data.table} date functions used to create date variables}
 
-\item{na.pad}{\link{\code{logical}}\cr
+\item{na.pad}{\code{\link{logical}}\cr
 A logical to denote whether the data should be padded to the original size with NAs}
 
-\item{return.nonlag}{\link{\code{logical}}\cr
+\item{return.nonlag}{\code{\link{logical}}\cr
 A logical to denote whether the original unlagged features should be returned}
 
-\item{grouping}{\link{\code{character}}\cr
+\item{grouping}{\code{\link{character}}\cr
 The name of the column to be passed to data.table's \code{by} function. This will take lags and differences wrt the groups.}
 
-\item{add_var}{\link{\code{logical}}
+\item{add_var}{\code{\link{logical}}
 When TRUE, creates the lagged rolling variance based on the \code{lag}}
 
-\item{TTR.funcs}{\link{\code{list}}\cr
+\item{TTR.funcs}{\code{\link{list}}\cr
 A list of TTR functions such as \code{list(runSum = list(n = 1:10, cumulative = TRUE))}}
 
-\item{date.col}{\link{code{data.frame}}
+\item{date.col}{\code{\link{data.frame}}
 The dates for each observation. In the case of a forecasting task, these will be taken from the task description.}
-
-\item{momentum}{\link{\code{integer}} \cr
-An vector of integers denoting the lags for momentum calculation}
 }
 \description{
 Replace all variables with their generated lagged and differenced variables.
 }
 \examples{
 set.seed(1234)
-dat = data.frame(arma_test = as.numeric(arima.sim(model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 2000)))
+dat = data.frame(arma_test = as.numeric(arima.sim(
+  model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 2000)
+  ))
 times = as.POSIXct("1992-01-14") + 0:1999
 regr.task = makeRegrTask(id = "Lagged ML model", data = dat, target = "arma_test")
-regr.task.lag = createLagDiffFeatures(regr.task, lag = 1L:200L, difference = 0L, date.col = times, add_var = TRUE)
+regr.task.lag = createLagDiffFeatures(regr.task, lag = 1L:200L,
+  difference = 0L, date.col = times, add_var = TRUE)
 lrn = makeLearner("regr.lm")
 trn = train(lrn,regr.task.lag)
 forecast(trn, h = 5)

@@ -8,22 +8,22 @@ updateLearner(.learner, .model, .newdata = NULL, .task, .truth, .weights,
   ...)
 }
 \arguments{
-\item{.learner}{\link{\code{\link{RLearner}}}\cr
+\item{.learner}{\code{\link{RLearner}}\cr
 Wrapped learner.}
 
-\item{.model}{\link{\code{\link{WrappedModel}}}\cr
+\item{.model}{\link{\code{`WrappedModel`}}\cr
 Model produced by training.}
 
-\item{.newdata}{\link{\code{data.frame}}\cr
+\item{.newdata}{\code{\link{data.frame}}\cr
 New data to predict. Does not include target column.}
 
-\item{.task}{\link{\code{Task}}
+\item{.task}{\code{\link{Task}}
 The model's task}
 
-\item{.truth}{\link{\code{data.frame}}
+\item{.truth}{\code{\link{data.frame}}
 A vector of data that is to be predicted.}
 
-\item{.weights}{\link{\code{data.frame}}
+\item{.weights}{\code{\link{data.frame}}
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
 By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).

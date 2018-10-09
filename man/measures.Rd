@@ -145,9 +145,9 @@ timeboth
 
 sse
 
-none
+mase
 
-measureMASE(truth, response, target, frequency)
+measureMASE(truth, response, target, extra.args)
 
 measureSSE(truth, response)
 
@@ -400,20 +400,15 @@ Vector of the true class.}
 \item{response}{(\link{factor})\cr
 Vector of the predicted class.}
 
-\item{target}{\link{character(1)}
-The target variable from the training data}
-
-\item{frequency}{The seasonality of the data}
-
 \item{probabilities}{(\link{numeric} | \link{matrix})\cr
 a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
 b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
 columns are named with class labels.}
 
-\item{negative}{(\code{character(1)})\cr
+\item{negative}{(\code{character})\cr
 The name of the negative class.}
 
-\item{positive}{(\code{character(1)})\cr
+\item{positive}{(\code{character})\cr
 The name of the positive class.}
 }
 \description{

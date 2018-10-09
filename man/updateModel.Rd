@@ -7,20 +7,20 @@
 updateModel(object, task, newdata, subset, weights = NULL, ...)
 }
 \arguments{
-\item{object}{\link{\code{\link{WrappedModel}}}\cr
+\item{object}{\link{wrappedModel}\cr
 Wrapped model, result of \code{\link{train}}.}
 
-\item{task}{\link{\code{\link{Task}}}\cr
+\item{task}{\code{\link{Task}}\cr
 The task.}
 
-\item{newdata}{\link{\code{data.frame}}\cr
+\item{newdata}{\code{\link{data.frame}}\cr
 New observations to update the model}
 
 \item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
 By default \code{NULL} if all observations are used.}
 
-\item{weights}{\link{\code{numeric}}\cr
+\item{weights}{\code{\link{numeric}}\cr
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
 By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
@@ -30,7 +30,7 @@ Weights from the task will be overwritten.}
 Currently ignored.}
 }
 \value{
-\link{\code{\link{WrappedModel}}}.
+\code{\link{WrappedModel}}.
 }
 \description{
 Update a fitted model with new data.

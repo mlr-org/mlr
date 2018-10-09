@@ -12,16 +12,16 @@ makePreprocWrapperLambert(learner, type = c("h", "hh", "s"),
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{type}{\link{\code{character(1)}} \cr
+\item{type}{\code{\link{character}} \cr
 What type of non-normality: symmetric heavy-tails "h" (default),
 skewed heavy-tails "hh", or just skewed "s".}
 
-\item{methods}{\link{\code{character(1)}} \cr
+\item{methods}{\code{\link{character}} \cr
 What estimator should be used: "MLE" or "IGMM". "IGMM" gives exactly
 Gaussian characteristics (kurtosis = 3 for "h" or skewness = 0 for "s"),
 "MLE" comes close to this. Default: "IGMM" since it is much faster than "MLE".}
 
-\item{verbose}{\link{\code{logical(1)}} \cr
+\item{verbose}{\code{\link{logical}} \cr
 If TRUE, it prints out progress information in the console. Default: FALSE.}
 }
 \value{
