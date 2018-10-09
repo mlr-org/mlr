@@ -342,14 +342,14 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb1-15" data-line-number="15">## Resample Result</a>
 <a class="sourceLine" id="cb1-16" data-line-number="16">## Task: iris-example</a>
 <a class="sourceLine" id="cb1-17" data-line-number="17">## Learner: classif.ksvm.tuned</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">## Aggr perf: mmce.test.mean=0.0600000</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">## Runtime: 4.30852</a></code></pre></div>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## Aggr perf: mmce.test.mean=0.0400000</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## Runtime: 3.85205</a></code></pre></div>
 <p>You can obtain the error rates on the 3 outer test sets by:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">r<span class="op">$</span>measures.test</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">##   iter mmce</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">## 1    1 0.10</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">## 1    1 0.02</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">## 2    2 0.06</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## 3    3 0.02</a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## 3    3 0.04</a></code></pre></div>
 <div id="accessing-the-tuning-result" class="section level2">
 <h2 class="hasAnchor">
 <a href="#accessing-the-tuning-result" class="anchor"></a>Accessing the tuning result</h2>
@@ -357,7 +357,7 @@ Nested Resampling Figure
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">r<span class="op">$</span>extract</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">## Tune result:</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## Op. pars: C=4; sigma=0.5</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">## Op. pars: C=2; sigma=0.25</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">## mmce.test.mean=0.0294118</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">## [[2]]</a>
@@ -368,7 +368,7 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb3-12" data-line-number="12">## [[3]]</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">## Tune result:</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14">## Op. pars: C=4; sigma=0.25</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">## mmce.test.mean=0.0294118</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">## mmce.test.mean=0.0147059</a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw">names</span>(r<span class="op">$</span>extract[[<span class="dv">1</span>]])</a>
 <a class="sourceLine" id="cb3-18" data-line-number="18">## [1] "learner"    "control"    "x"          "y"          "resampling"</a>
@@ -378,16 +378,16 @@ Nested Resampling Figure
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">opt.paths =<span class="st"> </span><span class="kw"><a href="../../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span>(r)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">head</span>(opt.paths, <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">##       C sigma mmce.test.mean dob eol error.message exec.time iter</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## 1  0.25  0.25     0.05882353   1  NA          &lt;NA&gt;     1.524    1</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">## 2   0.5  0.25     0.05882353   2  NA          &lt;NA&gt;     0.036    1</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## 3     1  0.25     0.04411765   3  NA          &lt;NA&gt;     0.023    1</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## 4     2  0.25     0.02941176   4  NA          &lt;NA&gt;     0.023    1</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## 5     4  0.25     0.02941176   5  NA          &lt;NA&gt;     0.023    1</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## 6  0.25   0.5     0.07352941   6  NA          &lt;NA&gt;     0.032    1</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## 7   0.5   0.5     0.04411765   7  NA          &lt;NA&gt;     0.027    1</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## 8     1   0.5     0.02941176   8  NA          &lt;NA&gt;     0.026    1</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## 9     2   0.5     0.02941176   9  NA          &lt;NA&gt;     0.024    1</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## 10    4   0.5     0.02941176  10  NA          &lt;NA&gt;     0.025    1</a></code></pre></div>
+<a class="sourceLine" id="cb4-4" data-line-number="4">## 1  0.25  0.25     0.10294118   1  NA          &lt;NA&gt;     1.380    1</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">## 2   0.5  0.25     0.04411765   2  NA          &lt;NA&gt;     0.034    1</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">## 3     1  0.25     0.02941176   3  NA          &lt;NA&gt;     0.027    1</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">## 4     2  0.25     0.02941176   4  NA          &lt;NA&gt;     0.027    1</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">## 5     4  0.25     0.02941176   5  NA          &lt;NA&gt;     0.027    1</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">## 6  0.25   0.5     0.08823529   6  NA          &lt;NA&gt;     0.028    1</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## 7   0.5   0.5     0.05882353   7  NA          &lt;NA&gt;     0.027    1</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## 8     1   0.5     0.04411765   8  NA          &lt;NA&gt;     0.026    1</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## 9     2   0.5     0.04411765   9  NA          &lt;NA&gt;     0.027    1</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">## 10    4   0.5     0.04411765  10  NA          &lt;NA&gt;     0.027    1</a></code></pre></div>
 <p>Below we visualize the <code>opt.path</code>s for the 3 outer resampling iterations.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">g =<span class="st"> </span><span class="kw">ggplot</span>(opt.paths, <span class="kw">aes</span>(<span class="dt">x =</span> C, <span class="dt">y =</span> sigma, <span class="dt">fill =</span> mmce.test.mean))</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">g <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>iter)</a></code></pre></div>
@@ -395,7 +395,7 @@ Nested Resampling Figure
 <p>Another useful function is <code><a href="../../reference/getNestedTuneResultsX.html">getNestedTuneResultsX()</a></code>, which extracts the best found hyperparameter settings for each outer resampling iteration.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/getNestedTuneResultsX.html">getNestedTuneResultsX</a></span>(r)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">##     C sigma</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">## 1 4.0  0.50</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">## 1 2.0  0.25</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">## 2 0.5  0.25</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">## 3 4.0  0.25</a></code></pre></div>
 <p>You can furthermore access the resampling indices of the inner level using <code><a href="../../reference/getResamplingIndices.html">getResamplingIndices()</a></code> if you used either <code>extract = getTuneResult</code> or <code>extract = getFeatSelResult</code> in the <code><a href="../../reference/resample.html">resample()</a></code> call:</p>
@@ -403,78 +403,78 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb7-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">## [[1]]$train.inds</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">## [[1]]$train.inds[[1]]</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">##  [1]  62  20 122  53  27   6  67  17  96 114 146  97  84  29 140   9  13</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## [18]  54  79 109  11  89 141  99 144  93  88  90  44  38  58  57  49 100</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## [35]  39  31  80   3 150 145  95 111 127  15  77  41  66 126  92  33  55</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## [52]  42 108  32  35  59  16 137  47 106  60  94 130  52  37  48</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">##  [1]  43  72  13 145  95  58  60 136  24  10  86  91  82  45  46  65  16</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">## [18]  98  97 134  89 140 127  70  29   1  52 135  79   2  99  69  28 118</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## [35] 102  35  85 131  26  32 149  47  67 111  88 138  44  40  73  48 137</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## [52]  14  90 112  84 104 125  19 120 114  53 133  61 146  21  11</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">## </a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">## [[1]]$train.inds[[2]]</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">##  [1]  55  28  90 109 130  17  44  16  15  22  99  38 141  53  92  27 127</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">## [18] 113  57  69  58  36  77 120  63  47  79  11 125  54  94  86  67  13</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">## [35]   7 133 103  87  96 108 106  29  97 111  93   8 150  89  72  20  62</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">## [52]   9  39  32 132  59 131  30 122 129  52 100  95  35  26 102</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">##  [1]  19  32  48 140 142  44  95 124  28 104 107  33 109 146  81  89  98</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">## [18]  14  29 134  45  62  56  61  76 108   4  35  39  82  13 110  15   8</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">## [35]  77 116  90   5  86   6  97  58 133  87  88   2  91  43  92  84 137</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">## [52] 106  79 138 135  40  26 145  36 125  85  10 102  51  53 127</a>
 <a class="sourceLine" id="cb7-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb7-16" data-line-number="16">## </a>
 <a class="sourceLine" id="cb7-17" data-line-number="17">## [[1]]$test.inds</a>
 <a class="sourceLine" id="cb7-18" data-line-number="18">## [[1]]$test.inds[[1]]</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">##  [1] 120  74  26  25  12 102 129   7  56 132  65 125 103  28  30 118 101</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## [18] 139  36  69  68 113 112 131   8 105 133  87  22  63  72  86 117  81</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">##  [1]  76 107   9  87  51  36 110 121  62  54   7 109 124  92 129 144   8</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">## [18]  77   5 108   4  15  64 106  56 132 150  81  12 142 116  39   6  33</a>
 <a class="sourceLine" id="cb7-21" data-line-number="21">## </a>
 <a class="sourceLine" id="cb7-22" data-line-number="22">## [[1]]$test.inds[[2]]</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">##  [1] 145   6  74  25  66  12  49  56 140  37  65  41   3  48 126 118 101</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">## [18] 139  68 144  88 112 114 105 137  31 117  60  81  80 146  33  42  84</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">##  [1]  72  11   9  52 121  54   7 136 129  99  46 131  65   1 144 114  67</a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">## [18]  16  21 120  64  47  73 132 149 150  12  69  60 118 111  70 112  24</a>
 <a class="sourceLine" id="cb7-25" data-line-number="25">## </a>
 <a class="sourceLine" id="cb7-26" data-line-number="26">## </a>
 <a class="sourceLine" id="cb7-27" data-line-number="27">## </a>
 <a class="sourceLine" id="cb7-28" data-line-number="28">## [[2]]</a>
 <a class="sourceLine" id="cb7-29" data-line-number="29">## [[2]]$train.inds</a>
 <a class="sourceLine" id="cb7-30" data-line-number="30">## [[2]]$train.inds[[1]]</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">##  [1]  22 138  96  51 128  64 143 134  18 109  53  50  57  52  17   3 100</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## [18]  34 121 122  20  78  98  37 145  76 119  43 147  27   2 126  72  19</a>
-<a class="sourceLine" id="cb7-33" data-line-number="33">## [35]  41  55 113 146   4 110  91 127  46  68 114 132  14  83  66  60   8</a>
-<a class="sourceLine" id="cb7-34" data-line-number="34">## [52]  31  45  82  61  32 118  15 142 115  33 139 104  75  30 102</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">##  [1]  12  25  45  49   2  80 150  82  65 143 136 138  35   3  56  16  42</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">## [18] 105 147  66  63 140  38  78  17 117  68  33   7  74  47  96  71  31</a>
+<a class="sourceLine" id="cb7-33" data-line-number="33">## [35] 115 100  91 133  86  37 112   8 144  93  41  73   1 148 113 139 126</a>
+<a class="sourceLine" id="cb7-34" data-line-number="34">## [52]  59  34 103 106  15  52  18  11  99  27 118 142 101 123  72</a>
 <a class="sourceLine" id="cb7-35" data-line-number="35">## </a>
 <a class="sourceLine" id="cb7-36" data-line-number="36">## [[2]]$train.inds[[2]]</a>
-<a class="sourceLine" id="cb7-37" data-line-number="37">##  [1]  30  45  95  46 132   4 104  19   5  52  73 107   3  70 121  76 109</a>
-<a class="sourceLine" id="cb7-38" data-line-number="38">## [18]  57  80 148 146  17  33  61 140  41 136  40 134 126  68  96  27  34</a>
-<a class="sourceLine" id="cb7-39" data-line-number="39">## [35]  31   1 139 129  21  22  43  58  38 102 131  75  11  78 145  98 123</a>
-<a class="sourceLine" id="cb7-40" data-line-number="40">## [52]   2 105 135 116 114  10 149  71 118  51 113 127  66  24 108</a>
+<a class="sourceLine" id="cb7-37" data-line-number="37">##  [1]  50 122 143  17 109  53 128 123 126  16  49  63   7 115  25 139  41</a>
+<a class="sourceLine" id="cb7-38" data-line-number="38">## [18]  12   2  70 127 147  27  38 150   1  52  30 117  78  96  11  45 106</a>
+<a class="sourceLine" id="cb7-39" data-line-number="39">## [35]  31  83 136 105   3  66  68 120 130  86  18 132  94 142  60  55  75</a>
+<a class="sourceLine" id="cb7-40" data-line-number="40">## [52]  95  23   9 138  35  56 100  74 129  33  22  84 141  91  92</a>
 <a class="sourceLine" id="cb7-41" data-line-number="41">## </a>
 <a class="sourceLine" id="cb7-42" data-line-number="42">## </a>
 <a class="sourceLine" id="cb7-43" data-line-number="43">## [[2]]$test.inds</a>
 <a class="sourceLine" id="cb7-44" data-line-number="44">## [[2]]$test.inds[[1]]</a>
-<a class="sourceLine" id="cb7-45" data-line-number="45">##  [1] 111  10 129  11 108   5  23  40 136 105  24 116 123  62  85 107 148</a>
-<a class="sourceLine" id="cb7-46" data-line-number="46">## [18] 117  21 149  58  73  95  80  70  26  71 120 131  38 124 135 140   1</a>
+<a class="sourceLine" id="cb7-45" data-line-number="45">##  [1]  23  30  22 125  70 129  81  94 124  95  75  57  19 130   9  83 122</a>
+<a class="sourceLine" id="cb7-46" data-line-number="46">## [18] 132 141  60  97 119 114 127 120  92 128  14  20  55  84  53 109  50</a>
 <a class="sourceLine" id="cb7-47" data-line-number="47">## </a>
 <a class="sourceLine" id="cb7-48" data-line-number="48">## [[2]]$test.inds[[2]]</a>
-<a class="sourceLine" id="cb7-49" data-line-number="49">##  [1]  55  18 111  64 128 138 100  20  23  83 122  91  32 143  82  53 115</a>
-<a class="sourceLine" id="cb7-50" data-line-number="50">## [18]  62  85 117  15 110 142  26 147  72  60  50  37 120 119 124   8  14</a>
+<a class="sourceLine" id="cb7-49" data-line-number="49">##  [1]  71  65 125 118  34   8  72 101  99 103  81  37 140 124  57 144 112</a>
+<a class="sourceLine" id="cb7-50" data-line-number="50">## [18]  19  15  73  47  80 133  82 113  97 119  42 114  93  14  20 148  59</a>
 <a class="sourceLine" id="cb7-51" data-line-number="51">## </a>
 <a class="sourceLine" id="cb7-52" data-line-number="52">## </a>
 <a class="sourceLine" id="cb7-53" data-line-number="53">## </a>
 <a class="sourceLine" id="cb7-54" data-line-number="54">## [[3]]</a>
 <a class="sourceLine" id="cb7-55" data-line-number="55">## [[3]]$train.inds</a>
 <a class="sourceLine" id="cb7-56" data-line-number="56">## [[3]]$train.inds[[1]]</a>
-<a class="sourceLine" id="cb7-57" data-line-number="57">##  [1]  87 128  36 107  10 134   9  39  86  40  89 148 137  21  69  16  14</a>
-<a class="sourceLine" id="cb7-58" data-line-number="58">## [18]  63  44  64  90   2  79 133  76  94  13  83  25  92 147 144  85  59</a>
-<a class="sourceLine" id="cb7-59" data-line-number="59">## [35]  29  74 138  12 121  48  81  24 142  50  46 143  65   6 123   4  49</a>
-<a class="sourceLine" id="cb7-60" data-line-number="60">## [52]  35 135  54  84 124  56  67 104   7  97  51 112  61   5  47</a>
+<a class="sourceLine" id="cb7-57" data-line-number="57">##  [1] 107  59  42  79  50  96  39  24 113 102 126  30 103  78 105 123 130</a>
+<a class="sourceLine" id="cb7-58" data-line-number="58">## [18] 117  89 145  25  32 141  21  46  61  74  17 148  80   3 104  10  85</a>
+<a class="sourceLine" id="cb7-59" data-line-number="59">## [35]  26  90  34  36  87   5  55 139  54 121  28  67 100  64  37  88 115</a>
+<a class="sourceLine" id="cb7-60" data-line-number="60">## [52]  83  48  20  71  94  44  40 110 128  43  68 146 116  31  18</a>
 <a class="sourceLine" id="cb7-61" data-line-number="61">## </a>
 <a class="sourceLine" id="cb7-62" data-line-number="62">## [[3]]$train.inds[[2]]</a>
-<a class="sourceLine" id="cb7-63" data-line-number="63">##  [1]  35   2  83  40  99  56  50   4 135  12 142  79  73 125 124  36   7</a>
-<a class="sourceLine" id="cb7-64" data-line-number="64">## [18]  76   6 123  91  86  81  85  47  39  48 134 119 148  97  88 116 128</a>
-<a class="sourceLine" id="cb7-65" data-line-number="65">## [35]  16  49  61  65   1 101  84 110  90  69  21  78  74   9 103  89 143</a>
-<a class="sourceLine" id="cb7-66" data-line-number="66">## [52] 115 149 121  25  87  23 141  46  77  14  29  67  24  43   5</a>
+<a class="sourceLine" id="cb7-63" data-line-number="63">##  [1]  93  98   5 139  30  37 131  39  80  40  62  18  61 137  68  10  21</a>
+<a class="sourceLine" id="cb7-64" data-line-number="64">## [18]  46 146  96  44  79 111  59 134  55   3 135  58  90 116 102 117   6</a>
+<a class="sourceLine" id="cb7-65" data-line-number="65">## [35]  71  23  66  27  76  48  24  43  29  31  22  13 113  36  42  78  20</a>
+<a class="sourceLine" id="cb7-66" data-line-number="66">## [52] 128  17  57 149  34 148 141 107  77  87 104 115  64  88 126</a>
 <a class="sourceLine" id="cb7-67" data-line-number="67">## </a>
 <a class="sourceLine" id="cb7-68" data-line-number="68">## </a>
 <a class="sourceLine" id="cb7-69" data-line-number="69">## [[3]]$test.inds</a>
 <a class="sourceLine" id="cb7-70" data-line-number="70">## [[3]]$test.inds[[1]]</a>
-<a class="sourceLine" id="cb7-71" data-line-number="71">##  [1]  45 136  98 106  42 101 103  18 116  43 119  93  78  23  28  75  70</a>
-<a class="sourceLine" id="cb7-72" data-line-number="72">## [18] 110  77  19   1 115 130 149  82  88 125  34  91  71 141 150  99  73</a>
+<a class="sourceLine" id="cb7-71" data-line-number="71">##  [1]  49  75  63  41  69   4 143  98 101 147 108  62  77  23 111 134 137</a>
+<a class="sourceLine" id="cb7-72" data-line-number="72">## [18] 119  76  93  66 122 135  29 131  51  58  27  22  57   6  13 149  38</a>
 <a class="sourceLine" id="cb7-73" data-line-number="73">## </a>
 <a class="sourceLine" id="cb7-74" data-line-number="74">## [[3]]$test.inds[[2]]</a>
-<a class="sourceLine" id="cb7-75" data-line-number="75">##  [1]  45 136  92  51  10  98 106 138  42  54 133 107  44  18 144  64 147</a>
-<a class="sourceLine" id="cb7-76" data-line-number="76">## [18]  93  28  75  70 104  19  94 130  63 137  82  59  34 112  71 150  13</a></code></pre></div>
+<a class="sourceLine" id="cb7-75" data-line-number="75">##  [1]  49 123  50  75  28  54  63  25  67  26  41  69 110   4 143 101  74</a>
+<a class="sourceLine" id="cb7-76" data-line-number="76">## [18] 147 108 121 100 145 119  94  85  89 122 130  83  51 103 105  32  38</a></code></pre></div>
 </div>
 </div>
 <div id="feature-selection" class="section level1">
@@ -501,13 +501,13 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb8-12" data-line-number="12">## Resample Result</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">## Learner: regr.lm.featsel</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">## Aggr perf: mse.test.mean=27.9524818</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">## Runtime: 5.35612</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">## Aggr perf: mse.test.mean=28.5866366</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">## Runtime: 4.41715</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb8-18" data-line-number="18">r<span class="op">$</span>measures.test</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19">##   iter      mse</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">## 1    1 26.41274</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">## 2    2 29.49222</a></code></pre></div>
+<a class="sourceLine" id="cb8-20" data-line-number="20">## 1    1 30.21146</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">## 2    2 26.96181</a></code></pre></div>
 <div id="accessing-the-selected-features" class="section level3">
 <h3 class="hasAnchor">
 <a href="#accessing-the-selected-features" class="anchor"></a>Accessing the selected features</h3>
@@ -515,54 +515,54 @@ Nested Resampling Figure
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">r<span class="op">$</span>extract</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">## FeatSel result:</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">## Features (7): chas, nox, rm, dis, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">## mse.test.mean=25.1886156</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">## Features (7): zn, indus, chas, rm, dis, ptratio, lstat</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">## mse.test.mean=25.9907418</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">## [[2]]</a>
 <a class="sourceLine" id="cb9-8" data-line-number="8">## FeatSel result:</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">## Features (11): crim, zn, indus, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">## mse.test.mean=21.1611379</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">## Features (10): crim, zn, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">## mse.test.mean=23.4807971</a>
 <a class="sourceLine" id="cb9-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co"># Selected features in the first outer resampling iteration</span></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13">r<span class="op">$</span>extract[[<span class="dv">1</span>]]<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">## [1] "chas"    "nox"     "rm"      "dis"     "ptratio" "b"       "lstat"</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">## [1] "zn"      "indus"   "chas"    "rm"      "dis"     "ptratio" "lstat"</a>
 <a class="sourceLine" id="cb9-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co"># Resampled performance of the selected feature subset on the first inner training set</span></a>
 <a class="sourceLine" id="cb9-17" data-line-number="17">r<span class="op">$</span>extract[[<span class="dv">1</span>]]<span class="op">$</span>y</a>
 <a class="sourceLine" id="cb9-18" data-line-number="18">## mse.test.mean </a>
-<a class="sourceLine" id="cb9-19" data-line-number="19">##      25.18862</a></code></pre></div>
+<a class="sourceLine" id="cb9-19" data-line-number="19">##      25.99074</a></code></pre></div>
 <p>As for tuning, you can extract the optimization paths. The resulting <code>data.frame</code>s contain, among others, binary columns for all features, indicating if they were included in the linear regression model, and the corresponding performances.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">opt.paths =<span class="st"> </span><span class="kw">lapply</span>(r<span class="op">$</span>extract, <span class="cf">function</span>(x) <span class="kw">as.data.frame</span>(x<span class="op">$</span>opt.path))</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">head</span>(opt.paths[[<span class="dv">1</span>]])</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">##   crim zn indus chas nox rm age dis rad tax ptratio b lstat mse.test.mean</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">## 1    0  0     0    0   0  0   0   0   0   0       0 0     0      78.60128</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">## 2    1  0     0    0   0  0   0   0   0   0       0 0     0      63.85438</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## 3    0  1     0    0   0  0   0   0   0   0       0 0     0      71.09939</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## 4    0  0     1    0   0  0   0   0   0   0       0 0     0      60.75866</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">## 5    0  0     0    1   0  0   0   0   0   0       0 0     0      77.07564</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">## 6    0  0     0    0   1  0   0   0   0   0       0 0     0      61.53736</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">## 1    0  0     0    0   0  0   0   0   0   0       0 0     0      78.44274</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">## 2    1  0     0    0   0  0   0   0   0   0       0 0     0      64.55298</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">## 3    0  1     0    0   0  0   0   0   0   0       0 0     0      68.61908</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## 4    0  0     1    0   0  0   0   0   0   0       0 0     0      62.73168</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">## 5    0  0     0    1   0  0   0   0   0   0       0 0     0      74.67933</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">## 6    0  0     0    0   1  0   0   0   0   0       0 0     0      65.85593</a>
 <a class="sourceLine" id="cb10-10" data-line-number="10">##   dob eol error.message exec.time</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">## 1   1   2          &lt;NA&gt;     0.026</a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">## 2   2   2          &lt;NA&gt;     0.025</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">## 3   2   2          &lt;NA&gt;     0.023</a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">## 4   2   2          &lt;NA&gt;     0.023</a>
-<a class="sourceLine" id="cb10-15" data-line-number="15">## 5   2   2          &lt;NA&gt;     0.038</a>
-<a class="sourceLine" id="cb10-16" data-line-number="16">## 6   2   2          &lt;NA&gt;     0.027</a></code></pre></div>
+<a class="sourceLine" id="cb10-11" data-line-number="11">## 1   1   2          &lt;NA&gt;     0.022</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">## 2   2   2          &lt;NA&gt;     0.021</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">## 3   2   2          &lt;NA&gt;     0.019</a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">## 4   2   2          &lt;NA&gt;     0.019</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">## 5   2   2          &lt;NA&gt;     0.022</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">## 6   2   2          &lt;NA&gt;     0.019</a></code></pre></div>
 <p>An easy-to-read version of the optimization path for sequential feature selection can be obtained with function <code><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult</a></span>(r<span class="op">$</span>extract[[<span class="dv">1</span>]])</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">## Features         : 7</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">## Performance      : mse.test.mean=25.1886156</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">## chas, nox, rm, dis, ptratio, b, lstat</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">## Performance      : mse.test.mean=25.9907418</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">## zn, indus, chas, rm, dis, ptratio, lstat</a>
 <a class="sourceLine" id="cb11-5" data-line-number="5">## </a>
 <a class="sourceLine" id="cb11-6" data-line-number="6">## Path to optimum:</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">## - Features:    0  Init   :                       Perf = 78.601  Diff: NA  *</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">## - Features:    1  Add    : lstat                 Perf = 35.652  Diff: 42.95  *</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">## - Features:    2  Add    : rm                    Perf = 31.364  Diff: 4.2878  *</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">## - Features:    3  Add    : ptratio               Perf = 28.327  Diff: 3.0365  *</a>
-<a class="sourceLine" id="cb11-11" data-line-number="11">## - Features:    4  Add    : dis                   Perf = 27.446  Diff: 0.881  *</a>
-<a class="sourceLine" id="cb11-12" data-line-number="12">## - Features:    5  Add    : nox                   Perf = 25.934  Diff: 1.5127  *</a>
-<a class="sourceLine" id="cb11-13" data-line-number="13">## - Features:    6  Add    : b                     Perf = 25.351  Diff: 0.58289  *</a>
-<a class="sourceLine" id="cb11-14" data-line-number="14">## - Features:    7  Add    : chas                  Perf = 25.189  Diff: 0.16219  *</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">## - Features:    0  Init   :                       Perf = 78.443  Diff: NA  *</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">## - Features:    1  Add    : lstat                 Perf = 37.666  Diff: 40.776  *</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">## - Features:    2  Add    : ptratio               Perf = 31.715  Diff: 5.9513  *</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">## - Features:    3  Add    : rm                    Perf = 28.098  Diff: 3.6173  *</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">## - Features:    4  Add    : chas                  Perf = 27.074  Diff: 1.0236  *</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">## - Features:    5  Add    : dis                   Perf = 26.686  Diff: 0.38819  *</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">## - Features:    6  Add    : indus                 Perf = 26.141  Diff: 0.54515  *</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">## - Features:    7  Add    : zn                    Perf = 25.991  Diff: 0.15002  *</a>
 <a class="sourceLine" id="cb11-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb11-16" data-line-number="16">## Stopped, because no improving feature was found.</a></code></pre></div>
 </div>
@@ -586,8 +586,8 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb12-12" data-line-number="12">## Resample Result</a>
 <a class="sourceLine" id="cb12-13" data-line-number="13">## Task: BostonHousing-example</a>
 <a class="sourceLine" id="cb12-14" data-line-number="14">## Learner: regr.lm.filtered.tuned</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">## Aggr perf: mse.test.mean=24.3042174</a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">## Runtime: 4.79483</a></code></pre></div>
+<a class="sourceLine" id="cb12-15" data-line-number="15">## Aggr perf: mse.test.mean=25.7874462</a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">## Runtime: 4.57564</a></code></pre></div>
 <div id="accessing-the-selected-features-and-optimal-percentage" class="section level3">
 <h3 class="hasAnchor">
 <a href="#accessing-the-selected-features-and-optimal-percentage" class="anchor"></a>Accessing the selected features and optimal percentage</h3>
@@ -601,18 +601,18 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb13-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">## [[2]]</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8">## Model for learner.id=regr.lm.filtered.tuned; learner.class=TuneWrapper</a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">## Trained on: task.id = BostonHousing-example; obs = 337; features = 13</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">## Trained on: task.id = BostonHousing-example; obs = 338; features = 13</a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">## Hyperparameters: fw.method=chi.squared</a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">## </a>
 <a class="sourceLine" id="cb13-12" data-line-number="12">## [[3]]</a>
 <a class="sourceLine" id="cb13-13" data-line-number="13">## Model for learner.id=regr.lm.filtered.tuned; learner.class=TuneWrapper</a>
-<a class="sourceLine" id="cb13-14" data-line-number="14">## Trained on: task.id = BostonHousing-example; obs = 338; features = 13</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14">## Trained on: task.id = BostonHousing-example; obs = 337; features = 13</a>
 <a class="sourceLine" id="cb13-15" data-line-number="15">## Hyperparameters: fw.method=chi.squared</a></code></pre></div>
 <p>The result of the feature selection can be extracted by function <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code>. Almost always all 13 features are selected.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">lapply</span>(r<span class="op">$</span>models, <span class="cf">function</span>(x) <span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(x<span class="op">$</span>learner.model<span class="op">$</span>next.model))</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">## [[1]]</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">##  [1] "crim"    "zn"      "indus"   "nox"     "rm"      "age"     "dis"    </a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">##  [8] "rad"     "tax"     "ptratio" "b"       "lstat"  </a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">##  [1] "crim"    "zn"      "indus"   "chas"    "nox"     "rm"      "age"    </a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">##  [8] "dis"     "rad"     "tax"     "ptratio" "b"       "lstat"  </a>
 <a class="sourceLine" id="cb14-5" data-line-number="5">## </a>
 <a class="sourceLine" id="cb14-6" data-line-number="6">## [[2]]</a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">##  [1] "crim"    "zn"      "indus"   "nox"     "rm"      "age"     "dis"    </a>
@@ -626,28 +626,28 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb15-2" data-line-number="2">res</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">## [[1]]</a>
 <a class="sourceLine" id="cb15-4" data-line-number="4">## Tune result:</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">## Op. pars: fw.threshold=0.2</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">## mse.test.mean=28.3658612</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">## Op. pars: fw.threshold=0</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">## mse.test.mean=26.3159028</a>
 <a class="sourceLine" id="cb15-7" data-line-number="7">## </a>
 <a class="sourceLine" id="cb15-8" data-line-number="8">## [[2]]</a>
 <a class="sourceLine" id="cb15-9" data-line-number="9">## Tune result:</a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">## Op. pars: fw.threshold=0.4</a>
-<a class="sourceLine" id="cb15-11" data-line-number="11">## mse.test.mean=22.1848179</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">## Op. pars: fw.threshold=0.2</a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">## mse.test.mean=26.5695268</a>
 <a class="sourceLine" id="cb15-12" data-line-number="12">## </a>
 <a class="sourceLine" id="cb15-13" data-line-number="13">## [[3]]</a>
 <a class="sourceLine" id="cb15-14" data-line-number="14">## Tune result:</a>
 <a class="sourceLine" id="cb15-15" data-line-number="15">## Op. pars: fw.threshold=0</a>
-<a class="sourceLine" id="cb15-16" data-line-number="16">## mse.test.mean=23.9825545</a>
+<a class="sourceLine" id="cb15-16" data-line-number="16">## mse.test.mean=17.3094307</a>
 <a class="sourceLine" id="cb15-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb15-18" data-line-number="18">opt.paths =<span class="st"> </span><span class="kw">lapply</span>(res, <span class="cf">function</span>(x) <span class="kw">as.data.frame</span>(x<span class="op">$</span>opt.path))</a>
 <a class="sourceLine" id="cb15-19" data-line-number="19">opt.paths[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb15-20" data-line-number="20">##   fw.threshold mse.test.mean dob eol error.message exec.time</a>
-<a class="sourceLine" id="cb15-21" data-line-number="21">## 1            0      28.58203   1  NA          &lt;NA&gt;     0.338</a>
-<a class="sourceLine" id="cb15-22" data-line-number="22">## 2          0.2      28.36586   2  NA          &lt;NA&gt;     0.244</a>
-<a class="sourceLine" id="cb15-23" data-line-number="23">## 3          0.4      28.83220   3  NA          &lt;NA&gt;     0.243</a>
-<a class="sourceLine" id="cb15-24" data-line-number="24">## 4          0.6      38.40220   4  NA          &lt;NA&gt;     0.195</a>
-<a class="sourceLine" id="cb15-25" data-line-number="25">## 5          0.8      88.47242   5  NA          &lt;NA&gt;     0.189</a>
-<a class="sourceLine" id="cb15-26" data-line-number="26">## 6            1      88.47242   6  NA          &lt;NA&gt;     0.122</a></code></pre></div>
+<a class="sourceLine" id="cb15-21" data-line-number="21">## 1            0      26.31590   1  NA          &lt;NA&gt;     0.280</a>
+<a class="sourceLine" id="cb15-22" data-line-number="22">## 2          0.2      27.07262   2  NA          &lt;NA&gt;     0.210</a>
+<a class="sourceLine" id="cb15-23" data-line-number="23">## 3          0.4      26.84138   3  NA          &lt;NA&gt;     0.187</a>
+<a class="sourceLine" id="cb15-24" data-line-number="24">## 4          0.6      53.99120   4  NA          &lt;NA&gt;     0.160</a>
+<a class="sourceLine" id="cb15-25" data-line-number="25">## 5          0.8      85.32909   5  NA          &lt;NA&gt;     0.186</a>
+<a class="sourceLine" id="cb15-26" data-line-number="26">## 6            1      85.32909   6  NA          &lt;NA&gt;     0.168</a></code></pre></div>
 </div>
 </div>
 </div>
@@ -701,36 +701,36 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb16-26" data-line-number="26">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns, tasks, outer, <span class="dt">measures =</span> <span class="kw">list</span>(acc, ber), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb16-27" data-line-number="27">res</a>
 <a class="sourceLine" id="cb16-28" data-line-number="28">##         task.id         learner.id acc.test.mean ber.test.mean</a>
-<a class="sourceLine" id="cb16-29" data-line-number="29">## 1  iris-example classif.ksvm.tuned     0.9400000    0.05592105</a>
-<a class="sourceLine" id="cb16-30" data-line-number="30">## 2  iris-example classif.kknn.tuned     0.9200000    0.07675439</a>
-<a class="sourceLine" id="cb16-31" data-line-number="31">## 3 Sonar-example classif.ksvm.tuned     0.5227728    0.50000000</a>
-<a class="sourceLine" id="cb16-32" data-line-number="32">## 4 Sonar-example classif.kknn.tuned     0.8139806    0.19020147</a></code></pre></div>
+<a class="sourceLine" id="cb16-29" data-line-number="29">## 1  iris-example classif.ksvm.tuned     0.9800000    0.02083333</a>
+<a class="sourceLine" id="cb16-30" data-line-number="30">## 2  iris-example classif.kknn.tuned     0.9600000    0.03598485</a>
+<a class="sourceLine" id="cb16-31" data-line-number="31">## 3 Sonar-example classif.ksvm.tuned     0.5458228    0.50000000</a>
+<a class="sourceLine" id="cb16-32" data-line-number="32">## 4 Sonar-example classif.kknn.tuned     0.8243882    0.18012168</a></code></pre></div>
 <p>The <code>print</code> method for the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> shows the aggregated performances from the outer resampling loop.</p>
 <p>As you might recall, <code>mlr</code> offers several accessor function to extract information from the benchmark result. These are listed on the help page of <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> and many examples are shown on the tutorial page about <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>.</p>
 <p>The performance values in individual outer resampling runs can be obtained by <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code>. Note that, since we used different outer resampling strategies for the two tasks, the number of rows per task differ.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(res, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">##         task.id         learner.id iter       acc        ber</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">## 1  iris-example classif.ksvm.tuned    1 0.9400000 0.05592105</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">## 2  iris-example classif.kknn.tuned    1 0.9200000 0.07675439</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">## 3 Sonar-example classif.ksvm.tuned    1 0.5185185 0.50000000</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">## 4 Sonar-example classif.ksvm.tuned    2 0.5270270 0.50000000</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">## 5 Sonar-example classif.kknn.tuned    1 0.7901235 0.21336996</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">## 6 Sonar-example classif.kknn.tuned    2 0.8378378 0.16703297</a></code></pre></div>
+<a class="sourceLine" id="cb17-3" data-line-number="3">## 1  iris-example classif.ksvm.tuned    1 0.9800000 0.02083333</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">## 2  iris-example classif.kknn.tuned    1 0.9600000 0.03598485</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">## 3 Sonar-example classif.ksvm.tuned    1 0.5600000 0.50000000</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">## 4 Sonar-example classif.ksvm.tuned    2 0.5316456 0.50000000</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">## 5 Sonar-example classif.kknn.tuned    1 0.8133333 0.18939394</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">## 6 Sonar-example classif.kknn.tuned    2 0.8354430 0.17084942</a></code></pre></div>
 <p>The results from the parameter tuning can be obtained through function <code><a href="../../reference/getBMRTuneResults.html">getBMRTuneResults()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRTuneResults.html">getBMRTuneResults</a></span>(res)</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">## $`iris-example`</a>
 <a class="sourceLine" id="cb18-3" data-line-number="3">## $`iris-example`$classif.ksvm.tuned</a>
 <a class="sourceLine" id="cb18-4" data-line-number="4">## $`iris-example`$classif.ksvm.tuned[[1]]</a>
 <a class="sourceLine" id="cb18-5" data-line-number="5">## Tune result:</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">## Op. pars: C=1; sigma=1</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">## mmce.test.mean=0.0000000</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">## Op. pars: C=2; sigma=2</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7">## mmce.test.mean=0.0294118</a>
 <a class="sourceLine" id="cb18-8" data-line-number="8">## </a>
 <a class="sourceLine" id="cb18-9" data-line-number="9">## </a>
 <a class="sourceLine" id="cb18-10" data-line-number="10">## $`iris-example`$classif.kknn.tuned</a>
 <a class="sourceLine" id="cb18-11" data-line-number="11">## $`iris-example`$classif.kknn.tuned[[1]]</a>
 <a class="sourceLine" id="cb18-12" data-line-number="12">## Tune result:</a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">## Op. pars: k=5</a>
-<a class="sourceLine" id="cb18-14" data-line-number="14">## mmce.test.mean=0.0294118</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13">## Op. pars: k=4</a>
+<a class="sourceLine" id="cb18-14" data-line-number="14">## mmce.test.mean=0.0490196</a>
 <a class="sourceLine" id="cb18-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb18-16" data-line-number="16">## </a>
 <a class="sourceLine" id="cb18-17" data-line-number="17">## </a>
@@ -738,41 +738,41 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb18-19" data-line-number="19">## $`Sonar-example`$classif.ksvm.tuned</a>
 <a class="sourceLine" id="cb18-20" data-line-number="20">## $`Sonar-example`$classif.ksvm.tuned[[1]]</a>
 <a class="sourceLine" id="cb18-21" data-line-number="21">## Tune result:</a>
-<a class="sourceLine" id="cb18-22" data-line-number="22">## Op. pars: C=1; sigma=0.5</a>
-<a class="sourceLine" id="cb18-23" data-line-number="23">## mmce.test.mean=0.1714286</a>
+<a class="sourceLine" id="cb18-22" data-line-number="22">## Op. pars: C=2; sigma=0.5</a>
+<a class="sourceLine" id="cb18-23" data-line-number="23">## mmce.test.mean=0.2000000</a>
 <a class="sourceLine" id="cb18-24" data-line-number="24">## </a>
 <a class="sourceLine" id="cb18-25" data-line-number="25">## $`Sonar-example`$classif.ksvm.tuned[[2]]</a>
 <a class="sourceLine" id="cb18-26" data-line-number="26">## Tune result:</a>
-<a class="sourceLine" id="cb18-27" data-line-number="27">## Op. pars: C=2; sigma=1</a>
-<a class="sourceLine" id="cb18-28" data-line-number="28">## mmce.test.mean=0.2142857</a>
+<a class="sourceLine" id="cb18-27" data-line-number="27">## Op. pars: C=0.5; sigma=0.5</a>
+<a class="sourceLine" id="cb18-28" data-line-number="28">## mmce.test.mean=0.1000000</a>
 <a class="sourceLine" id="cb18-29" data-line-number="29">## </a>
 <a class="sourceLine" id="cb18-30" data-line-number="30">## </a>
 <a class="sourceLine" id="cb18-31" data-line-number="31">## $`Sonar-example`$classif.kknn.tuned</a>
 <a class="sourceLine" id="cb18-32" data-line-number="32">## $`Sonar-example`$classif.kknn.tuned[[1]]</a>
 <a class="sourceLine" id="cb18-33" data-line-number="33">## Tune result:</a>
-<a class="sourceLine" id="cb18-34" data-line-number="34">## Op. pars: k=5</a>
-<a class="sourceLine" id="cb18-35" data-line-number="35">## mmce.test.mean=0.0523810</a>
+<a class="sourceLine" id="cb18-34" data-line-number="34">## Op. pars: k=4</a>
+<a class="sourceLine" id="cb18-35" data-line-number="35">## mmce.test.mean=0.0619048</a>
 <a class="sourceLine" id="cb18-36" data-line-number="36">## </a>
 <a class="sourceLine" id="cb18-37" data-line-number="37">## $`Sonar-example`$classif.kknn.tuned[[2]]</a>
 <a class="sourceLine" id="cb18-38" data-line-number="38">## Tune result:</a>
 <a class="sourceLine" id="cb18-39" data-line-number="39">## Op. pars: k=4</a>
-<a class="sourceLine" id="cb18-40" data-line-number="40">## mmce.test.mean=0.0809524</a></code></pre></div>
+<a class="sourceLine" id="cb18-40" data-line-number="40">## mmce.test.mean=0.1142857</a></code></pre></div>
 <p>As for several other accessor functions a clearer representation as <code>data.frame</code> can be achieved by setting <code>as.df = TRUE</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRTuneResults.html">getBMRTuneResults</a></span>(res, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">##         task.id         learner.id iter  C sigma mmce.test.mean  k</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">## 1  iris-example classif.ksvm.tuned    1  1   1.0     0.00000000 NA</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">## 2  iris-example classif.kknn.tuned    1 NA    NA     0.02941176  5</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">## 3 Sonar-example classif.ksvm.tuned    1  1   0.5     0.17142857 NA</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">## 4 Sonar-example classif.ksvm.tuned    2  2   1.0     0.21428571 NA</a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">## 5 Sonar-example classif.kknn.tuned    1 NA    NA     0.05238095  5</a>
-<a class="sourceLine" id="cb19-8" data-line-number="8">## 6 Sonar-example classif.kknn.tuned    2 NA    NA     0.08095238  4</a></code></pre></div>
+<a class="sourceLine" id="cb19-2" data-line-number="2">##         task.id         learner.id iter   C sigma mmce.test.mean  k</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">## 1  iris-example classif.ksvm.tuned    1 2.0   2.0     0.02941176 NA</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">## 2  iris-example classif.kknn.tuned    1  NA    NA     0.04901961  4</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">## 3 Sonar-example classif.ksvm.tuned    1 2.0   0.5     0.20000000 NA</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">## 4 Sonar-example classif.ksvm.tuned    2 0.5   0.5     0.10000000 NA</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">## 5 Sonar-example classif.kknn.tuned    1  NA    NA     0.06190476  4</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">## 6 Sonar-example classif.kknn.tuned    2  NA    NA     0.11428571  4</a></code></pre></div>
 <p>It is also possible to extract the tuning results for individual tasks and learners and, as shown in earlier examples, inspect the optimization path (<code><a href="http://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath">ParamHelpers::OptPath()</a></code>).</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRTuneResults.html">getBMRTuneResults</a></span>(res, <span class="dt">task.ids =</span> <span class="st">"Sonar-example"</span>, <span class="dt">learner.ids =</span> <span class="st">"classif.ksvm.tuned"</span>,</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">tune.res</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">##         task.id         learner.id iter C sigma mmce.test.mean</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">## 1 Sonar-example classif.ksvm.tuned    1 1   0.5      0.1714286</a>
-<a class="sourceLine" id="cb20-6" data-line-number="6">## 2 Sonar-example classif.ksvm.tuned    2 2   1.0      0.2142857</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">##         task.id         learner.id iter   C sigma mmce.test.mean</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">## 1 Sonar-example classif.ksvm.tuned    1 2.0   0.5            0.2</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">## 2 Sonar-example classif.ksvm.tuned    2 0.5   0.5            0.1</a>
 <a class="sourceLine" id="cb20-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb20-8" data-line-number="8"><span class="kw"><a href="../../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span>(res<span class="op">$</span>results[[<span class="st">"Sonar-example"</span>]][[<span class="st">"classif.ksvm.tuned"</span>]])</a></code></pre></div>
 </div>
@@ -794,8 +794,8 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb21-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb21-13" data-line-number="13">res</a>
 <a class="sourceLine" id="cb21-14" data-line-number="14">##                 task.id      learner.id mse.test.mean</a>
-<a class="sourceLine" id="cb21-15" data-line-number="15">## 1 BostonHousing-example      regr.rpart      21.85857</a>
-<a class="sourceLine" id="cb21-16" data-line-number="16">## 2 BostonHousing-example regr.lm.featsel      22.46025</a></code></pre></div>
+<a class="sourceLine" id="cb21-15" data-line-number="15">## 1 BostonHousing-example      regr.rpart      26.49864</a>
+<a class="sourceLine" id="cb21-16" data-line-number="16">## 2 BostonHousing-example regr.lm.featsel      25.07154</a></code></pre></div>
 <p>The selected features can be extracted by function <code><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults()</a></code>. By default, a nested <code>list</code>, with the first level indicating the task and the second level indicating the learner, is returned. If only a single learner or, as in our case, a single task is considered, setting <code>drop = TRUE</code> simplifies the result to a flat <code>list</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults</a></span>(res)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">## $`BostonHousing-example`</a>
@@ -805,13 +805,13 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb22-6" data-line-number="6">## $`BostonHousing-example`$regr.lm.featsel</a>
 <a class="sourceLine" id="cb22-7" data-line-number="7">## $`BostonHousing-example`$regr.lm.featsel[[1]]</a>
 <a class="sourceLine" id="cb22-8" data-line-number="8">## FeatSel result:</a>
-<a class="sourceLine" id="cb22-9" data-line-number="9">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb22-10" data-line-number="10">## mse.test.mean=27.0680392</a>
+<a class="sourceLine" id="cb22-9" data-line-number="9">## Features (9): crim, zn, nox, rm, dis, rad, tax, ptratio, lstat</a>
+<a class="sourceLine" id="cb22-10" data-line-number="10">## mse.test.mean=18.0258510</a>
 <a class="sourceLine" id="cb22-11" data-line-number="11">## </a>
 <a class="sourceLine" id="cb22-12" data-line-number="12">## $`BostonHousing-example`$regr.lm.featsel[[2]]</a>
 <a class="sourceLine" id="cb22-13" data-line-number="13">## FeatSel result:</a>
-<a class="sourceLine" id="cb22-14" data-line-number="14">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb22-15" data-line-number="15">## mse.test.mean=18.4412482</a>
+<a class="sourceLine" id="cb22-14" data-line-number="14">## Features (11): zn, indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
+<a class="sourceLine" id="cb22-15" data-line-number="15">## mse.test.mean=24.0975557</a>
 <a class="sourceLine" id="cb22-16" data-line-number="16"><span class="kw"><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults</a></span>(res, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb22-17" data-line-number="17">## $regr.rpart</a>
 <a class="sourceLine" id="cb22-18" data-line-number="18">## NULL</a>
@@ -819,63 +819,61 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb22-20" data-line-number="20">## $regr.lm.featsel</a>
 <a class="sourceLine" id="cb22-21" data-line-number="21">## $regr.lm.featsel[[1]]</a>
 <a class="sourceLine" id="cb22-22" data-line-number="22">## FeatSel result:</a>
-<a class="sourceLine" id="cb22-23" data-line-number="23">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb22-24" data-line-number="24">## mse.test.mean=27.0680392</a>
+<a class="sourceLine" id="cb22-23" data-line-number="23">## Features (9): crim, zn, nox, rm, dis, rad, tax, ptratio, lstat</a>
+<a class="sourceLine" id="cb22-24" data-line-number="24">## mse.test.mean=18.0258510</a>
 <a class="sourceLine" id="cb22-25" data-line-number="25">## </a>
 <a class="sourceLine" id="cb22-26" data-line-number="26">## $regr.lm.featsel[[2]]</a>
 <a class="sourceLine" id="cb22-27" data-line-number="27">## FeatSel result:</a>
-<a class="sourceLine" id="cb22-28" data-line-number="28">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb22-29" data-line-number="29">## mse.test.mean=18.4412482</a></code></pre></div>
+<a class="sourceLine" id="cb22-28" data-line-number="28">## Features (11): zn, indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
+<a class="sourceLine" id="cb22-29" data-line-number="29">## mse.test.mean=24.0975557</a></code></pre></div>
 <p>You can access results for individual learners and tasks and inspect them further.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">feats =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults</a></span>(res, <span class="dt">learner.id =</span> <span class="st">"regr.lm.featsel"</span>, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co"># Selected features in the first outer resampling iteration</span></a>
 <a class="sourceLine" id="cb23-4" data-line-number="4">feats[[<span class="dv">1</span>]]<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5">##  [1] "crim"    "zn"      "chas"    "nox"     "rm"      "dis"     "rad"    </a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">##  [8] "tax"     "ptratio" "b"       "lstat"</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">## [1] "crim"    "zn"      "nox"     "rm"      "dis"     "rad"     "tax"    </a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">## [8] "ptratio" "lstat"</a>
 <a class="sourceLine" id="cb23-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co"># Resampled performance of the selected feature subset on the first inner training set</span></a>
 <a class="sourceLine" id="cb23-9" data-line-number="9">feats[[<span class="dv">1</span>]]<span class="op">$</span>y</a>
 <a class="sourceLine" id="cb23-10" data-line-number="10">## mse.test.mean </a>
-<a class="sourceLine" id="cb23-11" data-line-number="11">##      27.06804</a></code></pre></div>
+<a class="sourceLine" id="cb23-11" data-line-number="11">##      18.02585</a></code></pre></div>
 <p>As for tuning, you can extract the optimization paths. The resulting <code>data.frame</code>s contain, among others, binary columns for all features, indicating if they were included in the linear regression model, and the corresponding performances. <code><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult()</a></code> gives a clearer overview.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">opt.paths =<span class="st"> </span><span class="kw">lapply</span>(feats, <span class="cf">function</span>(x) <span class="kw">as.data.frame</span>(x<span class="op">$</span>opt.path))</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">head</span>(opt.paths[[<span class="dv">1</span>]])</a>
 <a class="sourceLine" id="cb24-3" data-line-number="3">##   crim zn indus chas nox rm age dis rad tax ptratio b lstat mse.test.mean</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">## 1    0  0     0    0   0  0   0   0   0   0       0 0     0      83.63594</a>
-<a class="sourceLine" id="cb24-5" data-line-number="5">## 2    1  0     0    0   0  0   0   0   0   0       0 0     0      70.71732</a>
-<a class="sourceLine" id="cb24-6" data-line-number="6">## 3    0  1     0    0   0  0   0   0   0   0       0 0     0      74.17308</a>
-<a class="sourceLine" id="cb24-7" data-line-number="7">## 4    0  0     1    0   0  0   0   0   0   0       0 0     0      65.71597</a>
-<a class="sourceLine" id="cb24-8" data-line-number="8">## 5    0  0     0    1   0  0   0   0   0   0       0 0     0      82.11281</a>
-<a class="sourceLine" id="cb24-9" data-line-number="9">## 6    0  0     0    0   1  0   0   0   0   0       0 0     0      69.65467</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">## 1    0  0     0    0   0  0   0   0   0   0       0 0     0      67.00111</a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">## 2    1  0     0    0   0  0   0   0   0   0       0 0     0      56.13923</a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">## 3    0  1     0    0   0  0   0   0   0   0       0 0     0      55.65793</a>
+<a class="sourceLine" id="cb24-7" data-line-number="7">## 4    0  0     1    0   0  0   0   0   0   0       0 0     0      43.85423</a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">## 5    0  0     0    1   0  0   0   0   0   0       0 0     0      66.75937</a>
+<a class="sourceLine" id="cb24-9" data-line-number="9">## 6    0  0     0    0   1  0   0   0   0   0       0 0     0      49.46606</a>
 <a class="sourceLine" id="cb24-10" data-line-number="10">##   dob eol error.message exec.time</a>
-<a class="sourceLine" id="cb24-11" data-line-number="11">## 1   1   2          &lt;NA&gt;     0.009</a>
-<a class="sourceLine" id="cb24-12" data-line-number="12">## 2   2   2          &lt;NA&gt;     0.011</a>
-<a class="sourceLine" id="cb24-13" data-line-number="13">## 3   2   2          &lt;NA&gt;     0.020</a>
-<a class="sourceLine" id="cb24-14" data-line-number="14">## 4   2   2          &lt;NA&gt;     0.012</a>
-<a class="sourceLine" id="cb24-15" data-line-number="15">## 5   2   2          &lt;NA&gt;     0.013</a>
-<a class="sourceLine" id="cb24-16" data-line-number="16">## 6   2   2          &lt;NA&gt;     0.012</a>
+<a class="sourceLine" id="cb24-11" data-line-number="11">## 1   1   2          &lt;NA&gt;     0.010</a>
+<a class="sourceLine" id="cb24-12" data-line-number="12">## 2   2   2          &lt;NA&gt;     0.014</a>
+<a class="sourceLine" id="cb24-13" data-line-number="13">## 3   2   2          &lt;NA&gt;     0.023</a>
+<a class="sourceLine" id="cb24-14" data-line-number="14">## 4   2   2          &lt;NA&gt;     0.014</a>
+<a class="sourceLine" id="cb24-15" data-line-number="15">## 5   2   2          &lt;NA&gt;     0.015</a>
+<a class="sourceLine" id="cb24-16" data-line-number="16">## 6   2   2          &lt;NA&gt;     0.014</a>
 <a class="sourceLine" id="cb24-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb24-18" data-line-number="18"><span class="kw"><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult</a></span>(feats[[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb24-19" data-line-number="19">## Features         : 11</a>
-<a class="sourceLine" id="cb24-20" data-line-number="20">## Performance      : mse.test.mean=27.0680392</a>
-<a class="sourceLine" id="cb24-21" data-line-number="21">## crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
+<a class="sourceLine" id="cb24-19" data-line-number="19">## Features         : 9</a>
+<a class="sourceLine" id="cb24-20" data-line-number="20">## Performance      : mse.test.mean=18.0258510</a>
+<a class="sourceLine" id="cb24-21" data-line-number="21">## crim, zn, nox, rm, dis, rad, tax, ptratio, lstat</a>
 <a class="sourceLine" id="cb24-22" data-line-number="22">## </a>
 <a class="sourceLine" id="cb24-23" data-line-number="23">## Path to optimum:</a>
-<a class="sourceLine" id="cb24-24" data-line-number="24">## - Features:    0  Init   :                       Perf = 83.636  Diff: NA  *</a>
-<a class="sourceLine" id="cb24-25" data-line-number="25">## - Features:    1  Add    : lstat                 Perf = 42.351  Diff: 41.285  *</a>
-<a class="sourceLine" id="cb24-26" data-line-number="26">## - Features:    2  Add    : ptratio               Perf = 34.782  Diff: 7.5694  *</a>
-<a class="sourceLine" id="cb24-27" data-line-number="27">## - Features:    3  Add    : rm                    Perf = 31.882  Diff: 2.8996  *</a>
-<a class="sourceLine" id="cb24-28" data-line-number="28">## - Features:    4  Add    : dis                   Perf = 30.488  Diff: 1.3939  *</a>
-<a class="sourceLine" id="cb24-29" data-line-number="29">## - Features:    5  Add    : b                     Perf = 29.461  Diff: 1.0278  *</a>
-<a class="sourceLine" id="cb24-30" data-line-number="30">## - Features:    6  Add    : zn                    Perf = 28.735  Diff: 0.7253  *</a>
-<a class="sourceLine" id="cb24-31" data-line-number="31">## - Features:    7  Add    : chas                  Perf = 28.514  Diff: 0.22163  *</a>
-<a class="sourceLine" id="cb24-32" data-line-number="32">## - Features:    8  Add    : nox                   Perf = 28.478  Diff: 0.036103  *</a>
-<a class="sourceLine" id="cb24-33" data-line-number="33">## - Features:    9  Add    : rad                   Perf = 27.964  Diff: 0.51373  *</a>
-<a class="sourceLine" id="cb24-34" data-line-number="34">## - Features:   10  Add    : crim                  Perf = 27.414  Diff: 0.55025  *</a>
-<a class="sourceLine" id="cb24-35" data-line-number="35">## - Features:   11  Add    : tax                   Perf = 27.068  Diff: 0.34563  *</a>
-<a class="sourceLine" id="cb24-36" data-line-number="36">## </a>
-<a class="sourceLine" id="cb24-37" data-line-number="37">## Stopped, because no improving feature was found.</a></code></pre></div>
+<a class="sourceLine" id="cb24-24" data-line-number="24">## - Features:    0  Init   :                       Perf = 67.001  Diff: NA  *</a>
+<a class="sourceLine" id="cb24-25" data-line-number="25">## - Features:    1  Add    : lstat                 Perf = 31.763  Diff: 35.238  *</a>
+<a class="sourceLine" id="cb24-26" data-line-number="26">## - Features:    2  Add    : ptratio               Perf = 25.742  Diff: 6.0216  *</a>
+<a class="sourceLine" id="cb24-27" data-line-number="27">## - Features:    3  Add    : rm                    Perf = 21.514  Diff: 4.228  *</a>
+<a class="sourceLine" id="cb24-28" data-line-number="28">## - Features:    4  Add    : tax                   Perf = 20.593  Diff: 0.92022  *</a>
+<a class="sourceLine" id="cb24-29" data-line-number="29">## - Features:    5  Add    : crim                  Perf = 20.327  Diff: 0.26618  *</a>
+<a class="sourceLine" id="cb24-30" data-line-number="30">## - Features:    6  Add    : dis                   Perf = 20.289  Diff: 0.038228  *</a>
+<a class="sourceLine" id="cb24-31" data-line-number="31">## - Features:    7  Add    : nox                   Perf = 18.336  Diff: 1.9532  *</a>
+<a class="sourceLine" id="cb24-32" data-line-number="32">## - Features:    8  Add    : zn                    Perf = 18.096  Diff: 0.23966  *</a>
+<a class="sourceLine" id="cb24-33" data-line-number="33">## - Features:    9  Add    : rad                   Perf = 18.026  Diff: 0.070336  *</a>
+<a class="sourceLine" id="cb24-34" data-line-number="34">## </a>
+<a class="sourceLine" id="cb24-35" data-line-number="35">## Stopped, because no improving feature was found.</a></code></pre></div>
 </div>
 <div id="example-3-one-task-two-learners-feature-filtering-with-tuning" class="section level2">
 <h2 class="hasAnchor">
@@ -898,17 +896,17 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb25-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb25-16" data-line-number="16">res</a>
 <a class="sourceLine" id="cb25-17" data-line-number="17">##                 task.id             learner.id mse.test.mean</a>
-<a class="sourceLine" id="cb25-18" data-line-number="18">## 1 BostonHousing-example             regr.rpart      21.10839</a>
-<a class="sourceLine" id="cb25-19" data-line-number="19">## 2 BostonHousing-example regr.lm.filtered.tuned      21.21678</a></code></pre></div>
+<a class="sourceLine" id="cb25-18" data-line-number="18">## 1 BostonHousing-example             regr.rpart      22.63908</a>
+<a class="sourceLine" id="cb25-19" data-line-number="19">## 2 BostonHousing-example regr.lm.filtered.tuned      20.40776</a></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># Performances on individual outer test data sets</span></a>
 <a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(res, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb26-3" data-line-number="3">##                 task.id             learner.id iter      mse</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4">## 1 BostonHousing-example             regr.rpart    1 18.20945</a>
-<a class="sourceLine" id="cb26-5" data-line-number="5">## 2 BostonHousing-example             regr.rpart    2 22.32207</a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">## 3 BostonHousing-example             regr.rpart    3 22.79364</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7">## 4 BostonHousing-example regr.lm.filtered.tuned    1 17.80947</a>
-<a class="sourceLine" id="cb26-8" data-line-number="8">## 5 BostonHousing-example regr.lm.filtered.tuned    2 23.80828</a>
-<a class="sourceLine" id="cb26-9" data-line-number="9">## 6 BostonHousing-example regr.lm.filtered.tuned    3 22.03258</a></code></pre></div>
+<a class="sourceLine" id="cb26-4" data-line-number="4">## 1 BostonHousing-example             regr.rpart    1 24.37316</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">## 2 BostonHousing-example             regr.rpart    2 18.02819</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">## 3 BostonHousing-example             regr.rpart    3 25.51588</a>
+<a class="sourceLine" id="cb26-7" data-line-number="7">## 4 BostonHousing-example regr.lm.filtered.tuned    1 19.81657</a>
+<a class="sourceLine" id="cb26-8" data-line-number="8">## 5 BostonHousing-example regr.lm.filtered.tuned    2 20.65981</a>
+<a class="sourceLine" id="cb26-9" data-line-number="9">## 6 BostonHousing-example regr.lm.filtered.tuned    3 20.74689</a></code></pre></div>
 </div>
 </div>
 </div>
