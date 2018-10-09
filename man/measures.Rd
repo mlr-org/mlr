@@ -422,7 +422,7 @@ of the prediction (or maybe only the model, think AIC).
 The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 
 All supported measures can be found by \link{listMeasures} or as a table
-in the tutorial appendix: \url{http://mlr-org.github.io/mlr-tutorial/release/html/measures/}.
+in the tutorial appendix: \url{https://mlr-org.github.io/mlr/articles/measures.html}.
 
 If you want a measure for a misclassification cost matrix, look at \link{makeCostMeasure}.
 If you want to implement your own measure, look at \link{makeMeasure}.
@@ -459,4 +459,5 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
+\concept{performance}
 \keyword{datasets}

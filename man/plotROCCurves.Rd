@@ -11,11 +11,8 @@ plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE,
 \item{obj}{(\link{ThreshVsPerfData})\cr
 Result of \link{generateThreshVsPerfData}.}
 
-\item{measures}{([list(2)` of [Measure])\cr
-Default is the first 2 measures passed to [generateThreshVsPerfData].
-
-[list(2)` of [Measure]: R:list(2)%60%20of%20[Measure
-[generateThreshVsPerfData]: R:generateThreshVsPerfData}
+\item{measures}{([list(2)` of \link{Measure})\cr
+Default is the first 2 measures passed to \link{generateThreshVsPerfData}.}
 
 \item{diagonal}{(\code{logical(1)})\cr
 Whether to plot a dashed diagonal line.
@@ -53,7 +50,8 @@ plotROCCurves(roc_l)
 }
 }
 \seealso{
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
@@ -66,3 +64,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{plot}
+\concept{thresh_vs_perf}

@@ -49,3 +49,5 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}}, \code{\link{setPredictType}}
 }
+\concept{learner}
+\concept{predict}

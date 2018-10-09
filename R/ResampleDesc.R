@@ -65,6 +65,17 @@
 #'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
 #'      of test indices.}
 #'   }
+#' @param fixed (`logical(1)`)\cr
+#'   Whether indices supplied via argument 'blocking' in the task should be used as
+#'   fully pre-defined indices. Default is `FALSE` which means
+#'   they will be used following the 'blocking' approach.
+#'   `fixed` only works with ResampleDesc `CV` and the supplied indices must match
+#'   the number of observations. When `fixed = TRUE`, the `iters` argument will be ignored
+#'   and is interally set to the number of supplied factor levels in `blocking`.
+#' @param blocking.cv (`logical(1)`)\cr
+#'   Should 'blocking' be used in `CV`? Default to `FALSE`.
+#'   This is different to `fixed = TRUE` and cannot be combined. Please check the mlr online tutorial
+#'   for more details.
 #' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
@@ -92,7 +103,8 @@
 #'
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
-makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
+makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE,
+  stratify.cols = NULL, fixed = FALSE, blocking.cv = FALSE) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
                                    "Subsample", "Bootstrap", "SpCV", "SpRepCV",
                                    "GrowingWindowCV", "FixedWindowCV"))
@@ -106,6 +118,8 @@ makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, str
   d$predict = predict
   d$stratify = stratify
   d$stratify.cols = stratify.cols
+  d$fixed = fixed
+  d$blocking.cv = blocking.cv
   addClasses(d, stri_paste(method, "Desc"))
 }
 
@@ -134,9 +148,10 @@ makeResampleDescHoldout = function(iters, split = 2 / 3) {
   makeResampleDescInternal("holdout", iters = 1L, split = split)
 }
 
-makeResampleDescCV = function(iters = 10L) {
+makeResampleDescCV = function(iters = 10L, fixed = FALSE, blocking.cv = FALSE) {
   iters = asInt(iters, lower = 2L)
-  makeResampleDescInternal("cross-validation", iters = iters)
+  makeResampleDescInternal("cross-validation", iters = iters, fixed = fixed,
+    blocking.cv = blocking.cv)
 }
 
 makeResampleDescSpCV = function(iters = 10L) {
@@ -159,10 +174,11 @@ makeResampleDescBootstrap = function(iters = 30L) {
   makeResampleDescInternal("OOB bootstrapping", iters = iters)
 }
 
-makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
+makeResampleDescRepCV = function(reps = 10L, folds = 10L, fixed = FALSE, blocking.cv = FALSE) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
-  makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps)
+  makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps,
+    fixed = fixed, blocking.cv = blocking.cv)
 }
 
 makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {

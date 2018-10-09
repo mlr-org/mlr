@@ -32,7 +32,6 @@ globalVariables("dates")
 #' An integer denoting the period to difference over
 #' @param momentum [\code{integer}] \cr
 #' An vector of integers denoting the lags for momentum calculation
-#' @param
 #' @param seasonal.difference.lag [\code{integer}]\cr
 #' An integer denoting the period to seasonaly difference over
 #' @param return.nonlag [\code{logical}]\cr

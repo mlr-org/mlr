@@ -8,9 +8,9 @@ makePreprocWrapperLambert(learner, type = c("h", "hh", "s"),
   methods = c("IGMM", "MLE"), verbose = FALSE)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{type}{\link{\code{character(1)}} \cr
 What type of non-normality: symmetric heavy-tails "h" (default),
@@ -25,7 +25,7 @@ Gaussian characteristics (kurtosis = 3 for "h" or skewness = 0 for "s"),
 If TRUE, it prints out progress information in the console. Default: FALSE.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Takes numeric data and "Gaussianizes" it using an h, hh, or s Lambert W transform.
@@ -57,3 +57,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{wrapper}

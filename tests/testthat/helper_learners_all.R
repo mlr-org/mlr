@@ -74,11 +74,11 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
   p = predict(m, task)
   expect_true(info = info, !is.na(performance(pred = p, task = task)))
 
-  # check that se works and is > 0 and < range(y)
+  # check that se works and is > 0
   if (pred.type == "se") {
     s = getPredictionSE(p)
     y = getPredictionResponse(p)
-    expect_numeric(info = info, s, lower = 0, upper = range(y), finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
+    expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
   # check that quantile works and is > 0
   if (pred.type == "quantile") {

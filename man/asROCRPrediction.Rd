@@ -24,3 +24,5 @@ Other predict: \code{\link{forecast.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
+\concept{predict}
+\concept{roc}

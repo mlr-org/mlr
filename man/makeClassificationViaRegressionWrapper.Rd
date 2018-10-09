@@ -4,7 +4,8 @@
 \alias{makeClassificationViaRegressionWrapper}
 \title{Classification via regression wrapper.}
 \usage{
-makeClassificationViaRegressionWrapper(learner, predict.type = "response")
+makeClassificationViaRegressionWrapper(learner,
+  predict.type = "response")
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -57,3 +58,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{wrapper}

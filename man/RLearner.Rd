@@ -21,36 +21,36 @@
 makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  class.weights.param = NULL, callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", class.weights.param = NULL, callees = character(0L))
 
 makeRLearnerMultilabel(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 
 makeRLearnerCluster(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 
 makeRLearnerForecastRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 
 makeRLearnerMultiForecastRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "",
-  callees = character(0L))
+  properties = character(0L), name = cl, short.name = cl,
+  note = "", callees = character(0L))
 }
 \arguments{
 \item{cl}{(\code{character(1)})\cr
@@ -115,7 +115,7 @@ features of the learner.
 
 For a general overview on how to integrate a learning algorithm into mlr's system, please read the
 section in the online tutorial:
-\url{http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html}
+\url{https://mlr-org.github.io/mlr/articles/create_learner.html}
 
 To see all possible properties of a learner, go to: \link{LearnerProperties}.
 }

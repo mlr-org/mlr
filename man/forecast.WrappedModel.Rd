@@ -4,7 +4,8 @@
 \alias{forecast.WrappedModel}
 \title{Forecast a trained learner.}
 \usage{
-\method{forecast}{WrappedModel}(object, newdata = NULL, task, h = 10, ...)
+\method{forecast}{WrappedModel}(object, newdata = NULL, task, h = 10,
+  ...)
 }
 \arguments{
 \item{object}{\link{\code{\link{WrappedModel}}}\cr
@@ -60,8 +61,8 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
-  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
+\concept{predict}

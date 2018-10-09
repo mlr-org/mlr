@@ -11,16 +11,16 @@
 #'
 #' Object slots:
 #' \describe{
-#'   \item{id (`character(1)`)}{See argument.}
-#'   \item{minimize (`logical(1)`)}{See argument.}
-#'   \item{properties ([character])}{See argument.}
-#'   \item{fun (`function])}{See argument.}
-#'   \item{extra.args ([list])}{See argument.}
-#'   \item{aggr ([Aggregation])}{See argument.}
-#'   \item{best (`numeric(1)`)}{See argument.}
-#'   \item{worst (`numeric(1)`)}{See argument.}
-#'   \item{name (`character(1)`)}{See argument.}
-#'   \item{note (`character(1)`)}{See argument.}
+#'   \item{id (character(1))}{See argument.}
+#'   \item{minimize (logical(1))}{See argument.}
+#'   \item{properties (character)}{See argument.}
+#'   \item{fun (function)}{See argument.}
+#'   \item{extra.args (list)}{See argument.}
+#'   \item{aggr (Aggregation)}{See argument.}
+#'   \item{best (numeric(1))}{See argument.}
+#'   \item{worst (numeric(1))}{See argument.}
+#'   \item{name (character(1))}{See argument.}
+#'   \item{note (character(1))}{See argument.}
 #' }
 #'
 #' @param id (`character(1)`)\cr

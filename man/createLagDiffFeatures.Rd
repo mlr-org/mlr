@@ -12,16 +12,16 @@ createLagDiffFeatures(obj, target = character(0L), lag = 0L,
   add_var = FALSE, TTR.funcs = NULL, date.col)
 }
 \arguments{
-\item{obj}{([data.frame] | [Task])\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{target}{(`character(1)` | `character(2)` | `character(n.classes)`)\cr
+\item{target}{(\code{character(1)} | \code{character(2)} | \code{character(n.classes)})\cr
 Name(s) of the target variable(s).
-Only used when `obj` is `character(1)` data.frame, otherwise ignored.
+Only used when \code{obj} is a data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
 so it has length 2.
 For multilabel classification these are the names of logical columns that indicate whether
-`character(1)` class label is present and the number of target variables corresponds to the number of
+a class label is present and the number of target variables corresponds to the number of
 classes.}
 
 \item{lag}{\link{\code{integer}}\cr
@@ -99,3 +99,4 @@ Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{removeConstantFeatures}},
   \code{\link{summarizeColumns}}
 }
+\concept{eda_and_preprocess}

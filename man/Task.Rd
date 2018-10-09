@@ -34,24 +34,26 @@ makeCostSensTask(id = deparse(substitute(data)), data, costs,
   check.data = TRUE)
 
 makeForecastRegrTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates",
-  fixup.data = "warn", check.data = TRUE, coordinates = NULL)
+  weights = NULL, blocking = NULL, frequency = 1L,
+  date.col = "dates", fixup.data = "warn", check.data = TRUE,
+  coordinates = NULL)
 
 makeMultiForecastRegrTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates",
-  fixup.data = "warn", check.data = TRUE, coordinates = NULL)
+  weights = NULL, blocking = NULL, frequency = 1L,
+  date.col = "dates", fixup.data = "warn", check.data = TRUE,
+  coordinates = NULL)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, coordinates = NULL,
   fixup.data = "warn", check.data = TRUE)
 
-makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, coordinates = NULL, fixup.data = "warn",
-  check.data = TRUE)
+makeRegrTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, coordinates = NULL, fixup.data = "warn",
-  check.data = TRUE)
+makeSurvTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
@@ -169,3 +171,4 @@ Other costsens: \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 }
+\concept{costsens}

@@ -23,9 +23,7 @@ Optional named (hyper)parameters.
 Alternatively these can be given using the \code{par.vals} argument.}
 }
 \value{
-[named list of [Learner]). Named by \code{ids}.
-
-[named list of [Learner]: R:named%20list%20of%20[Learner
+(named list of \link{Learner}). Named by \code{ids}.
 }
 \description{
 Small helper function that can save some typing when creating mutiple learner objects.
@@ -52,3 +50,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
+\concept{learner}

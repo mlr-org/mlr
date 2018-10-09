@@ -5,7 +5,6 @@
 #' or 'All'. Targeting a single series will produce a single output similar to univariate tasks while
 #' treating all other variables endogeneously. targeting 'All' will forecast all variables forward.
 #' @export
-#' @importFrom zoo index coredata
 makeMultiForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates", fixup.data = "warn",
   check.data = TRUE, coordinates = NULL) {

@@ -83,3 +83,4 @@ Other wrapper: \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{wrapper}
