@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![Build status](https://ci.appveyor.com/api/projects/status/skoekgkgu8l5tc1o/branch/master?svg=true)](https://ci.appveyor.com/project/mlr-org/mlr/branch/master)
-[![CRAN](http://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/package=mlr)
+[![CRAN](https://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/package=mlr)
 [![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
