@@ -50,6 +50,7 @@ makeRLearner.surv.randomForestSRC = function() {
   )
 }
 
+#' @export
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   data = getTaskData(.task, subset = .subset)
   if (.learner$predict.type == "response") {
@@ -63,6 +64,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
   }
 }
 
+#' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted

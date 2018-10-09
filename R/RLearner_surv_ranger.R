@@ -1,4 +1,3 @@
-
 #' @export
 makeRLearner.surv.ranger = function() {
   makeRLearnerSurv(
@@ -29,7 +28,7 @@ makeRLearner.surv.ranger = function() {
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
-    properties = c("numerics", "factors", "ordered", "featimp"),
+    properties = c("numerics", "factors", "ordered", "featimp", "prob"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable.",
@@ -39,15 +38,34 @@ makeRLearner.surv.ranger = function() {
 
 #' @export
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
-  tn = getTaskTargetNames(.task)
-  ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
-    status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
+  data = getTaskData(.task, .subset)
+  if (.learner$predict.type == "response") {
+    tn = getTaskTargetNames(.task)
+    ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
+      status.variable.name = tn[2L], data = data, ...)
+  } else {
+    tn = getTaskTargetNames(.task)
+    model = ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
+      status.variable.name = tn[2L], data = data, ...)
+    model = mlr:::attachTrainingTime(model, .task, data)
+    model
+  }
 }
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  p = predict(object = .model$learner.model, data = .newdata)
-  rowMeans(p$chf)
+  if (.learner$predict.type == "response") {
+    p = predict(object = .model$learner.model, data = .newdata)
+    rowMeans(p$chf)
+  } else {
+    p = predict(object = .model$learner.model, data = .newdata)
+    preds = rowMeans(p$chf)
+    train.times = sort(unique(c(0, .model$learner.model$times)))
+    ptemp = p$survival
+    pos = prodlim::sindex(jump.times = p$unique.death.times, eval.times = train.times)
+    probs = cbind(1, ptemp)[, pos + 1, drop = FALSE]
+    list(preds = preds, probs = probs, train.times = train.times)
+  }
 }
 
 #' @export
