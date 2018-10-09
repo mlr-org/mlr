@@ -463,9 +463,9 @@
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred2, <span class="dt">measures =</span> <span class="kw">list</span>(multilabel.subset01, multilabel.hamloss, multilabel.acc,</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">  multilabel.f1, timepredict))</a>
 <a class="sourceLine" id="cb6-7" data-line-number="7">## multilabel.subset01  multilabel.hamloss      multilabel.acc </a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">##           0.8717418           0.2044743           0.4594828 </a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">##           0.8705006           0.2042083           0.4616123 </a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">##       multilabel.f1         timepredict </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">##           0.5698162           0.9660000</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">##           0.5715340           0.8780000</a>
 <a class="sourceLine" id="cb6-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="kw"><a href="../../reference/listMeasures.html">listMeasures</a></span>(<span class="st">"multilabel"</span>)</a>
 <a class="sourceLine" id="cb6-13" data-line-number="13">##  [1] "featperc"            "multilabel.tpr"      "multilabel.hamloss" </a>
@@ -483,16 +483,16 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4">## Resample Result</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">## Task: multi</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6">## Learner: multilabel.binaryRelevance.classif.rpart</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## Aggr perf: multilabel.hamloss.test.mean=0.2266685</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## Runtime: 6.77601</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## Aggr perf: multilabel.hamloss.test.mean=0.2216442</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## Runtime: 5.23962</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn.rFerns, <span class="dt">task =</span> yeast.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-11" data-line-number="11">r</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">## Resample Result</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">## Task: multi</a>
 <a class="sourceLine" id="cb7-14" data-line-number="14">## Learner: multilabel.rFerns</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">## Aggr perf: multilabel.hamloss.test.mean=0.4735215</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">## Runtime: 0.695692</a></code></pre></div>
+<a class="sourceLine" id="cb7-15" data-line-number="15">## Aggr perf: multilabel.hamloss.test.mean=0.4761885</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">## Runtime: 0.309743</a></code></pre></div>
 </div>
 <div id="binary-performance" class="section level1">
 <h1 class="hasAnchor">
@@ -517,19 +517,19 @@
 <a class="sourceLine" id="cb8-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(r<span class="op">$</span>pred, <span class="dt">measures =</span> <span class="kw">list</span>(acc, mmce))</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19">##         acc.test.mean mmce.test.mean</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">## label1     0.70252379      0.2974762</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">## label2     0.59122880      0.4087712</a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">## label3     0.69880017      0.3011998</a>
-<a class="sourceLine" id="cb8-23" data-line-number="23">## label4     0.71493587      0.2850641</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">## label5     0.70335126      0.2966487</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">## label6     0.58957385      0.4104261</a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">## label7     0.53496070      0.4650393</a>
-<a class="sourceLine" id="cb8-27" data-line-number="27">## label8     0.51965246      0.4803475</a>
-<a class="sourceLine" id="cb8-28" data-line-number="28">## label9     0.31154324      0.6884568</a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">## label10    0.45510964      0.5448904</a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">## label11    0.46959040      0.5304096</a>
-<a class="sourceLine" id="cb8-31" data-line-number="31">## label12    0.52792718      0.4720728</a>
-<a class="sourceLine" id="cb8-32" data-line-number="32">## label13    0.53744311      0.4625569</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">## label1     0.69507654      0.3049235</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">## label2     0.58750517      0.4124948</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">## label3     0.70045511      0.2995449</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">## label4     0.71369466      0.2863053</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">## label5     0.71452213      0.2854779</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">## label6     0.59288374      0.4071163</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">## label7     0.54571783      0.4542822</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">## label8     0.52875465      0.4712453</a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">## label9     0.30285478      0.6971452</a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">## label10    0.43400910      0.5659909</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">## label11    0.45138602      0.5486140</a>
+<a class="sourceLine" id="cb8-31" data-line-number="31">## label12    0.52461729      0.4753827</a>
+<a class="sourceLine" id="cb8-32" data-line-number="32">## label13    0.52792718      0.4720728</a>
 <a class="sourceLine" id="cb8-33" data-line-number="33">## label14    0.01406703      0.9859330</a></code></pre></div>
 </div>
 </div>
