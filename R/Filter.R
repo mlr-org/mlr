@@ -637,7 +637,7 @@ praznik.filter = function(fun) {
 
 makeFilter(
   name = "praznik.JMI",
-  desc = "conditional mutual information based feature selection filters",
+  desc = "Joint mutual information filter",
   pkg = "praznik",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
@@ -646,7 +646,7 @@ makeFilter(
 
 makeFilter(
   name = "praznik.DISR",
-  desc = "conditional mutual information based feature selection filters",
+  desc = "Double input symmetrical relevance filter",
   pkg = "praznik",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
@@ -655,7 +655,7 @@ makeFilter(
 
 makeFilter(
   name = "praznik.JMIM",
-  desc = "conditional mutual information based feature selection filters",
+  desc = "Minimal joint mutual information maximisation filter",
   pkg = "praznik",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
@@ -673,7 +673,7 @@ makeFilter(
 
 makeFilter(
   name = "praznik.NJMIM",
-  desc = "conditional mutual information based feature selection filters",
+  desc = "Minimal normalised joint mutual information maximisation filter",
   pkg = "praznik",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
@@ -682,7 +682,7 @@ makeFilter(
 
 makeFilter(
   name = "praznik.MRMR",
-  desc = "conditional mutual information based feature selection filters",
+  desc = "Minimum redundancy maximal relevancy filter",
   pkg = "praznik",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
@@ -691,7 +691,7 @@ makeFilter(
 
 makeFilter(
   name = "praznik.CMIM",
-  desc = "conditional mutual information based feature selection filters",
+  desc = "Minimal conditional mutual information maximisation filter",
   pkg = "praznik",
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
@@ -720,7 +720,7 @@ FSelectorRcpp.filter = function(type) {
 
 makeFilter(
   name = "FSelectorRcpp.infogain",
-  desc = "info.gain: entropy based filter with Rcpp",
+  desc = "Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute",
   pkg  = "FSelectorRcpp",
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
@@ -729,7 +729,7 @@ makeFilter(
 
 makeFilter(
   name = "FSelectorRcpp.gainratio",
-  desc = "gain.ratio: entropy based filter with Rcpp",
+  desc = "Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute",
   pkg  = "FSelectorRcpp",
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
@@ -738,7 +738,7 @@ makeFilter(
 
 makeFilter(
   name = "FSelectorRcpp.symuncert",
-  desc = "symmetric uncertainty: entropy based filter with Rcpp",
+  desc = "Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute",
   pkg  = "FSelectorRcpp",
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
