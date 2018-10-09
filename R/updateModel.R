@@ -6,9 +6,9 @@
 #'
 #' @param object WrappedModel \cr
 #'   Wrapped model, result of \code{\link{train}}.
-#' @param task [`Task`]\cr
+#' @param task [Task]\cr
 #'   The task.
-#' @param newdata [`data.frame`]\cr
+#' @param newdata [data.frame]\cr
 #'   New observations to update the model
 #' @param weights [`numeric`]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
@@ -150,17 +150,17 @@ updateModel = function(object, task, newdata, subset, weights = NULL, ...) {
 #' model (\code{.model$learner.model}).
 #' All parameters in \code{...} must be passed to the underlying predict function.
 #'
-#' @param .learner [`RLearner`]\cr
+#' @param .learner [Learner]\cr
 #'   Wrapped learner.
-#' @param .model [\code{`WrappedModel`}]\cr
+#' @param .model [WrappedModel]\cr
 #'   Model produced by training.
-#' @param .newdata [`data.frame`]\cr
+#' @param .newdata [data.frame]\cr
 #'   New data to predict. Does not include target column.
-#' @param .task [`Task`]
+#' @param .task [Task]
 #'   The model's task
-#' @param .truth [`data.frame`]
+#' @param .truth [data.frame]
 #'   A vector of data that is to be predicted.
-#' @param .weights [`data.frame`]
+#' @param .weights [data.frame]
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).

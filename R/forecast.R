@@ -16,7 +16,7 @@ forecast = function(object, ...) {
 #'
 #' @description
 #' Forecast the target variable of new data using a fitted model.
-#' What is stored exactly in the [\code{\link{Prediction}}] object depends
+#' What is stored exactly in the [Prediction] object depends
 #' on the \code{predict.type} setting of the \code{\link{Learner}}.
 #' If \code{predict.type} was set to \dQuote{prob} probability thresholding
 #' can be done calling the \code{\link{setThreshold}} function on the
@@ -24,17 +24,17 @@ forecast = function(object, ...) {
 #'
 #' The row names of the input \code{task} or \code{newdata} are preserved in the output.
 #'
-#' @param object [`WrappedModel`]\cr
+#' @param object [WrappedModel]\cr
 #'   Wrapped model, result of `train`.
-#' @param task [`Task`]\cr
+#' @param task [Task]\cr
 #'   The task. This is only used for fcregr and mfcregr, in which it's used to gather date information
-#' @param newdata [`data.frame`]\cr
+#' @param newdata [data.frame]\cr
 #'   Optional: A data frame of external regressors which must have the same number of rows as your forecast length h
-#' @param h [`integer`]
+#' @param h (`integer(1)`)
 #'   An integer specifying the forecast horizon
 #' @param ... [any]\cr
 #'   Currently ignored.
-#' @return `Prediction`.
+#' @return [Prediction].
 #' @family predict
 #' @export
 #' @examples

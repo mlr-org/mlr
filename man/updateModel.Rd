@@ -7,13 +7,13 @@
 updateModel(object, task, newdata, subset, weights = NULL, ...)
 }
 \arguments{
-\item{object}{\link{wrappedModel}\cr
+\item{object}{WrappedModel \cr
 Wrapped model, result of \code{\link{train}}.}
 
-\item{task}{\code{\link{Task}}\cr
+\item{task}{\link{Task}\cr
 The task.}
 
-\item{newdata}{\code{\link{data.frame}}\cr
+\item{newdata}{\link{data.frame}\cr
 New observations to update the model}
 
 \item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
@@ -30,7 +30,7 @@ Weights from the task will be overwritten.}
 Currently ignored.}
 }
 \value{
-\code{\link{WrappedModel}}.
+WrappedModel.
 }
 \description{
 Update a fitted model with new data.

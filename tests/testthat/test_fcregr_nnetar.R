@@ -33,6 +33,8 @@ test_that("fcregr_nnetar", {
     fcregr.train.inds, old.predicts.list, parset.list)
 })
 
+# FIXME: It fails due to the model passed to updateLearner
+# does not have the attribute scalexreg, needed for the model updating
 test_that("fcregr_nnetar_update", {
   parset.list = list(
     list(),

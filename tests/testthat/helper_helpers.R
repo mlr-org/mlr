@@ -65,6 +65,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   else
     stop("Should not happen!")
   set.seed(getOption("mlr.debug.seed"))
+  browser()
   m = try(train(lrn, task, subset = inds))
 
   if (inherits(m, "FailureModel")) {
@@ -77,23 +78,23 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
       rownames(cp$data) = NULL
       expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
     } else {
-    # to avoid issues with dropped levels in the class factor we only check the elements as chars
-    if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {
-      if (lrn$predict.type == "se") {
-        expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tol = 1e-5)
-      } else {
+      # to avoid issues with dropped levels in the class factor we only check the elements as chars
+      if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {
+        if (lrn$predict.type == "se") {
+          expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tol = 1e-5)
+        } else {
+          expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+        }
+      } else if (inherits(task, "MultiForecastRegrTask")) {
+        expect_equal(unname(as.matrix(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), force = TRUE),
+          unname(as.matrix(old.predicts)))
+      } else if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {
         expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      } else {
+        expect_equal(as.character(cp$data$response), as.character(old.predicts))
       }
-    } else if (inherits(task, "MultiForecastRegrTask")) {
-      expect_equal(unname(as.matrix(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), force = TRUE),
-                   unname(as.matrix(old.predicts)))
-    } else if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {
-      expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
-    } else {
-      expect_equal(as.character(cp$data$response), as.character(old.predicts))
     }
-    }
-    }
+  }
 
 }
 
@@ -324,13 +325,13 @@ quiet = function(expr) {
 }
 
 testSimpleUpdate = function(t.name, target, train.df, update.df,
-                            test.df, old.predicts, parset = list()) {
+  test.df, old.predicts, parset = list()) {
 
   lrn = do.call("makeLearner", c(list(t.name), parset))
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data = train.df)
-  else if (is.POSIXt(df$dates))
+  else if (is.POSIXt(train.df$dates))
     task = makeForecastRegrTask(data = train.df, target = target, date.col = "dates")
   else if (is.numeric(train.df[, target]))
     task = makeRegrTask(data = train.df, target = target)
@@ -365,10 +366,10 @@ testSimpleUpdate = function(t.name, target, train.df, update.df,
 }
 
 testSimpleParsetsUpdate = function(t.name, df, target,update.inds, train.inds,
-                                   test.inds, old.predicts.list, parset.list) {
+  test.inds, old.predicts.list, parset.list) {
 
   train.df = df[train.inds,]
-  update.df = df[update.inds]
+  update.df = df[update.inds,]
   test.df = df[test.inds,]
 
   for (i in 1:length(parset.list)) {
