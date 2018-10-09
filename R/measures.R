@@ -1425,6 +1425,8 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     newdata = cbind(truth[,1], pred$data$truth.event, feats)
     colnames(newdata)[1:2] = target
     probs = getPredictionProbabilities(pred)
+    if (anyMissing(probs))
+      return(NA_real_)
     colnames(probs) = times.train = as.numeric(substr(colnames(probs), 11, 100))
     times.test = truth[truth[,2] == 1,1]
     grid = c(sort(unique(c(times.test))))

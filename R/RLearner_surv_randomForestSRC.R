@@ -42,7 +42,7 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered", "weights", "oobpreds", "featimp"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "oobpreds", "featimp", "prob"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',
@@ -50,15 +50,28 @@ makeRLearner.surv.randomForestSRC = function() {
   )
 }
 
-#' @export
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
-  f = getTaskFormula(.task)
-  randomForestSRC::rfsrc(f, data = getTaskData(.task, subset = .subset), case.wt = .weights, ...)
+  data = getTaskData(.task, subset = .subset)
+  if (.learner$predict.type == "response") {
+    f = getTaskFormula(.task)
+    randomForestSRC::rfsrc(f, data = data, case.wt = .weights, ...)
+  } else {
+    f = getTaskFormula(.task)
+    model = randomForestSRC::rfsrc(f, data = data, case.wt = .weights, ...)
+    model = mlr:::attachTrainingTime(model, .task, data)
+    model
+  }
 }
 
-#' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
+  if (.learner$predict.type == "response") {
+    predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
+  } else {
+    preds = predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
+    train.times = sort(unique(c(0, .model$learner.model$times)))
+    probs = pec::predictSurvProb(.model$learner.model, newdata = .newdata, times = train.times)
+    list(preds = preds, probs = probs, train.times = train.times)
+  }
 }
 
 #' @export
