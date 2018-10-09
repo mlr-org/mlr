@@ -1,10 +1,12 @@
 # Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
-[![Build status](https://ci.appveyor.com/api/projects/status/8predl48o55f2do2/branch/master?svg=true)](https://ci.appveyor.com/project/pat-s/mlr/branch/master)
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
+[![Build status](https://ci.appveyor.com/api/projects/status/skoekgkgu8l5tc1o/branch/master?svg=true)](https://ci.appveyor.com/project/mlr-org/mlr/branch/master)
+[![CRAN](http://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/package=mlr)
+[![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 * [CRAN release site](https://CRAN.R-project.org/package=mlr)
 * Detailed Tutorial: [Online as HTML](https://mlr-org.github.io/mlr/)
