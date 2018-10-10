@@ -22,8 +22,6 @@ Note that when you have trafos on some of your params, the opt.path always conta
 UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to
 transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
 \item{ind (\code{integer(n)})}{Indices of Pareto optimal params in \code{opt.path}.}
-\item{measures [(list of) [Measure])}{Performance measures.}
+\item{measures [(list of) \link{Measure})}{Performance measures.}
 }
-
-[(list of) [Measure]: R:(list%20of)%20[Measure
 }

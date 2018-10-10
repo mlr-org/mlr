@@ -5,7 +5,8 @@
 \title{Filter features by thresholding filter values.}
 \usage{
 filterFeatures(task, method = "randomForestSRC.rfsrc", fval = NULL,
-  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
+  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
+  ...)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -54,3 +55,4 @@ Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
+\concept{filter}

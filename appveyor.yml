@@ -10,27 +10,36 @@ install:
   - ps: Bootstrap
   - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
   - cmd: R -q -e "getOption('repos')"
-  - cmd: R -q -e "install.packages('devtools'); devtools::install_github('pat-s/tic@rcmdcheck-build-args'); tic::prepare_all_stages()"
+  - cmd: rm -rf C:\RLibrary\00LOCK-*
+  - cmd: R -q -e "if (!requireNamespace('devtools')) install.packages('devtools')"
+  - cmd: R -q -e "if (!requireNamespace('curl')) install.packages('curl')"
+  - cmd: R -q -e "devtools::install_github('ropenscilabs/tic@rcmdcheck'); tic::prepare_all_stages()"
 
 
 cache:
   - C:\RLibrary
-  - C:\Program Files (x86)\Pandoc\
+  - C:\Program Files\Pandoc\
+  - C:\miktex
 
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
-after_build: R -q -e "tic::after_install()"
+# after_build: R -q -e "tic::after_install()"
 before_test:
  - ps: >-
-      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
+      if (-Not (Test-Path "C:\Program Files\Pandoc\")) {
         cinst pandoc
       }
- - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+ - ps: $env:Path += ";C:\Program Files\Pandoc\"
  - pandoc -v
+ # Install miktex to get pdflatex, if we don't get it from the cache
+ - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x86/miktex-portable-2.9.6753.exe
+ - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable-2.9.6753.exe -oC:\miktex >NUL
+ - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
+ # autoinstall latex packages (0=no, 1=autoinstall, 2=ask)
+ # this adds this to the registry!
+ - initexmf --set-config-value "[MPM]AutoInstall=1"
  - R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
-on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
-on_failure: R -q -e "tic::after_failure()"
 before_deploy: R -q -e "tic::before_deploy()"
 deploy_script: R -q -e "tic::deploy()"
 after_deploy: R -q -e "tic::after_deploy()"
@@ -38,32 +47,13 @@ on_finish: R -q -e "tic::after_script()"
 
 # Adapt as necessary starting from here
 
+platform: x64
+image: Visual Studio 2017
+
 environment:
   GITHUB_PAT:
-    secure: VXO22OHLkl4YhVIomSMwCZyOTx03Xf2WICaVng9xH7gISlAg8a+qrt1DtFtk8sK5
+    secure: V55U9UnApb09OaMrW7myVV2Rnfb1RDeWEjFtfC49qu7Nm/1yqzYTOv0gu88UNVCi
+  R_ARCH: x64
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
-  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown xgboost xml2'
-
-#  matrix:
-#    - R_VERSION: devel
-#    - R_VERSION: release
-
-artifacts:
-  - path: '*.Rcheck\**\*.log'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.out'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.fail'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.Rout'
-    name: Logs
-
-  - path: '\*_*.tar.gz'
-    name: Bits
-
-  - path: '\*_*.zip'
-    name: Bits
+  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 testthat'

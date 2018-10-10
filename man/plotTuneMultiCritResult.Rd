@@ -44,3 +44,4 @@ Visualizes the pareto front and possibly the dominated points.
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{tuneParamsMultiCrit}}
 }
+\concept{tune_multicrit}

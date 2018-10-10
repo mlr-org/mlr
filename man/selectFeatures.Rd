@@ -4,8 +4,8 @@
 \alias{selectFeatures}
 \title{Feature selection by wrapper approach.}
 \usage{
-selectFeatures(learner, task, resampling, measures, bit.names, bits.to.features,
-  control, show.info = getMlrOption("show.info"))
+selectFeatures(learner, task, resampling, measures, bit.names,
+  bits.to.features, control, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -69,3 +69,4 @@ Other featsel: \code{\link{FeatSelControl}},
   \code{\link{getFeatSelResult}},
   \code{\link{makeFeatSelWrapper}}
 }
+\concept{featsel}

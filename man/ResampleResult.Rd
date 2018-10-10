@@ -46,10 +46,10 @@ The error dumps are only saved when option \code{on.error.dump} is \code{TRUE}.
 \item{pred (\link{ResamplePrediction}):}{
 Container for all predictions during resampling.
 }
-\item{models [list of [WrappedModel]):}{
+\item{models [list of \link{WrappedModel}):}{
 List of fitted models or \code{NULL}.
 }
-\item{extract ([list]):}{
+\item{extract (\link{list}):}{
 List of extracted parts from fitted models or \code{NULL}.
 }
 \item{runtime (\code{numeric(1)}):}{
@@ -58,9 +58,6 @@ Time in seconds it took to execute the resampling.
 }
 The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling.
-
-[list of [WrappedModel]: R:list%20of%20[WrappedModel
-[list]: R:list
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
@@ -76,3 +73,5 @@ Other resample: \code{\link{ResamplePrediction}},
 Other debug: \code{\link{FailureModel}},
   \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
 }
+\concept{debug}
+\concept{resample}

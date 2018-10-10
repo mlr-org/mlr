@@ -4,8 +4,8 @@
 \alias{getBMRPredictions}
 \title{Extract the predictions from a benchmark result.}
 \usage{
-getBMRPredictions(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
-  drop = FALSE)
+getBMRPredictions(bmr, task.ids = NULL, learner.ids = NULL,
+  as.df = FALSE, drop = FALSE)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -75,3 +75,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}

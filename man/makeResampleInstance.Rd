@@ -41,7 +41,7 @@ Object slots:
 \item{train.inds (list of \link{integer})}{List of of training indices for all iterations.}
 \item{test.inds (list of \link{integer})}{List of of test indices for all iterations.}
 \item{group (\link{factor})}{Optional grouping of resampling iterations. This encodes whether
-specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
+specific iterations 'belong together' (e.g. repeated CV), and it can later be used to
 aggregate performance values accordingly. Default is 'factor()'.}
 }
 }
@@ -63,3 +63,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{getRRTaskDesc}},
   \code{\link{makeResampleDesc}}, \code{\link{resample}}
 }
+\concept{resample}
