@@ -60,15 +60,15 @@ trainLearner.OrdinalWrapper = function(.learner, .task, .subset = NULL, .weights
   .task = subsetTask(.task, .subset)
   y = getTaskTargets(.task)
   if (method != "tune.threshold") {
-    cm = buildOrdMatrix(method, .task)
-  x = multi.to.binary(y, cm)
+    om = buildOrdMatrix(method, .task)
+  x = multi.to.binary(y, om)
   args = list(x = x, learner = .learner, task = .task, weights = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(i = seq_along(x$row.inds), doOrdinalTrainIteration,
     more.args = args, level = "mlr.ensemble")
   m = makeHomChainModel(.learner, models)
-  m$cm = cm
+  m$om = om
   return(m)
   } else {
     #tune threhold
@@ -90,7 +90,7 @@ doOrdinalTrainIteration = function(x, i, learner, task, weights) {
 #' @export
 predictLearner.OrdinalWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = .model$learner.model$next.model
-  cm = .model$learner.model$cm
+  om = .model$learner.model$om
   # predict newdata with every binary model, get n x n.models matrix of +1,-1
   # FIXME: this will break for length(models) == 1? do not use sapply!
   p = sapply(models, function(m) {
@@ -99,10 +99,10 @@ predictLearner.OrdinalWrapper = function(.learner, .model, .newdata, .subset = N
       pred = as.numeric(pred == "1") * 2 - 1
     pred
   })
-  rns = rownames(cm)
+  rns = rownames(om)
   # we use hamming decoding here, see http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf
   y = apply(p, 1L, function(v) {
-    d = apply(cm, 1L, function(z) sum((1 - sign(v * z)) / 2))
+    d = apply(om, 1L, function(z) sum((1 - sign(v * z)) / 2))
     rns[getMinIndex(d)]
   })
   as.factor(y)
@@ -128,12 +128,12 @@ buildOrdMatrix = function(method, .task) {
       onevsprevious = ord.onevsprevious)
   }
   levs = getTaskClassLevels(.task)
-  cm = meth(.task)
-  if (!setequal(rownames(cm), levs))
+  om = meth(.task)
+  if (!setequal(rownames(om), levs))
     stop("Rownames of codematrix must be class levels!")
-  if (!all(cm == 1 | cm == -1 | cm == 0))
+  if (!all(om == 1 | om == -1 | om == 0))
     stop("Codematrix must only contain: -1, 0, +1!")
-  cm
+  om
 }
 
 
@@ -156,31 +156,31 @@ multi.to.binary = function(target, codematrix) {
 ord.orderedpartitions = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
-  cm = matrix(0, n, n - 1)
-  cm[lower.tri(cm)] = 1
-  setRowNames(cm, tcl)
+  om = matrix(0, n, n - 1)
+  om[lower.tri(om)] = 1
+  setRowNames(om, tcl)
 }
 ord.onevsnext = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
-  cm = matrix(0, n, n - 1)
-  delta = row(cm) - col(cm)
-  cm[delta == 1] = 1
-  cm[delta == 0] = -1
-  setRowNames(cm, tcl)
+  om = matrix(0, n, n - 1)
+  delta = row(om) - col(om)
+  om[delta == 1] = 1
+  om[delta == 0] = -1
+  setRowNames(om, tcl)
 }
 ord.onevsfollowers = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
-  cm = matrix(0, n, n - 1)
-  delta = row(cm) - col(cm)
-  cm[delta >= 1] = 1
-  cm[delta == 0] = -1
-  setRowNames(cm, tcl)
+  om = matrix(0, n, n - 1)
+  delta = row(om) - col(om)
+  om[delta >= 1] = 1
+  om[delta == 0] = -1
+  setRowNames(om, tcl)
 }
 ord.onevsprevious = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
-  cm = cm.onevsfollower[n:1,]
-  setRowNames(cm, tcl)
+  om = ord.onevsfollower[n:1,]
+  setRowNames(om, tcl)
 }
