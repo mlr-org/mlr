@@ -31,17 +31,24 @@
 makeOrdinalWrapper = function(learner, method = "tune.threshold") {
   learner = checkLearner(learner)
   ps = makeParamSet(
-    makeUntypedLearnerParam(id = "method", default = "tune.threshold", values =
-        c("tune.threshold", "onevsrest", "onevsone"))
+    makeDiscreteLearnerParam(id = "method", values = c("tune.threshold",
+     "orderedpartitions", "onevsnext", "onevsfollowers", "onevsprevious"))
   )
+
+  type = learner$type
+  if(is.null(method))
+    ifelse(type == "regr", "tune.threshold", "orderedpartitions")
+
   assert(
-    checkChoice(method, "tune.threshold"),
+    checkChoice(method, c("tune.threshold", "orderedpartitions",
+      "onevsnext", "onevsfollowers", "onevsprevious")),
     checkFunction(method, args = "task")
   )
+  
   pv = list(method = method)
   id = stri_paste(learner$id, "ordinal", sep = ".")
 
-  x = makeHomogeneousEnsemble(id = id, type = "regr", next.learner = learner,
+  x = makeHomogeneousEnsemble(id = id, type = "ordinal", next.learner = learner,
     package = learner$package,  par.set = ps, par.vals = pv,
     learner.subclass = "OrdinalWrapper", model.subclass = "OrdinalModel")
   x = setPredictType(x, predict.type = "response")
@@ -52,7 +59,8 @@ makeOrdinalWrapper = function(learner, method = "tune.threshold") {
 trainLearner.OrdinalWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, method, ...) {
   .task = subsetTask(.task, .subset)
   y = getTaskTargets(.task)
-  cm = buildCMatrix(method, .task)
+  if (method != "tune.threshold") {
+    cm = buildOrdMatrix(method, .task)
   x = multi.to.binary(y, cm)
   args = list(x = x, learner = .learner, task = .task, weights = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
@@ -62,6 +70,9 @@ trainLearner.OrdinalWrapper = function(.learner, .task, .subset = NULL, .weights
   m = makeHomChainModel(.learner, models)
   m$cm = cm
   return(m)
+  } else {
+    #tune threhold
+  }
 }
 
 doOrdinalTrainIteration = function(x, i, learner, task, weights) {
@@ -100,19 +111,21 @@ predictLearner.OrdinalWrapper = function(.learner, .model, .newdata, .subset = N
 #' @export
 getLearnerProperties.OrdinalWrapper = function(learner){
   props = getLearnerProperties(learner$next.learner)
-  props = union(props, "multiclass")
+  props = union(props, "ordinal")
   setdiff(props, "prob")
 }
 
 ##############################               helpers                      ##############################
 
-buildCMatrix = function(mcw.method, .task) {
-  if (is.function(mcw.method)) {
-    meth = mcw.method
+buildOrdMatrix = function(method, .task) {
+  if (is.function(method)) {
+    meth = method
   } else {
-    meth = switch(mcw.method,
-      onevsrest = cm.onevsrest,
-      onevsone = cm.onevsone)
+    meth = switch(method,
+      orderedpartitions = ord.orderedpartitions,
+      onevsnext = ord.onevsnext,
+      onevsfollowers = ord.onevsfollowers,
+      onevsprevious = ord.onevsprevious)
   }
   levs = getTaskClassLevels(.task)
   cm = meth(.task)
@@ -140,34 +153,14 @@ multi.to.binary = function(target, codematrix) {
   return(list(row.inds = row.inds, targets = targets))
 }
 
-cm.onevsrest = function(task) {
-  tcl = getTaskClassLevels(task)
-  n = length(tcl)
-  cm = matrix(-1, n, n)
-  diag(cm) = 1
-  setRowNames(cm, tcl)
-}
-
-cm.onevsone = function(task) {
-  tcl = getTaskClassLevels(task)
-  n = length(tcl)
-  cm = matrix(0, n, choose(n, 2))
-  combs = combn(n, 2)
-  for (i in seq_col(combs)) {
-    j = combs[, i]
-    cm[j, i] = c(1, -1)
-  }
-  setRowNames(cm, tcl)
-}
-
-cm.orderedpartitions = function(task) {
+ord.orderedpartitions = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
   cm = matrix(0, n, n - 1)
   cm[lower.tri(cm)] = 1
   setRowNames(cm, tcl)
 }
-cm.onevsnext = function(task) {
+ord.onevsnext = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
   cm = matrix(0, n, n - 1)
@@ -176,7 +169,7 @@ cm.onevsnext = function(task) {
   cm[delta == 0] = -1
   setRowNames(cm, tcl)
 }
-cm.onevsfollowers = function(task) {
+ord.onevsfollowers = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
   cm = matrix(0, n, n - 1)
@@ -185,7 +178,7 @@ cm.onevsfollowers = function(task) {
   cm[delta == 0] = -1
   setRowNames(cm, tcl)
 }
-cm.onevsprevious = function(task) {
+ord.onevsprevious = function(task) {
   tcl = getTaskClassLevels(task)
   n = length(tcl)
   cm = cm.onevsfollower[n:1,]
