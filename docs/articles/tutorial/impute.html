@@ -330,8 +330,8 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">airq<span class="op">$</span>Wind =<span class="st"> </span><span class="kw">cut</span>(airq<span class="op">$</span>Wind, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">16</span>,<span class="dv">24</span>))</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">summary</span>(airq)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">##      Ozone           Solar.R           Wind         Temp      </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :52   Min.   :56.00  </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">##  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :85   1st Qu.:72.00  </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :51   Min.   :56.00  </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">##  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :86   1st Qu.:72.00  </a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">##  Median : 31.50   Median :205.0   (16,24]: 6   Median :79.00  </a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">##  Mean   : 42.13   Mean   :185.9   NA's   :10   Mean   :77.88  </a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">##  3rd Qu.: 63.25   3rd Qu.:258.8                3rd Qu.:85.00  </a>
@@ -352,7 +352,7 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">head</span>(imp<span class="op">$</span>data, <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">##       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">## 1  41.00000 190.0000   (0,8]   67     5   1       FALSE         FALSE</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## 2  36.00000 118.0000  (8,16]   72     5   2       FALSE         FALSE</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">## 2  36.00000 118.0000   (0,8]   72     5   2       FALSE         FALSE</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">## 3  12.00000 149.0000  (8,16]   74     5   3       FALSE         FALSE</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">## 4  18.00000 313.0000  (8,16]   62     5   4       FALSE         FALSE</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">## 5  42.12931 185.9315  (8,16]   56     5   5        TRUE          TRUE</a>
@@ -385,14 +385,14 @@
 <a class="sourceLine" id="cb9-4" data-line-number="4">##      Ozone           Solar.R           Wind         Temp      </a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">##  Min.   :  1.00   Min.   :  7.0   (0,8]  :36   Min.   :56.00  </a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">##  1st Qu.: 16.00   1st Qu.:119.5   (8,16] :59   1st Qu.:69.00  </a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">##  Median : 34.00   Median :225.0   (16,24]: 5   Median :79.50  </a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">##  Mean   : 41.59   Mean   :196.5                Mean   :76.87  </a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">##  3rd Qu.: 63.00   3rd Qu.:274.2                3rd Qu.:84.00  </a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">##  Median : 34.00   Median :223.0   (16,24]: 5   Median :79.50  </a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">##  Mean   : 41.59   Mean   :195.0                Mean   :76.87  </a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">##  3rd Qu.: 63.00   3rd Qu.:274.0                3rd Qu.:84.00  </a>
 <a class="sourceLine" id="cb9-10" data-line-number="10">##  Max.   :135.00   Max.   :334.0                Max.   :93.00  </a>
 <a class="sourceLine" id="cb9-11" data-line-number="11">##  NA's   :31                                                   </a>
 <a class="sourceLine" id="cb9-12" data-line-number="12">##  Solar.R.dummy Wind.dummy</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">##  FALSE:93      FALSE:92  </a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">##  TRUE : 7      TRUE : 8  </a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">##  FALSE:93      FALSE:95  </a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">##  TRUE : 7      TRUE : 5  </a>
 <a class="sourceLine" id="cb9-15" data-line-number="15">##                          </a>
 <a class="sourceLine" id="cb9-16" data-line-number="16">##                          </a>
 <a class="sourceLine" id="cb9-17" data-line-number="17">##                          </a>
@@ -412,7 +412,7 @@
 <a class="sourceLine" id="cb10-3" data-line-number="3">##   Ozone Solar.R   Wind Temp Solar.R.dummy Wind.dummy</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">## 1   110     207  (0,8]   90         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">## 2    NA     222 (8,16]   92         FALSE      FALSE</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## 3    NA     137  (0,8]   86         FALSE       TRUE</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">## 3    NA     137 (8,16]   86         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">## 4    44     192 (8,16]   86         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-8" data-line-number="8">## 5    28     273 (8,16]   82         FALSE      FALSE</a>
 <a class="sourceLine" id="cb10-9" data-line-number="9">## 6    65     157 (8,16]   80         FALSE      FALSE</a></code></pre></div>
@@ -441,7 +441,7 @@
 <a class="sourceLine" id="cb13-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">r<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">## mse.test.mean </a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">##      536.0462</a></code></pre></div>
+<a class="sourceLine" id="cb13-5" data-line-number="5">##      498.9631</a></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">lapply</span>(r<span class="op">$</span>models, getLearnerModel, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">## </a>
@@ -450,11 +450,11 @@
 <a class="sourceLine" id="cb14-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">## Coefficients:</a>
 <a class="sourceLine" id="cb14-8" data-line-number="8">##       (Intercept)            Solar.R         Wind(8,16]  </a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">##         -35.41653            0.09212          -38.96739  </a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">##         -71.82776            0.07091          -26.76577  </a>
 <a class="sourceLine" id="cb14-10" data-line-number="10">##       Wind(16,24]               Temp  Solar.R.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">##         -30.15615            1.14179          -19.23132  </a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">##         -25.98255            1.53434           -9.41852  </a>
 <a class="sourceLine" id="cb14-12" data-line-number="12">##    Wind.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">##         -11.08745  </a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">##          -3.14841  </a>
 <a class="sourceLine" id="cb14-14" data-line-number="14">## </a>
 <a class="sourceLine" id="cb14-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">## [[2]]</a>
@@ -464,11 +464,11 @@
 <a class="sourceLine" id="cb14-20" data-line-number="20">## </a>
 <a class="sourceLine" id="cb14-21" data-line-number="21">## Coefficients:</a>
 <a class="sourceLine" id="cb14-22" data-line-number="22">##       (Intercept)            Solar.R         Wind(8,16]  </a>
-<a class="sourceLine" id="cb14-23" data-line-number="23">##         -83.60502            0.06019          -18.98248  </a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">##         -89.26690            0.04724          -23.45232  </a>
 <a class="sourceLine" id="cb14-24" data-line-number="24">##       Wind(16,24]               Temp  Solar.R.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-25" data-line-number="25">##         -22.92762            1.64125          -12.78159  </a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">##         -16.97948            1.73518          -22.13575  </a>
 <a class="sourceLine" id="cb14-26" data-line-number="26">##    Wind.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-27" data-line-number="27">##         -11.32570  </a>
+<a class="sourceLine" id="cb14-27" data-line-number="27">##           5.42343  </a>
 <a class="sourceLine" id="cb14-28" data-line-number="28">## </a>
 <a class="sourceLine" id="cb14-29" data-line-number="29">## </a>
 <a class="sourceLine" id="cb14-30" data-line-number="30">## [[3]]</a>
@@ -478,11 +478,11 @@
 <a class="sourceLine" id="cb14-34" data-line-number="34">## </a>
 <a class="sourceLine" id="cb14-35" data-line-number="35">## Coefficients:</a>
 <a class="sourceLine" id="cb14-36" data-line-number="36">##       (Intercept)            Solar.R         Wind(8,16]  </a>
-<a class="sourceLine" id="cb14-37" data-line-number="37">##        -115.38842            0.06543          -17.81009  </a>
+<a class="sourceLine" id="cb14-37" data-line-number="37">##        -108.82396            0.07124          -18.99309  </a>
 <a class="sourceLine" id="cb14-38" data-line-number="38">##       Wind(16,24]               Temp  Solar.R.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-39" data-line-number="39">##         -11.86764            1.98619          -11.96119  </a>
+<a class="sourceLine" id="cb14-39" data-line-number="39">##          -2.05087            1.94332           -5.31922  </a>
 <a class="sourceLine" id="cb14-40" data-line-number="40">##    Wind.dummyTRUE  </a>
-<a class="sourceLine" id="cb14-41" data-line-number="41">##          10.24551</a></code></pre></div>
+<a class="sourceLine" id="cb14-41" data-line-number="41">##          -7.87121</a></code></pre></div>
 <p>A second possibility to fuse a learner with imputation is provided by <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>, which is an interface to <code>caret</code>s <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code> function. <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code> only works for numeric features and offers imputation by k-nearest neighbors, bagged trees, and by the median.</p>
 </div>
 </div>
