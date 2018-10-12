@@ -4,12 +4,17 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #'
+#' @import purrr
+#' @importFrom magrittr %>%
+#' @import dplyr
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
+#' @param ensemble.method ([character])\cr
+#'   Which ensemble method should be used. Can only be used with >= 2 filter methods.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
 #' @param more.args (named [list])\cr
@@ -33,7 +38,9 @@
 #' @family filter
 #' @aliases FilterValues
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
+  nselect = getTaskNFeats(task), ensemble.method = NULL, ..., more.args = list()) {
+
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
@@ -77,15 +84,80 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
     x[match(fn, names(x))]
   })
 
-  fval = do.call(cbind, fval)
-  colnames(fval) = method
-  types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
-  out = data.frame(name = row.names(fval),
-                   type = types,
-                   fval, row.names = NULL, stringsAsFactors = FALSE)
+  ### ensemble
+
+  if (!is.null(ensemble.method)) {
+
+    fval_all = set_names(fval, method) %>%
+      map(~ cbind(.x)) %>%
+      map(~ as.data.frame(.x)) %>%
+      map(~ rename(.x, value = .x)) %>%
+      map(~ mutate(.x, name = rownames(.x))) %>%
+      map(~ arrange(.x, desc(.x$value)))
+
+    # we default rank in descending order. some methods rank in desc order so we need to account for them
+
+
+    # merge all information together into one data.frame
+    fval_all_rank = map(fval_all, ~ mutate(.x, rank = seq(1:length(.x$value)))) %>%
+      imap(~ mutate(.x, method = names(fval_all[.y]))) %>%
+      map_dfr(~ as.data.frame(.x))
+
+    ### ensemble rank aggregation
+
+    # the highest min value across all methods
+    if (ensemble.,method == "E-min") {
+
+      out = fval_all_rank %>%
+        group_by(name) %>%
+        summarise(E_min = min(rank)) %>%
+        arrange(desc(E_min))
+    }
+    # the highest mean value across all methods
+    else if (ensemble.,method == "E-mean"){
+      out =fval_all_rank %>%
+        group_by(name) %>%
+        summarise(E_mean = mean(rank)) %>%
+        arrange(desc(E_mean))
+    }
+    # the highest median value across all methods
+    else if (ensemble.,method == "E-median"){
+      out = fval_all_rank %>%
+        group_by(name) %>%
+        summarise(E_median = median(rank)) %>%
+        arrange(desc(E_median))
+    }
+    # the highest max value across all methods
+    else if (ensemble.,method == "E-max"){
+      out = fval_all_rank %>%
+        group_by(name) %>%
+        summarise(E_max = max(rank)) %>%
+        arrange(desc(E_max))
+    }
+    # Borda weighting: summed up scores value across all methods
+    else if (ensemble.,method == "E-Borda"){
+      out = fval_all_rank %>%
+        group_by(name) %>%
+        summarise(E_Borda = sum(rank)) %>%
+        arrange(desc(E_Borda))
+    }
+
+  } else {
+
+    fval = do.call(cbind, fval)
+    colnames(fval) = method
+
+    types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
+    out = data.frame(name = row.names(fval),
+                     type = types,
+                     fval, row.names = NULL, stringsAsFactors = FALSE)
+  }
+
   makeS3Obj("FilterValues",
             task.desc = td,
-            data = out)
+            data = out,
+            ensemble.method = ensemble.,method,
+            basal.methods = method)
 }
 #' @export
 print.FilterValues = function(x, ...) {

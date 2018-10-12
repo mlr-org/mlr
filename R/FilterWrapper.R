@@ -26,12 +26,18 @@
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param ensemble.method ([character])\cr
+#'   Which ensemble method should be used. Can only be used with >= 2 filter methods.
 #' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
 #' @template ret_learner
 #' @export
 #' @family filter
 #' @family wrapper
+#'
+#' If `ensemble = TRUE`, ensemble feature selection using all methods specified
+#' in `fw.method` is performed. At least two methods need to be selected.
+#'
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
@@ -45,7 +51,10 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
+  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL,
+  ensemble = FALSE, ...) {
+
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
@@ -62,7 +71,8 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.pe
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
-      makeUntypedLearnerParam(id = "fw.mandatory.feat")
+      makeUntypedLearnerParam(id = "fw.mandatory.feat"),
+      makeLogicalLearnerParam(id = "ensemble", tunable = FALSE, default = FALSE)
     ),
     par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
@@ -72,10 +82,13 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.pe
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ensemble = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold, mandatory.feat = fw.mandatory.feat), .learner$more.args))
+  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
+     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
+     mandatory.feat = fw.mandatory.feat), ensemble = ensemble,
+     .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
