@@ -4,9 +4,9 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #'
-#' @import purrr
+#' @importFrom purrr map_dfr imap map
 #' @importFrom magrittr %>%
-#' @import dplyr
+#' @importFrom dplyr group_by arrange mutate summarise rename
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
@@ -105,8 +105,16 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
 
     ### ensemble rank aggregation
 
+    fs_ens = map(ensemble.method, ~ {
+      fval_all_rank %>%
+        group_by(name) %>%
+        summarise(method = min(rank)) %>%
+        arrange(desc(method)) %>%
+        rename(!!.x := `method`) # Non-standard evaluation
+    })
+
     # the highest min value across all methods
-    if (ensemble.,method == "E-min") {
+    if (stri_detect_fixed(ensemble.method, "E-min")) {
 
       out = fval_all_rank %>%
         group_by(name) %>%
@@ -114,28 +122,28 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
         arrange(desc(E_min))
     }
     # the highest mean value across all methods
-    else if (ensemble.,method == "E-mean"){
+    else if (stri_detect_fixed(ensemble.method, "E-mean")){
       out =fval_all_rank %>%
         group_by(name) %>%
         summarise(E_mean = mean(rank)) %>%
         arrange(desc(E_mean))
     }
     # the highest median value across all methods
-    else if (ensemble.,method == "E-median"){
+    else if (stri_detect_fixed(ensemble.method, "E-median")){
       out = fval_all_rank %>%
         group_by(name) %>%
         summarise(E_median = median(rank)) %>%
         arrange(desc(E_median))
     }
     # the highest max value across all methods
-    else if (ensemble.,method == "E-max"){
+    else if (stri_detect_fixed(ensemble.method, "E-max")){
       out = fval_all_rank %>%
         group_by(name) %>%
         summarise(E_max = max(rank)) %>%
         arrange(desc(E_max))
     }
     # Borda weighting: summed up scores value across all methods
-    else if (ensemble.,method == "E-Borda"){
+    else if (stri_detect_fixed(ensemble.method, "E-Borda")){
       out = fval_all_rank %>%
         group_by(name) %>%
         summarise(E_Borda = sum(rank)) %>%
@@ -156,7 +164,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
   makeS3Obj("FilterValues",
             task.desc = td,
             data = out,
-            ensemble.method = ensemble.,method,
+            ensemble.method = ensemble.method,
             basal.methods = method)
 }
 #' @export
