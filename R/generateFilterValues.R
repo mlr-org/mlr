@@ -6,7 +6,8 @@
 #'
 #' @importFrom purrr map_dfr imap map
 #' @importFrom magrittr %>%
-#' @importFrom dplyr group_by arrange mutate summarise rename
+#' @importFrom dplyr group_by arrange mutate summarise rename bind_rows mutate_if
+#' @importFrom tibble as_tibble tibble
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
@@ -14,7 +15,7 @@
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ensemble.method ([character])\cr
-#'   Which ensemble method should be used. Can only be used with >= 2 filter methods.
+#'   Ensemble filter method to use. Can only be used with >= 2 filter methods.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
 #' @param more.args (named [list])\cr
@@ -25,7 +26,7 @@
 #' @return ([FilterValues]). A `list` containing:
 #'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
-#'   \item{data}{([data.frame]) with columns:
+#'   \item{data}{([data.frame] or [list]) with columns:
 #'     \itemize{
 #'       \item `name`([character])\cr
 #'         Name of feature.
@@ -88,66 +89,56 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
 
   if (!is.null(ensemble.method)) {
 
+    # format and order simple filter methods
     fval_all = set_names(fval, method) %>%
       map(~ cbind(.x)) %>%
       map(~ as.data.frame(.x)) %>%
       map(~ rename(.x, value = .x)) %>%
       map(~ mutate(.x, name = rownames(.x))) %>%
-      map(~ arrange(.x, desc(.x$value)))
+      map(~ arrange(.x, desc(.x$value))) %>%
+      map(~ mutate(.x, types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)))
 
-    # we default rank in descending order. some methods rank in desc order so we need to account for them
-
-
-    # merge all information together into one data.frame
-    fval_all_rank = map(fval_all, ~ mutate(.x, rank = seq(1:length(.x$value)))) %>%
+    # rank and merge all information together into one data.frame
+    fval_all_ranked = map(fval_all, ~ mutate(.x, rank = seq(1:length(.x$value)))) %>%
       imap(~ mutate(.x, method = names(fval_all[.y]))) %>%
       map_dfr(~ as.data.frame(.x))
 
     ### ensemble rank aggregation
 
-    fs_ens = map(ensemble.method, ~ {
-      fval_all_rank %>%
-        group_by(name) %>%
-        summarise(method = min(rank)) %>%
-        arrange(desc(method)) %>%
-        rename(!!.x := `method`) # Non-standard evaluation
-    })
+    if (any(c("E-min", "E-mean", "E-median", "E-max", "E-Borda") %in% ensemble.method)) {
 
-    # the highest min value across all methods
-    if (stri_detect_fixed(ensemble.method, "E-min")) {
+      simple_ens_methods = ensemble.method[ensemble.method %in% c("E-min", "E-mean", "E-median", "E-max", "E-Borda")]
 
-      out = fval_all_rank %>%
-        group_by(name) %>%
-        summarise(E_min = min(rank)) %>%
-        arrange(desc(E_min))
-    }
-    # the highest mean value across all methods
-    else if (stri_detect_fixed(ensemble.method, "E-mean")){
-      out =fval_all_rank %>%
-        group_by(name) %>%
-        summarise(E_mean = mean(rank)) %>%
-        arrange(desc(E_mean))
-    }
-    # the highest median value across all methods
-    else if (stri_detect_fixed(ensemble.method, "E-median")){
-      out = fval_all_rank %>%
-        group_by(name) %>%
-        summarise(E_median = median(rank)) %>%
-        arrange(desc(E_median))
-    }
-    # the highest max value across all methods
-    else if (stri_detect_fixed(ensemble.method, "E-max")){
-      out = fval_all_rank %>%
-        group_by(name) %>%
-        summarise(E_max = max(rank)) %>%
-        arrange(desc(E_max))
-    }
-    # Borda weighting: summed up scores value across all methods
-    else if (stri_detect_fixed(ensemble.method, "E-Borda")){
-      out = fval_all_rank %>%
-        group_by(name) %>%
-        summarise(E_Borda = sum(rank)) %>%
-        arrange(desc(E_Borda))
+      fs_ens = map(simple_ens_methods, ~ {
+        fval_all_rank %>%
+          group_by(name) %>%
+          summarise(method = switch(.x,
+                                    "E-min" = min(rank),
+                                    "E-mean" = mean(rank),
+                                    "E-median" = median(rank),
+                                    "E-max" = max(rank),
+                                    "E-Borda" = sum(rank)
+          )) %>%
+          arrange(desc(method)) %>%
+          rename(value := `method`) %>%  # Non-standard evaluation
+          mutate(types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1))
+      }) %>%
+        set_names(simple_ens_methods)
+
+      ### merge basal methods and ensemble methods results into one DF
+
+      # merge simple filter methods
+      fv_merge_simple = imap(fval_all, ~ mutate(.x, method = names(fval_all[.y]))) %>%
+        map_dfr(~ as_tibble(.x))
+
+      # merge ensemble filter methods
+      fv_merge_ens = imap(fs_ens, ~ mutate(.x, method = names(fs_ens[.y]))) %>%
+        map_dfr(~ as_tibble(.x))
+
+      # combine both
+      out = bind_rows(fv_merge_simple, fv_merge_ens) %>%
+        mutate_if(is.character, as.factor)
+
     }
 
   } else {
@@ -156,22 +147,26 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
     colnames(fval) = method
 
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
-    out = data.frame(name = row.names(fval),
-                     type = types,
-                     fval, row.names = NULL, stringsAsFactors = FALSE)
+    out = list(as_tibble(data.frame(name = as.factor(row.names(fval)), type = as.factor(types), as.factor(fval),
+            row.names = NULL, stringsAsFactors = FALSE))
+    )
   }
 
   makeS3Obj("FilterValues",
             task.desc = td,
             data = out,
-            ensemble.method = ensemble.method,
+            ensemble.methods = ensemble.method,
             basal.methods = method)
 }
 #' @export
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  printHead(x$data, ...)
+  catf("Ensemble Methods: ", newline = FALSE)
+  catf("%s ", x$ensemble.methods)
+  catf("Basal Methods: ", newline = FALSE)
+  catf("%s ", x$basal.methods)
+  print(x$data, ...)
 }
 #' @title Calculates feature filter values.
 #'
