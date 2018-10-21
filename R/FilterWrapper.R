@@ -15,6 +15,9 @@
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
+#' @param fw.basal.methods (`character(1)`)\cr
+#'   Simple Filter methods for ensemble filters. See [listFilterMethods].
+#'   Can only be used in combination with ensemble filters. See [listFilterEnsembleMethods].
 #' @param fw.perc (`numeric(1)`)\cr
 #'   If set, select `fw.perc`*100 top scoring features.
 #'   Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
@@ -51,13 +54,31 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
+#'
+#' # usage of an ensemble filter
+#' lrn = makeLearner("classif.lda")
+#' lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
+#'   fw.basal.methods = c("gain.ratio", "information.gain"),
+#'   fw.perc = 0.5)
+#' r = resample(lrn, task, outer, extract = function(model) {
+#'   getFilteredFeatures(model)
+#' })devt
+#' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
-  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL,
-  ensemble = FALSE, ...) {
+  fw.basal.methods = NULL,
+  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   learner = checkLearner(learner)
-  assertChoice(fw.method, choices = ls(.FilterRegister))
+  assertChoice(fw.method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
   filter = .FilterRegister[[fw.method]]
+  # filter is NULL if an ensemble filter is supplied
+  if (is.null(filter)) {
+    if (is.null(fw.basal.methods)) {
+      stopf("When using an ensemble method you need to supply at least two simple filter methods.")
+    }
+    filter = .FilterEnsembleRegister[[fw.method]]
+    lapply(fw.basal.methods, function (x) assertChoice(x, choices = ls(.FilterRegister)))
+  }
   ddd = list(...)
   assertList(ddd, names = "named")
 
@@ -67,14 +88,14 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     next.learner = learner,
     package = filter$pkg,
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "fw.method", values = ls(.FilterRegister)),
+      makeDiscreteLearnerParam(id = "fw.method", values = append(ls(.FilterRegister), ls(.FilterEnsembleRegister))),
+      makeDiscreteLearnerParam(id = "fw.basal.methods", values = ls(.FilterRegister)),
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
-      makeUntypedLearnerParam(id = "fw.mandatory.feat"),
-      makeLogicalLearnerParam(id = "ensemble", tunable = FALSE, default = FALSE)
+      makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
-    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
+    par.vals = filterNull(list(fw.method = fw.method, fw.basal.methods = fw.basal.methods, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
   lrn$more.args = ddd
   lrn
@@ -82,12 +103,13 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ensemble = NULL, ...) {
+  fw.method = "randomForestSRC.rfsrc", fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
+     basal.methods = fw.basal.methods,
      perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-     mandatory.feat = fw.mandatory.feat), ensemble = ensemble,
+     mandatory.feat = fw.mandatory.feat),
      .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")

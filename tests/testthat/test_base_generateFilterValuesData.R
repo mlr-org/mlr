@@ -144,8 +144,11 @@ test_that("filter method 'variance' works with missing values", {
   expect_false(anyMissing(fi$data$variance))
 })
 
-test_that("ensemble methods work", {
-  fi = generateFilterValuesData(multiclass.task, method = c('gain.ratio','information.gain'),
-                                ensemble.method = c("E-Borda", "E-min"))
+# test_that("ensemble methods work", {
+#   fi = generateFilterValuesData(multiclass.task, method = c('gain.ratio','information.gain'),
+#                                 ensemble.method = c("E-Borda", "E-min"))
+
+  fi = generateFilterValuesData(multiclass.task, method = list("E-min", c('gain.ratio','information.gain')))
+  fi2 = generateFilterValuesData(multiclass.task, method = c('gain.ratio','information.gain'))
   expect_length(fi$data$method, 16)
 })

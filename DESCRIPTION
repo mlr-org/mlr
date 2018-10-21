@@ -152,6 +152,7 @@ Imports:
     stringi,
     survival,
     utils,
+    tibble,
     XML
 Suggests:
     ada,

@@ -4,18 +4,15 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #'
-#' @importFrom purrr map_dfr imap map
-#' @importFrom magrittr %>%
-#' @importFrom dplyr group_by arrange mutate summarise rename bind_rows mutate_if
-#' @importFrom tibble as_tibble tibble
 #' @template arg_task
+#' @importFrom tibble as_tibble
+#' @importFrom magrittr %>%
+#' @importFrom purrr flatten
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
-#' @param ensemble.method ([character])\cr
-#'   Ensemble filter method to use. Can only be used with >= 2 filter methods.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
 #' @param more.args (named [list])\cr
@@ -26,7 +23,7 @@
 #' @return ([FilterValues]). A `list` containing:
 #'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
-#'   \item{data}{([data.frame]) with columns:
+#'   \item{data}{([tbl]) with columns:
 #'     \itemize{
 #'       \item `name`([character])\cr
 #'         Name of feature.
@@ -35,19 +32,40 @@
 #'       \item `method`([numeric])\cr
 #'         One column for each method with the feature importance values.
 #'     }}
+#'
+#' @section Simple and ensemble filters:
+#'
+#' Besides passing (multiple) simple filter methods you can also pass an ensemble
+#' filter method (in a list). The ensemble method will use the simple methods to
+#' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
+#'
 #' @family generate_plot_data
 #' @family filter
 #' @aliases FilterValues
+#' @examples
+#' # two simple filter methods
+#' fval = generateFilterValuesData(iris.task, method = c("gain.ratio", "information.gain"))
+#' # using ensemble method "E-mean"
+#' fval = generateFilterValuesData(iris.task, method = list("E-mean", c("gain.ratio", "information.gain")))
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
-  nselect = getTaskNFeats(task), ensemble.method = NULL, ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
 
-  assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
+  # ensemble
+  if (class(method) == "list") {
+    ens.method = method[[1]]
+    method = method[[2]]
+    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
+    if (length(method) == 1) {
+      warningf("You only passed one basal filter method to an ensemble filter. Please use at least two basal filter methods to have a voting effect.")
+    }
+  }
+
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
-  td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+  assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
+  td = getTaskDesc(task)
   check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
@@ -71,134 +89,52 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
   # auto-setup more.args as list
   if (length(dot.args) > 0L) {
     if (length(method) == 1L)
-     more.args = namedList(method, dot.args)
+      more.args = namedList(method, dot.args)
     else
       stopf("You use more than 1 filter method. Please pass extra arguments via 'more.args' and not '...' to filter methods!")
   }
 
   fn = getTaskFeatureNames(task)
 
-  fval = lapply(filter, function(x) {
-    x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
-    missing.score = setdiff(fn, names(x))
-    x[missing.score] = NA_real_
-    x[match(fn, names(x))]
-  })
+  if (exists("ens.method")) {
 
-  ### ensemble
+    filter = lapply(ens.method, function(x) .FilterEnsembleRegister[[x]])
 
-  if (!is.null(ensemble.method)) {
+    out = lapply(filter, function(x) {
+      x = do.call(x$fun, c(list(task = task, nselect = nselect, basal.methods = method, more.args = more.args)))
+    })
 
-    # format and order simple filter methods
-    fval_all = set_names(fval, method) %>%
-      map(~ cbind(.x)) %>%
-      map(~ as.data.frame(.x)) %>%
-      map(~ rename(.x, value = .x)) %>%
-      map(~ mutate(.x, name = rownames(.x))) %>%
-      map(~ arrange(.x, desc(.x$value))) %>%
-      map(~ mutate(.x, type = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)))
-
-    # rank and merge all information together into one data.frame
-    fval_all_ranked = map(fval_all, ~ mutate(.x, rank = seq(1:length(.x$value)))) %>%
-      imap(~ mutate(.x, method = names(fval_all[.y]))) %>%
-      map_dfr(~ as.data.frame(.x))
-
-    ### ensemble rank aggregation
-
-    if (any(c("E-min", "E-mean", "E-median", "E-max", "E-Borda") %in% ensemble.method)) {
-
-      simple_ens_methods = ensemble.method[ensemble.method %in% c("E-min", "E-mean", "E-median", "E-max", "E-Borda")]
-
-      fs_ens = map(simple_ens_methods, ~ {
-        fval_all_ranked %>%
-          group_by(name) %>%
-          summarise(method = switch(.x,
-                                    "E-min" = min(rank),
-                                    "E-mean" = mean(rank),
-                                    "E-median" = median(rank),
-                                    "E-max" = max(rank),
-                                    "E-Borda" = sum(rank)
-          )) %>%
-          arrange(desc(method)) %>%
-          rename(value := `method`) %>%  # Non-standard evaluation
-          mutate(type = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1))
-      }) %>%
-        set_names(simple_ens_methods)
-
-      ### merge basal methods and ensemble methods results into one DF
-
-      # merge simple filter methods
-      fv_merge_simple = imap(fval_all, ~ mutate(.x, method = names(fval_all[.y]))) %>%
-        map_dfr(~ as_tibble(.x))
-
-      # merge ensemble filter methods
-      fv_merge_ens = imap(fs_ens, ~ mutate(.x, method = names(fs_ens[.y]))) %>%
-        map_dfr(~ as_tibble(.x))
-
-      # combine both
-      out = bind_rows(fv_merge_simple, fv_merge_ens) %>%
-        mutate_if(is.character, as.factor)
-
+    if (length(out) == 1) {
+      out = out[[1]]
     }
 
   } else {
 
+    fval = lapply(filter, function(x) {
+      x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
+      missing.score = setdiff(fn, names(x))
+      x[missing.score] = NA_real_
+      x[match(fn, names(x))]
+    })
     fval = do.call(cbind, fval)
     colnames(fval) = method
-
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
-    out = list(as_tibble(data.frame(name = as.factor(row.names(fval)), type = as.factor(types), as.factor(fval),
-            row.names = NULL, stringsAsFactors = FALSE))
-    )
+    out = as_tibble(data.frame(name = row.names(fval),
+                     type = types,
+                     fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
+      tidyr::gather(method, value, method)
   }
 
   makeS3Obj("FilterValues",
             task.desc = td,
-            data = out,
-            ensemble.methods = ensemble.method,
-            basal.methods = method)
+            data = out)
 }
 #' @export
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  catf("Ensemble Methods: ", newline = FALSE)
-  catf("%s ", x$ensemble.methods)
-  catf("Basal Methods: ", newline = FALSE)
-  catf("%s ", x$basal.methods)
-  print(x$data, ...)
-}
-#' @title Calculates feature filter values.
-#'
-#' @family filter
-#' @family generate_plot_data
-#'
-#' @description
-#' Calculates numerical filter values for features.
-#' For a list of features, use [listFilterMethods].
-#'
-#' @template arg_task
-#' @param method (`character(1)`)\cr
-#'   Filter method, see above.
-#'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect (`integer(1)`)\cr
-#'   Number of scores to request. Scores are getting calculated for all features per default.
-#' @param ... (any)\cr
-#'   Passed down to selected method.
-#' @return ([FilterValues]).
-#' @note `getFilterValues` is deprecated in favor of [generateFilterValuesData].
-#' @family filter
-#' @export
-getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ...) {
-  .Deprecated("generateFilterValuesData")
-  assertChoice(method, choices = ls(.FilterRegister))
-  out = generateFilterValuesData(task, method, nselect, ...)
-  colnames(out$data)[3] = "val"
-  out$data = out$data[, c(1, 3, 2)]
-  makeS3Obj("FilterValues",
-            task.desc = out$task.desc,
-            method = method,
-            data = out$data)
+  arrange(x$data, method, desc(value)) %>%
+    print(...)
 }
 #' Plot filter values using ggplot2.
 #'
@@ -248,17 +184,17 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
     plt = plt + facet_wrap(~ method, scales =,
-      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+                           nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
     plt = plt + labs(title = sprintf("%s (%i features)",
-                                              fvalues$task.desc$id,
-                                              sum(fvalues$task.desc$n.feat)),
-                              x = "", y = "")
+                                     fvalues$task.desc$id,
+                                     sum(fvalues$task.desc$n.feat)),
+                     x = "", y = "")
   } else {
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
-                                              fvalues$task.desc$id,
-                                              sum(fvalues$task.desc$n.feat),
-                                              methods),
-                              x = "", y = "")
+                                     fvalues$task.desc$id,
+                                     sum(fvalues$task.desc$n.feat),
+                                     methods),
+                     x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(plt)
