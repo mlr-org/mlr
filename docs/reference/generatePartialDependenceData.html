@@ -236,7 +236,7 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -366,8 +366,8 @@ Whether or not the partial derivative of the learned function with respect to th
 estimated. If <code>TRUE</code> <code>interaction</code> must be <code>FALSE</code>. The partial derivative of individual
 observations may be estimated. Note that computation time increases as the learned prediction function
 is evaluated at <code>gridsize</code> points * the number of points required to estimate the partial derivative.
-Additional arguments may be passed to numDeriv::grad (for regression or survival tasks) or
-numDeriv::jacobian (for classification tasks). Note that functions which are not smooth may
+Additional arguments may be passed to <a href='http://www.rdocumentation.org/packages/numDeriv/topics/grad'>numDeriv::grad</a> (for regression or survival tasks) or
+<a href='http://www.rdocumentation.org/packages/numDeriv/topics/jacobian'>numDeriv::jacobian</a> (for classification tasks). Note that functions which are not smooth may
 result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
 or estimates trending towards +/- infinity (at discontinuities).
 Default is <code>FALSE</code>.</p></td>
@@ -416,7 +416,7 @@ The default for <code>n[1]</code> is 10, and the default for <code>n[2]</code> i
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments to be passed to mmpf::marginalPrediction.</p></td>
+      <td><p>additional arguments to be passed to <a href='http://www.rdocumentation.org/packages/mmpf/topics/marginalPrediction'>mmpf::marginalPrediction</a>.</p></td>
     </tr>
     </table>
     
@@ -466,10 +466,11 @@ Whether the partial dependences were aggregated or the individual curves are ret
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.svm"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>bh.task</span>)
-<span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>bh.task</span>, <span class='st'>"lstat"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: mmpf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called ‘mmpf’</span></div><div class='output co'>#&gt; <span class='error'>Error in requirePackages("mmpf"): Please install the following packages: mmpf</span></div><div class='input'><span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>bh.task</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pd' not found</span></div><div class='input'>
+<span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>bh.task</span>, <span class='st'>"lstat"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: mmpf</span></div><div class='input'><span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>bh.task</span>))</div><div class='img'><img src='generatePartialDependenceData-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>)
-<span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>iris.task</span>, <span class='st'>"Petal.Width"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: mmpf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called ‘mmpf’</span></div><div class='output co'>#&gt; <span class='error'>Error in requirePackages("mmpf"): Please install the following packages: mmpf</span></div><div class='input'><span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>iris.task</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pd' not found</span></div></pre>
+<span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>iris.task</span>, <span class='st'>"Petal.Width"</span>)
+<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>iris.task</span>))</div><div class='img'><img src='generatePartialDependenceData-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

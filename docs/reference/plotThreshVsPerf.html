@@ -232,7 +232,7 @@
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -370,8 +370,7 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other plot: <code><a href='createSpatialResamplingPlots.html'>createSpatialResamplingPlots</a></code>,
-  <code><a href='plotBMRBoxplots.html'>plotBMRBoxplots</a></code>,
+    <div class='dont-index'><p>Other plot: <code><a href='plotBMRBoxplots.html'>plotBMRBoxplots</a></code>,
   <code><a href='plotBMRRanksAsBarChart.html'>plotBMRRanksAsBarChart</a></code>,
   <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
   <code><a href='plotCalibration.html'>plotCalibration</a></code>,
@@ -385,10 +384,7 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='no'>sonar.task</span>)
-<span class='no'>pvs</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'>list</span>(<span class='no'>acc</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>acc</span>, <span class='no'>train.mean</span>)))
-<span class='fu'>plotThreshVsPerf</span>(<span class='no'>pvs</span>)</div><div class='img'><img src='plotThreshVsPerf-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, sonar.task): object 'mod' not found</span></div><div class='input'><span class='no'>pvs</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'>list</span>(<span class='no'>acc</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>acc</span>, <span class='no'>train.mean</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in generateThreshVsPerfData(pred, list(acc, setAggregation(acc,     train.mean))): object 'pred' not found</span></div><div class='input'><span class='fu'>plotThreshVsPerf</span>(<span class='no'>pvs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pvs' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

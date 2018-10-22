@@ -238,7 +238,7 @@ discretized into specific values." />
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -384,7 +384,23 @@ tuning parameters</p></li>
   <span class='fu'>data</span>(<span class='no'>BostonHousing</span>)
   <span class='no'>regrTask</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='fu'>getCaretParamSet</span>(<span class='st'>"gbm"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>regrTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘caret’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mlr’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    train</span></div><div class='output co'>#&gt; note: only 3 unique complexity parameters in default grid. Truncating the grid to 3 .
+#&gt; </div><div class='output co'>#&gt; $par.vals
+#&gt; $par.vals$shrinkage
+#&gt; [1] 0.1
+#&gt; 
+#&gt; $par.vals$n.minobsinnode
+#&gt; [1] 10
+#&gt; 
+#&gt; 
+#&gt; $par.set
+#&gt;                      Type len Def    Constr Req Tunable Trafo
+#&gt; interaction.depth integer   -   -    1 to 9   -    TRUE     -
+#&gt; n.trees           numeric   -   - 50 to 450   -    TRUE     -
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

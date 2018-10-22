@@ -121,9 +121,6 @@
     <loc>https://mlr-org.github.io/mlr/reference/createDummyFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/createSpatialResamplingPlots.html</loc>
-  </url>
-  <url>
     <loc>https://mlr-org.github.io/mlr/reference/crossover.html</loc>
   </url>
   <url>
@@ -721,9 +718,6 @@
     <loc>https://mlr-org.github.io/mlr/reference/regr.featureless.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/regr.gstat.html</loc>
-  </url>
-  <url>
     <loc>https://mlr-org.github.io/mlr/reference/regr.randomForest.html</loc>
   </url>
   <url>
@@ -926,9 +920,6 @@
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/articles/tune.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/usecase_gstat.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/articles/usecase_regression.html</loc>

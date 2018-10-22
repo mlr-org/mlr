@@ -232,7 +232,7 @@
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -353,33 +353,19 @@ Number of repetitions.</p></td>
     </tr>
     <tr>
       <th>color.train</th>
-      <td><p>character<br />
-Color for train set.</p></td>
+      <td><p>Color for train set.</p></td>
     </tr>
     <tr>
       <th>color.test</th>
-      <td><p>character<br />
-Color for test set.</p></td>
+      <td><p>Color for test set.</p></td>
     </tr>
     <tr>
       <th>point.size</th>
-      <td><p>integer<br />
-Point size.</p></td>
+      <td><p>Point size.</p></td>
     </tr>
     <tr>
       <th>axis.text.size</th>
-      <td><p>integer<br />
-Font size of axis labels.</p></td>
-    </tr>
-    <tr>
-      <th>x.axis.breaks</th>
-      <td><p>numeric<br />
-Custom x axis breaks</p></td>
-    </tr>
-    <tr>
-      <th>y.axis.breaks</th>
-      <td><p>numeric<br />
-Custom y axis breaks</p></td>
+      <td><p>Font size of axis labels.</p></td>
     </tr>
     </table>
     
@@ -414,7 +400,7 @@ Due to a limited axis space in the resulting grid (especially on the x-axis),
 the data will by default projected into a lat/lon projection, specifically
 EPSG 4326.
 If other projections are desired for the resulting map, please set argument
-<code>datum</code> accordingly. This argument will be passed onto <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsf'>ggplot2::coord_sf</a>.</p>
+<code>datum</code> accordingly. This argument will be passed onto sf::coord_sf.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -430,7 +416,8 @@ If other projections are desired for the resulting map, please set argument
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"SpRepCV"</span>, <span class='kw'>folds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+    <pre class="examples"><div class='input'>
+<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"SpRepCV"</span>, <span class='kw'>folds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.qda"</span>), <span class='no'>spatial.task</span>, <span class='no'>rdesc</span>)
 
 <span class='co'>##-------------------------------------------------------------</span>
@@ -439,15 +426,15 @@ If other projections are desired for the resulting map, please set argument
 
 <span class='no'>plots</span> <span class='kw'>=</span> <span class='fu'>createSpatialResamplingPlots</span>(<span class='no'>spatial.task</span>, <span class='no'>r</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>32717</span>,
   <span class='kw'>repetitions</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>x.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>79.065</span>, -<span class='fl'>79.085</span>),
-  <span class='kw'>y.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>3.970</span>, -<span class='fl'>4</span>))</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘hrbrthemes’</span></div><div class='input'><span class='kw pkg'>cowplot</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/cowplot/topics/plot_grid'>plot_grid</a></span>(<span class='kw'>plotlist</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]])</div><div class='output co'>#&gt; <span class='error'>Error in cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,     labels = plots[["Labels"]]): object 'plots' not found</span></div><div class='input'>
+  <span class='kw'>y.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>3.970</span>, -<span class='fl'>4</span>))</div><div class='output co'>#&gt; <span class='error'>Error in createSpatialResamplingPlots(spatial.task, r, crs = 32717, repetitions = 2,     x.axis.breaks = c(-79.065, -79.085), y.axis.breaks = c(-3.97,         -4)): could not find function "createSpatialResamplingPlots"</span></div><div class='input'><span class='fu'>plot_grid</span>(<span class='kw'>plotlist</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]])</div><div class='output co'>#&gt; <span class='error'>Error in plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2, labels = plots[["Labels"]]): could not find function "plot_grid"</span></div><div class='input'>
 <span class='co'>##--------------------------------------------------------------------------</span>
 <span class='co'>## single named resample input with 5 folds and 1 repetition and 32717 datum</span>
 <span class='co'>##--------------------------------------------------------------------------</span>
 
 <span class='no'>plots</span> <span class='kw'>=</span> <span class='fu'>createSpatialResamplingPlots</span>(<span class='no'>spatial.task</span>, <span class='fu'>list</span>(<span class='st'>"Resamp"</span> <span class='kw'>=</span> <span class='no'>r</span>),
-  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>32717</span>, <span class='kw'>datum</span> <span class='kw'>=</span> <span class='fl'>32717</span>, <span class='kw'>repetitions</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘hrbrthemes’</span></div><div class='input'><span class='kw pkg'>cowplot</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/cowplot/topics/plot_grid'>plot_grid</a></span>(<span class='kw'>plotlist</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]])</div><div class='output co'>#&gt; <span class='error'>Error in cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 1,     labels = plots[["Labels"]]): object 'plots' not found</span></div><div class='input'>
+  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>32717</span>, <span class='kw'>datum</span> <span class='kw'>=</span> <span class='fl'>32717</span>, <span class='kw'>repetitions</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in createSpatialResamplingPlots(spatial.task, list(Resamp = r),     crs = 32717, datum = 32717, repetitions = 1): could not find function "createSpatialResamplingPlots"</span></div><div class='input'><span class='fu'>plot_grid</span>(<span class='kw'>plotlist</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]])</div><div class='output co'>#&gt; <span class='error'>Error in plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 1, labels = plots[["Labels"]]): could not find function "plot_grid"</span></div><div class='input'>
 <span class='co'>##-------------------------------------------------------------</span>
 <span class='co'>## multiple named resample inputs with 5 folds and 1 repetition</span>
 <span class='co'>##-------------------------------------------------------------</span>
@@ -459,8 +446,8 @@ If other projections are desired for the resulting map, please set argument
 
 <span class='no'>plots</span> <span class='kw'>=</span> <span class='fu'>createSpatialResamplingPlots</span>(<span class='no'>spatial.task</span>,
   <span class='fu'>list</span>(<span class='st'>"SpRepCV"</span> <span class='kw'>=</span> <span class='no'>r1</span>, <span class='st'>"RepCV"</span> <span class='kw'>=</span> <span class='no'>r2</span>), <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>32717</span>, <span class='kw'>repetitions</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>x.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>79.055</span>, -<span class='fl'>79.085</span>), <span class='kw'>y.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>3.975</span>, -<span class='fl'>4</span>))</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘hrbrthemes’</span></div><div class='input'><span class='kw pkg'>cowplot</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/cowplot/topics/plot_grid'>plot_grid</a></span>(<span class='kw'>plotlist</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]])</div><div class='output co'>#&gt; <span class='error'>Error in cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,     labels = plots[["Labels"]]): object 'plots' not found</span></div><div class='input'>
+  <span class='kw'>x.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>79.055</span>, -<span class='fl'>79.085</span>), <span class='kw'>y.axis.breaks</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>3.975</span>, -<span class='fl'>4</span>))</div><div class='output co'>#&gt; <span class='error'>Error in createSpatialResamplingPlots(spatial.task, list(SpRepCV = r1,     RepCV = r2), crs = 32717, repetitions = 1, x.axis.breaks = c(-79.055,     -79.085), y.axis.breaks = c(-3.975, -4)): could not find function "createSpatialResamplingPlots"</span></div><div class='input'><span class='fu'>plot_grid</span>(<span class='kw'>plotlist</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plots</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]])</div><div class='output co'>#&gt; <span class='error'>Error in plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2, labels = plots[["Labels"]]): could not find function "plot_grid"</span></div><div class='input'>
 <span class='co'>##-------------------------------------------------------------------------------------</span>
 <span class='co'>## Complex arrangements of multiple named resample inputs with 5 folds and 1 repetition</span>
 <span class='co'>##-------------------------------------------------------------------------------------</span>
@@ -473,7 +460,8 @@ If other projections are desired for the resulting map, please set argument
   <span class='no'>plist</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]]<span class='kw'>[[</span><span class='fl'>8</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plist</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]][<span class='fl'>6</span>:<span class='fl'>8</span>],
   <span class='kw'>label_size</span> <span class='kw'>=</span> <span class='fl'>18</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot_grid(plist[["Plots"]][[6]], plist[["Plots"]][[7]], plist[["Plots"]][[8]],     ncol = 3, nrow = 1, labels = plist[["Labels"]][6:8], label_size = 18): could not find function "plot_grid"</span></div><div class='input'><span class='no'>p22</span> <span class='kw'>&lt;-</span> <span class='fu'>plot_grid</span>(<span class='no'>plist</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]]<span class='kw'>[[</span><span class='fl'>9</span>]], <span class='no'>plist</span><span class='kw'>[[</span><span class='st'>"Plots"</span>]]<span class='kw'>[[</span><span class='fl'>10</span>]], <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='no'>plist</span><span class='kw'>[[</span><span class='st'>"Labels"</span>]][<span class='fl'>9</span>:<span class='fl'>10</span>], <span class='kw'>label_size</span> <span class='kw'>=</span> <span class='fl'>18</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot_grid(plist[["Plots"]][[9]], plist[["Plots"]][[10]], ncol = 2,     nrow = 1, labels = plist[["Labels"]][9:10], label_size = 18): could not find function "plot_grid"</span></div><div class='input'>
-<span class='kw pkg'>cowplot</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/cowplot/topics/plot_grid'>plot_grid</a></span>(<span class='no'>p1</span>, <span class='no'>p12</span>, <span class='no'>p2</span>, <span class='no'>p22</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in cowplot::plot_grid(p1, p12, p2, p22, ncol = 1): object 'p1' not found</span></div></pre>
+<span class='fu'>plot_grid</span>(<span class='no'>p1</span>, <span class='no'>p12</span>, <span class='no'>p2</span>, <span class='no'>p22</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot_grid(p1, p12, p2, p22, ncol = 1): could not find function "plot_grid"</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

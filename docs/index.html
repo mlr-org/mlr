@@ -208,7 +208,7 @@
       <a href="articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -295,7 +295,7 @@
 <li><p><a href="https://github.com/mlr-org/mlr/blob/master/inst/cheatsheet/MlrCheatsheet.pdf">mlr cheatsheet</a></p></li>
 <li><p>Install the development version</p></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</a></code></pre></div>
 <ul>
 <li><a href="https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information">Further installation instructions</a></li>
 <li><a href="https://stackoverflow.com/questions/tagged/mlr">Ask a question about mlr on Stackoverflow</a></li>
@@ -370,10 +370,8 @@
 <li>Open the respective source file, e.g. <code>task.Rmd</code>.</li>
 <li>Follow the style guide while editing:
 <ul>
-<li>Reference <code>mlr</code> functions as <function>, e.g. <code><a href="reference/makeLearner.html">makeLearner()</a></code>.</function>
-</li>
-<li>Reference external functions as <:function>, e.g. <code>kernlab::ksvm()</code>.</:function>
-</li>
+<li>Reference <code>mlr</code> functions as &lt;function()&gt;, e.g. <code><a href="reference/makeLearner.html">makeLearner()</a></code>.</li>
+<li>Reference external functions as &lt;package::function()&gt;, e.g. <code><a href="http://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code>.</li>
 <li>Reference other tutorial pages with <code>&lt;name_of_vignette&gt;.html</code>, e.g. <code>[bagging](bagging.html)</code>.</li>
 <li>Always start a new sentence with a new line.</li>
 <li>If you want to insert a paragraph, skip one line.</li>

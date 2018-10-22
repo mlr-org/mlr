@@ -243,7 +243,7 @@ parameter types can be handled.
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -330,7 +330,7 @@ You can either use their correct param type and <code>resolution</code>,
 or discretize them yourself by always using <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/Param'>ParamHelpers::makeDiscreteParam</a>
 in the <code>par.set</code> passed to <a href='tuneParams.html'>tuneParams</a>.</p></dd>
 <dt>makeTuneMultiCritControlRandom</dt><dd><p>Random search. All kinds of parameter types can be handled.</p></dd>
-<dt>makeTuneMultiCritControlNSGA2</dt><dd><p>Evolutionary method mco::nsga2.
+<dt>makeTuneMultiCritControlNSGA2</dt><dd><p>Evolutionary method <a href='http://www.rdocumentation.org/packages/mco/topics/nsga2'>mco::nsga2</a>.
 Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 For integers the internally proposed numeric values are automatically rounded.</p></dd>
 <dt>makeTuneMultiCritControlMBO</dt><dd><p>Model-based/ Bayesian optimization. All kinds of
@@ -434,13 +434,13 @@ in the same order as your measures.</p></td>
       <th>learner</th>
       <td><p>(<a href='makeLearner.html'>Learner</a> | <code>NULL</code>)<br />
 The surrogate learner: A regression learner to model performance landscape.
-For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in mlrMBO::makeMBOLearner.</p></td>
+For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOLearner'>mlrMBO::makeMBOLearner</a>.</p></td>
     </tr>
     <tr>
       <th>mbo.control</th>
-      <td><p>(mlrMBO::MBOControl | <code>NULL</code>)<br />
+      <td><p>(<a href='http://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
 Control object for model-based optimization tuning.
-For the default, <code>NULL</code>, the control object will be created with all the defaults as described in mlrMBO::makeMBOControl.</p></td>
+For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::makeMBOControl</a>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
@@ -459,9 +459,9 @@ Default is none.</p></td>
     <tr>
       <th>continue</th>
       <td><p>(<code>logical(1)</code>)<br />
-Resume calculation from previous run using mlrMBO::mboContinue?
+Resume calculation from previous run using <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/mboContinue'>mlrMBO::mboContinue</a>?
 Requires &#8220;save.file.path&#8221; to be set.
-Note that the <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a> in the mlrMBO::OptResult
+Note that the <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a> in the <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/OptResult'>mlrMBO::OptResult</a>
 will only include the evaluations after the continuation.
 The complete OptPath will be found in the slot <code>$mbo.result$opt.path</code>.</p></td>
     </tr>
@@ -471,14 +471,14 @@ The complete OptPath will be found in the slot <code>$mbo.result$opt.path</code>
 Initial design as data frame.
 If the parameters have corresponding trafo functions,
 the design must not be transformed before it is passed!
-For the default, <code>NULL</code>, a default design is created like described in mlrMBO::mbo.</p></td>
+For the default, <code>NULL</code>, a default design is created like described in <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>(any)<br />
 Further control parameters passed to the <code>control</code> arguments of
-cmaes::cma_es or GenSA::GenSA, as well as
-towards the <code>tunerConfig</code> argument of irace::irace.</p></td>
+<a href='http://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a> or <a href='http://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a>, as well as
+towards the <code>tunerConfig</code> argument of <a href='http://www.rdocumentation.org/packages/irace/topics/irace'>irace::irace</a>.</p></td>
     </tr>
     <tr>
       <th>maxit</th>

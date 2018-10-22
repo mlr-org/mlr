@@ -148,56 +148,32 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
     stop("Longitude and latitude data must be stored in columns named x and y respectively")
   }
 
-  # Retrieving the name of the target var
-  # target = getTaskTargetNames(.task)
-
-  # Assigning the data that is not location to the object element of pars list (must be a list for gstat::variogram.default)
-  # pars$object = as.list(data[colnames(data) != c("x","y", target)])
-
-  # list with for each variable the vector with responses
-  # browser()
-
   # Creating the locations argument for gstat::variogram.formula
-  # pars$locations = as.list(data[colnames(data) == c("x","y")])
   pars$locations = ~x+y
 
   # Creating the object argument for gstat::variogram.formula
   # Getting the task formula
   pars$object = getTaskFormula(.task, explicit.features = TRUE)
-  # Removing location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
+  # Removing location vars as they are handled by gstat
   pars$object = update(pars$object, .~.-y-x)
 
   # creating the formula argument for gstat::gstat function
   # Getting the task formula
   pars$formula = getTaskFormula(.task, explicit.features = TRUE)
-  # Removing location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
+  # Removing location vars as they are handled by gstat
   pars$formula = update(pars$formula, .~.-y-x)
-
-
-  # Assigning forced x and y location formula
-  # pars$locations = ~x+y
-  #pars$locations = list("x","y")
 
   # Extracting the names of the parameters that can be passed to the various gstat functions required to train the learner.
   # These functions are gstat::variogram, gstat::fit.variogram, gstat::vgm and gstat::gstat
-  # To extract the arguments names : https://stackoverflow.com/questions/11885207/get-all-parameters-as-list
-  # To extract the arguments names of S3 method default https://stackoverflow.com/questions/45083015/getting-arguments-of-s3-method-in-r
-  # As some of the gstat functions required to the train the learner use arguments with the same names, we rename these arguments according to the id declared in makeRLearner.regr.gstat.
+  # As some of the gstat functions required to train the learner use arguments with the same names, we rename these arguments according to the id declared in makeRLearner.regr.gstat.
   variogram.args = replace(names(formals(gstat:::variogram.default)), names(formals(gstat:::variogram.default)) == "beta", "beta.variogram")
   variogram.args = c(variogram.args, "data") # we need this subsetting because we use the S3 method for formula
   vgm.args = replace(names(formals(gstat::vgm)), names(formals(gstat::vgm)) == "model", "model")
   fit.variogram.args = replace(names(formals(gstat::fit.variogram)), names(formals(gstat::fit.variogram)) == "model", "model")
   gstat.args = replace(names(formals(gstat::gstat)), names(formals(gstat::gstat)) == "beta", "beta.gstat")
 
-  # Getting the task formula and assigning it to the pars$object
-  #pars$object = getTaskFormula(.task, explicit.features = TRUE)
-  # Removing location vars as they are handled by gstat - https://stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
-  #pars$object = update(pars$object, .~.-y-x)
-
   # If model.manual or model.auto arguments are passed, we use it to build the variogram model required to perform kriging interpolation
   if (!is.null(pars$model.manual) || !is.null(pars$model.auto)) {
-
-    #browser()
 
     # calculate sample variogram (https://www.rdocumentation.org/packages/gstat/versions/1.1-6/topics/variogram)
     pars$object = do.call(
@@ -205,20 +181,6 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         as.list(
           pars[names(pars) %in% variogram.args ]) # FIXME hack because we use variogram in formula method
     )
-    # pars$object = do.call(
-    #   gstat:::variogram.default,
-    #   as.list(
-    #     pars[names(pars) %in% variogram.args ]) # FIXME hack because we use variogram in formula method
-    # )
-    # pars$object = do.call(
-    #   gstat::variogram,
-    #   c(
-    #     list(
-    #       object = fml,
-    #       data = d,
-    #       locations = ~x+y),
-    #   pars[names(pars) %in% variogram.args && !names(pars) %in% c("object", "data", "locations")])
-    # )
     # Check if we are in auto-fitting mode (i.e. vector of model types to be tested passed to model.auto argument) and re-assigning the pars to the proper args
     if (!is.null(pars$model.auto)) {
       pars$psill = pars$model.auto # this is the way gstat works ! If a set of models are passed to the psill argument, gstat performs an autofitting by testing all the kind of models passed
@@ -242,40 +204,18 @@ trainLearner.regr.gstat = function(.learner, .task, .subset, .weights = NULL, ..
         as.list(
           pars[names(pars) %in% fit.variogram.args])
     )
-    # fit = do.call(
-    #   gstat::fit.variogram,
-    #   c(
-    #     list(
-    #       object = v,
-    #       model = model),
-    #     pars[names(pars) %in% fit.variogram.args && !names(pars) %in% c("object", "model")])
-    #   #pars[names(pars) %in% fit.variogram.args[fit.variogram.args != "model"]])
-    # )
 
-  } else { # Case where no models are passed. We don't use any predictor to make the spatial interpolation. Se solely use x and y data to interpolate the target var
-    pars$formula = update(pars$formula, .~1) # https://stackoverflow.com/questions/18070131/update-formula-in-r
-    pars$model = NULL # fit = NULL
+  # Case where no models are passed. We don't use any predictor to make the spatial interpolation. only use x and y data to interpolate the target var
+  } else {
+    pars$formula = update(pars$formula, .~1)
+    pars$model = NULL
   }
-
-  # as the gstat::gstat function requires to pass the location information as a formula, we update pars accordingly
-  # pars$locations = ~x+y
-  # as the gstat::gstat function requires to pass the dataset in the data arg we update pars accordindly  :
-  #pars$data = data
 
   # Creating the gstat object
   g = do.call(gstat::gstat,
       as.list(
       pars[names(pars) %in% gstat.args])
   )
-  # g = do.call(gstat::gstat,
-  #   c(
-  #     list(
-  #       formula = fml,
-  #       data = d,
-  #       model = fit,
-  #       locations = ~x+y),
-  #     pars[names(pars) %in% gstat.args && !names(pars) %in% c("formula", "data", "model", "locations")])
-  # )
 
   return(g)
 }

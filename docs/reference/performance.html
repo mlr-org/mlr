@@ -232,7 +232,7 @@
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -374,14 +374,10 @@ are extracted from it.</p></td>
 
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>[<span class='no'>test.set</span>, ])
-<span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; mmce 
-#&gt; 0.04 </div><div class='input'>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>[<span class='no'>test.set</span>, ])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris[test.set, ]): object 'mod' not found</span></div><div class='input'><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'>
 <span class='co'># Compute multiple performance measures at once</span>
 <span class='no'>ms</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"mmce"</span> <span class='kw'>=</span> <span class='no'>mmce</span>, <span class='st'>"acc"</span> <span class='kw'>=</span> <span class='no'>acc</span>, <span class='st'>"timetrain"</span> <span class='kw'>=</span> <span class='no'>timetrain</span>)
-<span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>ms</span>, <span class='no'>task</span>, <span class='no'>mod</span>)</div><div class='output co'>#&gt;      mmce       acc timetrain 
-#&gt;     0.040     0.960     0.004 </div></pre>
+<span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>ms</span>, <span class='no'>task</span>, <span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = ms, task, mod): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

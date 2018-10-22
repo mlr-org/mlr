@@ -240,7 +240,7 @@ After training, the optimal features (and other related information) can be retr
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -425,8 +425,9 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlRandom</a></span>(<span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFeatSelWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>inner</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='error'>Error in requirePackages(package, why = stri_paste("learner", id, sep = " "),     default.method = "load"): For learner classif.ksvm please install the following packages: kernlab</span></div><div class='input'><span class='co'># we also extract the selected features for all iteration here</span>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getFeatSelResult</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkLearner(learner): object 'lrn' not found</span></div></pre>
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFeatSelWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>inner</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
+<span class='co'># we also extract the selected features for all iteration here</span>
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getFeatSelResult</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

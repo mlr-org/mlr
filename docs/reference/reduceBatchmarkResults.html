@@ -233,7 +233,7 @@ To setup the benchmark have a look at batchmark." />
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -314,13 +314,13 @@ To setup the benchmark have a look at batchmark." />
     </div>
 
     
-    <p>This creates a <a href='BenchmarkResult.html'>BenchmarkResult</a> from a batchtools::ExperimentRegistry.
+    <p>This creates a <a href='BenchmarkResult.html'>BenchmarkResult</a> from a <a href='http://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>.
 To setup the benchmark have a look at <a href='batchmark.html'>batchmark</a>.</p>
     
 
     <pre class="usage"><span class='fu'>reduceBatchmarkResults</span>(<span class='kw'>ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>),
-  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'>getDefaultRegistry</span>())</pre>
+  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -331,7 +331,7 @@ To setup the benchmark have a look at <a href='batchmark.html'>batchmark</a>.</p
 A <a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>base::data.frame</a> (or <a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table</a>)
 with a column named &#8220;job.id&#8221;.
 Alternatively, you may also pass a vector of integerish job ids.
-If not set, defaults to all successfully terminated jobs (return value of batchtools::findDone.</p></td>
+If not set, defaults to all successfully terminated jobs (return value of <a href='http://www.rdocumentation.org/packages/batchtools/topics/findJobs'>batchtools::findDone</a>.</p></td>
     </tr>
     <tr>
       <th>keep.pred</th>
@@ -350,8 +350,8 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     <tr>
       <th>reg</th>
-      <td><p>(batchtools::ExperimentRegistry)<br />
-Registry, created by batchtools::makeExperimentRegistry. If not explicitly passed,
+      <td><p>(<a href='http://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>)<br />
+Registry, created by <a href='http://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::makeExperimentRegistry</a>. If not explicitly passed,
 uses the last created registry.</p></td>
     </tr>
     </table>

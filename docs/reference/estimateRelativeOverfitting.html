@@ -233,7 +233,7 @@ In the no-information case the features carry no information with respect to the
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -386,13 +386,13 @@ Iteration number. Default 1, usually you don't need to specify this. Only needed
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.knn"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
-#&gt; 1:    1          -0.02173913
-#&gt; 2:    2           0.02127660</div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
-#&gt; 1:    1           0.02040816
-#&gt; 2:    2          -0.02083333</div><div class='input'><span class='no'>rpred</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='st'>"classif.knn"</span>, <span class='no'>task</span>, <span class='no'>rdesc</span>)$<span class='no'>pred</span>
+#&gt; 1:    1                    0
+#&gt; 2:    2                    0</div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
+#&gt; 1:    1           0.06000000
+#&gt; 2:    2          -0.06382979</div><div class='input'><span class='no'>rpred</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='st'>"classif.knn"</span>, <span class='no'>task</span>, <span class='no'>rdesc</span>)$<span class='no'>pred</span>
 <span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rpred</span>, <span class='no'>acc</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt;    iter relative.overfit.acc
-#&gt; 1:    1           -0.1111111
-#&gt; 2:    2            0.1000000</div></pre>
+#&gt; 1:    1           0.06382979
+#&gt; 2:    2          -0.06818182</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

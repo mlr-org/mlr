@@ -238,7 +238,7 @@ The row names of the input task or newdata are preserved in the output." />
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -381,122 +381,10 @@ Currently ignored.</p></td>
     <pre class="examples"><div class='input'><span class='co'># train and predict</span>
 <span class='no'>train.set</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fl'>150</span>, <span class='fl'>2</span>)
 <span class='no'>test.set</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>2</span>, <span class='fl'>150</span>, <span class='fl'>2</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train.set</span>)
-<span class='no'>p</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>model</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)
-<span class='fu'>print</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; Prediction: 75 observations
-#&gt; predict.type: response
-#&gt; threshold: 
-#&gt; time: 0.00
-#&gt;     truth response
-#&gt; 2  setosa   setosa
-#&gt; 4  setosa   setosa
-#&gt; 6  setosa   setosa
-#&gt; 8  setosa   setosa
-#&gt; 10 setosa   setosa
-#&gt; 12 setosa   setosa
-#&gt; ... (#rows: 75, #cols: 2)</div><div class='input'><span class='fu'>predict</span>(<span class='no'>model</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; Prediction: 75 observations
-#&gt; predict.type: response
-#&gt; threshold: 
-#&gt; time: 0.00
-#&gt;    id  truth response
-#&gt; 2   2 setosa   setosa
-#&gt; 4   4 setosa   setosa
-#&gt; 6   6 setosa   setosa
-#&gt; 8   8 setosa   setosa
-#&gt; 10 10 setosa   setosa
-#&gt; 12 12 setosa   setosa
-#&gt; ... (#rows: 75, #cols: 3)</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>model</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, newdata = iris, subset = test.set): object 'model' not found</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(p): object 'p' not found</span></div><div class='input'><span class='fu'>predict</span>(<span class='no'>model</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, task = iris.task, subset = test.set): object 'model' not found</span></div><div class='input'>
 <span class='co'># predict now probabiliies instead of class labels</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train.set</span>)
-<span class='no'>p</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>model</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)
-<span class='fu'>print</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; Prediction: 75 observations
-#&gt; predict.type: prob
-#&gt; threshold: setosa=0.33,versicolor=0.33,virginica=0.33
-#&gt; time: 0.00
-#&gt;    id  truth prob.setosa prob.versicolor prob.virginica response
-#&gt; 2   2 setosa           1    1.080106e-16   5.495990e-36   setosa
-#&gt; 4   4 setosa           1    3.942221e-16   4.985591e-35   setosa
-#&gt; 6   6 setosa           1    1.100758e-20   4.582123e-40   setosa
-#&gt; 8   8 setosa           1    1.281324e-19   1.403683e-39   setosa
-#&gt; 10 10 setosa           1    3.464605e-18   3.358822e-38   setosa
-#&gt; 12 12 setosa           1    1.929046e-18   6.400669e-38   setosa
-#&gt; ... (#rows: 75, #cols: 6)</div><div class='input'><span class='fu'><a href='getPredictionProbabilities.html'>getPredictionProbabilities</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt;           setosa   versicolor    virginica
-#&gt; 2   1.000000e+00 1.080106e-16 5.495990e-36
-#&gt; 4   1.000000e+00 3.942221e-16 4.985591e-35
-#&gt; 6   1.000000e+00 1.100758e-20 4.582123e-40
-#&gt; 8   1.000000e+00 1.281324e-19 1.403683e-39
-#&gt; 10  1.000000e+00 3.464605e-18 3.358822e-38
-#&gt; 12  1.000000e+00 1.929046e-18 6.400669e-38
-#&gt; 14  1.000000e+00 9.174665e-19 6.828749e-39
-#&gt; 16  1.000000e+00 4.688969e-27 2.745830e-48
-#&gt; 18  1.000000e+00 4.645171e-20 8.128636e-40
-#&gt; 20  1.000000e+00 6.694294e-22 5.218579e-42
-#&gt; 22  1.000000e+00 1.066840e-19 7.786491e-39
-#&gt; 24  1.000000e+00 1.575929e-13 1.372108e-30
-#&gt; 26  1.000000e+00 1.644673e-15 2.043591e-34
-#&gt; 28  1.000000e+00 6.146076e-21 2.497149e-41
-#&gt; 30  1.000000e+00 1.658871e-16 1.808571e-35
-#&gt; 32  1.000000e+00 7.487312e-18 9.890059e-37
-#&gt; 34  1.000000e+00 2.670831e-28 1.079903e-50
-#&gt; 36  1.000000e+00 4.806539e-20 2.339239e-40
-#&gt; 38  1.000000e+00 3.813061e-23 2.052406e-44
-#&gt; 40  1.000000e+00 7.466350e-20 6.277056e-40
-#&gt; 42  1.000000e+00 3.674851e-09 4.536788e-26
-#&gt; 44  1.000000e+00 2.376956e-14 3.534795e-31
-#&gt; 46  1.000000e+00 4.173036e-15 1.631360e-33
-#&gt; 48  1.000000e+00 1.089430e-17 4.863932e-37
-#&gt; 50  1.000000e+00 1.774340e-19 1.730362e-39
-#&gt; 52  4.334244e-19 9.997549e-01 2.451293e-04
-#&gt; 54  1.330724e-22 9.997285e-01 2.714813e-04
-#&gt; 56  1.995591e-21 9.997140e-01 2.859941e-04
-#&gt; 58  3.839188e-14 9.999999e-01 7.106963e-08
-#&gt; 60  1.501079e-20 9.996878e-01 3.122195e-04
-#&gt; 62  7.760950e-20 9.995910e-01 4.090414e-04
-#&gt; 64  2.080898e-22 9.988291e-01 1.170948e-03
-#&gt; 66  3.562231e-17 9.999833e-01 1.673179e-05
-#&gt; 68  3.770679e-15 9.999998e-01 1.679949e-07
-#&gt; 70  2.965700e-17 9.999987e-01 1.332774e-06
-#&gt; 72  6.043746e-17 9.999945e-01 5.493982e-06
-#&gt; 74  1.491580e-20 9.999465e-01 5.354890e-05
-#&gt; 76  2.932270e-18 9.999654e-01 3.462071e-05
-#&gt; 78  2.102664e-26 8.507396e-01 1.492604e-01
-#&gt; 80  5.538611e-12 1.000000e+00 1.078961e-08
-#&gt; 82  1.436204e-15 9.999999e-01 1.469959e-07
-#&gt; 84  2.971359e-30 4.244857e-01 5.755143e-01
-#&gt; 86  1.110667e-19 9.983499e-01 1.650103e-03
-#&gt; 88  1.466022e-23 9.996693e-01 3.306824e-04
-#&gt; 90  6.669272e-21 9.998923e-01 1.076795e-04
-#&gt; 92  7.535665e-21 9.995863e-01 4.136941e-04
-#&gt; 94  9.307446e-15 9.999999e-01 8.660857e-08
-#&gt; 96  3.008115e-16 9.999966e-01 3.390003e-06
-#&gt; 98  5.496252e-18 9.999849e-01 1.507050e-05
-#&gt; 100 1.363049e-18 9.999717e-01 2.825366e-05
-#&gt; 102 4.405357e-37 2.114927e-03 9.978851e-01
-#&gt; 104 6.524746e-36 6.511480e-03 9.934885e-01
-#&gt; 106 2.777076e-46 4.860808e-06 9.999951e-01
-#&gt; 108 3.911272e-39 1.606942e-03 9.983931e-01
-#&gt; 110 4.550079e-45 4.040314e-07 9.999996e-01
-#&gt; 112 6.617645e-37 3.249953e-03 9.967500e-01
-#&gt; 114 1.073113e-40 1.951114e-04 9.998049e-01
-#&gt; 116 3.838267e-40 2.724272e-05 9.999728e-01
-#&gt; 118 1.307856e-40 2.434837e-05 9.999757e-01
-#&gt; 120 1.969144e-32 4.344769e-01 5.655231e-01
-#&gt; 122 6.209823e-37 1.068579e-03 9.989314e-01
-#&gt; 124 2.370584e-31 1.299622e-01 8.700378e-01
-#&gt; 126 1.835130e-33 2.730706e-02 9.726929e-01
-#&gt; 128 5.723015e-29 2.605009e-01 7.394991e-01
-#&gt; 130 9.802617e-30 5.518685e-01 4.481315e-01
-#&gt; 132 8.666451e-33 8.091592e-03 9.919084e-01
-#&gt; 134 5.291828e-27 9.385703e-01 6.142969e-02
-#&gt; 136 2.222144e-45 3.290807e-06 9.999967e-01
-#&gt; 138 1.629560e-32 3.699427e-02 9.630057e-01
-#&gt; 140 3.684844e-36 1.254447e-03 9.987456e-01
-#&gt; 142 1.587395e-37 2.050417e-04 9.997950e-01
-#&gt; 144 1.669608e-44 2.437914e-06 9.999976e-01
-#&gt; 146 3.097423e-40 4.263839e-05 9.999574e-01
-#&gt; 148 1.441239e-34 5.120744e-03 9.948793e-01
-#&gt; 150 1.747306e-31 6.120949e-02 9.387905e-01</div></pre>
+<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>model</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, task = iris.task, subset = test.set): object 'model' not found</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(p): object 'p' not found</span></div><div class='input'><span class='fu'><a href='getPredictionProbabilities.html'>getPredictionProbabilities</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'p' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

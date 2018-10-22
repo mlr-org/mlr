@@ -234,7 +234,7 @@ Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -373,8 +373,7 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.rpart"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeClassificationViaRegressionWrapper</span>(<span class='no'>lrn</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>140</span>)
-<span class='no'>predictions</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>sonar.task</span>)[<span class='fl'>141</span>:<span class='fl'>208</span>, <span class='fl'>1</span>:<span class='fl'>60</span>])</div></pre>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>140</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>predictions</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>sonar.task</span>)[<span class='fl'>141</span>:<span class='fl'>208</span>, <span class='fl'>1</span>:<span class='fl'>60</span>])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]): object 'mod' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -232,7 +232,7 @@
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -370,8 +370,24 @@ closest (hyper)parameter names will be output in case the user mistyped.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>cl1</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in requirePackages(package, why = stri_paste("learner", id, sep = " "),     default.method = "load"): For learner classif.ksvm please install the following packages: kernlab</span></div><div class='input'><span class='no'>cl2</span> <span class='kw'>=</span> <span class='fu'>setHyperPars</span>(<span class='no'>cl1</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt; <span class='error'>Error in setHyperPars2(learner, insert(par.vals, args)): object 'cl1' not found</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>cl1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(cl1): object 'cl1' not found</span></div><div class='input'><span class='co'># note the now set and altered hyperparameters:</span>
-<span class='fu'>print</span>(<span class='no'>cl2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(cl2): object 'cl2' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>cl1</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>cl2</span> <span class='kw'>=</span> <span class='fu'>setHyperPars</span>(<span class='no'>cl1</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='fl'>2</span>))
+<span class='fu'>print</span>(<span class='no'>cl1</span>)</div><div class='output co'>#&gt; Learner classif.ksvm from package kernlab
+#&gt; Type: classif
+#&gt; Name: Support Vector Machines; Short name: ksvm
+#&gt; Class: classif.ksvm
+#&gt; Properties: twoclass,multiclass,numerics,factors,prob,class.weights
+#&gt; Predict-Type: response
+#&gt; Hyperparameters: fit=FALSE,sigma=1
+#&gt; </div><div class='input'><span class='co'># note the now set and altered hyperparameters:</span>
+<span class='fu'>print</span>(<span class='no'>cl2</span>)</div><div class='output co'>#&gt; Learner classif.ksvm from package kernlab
+#&gt; Type: classif
+#&gt; Name: Support Vector Machines; Short name: ksvm
+#&gt; Class: classif.ksvm
+#&gt; Properties: twoclass,multiclass,numerics,factors,prob,class.weights
+#&gt; Predict-Type: response
+#&gt; Hyperparameters: fit=FALSE,sigma=10,C=2
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

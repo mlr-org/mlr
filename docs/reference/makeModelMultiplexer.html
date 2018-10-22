@@ -243,7 +243,7 @@ selected base learner." />
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -384,17 +384,43 @@ List of Learners with unique IDs.</p></td>
 <span class='no'>bls</span> <span class='kw'>=</span> <span class='fu'>list</span>(
   <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ksvm"</span>),
   <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.randomForest"</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in requirePackages(package, why = stri_paste("learner", id, sep = " "),     default.method = "load"): For learner classif.ksvm please install the following packages: kernlab</span></div><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeModelMultiplexer</span>(<span class='no'>bls</span>)</div><div class='output co'>#&gt; <span class='error'>Error in assertVector(base.learners, min.len = 1L): object 'bls' not found</span></div><div class='input'><span class='co'># simple way to contruct param set for tuning</span>
+)
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeModelMultiplexer</span>(<span class='no'>bls</span>)
+<span class='co'># simple way to contruct param set for tuning</span>
 <span class='co'># parameter names are prefixed automatically and the 'requires'</span>
 <span class='co'># element is set, too, to make all paramaters subordinate to 'selected.learner'</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></span>(<span class='no'>lrn</span>,
   <span class='fu'>makeNumericParam</span>(<span class='st'>"sigma"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>10</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>),
   <span class='fu'>makeIntegerParam</span>(<span class='st'>"ntree"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>500L</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'lrn' not found</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>ps</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(ps): object 'ps' not found</span></div><div class='input'><span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+)
+<span class='fu'>print</span>(<span class='no'>ps</span>)</div><div class='output co'>#&gt;                                Type len Def                            Constr
+#&gt; selected.learner           discrete   -   - classif.ksvm,classif.randomForest
+#&gt; classif.ksvm.sigma          numeric   -   -                         -10 to 10
+#&gt; classif.randomForest.ntree  integer   -   -                          1 to 500
+#&gt;                            Req Tunable Trafo
+#&gt; selected.learner             -    TRUE     -
+#&gt; classif.ksvm.sigma           Y    TRUE     Y
+#&gt; classif.randomForest.ntree   Y    TRUE     -</div><div class='input'><span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='co'># to save some time we use random search. but you probably want something like this:</span>
 <span class='co'># ctrl = makeTuneControlIrace(maxExperiments = 500L)</span>
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></span>(<span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>10L</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkLearner(learner): object 'lrn' not found</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(res): object 'res' not found</span></div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(res$opt.path): object 'res' not found</span></div><div class='input'>
+<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
+<span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+#&gt; Op. pars: selected.learner=classif.rand...; classif.randomForest.ntree=452
+#&gt; mmce.test.mean=0.0266667</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))</div><div class='output co'>#&gt;       selected.learner classif.ksvm.sigma classif.randomForest.ntree
+#&gt; 1         classif.ksvm         -0.7057245                         NA
+#&gt; 2 classif.randomForest                 NA                        368
+#&gt; 3         classif.ksvm         -0.9047674                         NA
+#&gt; 4         classif.ksvm          6.3016299                         NA
+#&gt; 5         classif.ksvm         -3.7577442                         NA
+#&gt; 6 classif.randomForest                 NA                        452
+#&gt;   mmce.test.mean dob eol error.message exec.time
+#&gt; 1     0.04666667   1  NA          &lt;NA&gt;     0.044
+#&gt; 2     0.02666667   2  NA          &lt;NA&gt;     0.083
+#&gt; 3     0.04666667   3  NA          &lt;NA&gt;     0.034
+#&gt; 4     0.67333333   4  NA          &lt;NA&gt;     0.043
+#&gt; 5     0.05333333   5  NA          &lt;NA&gt;     0.051
+#&gt; 6     0.02666667   6  NA          &lt;NA&gt;     0.092</div><div class='input'>
 <span class='co'># more unique and reliable way to construct the param set</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></span>(<span class='no'>lrn</span>,
   <span class='kw'>classif.ksvm</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
@@ -403,7 +429,8 @@ List of Learners with unique IDs.</p></td>
   <span class='kw'>classif.randomForest</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
     <span class='fu'>makeIntegerParam</span>(<span class='st'>"ntree"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>500L</span>)
   )
-)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'lrn' not found</span></div><div class='input'>
+)
+
 <span class='co'># this is how you would construct the param set manually, works too</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
   <span class='fu'>makeDiscreteParam</span>(<span class='st'>"selected.learner"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/BBmisc/topics/extractSubList'>extractSubList</a></span>(<span class='no'>bls</span>, <span class='st'>"id"</span>)),
@@ -411,9 +438,9 @@ List of Learners with unique IDs.</p></td>
     <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'>quote</span>(<span class='no'>selected.learner</span> <span class='kw'>==</span> <span class='st'>"classif.ksvm"</span>)),
   <span class='fu'>makeIntegerParam</span>(<span class='st'>"classif.randomForest.ntree"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>500L</span>,
     <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'>quote</span>(<span class='no'>selected.learner</span> <span class='kw'>==</span> <span class='st'>"classif.randomForst"</span>))
-)</div><div class='output co'>#&gt; <span class='error'>Error in .Call(c_check_list, x, any.missing, all.missing, len, min.len,     max.len, unique, names, null.ok) %and% checkListTypes(x,     types): object 'bls' not found</span></div><div class='input'>
-# all three ps-objects are exactly the same internally.
-</div></pre>
+)
+
+<span class='co'># all three ps-objects are exactly the same internally.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

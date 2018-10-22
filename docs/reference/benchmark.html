@@ -236,7 +236,7 @@ learner can be automatically tuned using makeTuneWrapper." />
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -423,7 +423,13 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 #&gt; 
 #&gt; data:  acc.test.mean and learner.id and task.id
 #&gt; Friedman chi-squared = 2, df = 1, p-value = 0.1573
-#&gt; </div><div class='input'><span class='fu'><a href='friedmanPostHocTestBMR.html'>friedmanPostHocTestBMR</a></span>(<span class='no'>bmr</span>, <span class='kw'>p.value</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: PMCMR</span></div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called ‘PMCMR’</span></div><div class='output co'>#&gt; <span class='error'>Error in requirePackages("PMCMR"): Please install the following packages: PMCMR</span></div></pre>
+#&gt; </div><div class='input'><span class='fu'><a href='friedmanPostHocTestBMR.html'>friedmanPostHocTestBMR</a></span>(<span class='no'>bmr</span>, <span class='kw'>p.value</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: PMCMR</span></div><div class='output co'>#&gt; <span class='message'>PMCMR is superseded by PMCMRplus and will be no longer maintained. You may wish to install PMCMRplus instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot reject null hypothesis of overall Friedman test,</span>
+#&gt; <span class='warning'>             returning overall Friedman test.</span></div><div class='output co'>#&gt; 
+#&gt; 	Friedman rank sum test
+#&gt; 
+#&gt; data:  acc.test.mean and learner.id and task.id
+#&gt; Friedman chi-squared = 2, df = 1, p-value = 0.1573
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

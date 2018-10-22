@@ -1,6 +1,6 @@
-pandoc: 1.19.2.1
+pandoc: 2.2.1
 pkgdown: 1.1.0.9000
-pkgdown_sha: 6ca8a64d7867469d65e17e2ab1f9686f501c3c06
+pkgdown_sha: ~
 articles:
   _mlr-tutorial_intro: _mlr-tutorial_intro.html
   advanced_tune: advanced_tune.html
@@ -42,7 +42,6 @@ articles:
   task: task.html
   train: train.html
   tune: tune.html
-  usecase_gstat: usecase_gstat.html
   usecase_regression: usecase_regression.html
   visualization: visualization.html
   wrapper: wrapper.html

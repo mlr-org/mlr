@@ -242,7 +242,7 @@ The following stacking methods are available:
       <a href="../articles/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talks, Videos and Workshops</a>
+      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -424,9 +424,7 @@ The default `NULL` uses 5-fold CV.</p></td>
   <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'>lapply</span>(<span class='no'>lrns</span>, <span class='no'>setPredictType</span>, <span class='st'>"prob"</span>)
   <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'>makeStackedLearner</span>(<span class='kw'>base.learners</span> <span class='kw'>=</span> <span class='no'>lrns</span>,
     <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hill.climb"</span>)
-  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)
-  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)
-
+  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div><div class='input'>
   <span class='co'># Regression</span>
   <span class='fu'>data</span>(<span class='no'>BostonHousing</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"mlbench"</span>)
   <span class='no'>tsk</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
@@ -434,8 +432,7 @@ The default `NULL` uses 5-fold CV.</p></td>
   <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'>lapply</span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
   <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'>makeStackedLearner</span>(<span class='kw'>base.learners</span> <span class='kw'>=</span> <span class='no'>lrns</span>,
     <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"compress"</span>)
-  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)
-  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div></pre>
+  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
