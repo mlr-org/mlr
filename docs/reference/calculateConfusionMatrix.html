@@ -447,8 +447,7 @@ Currently not used.</p></td>
 #&gt;   virginica       0          2        24      2
 #&gt;   -err.-          0          2         0      2</div><div class='input'>
 <span class='co'># now after cross-validation</span>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='fu'>print</span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>r</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>r</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
 #&gt; true         setosa versicolor virginica -err.-
 #&gt;   setosa         50          0         0      0
 #&gt;   versicolor      0         48         2      2
