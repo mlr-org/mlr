@@ -420,25 +420,26 @@ the measure. See example code below.</p>
 )
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>(<span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
-<span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
+#&gt; <span class='message'>C     numeric   -   - -12 to 12   -    TRUE     Y</span>
+#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.6400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0466667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.6466667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7133333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0466667</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: C=4.1e+03; sigma=0.000244
 #&gt; mmce.test.mean=0.0466667</div><div class='input'><span class='co'># access data for all evaluated points</span>
 <span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
-#&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.033
-#&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.031
-#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.034
-#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.031</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
-#&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.033
-#&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.031
-#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.034
-#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.031</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
+#&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.124
+#&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.068
+#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.107
+#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.107</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
+#&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.124
+#&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.068
+#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.107
+#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.107</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
 <span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)))</div><div class='output co'>#&gt; $data
 #&gt;     C sigma mmce.test.mean iteration exec.time
-#&gt; 1 -12   -12     0.64000000         1     0.033
-#&gt; 2  12   -12     0.04666667         2     0.031
-#&gt; 3 -12    12     0.64666667         3     0.034
-#&gt; 4  12    12     0.71333333         4     0.031
+#&gt; 1 -12   -12     0.64000000         1     0.124
+#&gt; 2  12   -12     0.04666667         2     0.068
+#&gt; 3 -12    12     0.64666667         3     0.107
+#&gt; 4  12    12     0.71333333         4     0.107
 #&gt; 
 #&gt; $measures
 #&gt; [1] "mmce.test.mean"
@@ -456,10 +457,10 @@ the measure. See example code below.</p>
 #&gt; [1] FALSE
 #&gt; </div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt; $data
 #&gt;              C        sigma mmce.test.mean iteration exec.time
-#&gt; 1 2.441406e-04 2.441406e-04     0.64000000         1     0.033
-#&gt; 2 4.096000e+03 2.441406e-04     0.04666667         2     0.031
-#&gt; 3 2.441406e-04 4.096000e+03     0.64666667         3     0.034
-#&gt; 4 4.096000e+03 4.096000e+03     0.71333333         4     0.031
+#&gt; 1 2.441406e-04 2.441406e-04     0.64000000         1     0.124
+#&gt; 2 4.096000e+03 2.441406e-04     0.04666667         2     0.068
+#&gt; 3 2.441406e-04 4.096000e+03     0.64666667         3     0.107
+#&gt; 4 4.096000e+03 4.096000e+03     0.71333333         4     0.107
 #&gt; 
 #&gt; $measures
 #&gt; [1] "mmce.test.mean"
