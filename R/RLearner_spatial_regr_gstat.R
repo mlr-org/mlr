@@ -4,15 +4,15 @@
 #' mlr learner for regression tasks using [gstat::gstat].
 #'
 #' This learner does not use the krige interface from gstat. This is because we want to make it the most general as possible.
-#' Therefore the learner makes use the combination of gstat::gstat and gstat::predict to compute spatial predidction.
-#' You can read more this StackOverflow thread : https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict.
+#' Therefore the learner uses a combination of gstat::gstat() and gstat::predict() to compute spatial predictions.
+#' You can read more about gstat interface on this StackOverflow thread : https://stackoverflow.com/questions/13920342/how-to-make-ordinary-kriging-by-using-gstat-predict.
 #'
-#' The columns holding the longitude and latitude values must be respectively named x and y
+#' The columns holding the longitude and latitude values must be respectively named x and y.
 #'
 #' The learner handles gstat variogram autofitting functionnality presented in this post https://www.r-spatial.org/r/2016/02/14/gstat-variogram-fitting.html.
 #' To use manual fitting, you must provide a list to the argument model that holds the following elements :
 #' psill, model, range and nugget.
-#' To use auto fitting, simply provide a list containting the types of models to be tested.
+#' To use auto fitting, simply provide a list containting the types of models to be tested (e.g. "Exp", "Sph", "Gau", "Mat")
 #'
 #' @examples
 #' # loading datasets
@@ -58,11 +58,9 @@
 #' Multivariable geostatistics in S: the gstat package
 #' Computers & Geosciences Volume 30, Issue 7, 2004, 683-691.
 #'
-#'
 #' @name regr.gstat
 #' @rdname regr.gstat
-NULL
-
+#'
 #' @export
 makeRLearner.regr.gstat = function() {
   makeRLearnerRegr(
