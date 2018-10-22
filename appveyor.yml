@@ -15,7 +15,6 @@ install:
   - cmd: R -q -e "if (!requireNamespace('curl')) install.packages('curl')"
   - cmd: R -q -e "devtools::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
 
-
 cache:
   - C:\RLibrary
   - C:\Program Files\Pandoc\
