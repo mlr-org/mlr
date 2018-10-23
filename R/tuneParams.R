@@ -102,7 +102,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control,
   assertFlag(show.info)
   checkTunerParset(learner, par.set, measures, control)
   control = setDefaultImputeVal(control, measures)
-  learner$par.vals$cache = cache
+  learner$cache = cache
 
   cl = getClass1(control)
   sel.func = switch(cl,
