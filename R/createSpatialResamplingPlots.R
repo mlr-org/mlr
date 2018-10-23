@@ -2,6 +2,7 @@
 #'
 #' @description Visualize partitioning of resample objects with spatial information.
 #' @import ggplot2
+#' @importFrom purrr map_int flatten imap
 #' @family plot
 #' @author Patrick Schratz
 #' @param task [Task] \cr
@@ -152,9 +153,9 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   }
 
   # create plot list with length = folds
-  nfolds = purrr::map_int(resample, ~ .x$pred$instance$desc$folds)[1]
+  nfolds = map_int(resample, ~ .x$pred$instance$desc$folds)[1]
 
-  plot.list.out.all = purrr::map(resample, function(.r) {
+  plot.list.out.all = map(resample, function(.r) {
 
     # bind coordinates to data
     data = cbind(task$env$data, task$coordinates)
@@ -163,9 +164,9 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     data = sf::st_as_sf(data, coords = names(task$coordinates), crs = crs)
 
     # create plot list with length = folds
-    plot.list = purrr::map(1:(nfolds * repetitions), ~ data)
+    plot.list = map(1:(nfolds * repetitions), ~ data)
 
-    plot.list.out = purrr::imap(plot.list, ~ ggplot(.x) +
+    plot.list.out = imap(plot.list, ~ ggplot(.x) +
       geom_sf(data = subset(.x, as.integer(rownames(.x)) %in%
                        .r$pred$instance[["train.inds"]][[.y]]),
         color = color.train, size = point.size, ) +
@@ -183,7 +184,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     return(plot.list.out)
   })
 
-  plot.list = purrr::flatten(plot.list.out.all)
+  plot.list = flatten(plot.list.out.all)
 
   # more than 1 repetition?
   if (repetitions > 1) {

@@ -23,3 +23,5 @@ Other predict: \code{\link{getPredictionProbabilities}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
+\concept{predict}
+\concept{roc}

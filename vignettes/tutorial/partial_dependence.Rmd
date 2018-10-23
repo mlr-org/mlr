@@ -50,7 +50,7 @@ Similarly, instead of using the mean to estimate the expected value of the funct
 See [Goldstein, Kapelner, Bleich, and Pitkin (2014)](http://arxiv.org/abs/1309.6392) for more details and their package `ICEbox` for the original implementation. 
 The algorithm works for any supervised learner with classification, regression, and survival tasks.
 
-# Generating partial dependences
+## Generating partial dependences
 
 Our implementation, following `mlr`'s [visualization](visualization.html){target="_blank"} pattern, consists of the above mentioned function `generatePartialDependenceData()`, as well as two visualization functions, `plotPartialDependence()` and `plotPartialDependenceGGVIS()`. 
 The former generates input (objects of class `PartialDependenceData()`) for the latter.
@@ -172,7 +172,7 @@ pd.classif.der.ind = generatePartialDependenceData(fit.classif, iris.task, "Peta
 head(pd.classif.der.ind$data)
 ```
 
-# Plotting partial dependences
+## Plotting partial dependences
 
 Results from `generatePartialDependenceData()` and `generateFunctionalANOVAData()` can be visualized with `plotPartialDependence()` and `plotPartialDependenceGGVIS()`.
 

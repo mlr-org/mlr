@@ -4,7 +4,8 @@
 \alias{makeTaskDescInternal}
 \title{Exported for internal use.}
 \usage{
-makeTaskDescInternal(type, id, data, target, weights, blocking, coordinates)
+makeTaskDescInternal(type, id, data, target, weights, blocking,
+  coordinates)
 }
 \arguments{
 \item{type}{(\code{character(1)})\cr

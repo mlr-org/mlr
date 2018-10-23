@@ -7,7 +7,7 @@
 #' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 #'
 #' All supported measures can be found by [listMeasures] or as a table
-#' in the tutorial appendix: <https://mlr-org.github.io/mlr/articles/measures.html>.
+#' in the tutorial appendix: <https://mlr.mlr-org.com/articles/tutorial/measures.html>.
 #'
 #' If you want a measure for a misclassification cost matrix, look at [makeCostMeasure].
 #' If you want to implement your own measure, look at [makeMeasure].
@@ -1417,7 +1417,7 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
 ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
   properties = c("surv", "req.truth", "req.model", "req.task"),
   name = "Integrated brier score using Kaplan-Meier estimator for weighting",
-  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  note = "Only works for methods for which probabilities are provided via pec::predictSurvProb. Currently these are only coxph and randomForestSRC. To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages(c("survival", "pec"))
     targets = getTaskTargets(task)
@@ -1427,11 +1427,11 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
     grid = seq(0, max.time, length.out = extra.args$resolution)
 
-    probs = predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
-      maxtime = max.time, verbose = FALSE)
+      maxtime = max.time, verbose = FALSE, reference = FALSE)
 
-    # FIXME: what is the difference between reference and matrix?
+
     # FIXME: this might be the wrong number!
     crps(perror, times = max.time)[1L, ]
   },

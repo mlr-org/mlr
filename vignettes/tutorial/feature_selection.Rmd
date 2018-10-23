@@ -13,6 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 library("lattice")
+library("kernlab")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
@@ -22,27 +23,44 @@ Often, data sets include a large number of features.
 The technique of extracting a subset of relevant features is called feature selection.
 Feature selection can enhance the interpretability of the model, speed up the learning process and improve the learner performance.
 There exist different approaches to identify the relevant features.
-`mlr` supports *filter* and *wrapper methods*.
+In the literature two different approaches exist: One is called "Filtering" and the other approach is often referred to as "feature subset selection" or "wrapper methods".
+
+What is the difference?
+
+- **Filter**: An external algorithm computes a rank of the variables (e.g. based on the correlation to the response). 
+  Then, features are subsetted by a certain criteria, e.g. an absolute number or a percentage of the number of variables.
+  The selected features will then be used to fit a model (with optional hyperparameters selected by tuning).
+  This calculation is usually cheaper than "feature subset selection" in terms of computation time.
+- **Feature subset selection**: Here, no ranking of features is done. 
+  Features are selected by a (random) subset of the data. 
+  Then, a model is fit and the performance is checked. 
+  This is done for a lot of feature combinations in a CV setting and the best combination is reported.
+  This method is very computational intense as a lot of models are fitted.
+  Also, strictly all these models would need to be tuned before the performance is estimated which would require an additional nested level in a CV setting.
+  After all this, the selected subset of features is again fitted (with optional hyperparameters selected by tuning).
+  
+`mlr` supports both **[filter methods](feature_selection.html#filter-methods){target="_blank"}** and **[wrapper methods](feature_selection.html#wrapper-methods){target="_blank"}**.
 
 # Filter methods
 
 Filter methods assign an importance value to each feature.
 Based on these values the features can be ranked and a feature subset can be selected.
+You can see [here](filter_methods.html#current-methods) which algorithms are implemented.
 
 ## Calculating the feature importance
 
-Different methods for calculating the feature importance are built into `mlr`'s function `generateFilterValuesData()` (`getFilterValues()` has been deprecated in favor of `generateFilterValuesData()`). 
+Different methods for calculating the feature importance are built into `mlr`'s function `generateFilterValuesData()`. 
 Currently, classification, regression and survival analysis tasks are supported. 
 A table showing all available methods can be found in article [filter methods](filter_methods.html){target="_blank"}.
 
-Function `generateFilterValuesData()` requires the `Task()` and a character string specifying the filter method.
+The most basic approach is to use `generateFilterValuesData()` directly on a `Task()` with a character string specifying the filter method.
 
 ```{r}
 fv = generateFilterValuesData(iris.task, method = "information.gain")
 fv
 ```
 
-``fv`` is a `FilterValues()` object and ``fv$data`` contains a `data.frame` that gives the importance values for all features. 
+`fv` is a `FilterValues()` object and `fv$data` contains a `data.frame` that gives the importance values for all features. 
 Optionally, a vector of filter methods can be passed.
 
 ```{r}
@@ -52,30 +70,23 @@ fv2$data
 
 A bar plot of importance values for the individual features can be obtained using function `plotFilterValues()`.
 
-```{r}
-plotFilterValues(fv2)
+```{r, fig.width=10}
+plotFilterValues(fv2) + ggpubr::theme_pubr()
 ```
 
 By default `plotFilterValues()` will create facetted subplots if multiple filter methods are passed as input to `generateFilterValuesData()`.
 
-There is also an experimental `ggvis` plotting function, `plotFilterValuesGGVIS()`. 
-This takes the same arguments as `plotFilterValues()` and produces a `shiny` application that allows the interactive selection of the displayed filter method, the number of features selected, and the sorting method (e.g., ascending or descending).
-
-```{r, eval=FALSE}
-plotFilterValuesGGVIS(fv2)
-```
-
-According to the ``"information.gain"`` measure, `Petal.Width` and `Petal.Length` contain the most information about the target variable `Species`.
+According to the `"information.gain"` measure, `Petal.Width` and `Petal.Length` contain the most information about the target variable `Species`.
 
 ## Selecting a feature subset
 
-With `mlr`'s function `filterFeatures()` you can create a new `Task()` by leaving out features of lower importance.
+With `mlr`s function `filterFeatures()` you can create a new `Task()` by leaving out features of lower importance.
 
 There are several ways to select a feature subset based on feature importance values:
 
-* Keep a certain *absolute number* (``abs``) of features with highest importance.
-* Keep a certain *percentage* (``perc``) of features with highest importance.
-* Keep all features whose importance exceeds a certain *threshold value* (``threshold``).
+* Keep a certain **absolute number** (`abs`) of features with highest importance.
+* Keep a certain **percentage** (`perc`) of features with highest importance.
+* Keep all features whose importance exceeds a certain *threshold value* (`threshold`).
 
 Function `filterFeatures()` supports these three methods as shown in the following example.
 Moreover, you can either specify the ``method`` for calculating the feature importance or you can use previously computed importance values via argument ``fval``.
@@ -98,9 +109,14 @@ Often feature selection based on a filter method is part of the data preprocessi
 In a proper experimental setup you might want to automate the selection of the features so that it can be part of the validation method of your choice.
 A Learner (`makeLearner()`) can be fused with a filter method by function `makeFilterWrapper()`.
 The resulting Learner (`makeLearner()`) has the additional class attribute `FilterWrapper()`.
+This has the advantage that the filter parameters (`fw.method`, `fw.perc.` `fw.abs`) can now be treated as hyperparameters.
+They can be tuned in a nested CV setting at the same level as the algorithm hyperparameters.
+You can think of if as "tuning the dataset".
+
+### Using fixed parameters
 
 In the following example we calculate the 10-fold cross-validated error rate [mmce](measures.html){target="_blank"} of the k-nearest neighbor classifier (`FNN::fnn()`) with preceding feature selection on the `iris` (`datasets::iris()`) data set.
-We use ``"information.gain"`` as importance measure and select the 2 features with highest importance.
+We use `information.gain` as importance measure with the aim to subset the dataset to the two features with the highest importance.
 In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.
 
 ```{r}
@@ -110,9 +126,8 @@ r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FA
 r$aggr
 ```
 
-You may want to know which features have been used. Luckily, we have called
-`resample()` with the argument `models = TRUE`, which means that `r$models`
-contains a `list` of models (`makeWrappedModel()`) fitted in the individual resampling iterations.
+You may want to know which features have been used. 
+Luckily, we have called `resample()` with the argument `models = TRUE`, which means that `r$models` contains a `list` of models (`makeWrappedModel()`) fitted in the individual resampling iterations.
 In order to access the selected feature subsets we can call `getFilteredFeatures()` on each model.
 
 ```{r}
@@ -120,24 +135,37 @@ sfeats = sapply(r$models, getFilteredFeatures)
 table(sfeats)
 ```
 
-The selection of features seems to be very stable.
+The result shows that in the ten folds always `Petal.Length` and `Petal.Width` have been chosen (remember we wanted to have the best two, i.e. $10 \times 2$). 
+The selection of features seems to be very stable for this dataset.
 The features `Sepal.Length` and `Sepal.Width` did not make it into a single fold.
 
-## Tuning the size of the feature subset
+### Tuning the size of the feature subset
 
 In the above examples the number/percentage of features to select or the threshold value have been arbitrarily chosen.
-If filtering is a preprocessing step before applying a learning method optimal values with regard to the learner performance can be found by [tuning](tune.html){target="_blank"}.
+However, it is usually unclear which subset of features will results in the best performance.
+To answer this question, we can [tune](tune.html){target="_blank"} the number of features that are taken (after the ranking of the chosen algorithms was applied) as a subset in each fold.
+Three tunable parameters exist in `mlr`, documented in `makeFilterWrapper()`: 
+
+* The percentage of features selected (`fw.perc`)
+* The absolute number of features selected (`fw.abs`)
+* The threshold of the filter method (`fw.threshold`)
 
 In the following regression example we consider the `BostonHousing` (`mlbench::BostonHousing()`) data set.
-We use a linear regression model and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (`mse()`) of the learner is minimal.
-As search strategy for tuning a grid search is used.
+We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (`mse()`) of the learner is minimal.
+Additionally, we [tune](tune.html){target="_blank"} the hyperparameters of the algorithm at the same time.
+As search strategy for tuning a random search with five iterations is used.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
-ps = makeParamSet(makeDiscreteParam("fw.perc", values = seq(0.2, 0.5, 0.05)))
+lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = "chi.squared")
+ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
+                  makeNumericParam("C", lower = -10, upper = 10, 
+                    trafo = function(x) 2^x),
+                  makeNumericParam("sigma", lower = -10, upper = 10,
+                    trafo = function(x) 2^x)
+                  )
 rdesc = makeResampleDesc("CV", iters = 3)
 res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
-  control = makeTuneControlGrid())
+  control = makeTuneControlRandom(maxit = 5))
 res
 ```
 
@@ -154,38 +182,15 @@ res$x
 res$y
 ```
 
-After tuning we can generate a new wrapped learner with the optimal percentage value for further use.
+After tuning we can generate a new wrapped learner with the optimal percentage value for further use (e.g. to predict to new data).
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", fw.perc = res$x$fw.perc)
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", 
+        fw.perc = res$x$fw.perc, C = res$x$C, sigma = res$x$sigma)
 mod = train(lrn, bh.task)
 mod
 
 getFilteredFeatures(mod)
-```
-
-Here is another example using multi-criteria [tuning](tune.html){target="_blank"}.
-We consider linear discriminant analysis (`MASS::lda()`) with precedent feature selection based on the Chi-squared statistic of independence (``"chi.squared"``) on the `Sonar` (`mlbench::sonar()`) data set and tune the threshold value.
-During tuning both, the false positive and the false negative rate [fpr](measures.html){target="_blank"} and [fnr](measures.html){target="_blank"}), are minimized. 
-As search strategy we choose a random search (see `makeTuneMultiCritControlRandom` (`?TuneMultiCritControl()`).
-
-```{r}
-lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared")
-ps = makeParamSet(makeNumericParam("fw.threshold", lower = 0.1, upper = 0.9))
-rdesc = makeResampleDesc("CV", iters = 10)
-res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = ps,
-  measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
-  show.info = FALSE)
-res
-head(as.data.frame(res$opt.path))
-```
-
-The results can be visualized with function `plotTuneMultiCritResult()`.
-The plot shows the false positive and false negative rates for all parameter values visited during tuning. 
-The size of the points on the Pareto front is slightly increased.
-
-```{r}
-plotTuneMultiCritResult(res)
 ```
 
 # Wrapper methods
@@ -307,4 +312,17 @@ The selected feature sets in the individual resampling iterations can be extract
 
 ```{r}
 lapply(r$models, getFeatSelResult)
+```
+
+# Feature importance from trained models
+
+Some algorithms internally compute a feature importance during training. 
+By using `getFeatureImportance()` it is possible to extract this part from the trained model.
+
+```{r}
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.ranger", importance = c("permutation"))
+mod = train(lrn, task)
+
+getFeatureImportance(mod)
 ```

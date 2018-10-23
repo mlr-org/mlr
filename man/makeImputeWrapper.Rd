@@ -6,8 +6,8 @@
 \usage{
 makeImputeWrapper(learner, classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L),
-  dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE)
+  dummy.type = "factor", force.dummies = FALSE,
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -93,3 +93,5 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{impute}
+\concept{wrapper}

@@ -63,3 +63,5 @@ Other plot: \code{\link{createSpatialResamplingPlots}},
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
   \code{\link{plotROCCurves}}
 }
+\concept{plot}
+\concept{thresh_vs_perf}

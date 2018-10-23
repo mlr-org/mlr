@@ -4,11 +4,11 @@
 \alias{plotLearnerPrediction}
 \title{Visualizes a learning algorithm on a 1D or 2D data set.}
 \usage{
-plotLearnerPrediction(learner, task, features = NULL, measures, cv = 10L,
-  ..., gridsize, pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
-  err.mark = "train", bg.cols = c("darkblue", "green", "darkred"),
-  err.col = "white", err.size = pointsize, greyscale = FALSE,
-  pretty.names = TRUE)
+plotLearnerPrediction(learner, task, features = NULL, measures,
+  cv = 10L, ..., gridsize, pointsize = 2, prob.alpha = TRUE,
+  se.band = TRUE, err.mark = "train", bg.cols = c("darkblue",
+  "green", "darkred"), err.col = "white", err.size = pointsize,
+  greyscale = FALSE, pretty.names = TRUE)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr

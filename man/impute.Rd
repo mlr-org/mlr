@@ -6,8 +6,8 @@
 \usage{
 impute(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L),
-  dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE)
+  dummy.type = "factor", force.dummies = FALSE,
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
 }
 \arguments{
 \item{obj}{(\link{data.frame} | \link{Task})\cr
@@ -105,3 +105,4 @@ Other impute: \code{\link{imputations}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }
+\concept{impute}

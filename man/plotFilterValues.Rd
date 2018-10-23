@@ -5,7 +5,8 @@
 \title{Plot filter values using ggplot2.}
 \usage{
 plotFilterValues(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
+  feat.type.cols = FALSE, facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{fvalues}{(\link{FilterValues})\cr
@@ -56,3 +57,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 }
+\concept{filter}
+\concept{generate_plot_data}
