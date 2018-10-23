@@ -45,7 +45,10 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
+  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
+  fw.mandatory.feat = NULL, cache = FALSE, ...) {
+
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
@@ -64,7 +67,10 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.pe
       makeNumericLearnerParam(id = "fw.threshold"),
       makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
-    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
+    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc,
+      fw.abs = fw.abs, fw.threshold = fw.threshold,
+      fw.mandatory.feat = fw.mandatory.feat,
+      cache = cache)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
   lrn$more.args = ddd
   lrn
@@ -72,10 +78,13 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.pe
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL,
+  fw.threshold = NULL, fw.mandatory.feat = NULL, cache = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold, mandatory.feat = fw.mandatory.feat), .learner$more.args))
+  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
+     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
+     mandatory.feat = fw.mandatory.feat, cache = cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
