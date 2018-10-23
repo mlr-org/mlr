@@ -73,10 +73,11 @@
 #'   measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(r$aggr)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  extract, keep.pred = TRUE, cache = FALSE, ..., show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
+  learner$cache = cache
   assertClass(task, classes = "Task")
   n = getTaskSize(task)
   # instantiate resampling
@@ -103,7 +104,8 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
-    measures = measures, model = models, extract = extract, show.info = show.info)
+    measures = measures, model = models, extract = extract, show.info = show.info,
+    cache = cache)
   if (!is.null(weights)) {
     more.args$weights = weights
   } else if (!is.null(getTaskWeights(task))) {
@@ -139,22 +141,22 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
 
 # this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
-doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
+doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info, cache) {
   setSlaveOptions()
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
   calculateResampleIterationResult(learner = learner, task = task, i = i, train.i = train.i, test.i = test.i, measures = measures,
-    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
+    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info, cache = cache)
 }
 
 
 #Evaluate one train/test split of the resample function and get one or more performance values
 calculateResampleIterationResult = function(learner, task, i, train.i, test.i, measures,
-  weights, rdesc, model, extract, show.info) {
+  weights, rdesc, model, extract, show.info, cache) {
 
   err.msgs = c(NA_character_, NA_character_)
   err.dumps = list()
-  m = train(learner, task, subset = train.i, weights = weights[train.i])
+  m = train(learner, task, subset = train.i, weights = weights[train.i], cache = cache)
   if (isFailureModel(m)) {
     err.msgs[1L] = getFailureModelMsg(m)
     err.dumps$train = getFailureModelDump(m)

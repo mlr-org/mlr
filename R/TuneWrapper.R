@@ -59,7 +59,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
 trainLearner.TuneWrapper = function(.learner, .task, .subset = NULL,  ...) {
   .task = subsetTask(.task, .subset)
   or = tuneParams(.learner$next.learner, .task, .learner$resampling, .learner$measures,
-                  .learner$opt.pars, .learner$control, .learner$show.info)
+                  .learner$opt.pars, .learner$control, .learner$show.info, cache = .learner$cache)
   lrn = setHyperPars(.learner$next.learner, par.vals = or$x)
   if ("DownsampleWrapper" %in% class(.learner$next.learner) && !is.null(.learner$control$final.dw.perc) && !is.null(getHyperPars(lrn)$dw.perc) && getHyperPars(lrn)$dw.perc < 1) {
     messagef("Train model on %f on data.", .learner$control$final.dw.perc)

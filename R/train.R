@@ -28,7 +28,7 @@
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset = NULL, weights = NULL) {
+train = function(learner, task, subset = NULL, weights = NULL, cache = FALSE) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   if (is.logical(subset))
