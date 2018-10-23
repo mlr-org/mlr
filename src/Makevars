@@ -1,1 +1,1 @@
-PKG_CXXFLAGS += -std=gnu99
+PKG_CPPFLAGS += -std=gnu99
