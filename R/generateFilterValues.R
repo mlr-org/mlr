@@ -30,7 +30,6 @@
 #' @family generate_plot_data
 #' @family filter
 #' @aliases FilterValues
-#' @keywords internal
 #' @export
 generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
