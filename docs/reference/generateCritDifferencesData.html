@@ -5,7 +5,8 @@
   <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<!-- Google Site Verification -->
+<meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
 <title>Generate data for critical-differences plot. — generateCritDifferencesData • mlr</title>
 
 <!-- jquery -->
@@ -32,22 +33,20 @@
 <meta property="og:description" content="Generates data that can be used to plot a
 critical differences plot. Computes the critical differences according
 to either the
-`"Bonferroni-Dunn"` test or the `"Nemenyi"` test.
-`"Bonferroni-Dunn"` usually yields higher power as it does not
+"Bonferroni-Dunn" test or the "Nemenyi" test.
+"Bonferroni-Dunn" usually yields higher power as it does not
 compare all algorithms to each other, but all algorithms to a
-`baseline` instead. 
+baseline instead. 
 Learners are drawn on the y-axis according to their average rank. 
-For `test = "nemenyi"` a bar is drawn, connecting all groups of not
+For test = "nemenyi" a bar is drawn, connecting all groups of not
 significantly different learners.
-For `test = "bd"` an interval is drawn arround the algorithm selected
-as baseline. All learners within this interval are not signifcantly different
+For test = "bd" an interval is drawn arround the algorithm selected
+as a baseline. All learners within this interval are not signifcantly different
 from the baseline. 
 Calculation:
-$$ CD = q_{\alpha} \sqrt{(\frac{k(k+1)}{6N})}$$ 
-Where \(q_\alpha\) is based on the  studentized range statistic.
+$$CD = q_{\alpha} \sqrt{\left(\frac{k(k+1)}{6N}\right)}$$ 
+Where \(q_\alpha\) is based on the studentized range statistic.
 See references for details." />
-
-<meta property="og:image" content="https://mlr-org.github.io/mlr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,10 +86,7 @@ See references for details." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../articles/mlr.html">Get Started</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Basics
      
@@ -98,40 +94,40 @@ See references for details." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/task.html">Tasks</a>
+      <a href="../articles/tutorial/task.html">Tasks</a>
     </li>
     <li>
-      <a href="../articles/learner.html">Learners</a>
+      <a href="../articles/tutorial/learner.html">Learners</a>
     </li>
     <li>
-      <a href="../articles/train.html">Train</a>
+      <a href="../articles/tutorial/train.html">Train</a>
     </li>
     <li>
-      <a href="../articles/predict.html">Predict</a>
+      <a href="../articles/tutorial/predict.html">Predict</a>
     </li>
     <li>
-      <a href="../articles/preproc.html">Preprocessing</a>
+      <a href="../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
-      <a href="../articles/performance.html">Performance</a>
+      <a href="../articles/tutorial/performance.html">Performance</a>
     </li>
     <li>
-      <a href="../articles/resample.html">Resampling</a>
+      <a href="../articles/tutorial/resample.html">Resampling</a>
     </li>
     <li>
-      <a href="../articles/tune.html">Tuning</a>
+      <a href="../articles/tutorial/tune.html">Tuning</a>
     </li>
     <li>
-      <a href="../articles/benchmark_experiments.html">Benchmark Experiments</a>
+      <a href="../articles/tutorial/benchmark_experiments.html">Benchmark Experiments</a>
     </li>
     <li>
-      <a href="../articles/parallelization.html">Parallelization</a>
+      <a href="../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
-      <a href="../articles/visualization.html">Visualization</a>
+      <a href="../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li>
-      <a href="../articles/usecase_regression.html">Use case - Regression</a>
+      <a href="../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
 </li>
@@ -143,58 +139,58 @@ See references for details." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/configureMlr.html">Configuration</a>
+      <a href="../articles/tutorial/configureMlr.html">Configuration</a>
     </li>
     <li>
-      <a href="../articles/wrapper.html">Wrapped Learners</a>
+      <a href="../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li>
-      <a href="../articles/impute.html">Imputation</a>
+      <a href="../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
-      <a href="../articles/bagging.html">Generic Bagging</a>
+      <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
     <li>
-      <a href="../articles/advanced_tune.html">Advanced Tuning</a>
+      <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
-      <a href="../articles/feature_selection.html">Feature Selection</a>
+      <a href="../articles/tutorial/feature_selection.html">Feature Selection/Filtering</a>
     </li>
     <li>
-      <a href="../articles/nested_resampling.html">Nested Resampling</a>
+      <a href="../articles/tutorial/nested_resampling.html">Nested Resampling</a>
     </li>
     <li>
-      <a href="../articles/cost_sensitive_classif.html">Cost-Sensitive Classification</a>
+      <a href="../articles/tutorial/cost_sensitive_classif.html">Cost-Sensitive Classification</a>
     </li>
     <li>
-      <a href="../articles/over_and_undersampling.html">Imbalanced Classification Problems</a>
+      <a href="../articles/tutorial/over_and_undersampling.html">Imbalanced Classification Problems</a>
     </li>
     <li>
-      <a href="../articles/roc_analysis.html">ROC Analysis and Performance Curves</a>
+      <a href="../articles/tutorial/roc_analysis.html">ROC Analysis and Performance Curves</a>
     </li>
     <li>
-      <a href="../articles/multilabel.html">Multilabel Classification</a>
+      <a href="../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
-      <a href="../articles/learning_curve.html">Learning Curve Analysis</a>
+      <a href="../articles/tutorial/learning_curve.html">Learning Curve Analysis</a>
     </li>
     <li>
-      <a href="../articles/partial_dependence.html">Partial Dependence Plots</a>
+      <a href="../articles/tutorial/partial_dependence.html">Partial Dependence Plots</a>
     </li>
     <li>
-      <a href="../articles/classifier_calibration.html">Classifier Calibration</a>
+      <a href="../articles/tutorial/classifier_calibration.html">Classifier Calibration</a>
     </li>
     <li>
-      <a href="../articles/hyperpar_tuning_effects.html">Hyperparameter Tuning Effects</a>
+      <a href="../articles/tutorial/hyperpar_tuning_effects.html">Hyperparameter Tuning Effects</a>
     </li>
     <li>
-      <a href="../articles/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
+      <a href="../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li>
-      <a href="../articles/handling_of_spatial_data.html">Handling of Spatial Data</a>
+      <a href="../articles/tutorial/handling_of_spatial_data.html">Handling of Spatial Data</a>
     </li>
     <li>
-      <a href="../articles/functional_data.html">Functional Data</a>
+      <a href="../articles/tutorial/functional_data.html">Functional Data</a>
     </li>
   </ul>
 </li>
@@ -206,16 +202,16 @@ See references for details." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/create_learner.html">Create Custom Learners</a>
+      <a href="../articles/tutorial/create_learner.html">Create Custom Learners</a>
     </li>
     <li>
-      <a href="../articles/create_measure.html">Create Custom Measures</a>
+      <a href="../articles/tutorial/create_measure.html">Create Custom Measures</a>
     </li>
     <li>
-      <a href="../articles/create_imputation.html">Create Imputation Methods</a>
+      <a href="../articles/tutorial/create_imputation.html">Create Imputation Methods</a>
     </li>
     <li>
-      <a href="../articles/create_filter.html">Create Custom Filters</a>
+      <a href="../articles/tutorial/create_filter.html">Create Custom Filters</a>
     </li>
   </ul>
 </li>
@@ -233,22 +229,22 @@ See references for details." />
       <a href="../news/index.html">News</a>
     </li>
     <li>
-      <a href="../articles/example_tasks.html">Example Tasks</a>
+      <a href="../articles/tutorial/example_tasks.html">Example Tasks</a>
     </li>
     <li>
-      <a href="../articles/integrated_learners.html">Integrated Learners</a>
+      <a href="../articles/tutorial/integrated_learners.html">Integrated Learners</a>
     </li>
     <li>
-      <a href="../articles/measures.html">Implemented Measures</a>
+      <a href="../articles/tutorial/measures.html">Implemented Measures</a>
     </li>
     <li>
-      <a href="../articles/filter_methods.html">Integrated Filter Methods</a>
+      <a href="../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li>
-      <a href="../articles/mlr_publications.html">mlr Publications</a>
+      <a href="../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="../articles/talks_videos_workshops.html">Talk, Videos and Workshops</a>
+      <a href="../articles/tutorial/talks_videos_workshops.html">Talks, Videos and Workshops</a>
     </li>
   </ul>
 </li>
@@ -263,19 +259,13 @@ See references for details." />
       <a href="https://github.com/mlr-org/mlrMBO">mlrMBO</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlrng">mlrng</a>
-    </li>
-    <li>
       <a href="https://github.com/mlr-org/mlrCPO">mlrCPO</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/shinyMlr">shinyMlr</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
-    </li>
-    <li>
-      <a href="http://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
+      <a href="https://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
     </li>
   </ul>
 </li>
@@ -301,7 +291,7 @@ See references for details." />
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.github.io">
+  <a href="https://mlr-blog.netlify.com/">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -332,19 +322,19 @@ See references for details." />
     <p>Generates data that can be used to plot a
 critical differences plot. Computes the critical differences according
 to either the
-`"Bonferroni-Dunn"` test or the `"Nemenyi"` test.<br />
-`"Bonferroni-Dunn"` usually yields higher power as it does not
+<code>"Bonferroni-Dunn"</code> test or the <code>"Nemenyi"</code> test.<br />
+<code>"Bonferroni-Dunn"</code> usually yields higher power as it does not
 compare all algorithms to each other, but all algorithms to a
-`baseline` instead. <br />
+<code>baseline</code> instead. <br />
 Learners are drawn on the y-axis according to their average rank. <br />
-For `test = "nemenyi"` a bar is drawn, connecting all groups of not
+For <code>test = "nemenyi"</code> a bar is drawn, connecting all groups of not
 significantly different learners.<br />
-For `test = "bd"` an interval is drawn arround the algorithm selected
-as baseline. All learners within this interval are not signifcantly different
+For <code>test = "bd"</code> an interval is drawn arround the algorithm selected
+as a baseline. All learners within this interval are not signifcantly different
 from the baseline. <br />
 Calculation:
-$$ CD = q_{\alpha} \sqrt{(\frac{k(k+1)}{6N})}$$ <br />
-Where \(q_\alpha\) is based on the  studentized range statistic.
+$$CD = q_{\alpha} \sqrt{\left(\frac{k(k+1)}{6N}\right)}$$ <br />
+Where \(q_\alpha\) is based on the studentized range statistic.
 See references for details.</p>
     
 
@@ -367,29 +357,29 @@ Default is the first measure used in the benchmark experiment.</p></td>
     </tr>
     <tr>
       <th>p.value</th>
-      <td><p>([numeric`(1)]<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 P-value for the critical difference. Default: 0.05</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>(`character(1)`): ([learner.id]) <br />
-Select a `learner.id` as baseline for the `test = "bd"`
+      <td><p>(<code>character(1)</code>): (<code>learner.id</code>) <br />
+Select a <code>learner.id</code> as baseline for the <code>test = "bd"</code>
 ("Bonferroni-Dunn") critical differences
-diagram.The critical difference Interval will then be positioned arround this learner.
+diagram. The critical difference interval will then be positioned arround this learner.
 Defaults to best performing algorithm. <br />
-For `test = "nemenyi"`, no baseline is needed as it performs `all pairwise
-comparisons.`</p></td>
+For <code>test = "nemenyi"</code>, no baseline is needed as it performs <em>all pairwise
+comparisons</em>.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>(`character(1)`) <br />
+      <td><p>(<code>character(1)</code>) <br />
 Test for which the critical differences are computed. <br />
 &#8220;bd&#8221; for the Bonferroni-Dunn Test, which is comparing all
-classifiers to a `baseline`, thus performing a comparison
+classifiers to a <code>baseline</code>, thus performing a comparison
 of one classifier to all others. <br />
-Algorithms not connected by a single line are statistically different.
-then the baseline. <br />
-&#8220;nemenyi&#8221; for the [PMCMR::posthoc.friedman.nemenyi.test]
+Algorithms not connected by a single line are statistically different
+from the baseline. <br />
+&#8220;nemenyi&#8221; for the <a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
 which is comparing all classifiers to each other. The null hypothesis that
 there is a difference between the classifiers can not be rejected for all
 classifiers that have a single grey bar connecting them.</p></td>
@@ -398,17 +388,17 @@ classifiers that have a single grey bar connecting them.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([critDifferencesData]). List containing:</p>
-<dt>data</dt><dd><p>([data.frame]) containing the info for the descriptive
-               part of the plot</p></dd>
-<dt>friedman.nemenyi.test</dt><dd><p>([list]) of class `pairwise.htest` <br />
-                               contains the calculated
-                               <a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>posthoc.friedman.nemenyi.test</a></p></dd>
-<dt>cd.info</dt><dd><p>([list]) containing info on the critical difference
-                 and its positioning</p></dd>
-<dt>baseline</dt><dd><p>`baseline` chosen for plotting</p></dd>
-<dt>p.value</dt><dd><p>p.value used for the <a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>posthoc.friedman.nemenyi.test</a>
-                 and for computation of the critical difference</p></dd>
+    <p>(<code>critDifferencesData</code>). List containing:</p>
+<dt>data</dt><dd><p>(data.frame) containing the info for the descriptive
+part of the plot</p></dd>
+<dt>friedman.nemenyi.test</dt><dd><p>(list) of class <code>pairwise.htest</code> <br />
+contains the calculated
+<a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a></p></dd>
+<dt>cd.info</dt><dd><p>(list) containing info on the critical difference
+and its positioning</p></dd>
+<dt>baseline</dt><dd><p><code>baseline</code> chosen for plotting</p></dd>
+<dt>p.value</dt><dd><p>p.value used for the <a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
+and for computation of the critical difference</p></dd>
 
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
