@@ -85,7 +85,10 @@
 #' print(head(as.data.frame(res$opt.path)))
 #' }
 #' @seealso [generateHyperParsEffectData]
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
+tuneParams = function(learner, task, resampling, measures, par.set, control,
+  show.info = getMlrOption("show.info"), resample.fun = resample,
+  cache) {
+
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
@@ -99,6 +102,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   assertFlag(show.info)
   checkTunerParset(learner, par.set, measures, control)
   control = setDefaultImputeVal(control, measures)
+  learner$par.vals$cache = cache
 
   cl = getClass1(control)
   sel.func = switch(cl,
@@ -121,7 +125,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("Imputation value: %g", control$impute.val)
   }
 
-  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
+  or = sel.func(learner, task, resampling, measures, par.set, control,
+                opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)

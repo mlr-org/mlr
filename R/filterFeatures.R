@@ -31,8 +31,9 @@
 #' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL, perc = 1, abs = NULL,
-    threshold = NULL, mandatory.feat = NULL, cache = FALSE, ...) {
+filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
+    perc = 1, abs = NULL, threshold = NULL, mandatory.feat = NULL,
+    cache = FALSE, ...) {
   assertClass(task, "SupervisedTask")
   assertChoice(method, choices = ls(.FilterRegister))
   select = checkFilterArguments(perc, abs, threshold)

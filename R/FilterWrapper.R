@@ -47,7 +47,7 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
   fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, cache = FALSE, ...) {
+  fw.mandatory.feat = NULL, ...) {
 
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
@@ -69,8 +69,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     ),
     par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc,
       fw.abs = fw.abs, fw.threshold = fw.threshold,
-      fw.mandatory.feat = fw.mandatory.feat,
-      cache = cache)),
+      fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
   lrn$more.args = ddd
   lrn
@@ -79,12 +78,12 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL,
-  fw.threshold = NULL, fw.mandatory.feat = NULL, cache = NULL, ...) {
+  fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
      perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-     mandatory.feat = fw.mandatory.feat, cache = cache), .learner$more.args))
+     mandatory.feat = fw.mandatory.feat, cache = .learner$par.vals$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
