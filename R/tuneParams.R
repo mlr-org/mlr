@@ -88,7 +88,7 @@
 #' }
 #' @seealso [generateHyperParsEffectData]
 tuneParams = function(learner, task, resampling, measures, par.set, control,
-  show.info = getMlrOption("show.info"), resample.fun = resample, cache) {
+  show.info = getMlrOption("show.info"), resample.fun = resample, cache = FALSE) {
 
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
