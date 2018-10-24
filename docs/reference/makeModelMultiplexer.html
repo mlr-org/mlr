@@ -394,8 +394,14 @@ List of Learners with unique IDs.</p></td>
 <span class='co'># to save some time we use random search. but you probably want something like this:</span>
 <span class='co'># ctrl = makeTuneControlIrace(maxExperiments = 500L)</span>
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></span>(<span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>10L</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
-<span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner ModelMultiplexer for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>                               Type len Def                            Constr</span>
+#&gt; <span class='message'>selected.learner           discrete   -   - classif.ksvm,classif.randomForest</span>
+#&gt; <span class='message'>classif.ksvm.sigma          numeric   -   -                         -10 to 10</span>
+#&gt; <span class='message'>classif.randomForest.ntree  integer   -   -                          1 to 500</span>
+#&gt; <span class='message'>                           Req Tunable Trafo</span>
+#&gt; <span class='message'>selected.learner             -    TRUE     -</span>
+#&gt; <span class='message'>classif.ksvm.sigma           Y    TRUE     Y</span>
+#&gt; <span class='message'>classif.randomForest.ntree   Y    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: selected.learner=classif.ksvm; sigma=0.613</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0466667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: selected.learner=classif.rand...; ntree=368</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0266667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: selected.learner=classif.ksvm; sigma=0.534</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0466667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: selected.learner=classif.ksvm; sigma=78.9</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.6733333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 5: selected.learner=classif.ksvm; sigma=0.0739</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 5: mmce.test.mean=0.0533333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 6: selected.learner=classif.rand...; ntree=452</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 6: mmce.test.mean=0.0266667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 7: selected.learner=classif.ksvm; sigma=880</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 7: mmce.test.mean=0.7066667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 8: selected.learner=classif.rand...; ntree=224</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 8: mmce.test.mean=0.0266667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 9: selected.learner=classif.rand...; ntree=370</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 9: mmce.test.mean=0.0266667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 10: selected.learner=classif.ksvm; sigma=96</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 10: mmce.test.mean=0.6866667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: selected.learner=classif.rand...; classif.randomForest.ntree=452 : mmce.test.mean=0.0266667</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: selected.learner=classif.rand...; classif.randomForest.ntree=452
 #&gt; mmce.test.mean=0.0266667</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))</div><div class='output co'>#&gt;       selected.learner classif.ksvm.sigma classif.randomForest.ntree
 #&gt; 1         classif.ksvm         -0.7057245                         NA
@@ -405,12 +411,12 @@ List of Learners with unique IDs.</p></td>
 #&gt; 5         classif.ksvm         -3.7577442                         NA
 #&gt; 6 classif.randomForest                 NA                        452
 #&gt;   mmce.test.mean dob eol error.message exec.time
-#&gt; 1     0.04666667   1  NA          &lt;NA&gt;     0.039
-#&gt; 2     0.02666667   2  NA          &lt;NA&gt;     0.071
-#&gt; 3     0.04666667   3  NA          &lt;NA&gt;     0.039
-#&gt; 4     0.67333333   4  NA          &lt;NA&gt;     0.040
-#&gt; 5     0.05333333   5  NA          &lt;NA&gt;     0.039
-#&gt; 6     0.02666667   6  NA          &lt;NA&gt;     0.059</div><div class='input'>
+#&gt; 1     0.04666667   1  NA          &lt;NA&gt;     0.099
+#&gt; 2     0.02666667   2  NA          &lt;NA&gt;     0.113
+#&gt; 3     0.04666667   3  NA          &lt;NA&gt;     0.091
+#&gt; 4     0.67333333   4  NA          &lt;NA&gt;     0.108
+#&gt; 5     0.05333333   5  NA          &lt;NA&gt;     0.065
+#&gt; 6     0.02666667   6  NA          &lt;NA&gt;     0.068</div><div class='input'>
 <span class='co'># more unique and reliable way to construct the param set</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></span>(<span class='no'>lrn</span>,
   <span class='kw'>classif.ksvm</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(

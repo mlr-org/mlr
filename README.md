@@ -9,7 +9,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 * [CRAN release site](https://CRAN.R-project.org/package=mlr)
-* Detailed Tutorial: [Online as HTML](https://mlr-org.github.io/mlr/)
+* Detailed Tutorial: [Online as HTML](https://mlr.mlr-org.com/index.html)
 * [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf)
 
 * Install the development version
@@ -31,7 +31,7 @@ Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](h
 
 Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately.
-An overview of all mlr related publications can be found [here](http://mlr-org.github.io/mlr/articles/mlr_publications.html).
+An overview of all mlr related publications can be found [here](https://mlr.mlr-org.com/articles/tutorial/mlr_publications.html).
 
 A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Misc#publications-that-use-mlr).
 
@@ -74,7 +74,7 @@ Furthermore, the package is nicely connected to the [**OpenML**](https://github.
 
 # News
 
-Changes of the packages can be accessed in the [NEWS file](https://mlr-org.github.io/mlr/news/index.html) shipped with the package.
+Changes of the packages can be accessed in the [NEWS file](https://mlr.mlr-org.com/news/index.html) shipped with the package.
 
 # Get in Touch
 
