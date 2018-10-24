@@ -1,17 +1,17 @@
 # mlr 2.14:
 
 ## general
-* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
 
 ## functions - general
-* getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+* getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (@pat-s, #2413).
 
 ## filter - general
-* Caching is now used when tuning a filter. This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations. This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold`.
+* Caching is now used when tuning a filter. This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations. This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold` (@pat-s, #2463).
 
 ## learners - new
-* classif.liquidSVM
-* regr.liquidSVM
+* classif.liquidSVM (@PhilippPro, #2428)
+* regr.liquidSVM (@PhilippPro, #2428)
 
 # mlr 2.13:
 
