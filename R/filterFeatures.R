@@ -25,6 +25,8 @@
 #'   Mutually exclusive with arguments `perc` and `abs`.
 #' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param cache ([logical])\cr Should caching be used? Only applies when
+#'   filtering is run multiple times, e.g. during tuning.
 #' @param ... (any)\cr
 #'   Passed down to selected filter method.
 #' @template ret_task
