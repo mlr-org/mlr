@@ -33,7 +33,7 @@
 #' @export
 #' @family filter
 filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
-    perc = 1, abs = NULL, threshold = NULL, mandatory.feat = NULL,
+    perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
     cache = FALSE, ...) {
   assertClass(task, "SupervisedTask")
   assertChoice(method, choices = ls(.FilterRegister))
@@ -51,6 +51,7 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
       if (!requireNamespace("memoise", quietly = TRUE)) {
         stop("Package \"memoise\" needed for this function to work. Please install it.",
              call. = FALSE)
+      }
 
       # caching calls to `generateFilterValuesData()` with the same arguments
       cache = memoise::cache_filesystem("~/.cache")
