@@ -91,11 +91,11 @@ test_that("plotFilterValues", {
 test_that("args are passed down to filter methods", { # we had an issue here, see #941
 
   expect_error(generateFilterValuesData(regr.num.task, method = c("mrmr", "univariate.model.score"),
-    nselect = 3, perf.learner = "regr.lm"), "Please pass extra arguments")
+    perf.learner = "regr.lm"), "Please pass extra arguments")
 
   # check that we can pass down perf.learner to univariate.model.score, and get no error from mrmr call
   f = generateFilterValuesData(regr.num.task, method = c("mrmr", "univariate.model.score"),
-    nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "regr.lm")))
+    more.args = list(univariate.model.score = list(perf.learner = "regr.lm")))
 
   # create stupid dummy data and check that we can change the na.rm arg of filter "variance" in multiple ways
   d = iris; d[1L, 1L] = NA_real_
