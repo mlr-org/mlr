@@ -13,7 +13,7 @@ install:
   - cmd: rm -rf C:\RLibrary\00LOCK-*
   - cmd: R -q -e "if (!requireNamespace('devtools')) install.packages('devtools')"
   - cmd: R -q -e "if (!requireNamespace('curl')) install.packages('curl')"
-  - cmd: R -q -e "devtools::install_github('ropenscilabs/tic@rcmdcheck'); tic::prepare_all_stages()"
+  - cmd: R -q -e "devtools::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
 
 
 cache:
