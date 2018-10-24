@@ -1,30 +1,35 @@
 #' @title Fuse learner with multiclass method.
 #'
 #' @description
-#' Fuses a base learner with a multi-class method.
+#' Fuses a base classificatio or regression learner with a ordinal method.
 #' Creates a learner object, which can be used like any other learner object.
-#' This way learners which can only handle binary classification will be able to
-#' handle multi-class problems, too.
+#' This way learners which cannot handle ordinal tasks will be able to
+#' handle those problems, too.
 #'
-#' We use a multiclass-to-binary reduction principle, where multiple binary
-#' problems are created from the multiclass task. How these binary problems
+#' For classification learners, we use multiclass-to-binary reduction principle, where multiple binary
+#' problems are created from the ordinal task. How these binary problems
 #' are generated is defined by an error-correcting-output-code (ECOC) code book.
-#' This also allows the simple and well-known one-vs-one and one-vs-rest
-#' approaches. Decoding is currently done via Hamming decoding, see
+#' This also allows the orderd partitions, one-vs-next, one-vs-followers and one-vs-previous  
+#' approaches. Decoding is currently done via Hamming decoding, see # FIXME
 #' e.g. here <http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf>.
 #'
+#' For regression learners we implemented a threshold based approach which seperates
+#' the response space into optimal areas accrording to the ordinal target. # FIXME
+#' 
 #' Currently, the approach always operates on the discrete predicted labels
 #' of the binary base models (instead of their probabilities) and the created
 #' wrapper cannot predict posterior probabilities.
 #'
 #' @template arg_learner
-#' @param mcw.method (`character(1)` | `function`) \cr
-#'   \dQuote{onevsone} or \dQuote{onevsrest}.
-#'   You can also pass a function, with signature `function(task)` and which
+#' @param method (`character(1)` | `function`) \cr
+#'   \dQuote{orderedpartitions} or \dQuote{onevsnext} or \dQuote{onevsfollowers}
+#'   or \dQuote{onevsprevious} or \dQuote{tune.threshold}.
+#'   For classification learners, you can also pass a function, with signature `function(task)` and which
 #'   returns a ECOC codematrix with entries +1,-1,0.
-#'   Columns define new binary problems, rows correspond to classes (rows must be named).
-#'   0 means class is not included in binary problem.
-#'   Default is \dQuote{onevsrest}.
+#'   Columns define new binary problems, rows correspond to ordinal levels (rows must be named).
+#'   0 means level is not included in binary problem.
+#'   Default for classification learners is \dQuote{orderedpartitions} and
+#'   \dQuote{tune.threshold} for regression learners.
 #' @template ret_learner
 #' @family wrapper
 #' @export
