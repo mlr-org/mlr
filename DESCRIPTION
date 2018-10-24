@@ -209,6 +209,7 @@ Suggests:
     mboost,
     mco,
     mda,
+    memoise,
     mlbench,
     mldr,
     mlrMBO,

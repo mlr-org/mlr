@@ -45,6 +45,11 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
 
   if (is.null(fval)) {
     if (isTRUE(cache)) {
+
+      if (!requireNamespace("memoise", quietly = TRUE)) {
+        stop("Package \"memoise\" needed for this function to work. Please install it.",
+             call. = FALSE)
+
       # caching calls to `generateFilterValuesData()` with the same arguments
       cache = memoise::cache_filesystem("~/.cache")
       mem.generateFilterValuesData = memoise::memoise(generateFilterValuesData,
