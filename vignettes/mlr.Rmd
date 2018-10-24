@@ -20,5 +20,5 @@ knitr::opts_chunk$set(collapse = TRUE)
 Information on mlr is available here:
 
 * [Project Page](https://github.com/mlr-org/mlr/)
-* [Tutorial](https://mlr-org.github.io/mlr/)
+* [Tutorial](https://mlr.mlr-org.com/index.html)
 * [Wiki](https://github.com/mlr-org/mlr/wiki) with additional information for developers
