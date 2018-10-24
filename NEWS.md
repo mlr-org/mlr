@@ -6,6 +6,9 @@
 ## functions - general
 * getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
 
+## filter - general
+* Caching is now used when tuning a filter. This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations. This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold`.
+
 ## learners - new
 * classif.liquidSVM
 * regr.liquidSVM
