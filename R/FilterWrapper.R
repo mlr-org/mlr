@@ -29,8 +29,6 @@
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
-#' @param ensemble.method ([character])\cr
-#'   Which ensemble method should be used. Can only be used with >= 2 filter methods.
 #' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
 #' @template ret_learner
@@ -69,15 +67,28 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
   fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   learner = checkLearner(learner)
+
+  ### some checks
+
+  if (length(fw.method) >= 2) {
+    stopf("You passed more than one filter method. If you want to tune over filter methods, please use 'tuneParams()' or 'resample()'.")
+  }
+
+  # fw.method must exists
   assertChoice(fw.method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
   filter = .FilterRegister[[fw.method]]
-  # filter is NULL if an ensemble filter is supplied
+
+  # check if basal-methods are supplied along with an ensemble method
+  # (filter == NULL if an ensemble filter is supplied)
   if (is.null(filter)) {
-    if (is.null(fw.basal.methods)) {
-      stopf("When using an ensemble method you need to supply at least two simple filter methods.")
-    }
     filter = .FilterEnsembleRegister[[fw.method]]
+    # check if ONLY basal-methods are supplied along with an ensemble method
     lapply(fw.basal.methods, function (x) assertChoice(x, choices = ls(.FilterRegister)))
+  } else {
+    # a simple filter ONLY cannot be used together with basal.methods
+    if (!is.null(fw.basal.methods)) {
+      stopf("A simple filter cannot be used together with 'fw.basal.methods'. Either specify an ensembe method or don't use 'fw.basal.methods'.")
+    }
   }
   ddd = list(...)
   assertList(ddd, names = "named")
@@ -89,7 +100,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     package = filter$pkg,
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "fw.method", values = append(ls(.FilterRegister), ls(.FilterEnsembleRegister))),
-      makeDiscreteLearnerParam(id = "fw.basal.methods", values = ls(.FilterRegister)),
+      makeDiscreteVectorLearnerParam(id = "fw.basal.methods", len = 2, values = ls(.FilterRegister)),
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),

@@ -46,6 +46,12 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", basal.methods 
     select.method = NULL, ...) {
   assertClass(task, "SupervisedTask")
 
+  # basal.methods arrive here in a list when called from 'tuneParams'.
+  # we need them as a chr vec for further proc, so transforming
+  if (is.list(basal.methods)) {
+    basal.methods = as.character(basal.methods)
+  }
+
   # if a list is passed to arg 'method' (ensemble)
   if (class(method) == "list") {
     ens.method = method[[1]]

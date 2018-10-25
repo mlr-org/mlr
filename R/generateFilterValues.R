@@ -60,7 +60,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
     }
   }
 
-  assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
+  assertSubset(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
