@@ -7,7 +7,7 @@
 #' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 #'
 #' All supported measures can be found by [listMeasures] or as a table
-#' in the tutorial appendix: <https://mlr-org.github.io/mlr/articles/measures.html>.
+#' in the tutorial appendix: <https://mlr.mlr-org.com/articles/tutorial/measures.html>.
 #'
 #' If you want a measure for a misclassification cost matrix, look at [makeCostMeasure].
 #' If you want to implement your own measure, look at [makeMeasure].
@@ -1430,7 +1430,7 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
       maxtime = max.time, verbose = FALSE, reference = FALSE)
-    
+
 
     # FIXME: this might be the wrong number!
     crps(perror, times = max.time)[1L, ]

@@ -9,7 +9,7 @@
 #'
 #' For a general overview on how to integrate a learning algorithm into mlr's system, please read the
 #' section in the online tutorial:
-#' <https://mlr-org.github.io/mlr/articles/create_learner.html>
+#' <https://mlr.mlr-org.com/articles/tutorial/create_learner.html>
 #'
 #' To see all possible properties of a learner, go to: [LearnerProperties].
 #'
