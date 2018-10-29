@@ -27,6 +27,10 @@
 #'   Mutually exclusive with arguments `perc` and `abs`.
 #' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param select.method If multiple methods are supplied in argument `method`,
+#'   specify the method that is used for the final subsetting.
+#' @param basal.methods If `method` is an ensemble filter, specify the basal
+#'   filter methods which the ensemble method will use.
 #' @param ... (any)\cr
 #'   Passed down to selected filter method.
 #' @template ret_task
@@ -39,13 +43,15 @@
 #' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
 #'
 #' @examples
-#' fval = filterFeatures(iris.task, method = "gain.ratio", abs = 2)
-#' fval = filterFeatures(iris.task, method = "E-min",
+#' # simple filter
+#' filterFeatures(iris.task, method = "gain.ratio", abs = 2)
+#' # ensemble filter
+#' filterFeatures(iris.task, method = "E-min",
 #'   basal.methods = c("gain.ratio", "information.gain"), abs = 2)
 #' @export
-filterFeatures = function(task, method = "randomForestSRC.rfsrc", basal.methods = NULL, fval = NULL,
+filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
     perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
-    select.method = NULL, ...) {
+    select.method = NULL, basal.methods = NULL, ...) {
   assertClass(task, "SupervisedTask")
 
   # basal.methods arrive here in a list when called from 'tuneParams'.
@@ -94,8 +100,7 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", basal.methods 
       method = fval$method
       fval = fval$data[, c(1, 3, 2)]
     } else {
-      methods = colnames(fval$data[, -which(colnames(fval$data) %in%
-        c("name", "type")), drop = FALSE])
+      methods = unique(fval$data$method)
       if (length(methods) > 1) {
         assert(method %in% methods)
       } else {
@@ -116,10 +121,10 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", basal.methods 
     if (select != "threshold" && nselect < length(mandatory.feat))
       stop("The number of features to be filtered cannot be smaller than the number of mandatory features.")
     #Set the the filter values of the mandatory features to infinity to always select them
-    fval[fval$name %in% mandatory.feat, method] = Inf
+    fval[fval$name %in% mandatory.feat, "value"] = Inf
   }
   if (select == "threshold")
-    nselect = sum(fval[[method]] >= threshold, na.rm = TRUE)
+    nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
   if (length(levels(as.factor(fval$method))) >= 2) {

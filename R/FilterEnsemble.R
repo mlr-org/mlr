@@ -8,8 +8,11 @@
 #' be found in the description.
 #'
 #' @importFrom dplyr ungroup group_by arrange mutate summarise select bind_rows
+#' @importFrom rlang .data
 #' @param name (`character(1)`)\cr
 #'  Identifier for the filter.
+#' @param basal.methods the basal filter methods which the ensemble method
+#'   will use.
 #' @param desc (`character(1)`)\cr
 #'  Short description of the filter.
 #' @param fun (`function(task, nselect, ...`)\cr
@@ -22,7 +25,9 @@
 #' @return Object of class \dQuote{FilterEnsemble}.
 #' @export
 #' @family filter
-makeFilterEnsemble = function(name = "E.min", basal.methods = c("randomForestSRC.rfsrc", "variance"), desc = NULL, fun = NULL) {
+makeFilterEnsemble = function(name = "E-min",
+  basal.methods = c("randomForestSRC.rfsrc", "variance"),
+  desc = NULL, fun = NULL) {
 
   assertString(name)
   assertString(desc)
@@ -103,20 +108,20 @@ makeFilterEnsemble(
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
-      group_by(method) %>%
-      arrange(value) %>%
-      mutate(rank = 1:length(value)) %>%
+      group_by(.data$method) %>%
+      arrange(.data$value) %>%
+      mutate(rank = 1:length(.data$value)) %>%
       ungroup()
 
     # calculate ensemble filter
     fval_ens = fval_all_ranked_simple %>%
-      group_by(name) %>%
+      group_by(.data$name) %>%
       summarise(value = min(rank)) %>%
       mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
       mutate(method = "E-min")
 
     # merge ensemble and basal filters into one tbl
-    fval_all = bind_rows(fval_all_ranked_simple, fval_ens) %>%
+    bind_rows(fval_all_ranked_simple, fval_ens) %>%
       select(-rank)
   }
 )
@@ -141,20 +146,20 @@ makeFilterEnsemble(
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
-      group_by(method) %>%
-      arrange(value) %>%
-      mutate(rank = 1:length(value)) %>%
+      group_by(.data$method) %>%
+      arrange(.data$value) %>%
+      mutate(rank = 1:length(.data$value)) %>%
       ungroup()
 
     # calculate ensemble filter
     fval_ens = fval_all_ranked_simple %>%
-      group_by(name) %>%
+      group_by(.data$name) %>%
       summarise(value = min(rank)) %>%
       mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
       mutate(method = "E-mean")
 
     # merge ensemble and basal filters into one tbl
-    fval_all = bind_rows(fval_all_ranked_simple, fval_ens) %>%
+    bind_rows(fval_all_ranked_simple, fval_ens) %>%
       select(-rank)
   }
 )
@@ -179,20 +184,20 @@ makeFilterEnsemble(
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
-      group_by(method) %>%
-      arrange(value) %>%
-      mutate(rank = 1:length(value)) %>%
+      group_by(.data$method) %>%
+      arrange(.data$value) %>%
+      mutate(rank = 1:length(.data$value)) %>%
       ungroup()
 
     # calculate ensemble filter
     fval_ens = fval_all_ranked_simple %>%
-      group_by(name) %>%
+      group_by(.data$name) %>%
       summarise(value = max(rank)) %>%
       mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
       mutate(method = "E-max")
 
     # merge ensemble and basal filters into one tbl
-    fval_all = bind_rows(fval_all_ranked_simple, fval_ens) %>%
+    bind_rows(fval_all_ranked_simple, fval_ens) %>%
       select(-rank)
   }
 )
@@ -217,20 +222,20 @@ makeFilterEnsemble(
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
-      group_by(method) %>%
-      arrange(value) %>%
-      mutate(rank = 1:length(value)) %>%
+      group_by(.data$method) %>%
+      arrange(.data$value) %>%
+      mutate(rank = 1:length(.data$value)) %>%
       ungroup()
 
     # calculate ensemble filter
     fval_ens = fval_all_ranked_simple %>%
-      group_by(name) %>%
+      group_by(.data$name) %>%
       summarise(value = median(rank)) %>%
       mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
       mutate(method = "E-median")
 
     # merge ensemble and basal filters into one tbl
-    fval_all = bind_rows(fval_all_ranked_simple, fval_ens) %>%
+    bind_rows(fval_all_ranked_simple, fval_ens) %>%
       select(-rank)
   }
 )
@@ -255,20 +260,20 @@ makeFilterEnsemble(
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
-      group_by(method) %>%
-      arrange(value) %>%
-      mutate(rank = 1:length(value)) %>%
+      group_by(.data$method) %>%
+      arrange(.data$value) %>%
+      mutate(rank = 1:length(.data$value)) %>%
       ungroup()
 
     # calculate ensemble filter
     fval_ens = fval_all_ranked_simple %>%
-      group_by(name) %>%
+      group_by(.data$name) %>%
       summarise(value = sum(rank)) %>%
       mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
       mutate(method = "E-Borda")
 
     # merge ensemble and basal filters into one tbl
-    fval_all = bind_rows(fval_all_ranked_simple, fval_ens) %>%
+    bind_rows(fval_all_ranked_simple, fval_ens) %>%
       select(-rank)
   }
 )
