@@ -140,9 +140,13 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
       fval %<>% dplyr::filter(method == select.method)
     }
   }
-  features = arrange(fval, method, desc(.data$value)) %>%
+  if (nselect > 0L) {
+    features = arrange(fval, method, desc(.data$value)) %>%
     slice(1:nselect) %>%
     pull(.data$name)
+  } else {
+    features = NULL
+  }
   allfeats = getTaskFeatureNames(task)
   j = match(features, allfeats)
   features = allfeats[sort(j)]
