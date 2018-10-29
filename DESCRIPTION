@@ -150,6 +150,7 @@ Imports:
     methods,
     parallelMap (>= 1.3),
     purrr,
+    rlang,
     stats,
     stringi,
     survival,

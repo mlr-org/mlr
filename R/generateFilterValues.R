@@ -8,6 +8,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom magrittr %>%
 #' @importFrom purrr flatten
+#' @importFrom rlang .data
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
@@ -122,7 +123,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
     out = as_tibble(data.frame(name = row.names(fval),
                      type = types,
                      fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
-      tidyr::gather(method, value, method)
+      tidyr::gather(method, .data$value, method)
   }
 
   makeS3Obj("FilterValues",
@@ -130,10 +131,11 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
             data = out)
 }
 #' @export
+#' @importFrom rlang .data
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  arrange(x$data, method, desc(value)) %>%
+  arrange(x$data, .data$method, desc(.data$value)) %>%
     print(...)
 }
 #' Plot filter values using ggplot2.

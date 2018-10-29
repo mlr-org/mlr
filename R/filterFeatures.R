@@ -4,6 +4,7 @@
 #' First, calls [generateFilterValuesData].
 #' Features are then selected via `select` and `val`.
 #'
+#' @importFrom rlang .data
 #' @importFrom dplyr arrange pull slice desc
 #' @importFrom magrittr %>% %<>%
 #' @template arg_task
@@ -133,9 +134,9 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", basal.methods 
       fval %<>% dplyr::filter(method == select.method)
     }
   }
-  features = arrange(fval, method, desc(value)) %>%
+  features = arrange(fval, method, desc(.data$value)) %>%
     slice(1:nselect) %>%
-    pull(name)
+    pull(.data$name)
   allfeats = getTaskFeatureNames(task)
   j = match(features, allfeats)
   features = allfeats[sort(j)]
