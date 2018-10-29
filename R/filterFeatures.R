@@ -4,7 +4,7 @@
 #' First, calls [generateFilterValuesData].
 #' Features are then selected via `select` and `val`.
 #'
-#' @importFrom dplyr arrange pull slice filter
+#' @importFrom dplyr arrange pull slice desc
 #' @importFrom magrittr %>% %<>%
 #' @template arg_task
 #' @param method (`character(1)`)\cr
@@ -127,10 +127,10 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", basal.methods 
       stopf("You supplied multiple filters. Please choose which should be used for the final subsetting of the features.")
     }
     if (is.null(select.method)) {
-      fval %<>% filter(method == method)
+      fval %<>% dplyr::filter(method == method)
     } else {
       assertSubset(select.method, choices = unique(fval$method))
-      fval %<>% filter(method == select.method)
+      fval %<>% dplyr::filter(method == select.method)
     }
   }
   features = arrange(fval, method, desc(value)) %>%
