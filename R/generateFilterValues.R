@@ -128,7 +128,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
     out = as_tibble(data.frame(name = row.names(fval),
                      type = types,
                      fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
-      tidyr::gather(method, value, !! enquo(method))
+      tidyr::gather(method, .data$value, !! enquo(method))
   }
 
   makeS3Obj("FilterValues",
