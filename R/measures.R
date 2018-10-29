@@ -1393,7 +1393,7 @@ cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 
 #' @references
 #' H. Uno et al.
 #' *Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models*
-#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <http://www.jstor.org/stable/27639883>.
+#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <https://www.jstor.org/stable/27639883>.
 iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
   name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
