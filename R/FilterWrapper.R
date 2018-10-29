@@ -60,7 +60,6 @@
 #'   fw.perc = 0.5)
 #' r = resample(lrn, task, outer, extract = function(model) {
 #'   getFilteredFeatures(model)
-#' })devt
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
   fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
