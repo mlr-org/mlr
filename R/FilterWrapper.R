@@ -63,8 +63,8 @@
 #' })devt
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
-  fw.basal.methods = NULL,
-  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
+  fw.mandatory.feat = NULL, ...) {
 
   learner = checkLearner(learner)
 
@@ -84,11 +84,6 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     filter = .FilterEnsembleRegister[[fw.method]]
     # check if ONLY basal-methods are supplied along with an ensemble method
     lapply(fw.basal.methods, function (x) assertChoice(x, choices = ls(.FilterRegister)))
-  } else {
-    # a simple filter ONLY cannot be used together with basal.methods
-    if (!is.null(fw.basal.methods)) {
-      stopf("A simple filter cannot be used together with 'fw.basal.methods'. Either specify an ensembe method or don't use 'fw.basal.methods'.")
-    }
   }
   ddd = list(...)
   assertList(ddd, names = "named")
