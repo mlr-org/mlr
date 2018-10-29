@@ -17,7 +17,7 @@ install:
 
 
 cache:
-  - C:\RLibrary
+  # - C:\RLibrary
   - C:\Program Files\Pandoc\
   - C:\miktex
 
