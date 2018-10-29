@@ -9,6 +9,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom purrr flatten
 #' @importFrom rlang .data
+#' @importFrom dplyr enquo
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
@@ -104,7 +105,8 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
     filter = lapply(ens.method, function(x) .FilterEnsembleRegister[[x]])
 
     out = lapply(filter, function(x) {
-      x = do.call(x$fun, c(list(task = task, nselect = nselect, basal.methods = method, more.args = more.args)))
+      x = do.call(x$fun, c(list(task = task, nselect = nselect,
+        basal.methods = method, more.args = more.args)))
     })
 
     if (length(out) == 1) {
@@ -122,10 +124,11 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
     fval = do.call(cbind, fval)
     colnames(fval) = method
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
+
     out = as_tibble(data.frame(name = row.names(fval),
                      type = types,
                      fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
-      tidyr::gather(method, .data$value, method)
+      tidyr::gather(method, value, !! enquo(method))
   }
 
   makeS3Obj("FilterValues",
