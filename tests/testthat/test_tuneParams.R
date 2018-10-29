@@ -89,7 +89,7 @@ test_that("tuneParams output works as documented", {
 
 test_that("tuning with a fixed ensemble methods and varying basal methods works", {
 
-  # TODO: choose arbitrary number of basal.methods
+  # TODO: choose arbitrary number of basal.methods -> cannot tune an argument of a param. We need to make makeDiscreteVectorParam more flexible.
   # allow more than one ensemble.method
   lrn = makeFilterWrapper(learner = "classif.ksvm", fw.method = "E-min")
 
@@ -110,3 +110,56 @@ test_that("tuning with a fixed ensemble methods and varying basal methods works"
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
                    control = makeTuneControlRandom(maxit = 5), show.info = T)
+
+})
+
+test_that("tuning with a fixed ensemble methods and varying basal methods works", {
+
+  # TODO: choose arbitrary number of basal.methods -> cannot tune an argument of a param. We need to make makeDiscreteVectorParam more flexible.
+  # allow more than one ensemble.method
+  lrn = makeFilterWrapper(learner = "classif.ksvm", fw.method = "E-min")
+
+  filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
+  filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
+  filter.list.classif = setdiff(filter.list.classif, c(
+    "univariate.model.score", "permutation.importance", "auc",
+    "univariate", "rf.importance", "rf.min.depth"))
+
+  ps = makeParamSet(#makeDiscreteParam("fw.method"),
+    makeDiscreteVectorParam("fw.basal.methods", len = 2, values = filter.list.classif),
+    makeNumericParam("fw.perc", lower = 0, upper = 1),
+    makeNumericParam("C", lower = -10, upper = 10,
+                     trafo = function(x) 2^x),
+    makeNumericParam("sigma", lower = -10, upper = 10,
+                     trafo = function(x) 2^x)
+  )
+  rdesc = makeResampleDesc("CV", iters = 3)
+  out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
+                   control = makeTuneControlRandom(maxit = 5), show.info = T)
+
+})
+
+test_that("tuning with fixed basal methods and varying ensemble methods works", {
+
+  lrn = makeFilterWrapper(learner = "classif.ksvm", fw.basal.methods = c("gain.ratio", "information.gain"))
+
+  ps = makeParamSet(makeDiscreteParam("fw.method", values = c("E-min", "E-max")),
+    makeNumericParam("fw.perc", lower = 0, upper = 1),
+    makeNumericParam("C", lower = -10, upper = 10,
+                     trafo = function(x) 2^x),
+    makeNumericParam("sigma", lower = -10, upper = 10,
+                     trafo = function(x) 2^x)
+  )
+  rdesc = makeResampleDesc("CV", iters = 3)
+  out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
+                   control = makeTuneControlRandom(maxit = 5), show.info = T)
+
+})
+
+test_that("passing more than one fw.method raises an error", {
+
+  expect_error(makeFilterWrapper(learner = "classif.ksvm", fw.method = c("E-min", "E-max"),
+    fw.basal.methods = c("gain.ratio", "information.gain"))
+  )
+
+})
