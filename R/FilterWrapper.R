@@ -101,7 +101,9 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
       makeNumericLearnerParam(id = "fw.threshold"),
       makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
-    par.vals = filterNull(list(fw.method = fw.method, fw.basal.methods = fw.basal.methods, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
+    par.vals = filterNull(list(fw.method = fw.method,
+      fw.basal.methods = fw.basal.methods, fw.perc = fw.perc, fw.abs = fw.abs,
+      fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
   lrn$more.args = ddd
   lrn
