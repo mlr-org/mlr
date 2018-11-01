@@ -9,6 +9,19 @@
 ## filter - general
 * Caching is now used when tuning a filter. This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations. This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold` (@pat-s, #2463).
 
+## filter - new
+* praznik.JMI
+* praznik.DISR
+* praznik.JMIM
+* praznik.MIM
+* praznik.NJMIM
+* praznik.MRMR
+* praznik.CMIM
+
+## filter - general
+* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`. 
+  The change comes with a ~ 100 times speedup.
+
 ## learners - new
 * classif.liquidSVM (@PhilippPro, #2428)
 * regr.liquidSVM (@PhilippPro, #2428)

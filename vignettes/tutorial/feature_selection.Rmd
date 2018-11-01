@@ -56,7 +56,7 @@ A table showing all available methods can be found in article [filter methods](f
 The most basic approach is to use `generateFilterValuesData()` directly on a `Task()` with a character string specifying the filter method.
 
 ```{r}
-fv = generateFilterValuesData(iris.task, method = "information.gain")
+fv = generateFilterValuesData(iris.task, method = "FSelectorRcpp.infogain")
 fv
 ```
 
@@ -64,7 +64,7 @@ fv
 Optionally, a vector of filter methods can be passed.
 
 ```{r}
-fv2 = generateFilterValuesData(iris.task, method = c("information.gain", "chi.squared"))
+fv2 = generateFilterValuesData(iris.task, method = c("FSelectorRcpp.infogain", "chi.squared"))
 fv2$data
 ```
 
@@ -93,7 +93,7 @@ Moreover, you can either specify the ``method`` for calculating the feature impo
 
 ```{r}
 # Keep the 2 most important features
-filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2)
+filtered.task = filterFeatures(iris.task, method = "FSelectorRcpp.infogain", abs = 2)
 
 # Keep the 25% most important features
 filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
@@ -120,7 +120,7 @@ We use `information.gain` as importance measure with the aim to subset the datas
 In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain", fw.abs = 2)
+lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "FSelectorRcpp.infogain", fw.abs = 2)
 rdesc = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
