@@ -23,7 +23,7 @@ test_that("caching works with most filters", {
       )
       rdesc = makeResampleDesc("CV", iters = 3)
 
-      print(.x)
+      # print(.x)
 
       tuneParams(lrn, task = regr.num.task, resampling = rdesc, par.set = ps,
                  control = makeTuneControlRandom(maxit = 5),
