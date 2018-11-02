@@ -35,8 +35,6 @@
 #'   the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
 #'   (see [TuneControl]), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
 #'   This parameter must be the default when `mbo` tuning is performed.
-#' @param cache ([logical])\cr Should caching be used? When applicable, caching
-#'   is used during filtering.
 #' @return ([TuneResult]).
 #' @family tune
 #' @note If you would like to include results from the training data set, make

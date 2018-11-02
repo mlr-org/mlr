@@ -11,9 +11,6 @@
 #'   If given, must be of same length as `subset` and in corresponding order.
 #'   By default `NULL` which means no weights are used unless specified in the task ([Task]).
 #'   Weights from the task will be overwritten.
-#' @param cache ([logical])\cr Should caching be used? When applicable, caching
-#'   is used during filtering. This argument is triggered by higher level
-#'   functions such as `tuneParams()` or `resample()`.
 #' @return ([WrappedModel]).
 #' @export
 #' @seealso [predict.WrappedModel]

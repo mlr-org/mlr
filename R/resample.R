@@ -49,8 +49,6 @@
 #'   Is applied to every [WrappedModel] resulting from calls to [train]
 #'   during resampling.
 #'   Default is to extract nothing.
-#' @param cache ([logical])\cr Should caching be used? When applicable, caching
-#'   is used during filtering.
 #' @template arg_keep_pred
 #' @param ... (any)\cr
 #'   Further hyperparameters passed to `learner`.
