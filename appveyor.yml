@@ -13,6 +13,7 @@ install:
   - cmd: rm -rf C:\RLibrary\00LOCK-*
   - cmd: R -q -e "if (!requireNamespace('devtools')) install.packages('devtools')"
   - cmd: R -q -e "if (!requireNamespace('curl')) install.packages('curl')"
+  - cmd: R -q -e 'install.packages("BiocManager"); BioManager::install("genefilter")'
   - cmd: R -q -e "devtools::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
 
 
@@ -56,4 +57,4 @@ environment:
   R_ARCH: x64
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
-  WARMUPPKGS: 'BiocManager roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 testthat'
+  WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 testthat'

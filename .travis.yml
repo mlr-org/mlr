@@ -9,7 +9,7 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='BiocManager roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 ggpubr FSelectorRcpp praznik'
+    - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 ggpubr FSelectorRcpp praznik'
 
 jobs:
   include:
@@ -24,7 +24,9 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'if (!requireNamespace("devtools")) install.packages("devtools"); if (!requireNamespace("curl")) install.packages("curl"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+      before_install:
+        - R -q -e 'install.packages("BiocManager"); BioManager::install("genefilter")'
+        - R -q -e 'if (!requireNamespace("devtools")) install.packages("devtools"); if (!requireNamespace("curl")) install.packages("curl"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
       script: true
       after_script: R -q -e 'tic::after_script()'
