@@ -77,9 +77,6 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
-  # if (is.null(learner$cache)) {
-  #   learner$cache = cache
-  # }
   assertClass(task, classes = "Task")
   n = getTaskSize(task)
   # instantiate resampling
