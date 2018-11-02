@@ -11,7 +11,7 @@ test_that("caching works with most filters", {
   filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
 
   # tune over various filters using all possible caching options
-  out = lapply(c(FALSE, TRUE, tempdir()), function (i) {
+  out = lapply(list(NULL, TRUE, tempdir()), function (i) {
 
     tune_out = lapply(filter.list.regr, function(.x) {
       lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = .x, cache = i)
