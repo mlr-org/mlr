@@ -26,8 +26,18 @@
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param cache (`character(1)` | [logical])\cr
+#'   Whether to use caching during filter value creation. See details.
 #' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
+#'
+#' @section Caching:
+#' If `cache = TRUE`, the default mlr cache directory is used to cache
+#' filter values. The directory is operating system dependent and can be
+#' checked with `get_cache_dir()`. \cr
+#' Alternatively a custom directory can be passed to store the cache.\cr
+#' The cache can be cleared with `delete_cache()`.
+#'
 #' @template ret_learner
 #' @export
 #' @family filter
@@ -47,7 +57,9 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
   fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, ...) {
+  fw.mandatory.feat = NULL, cache = NULL, ...) {
+
+  #learner$cache = cache
 
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
@@ -70,7 +82,8 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc,
       fw.abs = fw.abs, fw.threshold = fw.threshold,
       fw.mandatory.feat = fw.mandatory.feat)),
-    learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
+    learner.subclass = "FilterWrapper", model.subclass = "FilterModel",
+    cache = cache)
   lrn$more.args = ddd
   lrn
 }
@@ -83,7 +96,8 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
      perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-     mandatory.feat = fw.mandatory.feat, cache = .learner$cache), .learner$more.args))
+     mandatory.feat = fw.mandatory.feat,
+     cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }

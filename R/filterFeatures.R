@@ -25,16 +25,24 @@
 #'   Mutually exclusive with arguments `perc` and `abs`.
 #' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
-#' @param cache ([logical])\cr Should caching be used? Only applies when
-#'   filtering is run multiple times, e.g. during tuning.
+#' @param cache (`character(1)` | [logical])\cr
+#'   Whether to use caching during filter value creation. See details.
 #' @param ... (any)\cr
 #'   Passed down to selected filter method.
+#'
+#' @section Caching:
+#' If `cache = TRUE`, the default mlr cache directory is used to cache
+#' filter values. The directory is operating system dependent and can be
+#' checked with `get_cache_dir()`. \cr
+#' Alternatively a custom directory can be passed to store the cache.\cr
+#' The cache can be cleared with `delete_cache()`.
+#'
 #' @template ret_task
 #' @export
 #' @family filter
 filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
     perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
-    cache = FALSE, ...) {
+    cache = NULL, ...) {
   assertClass(task, "SupervisedTask")
   assertChoice(method, choices = ls(.FilterRegister))
   select = checkFilterArguments(perc, abs, threshold)
@@ -45,18 +53,32 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
     threshold = p
   )
 
+  # Caching implementation: @pat-s, Nov 2018
   if (is.null(fval)) {
-    if (isTRUE(cache)) {
+    if (!is.null(cache)) {
 
       if (!requireNamespace("memoise", quietly = TRUE)) {
         stop("Package \"memoise\" needed for this function to work. Please install it.",
              call. = FALSE)
       }
 
+      # check for user defined cache dir
+      if (class(cache) == "character") {
+        if(!fs::dir_exists(cache)) {
+          fs::dir_create(cache)
+        }
+        cache_dir = cache
+      } else {
+        if(!fs::dir_exists(rappdirs::user_cache_dir("mlr", "mlr-org"))) {
+          fs::dir_create(rappdirs::user_cache_dir("mlr", "mlr-org"))
+        }
+        cache_dir = rappdirs::user_cache_dir("mlr", "mlr-org")
+      }
+
       # caching calls to `generateFilterValuesData()` with the same arguments
-      cache = memoise::cache_filesystem("~/.cache")
+      cache_dir = memoise::cache_filesystem(cache_dir)
       mem.generateFilterValuesData = memoise::memoise(generateFilterValuesData,
-                                                    cache = cache)
+                                                      cache = cache_dir)
       fval = mem.generateFilterValuesData(task = task, method = method, ...)$data
     } else {
       fval = generateFilterValuesData(task = task, method = method, ...)$data
