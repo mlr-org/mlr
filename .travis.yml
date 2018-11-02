@@ -25,7 +25,7 @@ jobs:
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
       before_install:
-        - R -q -e 'install.packages("BiocManager"); BioManager::install("genefilter")'
+        - R -q -e 'install.packages("BiocManager"); BiocManager::install("genefilter")'
         - R -q -e 'if (!requireNamespace("devtools")) install.packages("devtools"); if (!requireNamespace("curl")) install.packages("curl"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
       script: true
