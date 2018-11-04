@@ -79,9 +79,11 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
       cache_dir = memoise::cache_filesystem(cache_dir)
       mem.generateFilterValuesData = memoise::memoise(generateFilterValuesData,
                                                       cache = cache_dir)
-      fval = mem.generateFilterValuesData(task = task, method = method, ...)$data
+      fval = mem.generateFilterValuesData(task = task, method = method,
+        nselect = getTaskNFeats(task), ...)$data
     } else {
-      fval = generateFilterValuesData(task = task, method = method, ...)$data
+      fval = generateFilterValuesData(task = task, method = method,
+        nselect = getTaskNFeats(task), ...)$data
     }
   } else {
     assertClass(fval, "FilterValues")

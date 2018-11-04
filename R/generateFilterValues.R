@@ -31,7 +31,9 @@
 #' @family filter
 #' @aliases FilterValues
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
+  nselect = getTaskNFeats(task), ..., more.args = list()) {
+
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
@@ -50,6 +52,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", ...,
           stri_paste("'", method[check.length], "'", collapse = ", "),
           stri_paste(sapply(check.feat[check.length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
   }
+  assertCount(nselect)
   assertList(more.args, names = "unique", max.len = length(method))
   assertSubset(names(more.args), method)
   dot.args = list(...)
@@ -68,7 +71,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", ...,
   fn = getTaskFeatureNames(task)
 
   fval = lapply(filter, function(x) {
-    x = do.call(x$fun, c(list(task = task), more.args[[x$name]]))
+    x = do.call(x$fun, c(list(task = task), nselect = nselect, more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
     x[match(fn, names(x))]
