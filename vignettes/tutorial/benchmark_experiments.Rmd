@@ -125,10 +125,66 @@ You can access the predictions using function `getBMRPredictions()`.
 Per default, you get a nested `base::list()` of `ResamplePrediction()`objects.
 As above, you can use the `drop` or `as.df` options to simplify the result.
 
-```{r}
+```{r ech0 = FALSE, results = 'hide'}
 getBMRPredictions(bmr)
 
 head(getBMRPredictions(bmr, as.df = TRUE))
+```
+
+```{r eval = FALSE}
+getBMRPredictions(bmr)
+
+## $`Sonar-example`
+## $`Sonar-example`$classif.lda
+## Resampled Prediction for:
+## Resample description: holdout with 0.67 split rate.
+## Predict: test
+## Stratification: FALSE
+## predict.type: prob
+## threshold: M=0.50,R=0.50
+## time (mean): 0.00
+##    id truth      prob.M       prob.R response iter  set
+## 1 194     M 0.001914379 9.980856e-01        R    1 test
+## 2  18     R 0.474564117 5.254359e-01        R    1 test
+## 3 196     M 0.996712551 3.287449e-03        M    1 test
+## 4  10     R 0.001307244 9.986928e-01        R    1 test
+## 5 134     M 0.999999755 2.445735e-07        M    1 test
+## 6  34     R 0.999761364 2.386361e-04        M    1 test
+## ... (#rows: 70, #cols: 7)
+## 
+## $`Sonar-example`$classif.rpart
+## Resampled Prediction for:
+## Resample description: holdout with 0.67 split rate.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##    id truth response iter  set
+## 1 194     M        M    1 test
+## 2  18     R        R    1 test
+## 3 196     M        M    1 test
+## 4  10     R        R    1 test
+## 5 134     M        M    1 test
+## 6  34     R        M    1 test
+## ... (#rows: 70, #cols: 5)
+
+head(getBMRPredictions(bmr, as.df = TRUE))
+
+##         task.id  learner.id  id truth      prob.M       prob.R response
+## 1 Sonar-example classif.lda 194     M 0.001914379 9.980856e-01        R
+## 2 Sonar-example classif.lda  18     R 0.474564117 5.254359e-01        R
+## 3 Sonar-example classif.lda 196     M 0.996712551 3.287449e-03        M
+## 4 Sonar-example classif.lda  10     R 0.001307244 9.986928e-01        R
+## 5 Sonar-example classif.lda 134     M 0.999999755 2.445735e-07        M
+## 6 Sonar-example classif.lda  34     R 0.999761364 2.386361e-04        M
+##   iter  set
+## 1    1 test
+## 2    1 test
+## 3    1 test
+## 4    1 test
+## 5    1 test
+## 6    1 test
 ```
 
 It is also easily possible to access results for certain learners or tasks via their IDs. 
