@@ -6,7 +6,6 @@ latex: true
 env:
   global:
     - _R_CHECK_TIMINGS_=0
-    - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
     - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 ggpubr FSelectorRcpp praznik'
@@ -24,7 +23,9 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'if (!requireNamespace("devtools")) install.packages("devtools"); if (!requireNamespace("curl")) install.packages("curl"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+      before_install:
+        - R -q -e 'if (!requireNamespace("BiocManager")) install.packages("BiocManager"); if (!requireNamespace("genefilter")) BiocManager::install("genefilter")'
+        - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
       script: true
       after_script: R -q -e 'tic::after_script()'
@@ -39,7 +40,7 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-      before_install: R -q -e 'if (!requireNamespace("devtools")) install.packages("devtools"); if (!requireNamespace("curl")) install.packages("curl"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+      before_install: R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script: R -q -e 'tic::script()'
@@ -76,7 +77,9 @@ jobs:
            - libudunits2-dev # for sf
       latex: false
       pandoc_version: 2.2.1
-      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      before_install:
+        - R -q -e 'if (!requireNamespace("BiocManager")) install.packages("BiocManager"); if (!requireNamespace("genefilter")) BiocManager::install("genefilter")'
+        - R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       after_script: R -q -e 'tic::after_script()'

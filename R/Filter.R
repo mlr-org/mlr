@@ -428,6 +428,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "chi.squared",
   desc = "Chi-squared statistic of independence between feature and target",
@@ -458,6 +460,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "relief",
   desc = "RELIEF algorithm",
@@ -480,6 +484,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "oneR",
   desc = "oneR association rule",
@@ -817,7 +823,7 @@ FSelectorRcpp.filter = function(type) {
   }
 }
 
-# information.gain (FSelectorRcpp) ----------------
+# info.gain (FSelectorRcpp) ----------------
 
 makeFilter(
   name = "FSelectorRcpp.infogain",
