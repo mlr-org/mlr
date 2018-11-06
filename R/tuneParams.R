@@ -42,6 +42,7 @@
 #' the measure. See example code below.
 #' @export
 #' @examples
+#' set.seed(123)
 #' # a grid search for an SVM (with a tiny number of points...)
 #' # note how easily we can optimize on a log-scale
 #' ps = makeParamSet(
