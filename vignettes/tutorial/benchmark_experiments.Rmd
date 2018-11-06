@@ -245,11 +245,7 @@ It is also possible to choose a different resampling strategy for each `Task()` 
 
 We use the mean misclassification error [mmce](measures.html){target="_blank"} as primary performance measure, but also calculate the balanced error rate [ber](measures.html){target="_blank"} and the training time `timetrain`.
 
-```{r, message = FALSE, echo= FALSE}
-set.seed(4444)
-```
-
-```{r, message = FALSE, echo=FALSE}
+```{r echo = FALSE, results='hide'}
 # Create a list of learners
 lrns = list(
   makeLearner("classif.lda", id = "lda"),
