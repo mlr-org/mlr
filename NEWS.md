@@ -14,10 +14,14 @@
 * praznik.NJMIM
 * praznik.MRMR
 * praznik.CMIM
+* FSelectorRcpp.gainratio
+* FSelectorRcpp.infogain
+* FSelectorRcpp.symuncert
 
 ## filter - general
-* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`. 
-  The change comes with a ~ 100 times speedup.
+* Added filters `information.gain`, `gainratio` and `symmetrical.uncertainty` from package `FSelectorRcpp`. 
+  These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
+  Please note that both implementations do things slightly different internally and the `FSelectorRcpp` methods should not be seen as direct replacement for the `FSelector` pkg.
 
 ## learners - new
 * classif.liquidSVM
