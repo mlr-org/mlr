@@ -318,7 +318,7 @@
 <a class="sourceLine" id="cb1-22" data-line-number="22">## {</a>
 <a class="sourceLine" id="cb1-23" data-line-number="23">##     measureMSE(pred$data$truth, pred$data$response)</a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">## }</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0xbc00450&gt;</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0xd9f6500&gt;</a>
 <a class="sourceLine" id="cb1-26" data-line-number="26">## &lt;environment: namespace:mlr&gt;</a>
 <a class="sourceLine" id="cb1-27" data-line-number="27"></a>
 <a class="sourceLine" id="cb1-28" data-line-number="28">measureMSE</a>
@@ -326,7 +326,7 @@
 <a class="sourceLine" id="cb1-30" data-line-number="30">## {</a>
 <a class="sourceLine" id="cb1-31" data-line-number="31">##     mean((response - truth)^2)</a>
 <a class="sourceLine" id="cb1-32" data-line-number="32">## }</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">## &lt;bytecode: 0xbf63f10&gt;</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">## &lt;bytecode: 0xdd5bf50&gt;</a>
 <a class="sourceLine" id="cb1-34" data-line-number="34">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
 <p>See the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) documentation page for a detailed description of the object slots.</p>
 <p>At the core is slot <code>$fun</code> which contains the function that calculates the performance value. The actual work is done by function <code>measureMSE</code> (<code><a href="../../reference/measures.html">measures()</a></code>). Similar functions, generally adhering to the naming scheme <code>measure</code> followed by the capitalized measure ID, exist for most performance measures. See the [<code><a href="../../reference/measures.html">measures()</a></code>] help page for a complete list.</p>
@@ -350,7 +350,7 @@
 <a class="sourceLine" id="cb3-9" data-line-number="9">test.mean<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">## function (task, perf.test, perf.train, measure, group, pred) </a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">## mean(perf.test)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## &lt;bytecode: 0xb3e2dc8&gt;</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">## &lt;bytecode: 0xd1d8900&gt;</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
 <p>All aggregation schemes are objects of class <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> with the function in slot <code>$fun</code> doing the actual work. The <code>$properties</code> member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.</p>
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>

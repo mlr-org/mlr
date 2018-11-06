@@ -459,7 +459,7 @@
 <a class="sourceLine" id="cb7-7" data-line-number="7">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8">## Learner: classif.multinom</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">## Aggr perf: credit.costs.test.mean=0.5449911,mmce.test.mean=0.3609867</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## Runtime: 0.193425</a></code></pre></div>
+<a class="sourceLine" id="cb7-10" data-line-number="10">## Runtime: 0.187934</a></code></pre></div>
 <p>If we are also interested in the cross-validated performance for the default threshold values we can call <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> on the resample prediction (<code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code>) <code>r$pred</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Cross-validated performance with default thresholds</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(r<span class="op">$</span>pred, <span class="fl">0.5</span>), <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
@@ -486,7 +486,7 @@
 <a class="sourceLine" id="cb10-7" data-line-number="7">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb10-8" data-line-number="8">## Learner: classif.multinom</a>
 <a class="sourceLine" id="cb10-9" data-line-number="9">## Aggr perf: credit.costs.test.mean=0.8390396,mmce.test.mean=0.2470225</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">## Runtime: 0.211042</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">## Runtime: 0.200706</a>
 <a class="sourceLine" id="cb10-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co"># Tune the threshold based on the predicted probabilities on the 3 test data sets</span></a>
 <a class="sourceLine" id="cb10-13" data-line-number="13">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span>(<span class="dt">pred =</span> r<span class="op">$</span>pred, <span class="dt">measure =</span> credit.costs)</a>
@@ -556,7 +556,7 @@
 <a class="sourceLine" id="cb13-16" data-line-number="16">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb13-17" data-line-number="17">## Learner: weightedclasses.classif.multinom</a>
 <a class="sourceLine" id="cb13-18" data-line-number="18">## Aggr perf: credit.costs.test.mean=0.5290290,mmce.test.mean=0.3450007</a>
-<a class="sourceLine" id="cb13-19" data-line-number="19">## Runtime: 0.233006</a></code></pre></div>
+<a class="sourceLine" id="cb13-19" data-line-number="19">## Runtime: 0.223252</a></code></pre></div>
 <p>For classification methods like <code>"classif.ksvm"</code> (the support vector machine <code><a href="http://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code> in package <code>kernlab</code>) that support class weights you can pass them directly.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">class.weights =</span> <span class="kw">c</span>(<span class="dt">Bad =</span> w, <span class="dt">Good =</span> <span class="dv">1</span>))</a></code></pre></div>
 <p>Or, more conveniently, you can again use <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>.</p>
@@ -567,7 +567,7 @@
 <a class="sourceLine" id="cb15-5" data-line-number="5">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb15-6" data-line-number="6">## Learner: weightedclasses.classif.ksvm</a>
 <a class="sourceLine" id="cb15-7" data-line-number="7">## Aggr perf: credit.costs.test.mean=0.5740861,mmce.test.mean=0.3300216</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">## Runtime: 1.76005</a></code></pre></div>
+<a class="sourceLine" id="cb15-8" data-line-number="8">## Runtime: 1.49848</a></code></pre></div>
 <p>Just like the theoretical threshold, the theoretical weights may not always be suitable, therefore you can tune the weight for the positive class as shown in the following example. Calculating the theoretical weight beforehand may help to narrow down the search interval.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn)</a>
@@ -631,7 +631,7 @@
 <a class="sourceLine" id="cb18-15" data-line-number="15">## Task: GermanCredit</a>
 <a class="sourceLine" id="cb18-16" data-line-number="16">## Learner: classif.multinom.oversampled</a>
 <a class="sourceLine" id="cb18-17" data-line-number="17">## Aggr perf: credit.costs.test.mean=0.5340430,mmce.test.mean=0.3380147</a>
-<a class="sourceLine" id="cb18-18" data-line-number="18">## Runtime: 0.508607</a></code></pre></div>
+<a class="sourceLine" id="cb18-18" data-line-number="18">## Runtime: 0.380444</a></code></pre></div>
 <p>Of course, we can also tune the oversampling rate. For this purpose we again have to create an OversampleWrapper (<code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>). Optimal values for parameter <code>osw.rate</code> can be obtained using function <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span>(lrn, <span class="dt">osw.cl =</span> <span class="st">"Bad"</span>)</a>
@@ -702,7 +702,7 @@
 <a class="sourceLine" id="cb21-6" data-line-number="6">## Task: waveform</a>
 <a class="sourceLine" id="cb21-7" data-line-number="7">## Learner: classif.rpart</a>
 <a class="sourceLine" id="cb21-8" data-line-number="8">## Aggr perf: wf.costs.test.mean=7.0935599,mmce.test.mean=0.3119785</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">## Runtime: 0.109532</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">## Runtime: 0.0573728</a>
 <a class="sourceLine" id="cb21-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co"># Calculate thresholds as 1/(average costs of true classes)</span></a>
 <a class="sourceLine" id="cb21-12" data-line-number="12">th =<span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="kw">rowSums</span>(costs)</a>
@@ -828,7 +828,7 @@
 <a class="sourceLine" id="cb28-3" data-line-number="3">## Prediction: 150 observations</a>
 <a class="sourceLine" id="cb28-4" data-line-number="4">## predict.type: response</a>
 <a class="sourceLine" id="cb28-5" data-line-number="5">## threshold: </a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">## time: 0.14</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">## time: 0.13</a>
 <a class="sourceLine" id="cb28-7" data-line-number="7">##   id response</a>
 <a class="sourceLine" id="cb28-8" data-line-number="8">## 1  1   setosa</a>
 <a class="sourceLine" id="cb28-9" data-line-number="9">## 2  2   setosa</a>
