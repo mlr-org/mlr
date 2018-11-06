@@ -64,13 +64,13 @@ filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
 
       # check for user defined cache dir
       if (class(cache) == "character") {
-        if(!fs::dir_exists(cache)) {
-          fs::dir_create(cache)
+        if(!dir.exists(cache)) {
+          dir.create(cache)
         }
         cache_dir = cache
       } else {
-        if(!fs::dir_exists(rappdirs::user_cache_dir("mlr", "mlr-org"))) {
-          fs::dir_create(rappdirs::user_cache_dir("mlr", "mlr-org"))
+        if(!dir.exists(rappdirs::user_cache_dir("mlr", "mlr-org"))) {
+          dir.create(rappdirs::user_cache_dir("mlr", "mlr-org"))
         }
         cache_dir = rappdirs::user_cache_dir("mlr", "mlr-org")
       }

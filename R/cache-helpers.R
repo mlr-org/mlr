@@ -18,6 +18,6 @@ get_cache_dir = function() {
 #' @rdname cache-helpers
 #' @export
 delete_cache = function() {
-  fs::dir_delete(rappdirs::user_cache_dir("mlr", "mlr-org"))
+  unlink(rappdirs::user_cache_dir("mlr", "mlr-org"), recursive = TRUE)
   catf("Successfully cleared directory '%s'.", rappdirs::user_cache_dir("mlr", "mlr-org"))
 }

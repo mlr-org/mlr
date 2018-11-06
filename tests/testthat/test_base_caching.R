@@ -38,10 +38,10 @@ test_that("caching works with most filters", {
 
 test_that("cache dir is successfully deleted", {
 
-  fs::dir_create(get_cache_dir())
-  expect_true(fs::dir_exists(get_cache_dir()))
+  dir.create(get_cache_dir())
+  expect_true(dir.exists(get_cache_dir()))
 
   delete_cache()
-  expect_false(fs::dir_exists(get_cache_dir()))
+  expect_false(dir.exists(get_cache_dir()))
 
 })
