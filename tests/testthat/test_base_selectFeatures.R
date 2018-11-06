@@ -40,7 +40,7 @@ test_that("selectFeatures", {
 
   expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bit.names = bns, bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task)), control = ctrl, show.info = FALSE), "Must have length")
 
-  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bits.to.features = function(x, task) c("test1", "test2"), control = ctrl, show.info = FALSE), "(test1,test2) that are not in the task.")
+  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bits.to.features = function(x, task) c("test1", "test2"), control = ctrl, show.info = FALSE), "\\(test1,test2\\) that are not in the task.")
 
   expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bits.to.features = function(x, task) NULL, control = ctrl, show.info = FALSE), "but an object of type NULL")
 })
