@@ -17,6 +17,7 @@ library("kernlab")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Often, data sets include a large number of features.

@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Multilabel classification is a classification problem where multiple target labels can be assigned to each observation instead of only one like in multiclass classification.

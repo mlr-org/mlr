@@ -16,6 +16,7 @@ library("lattice")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Wrappers can be employed to extend integrated learners (`makeLearner()`)  with new functionality.

@@ -16,6 +16,7 @@ library("BBmisc")
 library("ParamHelpers")
 
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 **R** by default does not make use of parallelization.

@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 The quality of the predictions of a model in `mlr` can be assessed with respect to a number of different performance measures.

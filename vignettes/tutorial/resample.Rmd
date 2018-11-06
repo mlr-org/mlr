@@ -17,6 +17,7 @@ library("rpart")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Resampling strategies are usually used to assess the performance of a learning algorithm:

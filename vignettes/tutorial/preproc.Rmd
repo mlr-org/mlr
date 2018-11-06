@@ -16,6 +16,7 @@ library("lattice")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Data preprocessing refers to any transformation of the data done before applying a learning
