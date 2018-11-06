@@ -36,16 +36,15 @@ test_that("Filterwrapper permutation.importance (issue #814)", {
   expect_subset(r$extract[[1]][[1]], getTaskFeatureNames(binaryclass.task))
 })
 
-
 test_that("FilterWrapper with ensemble function in a train call", {
   lrn = makeLearner("classif.lda")
 
   # these combinations should fail
   expect_error(makeFilterWrapper(lrn, fw.method = "gain.ratio",
-                 fw.basal.methods = c("gain.ratio", "information.gain")))
+    fw.basal.methods = c("gain.ratio", "information.gain")))
 
   expect_error(makeFilterWrapper(lrn, fw.method = "E-min",
-                 fw.basal.methods = c("E-min", "information.gain")))
+   fw.basal.methods = c("E-min", "information.gain")))
 
   expect_error(makeFilterWrapper(lrn, fw.method = c("chi.squared", "information.gain")))
 

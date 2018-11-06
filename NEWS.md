@@ -6,6 +6,19 @@
 ## functions - general
 * getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
 
+## filter - new
+* praznik.JMI
+* praznik.DISR
+* praznik.JMIM
+* praznik.MIM
+* praznik.NJMIM
+* praznik.MRMR
+* praznik.CMIM
+
+## filter - general
+* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`. 
+  The change comes with a ~ 100 times speedup.
+
 ## learners - new
 * classif.liquidSVM
 * regr.liquidSVM
