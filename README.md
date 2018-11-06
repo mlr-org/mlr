@@ -21,7 +21,7 @@ devtools::install_github("mlr-org/mlr")
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
-* [We have a blog on mlr](https://mlr-blog.netlify.com/)
+* [We have a blog on mlr](https://mlr-org.com/)
 * A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#list-of-possible-enhancements-to-mlr) - contributors welcome!
 * We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
 
