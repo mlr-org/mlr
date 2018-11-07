@@ -361,7 +361,7 @@ Resampling Figure
 <a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## Task: BostonHousing-example</span></a>
 <a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">## Learner: regr.lm</span></a>
 <a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">## Aggr perf: mse.test.mean=23.3934636</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">## Runtime: 0.0680792</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">## Runtime: 0.0375051</span></a></code></pre></div>
 <p>The result <code>r</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> result. It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Peak into r</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">names</span>(r)</a>
@@ -384,13 +384,13 @@ Resampling Figure
 <p>You can calculate several measures at once by passing a <code>list</code> of Measures (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>)s to <code><a href="../../reference/resample.html">resample()</a></code>. Below, the error rate (<a href="measures.html" target="_blank">mmce</a>), false positive and false negative rates (<a href="measures.html" target="_blank">fpr</a>, <a href="measures.html" target="_blank">fnr</a>), and the time it takes to train the learner (<a href="measures.html" target="_blank">timetrain</a>) are estimated by <em>subsampling</em> with 5 iterations.</p>
 <pre><code>## Resampling: subsampling
 ## Measures:             mmce        fpr         fnr         timetrain
-## [Resample] iter 1:    0.4047619   0.5000000   0.3181818   0.0280000
-## [Resample] iter 2:    0.2619048   0.3809524   0.1428571   0.0250000
-## [Resample] iter 3:    0.1904762   0.3043478   0.0526316   0.0270000
-## [Resample] iter 4:    0.4285714   0.3500000   0.5000000   0.0250000
-## [Resample] iter 5:    0.3333333   0.2352941   0.4000000   0.0260000
+## [Resample] iter 1:    0.4047619   0.5000000   0.3181818   0.0180000
+## [Resample] iter 2:    0.2619048   0.3809524   0.1428571   0.0140000
+## [Resample] iter 3:    0.1904762   0.3043478   0.0526316   0.0160000
+## [Resample] iter 4:    0.4285714   0.3500000   0.5000000   0.0150000
+## [Resample] iter 5:    0.3333333   0.2352941   0.4000000   0.0150000
 ## 
-## Aggregated Result: mmce.test.mean=0.3238095,fpr.test.mean=0.3541189,fnr.test.mean=0.2827341,timetrain.test.mean=0.0262000
+## Aggregated Result: mmce.test.mean=0.3238095,fpr.test.mean=0.3541189,fnr.test.mean=0.2827341,timetrain.test.mean=0.0156000
 ## </code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Subsampling with 5 iterations and default split ratio 2/3</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Subsample"</span>, <span class="dt">iters =</span> <span class="dv">5</span>)</a>
@@ -1128,7 +1128,7 @@ Resampling Figure
 <a class="sourceLine" id="cb31-5" data-line-number="5">mmce<span class="op">$</span>aggr<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span></a>
 <a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co">## mean(perf.test)</span></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co">## &lt;bytecode: 0xc71d358&gt;</span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co">## &lt;bytecode: 0xc8eade8&gt;</span></a>
 <a class="sourceLine" id="cb31-9" data-line-number="9"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a>
 <a class="sourceLine" id="cb31-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb31-11" data-line-number="11"><span class="co"># Root mean square error</span></a>
@@ -1138,7 +1138,7 @@ Resampling Figure
 <a class="sourceLine" id="cb31-15" data-line-number="15">rmse<span class="op">$</span>aggr<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb31-16" data-line-number="16"><span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span></a>
 <a class="sourceLine" id="cb31-17" data-line-number="17"><span class="co">## sqrt(mean(perf.test^2))</span></a>
-<a class="sourceLine" id="cb31-18" data-line-number="18"><span class="co">## &lt;bytecode: 0x21504fb0&gt;</span></a>
+<a class="sourceLine" id="cb31-18" data-line-number="18"><span class="co">## &lt;bytecode: 0x23ad72d8&gt;</span></a>
 <a class="sourceLine" id="cb31-19" data-line-number="19"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a></code></pre></div>
 <p>You can change the aggregation method of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. All available aggregation schemes are listed on the <code><a href="../../reference/aggregations.html">aggregations()</a></code> documentation page.</p>
 <div id="example-one-measure-with-different-aggregations" class="section level4">

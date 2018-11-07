@@ -306,16 +306,16 @@
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">##  $ supported.tasks   : chr "regr"</span></a>
 <a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">##  $ supported.features: chr "numerics"</span></a>
 <a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">##  $ fun               :function (task, nselect, ...)  </span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##  - attr(*, "class")= chr "Filter"</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">filters<span class="op">$</span>rank.correlation<span class="op">$</span>fun</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">## function (task, nselect, ...) </span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">## {</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">##     data = getTaskData(task, target.extra = TRUE)</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", </span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">##         method = "spearman")[, 1L])</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">## }</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">## &lt;bytecode: 0xcf7c618&gt;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt; </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">##  - attr(*, "class")= chr "Filter"</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">filters<span class="op">$</span>rank.correlation<span class="op">$</span>fun</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">## function(task, nselect, ...) {</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">##     data = getTaskData(task, target.extra = TRUE)</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">##   }</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">## &lt;bytecode: 0x55db8dc9fe00&gt;</span></a>
 <a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a></code></pre></div>
 <p>The core element is <code>$fun</code> which calculates the feature importance. For the <code>"rank.correlation"</code> filter it just extracts the data and formula from the <code>task</code> and passes them on to the <code>base::cor()</code> function.</p>
 <p>Additionally, each Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object has a <code>$name</code>, which should be short and is for example used to annotate graphics (cp. <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>), and a slightly more detailed description in slot <code>$desc</code>. If the filter method is implemented by another package its name is given in the <code>$pkg</code> member. Moreover, the supported task types and feature types are listed.</p>
