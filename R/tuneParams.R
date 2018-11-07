@@ -54,11 +54,11 @@
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' # access data for all evaluated points
-#' print(head(as.data.frame(res$opt.path)))
-#' print(head(as.data.frame(res$opt.path, trafo = TRUE)))
-#' # access data for all evaluated points - alternative
-#' print(head(generateHyperParsEffectData(res)))
-#' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
+#' ### access data for all evaluated points - alternative
+#' # print(head(generateHyperParsEffectData(res)))
+#' # print(head(generateHyperParsEffectData(res, trafo = TRUE)))
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
@@ -76,14 +76,16 @@
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
 #'
 #' # include the training set performance as well
 #' rdesc = makeResampleDesc("Holdout", predict = "both")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
 #'   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
 #' }
 #' @seealso [generateHyperParsEffectData]
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
