@@ -8,20 +8,24 @@ get_stage("after_script") %>%
 if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("install") %>%
-    add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0)
-      install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])) %>%
-    add_code_step(devtools::update_packages(TRUE))
+    add_step(step_install_cran("stringi", type = "both")) %>%
+    add_step(step_install_cran("digest", type = "both")) %>%
+    add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0) {
+      paste0("Installing WARMUPPKGS", trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
+      install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
+    }
+    ) %>%
+    add_code_step(remotes::update_packages(TRUE))
 
-  get_stage("before_script") %>%
-    add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
-                                           "-install-package", "thirdparty/XMeans1.0.4.zip")))
+  if (inherits(ci(), "TravisCI")) {
+    get_stage("before_script") %>%
+      add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
+                                             "-install-package", "thirdparty/XMeans1.0.4.zip")))
+  }
 
   get_stage("script") %>%
     add_code_step(devtools::document()) %>%
-    # manual approch until https://github.com/r-lib/rcmdcheck/issues/83#issuecomment-424314978 is solved
-    add_code_step(devtools::build(manual = TRUE)) %>%
-    add_code_step(rcmdcheck::rcmdcheck(path = "../mlr_2.13.9000.tar.gz", args = "--as-cran",
-                                       error_on = "error"))
+    add_step(step_rcmdcheck("--as-cran", warnings_are_errors = FALSE, notes_are_errors = FALSE))
 
   if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
 
@@ -52,8 +56,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_step(step_build_pkgdown()) %>%
-      add_step(step_push_deploy(commit_paths = "docs/*"))
+      add_step(step_build_pkgdown()) #%>%
+      #add_step(step_push_deploy(commit_paths = "docs/*"))
 
   }
 }

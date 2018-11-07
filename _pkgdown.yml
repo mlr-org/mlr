@@ -16,6 +16,9 @@ development:
   version_label: default
   version_tooltip: "Github version"
 
+toc:
+  depth: 3
+
 home:
   links:
   - text: Cheatsheet
@@ -66,7 +69,7 @@ navbar:
       href: articles/tutorial/bagging.html
     - text: Advanced Tuning
       href: articles/tutorial/advanced_tune.html
-    - text: Feature Selection
+    - text: Feature Selection/Filtering
       href: articles/tutorial/feature_selection.html
     - text: Nested Resampling
       href: articles/tutorial/nested_resampling.html
@@ -130,9 +133,9 @@ navbar:
     - text: mlrCPO
       href: https://github.com/mlr-org/mlrCPO
     - text: mlrHyperopt
-      href: http://jakob-r.de/mlrHyperopt/index.html
+      href: https://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
-      href: http://openml.github.io/openml-r/vignettes/OpenML.html
+      href: https://openml.github.io/openml-r/vignettes/OpenML.html
 
   right:
   - icon: fa-github fa-lg

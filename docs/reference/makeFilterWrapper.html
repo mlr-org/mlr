@@ -144,7 +144,7 @@ down to the next learner." />
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
-      <a href="../articles/tutorial/feature_selection.html">Feature Selection</a>
+      <a href="../articles/tutorial/feature_selection.html">Feature Selection/Filtering</a>
     </li>
     <li>
       <a href="../articles/tutorial/nested_resampling.html">Nested Resampling</a>
@@ -252,10 +252,10 @@ down to the next learner." />
       <a href="https://github.com/mlr-org/mlrCPO">mlrCPO</a>
     </li>
     <li>
-      <a href="http://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
+      <a href="https://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
     </li>
   </ul>
 </li>
@@ -414,8 +414,7 @@ Additional parameters passed down to the filter.</p></td>
 <span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
-})
-<span class='fu'>print</span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "Petal.Length" "Petal.Width" 
 #&gt; 
 #&gt; [[2]]

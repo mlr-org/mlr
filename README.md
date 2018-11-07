@@ -1,13 +1,15 @@
 # Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
-[![Build status](https://ci.appveyor.com/api/projects/status/8predl48o55f2do2/branch/master?svg=true)](https://ci.appveyor.com/project/pat-s/mlr/branch/master)
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
+[![Build status](https://ci.appveyor.com/api/projects/status/skoekgkgu8l5tc1o/branch/master?svg=true)](https://ci.appveyor.com/project/mlr-org/mlr/branch/master)
+[![CRAN](https://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/package=mlr)
+[![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 * [CRAN release site](https://CRAN.R-project.org/package=mlr)
-* Detailed Tutorial: [Online as HTML](https://mlr-org.github.io/mlr/)
+* Detailed Tutorial: [Online as HTML](https://mlr.mlr-org.com/index.html)
 * [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf)
 
 * Install the development version
@@ -19,7 +21,7 @@ devtools::install_github("mlr-org/mlr")
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
-* [We have a blog on mlr](https://mlr-blog.netlify.com/)
+* [We have a blog on mlr](https://mlr-org.com/)
 * A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#list-of-possible-enhancements-to-mlr) - contributors welcome!
 * We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
 
@@ -29,7 +31,7 @@ Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](h
 
 Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately.
-An overview of all mlr related publications can be found [here](http://mlr-org.github.io/mlr/articles/mlr_publications.html).
+An overview of all mlr related publications can be found [here](https://mlr.mlr-org.com/articles/tutorial/mlr_publications.html).
 
 A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Misc#publications-that-use-mlr).
 
@@ -72,7 +74,7 @@ Furthermore, the package is nicely connected to the [**OpenML**](https://github.
 
 # News
 
-Changes of the packages can be accessed in the [NEWS file](https://mlr-org.github.io/mlr/news/index.html) shipped with the package.
+Changes of the packages can be accessed in the [NEWS file](https://mlr.mlr-org.com/news/index.html) shipped with the package.
 
 # Get in Touch
 
