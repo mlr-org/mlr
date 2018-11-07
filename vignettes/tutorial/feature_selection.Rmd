@@ -174,7 +174,7 @@ The performance of all percentage values visited during tuning is:
 
 ```{r}
 df = as.data.frame(res$opt.path)
-df[, -ncols(df)]
+df[, -ncol(df)]
 ```
 
 The optimal percentage and the corresponding performance can be accessed as follows:
