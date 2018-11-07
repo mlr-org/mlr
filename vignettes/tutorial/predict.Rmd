@@ -72,7 +72,7 @@ Here we cluster the `iris` data set without the target variable.
 All observations with an odd index are included in the `Task()` and used for training.
 Predictions are made for the remaining observations.
 
-```{r}
+```{r echo = FALSE, results = 'hide'}
 n = nrow(iris)
 iris.train = iris[seq(1, n, by = 2), -5]
 iris.test = iris[seq(2, n, by = 2), -5]
@@ -81,6 +81,30 @@ mod = train("cluster.kmeans", task)
 
 newdata.pred = predict(mod, newdata = iris.test)
 newdata.pred
+```
+
+```{r eval = FALSE}
+n = nrow(iris)
+iris.train = iris[seq(1, n, by = 2), -5]
+iris.test = iris[seq(2, n, by = 2), -5]
+task = makeClusterTask(data = iris.train)
+mod = train("cluster.kmeans", task)
+
+newdata.pred = predict(mod, newdata = iris.test)
+newdata.pred
+
+## Prediction: 75 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##    response
+## 2         2
+## 4         2
+## 6         2
+## 8         2
+## 10        2
+## 12        2
+## ... (#rows: 75, #cols: 1)
 ```
 
 Note that for supervised learning you do not have to remove the target columns from the data.
