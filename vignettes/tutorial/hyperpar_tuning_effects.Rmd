@@ -64,7 +64,7 @@ Below we perform random search on the `C` parameter for SVM on the famous
 Pima Indians (`mlbench::PimaIndiansDiabetes()`) dataset.
 We generate the hyperparameter effect data so that the `C` parameter is on the transformed scale and we do not include diagnostic data:
 
-```{r gen_data, echo = FALSE, results = 'hide'}
+```{r echo = FALSE, results = 'hide'}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -75,7 +75,7 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
-```{r gen_data, eval = FALSE}
+```{r eval = FALSE}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -102,7 +102,7 @@ generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 
 As a reminder from the [resampling](resample.html){target="_blank"} tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
 
-```{r gen_data_train, echo = FALSE, results = 'hide'}
+```{r echo = FALSE, results = 'hide'}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -114,7 +114,7 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
-```{r gen_data_train, eval = FALSE}
+```{r eval = FALSE}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
