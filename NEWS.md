@@ -16,12 +16,17 @@
 * praznik.CMIM
 
 ## filter - general
-* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`. 
+* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`.
   The change comes with a ~ 100 times speedup.
 
 ## learners - new
 * classif.liquidSVM
 * regr.liquidSVM
+
+## featSel - general
+ * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
+ * The slot `x` now always contains the real feature names and not the bit.names
+ * This fixes a bug and makes `makeFeatSelWrapper` usable with custom `bit.names`.
 
 # mlr 2.13:
 
