@@ -24,7 +24,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   }
 
   get_stage("script") %>%
-    add_code_step(devtools::document()) %>%
+    add_code_step(devtools::document(".")) %>%
     add_step(step_rcmdcheck("--as-cran", warnings_are_errors = FALSE, notes_are_errors = FALSE))
 
   if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
@@ -33,7 +33,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_code_step(devtools::document()) %>%
+      add_code_step(devtools::document(".")) %>%
       add_step(step_push_deploy(commit_paths = "man/"))
   }
 }
