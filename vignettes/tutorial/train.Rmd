@@ -68,6 +68,7 @@ In the following example we cluster the `Ruspini` (`cluster::ruspini()`) data se
 data(ruspini, package = "cluster")
 plot(y ~ x, ruspini)
 ```
+
 ```{r}
 # Generate the task
 ruspini.task = makeClusterTask(data = ruspini)
@@ -85,8 +86,6 @@ names(mod)
 mod$learner
 
 mod$features
-
-mod$time
 
 # Extract the fitted model
 getLearnerModel(mod)
