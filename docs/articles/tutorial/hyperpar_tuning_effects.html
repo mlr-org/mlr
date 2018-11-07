@@ -334,12 +334,12 @@
 <a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">## Nested CV Used: FALSE</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">## Snapshot of data:</span></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">##             C acc.test.mean mmce.test.mean iteration exec.time</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">## 1  0.41687027     0.7539062      0.2460938         1     1.437</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## 2  0.15592534     0.7343750      0.2656250         2     0.055</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">## 1  0.41687027     0.7539062      0.2460938         1     1.430</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## 2  0.15592534     0.7343750      0.2656250         2     0.053</span></a>
 <a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">## 3 19.91842468     0.7252604      0.2747396         3     0.060</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">## 4  0.84877117     0.7552083      0.2447917         4     0.056</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">## 5  0.04348465     0.6510417      0.3489583         5     0.062</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">## 6  6.65902317     0.7421875      0.2578125         6     0.053</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">## 4  0.84877117     0.7552083      0.2447917         4     0.054</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">## 5  0.04348465     0.6510417      0.3489583         5     0.060</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">## 6  6.65902317     0.7421875      0.2578125         6     0.052</span></a></code></pre></div>
 <p>As a reminder from the <a href="resample.html" target="_blank">resampling</a> tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
@@ -364,12 +364,12 @@
 <a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">## 5  1.777353     0.7291667      0.8554688      0.2708333      0.14453125</span></a>
 <a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## 6  6.062857     0.7200521      0.8906250      0.2799479      0.10937500</span></a>
 <a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">##   iteration exec.time</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">## 1         1     0.074</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## 2         2     0.087</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## 3         3     0.073</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## 4         4     0.082</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## 5         5     0.071</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## 6         6     0.079</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">## 1         1     0.070</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## 2         2     0.080</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## 3         3     0.067</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## 4         4     0.074</span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## 5         5     0.067</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## 6         6     0.074</span></a></code></pre></div>
 <p>In the example below, we perform grid search on the <code>C</code> parameter for SVM on the Pima Indians dataset using nested cross validation. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the untransformed scale and we do not include diagnostic data. As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
@@ -387,12 +387,12 @@
 <a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## Nested CV Used: TRUE</span></a>
 <a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">## Snapshot of data:</span></a>
 <a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">##            C acc.test.mean mmce.test.mean iteration exec.time</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">## 1 -5.0000000     0.6536458      0.3463542         1     0.041</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">## 2 -3.8888889     0.6536458      0.3463542         2     0.037</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">## 3 -2.7777778     0.6718750      0.3281250         3     0.038</span></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">## 4 -1.6666667     0.7291667      0.2708333         4     0.048</span></a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">## 5 -0.5555556     0.7369792      0.2630208         5     0.051</span></a>
-<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">## 6  0.5555556     0.7369792      0.2630208         6     0.063</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">## 1 -5.0000000     0.6536458      0.3463542         1     0.033</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">## 2 -3.8888889     0.6536458      0.3463542         2     0.033</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">## 3 -2.7777778     0.6718750      0.3281250         3     0.033</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">## 4 -1.6666667     0.7291667      0.2708333         4     0.033</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">## 5 -0.5555556     0.7369792      0.2630208         5     0.033</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">## 6  0.5555556     0.7369792      0.2630208         6     0.033</span></a>
 <a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">##   nested_cv_run</span></a>
 <a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">## 1             1</span></a>
 <a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">## 2             1</span></a>
