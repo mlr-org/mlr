@@ -457,21 +457,16 @@
 <a href="#performance" class="anchor"></a>Performance</h1>
 <p>The performance of your prediction can be assessed via function <code><a href="../../reference/performance.html">performance()</a></code>. You can specify via the <code>measures</code> argument which <a href="measures.html" target="_blank">measure(s)</a> to calculate. The default measure for multilabel classification is the Hamming loss <a href="measures.html" target="_blank">multilabel.hamloss</a>. All available measures for multilabel classification can be shown by <code><a href="../../reference/listMeasures.html">listMeasures()</a></code> and found in the table of performance <a href="measures.html" target="_blank">measures</a> and the <code>?measures()</code> documentation page.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## multilabel.hamloss </span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##          0.2257143</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred2, <span class="dt">measures =</span> <span class="kw">list</span>(multilabel.subset01, multilabel.hamloss, multilabel.acc,</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">  multilabel.f1, timepredict))</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">##           0.8725693           0.2051244           0.4601919 </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">##       multilabel.f1         timepredict </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">##           0.5709036           1.3520000</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="kw"><a href="../../reference/listMeasures.html">listMeasures</a></span>(<span class="st">"multilabel"</span>)</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">##  [1] "featperc"            "multilabel.tpr"      "multilabel.hamloss" </span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">##  [4] "multilabel.subset01" "timeboth"            "timetrain"          </span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">##  [7] "timepredict"         "multilabel.ppv"      "multilabel.f1"      </span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">## [10] "multilabel.acc"</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred2, <span class="dt">measures =</span> <span class="kw">list</span>(multilabel.subset01, multilabel.hamloss, multilabel.acc,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  multilabel.f1, timepredict))</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">##           0.8721556           0.2047402           0.4611732 </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">##       multilabel.f1         timepredict </span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">##           0.5715320           0.9210000</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw"><a href="../../reference/listMeasures.html">listMeasures</a></span>(<span class="st">"multilabel"</span>)</a></code></pre></div>
 </div>
 <div id="resampling" class="section level1">
 <h1 class="hasAnchor">
@@ -480,19 +475,21 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="dt">method =</span> <span class="st">"CV"</span>, <span class="dt">stratify =</span> <span class="ot">FALSE</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn.br, <span class="dt">task =</span> yeast.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">r</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## Task: multi</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## Learner: multilabel.binaryRelevance.classif.rpart</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.2260172</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Runtime: 7.30208</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn.rFerns, <span class="dt">task =</span> yeast.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">r</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">## Task: multi</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## Learner: multilabel.rFerns</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.4717750</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">## Runtime: 0.419687</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## Task: multi</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Learner: multilabel.binaryRelevance.classif.rpart</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.2200186</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## Runtime: 6.67501</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn.rFerns, <span class="dt">task =</span> yeast.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">r</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## Task: multi</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">## Learner: multilabel.rFerns</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.4762392</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">## Runtime: 0.320362</span></a></code></pre></div>
 </div>
 <div id="binary-performance" class="section level1">
 <h1 class="hasAnchor">

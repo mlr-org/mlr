@@ -630,20 +630,22 @@
 <a class="sourceLine" id="cb12-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">r</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">## Task: BostonHousing-example</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">## Learner: regr.nnet.preproc</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">## Aggr perf: mse.test.mean=19.3595724</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">## Runtime: 0.212814</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">r</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">## Task: BostonHousing-example</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">## Learner: regr.nnet</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">## Aggr perf: mse.test.mean=39.0264465</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">## Runtime: 0.16397</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">## Learner: regr.nnet.preproc</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">## Aggr perf: mse.test.mean=26.6997095</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">## Runtime: 0.083282</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">r</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">## Learner: regr.nnet</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">## Aggr perf: mse.test.mean=56.8645496</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">## Runtime: 0.0463462</span></a></code></pre></div>
 </div>
 <div id="joint-tuning-of-preprocessing-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -697,20 +699,21 @@
 <a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">## Op. pars: decay=0.05; center=TRUE; scale=TRUE</span></a>
 <a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">## mse.test.mean=11.2358338</span></a>
 <a class="sourceLine" id="cb14-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">##    decay center scale mse.test.mean dob eol error.message exec.time</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">## 1      0   TRUE  TRUE      57.95712   1  NA          &lt;NA&gt;     0.068</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">## 2   0.05   TRUE  TRUE      11.23583   2  NA          &lt;NA&gt;     0.067</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">## 3    0.1   TRUE  TRUE      13.04909   3  NA          &lt;NA&gt;     0.055</span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">## 4      0  FALSE  TRUE      84.89302   4  NA          &lt;NA&gt;     0.024</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">## 5   0.05  FALSE  TRUE      16.63278   5  NA          &lt;NA&gt;     0.062</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">## 6    0.1  FALSE  TRUE      14.88141   6  NA          &lt;NA&gt;     0.063</span></a>
-<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">## 7      0   TRUE FALSE      64.98619   7  NA          &lt;NA&gt;     0.038</span></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">## 8   0.05   TRUE FALSE      57.40447   8  NA          &lt;NA&gt;     0.058</span></a>
-<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">## 9    0.1   TRUE FALSE      26.67453   9  NA          &lt;NA&gt;     0.062</span></a>
-<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">## 10     0  FALSE FALSE      63.27422  10  NA          &lt;NA&gt;     0.036</span></a>
-<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">## 11  0.05  FALSE FALSE      32.68506  11  NA          &lt;NA&gt;     0.067</span></a>
-<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">## 12   0.1  FALSE FALSE      42.57609  12  NA          &lt;NA&gt;     0.066</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-15" data-line-number="15">df =<span class="st"> </span><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
+<a class="sourceLine" id="cb14-16" data-line-number="16">df[, <span class="op">-</span><span class="kw">ncol</span>(df)]</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">##    decay center scale mse.test.mean dob eol error.message</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">## 1      0   TRUE  TRUE      57.95712   1  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">## 2   0.05   TRUE  TRUE      11.23583   2  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">## 3    0.1   TRUE  TRUE      13.04909   3  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">## 4      0  FALSE  TRUE      84.89302   4  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">## 5   0.05  FALSE  TRUE      16.63278   5  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">## 6    0.1  FALSE  TRUE      14.88141   6  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">## 7      0   TRUE FALSE      64.98619   7  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">## 8   0.05   TRUE FALSE      57.40447   8  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">## 9    0.1   TRUE FALSE      26.67453   9  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">## 10     0  FALSE FALSE      63.27422  10  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">## 11  0.05  FALSE FALSE      32.68506  11  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">## 12   0.1  FALSE FALSE      42.57609  12  NA          &lt;NA&gt;</span></a></code></pre></div>
 </div>
 <div id="preprocessing-wrapper-functions" class="section level2">
 <h2 class="hasAnchor">

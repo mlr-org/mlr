@@ -381,7 +381,7 @@
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> timetrain, <span class="dt">model =</span> mod)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## timetrain </span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##     0.092</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##     0.055</span></a></code></pre></div>
 <p>For many performance measures in cluster analysis the <code><a href="../../reference/Task.html">Task()</a></code> is required.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</a>
@@ -448,7 +448,7 @@
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co"># Plot false negative and positive rates as well as the error rate versus the threshold</span></a>
 <a class="sourceLine" id="cb10-11" data-line-number="11">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(fpr, fnr, mmce))</a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="kw"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span>(d)</a></code></pre></div>
-<p><img src="performance_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p><img src="performance_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>There is an experimental <code>ggvis</code> plotting function <code>plotThreshVsPerfGGVIS()</code> which performs similarly to <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> but instead of creating facetted subplots to visualize multiple learners and/or multiple measures, one of them is mapped to an interactive sidebar which selects what to display.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plotThreshVsPerfGGVIS</span>(d)</a></code></pre></div>
 </div>

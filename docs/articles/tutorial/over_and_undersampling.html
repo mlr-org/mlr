@@ -450,69 +450,107 @@
 <h2 class="hasAnchor">
 <a href="#tuning-the-probability-threshold" class="anchor"></a>Tuning the probability threshold</h2>
 <p>In binary classification, the default probability value at which a prediction is either classified as “1” or “0” is 0.50. This means with an estimate of &gt;= 0.50 the observation is put into class “1” while lower values get assigned class “0”. To reach a better performance in binary classification, it can be helpful to also optimize the the probability threshold at which this split is made. This can be especially helpful if the response is unbalanced. To enable this, argument <code>tune.threshold</code> needs to be set to <code>TRUE</code> in the chosen <code>makeTuneControl*</code> function.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.gbm"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">distribution =</span> <span class="st">"bernoulli"</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="kw">makeIntegerParam</span>(<span class="st">"interaction.depth"</span>, <span class="dt">lower =</span> <span class="dv">1</span>, <span class="dt">upper =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">2</span>, <span class="dt">tune.threshold =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(lrn, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">resampling =</span> cv2)</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, spam.task, cv3, <span class="dt">extract =</span> getTuneResult)</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">## Resampling: cross-validation</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">## Measures:             mmce</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">## [Tune] Started tuning learner classif.gbm for parameter set:</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">##                      Type len Def Constr Req Tunable Trafo</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">## With control class: TuneControlRandom</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">## Imputation value: 1</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">## [Tune-x] 1: interaction.depth=3</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">## [Tune-y] 1: mmce.test.mean=0.0642112; time: 0.0 min</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">## [Tune-x] 2: interaction.depth=4</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">## [Tune-y] 2: mmce.test.mean=0.0625815; time: 0.0 min</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">## [Tune] Result: interaction.depth=4 : mmce.test.mean=0.0625815</span></a>
-<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">## [Resample] iter 1:    0.0502283</span></a>
-<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">## [Tune] Started tuning learner classif.gbm for parameter set:</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">##                      Type len Def Constr Req Tunable Trafo</span></a>
-<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">## With control class: TuneControlRandom</span></a>
-<a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">## Imputation value: 1</span></a>
-<a class="sourceLine" id="cb9-26" data-line-number="26"><span class="co">## [Tune-x] 1: interaction.depth=5</span></a>
-<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">## [Tune-y] 1: mmce.test.mean=0.0518423; time: 0.1 min</span></a>
-<a class="sourceLine" id="cb9-28" data-line-number="28"><span class="co">## [Tune-x] 2: interaction.depth=5</span></a>
-<a class="sourceLine" id="cb9-29" data-line-number="29"><span class="co">## [Tune-y] 2: mmce.test.mean=0.0498856; time: 0.0 min</span></a>
-<a class="sourceLine" id="cb9-30" data-line-number="30"><span class="co">## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0498856</span></a>
-<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="co">## [Resample] iter 2:    0.0638853</span></a>
-<a class="sourceLine" id="cb9-32" data-line-number="32"><span class="co">## [Tune] Started tuning learner classif.gbm for parameter set:</span></a>
-<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="co">##                      Type len Def Constr Req Tunable Trafo</span></a>
-<a class="sourceLine" id="cb9-34" data-line-number="34"><span class="co">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb9-35" data-line-number="35"><span class="co">## With control class: TuneControlRandom</span></a>
-<a class="sourceLine" id="cb9-36" data-line-number="36"><span class="co">## Imputation value: 1</span></a>
-<a class="sourceLine" id="cb9-37" data-line-number="37"><span class="co">## [Tune-x] 1: interaction.depth=1</span></a>
-<a class="sourceLine" id="cb9-38" data-line-number="38"><span class="co">## [Tune-y] 1: mmce.test.mean=0.0727079; time: 0.0 min</span></a>
-<a class="sourceLine" id="cb9-39" data-line-number="39"><span class="co">## [Tune-x] 2: interaction.depth=3</span></a>
-<a class="sourceLine" id="cb9-40" data-line-number="40"><span class="co">## [Tune-y] 2: mmce.test.mean=0.0625998; time: 0.0 min</span></a>
-<a class="sourceLine" id="cb9-41" data-line-number="41"><span class="co">## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0625998</span></a>
-<a class="sourceLine" id="cb9-42" data-line-number="42"><span class="co">## [Resample] iter 3:    0.0521512</span></a>
-<a class="sourceLine" id="cb9-43" data-line-number="43"><span class="co">## </span></a>
-<a class="sourceLine" id="cb9-44" data-line-number="44"><span class="co">## Aggregated Result: mmce.test.mean=0.0554216</span></a>
-<a class="sourceLine" id="cb9-45" data-line-number="45"><span class="co">## </span></a>
-<a class="sourceLine" id="cb9-46" data-line-number="46"><span class="kw">print</span>(r<span class="op">$</span>extract)</a>
-<a class="sourceLine" id="cb9-47" data-line-number="47"><span class="co">## [[1]]</span></a>
-<a class="sourceLine" id="cb9-48" data-line-number="48"><span class="co">## Tune result:</span></a>
-<a class="sourceLine" id="cb9-49" data-line-number="49"><span class="co">## Op. pars: interaction.depth=4</span></a>
-<a class="sourceLine" id="cb9-50" data-line-number="50"><span class="co">## Threshold: 0.43</span></a>
-<a class="sourceLine" id="cb9-51" data-line-number="51"><span class="co">## mmce.test.mean=0.0625815</span></a>
-<a class="sourceLine" id="cb9-52" data-line-number="52"><span class="co">## </span></a>
-<a class="sourceLine" id="cb9-53" data-line-number="53"><span class="co">## [[2]]</span></a>
-<a class="sourceLine" id="cb9-54" data-line-number="54"><span class="co">## Tune result:</span></a>
-<a class="sourceLine" id="cb9-55" data-line-number="55"><span class="co">## Op. pars: interaction.depth=5</span></a>
-<a class="sourceLine" id="cb9-56" data-line-number="56"><span class="co">## Threshold: 0.59</span></a>
-<a class="sourceLine" id="cb9-57" data-line-number="57"><span class="co">## mmce.test.mean=0.0498856</span></a>
-<a class="sourceLine" id="cb9-58" data-line-number="58"><span class="co">## </span></a>
-<a class="sourceLine" id="cb9-59" data-line-number="59"><span class="co">## [[3]]</span></a>
-<a class="sourceLine" id="cb9-60" data-line-number="60"><span class="co">## Tune result:</span></a>
-<a class="sourceLine" id="cb9-61" data-line-number="61"><span class="co">## Op. pars: interaction.depth=3</span></a>
-<a class="sourceLine" id="cb9-62" data-line-number="62"><span class="co">## Threshold: 0.48</span></a>
-<a class="sourceLine" id="cb9-63" data-line-number="63"><span class="co">## mmce.test.mean=0.0625998</span></a></code></pre></div>
+<pre><code>## Resampling: cross-validation
+## Measures:             mmce
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=3
+## [Tune-y] 1: mmce.test.mean=0.0642112; time: 0.0 min
+## [Tune-x] 2: interaction.depth=4
+## [Tune-y] 2: mmce.test.mean=0.0625815; time: 0.0 min
+## [Tune] Result: interaction.depth=4 : mmce.test.mean=0.0625815
+## [Resample] iter 1:    0.0502283
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=5
+## [Tune-y] 1: mmce.test.mean=0.0518423; time: 0.0 min
+## [Tune-x] 2: interaction.depth=5
+## [Tune-y] 2: mmce.test.mean=0.0498856; time: 0.0 min
+## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0498856
+## [Resample] iter 2:    0.0638853
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=1
+## [Tune-y] 1: mmce.test.mean=0.0727079; time: 0.0 min
+## [Tune-x] 2: interaction.depth=3
+## [Tune-y] 2: mmce.test.mean=0.0625998; time: 0.0 min
+## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0625998
+## [Resample] iter 3:    0.0521512
+## 
+## Aggregated Result: mmce.test.mean=0.0554216
+## </code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.gbm"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">distribution =</span> <span class="st">"bernoulli"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="kw">makeIntegerParam</span>(<span class="st">"interaction.depth"</span>, <span class="dt">lower =</span> <span class="dv">1</span>, <span class="dt">upper =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">2</span>, <span class="dt">tune.threshold =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(lrn, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">resampling =</span> cv2)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, spam.task, cv3, <span class="dt">extract =</span> getTuneResult)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">## Resampling: cross-validation</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">## Measures:             mmce</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">## [Tune] Started tuning learner classif.gbm for parameter set:</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">##                      Type len Def Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">## With control class: TuneControlRandom</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">## Imputation value: 1</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">## [Tune-x] 1: interaction.depth=5</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">## [Tune-y] 1: mmce.test.mean=0.0599739; time: 0.1 min</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">## [Tune-x] 2: interaction.depth=3</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">## [Tune-y] 2: mmce.test.mean=0.0625815; time: 0.0 min</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0599739</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">## [Resample] iter 1:    0.0482714</span></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">## [Tune] Started tuning learner classif.gbm for parameter set:</span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">##                      Type len Def Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">## With control class: TuneControlRandom</span></a>
+<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">## Imputation value: 1</span></a>
+<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">## [Tune-x] 1: interaction.depth=1</span></a>
+<a class="sourceLine" id="cb10-27" data-line-number="27"><span class="co">## [Tune-y] 1: mmce.test.mean=0.0652075; time: 0.0 min</span></a>
+<a class="sourceLine" id="cb10-28" data-line-number="28"><span class="co">## [Tune-x] 2: interaction.depth=3</span></a>
+<a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">## [Tune-y] 2: mmce.test.mean=0.0586882; time: 0.0 min</span></a>
+<a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co">## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0586882</span></a>
+<a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">## [Resample] iter 2:    0.0560626</span></a>
+<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">## [Tune] Started tuning learner classif.gbm for parameter set:</span></a>
+<a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co">##                      Type len Def Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb10-34" data-line-number="34"><span class="co">## interaction.depth integer   -   - 1 to 5   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb10-35" data-line-number="35"><span class="co">## With control class: TuneControlRandom</span></a>
+<a class="sourceLine" id="cb10-36" data-line-number="36"><span class="co">## Imputation value: 1</span></a>
+<a class="sourceLine" id="cb10-37" data-line-number="37"><span class="co">## [Tune-x] 1: interaction.depth=3</span></a>
+<a class="sourceLine" id="cb10-38" data-line-number="38"><span class="co">## [Tune-y] 1: mmce.test.mean=0.0577155; time: 0.0 min</span></a>
+<a class="sourceLine" id="cb10-39" data-line-number="39"><span class="co">## [Tune-x] 2: interaction.depth=2</span></a>
+<a class="sourceLine" id="cb10-40" data-line-number="40"><span class="co">## [Tune-y] 2: mmce.test.mean=0.0606496; time: 0.0 min</span></a>
+<a class="sourceLine" id="cb10-41" data-line-number="41"><span class="co">## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0577155</span></a>
+<a class="sourceLine" id="cb10-42" data-line-number="42"><span class="co">## [Resample] iter 3:    0.0625815</span></a>
+<a class="sourceLine" id="cb10-43" data-line-number="43"><span class="co">## </span></a>
+<a class="sourceLine" id="cb10-44" data-line-number="44"><span class="co">## Aggregated Result: mmce.test.mean=0.0556385</span></a>
+<a class="sourceLine" id="cb10-45" data-line-number="45"><span class="co">## </span></a>
+<a class="sourceLine" id="cb10-46" data-line-number="46"><span class="kw">print</span>(r<span class="op">$</span>extract)</a>
+<a class="sourceLine" id="cb10-47" data-line-number="47"><span class="co">## [[1]]</span></a>
+<a class="sourceLine" id="cb10-48" data-line-number="48"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb10-49" data-line-number="49"><span class="co">## Op. pars: interaction.depth=5</span></a>
+<a class="sourceLine" id="cb10-50" data-line-number="50"><span class="co">## Threshold: 0.48</span></a>
+<a class="sourceLine" id="cb10-51" data-line-number="51"><span class="co">## mmce.test.mean=0.0599739</span></a>
+<a class="sourceLine" id="cb10-52" data-line-number="52"><span class="co">## </span></a>
+<a class="sourceLine" id="cb10-53" data-line-number="53"><span class="co">## [[2]]</span></a>
+<a class="sourceLine" id="cb10-54" data-line-number="54"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb10-55" data-line-number="55"><span class="co">## Op. pars: interaction.depth=3</span></a>
+<a class="sourceLine" id="cb10-56" data-line-number="56"><span class="co">## Threshold: 0.48</span></a>
+<a class="sourceLine" id="cb10-57" data-line-number="57"><span class="co">## mmce.test.mean=0.0586882</span></a>
+<a class="sourceLine" id="cb10-58" data-line-number="58"><span class="co">## </span></a>
+<a class="sourceLine" id="cb10-59" data-line-number="59"><span class="co">## [[3]]</span></a>
+<a class="sourceLine" id="cb10-60" data-line-number="60"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb10-61" data-line-number="61"><span class="co">## Op. pars: interaction.depth=3</span></a>
+<a class="sourceLine" id="cb10-62" data-line-number="62"><span class="co">## Threshold: 0.52</span></a>
+<a class="sourceLine" id="cb10-63" data-line-number="63"><span class="co">## mmce.test.mean=0.0577155</span></a></code></pre></div>
 <p>In the above script the tuning is (of course) nested. What happens is: The tuner evaluates a certain learner configuration via (inner) two-fold CV. On these predictions then the optimal threshold is selected, for this learner config (by calling <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> on the <code>ResamplePrediction</code> object, which was generated in the configuration evaluation). For the optimal learner config, at the end of tuning, we also know its selected threshold. The model is then trained on the complete outer training data set with the threshold set from the tuning and the prediction is made on the outer test set.</p>
 </div>
 <div id="cost-based-approaches" class="section level2">
@@ -524,12 +562,12 @@
 <a href="#weighted-classes-wrapper" class="anchor"></a>Weighted classes wrapper</h3>
 <p>Another approach independent of the underlying classifier is to assign the costs as <em>class weights</em>, so that each observation receives a weight, depending on the class it belongs to. Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.</p>
 <p>In this way every learner which supports weights can be extended through the <a href="wrapper.html" target="_blank">wrapper approach</a>. If the learner does not have a direct parameter for class weights, but supports observation weights, the weights depending on the class are internally set in the wrapper.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.logreg"</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">wcw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn, <span class="dt">wcw.weight =</span> <span class="fl">0.01</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.logreg"</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">wcw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn, <span class="dt">wcw.weight =</span> <span class="fl">0.01</span>)</a></code></pre></div>
 <p>For binary classification, the single number passed to the classifier corresponds to the weight of the positive / majority class, while the negative / minority class receives a weight of 1. So actually, no real costs are used within this approach, but the cost ratio is taken into account.</p>
 <p>If the underlying learner already has a parameter for class weighting (e.g., <code>class.weights</code> in <code>"classif.ksvm"</code>), the <code>wcw.weight</code> is basically passed to the specific class weighting parameter.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">wcw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn, <span class="dt">wcw.weight =</span> <span class="fl">0.01</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">wcw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn, <span class="dt">wcw.weight =</span> <span class="fl">0.01</span>)</a></code></pre></div>
 </div>
 </div>
 </div>
