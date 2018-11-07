@@ -28,6 +28,7 @@
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
+#' set.seed(123)
 #' \donttest{
 #' library(BBmisc)
 #' bls = list(
