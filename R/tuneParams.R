@@ -53,8 +53,10 @@
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' # access data for all evaluated points
-#' print(head(as.data.frame(res$opt.path)))
-#' print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+#' df = as.data.frame(res$opt.path)
+#' df1 = as.data.frame(res$opt.path, trafo = TRUE)
+#' print(head(df[, -ncol(df)]))
+#' print(head(df1[, -ncol(df)]))
 #' # access data for all evaluated points - alternative
 #' print(head(generateHyperParsEffectData(res)))
 #' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
@@ -82,7 +84,8 @@
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
 #'   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#' df2 = as.data.frame(res$opt.path)
+#' print(head(df2[, -ncol(df2)]))
 #' }
 #' @seealso [generateHyperParsEffectData]
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {

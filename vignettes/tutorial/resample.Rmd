@@ -86,7 +86,7 @@ In the $b$-th of the $K$ iterations, the $b$-th subset is used for testing, whil
 As usual, you can either pass a Learner (`makeLearner()`) object to `resample()` or, as done here, provide the class name `"regr.lm"` of the learner.
 Since no performance measure is specified the default for regression learners (mean squared error, [mse](measures.html){target="_blank"}) is calculated.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 # Specify the resampling strategy (3-fold cross-validation)
 rdesc = makeResampleDesc("CV", iters = 3)
 
@@ -94,6 +94,29 @@ rdesc = makeResampleDesc("CV", iters = 3)
 r = resample("regr.lm", bh.task, rdesc)
 
 r
+```
+
+```{r eval = FALSE}
+# Specify the resampling strategy (3-fold cross-validation)
+rdesc = makeResampleDesc("CV", iters = 3)
+
+# Calculate the performance
+r = resample("regr.lm", bh.task, rdesc)
+## Resampling: cross-validation
+## Measures:             mse
+## [Resample] iter 1:    25.1371739
+## [Resample] iter 2:    23.1279497
+## [Resample] iter 3:    21.9152672
+## 
+## Aggregated Result: mse.test.mean=23.3934636
+## 
+
+r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.test.mean=23.3934636
+## Runtime: 0.0375051
 ```
 
 The result `r` is an object of class `resample()` result.

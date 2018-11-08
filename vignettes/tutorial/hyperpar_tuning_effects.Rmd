@@ -93,7 +93,7 @@ In the example below, we perform grid search on the `C` parameter for SVM on the
 the `C` parameter is on the untransformed scale and we do not include diagnostic data. 
 As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.
 
-```{r gen_nested}
+```{r echo = FALSE, results='hide'}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -103,6 +103,38 @@ lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
   measures = list(acc, mmce), resampling = rdesc, par.set = ps, show.info = FALSE)
 res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult, show.info = FALSE)
 generateHyperParsEffectData(res)
+```
+```{r eval = FALSE}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlGrid()
+rdesc = makeResampleDesc("CV", iters = 2L)
+lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
+  measures = list(acc, mmce), resampling = rdesc, par.set = ps, show.info = FALSE)
+res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult, show.info = FALSE)
+generateHyperParsEffectData(res)
+
+## HyperParsEffectData:
+## Hyperparameters: C
+## Measures: acc.test.mean,mmce.test.mean
+## Optimizer: TuneControlGrid
+## Nested CV Used: TRUE
+## Snapshot of data:
+##            C acc.test.mean mmce.test.mean iteration exec.time
+## 1 -5.0000000     0.6536458      0.3463542         1     0.064
+## 2 -3.8888889     0.6536458      0.3463542         2     0.037
+## 3 -2.7777778     0.6718750      0.3281250         3     0.036
+## 4 -1.6666667     0.7291667      0.2708333         4     0.038
+## 5 -0.5555556     0.7369792      0.2630208         5     0.037
+## 6  0.5555556     0.7369792      0.2630208         6     0.051
+##   nested_cv_run
+## 1             1
+## 2             1
+## 3             1
+## 4             1
+## 5             1
+## 6             1
 ```
 
 After generating the hyperparameter effect data, the next step is to visualize it. 

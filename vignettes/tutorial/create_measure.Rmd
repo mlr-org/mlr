@@ -62,10 +62,26 @@ For resampling slot `$aggr` specifies how the overall performance across all res
 Typically, this is just a matter of aggregating the performance values obtained on the test sets `perf.test` or the training sets `perf.train` by a simple function. 
 The by far most common scheme is `test.mean` (`aggregations()`), i.e., the unweighted mean of the performances on the test sets.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 str(test.mean)
 
 test.mean$fun
+```
+
+```{r eval = FALSE}
+str(test.mean)
+## List of 4
+##  $ id        : chr "test.mean"
+##  $ name      : chr "Test mean"
+##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)  
+##  $ properties: chr "req.test"
+##  - attr(*, "class")= chr "Aggregation"
+
+test.mean$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## mean(perf.test)
+## <bytecode: 0xc0a82e8>
+## <environment: namespace:mlr>
 ```
 
 All aggregation schemes are objects of class `Aggregation()` with the function in slot `$fun` doing the actual work.
