@@ -66,6 +66,7 @@ sure to appropriately adjust the resampling strategy and the aggregation for
 the measure. See example code below.
 }
 \examples{
+set.seed(123)
 # a grid search for an SVM (with a tiny number of points...)
 # note how easily we can optimize on a log-scale
 ps = makeParamSet(
@@ -77,8 +78,10 @@ rdesc = makeResampleDesc("CV", iters = 2L)
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 # access data for all evaluated points
-print(head(as.data.frame(res$opt.path)))
-print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+df = as.data.frame(res$opt.path)
+df1 = as.data.frame(res$opt.path, trafo = TRUE)
+print(head(df[, -ncol(df)]))
+print(head(df1[, -ncol(df)]))
 # access data for all evaluated points - alternative
 print(head(generateHyperParsEffectData(res)))
 print(head(generateHyperParsEffectData(res, trafo = TRUE)))
@@ -99,14 +102,16 @@ ctrl = makeTuneControlIrace(maxExperiments = 5, nbIterations = 1, minNbSurvival 
 rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
-print(head(as.data.frame(res$opt.path)))
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 
 # include the training set performance as well
 rdesc = makeResampleDesc("Holdout", predict = "both")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 print(res)
-print(head(as.data.frame(res$opt.path)))
+df2 = as.data.frame(res$opt.path)
+print(head(df2[, -ncol(df2)]))
 }
 }
 \seealso{
