@@ -34,7 +34,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
     get_stage("deploy") %>%
       add_code_step(devtools::document(".")) %>%
-      add_step(step_push_deploy(commit_paths = "man/"))
+      add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
   }
 }
 
