@@ -42,6 +42,7 @@
 #' the measure. See example code below.
 #' @export
 #' @examples
+#' set.seed(123)
 #' # a grid search for an SVM (with a tiny number of points...)
 #' # note how easily we can optimize on a log-scale
 #' ps = makeParamSet(
@@ -77,7 +78,8 @@
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
 #'
 #' # include the training set performance as well
 #' rdesc = makeResampleDesc("Holdout", predict = "both")

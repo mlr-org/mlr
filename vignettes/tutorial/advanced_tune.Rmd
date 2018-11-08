@@ -35,7 +35,8 @@ ctrl = makeTuneControlIrace(maxExperiments = 200L)
 rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl,
   show.info = FALSE)
-print(head(as.data.frame(res$opt.path)))
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 ```
 
 See how we made the kernel parameters like `sigma` and `degree` dependent on the `kernel` selection parameters? 
@@ -69,7 +70,8 @@ rdesc = makeResampleDesc("CV", iters = 2L)
 ctrl = makeTuneControlIrace(maxExperiments = 200L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl,
   show.info = FALSE)
-print(head(as.data.frame(res$opt.path)))
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 ```
 
 # Multi-criteria evaluation and optimization
@@ -94,7 +96,7 @@ res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task,
   measures = list(fpr, fnr), control = ctrl, show.info = FALSE)
 res
 
-head(as.data.frame(trafoOptPath(res$opt.path)))
+print(head(df[, -ncol(df)]))
 ```
 
 The results can be visualized with function `plotTuneMultiCritResult()`.

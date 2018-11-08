@@ -31,7 +31,7 @@ Just as `train()`, the `predict` (`predict.WrappedModel()`) function has a `subs
 
 In the following example we fit a gradient boosting machine (`gbm::gbm()`) to every second observation of the `BostonHousing` (`mlbench::BostonHousing()`) data set and make predictions on the remaining data in `bh.task()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 n = getTaskSize(bh.task)
 train.set = seq(1, n, by = 2)
 test.set = seq(2, n, by = 2)
@@ -42,13 +42,37 @@ task.pred = predict(mod, task = bh.task, subset = test.set)
 task.pred
 ```
 
+```{r eval = FALSE}
+n = getTaskSize(bh.task)
+train.set = seq(1, n, by = 2)
+test.set = seq(2, n, by = 2)
+lrn = makeLearner("regr.gbm", n.trees = 100)
+mod = train(lrn, bh.task, subset = train.set)
+
+task.pred = predict(mod, task = bh.task, subset = test.set)
+task.pred
+
+## Prediction: 253 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##    id truth response
+## 2   2  21.6 22.27841
+## 4   4  33.4 38.92484
+## 6   6  28.7 25.36387
+## 8   8  27.1 15.61735
+## 10 10  18.9 16.98708
+## 12 12  18.9 20.41749
+## ... (#rows: 253, #cols: 3)
+```
+
 The second way is useful if you want to predict data not included in the `Task()`.
 
 Here we cluster the `iris` data set without the target variable.
 All observations with an odd index are included in the `Task()` and used for training.
 Predictions are made for the remaining observations.
 
-```{r}
+```{r echo = FALSE, results = 'hide'}
 n = nrow(iris)
 iris.train = iris[seq(1, n, by = 2), -5]
 iris.test = iris[seq(2, n, by = 2), -5]
@@ -57,6 +81,30 @@ mod = train("cluster.kmeans", task)
 
 newdata.pred = predict(mod, newdata = iris.test)
 newdata.pred
+```
+
+```{r eval = FALSE}
+n = nrow(iris)
+iris.train = iris[seq(1, n, by = 2), -5]
+iris.test = iris[seq(2, n, by = 2), -5]
+task = makeClusterTask(data = iris.train)
+mod = train("cluster.kmeans", task)
+
+newdata.pred = predict(mod, newdata = iris.test)
+newdata.pred
+
+## Prediction: 75 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##    response
+## 2         2
+## 4         2
+## 6         2
+## 8         2
+## 10        2
+## 12        2
+## ... (#rows: 75, #cols: 1)
 ```
 
 Note that for supervised learning you do not have to remove the target columns from the data.

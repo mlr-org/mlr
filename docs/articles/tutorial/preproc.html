@@ -360,180 +360,180 @@
 <li>The only exception: <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> does not have a <code>method</code> argument. Instead all preprocessing options that would be passed to <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code>’s <code>method</code> argument are given as individual logical parameters to <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</li>
 </ul>
 <p>For example the following call to <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">preProcess</span>(x, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">"knnImpute"</span>, <span class="st">"pca"</span>), <span class="dt">pcaComp =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">preProcess</span>(x, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">"knnImpute"</span>, <span class="st">"pca"</span>), <span class="dt">pcaComp =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>with <code>x</code> being a <code>matrix</code> or <code>data.frame</code> would thus translate into</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(learner, <span class="dt">ppc.knnImpute =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.pca =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.pcaComp =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(learner, <span class="dt">ppc.knnImpute =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.pca =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.pcaComp =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>where <code>learner</code> is a <code>mlr</code> Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) or the name of a learner class like <code>"classif.lda"</code>.</p>
 <p>If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function <code><a href="http://www.rdocumentation.org/packages/caret/topics/preProcess">caret::preProcess()</a></code>.</p>
 <p>In the following we show an example where principal components analysis (PCA) is used for dimensionality reduction. This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.</p>
 <p>We consider the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>, which poses a binary classification problem with 208 observations and 60 features.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">sonar.task</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">## Supervised task: Sonar-example</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">## Type: classif</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">## Target: Class</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">## Observations: 208</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">## Features:</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">##    numerics     factors     ordered functionals </span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">##          60           0           0           0 </span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">## Missings: FALSE</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">## Has weights: FALSE</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">## Has blocking: FALSE</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">## Has coordinates: FALSE</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">## Classes: 2</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">##   M   R </span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">## 111  97 </span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">## Positive class: M</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sonar.task</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## Supervised task: Sonar-example</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## Type: classif</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## Target: Class</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## Observations: 208</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">## Features:</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##    numerics     factors     ordered functionals </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##          60           0           0           0 </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## Missings: FALSE</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## Has weights: FALSE</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## Has blocking: FALSE</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## Has coordinates: FALSE</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## Classes: 2</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">##   M   R </span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">## 111  97 </span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">## Positive class: M</span></a></code></pre></div>
 <p>Below we fuse quadratic discriminant analysis (<code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="st">"classif.qda"</span>, <span class="dt">ppc.pca =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.thresh =</span> <span class="fl">0.9</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2">lrn</a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">## Learner classif.qda.preproc from package MASS</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">## Type: classif</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">## Name: ; Short name: </span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">## Class: PreprocWrapperCaret</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">## Predict-Type: response</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="st">"classif.qda"</span>, <span class="dt">ppc.pca =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.thresh =</span> <span class="fl">0.9</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">lrn</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## Learner classif.qda.preproc from package MASS</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Type: classif</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">## Name: ; Short name: </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## Class: PreprocWrapperCaret</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></a></code></pre></div>
 <p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, sonar.task)</a>
-<a class="sourceLine" id="cb5-2" title="2">mod</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></a>
-<a class="sourceLine" id="cb5-6" title="6"></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod)</a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co">## Hyperparameters:</span></a>
-<a class="sourceLine" id="cb5-11" title="11"></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb5-14" title="14"><span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span></a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="co">## </span></a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="co">## Prior probabilities of groups:</span></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="co">##         M         R </span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="co">## 0.5336538 0.4663462 </span></a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb5-20" title="20"><span class="co">## Group means:</span></a>
-<a class="sourceLine" id="cb5-21" title="21"><span class="co">##          PC1        PC2        PC3         PC4         PC5         PC6</span></a>
-<a class="sourceLine" id="cb5-22" title="22"><span class="co">## M  0.5976122 -0.8058235  0.9773518  0.03794232 -0.04568166 -0.06721702</span></a>
-<a class="sourceLine" id="cb5-23" title="23"><span class="co">## R -0.6838655  0.9221279 -1.1184128 -0.04341853  0.05227489  0.07691845</span></a>
-<a class="sourceLine" id="cb5-24" title="24"><span class="co">##          PC7         PC8        PC9       PC10        PC11          PC12</span></a>
-<a class="sourceLine" id="cb5-25" title="25"><span class="co">## M  0.2278162 -0.01034406 -0.2530606 -0.1793157 -0.04084466 -0.0004789888</span></a>
-<a class="sourceLine" id="cb5-26" title="26"><span class="co">## R -0.2606969  0.01183702  0.2895848  0.2051963  0.04673977  0.0005481212</span></a>
-<a class="sourceLine" id="cb5-27" title="27"><span class="co">##          PC13       PC14        PC15        PC16        PC17        PC18</span></a>
-<a class="sourceLine" id="cb5-28" title="28"><span class="co">## M -0.06138758 -0.1057137  0.02808048  0.05215865 -0.07453265  0.03869042</span></a>
-<a class="sourceLine" id="cb5-29" title="29"><span class="co">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</span></a>
-<a class="sourceLine" id="cb5-30" title="30"><span class="co">##          PC19         PC20        PC21         PC22</span></a>
-<a class="sourceLine" id="cb5-31" title="31"><span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span></a>
-<a class="sourceLine" id="cb5-32" title="32"><span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, sonar.task)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">mod</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## Hyperparameters:</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## Call:</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## </span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## Prior probabilities of groups:</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">##         M         R </span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## 0.5336538 0.4663462 </span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## </span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## Group means:</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">##          PC1        PC2        PC3         PC4         PC5         PC6</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## M  0.5976122 -0.8058235  0.9773518  0.03794232 -0.04568166 -0.06721702</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">## R -0.6838655  0.9221279 -1.1184128 -0.04341853  0.05227489  0.07691845</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">##          PC7         PC8        PC9       PC10        PC11          PC12</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## M  0.2278162 -0.01034406 -0.2530606 -0.1793157 -0.04084466 -0.0004789888</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## R -0.2606969  0.01183702  0.2895848  0.2051963  0.04673977  0.0005481212</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">##          PC13       PC14        PC15        PC16        PC17        PC18</span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## M -0.06138758 -0.1057137  0.02808048  0.05215865 -0.07453265  0.03869042</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</span></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">##          PC19         PC20        PC21         PC22</span></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></a></code></pre></div>
 <p>Below the performances of <code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">stratify =</span> <span class="ot">TRUE</span>, <span class="dt">task =</span> sonar.task)</a>
-<a class="sourceLine" id="cb6-2" title="2">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="kw">list</span>(<span class="st">"classif.qda"</span>, lrn), sonar.task, rin, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3">res</a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">##         task.id          learner.id mmce.test.mean</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">## 1 Sonar-example         classif.qda      0.3652174</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">## 2 Sonar-example classif.qda.preproc      0.2115942</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">stratify =</span> <span class="ot">TRUE</span>, <span class="dt">task =</span> sonar.task)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="kw">list</span>(<span class="st">"classif.qda"</span>, lrn), sonar.task, rin, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">res</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">##         task.id          learner.id mmce.test.mean</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## 1 Sonar-example         classif.qda      0.3505176</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## 2 Sonar-example classif.qda.preproc      0.2213251</span></a></code></pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
 <div id="joint-tuning-of-preprocessing-options-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#joint-tuning-of-preprocessing-options-and-learner-parameters" class="anchor"></a>Joint tuning of preprocessing options and learner parameters</h2>
 <p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(lrn)</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="co">##                      Type len     Def                      Constr Req</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">## ppc.YeoJohnson    logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">## ppc.expoTrans     logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">## ppc.center        logical   -    TRUE                           -   -</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">## ppc.scale         logical   -    TRUE                           -   -</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">## ppc.range         logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">## ppc.knnImpute     logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">## ppc.bagImpute     logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">## ppc.medianImpute  logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">## ppc.pca           logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">## ppc.ica           logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">## ppc.spatialSign   logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">## ppc.corr          logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">## ppc.zv            logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">## ppc.nzv           logical   -   FALSE                           -   -</span></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="co">## ppc.thresh        numeric   -    0.95                    0 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="co">## ppc.pcaComp       integer   -       -                    1 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="co">## ppc.na.remove     logical   -    TRUE                           -   -</span></a>
-<a class="sourceLine" id="cb7-21" title="21"><span class="co">## ppc.k             integer   -       5                    1 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="co">## ppc.fudge         numeric   -     0.2                    0 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-23" title="23"><span class="co">## ppc.numUnique     integer   -       3                    1 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-24" title="24"><span class="co">## ppc.n.comp        integer   -       -                    1 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-25" title="25"><span class="co">## ppc.cutoff        numeric   -     0.9                      0 to 1   -</span></a>
-<a class="sourceLine" id="cb7-26" title="26"><span class="co">## ppc.freqCut       numeric   -      19                    1 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-27" title="27"><span class="co">## ppc.uniqueCut     numeric   -      10                    0 to Inf   -</span></a>
-<a class="sourceLine" id="cb7-28" title="28"><span class="co">## method           discrete   -  moment            moment,mle,mve,t   -</span></a>
-<a class="sourceLine" id="cb7-29" title="29"><span class="co">## nu                numeric   -       5                    2 to Inf   Y</span></a>
-<a class="sourceLine" id="cb7-30" title="30"><span class="co">## predict.method   discrete   - plug-in plug-in,predictive,debiased   -</span></a>
-<a class="sourceLine" id="cb7-31" title="31"><span class="co">##                  Tunable Trafo</span></a>
-<a class="sourceLine" id="cb7-32" title="32"><span class="co">## ppc.BoxCox          TRUE     -</span></a>
-<a class="sourceLine" id="cb7-33" title="33"><span class="co">## ppc.YeoJohnson      TRUE     -</span></a>
-<a class="sourceLine" id="cb7-34" title="34"><span class="co">## ppc.expoTrans       TRUE     -</span></a>
-<a class="sourceLine" id="cb7-35" title="35"><span class="co">## ppc.center          TRUE     -</span></a>
-<a class="sourceLine" id="cb7-36" title="36"><span class="co">## ppc.scale           TRUE     -</span></a>
-<a class="sourceLine" id="cb7-37" title="37"><span class="co">## ppc.range           TRUE     -</span></a>
-<a class="sourceLine" id="cb7-38" title="38"><span class="co">## ppc.knnImpute       TRUE     -</span></a>
-<a class="sourceLine" id="cb7-39" title="39"><span class="co">## ppc.bagImpute       TRUE     -</span></a>
-<a class="sourceLine" id="cb7-40" title="40"><span class="co">## ppc.medianImpute    TRUE     -</span></a>
-<a class="sourceLine" id="cb7-41" title="41"><span class="co">## ppc.pca             TRUE     -</span></a>
-<a class="sourceLine" id="cb7-42" title="42"><span class="co">## ppc.ica             TRUE     -</span></a>
-<a class="sourceLine" id="cb7-43" title="43"><span class="co">## ppc.spatialSign     TRUE     -</span></a>
-<a class="sourceLine" id="cb7-44" title="44"><span class="co">## ppc.corr            TRUE     -</span></a>
-<a class="sourceLine" id="cb7-45" title="45"><span class="co">## ppc.zv              TRUE     -</span></a>
-<a class="sourceLine" id="cb7-46" title="46"><span class="co">## ppc.nzv             TRUE     -</span></a>
-<a class="sourceLine" id="cb7-47" title="47"><span class="co">## ppc.thresh          TRUE     -</span></a>
-<a class="sourceLine" id="cb7-48" title="48"><span class="co">## ppc.pcaComp         TRUE     -</span></a>
-<a class="sourceLine" id="cb7-49" title="49"><span class="co">## ppc.na.remove       TRUE     -</span></a>
-<a class="sourceLine" id="cb7-50" title="50"><span class="co">## ppc.k               TRUE     -</span></a>
-<a class="sourceLine" id="cb7-51" title="51"><span class="co">## ppc.fudge           TRUE     -</span></a>
-<a class="sourceLine" id="cb7-52" title="52"><span class="co">## ppc.numUnique       TRUE     -</span></a>
-<a class="sourceLine" id="cb7-53" title="53"><span class="co">## ppc.n.comp          TRUE     -</span></a>
-<a class="sourceLine" id="cb7-54" title="54"><span class="co">## ppc.cutoff          TRUE     -</span></a>
-<a class="sourceLine" id="cb7-55" title="55"><span class="co">## ppc.freqCut         TRUE     -</span></a>
-<a class="sourceLine" id="cb7-56" title="56"><span class="co">## ppc.uniqueCut       TRUE     -</span></a>
-<a class="sourceLine" id="cb7-57" title="57"><span class="co">## method              TRUE     -</span></a>
-<a class="sourceLine" id="cb7-58" title="58"><span class="co">## nu                  TRUE     -</span></a>
-<a class="sourceLine" id="cb7-59" title="59"><span class="co">## predict.method      TRUE     -</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(lrn)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">##                      Type len     Def                      Constr Req</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">## ppc.YeoJohnson    logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## ppc.expoTrans     logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## ppc.center        logical   -    TRUE                           -   -</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## ppc.scale         logical   -    TRUE                           -   -</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## ppc.range         logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## ppc.knnImpute     logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">## ppc.bagImpute     logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">## ppc.medianImpute  logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">## ppc.pca           logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">## ppc.ica           logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## ppc.spatialSign   logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## ppc.corr          logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">## ppc.zv            logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">## ppc.nzv           logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">## ppc.thresh        numeric   -    0.95                    0 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">## ppc.pcaComp       integer   -       -                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">## ppc.na.remove     logical   -    TRUE                           -   -</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">## ppc.k             integer   -       5                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">## ppc.fudge         numeric   -     0.2                    0 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">## ppc.numUnique     integer   -       3                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">## ppc.n.comp        integer   -       -                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">## ppc.cutoff        numeric   -     0.9                      0 to 1   -</span></a>
+<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">## ppc.freqCut       numeric   -      19                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">## ppc.uniqueCut     numeric   -      10                    0 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">## method           discrete   -  moment            moment,mle,mve,t   -</span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">## nu                numeric   -       5                    2 to Inf   Y</span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">## predict.method   discrete   - plug-in plug-in,predictive,debiased   -</span></a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">##                  Tunable Trafo</span></a>
+<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">## ppc.BoxCox          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">## ppc.YeoJohnson      TRUE     -</span></a>
+<a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">## ppc.expoTrans       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-35" data-line-number="35"><span class="co">## ppc.center          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-36" data-line-number="36"><span class="co">## ppc.scale           TRUE     -</span></a>
+<a class="sourceLine" id="cb7-37" data-line-number="37"><span class="co">## ppc.range           TRUE     -</span></a>
+<a class="sourceLine" id="cb7-38" data-line-number="38"><span class="co">## ppc.knnImpute       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-39" data-line-number="39"><span class="co">## ppc.bagImpute       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-40" data-line-number="40"><span class="co">## ppc.medianImpute    TRUE     -</span></a>
+<a class="sourceLine" id="cb7-41" data-line-number="41"><span class="co">## ppc.pca             TRUE     -</span></a>
+<a class="sourceLine" id="cb7-42" data-line-number="42"><span class="co">## ppc.ica             TRUE     -</span></a>
+<a class="sourceLine" id="cb7-43" data-line-number="43"><span class="co">## ppc.spatialSign     TRUE     -</span></a>
+<a class="sourceLine" id="cb7-44" data-line-number="44"><span class="co">## ppc.corr            TRUE     -</span></a>
+<a class="sourceLine" id="cb7-45" data-line-number="45"><span class="co">## ppc.zv              TRUE     -</span></a>
+<a class="sourceLine" id="cb7-46" data-line-number="46"><span class="co">## ppc.nzv             TRUE     -</span></a>
+<a class="sourceLine" id="cb7-47" data-line-number="47"><span class="co">## ppc.thresh          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-48" data-line-number="48"><span class="co">## ppc.pcaComp         TRUE     -</span></a>
+<a class="sourceLine" id="cb7-49" data-line-number="49"><span class="co">## ppc.na.remove       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-50" data-line-number="50"><span class="co">## ppc.k               TRUE     -</span></a>
+<a class="sourceLine" id="cb7-51" data-line-number="51"><span class="co">## ppc.fudge           TRUE     -</span></a>
+<a class="sourceLine" id="cb7-52" data-line-number="52"><span class="co">## ppc.numUnique       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-53" data-line-number="53"><span class="co">## ppc.n.comp          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-54" data-line-number="54"><span class="co">## ppc.cutoff          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-55" data-line-number="55"><span class="co">## ppc.freqCut         TRUE     -</span></a>
+<a class="sourceLine" id="cb7-56" data-line-number="56"><span class="co">## ppc.uniqueCut       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-57" data-line-number="57"><span class="co">## method              TRUE     -</span></a>
+<a class="sourceLine" id="cb7-58" data-line-number="58"><span class="co">## nu                  TRUE     -</span></a>
+<a class="sourceLine" id="cb7-59" data-line-number="59"><span class="co">## predict.method      TRUE     -</span></a></code></pre></div>
 <p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code> parameters.</p>
 <p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb8-2" title="2">  <span class="kw">makeIntegerParam</span>(<span class="st">"ppc.pcaComp"</span>, <span class="dt">lower =</span> <span class="dv">1</span>, <span class="dt">upper =</span> <span class="kw"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(sonar.task)),</a>
-<a class="sourceLine" id="cb8-3" title="3">  <span class="kw">makeDiscreteParam</span>(<span class="st">"predict.method"</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"plug-in"</span>, <span class="st">"debiased"</span>))</a>
-<a class="sourceLine" id="cb8-4" title="4">)</a>
-<a class="sourceLine" id="cb8-5" title="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>(<span class="dt">resolution =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb8-6" title="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, sonar.task, rin, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-7" title="7">res</a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">## Tune result:</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">## mmce.test.mean=0.2115942</span></a>
-<a class="sourceLine" id="cb8-11" title="11"></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">## 1            1        plug-in      0.5149068</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">## 2            8        plug-in      0.2118012</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">## 3           14        plug-in      0.2118012</span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="co">## 4           21        plug-in      0.2115942</span></a>
-<a class="sourceLine" id="cb8-18" title="18"><span class="co">## 5           27        plug-in      0.2547964</span></a>
-<a class="sourceLine" id="cb8-19" title="19"><span class="co">## 6           34        plug-in      0.3028295</span></a>
-<a class="sourceLine" id="cb8-20" title="20"><span class="co">## 7           40        plug-in      0.2884748</span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">## 8           47        plug-in      0.3026225</span></a>
-<a class="sourceLine" id="cb8-22" title="22"><span class="co">## 9           53        plug-in      0.2978606</span></a>
-<a class="sourceLine" id="cb8-23" title="23"><span class="co">## 10          60        plug-in      0.3652174</span></a>
-<a class="sourceLine" id="cb8-24" title="24"><span class="co">## 11           1       debiased      0.5287785</span></a>
-<a class="sourceLine" id="cb8-25" title="25"><span class="co">## 12           8       debiased      0.2309179</span></a>
-<a class="sourceLine" id="cb8-26" title="26"><span class="co">## 13          14       debiased      0.2646653</span></a>
-<a class="sourceLine" id="cb8-27" title="27"><span class="co">## 14          21       debiased      0.2933747</span></a>
-<a class="sourceLine" id="cb8-28" title="28"><span class="co">## 15          27       debiased      0.3123533</span></a>
-<a class="sourceLine" id="cb8-29" title="29"><span class="co">## 16          34       debiased      0.3411318</span></a>
-<a class="sourceLine" id="cb8-30" title="30"><span class="co">## 17          40       debiased      0.3075914</span></a>
-<a class="sourceLine" id="cb8-31" title="31"><span class="co">## 18          47       debiased      0.3024845</span></a>
-<a class="sourceLine" id="cb8-32" title="32"><span class="co">## 19          53       debiased      0.3074534</span></a>
-<a class="sourceLine" id="cb8-33" title="33"><span class="co">## 20          60       debiased      0.3460317</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="kw">makeIntegerParam</span>(<span class="st">"ppc.pcaComp"</span>, <span class="dt">lower =</span> <span class="dv">1</span>, <span class="dt">upper =</span> <span class="kw"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(sonar.task)),</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="kw">makeDiscreteParam</span>(<span class="st">"predict.method"</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"plug-in"</span>, <span class="st">"debiased"</span>))</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>(<span class="dt">resolution =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, sonar.task, rin, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">res</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">## mmce.test.mean=0.2116632</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">## 1            1        plug-in      0.5284334</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## 2            8        plug-in      0.2311939</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">## 3           14        plug-in      0.2118703</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">## 4           21        plug-in      0.2116632</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">## 5           27        plug-in      0.2309869</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">## 6           34        plug-in      0.2739821</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">## 7           40        plug-in      0.2933057</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">## 8           47        plug-in      0.3029676</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">## 9           53        plug-in      0.3222912</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">## 10          60        plug-in      0.3505176</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">## 11           1       debiased      0.5579020</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">## 12           8       debiased      0.2502415</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">## 13          14       debiased      0.2503796</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">## 14          21       debiased      0.2550725</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">## 15          27       debiased      0.2792271</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">## 16          34       debiased      0.3128364</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">## 17          40       debiased      0.2982747</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">## 18          47       debiased      0.2839199</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">## 19          53       debiased      0.3224983</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">## 20          60       debiased      0.3799172</span></a></code></pre></div>
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
@@ -560,25 +560,25 @@
 <p>The <em>train</em> function for the scaling example is given below. It calls <code><a href="http://www.rdocumentation.org/packages/base/topics/scale">base::scale()</a></code> on the numerical features and returns the scaled training data and the corresponding scaling parameters.</p>
 <p><code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <code><a href="http://www.rdocumentation.org/packages/base/topics/scale">base::scale()</a></code> and slot <code>$control</code> stores the scaling parameters to be used in the prediction stage.</p>
 <p>Regarding the latter note that the <code>center</code> and <code>scale</code> arguments of <code><a href="http://www.rdocumentation.org/packages/base/topics/scale">base::scale()</a></code> can be either a logical value or a numeric vector of length equal to the number of the numeric columns in <code>data</code>, respectively. If a logical value was passed to <code>args</code> we store the column means and standard deviations/root mean squares in the <code>$center</code> and <code>$scale</code> slots of the returned <code>$control</code> object.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">trainfun =<span class="st"> </span><span class="cf">function</span>(data, target, <span class="dt">args =</span> <span class="kw">list</span>(center, scale)) {</a>
-<a class="sourceLine" id="cb9-2" title="2">  <span class="co"># Identify numerical features</span></a>
-<a class="sourceLine" id="cb9-3" title="3">  cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
-<a class="sourceLine" id="cb9-4" title="4">  nums =<span class="st"> </span><span class="kw">setdiff</span>(cns[<span class="kw">sapply</span>(data, is.numeric)], target)</a>
-<a class="sourceLine" id="cb9-5" title="5">  <span class="co"># Extract numerical features from the data set and call scale</span></a>
-<a class="sourceLine" id="cb9-6" title="6">  x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
-<a class="sourceLine" id="cb9-7" title="7">  x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> args<span class="op">$</span>center, <span class="dt">scale =</span> args<span class="op">$</span>scale)</a>
-<a class="sourceLine" id="cb9-8" title="8">  <span class="co"># Store the scaling parameters in control</span></a>
-<a class="sourceLine" id="cb9-9" title="9">  <span class="co"># These are needed to preprocess the data before prediction</span></a>
-<a class="sourceLine" id="cb9-10" title="10">  control =<span class="st"> </span>args</a>
-<a class="sourceLine" id="cb9-11" title="11">  <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>center) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>center)</a>
-<a class="sourceLine" id="cb9-12" title="12">    control<span class="op">$</span>center =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:center"</span>)</a>
-<a class="sourceLine" id="cb9-13" title="13">  <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>scale) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>scale)</a>
-<a class="sourceLine" id="cb9-14" title="14">    control<span class="op">$</span>scale =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:scale"</span>)</a>
-<a class="sourceLine" id="cb9-15" title="15">  <span class="co"># Recombine the data</span></a>
-<a class="sourceLine" id="cb9-16" title="16">  data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb9-17" title="17">  data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
-<a class="sourceLine" id="cb9-18" title="18">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">data =</span> data, <span class="dt">control =</span> control))</a>
-<a class="sourceLine" id="cb9-19" title="19">}</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">trainfun =<span class="st"> </span><span class="cf">function</span>(data, target, <span class="dt">args =</span> <span class="kw">list</span>(center, scale)) {</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="co"># Identify numerical features</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  nums =<span class="st"> </span><span class="kw">setdiff</span>(cns[<span class="kw">sapply</span>(data, is.numeric)], target)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="co"># Extract numerical features from the data set and call scale</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">  x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">  x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> args<span class="op">$</span>center, <span class="dt">scale =</span> args<span class="op">$</span>scale)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">  <span class="co"># Store the scaling parameters in control</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">  <span class="co"># These are needed to preprocess the data before prediction</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">  control =<span class="st"> </span>args</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">  <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>center) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>center)</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">    control<span class="op">$</span>center =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:center"</span>)</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">  <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>scale) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>scale)</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">    control<span class="op">$</span>scale =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:scale"</span>)</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">  <span class="co"># Recombine the data</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">  data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">  data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">data =</span> data, <span class="dt">control =</span> control))</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">}</a></code></pre></div>
 </div>
 <div id="specifying-the-predict-function" class="section level2">
 <h2 class="hasAnchor">
@@ -596,54 +596,56 @@
 </ul>
 <p>It returns the preprocessed data.</p>
 <p>In our scaling example the <em>predict</em> function scales the numerical features using the parameters from the training stage stored in <code>control</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">predictfun =<span class="st"> </span><span class="cf">function</span>(data, target, args, control) {</a>
-<a class="sourceLine" id="cb10-2" title="2">  <span class="co"># Identify numerical features</span></a>
-<a class="sourceLine" id="cb10-3" title="3">  cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
-<a class="sourceLine" id="cb10-4" title="4">  nums =<span class="st"> </span>cns[<span class="kw">sapply</span>(data, is.numeric)]</a>
-<a class="sourceLine" id="cb10-5" title="5">  <span class="co"># Extract numerical features from the data set and call scale</span></a>
-<a class="sourceLine" id="cb10-6" title="6">  x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
-<a class="sourceLine" id="cb10-7" title="7">  x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> control<span class="op">$</span>center, <span class="dt">scale =</span> control<span class="op">$</span>scale)</a>
-<a class="sourceLine" id="cb10-8" title="8">  <span class="co"># Recombine the data</span></a>
-<a class="sourceLine" id="cb10-9" title="9">  data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb10-10" title="10">  data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
-<a class="sourceLine" id="cb10-11" title="11">  <span class="kw">return</span>(data)</a>
-<a class="sourceLine" id="cb10-12" title="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">predictfun =<span class="st"> </span><span class="cf">function</span>(data, target, args, control) {</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="co"># Identify numerical features</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  nums =<span class="st"> </span>cns[<span class="kw">sapply</span>(data, is.numeric)]</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="co"># Extract numerical features from the data set and call scale</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">  x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">  x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> control<span class="op">$</span>center, <span class="dt">scale =</span> control<span class="op">$</span>scale)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">  <span class="co"># Recombine the data</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">  data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">  data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">  <span class="kw">return</span>(data)</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">}</a></code></pre></div>
 </div>
 <div id="creating-the-preprocessing-wrapper" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-the-preprocessing-wrapper" class="anchor"></a>Creating the preprocessing wrapper</h2>
 <p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
 <p>The <em>train</em> and <em>predict</em> functions defined above are passed to <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> via the <code>train</code> and <code>predict</code> arguments. <code>par.vals</code> is a <code>list</code> of parameter values that is relayed to the <code>args</code> argument of the <em>train</em> function.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(lrn, <span class="dt">train =</span> trainfun, <span class="dt">predict =</span> predictfun,</a>
-<a class="sourceLine" id="cb11-3" title="3">  <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb11-4" title="4">lrn</a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co">## Learner regr.nnet.preproc from package nnet</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="co">## Type: regr</span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="co">## Name: ; Short name: </span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="co">## Class: PreprocWrapper</span></a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="co">## Properties: numerics,factors,weights</span></a>
-<a class="sourceLine" id="cb11-10" title="10"><span class="co">## Predict-Type: response</span></a>
-<a class="sourceLine" id="cb11-11" title="11"><span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(lrn, <span class="dt">train =</span> trainfun, <span class="dt">predict =</span> predictfun,</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">lrn</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">## Learner regr.nnet.preproc from package nnet</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">## Type: regr</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">## Name: ; Short name: </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">## Class: PreprocWrapper</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">## Properties: numerics,factors,weights</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></a></code></pre></div>
 <p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="http://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb12-2" title="2"></a>
-<a class="sourceLine" id="cb12-3" title="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb12-4" title="4">r</a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb12-6" title="6"><span class="co">## Task: BostonHousing-example</span></a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="co">## Learner: regr.nnet.preproc</span></a>
-<a class="sourceLine" id="cb12-8" title="8"><span class="co">## Aggr perf: mse.test.mean=26.6997095</span></a>
-<a class="sourceLine" id="cb12-9" title="9"><span class="co">## Runtime: 0.083282</span></a>
-<a class="sourceLine" id="cb12-10" title="10"></a>
-<a class="sourceLine" id="cb12-11" title="11">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
-<a class="sourceLine" id="cb12-12" title="12">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb12-13" title="13">r</a>
-<a class="sourceLine" id="cb12-14" title="14"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb12-15" title="15"><span class="co">## Task: BostonHousing-example</span></a>
-<a class="sourceLine" id="cb12-16" title="16"><span class="co">## Learner: regr.nnet</span></a>
-<a class="sourceLine" id="cb12-17" title="17"><span class="co">## Aggr perf: mse.test.mean=56.8645496</span></a>
-<a class="sourceLine" id="cb12-18" title="18"><span class="co">## Runtime: 0.0463462</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">r</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">## Learner: regr.nnet.preproc</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">## Aggr perf: mse.test.mean=26.6997095</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">## Runtime: 0.083282</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">r</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">## Learner: regr.nnet</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">## Aggr perf: mse.test.mean=56.8645496</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">## Runtime: 0.0463462</span></a></code></pre></div>
 </div>
 <div id="joint-tuning-of-preprocessing-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -651,112 +653,113 @@
 <p>Often it’s not clear which preprocessing options work best with a certain learning algorithm. As already shown for the number of principal components in <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> we can <a href="tune.html" target="_blank">tune</a> them easily together with other hyperparameters of the learner.</p>
 <p>In our scaling example we can try if <code><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="http://www.rdocumentation.org/packages/ParamHelpers/topics/LearnerParam">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
 <p>As mentioned above <code><a href="http://www.rdocumentation.org/packages/base/topics/scale">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb13-2" title="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(lrn, <span class="dt">train =</span> trainfun, <span class="dt">predict =</span> predictfun,</a>
-<a class="sourceLine" id="cb13-3" title="3">  <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb13-4" title="4">    <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"center"</span>),</a>
-<a class="sourceLine" id="cb13-5" title="5">    <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"scale"</span>)</a>
-<a class="sourceLine" id="cb13-6" title="6">  ),</a>
-<a class="sourceLine" id="cb13-7" title="7">  <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb13-8" title="8"></a>
-<a class="sourceLine" id="cb13-9" title="9">lrn</a>
-<a class="sourceLine" id="cb13-10" title="10"><span class="co">## Learner regr.nnet.preproc from package nnet</span></a>
-<a class="sourceLine" id="cb13-11" title="11"><span class="co">## Type: regr</span></a>
-<a class="sourceLine" id="cb13-12" title="12"><span class="co">## Name: ; Short name: </span></a>
-<a class="sourceLine" id="cb13-13" title="13"><span class="co">## Class: PreprocWrapper</span></a>
-<a class="sourceLine" id="cb13-14" title="14"><span class="co">## Properties: numerics,factors,weights</span></a>
-<a class="sourceLine" id="cb13-15" title="15"><span class="co">## Predict-Type: response</span></a>
-<a class="sourceLine" id="cb13-16" title="16"><span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span></a>
-<a class="sourceLine" id="cb13-17" title="17"></a>
-<a class="sourceLine" id="cb13-18" title="18"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(lrn)</a>
-<a class="sourceLine" id="cb13-19" title="19"><span class="co">##            Type len    Def      Constr Req Tunable Trafo</span></a>
-<a class="sourceLine" id="cb13-20" title="20"><span class="co">## center  logical   -      -           -   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-21" title="21"><span class="co">## scale   logical   -      -           -   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-22" title="22"><span class="co">## size    integer   -      3    0 to Inf   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-23" title="23"><span class="co">## maxit   integer   -    100    1 to Inf   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-24" title="24"><span class="co">## skip    logical   -  FALSE           -   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-25" title="25"><span class="co">## rang    numeric   -    0.7 -Inf to Inf   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-26" title="26"><span class="co">## decay   numeric   -      0    0 to Inf   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-27" title="27"><span class="co">## Hess    logical   -  FALSE           -   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-28" title="28"><span class="co">## trace   logical   -   TRUE           -   -   FALSE     -</span></a>
-<a class="sourceLine" id="cb13-29" title="29"><span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span></a>
-<a class="sourceLine" id="cb13-30" title="30"><span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span></a>
-<a class="sourceLine" id="cb13-31" title="31"><span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(lrn, <span class="dt">train =</span> trainfun, <span class="dt">predict =</span> predictfun,</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"center"</span>),</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">    <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"scale"</span>)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">  ),</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">  <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">lrn</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">## Learner regr.nnet.preproc from package nnet</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">## Type: regr</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">## Name: ; Short name: </span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">## Class: PreprocWrapper</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">## Properties: numerics,factors,weights</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(lrn)</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">##            Type len    Def      Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">## center  logical   -      -           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">## scale   logical   -      -           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">## size    integer   -      3    0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-23" data-line-number="23"><span class="co">## maxit   integer   -    100    1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-24" data-line-number="24"><span class="co">## skip    logical   -  FALSE           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-25" data-line-number="25"><span class="co">## rang    numeric   -    0.7 -Inf to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-26" data-line-number="26"><span class="co">## decay   numeric   -      0    0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-27" data-line-number="27"><span class="co">## Hess    logical   -  FALSE           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-28" data-line-number="28"><span class="co">## trace   logical   -   TRUE           -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb13-29" data-line-number="29"><span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb13-30" data-line-number="30"><span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-31" data-line-number="31"><span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></a></code></pre></div>
 <p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="http://www.rdocumentation.org/packages/nnet/topics/nnet">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb14-2" title="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb14-3" title="3">  <span class="kw">makeDiscreteParam</span>(<span class="st">"decay"</span>, <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>)),</a>
-<a class="sourceLine" id="cb14-4" title="4">  <span class="kw">makeLogicalParam</span>(<span class="st">"center"</span>),</a>
-<a class="sourceLine" id="cb14-5" title="5">  <span class="kw">makeLogicalParam</span>(<span class="st">"scale"</span>)</a>
-<a class="sourceLine" id="cb14-6" title="6">)</a>
-<a class="sourceLine" id="cb14-7" title="7">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb14-8" title="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, bh.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb14-9" title="9"></a>
-<a class="sourceLine" id="cb14-10" title="10">res</a>
-<a class="sourceLine" id="cb14-11" title="11"><span class="co">## Tune result:</span></a>
-<a class="sourceLine" id="cb14-12" title="12"><span class="co">## Op. pars: decay=0; center=TRUE; scale=TRUE</span></a>
-<a class="sourceLine" id="cb14-13" title="13"><span class="co">## mse.test.mean=17.2503597</span></a>
-<a class="sourceLine" id="cb14-14" title="14"></a>
-<a class="sourceLine" id="cb14-15" title="15"><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
-<a class="sourceLine" id="cb14-16" title="16"><span class="co">##    decay center scale mse.test.mean dob eol error.message exec.time</span></a>
-<a class="sourceLine" id="cb14-17" title="17"><span class="co">## 1      0   TRUE  TRUE      17.25036   1  NA          &lt;NA&gt;     0.029</span></a>
-<a class="sourceLine" id="cb14-18" title="18"><span class="co">## 2   0.05   TRUE  TRUE      38.83601   2  NA          &lt;NA&gt;     0.035</span></a>
-<a class="sourceLine" id="cb14-19" title="19"><span class="co">## 3    0.1   TRUE  TRUE      19.64003   3  NA          &lt;NA&gt;     0.033</span></a>
-<a class="sourceLine" id="cb14-20" title="20"><span class="co">## 4      0  FALSE  TRUE      18.28944   4  NA          &lt;NA&gt;     0.029</span></a>
-<a class="sourceLine" id="cb14-21" title="21"><span class="co">## 5   0.05  FALSE  TRUE      22.58510   5  NA          &lt;NA&gt;     0.028</span></a>
-<a class="sourceLine" id="cb14-22" title="22"><span class="co">## 6    0.1  FALSE  TRUE      19.27203   6  NA          &lt;NA&gt;     0.026</span></a>
-<a class="sourceLine" id="cb14-23" title="23"><span class="co">## 7      0   TRUE FALSE      50.50742   7  NA          &lt;NA&gt;     0.031</span></a>
-<a class="sourceLine" id="cb14-24" title="24"><span class="co">## 8   0.05   TRUE FALSE      36.81513   8  NA          &lt;NA&gt;     0.029</span></a>
-<a class="sourceLine" id="cb14-25" title="25"><span class="co">## 9    0.1   TRUE FALSE      45.88844   9  NA          &lt;NA&gt;     0.031</span></a>
-<a class="sourceLine" id="cb14-26" title="26"><span class="co">## 10     0  FALSE FALSE      56.28872  10  NA          &lt;NA&gt;     0.016</span></a>
-<a class="sourceLine" id="cb14-27" title="27"><span class="co">## 11  0.05  FALSE FALSE      42.54509  11  NA          &lt;NA&gt;     0.025</span></a>
-<a class="sourceLine" id="cb14-28" title="28"><span class="co">## 12   0.1  FALSE FALSE      29.36306  12  NA          &lt;NA&gt;     0.026</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">  <span class="kw">makeDiscreteParam</span>(<span class="st">"decay"</span>, <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>)),</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">  <span class="kw">makeLogicalParam</span>(<span class="st">"center"</span>),</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">  <span class="kw">makeLogicalParam</span>(<span class="st">"scale"</span>)</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, bh.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">res</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">## Op. pars: decay=0.05; center=TRUE; scale=TRUE</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">## mse.test.mean=11.2358338</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">df =<span class="st"> </span><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
+<a class="sourceLine" id="cb14-16" data-line-number="16">df[, <span class="op">-</span><span class="kw">ncol</span>(df)]</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">##    decay center scale mse.test.mean dob eol error.message</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">## 1      0   TRUE  TRUE      57.95712   1  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">## 2   0.05   TRUE  TRUE      11.23583   2  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">## 3    0.1   TRUE  TRUE      13.04909   3  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">## 4      0  FALSE  TRUE      84.89302   4  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">## 5   0.05  FALSE  TRUE      16.63278   5  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">## 6    0.1  FALSE  TRUE      14.88141   6  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">## 7      0   TRUE FALSE      64.98619   7  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">## 8   0.05   TRUE FALSE      57.40447   8  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">## 9    0.1   TRUE FALSE      26.67453   9  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">## 10     0  FALSE FALSE      63.27422  10  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">## 11  0.05  FALSE FALSE      32.68506  11  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">## 12   0.1  FALSE FALSE      42.57609  12  NA          &lt;NA&gt;</span></a></code></pre></div>
 </div>
 <div id="preprocessing-wrapper-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preprocessing-wrapper-functions" class="anchor"></a>Preprocessing wrapper functions</h2>
 <p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues">contact us</a>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">makePreprocWrapperScale =<span class="st"> </span><span class="cf">function</span>(learner, <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>) {</a>
-<a class="sourceLine" id="cb15-2" title="2">  trainfun =<span class="st"> </span><span class="cf">function</span>(data, target, <span class="dt">args =</span> <span class="kw">list</span>(center, scale)) {</a>
-<a class="sourceLine" id="cb15-3" title="3">    cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
-<a class="sourceLine" id="cb15-4" title="4">    nums =<span class="st"> </span><span class="kw">setdiff</span>(cns[<span class="kw">sapply</span>(data, is.numeric)], target)</a>
-<a class="sourceLine" id="cb15-5" title="5">    x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
-<a class="sourceLine" id="cb15-6" title="6">    x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> args<span class="op">$</span>center, <span class="dt">scale =</span> args<span class="op">$</span>scale)</a>
-<a class="sourceLine" id="cb15-7" title="7">    control =<span class="st"> </span>args</a>
-<a class="sourceLine" id="cb15-8" title="8">    <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>center) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>center)</a>
-<a class="sourceLine" id="cb15-9" title="9">      control<span class="op">$</span>center =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:center"</span>)</a>
-<a class="sourceLine" id="cb15-10" title="10">    <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>scale) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>scale)</a>
-<a class="sourceLine" id="cb15-11" title="11">      control<span class="op">$</span>scale =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:scale"</span>)</a>
-<a class="sourceLine" id="cb15-12" title="12">    data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb15-13" title="13">    data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
-<a class="sourceLine" id="cb15-14" title="14">    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">data =</span> data, <span class="dt">control =</span> control))</a>
-<a class="sourceLine" id="cb15-15" title="15">  }</a>
-<a class="sourceLine" id="cb15-16" title="16">  predictfun =<span class="st"> </span><span class="cf">function</span>(data, target, args, control) {</a>
-<a class="sourceLine" id="cb15-17" title="17">    cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
-<a class="sourceLine" id="cb15-18" title="18">    nums =<span class="st"> </span>cns[<span class="kw">sapply</span>(data, is.numeric)]</a>
-<a class="sourceLine" id="cb15-19" title="19">    x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
-<a class="sourceLine" id="cb15-20" title="20">    x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> control<span class="op">$</span>center, <span class="dt">scale =</span> control<span class="op">$</span>scale)</a>
-<a class="sourceLine" id="cb15-21" title="21">    data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb15-22" title="22">    data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
-<a class="sourceLine" id="cb15-23" title="23">    <span class="kw">return</span>(data)</a>
-<a class="sourceLine" id="cb15-24" title="24">  }</a>
-<a class="sourceLine" id="cb15-25" title="25">  <span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(</a>
-<a class="sourceLine" id="cb15-26" title="26">    learner,</a>
-<a class="sourceLine" id="cb15-27" title="27">    <span class="dt">train =</span> trainfun,</a>
-<a class="sourceLine" id="cb15-28" title="28">    <span class="dt">predict =</span> predictfun,</a>
-<a class="sourceLine" id="cb15-29" title="29">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb15-30" title="30">      <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"center"</span>),</a>
-<a class="sourceLine" id="cb15-31" title="31">      <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"scale"</span>)</a>
-<a class="sourceLine" id="cb15-32" title="32">    ),</a>
-<a class="sourceLine" id="cb15-33" title="33">    <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">center =</span> center, <span class="dt">scale =</span> scale)</a>
-<a class="sourceLine" id="cb15-34" title="34">  )</a>
-<a class="sourceLine" id="cb15-35" title="35">}</a>
-<a class="sourceLine" id="cb15-36" title="36"></a>
-<a class="sourceLine" id="cb15-37" title="37">lrn =<span class="st"> </span><span class="kw">makePreprocWrapperScale</span>(<span class="st">"classif.lda"</span>)</a>
-<a class="sourceLine" id="cb15-38" title="38"><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</a>
-<a class="sourceLine" id="cb15-39" title="39"><span class="co">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</span></a>
-<a class="sourceLine" id="cb15-40" title="40"><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></a>
-<a class="sourceLine" id="cb15-41" title="41"><span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">makePreprocWrapperScale =<span class="st"> </span><span class="cf">function</span>(learner, <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">  trainfun =<span class="st"> </span><span class="cf">function</span>(data, target, <span class="dt">args =</span> <span class="kw">list</span>(center, scale)) {</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">    cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">    nums =<span class="st"> </span><span class="kw">setdiff</span>(cns[<span class="kw">sapply</span>(data, is.numeric)], target)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">    x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">    x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> args<span class="op">$</span>center, <span class="dt">scale =</span> args<span class="op">$</span>scale)</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">    control =<span class="st"> </span>args</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">    <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>center) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>center)</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">      control<span class="op">$</span>center =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:center"</span>)</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">    <span class="cf">if</span> (<span class="kw">is.logical</span>(control<span class="op">$</span>scale) <span class="op">&amp;&amp;</span><span class="st"> </span>control<span class="op">$</span>scale)</a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">      control<span class="op">$</span>scale =<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"scaled:scale"</span>)</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">    data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">    data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
+<a class="sourceLine" id="cb15-14" data-line-number="14">    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">data =</span> data, <span class="dt">control =</span> control))</a>
+<a class="sourceLine" id="cb15-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb15-16" data-line-number="16">  predictfun =<span class="st"> </span><span class="cf">function</span>(data, target, args, control) {</a>
+<a class="sourceLine" id="cb15-17" data-line-number="17">    cns =<span class="st"> </span><span class="kw">colnames</span>(data)</a>
+<a class="sourceLine" id="cb15-18" data-line-number="18">    nums =<span class="st"> </span>cns[<span class="kw">sapply</span>(data, is.numeric)]</a>
+<a class="sourceLine" id="cb15-19" data-line-number="19">    x =<span class="st"> </span><span class="kw">as.matrix</span>(data[, nums, <span class="dt">drop =</span> <span class="ot">FALSE</span>])</a>
+<a class="sourceLine" id="cb15-20" data-line-number="20">    x =<span class="st"> </span><span class="kw">scale</span>(x, <span class="dt">center =</span> control<span class="op">$</span>center, <span class="dt">scale =</span> control<span class="op">$</span>scale)</a>
+<a class="sourceLine" id="cb15-21" data-line-number="21">    data =<span class="st"> </span>data[, <span class="kw">setdiff</span>(cns, nums), drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb15-22" data-line-number="22">    data =<span class="st"> </span><span class="kw">cbind</span>(data, <span class="kw">as.data.frame</span>(x))</a>
+<a class="sourceLine" id="cb15-23" data-line-number="23">    <span class="kw">return</span>(data)</a>
+<a class="sourceLine" id="cb15-24" data-line-number="24">  }</a>
+<a class="sourceLine" id="cb15-25" data-line-number="25">  <span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(</a>
+<a class="sourceLine" id="cb15-26" data-line-number="26">    learner,</a>
+<a class="sourceLine" id="cb15-27" data-line-number="27">    <span class="dt">train =</span> trainfun,</a>
+<a class="sourceLine" id="cb15-28" data-line-number="28">    <span class="dt">predict =</span> predictfun,</a>
+<a class="sourceLine" id="cb15-29" data-line-number="29">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb15-30" data-line-number="30">      <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"center"</span>),</a>
+<a class="sourceLine" id="cb15-31" data-line-number="31">      <span class="kw">makeLogicalLearnerParam</span>(<span class="st">"scale"</span>)</a>
+<a class="sourceLine" id="cb15-32" data-line-number="32">    ),</a>
+<a class="sourceLine" id="cb15-33" data-line-number="33">    <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">center =</span> center, <span class="dt">scale =</span> scale)</a>
+<a class="sourceLine" id="cb15-34" data-line-number="34">  )</a>
+<a class="sourceLine" id="cb15-35" data-line-number="35">}</a>
+<a class="sourceLine" id="cb15-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb15-37" data-line-number="37">lrn =<span class="st"> </span><span class="kw">makePreprocWrapperScale</span>(<span class="st">"classif.lda"</span>)</a>
+<a class="sourceLine" id="cb15-38" data-line-number="38"><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</a>
+<a class="sourceLine" id="cb15-39" data-line-number="39"><span class="co">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</span></a>
+<a class="sourceLine" id="cb15-40" data-line-number="40"><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></a>
+<a class="sourceLine" id="cb15-41" data-line-number="41"><span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span></a></code></pre></div>
 </div>
 </div>
 </div>

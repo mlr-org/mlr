@@ -42,6 +42,7 @@
 #' @family wrapper
 #' @export
 #' @examples
+#' set.seed(123)
 #' # using the direct parameter of the SVM (which is already defined in the learner)
 #' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 #' res = holdout(lrn, sonar.task)
