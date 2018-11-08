@@ -16,7 +16,7 @@
 * praznik.CMIM
 
 ## filter - general
-* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`.
+* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`. 
   The change comes with a ~ 100 times speedup.
 
 ## learners - new
