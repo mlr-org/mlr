@@ -21,9 +21,11 @@
 #' @param bit.names [character]\cr
 #'   Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
 #'   Per default these are the feature names of the task.
+#'   Has to be used together with `bits.to.features`.
 #' @param bits.to.features [function(x, task)]\cr
 #'   Function which transforms an integer-0-1 vector into a character vector of selected features.
 #'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
+#'   The vector `x` will correspond to the `bit.names` and has to be of the same length.
 #' @param control [see [FeatSelControl])
 #'   Control object for search method.
 #'   Also selects the optimization algorithm for feature selection.
@@ -53,11 +55,27 @@ selectFeatures = function(learner, task, resampling, measures,
     bit.names = getTaskFeatureNames(task)
   } else {
     assertCharacter(bit.names, any.missing = FALSE)
+    if (missing(bits.to.features)) {
+      stop("If you set bit.names you also have to set bits.to.features.")
+    }
   }
   if (missing(bits.to.features)) {
-    bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))
+    bits.to.features2 = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))
   } else {
     assertFunction(bits.to.features, args = c("x", "task"))
+    # wrap the function to prevent wrong user input and give meaningful errors
+    bits.to.features2 = function(x, task) {
+      force(bits.to.features)
+      res = bits.to.features(x, task)
+      if (!testCharacter(res)) {
+        stopf("bits.to.features did not return a valid character but an object of type %s.", class(res))
+      }
+      if (!testSubset(res, getTaskFeatureNames(task))) {
+        wrong.names = setdiff(res, getTaskFeatureNames(task))
+        stopf("bits.to.features returned feature names (%s) that are not in the task.", collapse(wrong.names))
+      }
+      return(res)
+    }
   }
   assertClass(control, classes = "FeatSelControl")
   assertFlag(show.info)
@@ -83,7 +101,7 @@ selectFeatures = function(learner, task, resampling, measures,
   )
 
   or = sel.func(learner, task, resampling, measures, bit.names,
-    bits.to.features, control, opt.path, show.info)
+    bits.to.features2, control, opt.path, show.info)
   if (show.info)
     messagef("[FeatSel] Result: %s (%i bits)",
       clipString(collapse(or$x, ""), 30L), length(or$x), perfsToString(or$y))
