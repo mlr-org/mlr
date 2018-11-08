@@ -352,7 +352,7 @@
 <a class="sourceLine" id="cb3-9" data-line-number="9">test.mean<span class="op">$</span>fun</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## mean(perf.test)</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## &lt;bytecode: 0xcdef638&gt;</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## &lt;bytecode: 0xc0a82e8&gt;</span></a>
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a></code></pre></div>
 <p>All aggregation schemes are objects of class <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> with the function in slot <code>$fun</code> doing the actual work. The <code>$properties</code> member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.</p>
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>
@@ -475,7 +475,7 @@
 <a class="sourceLine" id="cb7-37" data-line-number="37"><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">position =</span> pd) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-38" data-line-number="38"><span class="st">  </span><span class="kw">coord_flip</span>()</a>
 <a class="sourceLine" id="cb7-39" data-line-number="39"><span class="kw">print</span>(p)</a></code></pre></div>
-<p><img src="create_measure_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="create_measure_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>The plot shows the range versus the mean misclassification error. The value on the y-axis thus corresponds to the length of the error bars. (Note that the points and error bars are jittered in y-direction.)</p>
 </div>
 </div>
