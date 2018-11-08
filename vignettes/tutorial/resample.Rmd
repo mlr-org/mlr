@@ -157,8 +157,6 @@ lrn = makeLearner("classif.rpart", parms = list(split = "information"))
 
 # Calculate the performance measures
 r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
-
-r
 ```
 
 ```{r eval = FALSE}
@@ -690,10 +688,6 @@ mseTestMedian
 
 rdesc = makeResampleDesc("CV", iters = 3)
 r = resample("regr.lm", bh.task, rdesc, measures = list(mse, mseTestMedian, mseTestMin, mseTestMax))
-
-r
-
-r$aggr
 ```
 
 ```{r eval = FALSE}
@@ -791,9 +785,9 @@ As mentioned above, `mlr` includes some pre-defined resample description objects
 Moreover, `mlr` provides special functions for the most common resampling methods, for example `holdout` (`resample()`), `crossval` (`resample()`), or `bootstrapB632` (`resample()`).
 
 ```{r echo = FALSE, results='hide'}
-crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
+test1 = crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
 
-bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
+test2 = bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
 ```
 
 ```{r eval = FALSE}

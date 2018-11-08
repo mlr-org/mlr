@@ -50,7 +50,9 @@
 #' ctrl = makeTuneControlRandom(maxit = 10L)
 #' res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#'
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
 #'
 #' # more unique and reliable way to construct the param set
 #' ps = makeModelMultiplexerParamSet(lrn,
