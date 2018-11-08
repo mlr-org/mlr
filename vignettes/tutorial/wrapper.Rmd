@@ -94,7 +94,7 @@ The base wrapper function calls the base learner `bw.iters` times and stores the
 3. The bagged models are evaluated using the mean [mmce](measures.html){target="_blank"} (default aggregation for this performance measure) and new parameters are selected using the tuning method.
 4. This is repeated until the tuner terminates. Output is a tuned bagged learner.
 
-```{r echo = FALSE, results='hide'}
+```{r echo = FALSE, results='hide', message=FALSE}
 lrn = train(tuned.lrn, task = task)
 
 print(lrn)

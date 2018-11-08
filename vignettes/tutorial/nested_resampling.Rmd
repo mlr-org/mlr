@@ -357,7 +357,7 @@ res = lapply(r$models, getTuneResult)
 res
 
 opt.paths = lapply(res, function(x) as.data.frame(x$opt.path))
-opt.paths[[1]]
+opt.paths[[1]][, -ncol(opt.paths[[1]])]
 ```
 
 # Benchmark experiments

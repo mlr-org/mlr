@@ -122,7 +122,7 @@ If there is just one iteration, the strategy is commonly called *holdout* or *te
 You can calculate several measures at once by passing a `list` of Measures (`makeMeasure()`)s to `resample()`.
 Below, the error rate ([mmce](measures.html){target="_blank"}), false positive and false negative rates ([fpr](measures.html){target="_blank"}, [fnr](measures.html){target="_blank"}), and the time it takes to train the learner ([timetrain](measures.html){target="_blank"}) are estimated by *subsampling* with 5 iterations.
 
-```{r echo = FALSE, results='hide'}
+```{r echo = FALSE, results='hide', message=FALSE}
 # Subsampling with 5 iterations and default split ratio 2/3
 rdesc = makeResampleDesc("Subsample", iters = 5)
 
