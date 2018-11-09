@@ -437,49 +437,17 @@ the measure. See example code below.</p>
 #&gt; 2  12   -12     0.02666667   2  NA          &lt;NA&gt;
 #&gt; 3 -12    12     0.72000000   3  NA          &lt;NA&gt;
 #&gt; 4  12    12     0.70666667   4  NA          &lt;NA&gt;</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
-<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)))</div><div class='output co'>#&gt; $data
-#&gt;     C sigma mmce.test.mean iteration exec.time
-#&gt; 1 -12   -12     0.72000000         1     0.034
-#&gt; 2  12   -12     0.02666667         2     0.032
-#&gt; 3 -12    12     0.72000000         3     0.037
-#&gt; 4  12    12     0.70666667         4     0.037
-#&gt; 
-#&gt; $measures
-#&gt; [1] "mmce.test.mean"
-#&gt; 
-#&gt; $hyperparams
-#&gt; [1] "C"     "sigma"
-#&gt; 
-#&gt; $diagnostics
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $optimization
-#&gt; [1] "TuneControlGrid"
-#&gt; 
-#&gt; $nested
-#&gt; [1] FALSE
-#&gt; </div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt; $data
-#&gt;              C        sigma mmce.test.mean iteration exec.time
-#&gt; 1 2.441406e-04 2.441406e-04     0.72000000         1     0.034
-#&gt; 2 4.096000e+03 2.441406e-04     0.02666667         2     0.032
-#&gt; 3 2.441406e-04 4.096000e+03     0.72000000         3     0.037
-#&gt; 4 4.096000e+03 4.096000e+03     0.70666667         4     0.037
-#&gt; 
-#&gt; $measures
-#&gt; [1] "mmce.test.mean"
-#&gt; 
-#&gt; $hyperparams
-#&gt; [1] "C"     "sigma"
-#&gt; 
-#&gt; $diagnostics
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $optimization
-#&gt; [1] "TuneControlGrid"
-#&gt; 
-#&gt; $nested
-#&gt; [1] FALSE
-#&gt; </div><div class='input'>
+<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)
+<span class='no'>df3</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df2</span>$<span class='no'>data</span>[, -<span class='fu'>ncol</span>(<span class='no'>df2</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean iteration
+#&gt; 1 -12   -12     0.72000000         1
+#&gt; 2  12   -12     0.02666667         2
+#&gt; 3 -12    12     0.72000000         3
+#&gt; 4  12    12     0.70666667         4</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df3</span>$<span class='no'>data</span>[, -<span class='fu'>ncol</span>(<span class='no'>df3</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;              C        sigma mmce.test.mean iteration
+#&gt; 1 2.441406e-04 2.441406e-04     0.72000000         1
+#&gt; 2 4.096000e+03 2.441406e-04     0.02666667         2
+#&gt; 3 2.441406e-04 4.096000e+03     0.72000000         3
+#&gt; 4 4.096000e+03 4.096000e+03     0.70666667         4</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># we optimize the SVM over 3 kernels simultanously</span>
 <span class='co'># note how we use dependent params (requires = ...) and iterated F-racing here</span>

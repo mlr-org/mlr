@@ -452,38 +452,8 @@
 <p>In binary classification, the default probability value at which a prediction is either classified as “1” or “0” is 0.50. This means with an estimate of &gt;= 0.50 the observation is put into class “1” while lower values get assigned class “0”. To reach a better performance in binary classification, it can be helpful to also optimize the the probability threshold at which this split is made. This can be especially helpful if the response is unbalanced. To enable this, argument <code>tune.threshold</code> needs to be set to <code>TRUE</code> in the chosen <code>makeTuneControl*</code> function.</p>
 <pre><code>## Resampling: cross-validation
 ## Measures:             mmce
-## [Tune] Started tuning learner classif.gbm for parameter set:
-##                      Type len Def Constr Req Tunable Trafo
-## interaction.depth integer   -   - 1 to 5   -    TRUE     -
-## With control class: TuneControlRandom
-## Imputation value: 1
-## [Tune-x] 1: interaction.depth=3
-## [Tune-y] 1: mmce.test.mean=0.0642112; time: 0.0 min
-## [Tune-x] 2: interaction.depth=4
-## [Tune-y] 2: mmce.test.mean=0.0625815; time: 0.1 min
-## [Tune] Result: interaction.depth=4 : mmce.test.mean=0.0625815
 ## [Resample] iter 1:    0.0502283
-## [Tune] Started tuning learner classif.gbm for parameter set:
-##                      Type len Def Constr Req Tunable Trafo
-## interaction.depth integer   -   - 1 to 5   -    TRUE     -
-## With control class: TuneControlRandom
-## Imputation value: 1
-## [Tune-x] 1: interaction.depth=5
-## [Tune-y] 1: mmce.test.mean=0.0518423; time: 0.0 min
-## [Tune-x] 2: interaction.depth=5
-## [Tune-y] 2: mmce.test.mean=0.0498856; time: 0.1 min
-## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0498856
 ## [Resample] iter 2:    0.0638853
-## [Tune] Started tuning learner classif.gbm for parameter set:
-##                      Type len Def Constr Req Tunable Trafo
-## interaction.depth integer   -   - 1 to 5   -    TRUE     -
-## With control class: TuneControlRandom
-## Imputation value: 1
-## [Tune-x] 1: interaction.depth=1
-## [Tune-y] 1: mmce.test.mean=0.0727079; time: 0.0 min
-## [Tune-x] 2: interaction.depth=3
-## [Tune-y] 2: mmce.test.mean=0.0625998; time: 0.0 min
-## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0625998
 ## [Resample] iter 3:    0.0521512
 ## 
 ## Aggregated Result: mmce.test.mean=0.0554216

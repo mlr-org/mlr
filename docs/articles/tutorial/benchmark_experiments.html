@@ -866,18 +866,11 @@
 <a class="sourceLine" id="cb31-2" data-line-number="2">df =<span class="st"> </span>reshape2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/reshape2/topics/melt">melt</a></span>(perf, <span class="dt">id.vars =</span> <span class="kw">c</span>(<span class="st">"task.id"</span>, <span class="st">"learner.id"</span>, <span class="st">"iter"</span>))</a>
 <a class="sourceLine" id="cb31-3" data-line-number="3">df =<span class="st"> </span>df[df<span class="op">$</span>variable <span class="op">!=</span><span class="st"> "ber"</span>,]</a>
 <a class="sourceLine" id="cb31-4" data-line-number="4"><span class="kw">head</span>(df)</a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="co">##        task.id learner.id iter variable      value</span></a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">## 1 iris-example        lda    1     mmce 0.06666667</span></a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co">## 2 iris-example        lda    2     mmce 0.00000000</span></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co">## 3 iris-example        lda    3     mmce 0.00000000</span></a>
-<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="co">## 4 iris-example        lda    4     mmce 0.06666667</span></a>
-<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="co">## 5 iris-example        lda    5     mmce 0.06666667</span></a>
-<a class="sourceLine" id="cb31-11" data-line-number="11"><span class="co">## 6 iris-example        lda    6     mmce 0.00000000</span></a>
-<a class="sourceLine" id="cb31-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb31-13" data-line-number="13"><span class="kw">qplot</span>(variable, value, <span class="dt">data =</span> df, <span class="dt">colour =</span> learner.id, <span class="dt">geom =</span> <span class="st">"boxplot"</span>,</a>
-<a class="sourceLine" id="cb31-14" data-line-number="14">  <span class="dt">xlab =</span> <span class="st">"measure"</span>, <span class="dt">ylab =</span> <span class="st">"performance"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-15" data-line-number="15"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>task.id, <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-30-1.png" width="700"></p>
+<a class="sourceLine" id="cb31-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="kw">qplot</span>(variable, value, <span class="dt">data =</span> df, <span class="dt">colour =</span> learner.id, <span class="dt">geom =</span> <span class="st">"boxplot"</span>,</a>
+<a class="sourceLine" id="cb31-7" data-line-number="7">  <span class="dt">xlab =</span> <span class="st">"measure"</span>, <span class="dt">ylab =</span> <span class="st">"performance"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>task.id, <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="../../reference/figures/benchmark-experiments-30-1.png"><!-- --></p>
 <p>It might also be useful to assess if learner performances in single resampling iterations, i.e., in one fold, are related. This might help to gain further insight, for example by having a closer look at train and test sets from iterations where one learner performs exceptionally well while another one is fairly bad. Moreover, this might be useful for the construction of ensembles of learning algorithms. Below, function <code><a href="http://www.rdocumentation.org/packages/GGally/topics/ggpairs">GGally::ggpairs()</a></code> from package <code>GGally::GGally()</code> is used to generate a scatterplot matrix of <a href="measures.html" target="_blank">mean misclassification errors</a> on the <code><a href="http://www.rdocumentation.org/packages/mlbench/topics/Sonar">mlbench::Sonar()</a></code> data set.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">perf =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr, <span class="dt">task.id =</span> <span class="st">"Sonar-example"</span>, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb32-2" data-line-number="2">df =<span class="st"> </span>reshape2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/reshape2/topics/melt">melt</a></span>(perf, <span class="dt">id.vars =</span> <span class="kw">c</span>(<span class="st">"task.id"</span>, <span class="st">"learner.id"</span>, <span class="st">"iter"</span>))</a>
@@ -893,7 +886,7 @@
 <a class="sourceLine" id="cb32-12" data-line-number="12"><span class="co">## 6 Sonar-example    6 0.3333333  0.3333333         0.1904762</span></a>
 <a class="sourceLine" id="cb32-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb32-14" data-line-number="14">GGally<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/GGally/topics/ggpairs">ggpairs</a></span>(df, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
-<p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
+<p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
 </div>
 </div>
 <div id="further-comments" class="section level1">

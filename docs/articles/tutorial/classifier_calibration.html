@@ -303,11 +303,12 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## 3 prediction [0.925,1.000]     M 0.93333333</span></a></code></pre></div>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> objects can be plotted using <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>. <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code> by default plots a reference line which shows perfect calibration and a “rag” plot, which is a rug plot on the top and bottom of the graph, where the top pertains to “positive” cases, where the predicted class matches the observed class, and the bottom pertains to “negative” cases, where the predicted class does not match the observed class. Perfect classifier performance would result in all the positive cases clustering in the top right (i.e., the correct classes are predicted with high probability) and the negative cases clustering in the bottom left.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</a></code></pre></div>
-<p><img src="classifier_calibration_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="../../reference/figures/classifier-calibration-4-1.png"><!-- --></p>
 <p>Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. Though <code>smooth = FALSE</code> by default, setting this option to <code>TRUE</code> replaces the estimated proportions with a loess smoother.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal, <span class="dt">smooth =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="classifier_calibration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal, <span class="dt">smooth =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="../../reference/figures/classifier-calibration-5-1.png"><!-- --></p>
 <p>All of the above functionality works with multi-class classification as well.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrns =<span class="st"> </span><span class="kw">list</span>(</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>),</a>
@@ -318,7 +319,7 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw">names</span>(pred) =<span class="st"> </span><span class="kw">c</span>(<span class="st">"randomForest"</span>, <span class="st">"nnet"</span>)</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</a></code></pre></div>
-<p><img src="classifier_calibration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="../../reference/figures/classifier-calibration-6-1.png"><!-- --></p>
 </div>
   </div>
 
