@@ -23,6 +23,11 @@
 * classif.liquidSVM
 * regr.liquidSVM
 
+## featSel - general
+ * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
+ * The slot `x` now always contains the real feature names and not the bit.names
+ * This fixes a bug and makes `makeFeatSelWrapper` usable with custom `bit.names`.
+
 # mlr 2.13:
 
 ## general
