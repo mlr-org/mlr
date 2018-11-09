@@ -45,7 +45,7 @@ r = generateLearningCurveData(
 plotLearningCurve(r)
 ```
 
-```{r LearningCurveTPFP, fig.asp = 7/9, eval = FALSE}
+```{r LearningCurveTPFP-1, fig.asp = 7/9, eval = FALSE}
 r = generateLearningCurveData(
   learners = c("classif.rpart", "classif.knn"),
   task = sonar.task,
@@ -90,7 +90,7 @@ lc = generateLearningCurveData(learners = lrns, task = sonar.task,
 # plotLearningCurve(lc)
 ```
 
-```{r LearningCurveACCx, fig.asp = 3/4, eval = FALSE}
+```{r LearningCurveACCx-1, fig.asp = 3/4, eval = FALSE}
 lrns = list(
   makeLearner(cl = "classif.ksvm", id = "ksvm1", sigma = 0.2, C = 2),
   makeLearner(cl = "classif.ksvm", id = "ksvm2", sigma = 0.1, C = 1),
