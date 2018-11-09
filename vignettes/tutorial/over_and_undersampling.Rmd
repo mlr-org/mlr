@@ -223,7 +223,7 @@ ps = makeParamSet(
   makeIntegerParam("interaction.depth", lower = 1, upper = 5)
 )
 ctrl = makeTuneControlRandom(maxit = 2, tune.threshold = TRUE)
-lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2)
+lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2, show.info = FALSE)
 r = resample(lrn, spam.task, cv3, extract = getTuneResult)
 ```
 
