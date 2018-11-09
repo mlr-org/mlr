@@ -660,16 +660,26 @@ Each performance `Measure` (`makeMeasure()`) in `mlr` has a corresponding defaul
 The default aggregation for most measures is `test.mean`(`aggregations()`).
 One exception is the root mean square error ([rmse](measures.html){target="_blank"}).
 
-```{r}
+```{r eval = FALSE}
 # Mean misclassification error
 mmce$aggr
+## Aggregation function: test.mean
 
 mmce$aggr$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## mean(perf.test)
+## <bytecode: 0xc8eade8>
+## <environment: namespace:mlr>
 
 # Root mean square error
 rmse$aggr
+## Aggregation function: test.rmse
 
 rmse$aggr$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## sqrt(mean(perf.test^2))
+## <bytecode: 0x23ad72d8>
+## <environment: namespace:mlr>
 ```
 
 You can change the aggregation method of a `Measure` (`makeMeasure()`) via function `setAggregation()`.

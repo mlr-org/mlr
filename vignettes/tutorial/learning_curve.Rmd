@@ -80,12 +80,3 @@ lc2 = generateLearningCurveData(learners = lrns, task = sonar.task,
 plotLearningCurve(lc2, facet = "learner")
 ```
 
-There is also an experimental `ggvis` plotting function, `plotLearningCurveGGVIS()`. 
-Instead of the `facet` argument to `plotLearningCurve()` there is an argument `interaction` which plays a similar role. 
-As subplots are not available in `ggvis`, measures or learners are mapped to an interactive sidebar which allows selection of the displayed measures or learners. 
-The other feature is mapped to color.
-
-```{r, eval = FALSE}
-plotLearningCurveGGVIS(lc2, interaction = "measure")
-plotLearningCurveGGVIS(lc2, interaction = "learner")
-```

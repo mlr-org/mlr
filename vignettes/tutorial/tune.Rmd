@@ -216,9 +216,27 @@ lrn
 Then you can proceed as usual. 
 Here we refit and predict the learner on the complete iris (`datasets::iris()`) data set:
 
-```{r}
+```{r echo = FALSE, results='hide'}
+m = train(lrn, iris.task)
+test = predict(m, task = iris.task)
+```
+
+```{r eval = FALSE}
 m = train(lrn, iris.task)
 predict(m, task = iris.task)
+
+## Prediction: 150 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##   id  truth response
+## 1  1 setosa   setosa
+## 2  2 setosa   setosa
+## 3  3 setosa   setosa
+## 4  4 setosa   setosa
+## 5  5 setosa   setosa
+## 6  6 setosa   setosa
+## ... (#rows: 150, #cols: 3)
 ```
 
 But what if you wanted to inspect the other points on the search path, not just the optimal?
