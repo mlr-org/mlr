@@ -566,7 +566,13 @@ qplot(mmce, colour = learner.id, facets = . ~ task.id,
 In order to plot multiple performance measures in parallel, `perf` is reshaped to long format.
 Below we generate grouped boxplots showing the error rate and the training time [timetrain](measures.html){target="_blank"}.
 
-```{r, fig.asp = 2/3}
+```{r, fig.asp = 2/3, echo = FALSE, results='hide'}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+```
+
+```{r, fig.asp = 2/3, eval = FALSE}
 # Compare mmce and timetrain
 df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
 df = df[df$variable != "ber",]
@@ -577,6 +583,10 @@ qplot(variable, value, data = df, colour = learner.id, geom = "boxplot",
   facet_wrap(~ task.id, nrow = 2)
 ```
 
+```{r echo = FALSE}
+knitr::include_graphics("../../reference/figures/benchmark-experiments-30-1.png")
+```
+
 It might also be useful to assess if learner performances in single resampling iterations, i.e., in one fold, are related.
 This might help to gain further insight, for example by having a closer look at train and
 test sets from iterations where one learner performs exceptionally well while another one
@@ -584,7 +594,7 @@ is fairly bad.
 Moreover, this might be useful for the construction of ensembles of learning algorithms.
 Below, function `GGally::ggpairs()` from package `GGally::GGally()` is used to generate a scatterplot matrix of [mean misclassification errors](measures.html){target="_blank"} on the `mlbench::Sonar()` data set.
 
-```{r}
+```{r fig.asp = 2/3}
 perf = getBMRPerformances(bmr, task.id = "Sonar-example", as.df = TRUE)
 df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
 df = df[df$variable == "mmce",]
