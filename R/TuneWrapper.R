@@ -75,7 +75,10 @@ trainLearner.TuneWrapper = function(.learner, .task, .subset = NULL,  ...) {
 #' @export
 predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
   lrn = setHyperPars(.learner$next.learner, par.vals = .model$learner.model$opt.result$x)
-  predictLearner(lrn, .model$learner.model$next.model, .newdata, ...)
+  arglist = list(.learner = lrn, .model = .model$learner.model$next.model, .newdata = .newdata)
+  arglist = insert(arglist, list(...))
+  arglist = insert(arglist, .model$learner.model$opt.result$x)
+  do.call(predictLearner, arglist)
 }
 
 #' @export
