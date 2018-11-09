@@ -59,8 +59,10 @@
 #' print(head(df[, -ncol(df)]))
 #' print(head(df1[, -ncol(df)]))
 #' # access data for all evaluated points - alternative
-#' print(head(generateHyperParsEffectData(res)))
-#' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
+#' df2 = generateHyperParsEffectData(res)
+#' df3 = generateHyperParsEffectData(res, trafo = TRUE)
+#' print(head(df2$data[, -ncol(df2$data)]))
+#' print(head(df3$data[, -ncol(df3$data)]))
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
