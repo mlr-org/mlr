@@ -46,10 +46,10 @@ test_that("FilterWrapper with ensemble function in a train call", {
   expect_error(makeFilterWrapper(lrn, fw.method = "E-min",
    fw.basal.methods = c("E-min", "information.gain")))
 
-  expect_error(makeFilterWrapper(lrn, fw.method = c("chi.squared", "information.gain")))
+  expect_error(makeFilterWrapper(lrn, fw.method = c("chi.squared", "FSelectorRcpp.infogain")))
 
   lrn2 = makeFilterWrapper(lrn, fw.method = "E-min",
-    fw.basal.methods = c("chi.squared", "information.gain"), fw.perc = 0.43)
+    fw.basal.methods = c("chi.squared", "FSelectorRcpp.infogain"), fw.perc = 0.43)
 
   m = train(lrn2, binaryclass.task)
 
