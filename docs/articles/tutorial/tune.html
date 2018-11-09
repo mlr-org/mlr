@@ -460,18 +460,19 @@
 <p>Then you can proceed as usual. Here we refit and predict the learner on the complete iris (<code><a href="http://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code>) data set:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">m =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">predict</span>(m, <span class="dt">task =</span> iris.task)</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">## Prediction: 150 observations</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">## predict.type: response</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">## threshold: </span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">## time: 0.01</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">##   id  truth response</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">## 1  1 setosa   setosa</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">## 2  2 setosa   setosa</span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">## 3  3 setosa   setosa</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">## 4  4 setosa   setosa</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">## 5  5 setosa   setosa</span></a>
-<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">## 6  6 setosa   setosa</span></a>
-<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">## ... (#rows: 150, #cols: 3)</span></a></code></pre></div>
+<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">## Prediction: 150 observations</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">## predict.type: response</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">## threshold: </span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">## time: 0.00</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">##   id  truth response</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">## 1  1 setosa   setosa</span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">## 2  2 setosa   setosa</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">## 3  3 setosa   setosa</span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">## 4  4 setosa   setosa</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">## 5  5 setosa   setosa</span></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">## 6  6 setosa   setosa</span></a>
+<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">## ... (#rows: 150, #cols: 3)</span></a></code></pre></div>
 <p>But what if you wanted to inspect the other points on the search path, not just the optimal?</p>
 </div>
 <div id="investigating-hyperparameter-tuning-effects" class="section level1">
@@ -531,7 +532,7 @@
 <a class="sourceLine" id="cb20-3" data-line-number="3">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
 <a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"iteration"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>,</a>
 <a class="sourceLine" id="cb20-5" data-line-number="5">  <span class="dt">plot.type =</span> <span class="st">"line"</span>)</a></code></pre></div>
-<p><img src="tune_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p><img src="tune_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>Note that by default, we only plot the current global optima. This can be changed with the <code>global.only</code> argument.</p>
 <p>For an in-depth exploration of generating hyperparameter tuning effects and plotting the data, check out <a href="hyperpar_tuning_effects.html" target="_blank">Hyperparameter Tuning Effects</a>.</p>
 </div>
