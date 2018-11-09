@@ -34,7 +34,7 @@ With `plotLearningCurve()` the result of `generateLearningCurveData()` can be pl
 By default `facet = "measure"` and facetted subplots are created for each measure input to `generateLearningCurveData()`.
 If `facet = "measure"` learners are mapped to color, and vice versa.
 
-```{r LearningCurveTPFP, fig.asp = 7/9 echo = FALSE, results='hide'}
+```{r LearningCurveTPFP, fig.asp = 7/9, echo = FALSE, results='hide'}
 r = generateLearningCurveData(
   learners = c("classif.rpart", "classif.knn"),
   task = sonar.task,
