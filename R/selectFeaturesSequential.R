@@ -105,5 +105,5 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
 
   if (all(opt.path$env$eol[opt.path$env$dob == last] == last))
     last = last - 1
-  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, dob = last, ties = "first")
+  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, dob = last, ties = "first", task = task, bits.to.features = bits.to.features)
 }
