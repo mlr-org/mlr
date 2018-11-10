@@ -403,7 +403,8 @@ Default is 1.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># using the direct parameter of the SVM (which is already defined in the learner)</span>
+    <pre class="examples"><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>123</span>)
+<span class='co'># using the direct parameter of the SVM (which is already defined in the learner)</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>wcw.weight</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.5428571 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.5428571</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
 #&gt; true     M  R -err.-
@@ -431,12 +432,8 @@ Default is 1.</p></td>
 #&gt; <span class='message'>C          numeric   -   - -12 to 12   -    TRUE     Y</span>
 #&gt; <span class='message'>sigma      numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: wcw.weight=5.17; C=39.4; sigma=16</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: wcw.weight=6.15; C=29.7; sigma=13.7</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: wcw.weight=3.6; C=0.00123; sigma=2.19e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: wcw.weight=5.17; C=39.4; sigma=16 : mmce.test.mean=0.4663462</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: wcw.weight=5.17; C=39.4; sigma=16
-#&gt; mmce.test.mean=0.4663462</div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)</div><div class='output co'>#&gt; Optimization path
-#&gt;   Dimensions: x = 3/3, y = 1
-#&gt;   Length: 3
-#&gt;   Add x values transformed: FALSE
-#&gt;   Error messages: TRUE. Errors: 0 / 3.
-#&gt;   Exec times: TRUE. Range: 0.063 - 0.082. 0 NAs.</div></pre>
+#&gt; mmce.test.mean=0.4663462</div><div class='input'># print(res$opt.path)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
