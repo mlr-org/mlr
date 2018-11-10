@@ -56,7 +56,7 @@
 #' # usage of an ensemble filter
 #' lrn = makeLearner("classif.lda")
 #' lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
-#'   fw.basal.methods = c("gain.ratio", "information.gain"),
+#'   fw.basal.methods = c("FSelectorRcpp.gainratio", "FSelectorRcpp.infogain"),
 #'   fw.perc = 0.5)
 #' r = resample(lrn, task, outer, extract = function(model) {
 #'   getFilteredFeatures(model)
