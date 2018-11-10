@@ -47,7 +47,7 @@
 #' filterFeatures(iris.task, method = "gain.ratio", abs = 2)
 #' # ensemble filter
 #' filterFeatures(iris.task, method = "E-min",
-#'   basal.methods = c("gain.ratio", "information.gain"), abs = 2)
+#'   basal.methods = c("FSelectorRcpp.gainratio", "FSelectorRcpp.infogain"), abs = 2)
 #' @export
 filterFeatures = function(task, method = "randomForestSRC.rfsrc", fval = NULL,
     perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
