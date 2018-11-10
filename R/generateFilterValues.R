@@ -47,10 +47,10 @@
 #' @examples
 #' # two simple filter methods
 #' fval = generateFilterValuesData(iris.task,
-#'   method = c("gain.ratio", "information.gain"))
+#'   method = c("FSelectorRcpp.gainratio", "FSelectorRcpp.infogain"))
 #' # using ensemble method "E-mean"
 #' fval = generateFilterValuesData(iris.task,
-#'   method = list("E-mean", c("gain.ratio", "information.gain")))
+#'   method = list("E-mean", c("FSelectorRcpp.gainratio", "FSelectorRcpp.infogain")))
 #' @export
 generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
 
