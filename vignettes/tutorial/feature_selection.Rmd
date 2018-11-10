@@ -65,7 +65,7 @@ Optionally, a vector of filter methods can be passed.
 
 ```{r}
 fv2 = generateFilterValuesData(iris.task, 
-  method = c("FSelectorRcpp_information.gain", "chi.squared"))
+  method = c("FSelectorRcpp_information.gain", "FSelector_chi.squared"))
 fv2$data
 ```
 
@@ -158,7 +158,7 @@ Additionally, we [tune](tune.html){target="_blank"} the hyperparameters of the a
 As search strategy for tuning a random search with five iterations is used.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = "chi.squared")
+lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = "FSelector_chi.squared")
 ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
                   makeNumericParam("C", lower = -10, upper = 10, 
                     trafo = function(x) 2^x),
@@ -187,7 +187,7 @@ res$y
 After tuning we can generate a new wrapped learner with the optimal percentage value for further use (e.g. to predict to new data).
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", 
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared", 
         fw.perc = res$x$fw.perc, C = res$x$C, sigma = res$x$sigma)
 mod = train(lrn, bh.task)
 mod
