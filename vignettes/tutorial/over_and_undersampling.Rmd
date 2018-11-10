@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 In case of *binary classification* strongly imbalanced classes often lead to unsatisfactory results regarding the prediction of new observations, especially for the small class.
@@ -216,7 +217,17 @@ To reach a better performance in binary classification, it can be helpful to als
 This can be especially helpful if the response is unbalanced.
 To enable this, argument `tune.threshold` needs to be set to `TRUE` in the chosen `makeTuneControl*` function.
 
-```{r}
+```{r echo = FALSE, results='hide'}
+lrn = makeLearner("classif.gbm", predict.type = "prob", distribution = "bernoulli")
+ps = makeParamSet(
+  makeIntegerParam("interaction.depth", lower = 1, upper = 5)
+)
+ctrl = makeTuneControlRandom(maxit = 2, tune.threshold = TRUE)
+lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2, show.info = FALSE)
+r = resample(lrn, spam.task, cv3, extract = getTuneResult)
+```
+
+```{r eval = FALSE}
 lrn = makeLearner("classif.gbm", predict.type = "prob", distribution = "bernoulli")
 ps = makeParamSet(
   makeIntegerParam("interaction.depth", lower = 1, upper = 5)
@@ -224,7 +235,62 @@ ps = makeParamSet(
 ctrl = makeTuneControlRandom(maxit = 2, tune.threshold = TRUE)
 lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2)
 r = resample(lrn, spam.task, cv3, extract = getTuneResult)
+## Resampling: cross-validation
+## Measures:             mmce
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=5
+## [Tune-y] 1: mmce.test.mean=0.0599739; time: 0.1 min
+## [Tune-x] 2: interaction.depth=3
+## [Tune-y] 2: mmce.test.mean=0.0625815; time: 0.0 min
+## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0599739
+## [Resample] iter 1:    0.0482714
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=1
+## [Tune-y] 1: mmce.test.mean=0.0652075; time: 0.0 min
+## [Tune-x] 2: interaction.depth=3
+## [Tune-y] 2: mmce.test.mean=0.0586882; time: 0.0 min
+## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0586882
+## [Resample] iter 2:    0.0560626
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=3
+## [Tune-y] 1: mmce.test.mean=0.0577155; time: 0.0 min
+## [Tune-x] 2: interaction.depth=2
+## [Tune-y] 2: mmce.test.mean=0.0606496; time: 0.0 min
+## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0577155
+## [Resample] iter 3:    0.0625815
+## 
+## Aggregated Result: mmce.test.mean=0.0556385
+## 
 print(r$extract)
+## [[1]]
+## Tune result:
+## Op. pars: interaction.depth=5
+## Threshold: 0.48
+## mmce.test.mean=0.0599739
+## 
+## [[2]]
+## Tune result:
+## Op. pars: interaction.depth=3
+## Threshold: 0.48
+## mmce.test.mean=0.0586882
+## 
+## [[3]]
+## Tune result:
+## Op. pars: interaction.depth=3
+## Threshold: 0.52
+## mmce.test.mean=0.0577155
 ```
 
 In the above script the tuning is (of course) nested. 

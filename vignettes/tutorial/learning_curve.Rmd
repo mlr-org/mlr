@@ -34,7 +34,7 @@ With `plotLearningCurve()` the result of `generateLearningCurveData()` can be pl
 By default `facet = "measure"` and facetted subplots are created for each measure input to `generateLearningCurveData()`.
 If `facet = "measure"` learners are mapped to color, and vice versa.
 
-```{r LearningCurveTPFP, fig.asp = 7/9}
+```{r LearningCurveTPFP, fig.asp = 7/9, echo = FALSE, results='hide'}
 r = generateLearningCurveData(
   learners = c("classif.rpart", "classif.knn"),
   task = sonar.task,
@@ -43,6 +43,24 @@ r = generateLearningCurveData(
   resampling = makeResampleDesc(method = "CV", iters = 5),
   show.info = FALSE)
 plotLearningCurve(r)
+```
+
+```{r LearningCurveTPFP-1, fig.asp = 7/9, eval = FALSE}
+r = generateLearningCurveData(
+  learners = c("classif.rpart", "classif.knn"),
+  task = sonar.task,
+  percs = seq(0.1, 1, by = 0.2),
+  measures = list(tp, fp, tn, fn),
+  resampling = makeResampleDesc(method = "CV", iters = 5),
+  show.info = FALSE)
+# plotLearningCurve(r)
+```
+
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/LearningCurveTPFP-1.png")
 ```
 
 What happens in `generateLearningCurveData()` is the following:
@@ -56,7 +74,23 @@ In the first example we simply passed a vector of learner names to `generateLear
 As usual, you can also create the learners beforehand and provide a `list` of Learner (`makeLearner()`) objects, or even pass a mixed `list` of Learner (`makeLearner()`) objects and strings.
 Make sure that all learners have unique `id`s.
 
-```{r LearningCurveACCx, fig.asp = 3/4}
+```{r LearningCurveACCx, fig.asp = 3/4, echo = FALSE, results='hide'}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+lrns = list(
+  makeLearner(cl = "classif.ksvm", id = "ksvm1", sigma = 0.2, C = 2),
+  makeLearner(cl = "classif.ksvm", id = "ksvm2", sigma = 0.1, C = 1),
+  "classif.randomForest"
+)
+rin = makeResampleDesc(method = "CV", iters = 5)
+lc = generateLearningCurveData(learners = lrns, task = sonar.task,
+  percs = seq(0.1, 1, by = 0.1), measures = acc,
+  resampling = rin, show.info = FALSE)
+# plotLearningCurve(lc)
+```
+
+```{r LearningCurveACCx-1, fig.asp = 3/4, eval = FALSE}
 lrns = list(
   makeLearner(cl = "classif.ksvm", id = "ksvm1", sigma = 0.2, C = 2),
   makeLearner(cl = "classif.ksvm", id = "ksvm2", sigma = 0.1, C = 1),
@@ -69,9 +103,25 @@ lc = generateLearningCurveData(learners = lrns, task = sonar.task,
 plotLearningCurve(lc)
 ```
 
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/LearningCurveACCx-1.png")
+```
+
 We can display performance on the train set as well as the test set:
 
-```{r, fig.asp = 2/3}
+```{r, fig.asp = 2/3, echo = FALSE, results='hide'}
+rin2 = makeResampleDesc(method = "CV", iters = 5, predict = "both")
+lc2 = generateLearningCurveData(learners = lrns, task = sonar.task,
+  percs = seq(0.1, 1, by = 0.1),
+  measures = list(acc, setAggregation(acc, train.mean)), resampling = rin2,
+  show.info = FALSE)
+# plotLearningCurve(lc2, facet = "learner")
+```
+
+```{r, fig.asp = 2/3, eval = FALSE}
 rin2 = makeResampleDesc(method = "CV", iters = 5, predict = "both")
 lc2 = generateLearningCurveData(learners = lrns, task = sonar.task,
   percs = seq(0.1, 1, by = 0.1),
@@ -80,12 +130,9 @@ lc2 = generateLearningCurveData(learners = lrns, task = sonar.task,
 plotLearningCurve(lc2, facet = "learner")
 ```
 
-There is also an experimental `ggvis` plotting function, `plotLearningCurveGGVIS()`. 
-Instead of the `facet` argument to `plotLearningCurve()` there is an argument `interaction` which plays a similar role. 
-As subplots are not available in `ggvis`, measures or learners are mapped to an interactive sidebar which allows selection of the displayed measures or learners. 
-The other feature is mapped to color.
-
-```{r, eval = FALSE}
-plotLearningCurveGGVIS(lc2, interaction = "measure")
-plotLearningCurveGGVIS(lc2, interaction = "learner")
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/learning-curve-2-1.png")
 ```

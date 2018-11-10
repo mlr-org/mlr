@@ -16,6 +16,7 @@ library("lattice")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 `mlr` provides several imputation methods which are listed on the help page `imputations()`.

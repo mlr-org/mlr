@@ -17,6 +17,7 @@ library("kernlab")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Often, data sets include a large number of features.
@@ -172,7 +173,8 @@ res
 The performance of all percentage values visited during tuning is:
 
 ```{r}
-as.data.frame(res$opt.path)
+df = as.data.frame(res$opt.path)
+df[, -ncol(df)]
 ```
 
 The optimal percentage and the corresponding performance can be accessed as follows:
