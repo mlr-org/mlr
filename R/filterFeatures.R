@@ -44,7 +44,7 @@
 #'
 #' @examples
 #' # simple filter
-#' filterFeatures(iris.task, method = "gain.ratio", abs = 2)
+#' filterFeatures(iris.task, method = "FSelectorRcpp.gainratio", abs = 2)
 #' # ensemble filter
 #' filterFeatures(iris.task, method = "E-min",
 #'   basal.methods = c("FSelectorRcpp.gainratio", "FSelectorRcpp.infogain"), abs = 2)
