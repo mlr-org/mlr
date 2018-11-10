@@ -63,7 +63,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
     # only deploy in master branch
     if (ci()$get_branch() == "master") {
-      add_step(step_push_deploy(commit_paths = "docs/*"))
+      get_stage("deploy") %>%
+        add_step(step_push_deploy(commit_paths = "docs/*"))
     }
 
   }
