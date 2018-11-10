@@ -315,7 +315,7 @@ r
 
 ```{r eval = FALSE}
 # Tuning of the percentage of selected filters in the inner loop
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared")
 ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(0, 1, 0.2)))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iters = 3)
@@ -512,7 +512,7 @@ Here is a minimal example for feature filtering with tuning of the feature subse
 
 ```{r}
 # Feature filtering with tuning in the inner resampling loop
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared")
 ps = makeParamSet(makeDiscreteParam("fw.abs", values = seq_len(getTaskNFeats(bh.task))))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iter = 2)
