@@ -29,7 +29,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_rcmdcheck("--as-cran", warnings_are_errors = FALSE, notes_are_errors = FALSE))
 
   # only deploy in master branch
-  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron" && ci()$get_branch() == "master") {
+  if (ci()$get_branch() == "master") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
@@ -53,8 +53,6 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_install_cran("magick")) %>% # favicon creation
     add_step(step_install_cran("pander"))
 
-  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
-
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
 
@@ -66,6 +64,4 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
       get_stage("deploy") %>%
         add_step(step_push_deploy(commit_paths = "docs/*"))
     }
-
-  }
 }
