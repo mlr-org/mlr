@@ -108,8 +108,8 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   extracts = Map(function(x, fd.col) {
     reextract = x$reextract
     # Learn an "extraction model which is a trained algo for extracting from train data.
-    extractor.args = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col)))
-    list("reextract" = reextract, "extractor.args" = extractor.args)
+    extractor.vals = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col)))
+    list("reextract" = reextract, "extractor.vals" = extractor.vals)
   }, x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
   # Append Info relevant for reextraction to desc
@@ -184,7 +184,7 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
   # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.col) {
-      do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col, args = x$extractor.args)))
+      do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col, vals = x$extractor.vals)))
     },
     xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 

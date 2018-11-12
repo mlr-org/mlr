@@ -38,6 +38,19 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
   setClasses(list(learn = learn, reextract = reextract, args = args, par.set = par.set), "extractFDAFeatMethod")
 }
 
+
+
+# FIXME: Fix the following methods:
+# [ ] DTW
+# [ ] FFT
+# [ ] PCA
+# [ ] BSIGNAL
+# [ ] TSFEATURES
+# [ ] WAVELETS
+# [ ] Fourier
+# [ ] Multires
+
+
 #' @title Fast Fourier transform features.
 #'
 #' @description
@@ -123,16 +136,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 
-  # All possible values for the filters
-  filter.vals = c(
-    paste0("d", c(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)),
-    paste0("la", c(8, 10, 12, 14, 16, 18, 20)),
-    paste0("bl", c(14, 18, 20)),
-    paste0("c", c(6, 12, 18, 24, 30)),
-    "haar"
-  )
-  assertChoice(filter, filter.vals)
-  assertChoice(boundary, c("periodic", "reflection"))
+
 
   # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
   # to handle it right now.
@@ -141,35 +145,154 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   # FIXME: Add n.levels parameter. Has no default. When n.leves are not provided, we do not understand yet if there is a difference
 
   lrn = function(data, target = NULL, col, filter, boundary) {
+    # All possible values for the filters
+    filter.vals = c(
+      paste0("d", c(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)),
+      paste0("la", c(8, 10, 12, 14, 16, 18, 20)),
+      paste0("bl", c(14, 18, 20)),
+      paste0("c", c(6, 12, 18, 24, 30)),
+      "haar"
+    )
+    assertChoice(filter, filter.vals)
+    assertChoice(boundary, c("periodic", "reflection"))
+
+    # Convert to list in order to catch params that do not have defaults (n.levels)
+    vals = learnerArgsToControl(list, filter = filter, boundary = boundary)
+    return(vals)
+  }
+
+  reextract = function(data, target, col, vals, args) {
     requirePackages("wavelets", default.method = "load")
     assertDataFrame(data)
     assertChoice(col, choices = colnames(data))
 
-    assertDataFrame(data)
-    assertChoice(col, choices = colnames(data))
-    # Convert to list in order to catch params that do not have defaults (n.levels)
-    args = learnerArgsToControl(list, filter = filter, boundary = boundary)
-
     # Convert to list of rows and extract wavelets from each time-series.
     rowlst = convertRowsToList(data[, col, drop = FALSE])
     wtdata = t(dapply(rowlst, fun = function(x) {
-      args$X = as.numeric(x)
+      vals$X = as.numeric(x)
       wt = do.call(wavelets::dwt, args)
       # Extract wavelet coefficients W and level scaling coeffictients V
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
+
     df = as.data.frame(wtdata)
     colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
   }
+
   ps = makeParamSet(
     makeDiscreteParam("filter", values = filter.vals),
     makeDiscreteParam("boundary", values = c("periodic", "reflection"))
   )
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary), par.set = ps)
+
+  makeExtractFDAFeatMethod(learn = lrn, reextract = reextract, args = list(filter = filter, boundary = boundary), par.set = ps)
 }
 
+#' @title Extract functional principal component analysis features.
+#'
+#' @description
+#' The function extracts the functional principal components from a data.frame
+#' containing functional features.
+#'
+#' @param pve (`numeric(1)`)\cr
+#'   Fraction of variance explained for the functional principal components.
+#'   Default is 0.99.
+#' @param npc (`integer(1)`)\cr
+#'   Number of principal components to extract. Overrides `pve` param.
+#'   Default is `NULL`
+#' @return ([data.frame]).
+#' @export
+#' @family fda_featextractor
+extractFDAPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
+  assertCount(rank., null.ok = TRUE)
 
+  lrn = function(data, target, col, vals, ...) {
+    assert(
+      checkClass(data, "data.frame"),
+      checkClass(data, "matrix")
+    )
+
+    data = data[, col, drop = FALSE]
+
+    # transform dataframe into matrix
+    if (inherits(data, "data.frame"))
+      data = as.matrix(data)
+
+    # This method only learns the eigenvectors
+    lst = learnerArgsToControl(list, ...)
+    lst$x = data
+    rst = do.call("prcomp", lst)
+    return(rst)
+  }
+
+  reextract = function(data, target, col, vals, args) {
+    assert(
+      checkClass(data, "data.frame"),
+      checkClass(data, "matrix")
+    )
+
+    data = data[, col, drop = FALSE]
+
+    # transform dataframe into matrix
+    if (inherits(data, "data.frame"))
+      data = as.matrix(data)
+
+    as.data.frame(predict(vals, data))
+  }
+
+  ps = makeParamSet(
+    makeIntegerParam("rank.", lower = 1, upper = Inf),
+    makeLogicalParam("scale."),
+    makeLogicalParam("center")
+  )
+  makeExtractFDAFeatMethod(learn = lrn, reextract = reextract,
+   args = list(rank. = rank., center = center, scale. = scale.),
+   par.set = ps)
+}
+
+#' @title Bspline mlq features
+#'
+#' @description
+#' The function extracts features from functional data based on the Bspline fit.
+#' For more details refer to \code{\link[FDboost]{bsignal}}.
+#'
+#' @param bsignal.knots (`integer(1)`)\cr
+#'   The number of knots for bspline.
+#' @param bsignal.df (`numeric(1)`)\cr
+#'   The effective degree of freedom of penalized bspline.
+#' @return ([data.frame]).
+#' @export
+#' @family fda_featextractor
+extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
+  lrn = function(data, target, col, ...) {
+    assertInteger(bsignal.knots)
+    assertNumeric(bsignal.df)
+    return(list(bsignal.df = bsignal.df, bsignal.knots = bsignal.knots))
+  }
+
+  reextract = function(data, target, col, vals, args) {
+    assertClass(data, "data.frame")
+    # Transform data to matrix for stats::fft
+    data = as.matrix(data[, col, drop = FALSE])
+    assertNumeric(data)
+    blrn = FDboost::bsignal(x = data, s = seq_len(ncol(data)), knots = vals$bsignal.knots, degree = vals$bsignal.df)
+    feats.bsignal = mboost::extract(object = blrn, what = "design")  # get the design matrix of the base learner
+    # Add more legible column names to the output
+    df = as.data.frame(feats.bsignal)
+    colnames(df) = stri_paste("bsig", seq_len(ncol(df)), sep = ".")
+    return(df)
+  }
+  ps = makeParamSet(
+    makeIntegerParam("bsignal.knots", lower = 3L, upper = Inf, default = 10L),
+    makeNumericParam("bsignal.df", lower = 0.9, upper = Inf, default = 3)
+  )
+  makeExtractFDAFeatMethod(
+    learn = lrn,
+    reextract = reextract,
+    args = list(bsignal.knots = bsignal.knots, bsignal.df = bsignal.df),
+    par.set = ps
+  )
+}
 
 #' @title Time-Series Feature Heuristics
 #'
@@ -179,7 +302,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' Under the hood this function uses the package \code{\link[tsfeatures]{tsfeatures}}
 #' For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #'
-#' @param tsfeatures.scale (`logical(1)`)\cr
+#' @param scale (`logical(1)`)\cr
 #'   If TRUE, time series are scaled to mean 0 and sd 1 before features are computed.
 #' @param trim (`logical(1)`)\cr
 #'   If TRUE, time series are trimmed by \code{trim_amount} before features are computed.
@@ -197,15 +320,21 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' @references Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #' @export
 #' @family fda_featextractor
-extractFDATsfeatures = function(tsfeatures.scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
-  lrn = function(data, target = NULL, col, tsfeatures.scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
-    assertClass(data, "data.frame")
-    assertLogical(tsfeatures.scale)
+extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
+  lrn = function(data, target, col, ...) {
+    assertLogical(scale)
     assertLogical(trim)
     assertLogical(parallel)
     assertNumeric(trim_amount)
     assertFunction(na.action)
+    lst = learnerArgsToControl("list", ...)
+    # Simply pass on parameters
+    return(c(list(scale = scale, trim = trim, parallel = parallel, trim_amount = trim_amount,
+      na.action = na.action), lst))
+  }
 
+  reextract = function(data, target = NULL, col, vals, args) {
+    assertClass(data, "data.frame")
     # Transform data to matrix
     data = as.matrix(data[, col, drop = FALSE])
     assertNumeric(data)
@@ -213,12 +342,13 @@ extractFDATsfeatures = function(tsfeatures.scale = TRUE, trim = FALSE, trim_amou
     row.lst = as.list(data.frame(t(data)))
 
     requirePackages("tsfeatures", why = "time-series feature extraction")
-    # We do not compute heterogeneity, hw_parameters
+    # We do not compute some features as they are very unstable.
+    # Ex: heterogeneity, hw_parameters
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
       "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
       "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
 
-    tsfeats = tsfeatures::tsfeatures(row.lst, features = feats)
+    tsfeats = do.call(tsfeatures::tsfeatures, c(features = row.lst, args)
 
     # Get rid of series and type columns
     tsfeats = data.frame(lapply(tsfeats, as.numeric))
@@ -228,7 +358,7 @@ extractFDATsfeatures = function(tsfeatures.scale = TRUE, trim = FALSE, trim_amou
     return(tsfeats[, - const.feats])
   }
   ps = makeParamSet(
-    makeLogicalParam("tsfeatures.scale", default = TRUE),
+    makeLogicalParam("scale", default = TRUE),
     makeLogicalParam("trim", default = FALSE),
     makeNumericParam("trim_amount", lower = 0L, upper = 1L, default = 0.1),
     makeLogicalParam("parallel", default = FALSE),
@@ -236,8 +366,96 @@ extractFDATsfeatures = function(tsfeatures.scale = TRUE, trim = FALSE, trim_amou
   )
   makeExtractFDAFeatMethod(
     learn = lrn,
-    reextract = lrn,
-    args = list(tsfeatures.scale = tsfeatures.scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
+    reextract = reextract,
+    args = list(scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
+    par.set = ps
+  )
+}
+
+
+#' @title DTW kernel features
+#'
+#' @description
+#' The function extracts features from functional data based on the DTW distance with a reference dataframe.
+#'
+#' @param ref.method (`character(1)`)\cr
+#'   How should the reference curves be obtained?
+#'   Method `random` draws `n.refs` random reference curves, while `all` uses all curves as references.
+#'   In order to use user-provided reference curves, this parameter is set to `fixed`.
+#' @param n.refs (`numeric(1)`)\cr
+#'   Number of reference curves to be drawn (as a fraction of the number of observations in the training data).
+#' @param refs (`matrix`|`integer(n)`)\cr
+#'   Integer vector of training set row indices or a matrix of reference curves with the same length as
+#'   the functionals in the training data. Overwrites `ref.method` and `n.refs`.
+#' @param dtwwindow (`numeric(1)`)\cr
+#'   Size of the warping window size (as a proportion of query length).
+#' @return ([data.frame]).
+#' @export
+#' @family fda_featextractor
+extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {
+  requirePackages("rucrdtw", default.method = "attach")
+
+  # Function that extracts dtw-distances for a single observation and a set of reference
+  # curves
+  getDtwDist = function(frow, refs, dtwwindow) {
+    # Compute dtw distance from the selected row to each reference row
+    row = vnapply(seq_len(nrow(refs)), function(i) rucrdtw::ucrdtw_vv(frow, refs[i, ], dtwwindow)$distance)
+    return(row)
+  }
+
+  lrn = function(data, target = NULL, col, ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {
+    assertChoice(ref.method, c("random", "all", "fixed"))
+    assertNumeric(n.refs, lower = 0, upper = 1)
+    assertChoice(class(refs), c("matrix", "integer", "NULL"))
+    assertNumber(dtwwindow)
+
+    # Check and transform data to matrix
+    assertClass(data, "data.frame")
+    data = as.matrix(data[, col, drop = FALSE])
+    assertNumeric(data)
+
+    # Obtain reference curves
+    if (is.null(refs) | is.integer(refs)) {
+      if (ref.method == "random")
+        refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0)), 2L))
+      if (ref.method == "all")
+        refs = seq_len(nrow(data))
+      refs.data = data[refs, , drop = FALSE]
+    } else {
+      assert_true(nrow(refs) == nrow(data))
+      refs.data = refs
+    }
+
+    # This method only stores and returns the data points we compare against
+    return(list(refs = refs.data, dtwwindow = dtwwindow))
+  }
+
+  reextract = function(data, target = NULL, col, vals, args)
+    assertClass(data, "data.frame")
+    # Transform data to matrix
+    data = as.matrix(data[, col, drop = FALSE])
+    assertNumeric(data)
+
+
+    feats.dtw = t(apply(data, 1L, function(x) getDtwDist(x, vals$refs.data, vals$dtwwindow)))
+
+    # Add more legible column names to the output
+    df = as.data.frame(feats.dtw)
+    colnames(df) = stri_paste("dtw", seq_len(ncol(df)), sep = ".")
+    return(df)
+  }
+
+  ps = makeParamSet(
+    makeDiscreteParam(id = "ref.method", default = "random", values = c("random", "all", "fixed")),
+    makeNumericParam(id = "n.refs", default = 0.05, lower = 0, upper = 1),
+    makeUntypedParam(id = "refs", default = NULL),
+    makeNumericParam(id = "dtwwindow", lower = 0, upper = 1)
+  )
+
+  makeExtractFDAFeatMethod(
+    learn = lrn,
+    reextract = reextract,
+    args = list(ref.method = ref.method, n.refs = n.refs, refs = refs, dtwwindow = dtwwindow),
     par.set = ps
   )
 }

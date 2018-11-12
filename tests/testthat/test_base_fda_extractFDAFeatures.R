@@ -342,3 +342,25 @@ test_that("extract and reextract have correct args", {
   expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$args$trafo.coeff, "amplitude")
   expect_equal(mod$learner.model$control$extractFDAFeat$NIR$args$trafo.coeff, "amplitude")
 })
+
+
+test_that("extractBsignal features", {
+  methods = list("UVVIS" = extractFDABsignal(), "NIR" = extractFDABsignal())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
+  t2 = reextractFDAFeatures(fuelsubset.task, t$desc)
+  # check output data
+  df = getTaskData(t$task)
+  expect_is(df, "data.frame")
+  expect_equal(nrow(df), 129L)
+  expect_equal(ncol(df), 30L)
+})
+
+test_that("extractFDAFeaturesDTW", {
+  methods = list("UVVIS" = extractFDADTW(), "NIR" = extractFDADTW())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
+  # check output data
+  df = getTaskData(t$task)
+  expect_is(df, "data.frame")
+  expect_equal(nrow(df), 129)
+})
+
