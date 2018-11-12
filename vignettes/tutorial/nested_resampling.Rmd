@@ -301,7 +301,7 @@ Then a tuning step is added by `makeTuneWrapper()`.
 
 ```{r echo = FALSE, results='hide'}
 # Tuning of the percentage of selected filters in the inner loop
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared")
 ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(0, 1, 0.2)))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iters = 3)
