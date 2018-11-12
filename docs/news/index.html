@@ -323,20 +323,45 @@
 <h2 class="hasAnchor">
 <a href="#filter---new" class="anchor"></a>filter - new</h2>
 <ul>
-<li>praznik.JMI</li>
-<li>praznik.DISR</li>
-<li>praznik.JMIM</li>
-<li>praznik.MIM</li>
-<li>praznik.NJMIM</li>
-<li>praznik.MRMR</li>
-<li>praznik.CMIM</li>
+<li>praznik_JMI</li>
+<li>praznik_DISR</li>
+<li>praznik_JMIM</li>
+<li>praznik_MIM</li>
+<li>praznik_NJMIM</li>
+<li>praznik_MRMR</li>
+<li>praznik_CMIM</li>
+<li>FSelectorRcpp_gain.ratio</li>
+<li>FSelectorRcpp_information.gain</li>
+<li>FSelectorRcpp_symuncert</li>
 </ul>
 </div>
 <div id="filter---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filter---general" class="anchor"></a>filter - general</h2>
 <ul>
-<li>Replaced filters <code>information.gain</code>, <code>gainratio</code> and <code>symmetrical.uncertainty</code>depending on package <code>FSelector</code> by package <code>FSelectorRcpp</code>. The change comes with a ~ 100 times speedup.</li>
+<li>Added filters <code>FSelectorRcpp_gain.ratio</code>, <code>FSelectorRcpp_information.gain</code> and <code>FSelectorRcpp_symmetrical.uncertainty</code> from package <code>FSelectorRcpp</code>. These filters are ~ 100 times faster than the implementation of the <code>FSelector</code> pkg. Please note that both implementations do things slightly different internally and the <code>FSelectorRcpp</code> methods should not be seen as direct replacement for the <code>FSelector</code> pkg.</li>
+<li>prefixed all filters from pkg <code>FSelector</code> with <code>FSelector</code> to distinguish them from the new <code>FSelectorRcpp</code> filters
+<ul>
+<li>
+<code>information.gain</code> -&gt; <code>FSelector_information.gain</code>
+</li>
+<li>
+<code>gain.ratio</code> -&gt; <code>FSelector_gain.ratio</code>
+</li>
+<li>
+<code>symmetrical.uncertainty</code> -&gt; <code>FSelector_symmetrical.uncertainty</code>
+</li>
+<li>
+<code>chi.squared</code> -&gt; <code>FSelector_chi.squared</code>
+</li>
+<li>
+<code>relief</code> -&gt; <code>FSelector_relief</code>
+</li>
+<li>
+<code>oneR</code> -&gt; <code>FSelector_oneR</code>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
@@ -345,6 +370,15 @@
 <ul>
 <li>classif.liquidSVM</li>
 <li>regr.liquidSVM</li>
+</ul>
+</div>
+<div id="featsel---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#featsel---general" class="anchor"></a>featSel - general</h2>
+<ul>
+<li>The FeatSelResult object now contains an additional slot <code>x.bit.names</code> that stores the optimal bits</li>
+<li>The slot <code>x</code> now always contains the real feature names and not the bit.names</li>
+<li>This fixes a bug and makes <code>makeFeatSelWrapper</code> usable with custom <code>bit.names</code>.</li>
 </ul>
 </div>
 </div>
