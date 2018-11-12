@@ -222,41 +222,40 @@ test_that("extract and reextract MultiRes", {
 
 
 
-test_that("extractFPCAFeatures is equivalent to package", {
-  requirePackagesOrSkip(c("mboost", "refund"), default.method = "load")
-  set.seed(getOption("mlr.debug.seed"))
-  lrn = extractFDAFPCA()$learn
-  gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
-  fpca.df = lrn(data = gp$data, target = "X1", col = "fd", pve = 0.99, npc = NULL)
-  expect_true((nrow(gp$data) == nrow(fpca.df)))
-  expect_true((ncol(fpca.df) == 5L))
-  expect_match(names(fpca.df), regexp = "[FPCA]")
+# test_that("extractFPCAFeatures is equivalent to package", {
+#   requirePackagesOrSkip(c("mboost", "refund"), default.method = "load")
+#   set.seed(getOption("mlr.debug.seed"))
+#   lrn = extractFDAFPCA()$learn
+#   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
+#   fpca.df = lrn(data = gp$data, target = "X1", col = "fd", pve = 0.99, npc = NULL)
+#   expect_true((nrow(gp$data) == nrow(fpca.df)))
+#   expect_true((ncol(fpca.df) == 5L))
+#   expect_match(names(fpca.df), regexp = "[FPCA]")
 
-  # Is it equivalent to the mlr version?
-  set.seed(getOption("mlr.debug.seed"))
-  fpca.df2 = data.frame(refund::fpca.sc(Y = as.matrix(gp$data$fd))$scores)
-  expect_true((nrow(gp$data) == nrow(fpca.df2)))
-  expect_true((ncol(fpca.df2) == 5L))
-  expect_equivalent(fpca.df, fpca.df2)
+#   # Is it equivalent to the mlr version?
+#   set.seed(getOption("mlr.debug.seed"))
+#   fpca.df2 = data.frame(refund::fpca.sc(Y = as.matrix(gp$data$fd))$scores)
+#   expect_true((nrow(gp$data) == nrow(fpca.df2)))
+#   expect_true((ncol(fpca.df2) == 5L))
+#   expect_equivalent(fpca.df, fpca.df2)
 
-  set.seed(getOption("mlr.debug.seed"))
-  gp = getTaskData(gunpoint.task, subset = 1:20, target.extra = TRUE, functionals.as = "matrix")
-  fpca.df = lrn(data = gp$data, target = "X1", col = "fd", npc = 12L)
-  expect_true((nrow(gp$data) == nrow(fpca.df)))
-  expect_true((ncol(fpca.df) == 12L))
-  expect_match(names(fpca.df), regexp = "[FPCA]")
-})
+#   set.seed(getOption("mlr.debug.seed"))
+#   gp = getTaskData(gunpoint.task, subset = 1:20, target.extra = TRUE, functionals.as = "matrix")
+#   fpca.df = lrn(data = gp$data, target = "X1", col = "fd", npc = 12L)
+#   expect_true((nrow(gp$data) == nrow(fpca.df)))
+#   expect_true((ncol(fpca.df) == 12L))
+#   expect_match(names(fpca.df), regexp = "[FPCA]")
+# })
 
 test_that("extract and reextract FPCA", {
-  requirePackagesOrSkip(c("mboost", "refund"), default.method = "load")
   gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
-  fm = list("fd" = extractFDAFPCA(pve = .9, npc = 10))
+  fm = list("fd" = extractFDAPCA(rank. = 5))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reextractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
-  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 10L))
+  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 5L))
 })
 
 

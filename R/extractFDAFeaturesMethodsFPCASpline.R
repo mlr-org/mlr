@@ -13,13 +13,10 @@
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
-extractFDAFPCA = function(pve = 0.99, npc = NULL) {
-  assertNumber(pve, lower = 0, upper = 1)
-  assertCount(npc, null.ok = TRUE)
+extractFDAPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
+  assertCount(rank., null.ok = TRUE)
 
-  lrn = function(data, target, col, vals, pve = 0.99, npc = NULL) {
-    requirePackages("mboost", default.method = "load")
-    requirePackages("refund", default.method = "load")
+  lrn = function(data, target, col, vals, ...) {
     assert(
       checkClass(data, "data.frame"),
       checkClass(data, "matrix")
@@ -31,20 +28,36 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
     if (inherits(data, "data.frame"))
       data = as.matrix(data)
 
-    # extract fpca features
-    # FIXME: Add other fpca. options, maybe via function args ?
-    rst = refund::fpca.sc(Y = data, pve = pve, npc = npc)
-    # Order the columns by score
-    features.fpca = rst$scores[, order(rst$evalues,  decreasing = TRUE)]
-    df.fpca = as.data.frame(features.fpca)
-    names(df.fpca) = paste0("Fpca", seq_len(ncol(df.fpca)))
-    return(df.fpca)
+    # This method only learns the eigenvectors
+    lst = learnerArgsToControl(list, ...)
+    lst$x = data
+    rst = do.call("prcomp", lst)
+    return(rst)
   }
+
+  reextract = function(data, target, col, vals, args) {
+    assert(
+      checkClass(data, "data.frame"),
+      checkClass(data, "matrix")
+    )
+
+    data = data[, col, drop = FALSE]
+
+    # transform dataframe into matrix
+    if (inherits(data, "data.frame"))
+      data = as.matrix(data)
+
+    as.data.frame(predict(args, data))
+  }
+
   ps = makeParamSet(
-    makeNumericParam("pve", lower = 0, upper = 1),
-    makeIntegerParam("npc", lower = 1, upper = Inf)
+    makeIntegerParam("rank.", lower = 1, upper = Inf),
+    makeLogicalParam("scale."),
+    makeLogicalParam("center")
   )
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc), par.set = ps)
+  makeExtractFDAFeatMethod(learn = lrn, reextract = reextract,
+   args = list(rank. = rank., center = center, scale. = scale.),
+   par.set = ps)
 }
 
 

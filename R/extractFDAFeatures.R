@@ -103,37 +103,26 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   desc$fd.cols = names(desc$extractFDAFeat)
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
+
+  # The "learn" function only learns from the training data and returns the "extraction model".
   extracts = Map(function(x, fd.col) {
-    lst = list(
-      # feats are the extracted features
-      feats = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col))),
-      args = x$args, # Args passed to x$reextract
-      reextract = x$reextract  # pass on reextraction learner for extraction in prediction
-    )
-    # Append colnames of extracted features
-    lst$extracted_colnames = colnames(lst$feats)
-    return(lst)
+    reextract = x$reextract
+    # Learn an "extraction model which is a trained algo for extracting from train data.
+    extractor.args = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col)))
+    list("reextract" = reextract, "extractor.args" = extractor.args)
   }, x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
   # Append Info relevant for reextraction to desc
-  desc$extractFDAFeat = c(lapply(extracts, function(x) {c(x["args"], x["reextract"], x["extracted_colnames"])}))
+  desc$extractFDAFeat = extracts
+  extracted = reextractFDAFeatures(obj, desc)
 
-  # Extract feats for every functional feature and cbind to data.frame
-  vals = extractSubList(extracts, "feats", simplify = FALSE)
-
-  if (!all(vlapply(vals, is.data.frame))) {
+  if (!is.data.frame(extracted)) {
     stop("feat.method needs to return a data.frame with one row per observation in the original data.")
-  } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))) {
+  } else if (nrow(extracted) != nrow(obj)) {
     stop("feat.method needs to return a data.frame with one row per observation in the original data and equal nrow per column.")
   }
 
-  # cbind resulting columns. Use data.table to ensure proper naming.
-  df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
-
-  # Reappend target and non-functional features
-  keep.cols = setdiff(desc$coln, desc$fd.cols)
-  data = cbind(df, obj[, keep.cols, drop = FALSE])
-  list(data = data, desc = desc)
+  list(data = extracted, desc = desc)
 }
 
 #' @export
@@ -195,9 +184,7 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
   # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.col) {
-      df = do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col), x$args))
-      # Keep only extracted colnames
-      df[, x$extracted_colnames]
+      do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col, args = x$extractor.args)))
     },
     xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
