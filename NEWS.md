@@ -18,8 +18,6 @@
 * FSelectorRcpp_information.gain
 * FSelectorRcpp_symuncert
 
-## filter - renamed
-
 ## filter - general
 * Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
   These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.

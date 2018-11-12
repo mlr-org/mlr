@@ -290,17 +290,17 @@
 <div id="current-methods" class="section level1">
 <h1 class="hasAnchor">
 <a href="#current-methods" class="anchor"></a>Current methods</h1>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="9%">
+<col width="12%">
 <col width="23%">
-<col width="49%">
-<col width="3%">
+<col width="47%">
 <col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
 <col width="1%">
 <col width="1%">
 <col width="1%">
@@ -377,7 +377,7 @@
 <td align="center">X</td>
 </tr>
 <tr class="odd">
-<td align="left">chi.squared</td>
+<td align="left">FSelector_chi.squared</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
 <td align="left">Chi-squared statistic of independence between feature and target</td>
 <td align="center">X</td>
@@ -391,21 +391,77 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">FSelectorRcpp.gainratio</td>
-<td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
-<td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
+<td align="left">FSelector_gain.ratio</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">Entropy-based gain ratio between feature and target</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
+<td align="center"></td>
 <td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">FSelectorRcpp.infogain</td>
+<td align="left">FSelector_information.gain</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">Entropy-based information gain between feature and target</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">FSelector_oneR</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">oneR association rule</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">FSelector_relief</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">RELIEF algorithm</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">FSelector_symmetrical.uncertainty</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">Entropy-based symmetrical uncertainty between feature and target</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">FSelectorRcpp_gain.ratio</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
 <td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
 <td align="center">X</td>
@@ -419,7 +475,7 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">FSelectorRcpp.symuncert</td>
+<td align="left">FSelectorRcpp_information.gain</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
 <td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
 <td align="center">X</td>
@@ -433,6 +489,20 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
+<td align="left">FSelectorRcpp_symmetrical.uncertainty</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
+<td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
 <td align="left">kruskal.test</td>
 <td align="left"></td>
 <td align="left">Kruskal Test for binary and multiclass classification tasks</td>
@@ -446,7 +516,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">linear.correlation</td>
 <td align="left"></td>
 <td align="left">Pearson correlation between feature and target</td>
@@ -460,7 +530,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mrmr</td>
 <td align="left"><a href="https://cran.r-project.org/package=mRMRe">mRMRe</a></td>
 <td align="left">Minimum redundancy, maximum relevance filter</td>
@@ -473,20 +543,6 @@
 <td align="center"></td>
 <td align="center">X</td>
 <td align="center">X</td>
-</tr>
-<tr class="even">
-<td align="left">oneR</td>
-<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
-<td align="left">oneR association rule</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">permutation.importance</td>
@@ -503,7 +559,7 @@
 <td align="center">X</td>
 </tr>
 <tr class="even">
-<td align="left">praznik.CMIM</td>
+<td align="left">praznik_CMIM</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">Minimal conditional mutual information maximisation filter</td>
 <td align="center">X</td>
@@ -517,7 +573,7 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">praznik.DISR</td>
+<td align="left">praznik_DISR</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">Double input symmetrical relevance filter</td>
 <td align="center">X</td>
@@ -531,7 +587,7 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">praznik.JMI</td>
+<td align="left">praznik_JMI</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">Joint mutual information filter</td>
 <td align="center">X</td>
@@ -545,7 +601,7 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">praznik.JMIM</td>
+<td align="left">praznik_JMIM</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">Minimal joint mutual information maximisation filter</td>
 <td align="center">X</td>
@@ -559,7 +615,7 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">praznik.MIM</td>
+<td align="left">praznik_MIM</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">conditional mutual information based feature selection filters</td>
 <td align="center">X</td>
@@ -573,7 +629,7 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">praznik.MRMR</td>
+<td align="left">praznik_MRMR</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">Minimum redundancy maximal relevancy filter</td>
 <td align="center">X</td>
@@ -587,7 +643,7 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">praznik.NJMIM</td>
+<td align="left">praznik_NJMIM</td>
 <td align="left"><a href="https://cran.r-project.org/package=praznik">praznik</a></td>
 <td align="left">Minimal normalised joint mutual information maximisation filter</td>
 <td align="center">X</td>
@@ -685,20 +741,6 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">relief</td>
-<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
-<td align="left">RELIEF algorithm</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
 <td align="left">univariate.model.score</td>
 <td align="left"></td>
 <td align="left">Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.</td>
@@ -712,7 +754,7 @@
 <td align="center">X</td>
 <td align="center">X</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">variance</td>
 <td align="left"></td>
 <td align="left">A simple variance filter</td>

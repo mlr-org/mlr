@@ -581,7 +581,7 @@ Nested Resampling Figure
 <p>Filter methods assign an importance value to each feature. Based on these values you can select a feature subset by either keeping all features with importance higher than a certain threshold or by keeping a fixed number or percentage of the highest ranking features. Often, neither the theshold nor the number or percentage of features is known in advance and thus tuning is necessary.</p>
 <p>In the example below the threshold value (<code>fw.threshold</code>) is tuned in the inner resampling loop. For this purpose the base Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) <code>"regr.lm"</code> is wrapped two times. First, <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code> is used to fuse linear regression with a feature filtering preprocessing step. Then a tuning step is added by <code><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper()</a></code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Tuning of the percentage of selected filters in the inner loop</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"chi.squared"</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>)</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeDiscreteParam</span>(<span class="st">"fw.threshold"</span>, <span class="dt">values =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)))</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
 <a class="sourceLine" id="cb12-5" data-line-number="5">inner =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
@@ -606,17 +606,17 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">## [[1]]</span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">## Model for learner.id=regr.lm.filtered.tuned; learner.class=TuneWrapper</span></a>
 <a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">## Trained on: task.id = BostonHousing-example; obs = 338; features = 13</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">## Hyperparameters: fw.method=chi.squared</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">## Hyperparameters: fw.method=FSelector_ch...</span></a>
 <a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">## </span></a>
 <a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">## [[2]]</span></a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">## Model for learner.id=regr.lm.filtered.tuned; learner.class=TuneWrapper</span></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">## Trained on: task.id = BostonHousing-example; obs = 337; features = 13</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">## Hyperparameters: fw.method=chi.squared</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">## Hyperparameters: fw.method=FSelector_ch...</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">## </span></a>
 <a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">## [[3]]</span></a>
 <a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">## Model for learner.id=regr.lm.filtered.tuned; learner.class=TuneWrapper</span></a>
 <a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">## Trained on: task.id = BostonHousing-example; obs = 337; features = 13</span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">## Hyperparameters: fw.method=chi.squared</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">## Hyperparameters: fw.method=FSelector_ch...</span></a></code></pre></div>
 <p>The result of the feature selection can be extracted by function <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code>. Almost always all 13 features are selected.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">lapply</span>(r<span class="op">$</span>models, <span class="cf">function</span>(x) <span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(x<span class="op">$</span>learner.model<span class="op">$</span>next.model))</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">## [[1]]</span></a>
@@ -814,12 +814,12 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">## $`BostonHousing-example`$regr.lm.featsel</span></a>
 <a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">## $`BostonHousing-example`$regr.lm.featsel[[1]]</span></a>
 <a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">## FeatSel result:</span></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">## Features (11): zn, indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">## Features (11): zn, indus, chas, nox, rm, dis, rad, tax, ptrati...</span></a>
 <a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">## mse.test.mean=27.2177924</span></a>
 <a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">## </span></a>
 <a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co">## $`BostonHousing-example`$regr.lm.featsel[[2]]</span></a>
 <a class="sourceLine" id="cb22-13" data-line-number="13"><span class="co">## FeatSel result:</span></a>
-<a class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">## Features (10): crim, zn, nox, rm, dis, rad, tax, ptratio, b, lstat</span></a>
+<a class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">## Features (10): crim, zn, nox, rm, dis, rad, tax, ptratio, b, l...</span></a>
 <a class="sourceLine" id="cb22-15" data-line-number="15"><span class="co">## mse.test.mean=19.9134734</span></a>
 <a class="sourceLine" id="cb22-16" data-line-number="16"><span class="kw"><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults</a></span>(res, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb22-17" data-line-number="17"><span class="co">## $regr.rpart</span></a>
@@ -828,12 +828,12 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb22-20" data-line-number="20"><span class="co">## $regr.lm.featsel</span></a>
 <a class="sourceLine" id="cb22-21" data-line-number="21"><span class="co">## $regr.lm.featsel[[1]]</span></a>
 <a class="sourceLine" id="cb22-22" data-line-number="22"><span class="co">## FeatSel result:</span></a>
-<a class="sourceLine" id="cb22-23" data-line-number="23"><span class="co">## Features (11): zn, indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</span></a>
+<a class="sourceLine" id="cb22-23" data-line-number="23"><span class="co">## Features (11): zn, indus, chas, nox, rm, dis, rad, tax, ptrati...</span></a>
 <a class="sourceLine" id="cb22-24" data-line-number="24"><span class="co">## mse.test.mean=27.2177924</span></a>
 <a class="sourceLine" id="cb22-25" data-line-number="25"><span class="co">## </span></a>
 <a class="sourceLine" id="cb22-26" data-line-number="26"><span class="co">## $regr.lm.featsel[[2]]</span></a>
 <a class="sourceLine" id="cb22-27" data-line-number="27"><span class="co">## FeatSel result:</span></a>
-<a class="sourceLine" id="cb22-28" data-line-number="28"><span class="co">## Features (10): crim, zn, nox, rm, dis, rad, tax, ptratio, b, lstat</span></a>
+<a class="sourceLine" id="cb22-28" data-line-number="28"><span class="co">## Features (10): crim, zn, nox, rm, dis, rad, tax, ptratio, b, l...</span></a>
 <a class="sourceLine" id="cb22-29" data-line-number="29"><span class="co">## mse.test.mean=19.9134734</span></a></code></pre></div>
 <p>You can access results for individual learners and tasks and inspect them further.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">feats =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults</a></span>(res, <span class="dt">learner.id =</span> <span class="st">"regr.lm.featsel"</span>, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
@@ -891,7 +891,7 @@ Nested Resampling Figure
 <a href="#example-3-one-task-two-learners-feature-filtering-with-tuning" class="anchor"></a>Example 3: One task, two learners, feature filtering with tuning</h2>
 <p>Here is a minimal example for feature filtering with tuning of the feature subset size.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># Feature filtering with tuning in the inner resampling loop</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"chi.squared"</span>)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>)</a>
 <a class="sourceLine" id="cb25-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeDiscreteParam</span>(<span class="st">"fw.abs"</span>, <span class="dt">values =</span> <span class="kw">seq_len</span>(<span class="kw"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(bh.task))))</a>
 <a class="sourceLine" id="cb25-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
 <a class="sourceLine" id="cb25-5" data-line-number="5">inner =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iter =</span> <span class="dv">2</span>)</a>
