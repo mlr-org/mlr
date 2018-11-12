@@ -74,10 +74,15 @@ trainLearner.TuneWrapper = function(.learner, .task, .subset = NULL,  ...) {
 
 #' @export
 predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
-  lrn = setHyperPars(.learner$next.learner, par.vals = .model$learner.model$opt.result$x)
-  arglist = list(.learner = lrn, .model = .model$learner.model$next.model, .newdata = .newdata)
+  # setHyperPars not used because par.vals are not acessed anymore
+  arglist = list(.learner = .learner$next.learner, .model = .model$learner.model$next.model, .newdata = .newdata)
   arglist = insert(arglist, list(...))
-  arglist = insert(arglist, .model$learner.model$opt.result$x)
+
+  # get x from opt result and only select those that are used for predition
+  opt.x = .model$learner.model$opt.result$x
+  ps = getParamSet(.learner)
+  ns = Filter(function(x) ps$pars[[x]]$when %in% c("both", "predict"), getParamIds(ps))
+  arglist = insert(arglist, opt.x[ns])
   do.call(predictLearner, arglist)
 }
 

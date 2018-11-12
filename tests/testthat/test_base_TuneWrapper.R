@@ -120,3 +120,23 @@ test_that("TuneWrapper with glmnet (#958)", {
   expect_error(pred, NA)
 })
 
+test_that("TuneWrapper respects train parameters (#2472)", {
+  tsk = makeRegrTask("dummy", data = data.frame(y = rep(0L, 100), x = rep(1L, 100)), target = "y")
+  ps = makeParamSet(
+    makeNumericLearnerParam("p1", when = "train", lower = 0, upper = 10),
+    makeNumericLearnerParam("p2", when = "predict", lower = 0, upper = 10),
+    makeNumericLearnerParam("p3", when = "both", lower = 0, upper = 10)
+  )
+  lrn = makeLearner("regr.__mlrmocklearners__4", predict.type = "response", p1 = 10, p2 = 10, p3 = 10)
+  # resample(lrn, regr.task, cv10)
+  lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
+    par.set = ps,
+    control = makeTuneControlGrid(resolution = 2L))
+  mod = train(lrn2, tsk)
+  expect_equal(mod$learner.model$opt.result$x, list(p1 = 0, p2 = 0, p3 = 0))
+  expect_true(mod$learner.model$opt.result$y == 0)
+  pred = predict(mod, tsk)
+  expect_true(all(pred$data$response == 0))
+})
+
+
