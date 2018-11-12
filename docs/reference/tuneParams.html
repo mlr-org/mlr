@@ -412,7 +412,8 @@ the measure. See example code below.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># a grid search for an SVM (with a tiny number of points...)</span>
+    <pre class="examples"><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>123</span>)
+<span class='co'># a grid search for an SVM (with a tiny number of points...)</span>
 <span class='co'># note how easily we can optimize on a log-scale</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
   <span class='fu'>makeNumericParam</span>(<span class='st'>"C"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>),
@@ -422,61 +423,31 @@ the measure. See example code below.</p>
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>C     numeric   -   - -12 to 12   -    TRUE     Y</span>
-#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.6400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0466667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.6466667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7133333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0466667</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.7200000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0266667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.7200000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7066667; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0266667</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: C=4.1e+03; sigma=0.000244
-#&gt; mmce.test.mean=0.0466667</div><div class='input'><span class='co'># access data for all evaluated points</span>
-<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
-#&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.124
-#&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.068
-#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.107
-#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.107</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message exec.time
-#&gt; 1 -12   -12     0.64000000   1  NA          &lt;NA&gt;     0.124
-#&gt; 2  12   -12     0.04666667   2  NA          &lt;NA&gt;     0.068
-#&gt; 3 -12    12     0.64666667   3  NA          &lt;NA&gt;     0.107
-#&gt; 4  12    12     0.71333333   4  NA          &lt;NA&gt;     0.107</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
-<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)))</div><div class='output co'>#&gt; $data
-#&gt;     C sigma mmce.test.mean iteration exec.time
-#&gt; 1 -12   -12     0.64000000         1     0.124
-#&gt; 2  12   -12     0.04666667         2     0.068
-#&gt; 3 -12    12     0.64666667         3     0.107
-#&gt; 4  12    12     0.71333333         4     0.107
-#&gt; 
-#&gt; $measures
-#&gt; [1] "mmce.test.mean"
-#&gt; 
-#&gt; $hyperparams
-#&gt; [1] "C"     "sigma"
-#&gt; 
-#&gt; $diagnostics
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $optimization
-#&gt; [1] "TuneControlGrid"
-#&gt; 
-#&gt; $nested
-#&gt; [1] FALSE
-#&gt; </div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div><div class='output co'>#&gt; $data
-#&gt;              C        sigma mmce.test.mean iteration exec.time
-#&gt; 1 2.441406e-04 2.441406e-04     0.64000000         1     0.124
-#&gt; 2 4.096000e+03 2.441406e-04     0.04666667         2     0.068
-#&gt; 3 2.441406e-04 4.096000e+03     0.64666667         3     0.107
-#&gt; 4 4.096000e+03 4.096000e+03     0.71333333         4     0.107
-#&gt; 
-#&gt; $measures
-#&gt; [1] "mmce.test.mean"
-#&gt; 
-#&gt; $hyperparams
-#&gt; [1] "C"     "sigma"
-#&gt; 
-#&gt; $diagnostics
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $optimization
-#&gt; [1] "TuneControlGrid"
-#&gt; 
-#&gt; $nested
-#&gt; [1] FALSE
-#&gt; </div><div class='input'>
+#&gt; mmce.test.mean=0.0266667</div><div class='input'><span class='co'># access data for all evaluated points</span>
+<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
+<span class='no'>df1</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df</span>[, -<span class='fu'>ncol</span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
+#&gt; 1 -12   -12     0.72000000   1  NA          &lt;NA&gt;
+#&gt; 2  12   -12     0.02666667   2  NA          &lt;NA&gt;
+#&gt; 3 -12    12     0.72000000   3  NA          &lt;NA&gt;
+#&gt; 4  12    12     0.70666667   4  NA          &lt;NA&gt;</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df1</span>[, -<span class='fu'>ncol</span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
+#&gt; 1 -12   -12     0.72000000   1  NA          &lt;NA&gt;
+#&gt; 2  12   -12     0.02666667   2  NA          &lt;NA&gt;
+#&gt; 3 -12    12     0.72000000   3  NA          &lt;NA&gt;
+#&gt; 4  12    12     0.70666667   4  NA          &lt;NA&gt;</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
+<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)
+<span class='no'>df3</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df2</span>$<span class='no'>data</span>[, -<span class='fu'>ncol</span>(<span class='no'>df2</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean iteration
+#&gt; 1 -12   -12     0.72000000         1
+#&gt; 2  12   -12     0.02666667         2
+#&gt; 3 -12    12     0.72000000         3
+#&gt; 4  12    12     0.70666667         4</div><div class='input'><span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df3</span>$<span class='no'>data</span>[, -<span class='fu'>ncol</span>(<span class='no'>df3</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;              C        sigma mmce.test.mean iteration
+#&gt; 1 2.441406e-04 2.441406e-04     0.72000000         1
+#&gt; 2 4.096000e+03 2.441406e-04     0.02666667         2
+#&gt; 3 2.441406e-04 4.096000e+03     0.72000000         3
+#&gt; 4 4.096000e+03 4.096000e+03     0.70666667         4</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># we optimize the SVM over 3 kernels simultanously</span>
 <span class='co'># note how we use dependent params (requires = ...) and iterated F-racing here</span>
@@ -493,14 +464,16 @@ the measure. See example code below.</p>
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
 <span class='fu'>print</span>(<span class='no'>res</span>)
-<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))
+<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
+<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df</span>[, -<span class='fu'>ncol</span>(<span class='no'>df</span>)]))
 
 <span class='co'># include the training set performance as well</span>
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"both"</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>,
   <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))
 <span class='fu'>print</span>(<span class='no'>res</span>)
-<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)))
+<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
+<span class='fu'>print</span>(<span class='fu'>head</span>(<span class='no'>df2</span>[, -<span class='fu'>ncol</span>(<span class='no'>df2</span>)]))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

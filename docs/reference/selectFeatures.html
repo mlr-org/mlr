@@ -355,13 +355,15 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
       <th>bit.names</th>
       <td><p>[character]<br />
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-Per default these are the feature names of the task.</p></td>
+Per default these are the feature names of the task.
+Has to be used together with `bits.to.features`.</p></td>
     </tr>
     <tr>
       <th>bits.to.features</th>
       <td><p>[function(x, task)]<br />
 Function which transforms an integer-0-1 vector into a character vector of selected features.
-Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.</p></td>
+Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
+The vector `x` will correspond to the `bit.names` and has to be of the same length.</p></td>
     </tr>
     <tr>
       <th>control</th>

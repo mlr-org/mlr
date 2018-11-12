@@ -16,6 +16,7 @@ library("lattice")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Wrappers can be employed to extend integrated learners (`makeLearner()`)  with new functionality.
@@ -93,9 +94,44 @@ The base wrapper function calls the base learner `bw.iters` times and stores the
 3. The bagged models are evaluated using the mean [mmce](measures.html){target="_blank"} (default aggregation for this performance measure) and new parameters are selected using the tuning method.
 4. This is repeated until the tuner terminates. Output is a tuned bagged learner.
 
-```{r}
+```{r echo = FALSE, results='hide', message=FALSE}
 lrn = train(tuned.lrn, task = task)
 
 print(lrn)
 ```
 
+```{r eval = FALSE}
+lrn = train(tuned.lrn, task = task)
+## [Tune] Started tuning learner classif.rpart.bagged for parameter set:
+##             Type len Def    Constr Req Tunable Trafo
+## minsplit integer   -   -   1 to 10   -    TRUE     -
+## bw.feats numeric   -   - 0.25 to 1   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: minsplit=5; bw.feats=0.533
+## [Tune-y] 1: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune-x] 2: minsplit=3; bw.feats=0.377
+## [Tune-y] 2: mmce.test.mean=0.0600000; time: 0.0 min
+## [Tune-x] 3: minsplit=8; bw.feats=0.29
+## [Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min
+## [Tune-x] 4: minsplit=6; bw.feats=0.555
+## [Tune-y] 4: mmce.test.mean=0.0533333; time: 0.0 min
+## [Tune-x] 5: minsplit=9; bw.feats=0.699
+## [Tune-y] 5: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune-x] 6: minsplit=6; bw.feats=0.985
+## [Tune-y] 6: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune-x] 7: minsplit=10; bw.feats=0.632
+## [Tune-y] 7: mmce.test.mean=0.0400000; time: 0.0 min
+## [Tune-x] 8: minsplit=1; bw.feats=0.943
+## [Tune-y] 8: mmce.test.mean=0.0600000; time: 0.0 min
+## [Tune-x] 9: minsplit=9; bw.feats=0.715
+## [Tune-y] 9: mmce.test.mean=0.0533333; time: 0.0 min
+## [Tune-x] 10: minsplit=1; bw.feats=0.503
+## [Tune-y] 10: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune] Result: minsplit=10; bw.feats=0.632 : mmce.test.mean=0.0400000
+
+print(lrn)
+## Model for learner.id=classif.rpart.bagged.tuned; learner.class=TuneWrapper
+## Trained on: task.id = iris; obs = 150; features = 4
+## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5
+```
