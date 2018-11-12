@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 ## show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Predicting the target values for new observations is implemented the same way as most of the other predict methods in **R**.
@@ -30,7 +31,7 @@ Just as `train()`, the `predict` (`predict.WrappedModel()`) function has a `subs
 
 In the following example we fit a gradient boosting machine (`gbm::gbm()`) to every second observation of the `BostonHousing` (`mlbench::BostonHousing()`) data set and make predictions on the remaining data in `bh.task()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 n = getTaskSize(bh.task)
 train.set = seq(1, n, by = 2)
 test.set = seq(2, n, by = 2)
@@ -41,13 +42,37 @@ task.pred = predict(mod, task = bh.task, subset = test.set)
 task.pred
 ```
 
+```{r eval = FALSE}
+n = getTaskSize(bh.task)
+train.set = seq(1, n, by = 2)
+test.set = seq(2, n, by = 2)
+lrn = makeLearner("regr.gbm", n.trees = 100)
+mod = train(lrn, bh.task, subset = train.set)
+
+task.pred = predict(mod, task = bh.task, subset = test.set)
+task.pred
+
+## Prediction: 253 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##    id truth response
+## 2   2  21.6 22.27841
+## 4   4  33.4 38.92484
+## 6   6  28.7 25.36387
+## 8   8  27.1 15.61735
+## 10 10  18.9 16.98708
+## 12 12  18.9 20.41749
+## ... (#rows: 253, #cols: 3)
+```
+
 The second way is useful if you want to predict data not included in the `Task()`.
 
 Here we cluster the `iris` data set without the target variable.
 All observations with an odd index are included in the `Task()` and used for training.
 Predictions are made for the remaining observations.
 
-```{r}
+```{r echo = FALSE, results = 'hide'}
 n = nrow(iris)
 iris.train = iris[seq(1, n, by = 2), -5]
 iris.test = iris[seq(2, n, by = 2), -5]
@@ -56,6 +81,30 @@ mod = train("cluster.kmeans", task)
 
 newdata.pred = predict(mod, newdata = iris.test)
 newdata.pred
+```
+
+```{r eval = FALSE}
+n = nrow(iris)
+iris.train = iris[seq(1, n, by = 2), -5]
+iris.test = iris[seq(2, n, by = 2), -5]
+task = makeClusterTask(data = iris.train)
+mod = train("cluster.kmeans", task)
+
+newdata.pred = predict(mod, newdata = iris.test)
+newdata.pred
+
+## Prediction: 75 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##    response
+## 2         2
+## 4         2
+## 6         2
+## 8         2
+## 10        2
+## 12        2
+## ... (#rows: 75, #cols: 1)
 ```
 
 Note that for supervised learning you do not have to remove the target columns from the data.
@@ -204,7 +253,7 @@ Now, we set the threshold for the positive class to 0.9 (that is, an example is 
 Which of the two classes is the positive one can be seen by accessing the `Task()`.
 To illustrate binary classification, we use the `Sonar` (`mlbench::Sonar()`) data set from the `mlbench` package.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, task = sonar.task)
 
@@ -213,18 +262,64 @@ getTaskDesc(sonar.task)$positive
 
 ### Default threshold
 pred1 = predict(mod, sonar.task)
-pred1$threshold
 
 ### Set the threshold value for the positive class
 pred2 = setThreshold(pred1, 0.9)
-pred2$threshold
-
-pred2
 
 ### We can also set the effect in the confusion matrix
 calculateConfusionMatrix(pred1)
 
 calculateConfusionMatrix(pred2)
+```
+
+```{r eval = FALSE}
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+mod = train(lrn, task = sonar.task)
+
+### Label of the positive class
+getTaskDesc(sonar.task)$positive
+## [1] "M"
+
+### Default threshold
+pred1 = predict(mod, sonar.task)
+pred1$threshold
+##   M   R 
+## 0.5 0.5
+
+### Set the threshold value for the positive class
+pred2 = setThreshold(pred1, 0.9)
+pred2$threshold
+##   M   R 
+## 0.9 0.1
+
+pred2
+## Prediction: 208 observations
+## predict.type: prob
+## threshold: M=0.90,R=0.10
+## time: 0.00
+##   id truth    prob.M    prob.R response
+## 1  1     R 0.1060606 0.8939394        R
+## 2  2     R 0.7333333 0.2666667        R
+## 3  3     R 0.0000000 1.0000000        R
+## 4  4     R 0.1060606 0.8939394        R
+## 5  5     R 0.9250000 0.0750000        M
+## 6  6     R 0.0000000 1.0000000        R
+## ... (#rows: 208, #cols: 5)
+
+### We can also set the effect in the confusion matrix
+calculateConfusionMatrix(pred1)
+##         predicted
+## true      M  R -err.-
+##   M      95 16     16
+##   R      10 87     10
+##   -err.- 10 16     26
+
+calculateConfusionMatrix(pred2)
+##         predicted
+## true      M  R -err.-
+##   M      84 27     27
+##   R       6 91      6
+##   -err.-  6 27     33
 ```
 
 Note that in the binary case `getPredictionProbabilities()` by default extracts the posterior

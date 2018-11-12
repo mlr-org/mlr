@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 In *regular classification* the aim is to minimize the misclassification rate and
@@ -163,7 +164,21 @@ These performance values may be overly optimistic as we used the same data set f
 In the **R** code below we make use of the `predict.threshold` argument of `makeLearner()` to set the threshold before doing a 3-fold cross-validation on the `credit.task()`.
 Note that we create a `ResampleInstance` (`makeResampleInstance()`) (`rin`) that is used throughout the next several code chunks to get comparable performance values.
 
-```{r}
+```{r echo = FALSE, results='hide'}
+# Cross-validated performance with theoretical thresholds
+rin = makeResampleInstance("CV", iters = 3, task = credit.task)
+lrn = makeLearner("classif.multinom", predict.type = "prob", predict.threshold = th, trace = FALSE)
+r = resample(lrn, credit.task, resampling = rin, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+
+## Resample Result
+## Task: GermanCredit
+## Learner: classif.multinom
+## Aggr perf: credit.costs.test.mean=0.5510181,mmce.test.mean=0.3669778
+## Runtime: 0.183319
+```
+
+```{r eval = FALSE}
 # Cross-validated performance with theoretical thresholds
 rin = makeResampleInstance("CV", iters = 3, task = credit.task)
 lrn = makeLearner("classif.multinom", predict.type = "prob", predict.threshold = th, trace = FALSE)
@@ -203,7 +218,8 @@ In order to determine optimal threshold values you can use `mlr`'s function `tun
 As tuning the threshold on the complete training data set can lead to overfitting, you should use resampling strategies.
 Below we perform 3-fold cross-validation and use `tuneThreshold()` to calculate threshold values with lowest average costs over the 3 test data sets.
 
-```{r}
+
+```{r echo = FALSE, results='hide'}
 lrn = makeLearner("classif.multinom", predict.type = "prob", trace = FALSE)
 
 # 3-fold cross-validation
@@ -213,6 +229,31 @@ r
 # Tune the threshold based on the predicted probabilities on the 3 test data sets
 tune.res = tuneThreshold(pred = r$pred, measure = credit.costs)
 tune.res
+```
+
+```{r eval = FALSE}
+lrn = makeLearner("classif.multinom", predict.type = "prob", trace = FALSE)
+
+# 3-fold cross-validation
+r = resample(lrn, credit.task, resampling = rin, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+
+## Resample Result
+## Task: GermanCredit
+## Learner: classif.multinom
+## Aggr perf: credit.costs.test.mean=0.8461036,mmce.test.mean=0.2539905
+## Runtime: 0.285521
+
+# Tune the threshold based on the predicted probabilities on the 3 test data sets
+tune.res = tuneThreshold(pred = r$pred, measure = credit.costs)
+tune.res
+
+## $th
+## [1] 0.1062593
+## 
+## $perf
+## credit.costs 
+##     0.527033
 ```
 
 `tuneThreshold()` returns the optimal threshold value for the positive class and the corresponding performance.
@@ -266,7 +307,7 @@ Below is an example using learner `"classif.multinom"` (`nnet::multinom()`) from
 For binary classification problems it is sufficient to specify the weight `w` for the positive class. 
 The negative class then automatically receives weight 1.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 # Weighted learner
 lrn = makeLearner("classif.multinom", trace = FALSE)
 lrn = makeWeightedClassesWrapper(lrn, wcw.weight = w)
@@ -274,6 +315,22 @@ lrn
 
 r = resample(lrn, credit.task, rin, measures = list(credit.costs, mmce), show.info = FALSE)
 r
+```
+
+```{r eval = FALSE}
+# Weighted learner
+lrn = makeLearner("classif.multinom", trace = FALSE)
+lrn = makeWeightedClassesWrapper(lrn, wcw.weight = w)
+lrn
+
+r = resample(lrn, credit.task, rin, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+
+## Resample Result
+## Task: GermanCredit
+## Learner: weightedclasses.classif.multinom
+## Aggr perf: credit.costs.test.mean=0.5680531,mmce.test.mean=0.3599887
+## Runtime: 0.20412
 ```
 
 For classification methods like `"classif.ksvm"` (the support vector machine
@@ -285,10 +342,28 @@ lrn = makeLearner("classif.ksvm", class.weights = c(Bad = w, Good = 1))
 
 Or, more conveniently, you can again use `makeWeightedClassesWrapper()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = w)
 r = resample(lrn, credit.task, rin, measures = list(credit.costs, mmce), show.info = FALSE)
 r
+
+## Resample Result
+## Task: GermanCredit
+## Learner: weightedclasses.classif.ksvm
+## Aggr perf: credit.costs.test.mean=0.6070861,mmce.test.mean=0.3349817
+## Runtime: 1.69427
+```
+
+```{r eval = FALSE}
+lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = w)
+r = resample(lrn, credit.task, rin, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+
+## Resample Result
+## Task: GermanCredit
+## Learner: weightedclasses.classif.ksvm
+## Aggr perf: credit.costs.test.mean=0.6070861,mmce.test.mean=0.3349817
+## Runtime: 1.69427
 ```
 
 Just like the theoretical threshold, the theoretical weights may not always be suitable, therefore you can tune the weight for the positive class as shown in the following example.
@@ -329,13 +404,36 @@ The solution is to create a wrapped Learner (`makeLearner()`) via function
 `makeUndersampleWrapper()`.
 Internally, `oversample()` is called before training, but predictions are done on the original data.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 lrn = makeLearner("classif.multinom", trace = FALSE)
 lrn = makeOversampleWrapper(lrn, osw.rate = w, osw.cl = "Bad")
 lrn
 
 r = resample(lrn, credit.task, rin, measures = list(credit.costs, mmce), show.info = FALSE)
 r
+```
+
+```{r eval = FALSE}
+lrn = makeLearner("classif.multinom", trace = FALSE)
+lrn = makeOversampleWrapper(lrn, osw.rate = w, osw.cl = "Bad")
+lrn
+
+## Learner classif.multinom.oversampled from package mlr,nnet
+## Type: classif
+## Name: ; Short name: 
+## Class: OversampleWrapper
+## Properties: numerics,factors,weights,prob,twoclass,multiclass
+## Predict-Type: response
+## Hyperparameters: trace=FALSE,osw.rate=5,osw.cl=Bad
+
+r = resample(lrn, credit.task, rin, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+
+## Resample Result
+## Task: GermanCredit
+## Learner: classif.multinom.oversampled
+## Aggr perf: credit.costs.test.mean=0.5530710,mmce.test.mean=0.3570067
+## Runtime: 0.418571
 ```
 
 Of course, we can also tune the oversampling rate. 
@@ -393,19 +491,45 @@ This way, as in the binary case, classes with a low threshold are preferred to c
 Again this can be done by function `setThreshold()` as shown in the following example (or alternatively by the `predict.threshold` option of `makeLearner()`).
 Note that the threshold vector needs to have names that correspond to the class labels.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 rin = makeResampleInstance("CV", iters = 3, task = wf.task)
 r = resample(lrn, wf.task, rin, measures = list(wf.costs, mmce), show.info = FALSE)
 r
 
-# Calculate thresholds as 1/(average costs of true classes)
 th = 2/rowSums(costs)
 names(th) = getTaskClassLevels(wf.task)
 th
 
 pred.th = setThreshold(r$pred, threshold = th)
 performance(pred.th, measures = list(wf.costs, mmce))
+```
+
+```{r eval = FALSE}
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+rin = makeResampleInstance("CV", iters = 3, task = wf.task)
+r = resample(lrn, wf.task, rin, measures = list(wf.costs, mmce), show.info = FALSE)
+r
+
+## Resample Result
+## Task: waveform
+## Learner: classif.rpart
+## Aggr perf: wf.costs.test.mean=5.9764447,mmce.test.mean=0.2460020
+## Runtime: 0.0586474
+
+# Calculate thresholds as 1/(average costs of true classes)
+th = 2/rowSums(costs)
+names(th) = getTaskClassLevels(wf.task)
+th
+
+##          1          2          3 
+## 0.01818182 0.22222222 0.11111111
+
+pred.th = setThreshold(r$pred, threshold = th)
+performance(pred.th, measures = list(wf.costs, mmce))
+
+##  wf.costs      mmce 
+## 4.6863021 0.2919823
 ```
 
 The threshold vector ``th`` in the above example is chosen according to the average costs of the true classes 55, 4.5 and 9.
@@ -507,9 +631,32 @@ In the following example we calculate the mean costs of the predicted class labe
 The latter measure is the average difference between the costs caused by the predicted class labels, i.e., [meancosts](measures.html){target="_blank"}, and the costs resulting from choosing the class with lowest cost for each observation.
 In order to compute these measures the costs for the test observations are required and therefore the `Task()` has to be passed to `performance()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 pred = predict(mod, task = costsens.task)
 pred
 
 performance(pred, measures = list(meancosts, mcp), task = costsens.task)
+```
+
+```{r eval = FALSE}
+pred = predict(mod, task = costsens.task)
+pred
+
+## Prediction: 150 observations
+## predict.type: response
+## threshold: 
+## time: 0.04
+##   id response
+## 1  1   setosa
+## 2  2   setosa
+## 3  3   setosa
+## 4  4   setosa
+## 5  5   setosa
+## 6  6   setosa
+## ... (#rows: 150, #cols: 2)
+
+performance(pred, measures = list(meancosts, mcp), task = costsens.task)
+
+## meancosts       mcp 
+##  129.5971  124.8077
 ```

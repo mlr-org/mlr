@@ -44,21 +44,36 @@ cal$proportion
 `plotCalibration()` by default plots a reference line which shows perfect calibration and a "rag" plot, which is a rug plot on the top and bottom of the graph, where the top pertains to "positive" cases, where the predicted class matches the observed class, and the bottom pertains to "negative" cases, where the predicted class does not match the observed class.
 Perfect classifier performance would result in all the positive cases clustering in the top right (i.e., the correct classes are predicted with high probability) and the negative cases clustering in the bottom left.
 
-```{r, fig.asp = 3/4}
+```{r, fig.asp = 3/4, eval = FALSE}
 plotCalibration(cal)
+```
+
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/classifier-calibration-4-1.png")
 ```
 
 Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. 
 Though `smooth = FALSE` by default, setting this option to `TRUE` replaces the estimated proportions with a loess smoother.
 
-```{r, fig.asp = 3/4}
+```{r, fig.asp = 3/4, eval = FALSE}
+
 cal = generateCalibrationData(pred)
 plotCalibration(cal, smooth = TRUE)
 ```
 
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/classifier-calibration-5-1.png")
+```
+
 All of the above functionality works with multi-class classification as well.
 
-```{r, , fig.asp = 3/4}
+```{r, , fig.asp = 3/4, eval = FALSE}
 lrns = list(
   makeLearner("classif.randomForest", predict.type = "prob"),
   makeLearner("classif.nnet", predict.type = "prob", trace = FALSE)
@@ -68,4 +83,11 @@ pred = lapply(mod, predict, task = iris.task)
 names(pred) = c("randomForest", "nnet")
 cal = generateCalibrationData(pred, breaks = c(0, .3, .6, 1))
 plotCalibration(cal)
+```
+
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/classifier-calibration-6-1.png")
 ```

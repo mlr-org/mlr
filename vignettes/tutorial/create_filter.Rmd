@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 A lot of feature filter methods are already integrated in `mlr` and a complete list is given in the [Appendix](filter_methods.html){target="_blank"} or can be obtained using `listFilterMethods()`.
@@ -24,13 +25,33 @@ You can easily add another filter, be it a brand new one or a method which is al
 In `mlr` all filter methods are objects of class Filter (`makeFilter()`) and are registered in an environment called `.FilterRegister` (where `listFilterMethods()` looks them up to compile the list of available methods).
 To get to know their structure let's have a closer look at the `"rank.correlation"` filter.
 
-```{r}
+```{r eval = FALSE}
 filters = as.list(mlr:::.FilterRegister)
 filters$rank.correlation
+## Filter: 'rank.correlation'
+## Packages: ''
+## Supported tasks: regr
+## Supported features: numerics
 
 str(filters$rank.correlation)
+## List of 6
+##  $ name              : chr "rank.correlation"
+##  $ desc              : chr "Spearman's correlation between feature and target"
+##  $ pkg               : chr(0) 
+##  $ supported.tasks   : chr "regr"
+##  $ supported.features: chr "numerics"
+##  $ fun               :function (task, nselect, ...)  
+##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311
+##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x55db8ddf6dc0> 
+##  - attr(*, "class")= chr "Filter"
 
 filters$rank.correlation$fun
+## function(task, nselect, ...) {
+##     data = getTaskData(task, target.extra = TRUE)
+##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])
+##   }
+## <bytecode: 0x55db8dc9fe00>
+## <environment: namespace:mlr>
 ```
 
 The core element is `$fun` which calculates the feature importance.

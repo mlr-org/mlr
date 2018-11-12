@@ -288,13 +288,13 @@
 <li><p><a href="https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf">mlr cheatsheet</a></p></li>
 <li><p>Install the development version</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</a></code></pre></div>
 <ul>
 <li><a href="https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information">Further installation instructions</a></li>
 <li><a href="https://stackoverflow.com/questions/tagged/mlr">Ask a question about mlr on Stackoverflow</a></li>
 <li>
 <a href="https://mlr-org.slack.com/">We are on Slack</a> (Request invitation: code{at}jakob-r.de)</li>
-<li><a href="https://mlr-blog.netlify.com/">We have a blog on mlr</a></li>
+<li><a href="https://mlr-org.com/">We have a blog on mlr</a></li>
 <li>A list of possible enhancements to mlr is available on the <a href="https://github.com/mlr-org/mlr/wiki/Developer-Instructions#list-of-possible-enhancements-to-mlr">wiki</a> - contributors welcome!</li>
 <li>We are in the top 20 of the most starred R packages on Github, as reported by <a href="http://www.r-pkg.org/starred">metacran</a>.</li>
 </ul>
@@ -375,7 +375,7 @@
 <li>Make sure that the <code>.Rmd</code> file is working on its own, i.e. compile it as a single file (preferably using <code>build_article("&lt;vignette-name&gt;")</code>) and see if everything works. Put required packages in the setup chunk at the beginning of the tutorial.</li>
 </ol>
 <p><strong>Rendering the tutorial locally</strong>:</p>
-<p>If you want to view the complete <code>pkgdown</code> site locally, run <code><a href="http://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site(lazy = TRUE)</a></code>. You don’t have to render the complete site every time you change one tutorial. The <code>lazy = TRUE</code> argument ensures that only pages are rebuilt that have changed. Also, if you have built the whole site once, you can just build the vignettes again by using <code>build_articles(lazy = TRUE)</code>. More specific, if you are working on one vignette, you can run <code>build_article("&lt;vignette-name&gt;")</code>. You do not need to pass the <code>.Rmd</code> extension when using <code>build_article()</code>.</p>
+<p>If you want to view the complete <code>pkgdown</code> site locally, run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site(lazy = TRUE)</a></code>. You don’t have to render the complete site every time you change one tutorial. The <code>lazy = TRUE</code> argument ensures that only pages are rebuilt that have changed. Also, if you have built the whole site once, you can just build the vignettes again by using <code>build_articles(lazy = TRUE)</code>. More specific, if you are working on one vignette, you can run <code>build_article("&lt;vignette-name&gt;")</code>. You do not need to pass the <code>.Rmd</code> extension when using <code>build_article()</code>.</p>
 <p>Important: Do not commit any file in <code>docs/</code> as the rendering will be done by Travis!</p>
 <p><strong>Adding a new section</strong>:</p>
 <p>Edit <code>_pkgdown.yml</code> and add the new section at the appropriate place.</p>
