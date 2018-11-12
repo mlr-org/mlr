@@ -146,6 +146,6 @@ test_that("filter method 'variance' works with missing values", {
 })
 
 test_that("ensemble methods work", {
-  fi = generateFilterValuesData(multiclass.task, method = list("E-min", c('FSelectorRcpp.gainratio','FSelectorRcpp.infogain')))
+  fi = generateFilterValuesData(multiclass.task, method = list("E-min", c('FSelectorRcpp_gain.ratio','FSelectorRcpp_information.gain')))
   expect_true(all(!is.na(fi$data$value) == TRUE))
 })

@@ -804,7 +804,7 @@ makeFilter(
 )
 
 #' Entropy based filters from the package \pkg{FSelectorRcpp}:
-#' \dQuote{FSelectorRcpp_gainratio}, dQuote{FSelectorRcpp_infogain}, \dQuote{FSelectorRcpp_symuncert}.
+#' \dQuote{FSelectorRcpp_gain.ratio}, dQuote{FSelectorRcpp_information.gain}, \dQuote{FSelectorRcpp_symmetrical.uncertainty}.
 #' @rdname makeFilter
 #' @name makeFilter
 NULL
@@ -823,7 +823,7 @@ FSelectorRcpp.filter = function(type) {
   }
 }
 
-# info.gain (FSelectorRcpp) ----------------
+# information.gain (FSelectorRcpp) ----------------
 
 makeFilter(
   name = "FSelectorRcpp_information.gain",
@@ -845,7 +845,7 @@ makeFilter(
   fun = FSelectorRcpp.filter("gainratio")
 )
 
-# symuncert (FSelectorRcpp) ----------------
+# symmetrical.uncertainty (FSelectorRcpp) ----------------
 
 makeFilter(
   name = "FSelectorRcpp_symmetrical.uncertainty",
