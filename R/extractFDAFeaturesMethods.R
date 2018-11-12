@@ -70,11 +70,12 @@ extractFDAFourier = function(trafo.coeff = "phase") {
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
 
   lrn = function(data, target = NULL, col, trafo.coeff) {
-
-    assertClass(data, "data.frame")
     assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
 
-    # Transform data to matrix for stats::fft
+
+  }
+  reextract = function(data, target, col, vals, args) {
+    assertClass(data, "data.frame")
     data = as.matrix(data[, col, drop = FALSE])
     assertNumeric(data)
 
@@ -187,6 +188,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 
   makeExtractFDAFeatMethod(learn = lrn, reextract = reextract, args = list(filter = filter, boundary = boundary), par.set = ps)
 }
+
 
 #' @title Extract functional principal component analysis features.
 #'
