@@ -95,7 +95,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     package = filter$pkg,
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "fw.method", values = append(ls(.FilterRegister), ls(.FilterEnsembleRegister))),
-      makeDiscreteVectorLearnerParam(id = "fw.basal.methods", len = 2, values = ls(.FilterRegister)),
+      makeDiscreteVectorLearnerParam(id = "fw.basal.methods", values = ls(.FilterRegister)),
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
