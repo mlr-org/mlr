@@ -103,7 +103,7 @@
 #' pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
 #' plotPartialDependence(pd, data = getTaskData(iris.task))
 #' @export
-generatePartialDependenceData = function(obj, input, features,
+generatePartialDependenceData = function(obj, input, features = NULL,
   interaction = FALSE, derivative = FALSE, individual = FALSE,
   fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
   uniform = TRUE, n = c(10, NA), ...) {
@@ -129,10 +129,11 @@ generatePartialDependenceData = function(obj, input, features,
   if (is.na(n[2]))
     n[2] = nrow(data)
 
-  if (missing(features))
+  if (is.null(features)) {
     features = colnames(data)[!colnames(data) %in% td$target]
-  else
+  } else {
     assertSubset(features, obj$features)
+  }
 
   assertFlag(interaction)
   assertFlag(derivative)
@@ -146,8 +147,9 @@ generatePartialDependenceData = function(obj, input, features,
   se = Function = Class = patterns = NULL # nolint
 
   assertFlag(individual)
-  if (individual)
+  if (individual) {
     fun = identity
+  }
 
   assertFunction(fun)
   test.fun = fun(1:3)
@@ -165,19 +167,21 @@ generatePartialDependenceData = function(obj, input, features,
   assertFlag(uniform)
   assertCount(n[1], positive = TRUE)
   assertCount(n[2], positive = TRUE)
-  if (n[2] > nrow(data))
+  if (n[2] > nrow(data)) {
     stop("The number of points taken from the training data cannot exceed the number of training data points.")
+  }
 
   if (td$type == "regr")
     target = td$target
   else if (td$type == "classif") {
-    if (length(td$class.levels) > 2L)
+    if (length(td$class.levels) > 2L) {
       target = td$class.levels
-    else
+    } else {
       target = td$positive
-  } else
+    }
+  } else {
     target = "Risk"
-
+  }
   if (!derivative) {
     args = list(model = obj, data = data, uniform = uniform, aggregate.fun = fun,
       predict.fun = getPrediction, n = n, ...)
@@ -280,6 +284,10 @@ generatePartialDependenceData = function(obj, input, features,
     setcolorder(out, c(target, features))
   }
 
+  colnames(out) = make.names(colnames(out))
+  features = make.names(features)
+  target = make.names(features)
+
   makeS3Obj("PartialDependenceData",
     data = out,
     task.desc = td,
@@ -293,6 +301,8 @@ generatePartialDependenceData = function(obj, input, features,
 ## second layer wrapper for numDeriv grad and jacobian use with marginal prediction
 doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2]),
   target, points, obj, data, uniform, fun, n, individual, ...) {
+
+  requirePackages("numDeriv", why = "PartialDependenceData", default.method = "load")
 
   if (length(target) == 1L) {
     ret = cbind(numDeriv::grad(numDerivWrapper,

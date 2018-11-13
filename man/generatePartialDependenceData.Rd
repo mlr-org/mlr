@@ -5,10 +5,10 @@
 \alias{PartialDependenceData}
 \title{Generate partial dependence.}
 \usage{
-generatePartialDependenceData(obj, input, features, interaction = FALSE,
-  derivative = FALSE, individual = FALSE, fun = mean,
-  bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE, n = c(10, NA),
-  ...)
+generatePartialDependenceData(obj, input, features = NULL,
+  interaction = FALSE, derivative = FALSE, individual = FALSE,
+  fun = mean, bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE,
+  n = c(10, NA), ...)
 }
 \arguments{
 \item{obj}{(\link{WrappedModel})\cr
@@ -135,3 +135,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
+\concept{generate_plot_data}
+\concept{partial_dependence}

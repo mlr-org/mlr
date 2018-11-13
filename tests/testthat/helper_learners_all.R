@@ -76,7 +76,8 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
 
   # check that se works and is > 0
   if (pred.type == "se") {
-    s = p$data$se
+    s = getPredictionSE(p)
+    y = getPredictionResponse(p)
     expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
 
@@ -212,4 +213,10 @@ testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
   pars = lrn$par.set$pars
   pv = lrn$par.vals
   expect_true(isSubset(names(pv), names(pars)))
+}
+
+testThatLearnerPredictsFeasibleSEValues = function(lrn, task) {
+  lrn = setPredictType(lrn, "se")
+  res = resample(lrn, task, makeResampleDesc("LOO"))
+  ses = getPredictionSE(res$pred)
 }

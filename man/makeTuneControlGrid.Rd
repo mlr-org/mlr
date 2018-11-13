@@ -6,8 +6,9 @@
 \title{Create control object for hyperparameter tuning with grid search.}
 \usage{
 makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
-  resolution = 10L, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = "default", final.dw.perc = NULL, budget = NULL)
+  resolution = 10L, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default",
+  final.dw.perc = NULL, budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -77,6 +78,7 @@ in the \code{par.set} passed to \link{tuneParams}.
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
@@ -89,3 +91,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

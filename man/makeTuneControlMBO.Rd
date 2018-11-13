@@ -7,8 +7,9 @@
 \usage{
 makeTuneControlMBO(same.resampling.instance = TRUE, impute.val = NULL,
   learner = NULL, mbo.control = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), continue = FALSE, log.fun = "default",
-  final.dw.perc = NULL, budget = NULL, mbo.design = NULL)
+  tune.threshold.args = list(), continue = FALSE,
+  log.fun = "default", final.dw.perc = NULL, budget = NULL,
+  mbo.design = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -93,6 +94,7 @@ Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel 
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
@@ -105,3 +107,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

@@ -1,3 +1,67 @@
+# mlr 2.14:
+
+## general
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
+
+## functions - general
+* getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+
+## filter - new
+* praznik_JMI
+* praznik_DISR
+* praznik_JMIM
+* praznik_MIM
+* praznik_NJMIM
+* praznik_MRMR
+* praznik_CMIM
+* FSelectorRcpp_gain.ratio
+* FSelectorRcpp_information.gain
+* FSelectorRcpp_symuncert
+
+## filter - general
+* Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
+  These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
+  Please note that both implementations do things slightly different internally and the `FSelectorRcpp` methods should not be seen as direct replacement for the `FSelector` pkg.
+* prefixed all filters from pkg `FSelector` with `FSelector` to distinguish them from the new `FSelectorRcpp` filters
+  - `information.gain` -> `FSelector_information.gain`
+  - `gain.ratio` -> `FSelector_gain.ratio`
+  - `symmetrical.uncertainty` -> `FSelector_symmetrical.uncertainty`
+  - `chi.squared` -> `FSelector_chi.squared`
+  - `relief` -> `FSelector_relief`
+  - `oneR` -> `FSelector_oneR`
+  
+## learners - new
+* classif.liquidSVM
+* regr.liquidSVM
+
+## featSel - general
+ * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
+ * The slot `x` now always contains the real feature names and not the bit.names
+ * This fixes a bug and makes `makeFeatSelWrapper` usable with custom `bit.names`.
+
+# mlr 2.13:
+
+## general
+* Disabled unit tests for CRAN, we test on travis only now
+* Suppress messages with show.learner.output = FALSE
+
+## functions - general
+* plotHyperParsEffect: add colors
+
+## functions - new
+* getResamplingIndices
+* createSpatialResamplingPlots
+
+## learners - general
+*  regr.nnet: Removed unneeded params linout, entropy, softmax and censored
+*  regr.ranger: Add weight handling
+
+## learners - removed
+* {classif,regr}.blackboost: broke API with new release
+* regr.elmNN : package was removed from CRAN
+* classif.lqa : package was removed from CRAN
+
+
 # mlr 2.12:
 
 ## general
@@ -70,7 +134,7 @@
 * classif.lda learner: add 'prior' hyperparameter
 * ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
 * h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
-* h20*: Add support for "missings" 
+* h20*: Add support for "missings"
 
 ## learners - new
 * classif.adaboostm1

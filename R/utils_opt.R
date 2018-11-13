@@ -58,21 +58,9 @@ featuresToBinary = function(vars, all.vars) {
   y
 }
 
-logicalToFeatures = function(x, all.vars) {
-  if (is.matrix(x)) {
-    if (missing(all.vars))
-      all.vars = colnames(x)
-    lapply(seq_row(x), function(i) all.vars[x[i, ]])
-  } else {
-    if (missing(all.vars))
-      all.vars = names(x)
-    all.vars[x]
-  }
-}
-
 binaryToFeatures = function(x, all.vars) {
-  mode(x) = "logical"
-  logicalToFeatures(x, all.vars)
+  assertIntegerish(x, lower = 0, upper = 1, len = length(all.vars)) # We want to avoid vector recycling here
+  all.vars[as.logical(x)]
 }
 
 compare.diff = function(state1, state2, control, measure, threshold) {

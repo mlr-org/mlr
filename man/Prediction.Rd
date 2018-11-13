@@ -6,7 +6,8 @@
 \title{Prediction object.}
 \usage{
 makePrediction(task.desc, row.names, id, truth, predict.type,
-  predict.threshold = NULL, y, time, error = NA_character_, dump = NULL)
+  predict.threshold = NULL, y, time, error = NA_character_,
+  dump = NULL)
 }
 \description{
 Result from \link{predict.WrappedModel}.

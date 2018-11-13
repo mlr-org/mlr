@@ -1,0 +1,215 @@
+---
+title: "Multilabel Classification"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+Multilabel classification is a classification problem where multiple target labels can be assigned to each observation instead of only one like in multiclass classification.
+
+Two different approaches exist for multilabel classification. 
+*Problem transformation methods* try to transform the multilabel classification into binary or multiclass classification problems. 
+*Algorithm adaptation methods* adapt multiclass algorithms so they can be applied directly to the problem.
+
+# Creating a task
+
+The first thing you have to do for multilabel classification in `mlr` is to
+get your data in the right format. 
+You need a `data.frame` which consists of the features and a logical vector for each label which indicates if the label is present in the observation or not. After that you can create a `MultilabelTask` (`Task()`) like a normal `ClassifTask` (`Task()`). 
+Instead of one target name you have to specify a vector of targets which correspond to the names of logical variables in the `data.frame`. 
+In the following example we get the yeast data frame from the already existing `yeast.task()`, extract the 14 label names and create the task again.
+
+```{r}
+yeast = getTaskData(yeast.task)
+labels = colnames(yeast)[1:14]
+yeast.task = makeMultilabelTask(id = "multi", data = yeast, target = labels)
+yeast.task
+```
+
+# Constructing a learner
+
+Multilabel classification in `mlr` can currently be done in two ways:
+
+* Algorithm adaptation methods: Treat the whole problem with a specific algorithm.
+
+* Problem transformation methods: Transform the problem, so that simple binary classification algorithms can be applied.
+
+## Algorithm adaptation methods
+
+Currently the available algorithm adaptation methods in **R** are the multivariate random forest in the [%randomForestSRC] package and the random ferns multilabel algorithm in the [%rFerns] package. 
+You can create the learner for these algorithms like in multiclass classification problems.
+
+```{r}
+lrn.rfsrc = makeLearner("multilabel.randomForestSRC")
+lrn.rFerns = makeLearner("multilabel.rFerns")
+lrn.rFerns
+```
+
+## Problem transformation methods
+
+For generating a wrapped multilabel learner first create a binary (or multiclass) classification learner with `makeLearner()`. 
+Afterwards apply a function like `makeMultilabelBinaryRelevanceWrapper()`, `makeMultilabelClassifierChainsWrapper()`, `makeMultilabelNestedStackingWrapper()`, `makeMultilabelDBRWrapper()` or `makeMultilabelStackingWrapper()` on the learner to convert it to a learner that uses the respective problem transformation method.
+
+You can also generate a binary relevance learner directly, as you can see in the example.
+
+```{r}
+lrn.br = makeLearner("classif.rpart", predict.type = "prob")
+lrn.br = makeMultilabelBinaryRelevanceWrapper(lrn.br)
+lrn.br
+
+lrn.br2 = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
+lrn.br2
+```
+
+The different methods are shortly described in the following. 
+
+### Binary relevance
+
+This problem transformation method converts the multilabel problem to binary
+classification problems for each label and applies a simple binary classificator on these. 
+In `mlr` this can be done by converting your binary learner to a wrapped binary relevance multilabel learner.
+
+### Classifier chains
+
+Trains consecutively the labels with the input data. 
+The input data in each step is augmented by the already trained labels (with the real observed values).
+Therefore an order of the labels has to be specified. 
+At prediction time the labels are predicted in the same order as while training. 
+The required labels in the input data are given by the previous done prediction of the respective label.
+
+### Nested stacking
+
+Same as classifier chains, but the labels in the input data are not the real ones, but estimations of the labels obtained by the already trained learners.
+
+### Dependent binary relevance
+
+Each label is trained with the real observed values of all other labels. 
+In prediction phase for a label the other necessary labels are obtained in a previous step by a base learner like the binary relevance method.
+
+### Stacking
+
+Same as the dependent binary relevance method, but in the training phase the labels used as input for each label are obtained by the binary relevance method.
+
+# Train
+
+You can `train()` a model as usual with a multilabel learner and a multilabel task as input. 
+You can also pass ``subset`` and ``weights`` arguments if the
+learner supports this.
+
+```{r}
+mod = train(lrn.br, yeast.task)
+mod = train(lrn.br, yeast.task, subset = 1:1500, weights = rep(1/1500, 1500))
+mod
+
+mod2 = train(lrn.rfsrc, yeast.task, subset = 1:100)
+mod2
+```
+
+# Predict
+
+Prediction can be done as usual in `mlr` with `predict` (`predict.WrappedModel()`) and by passing a trained model and either the task to the ``task`` argument or some new data to the ``newdata`` argument. 
+As always you can specify a ``subset`` of the data which should be predicted.
+
+```{r}
+pred = predict(mod, task = yeast.task, subset = 1:10)
+pred = predict(mod, newdata = yeast[1501:1600,])
+names(as.data.frame(pred))
+
+pred2 = predict(mod2, task = yeast.task)
+names(as.data.frame(pred2))
+```
+
+Depending on the chosen `predict.type` of the learner you get true and predicted values and possibly probabilities for each class label.
+These can be extracted by the usual accessor functions `getPredictionTruth()`, `getPredictionResponse()` and `getPredictionProbabilities()`.
+
+# Performance
+
+The performance of your prediction can be assessed via function `performance()`.
+You can specify via the `measures` argument which [measure(s)](measures.html){target="_blank"} to calculate.
+The default measure for multilabel classification is the Hamming loss [multilabel.hamloss](measures.html){target="_blank"}.
+All available measures for multilabel classification can be shown by `listMeasures()` and found in the table of performance [measures](measures.html){target="_blank"} and the `?measures()` documentation page.
+
+```{r echo = FALSE, results = 'hide'}
+performance(pred)
+
+performance(pred2, measures = list(multilabel.subset01, multilabel.hamloss, multilabel.acc,
+  multilabel.f1, timepredict))
+
+listMeasures("multilabel")
+```
+
+```{r eval = FALSE}
+performance(pred)
+
+performance(pred2, measures = list(multilabel.subset01, multilabel.hamloss, multilabel.acc,
+  multilabel.f1, timepredict))
+
+## multilabel.subset01  multilabel.hamloss      multilabel.acc 
+##           0.8721556           0.2047402           0.4611732 
+##       multilabel.f1         timepredict 
+##           0.5715320           0.9210000
+
+listMeasures("multilabel")
+```
+
+# Resampling
+
+For evaluating the overall performance of the learning algorithm you can do some [resampling](resample.html){target="_blank"}. 
+As usual you have to define a resampling strategy, either via `makeResampleDesc()` or `makeResampleInstance()`. 
+After that you can run the `resample()` function. 
+Below the default measure Hamming loss is calculated.
+
+```{r echo = FALSE, results='hide'}
+rdesc = makeResampleDesc(method = "CV", stratify = FALSE, iters = 3)
+r = resample(learner = lrn.br, task = yeast.task, resampling = rdesc, show.info = FALSE)
+r
+
+r = resample(learner = lrn.rFerns, task = yeast.task, resampling = rdesc, show.info = FALSE)
+r
+```
+
+```{r eval = FALSE}
+rdesc = makeResampleDesc(method = "CV", stratify = FALSE, iters = 3)
+r = resample(learner = lrn.br, task = yeast.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: multi
+## Learner: multilabel.binaryRelevance.classif.rpart
+## Aggr perf: multilabel.hamloss.test.mean=0.2200186
+## Runtime: 6.67501
+
+r = resample(learner = lrn.rFerns, task = yeast.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: multi
+## Learner: multilabel.rFerns
+## Aggr perf: multilabel.hamloss.test.mean=0.4762392
+## Runtime: 0.320362
+```
+
+# Binary performance
+
+If you want to calculate a binary performance measure like, e.g., the  [accuracy](measures.html){target="_blank"}, the [mmce](measures.html){target="_blank"} or the [auc](measures.html){target="_blank"} for each label, you can use function `getMultilabelBinaryPerformances()`.
+You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. 
+For calculating the [auc](measures.html){target="_blank"} you need predicted probabilities.
+
+```{r}
+getMultilabelBinaryPerformances(pred, measures = list(acc, mmce, auc))
+
+getMultilabelBinaryPerformances(r$pred, measures = list(acc, mmce))
+```
+

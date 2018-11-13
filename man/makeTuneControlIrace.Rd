@@ -7,8 +7,8 @@
 \usage{
 makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = "default", final.dw.perc = NULL,
-  budget = NULL, ...)
+  tune.threshold.args = list(), log.fun = "default",
+  final.dw.perc = NULL, budget = NULL, ...)
 }
 \arguments{
 \item{impute.val}{(\link{numeric})\cr
@@ -89,6 +89,7 @@ and how to change the file path.
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
@@ -101,3 +102,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

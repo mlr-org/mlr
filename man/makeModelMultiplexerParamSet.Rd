@@ -45,6 +45,7 @@ Other multiplexer: \code{\link{makeModelMultiplexer}}
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexer}},
   \code{\link{makeTuneControlCMAES}},
@@ -57,3 +58,5 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{multiplexer}
+\concept{tune}

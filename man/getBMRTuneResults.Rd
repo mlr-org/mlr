@@ -4,8 +4,8 @@
 \alias{getBMRTuneResults}
 \title{Extract the tuning results from a benchmark result.}
 \usage{
-getBMRTuneResults(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
-  drop = FALSE)
+getBMRTuneResults(bmr, task.ids = NULL, learner.ids = NULL,
+  as.df = FALSE, drop = FALSE)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -69,3 +69,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}

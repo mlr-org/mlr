@@ -11,8 +11,8 @@ makeMultilabelStackingWrapper(learner, cv.folds = 2)
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{cv.folds}{(`integer(1)`)\cr
-The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is `2`.}
+\item{cv.folds}{(\code{integer(1)})\cr
+The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.}
 }
 \value{
 \link{Learner}.
@@ -80,3 +80,5 @@ Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
   \code{\link{makeMultilabelDBRWrapper}},
   \code{\link{makeMultilabelNestedStackingWrapper}}
 }
+\concept{multilabel}
+\concept{wrapper}

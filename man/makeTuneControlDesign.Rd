@@ -5,9 +5,9 @@
 \alias{TuneControlDesign}
 \title{Create control object for hyperparameter tuning with predefined design.}
 \usage{
-makeTuneControlDesign(same.resampling.instance = TRUE, impute.val = NULL,
-  design = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = "default")
+makeTuneControlDesign(same.resampling.instance = TRUE,
+  impute.val = NULL, design = NULL, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default")
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -65,6 +65,7 @@ during tuning. All kinds of parameter types can be handled.
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
@@ -77,3 +78,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

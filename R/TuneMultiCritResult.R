@@ -24,15 +24,15 @@
 #' @name TuneMultiCritResult
 #' @rdname TuneMultiCritResult
 NULL
-makeTuneMultiCritResult = function(learner, ind, x, y, control, opt.path, measures, ...) {
+makeTuneMultiCritResult = function(learner, ind, x, y, resampling, control, opt.path, measures, ...) {
   # set threshold to NULL, we can not currently tune for it in an MCO way
-  or = makeOptResult(learner, control, x, y, NULL, opt.path, "TuneMultiCritResult", ...)
+  or = makeOptResult(learner, control, x, y, resampling, NULL, opt.path, "TuneMultiCritResult", ...)
   or$ind = ind
   or$measures = measures
   return(or)
 }
 
-makeTuneMultiCritResultFromOptPath = function(learner, par.set, measures, control, opt.path) {
+makeTuneMultiCritResultFromOptPath = function(learner, par.set, measures, resampling, control, opt.path) {
   j = getOptPathParetoFront(opt.path, index = TRUE)
   els = lapply(j, getOptPathEl, op = opt.path)
   xs = extractSubList(els, "x", simplify = FALSE)
@@ -40,7 +40,7 @@ makeTuneMultiCritResultFromOptPath = function(learner, par.set, measures, contro
   xs = lapply(xs, removeMissingValues)
   ys = extractSubList(els, "y", simplify = "rows")
   colnames(ys) = opt.path$y.names
-  makeTuneMultiCritResult(learner, j, xs, ys, control, opt.path, measures)
+  makeTuneMultiCritResult(learner, j, xs, ys, resampling, control, opt.path, measures)
 }
 
 

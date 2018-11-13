@@ -5,9 +5,10 @@
 \alias{TuneControlCMAES}
 \title{Create control object for hyperparameter tuning with CMAES.}
 \usage{
-makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
-  start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = "default", final.dw.perc = NULL, budget = NULL, ...)
+makeTuneControlCMAES(same.resampling.instance = TRUE,
+  impute.val = NULL, start = NULL, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default",
+  final.dw.perc = NULL, budget = NULL, ...)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -81,6 +82,7 @@ parameter dimension.
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
@@ -93,3 +95,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

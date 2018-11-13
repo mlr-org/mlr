@@ -4,8 +4,8 @@
 \alias{makeSMOTEWrapper}
 \title{Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.}
 \usage{
-makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L, sw.standardize = TRUE,
-  sw.alt.logic = FALSE)
+makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L,
+  sw.standardize = TRUE, sw.alt.logic = FALSE)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -73,3 +73,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{wrapper}
