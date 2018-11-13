@@ -81,7 +81,7 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
 
   # get x from opt result and only select those that are used for predition
   opt.x = .model$learner.model$opt.result$x
-  ps = getParamSet(.learner)
+  ps = getParamSet(lrn)
   ns = Filter(function(x) ps$pars[[x]]$when %in% c("both", "predict"), getParamIds(ps))
   arglist = insert(arglist, opt.x[ns])
   do.call(predictLearner, arglist)
