@@ -89,7 +89,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     }
     # Add more legible column names to the output
     df = as.data.frame(fft.pa)
-    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)))
+    colnames(df) = stri_paste(vals$trafo.coeff, seq_len(ncol(fft.pa)), sep = ".")
     return(df)
   }
 
@@ -194,7 +194,7 @@ extractFDAPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
   lrn = function(data, target, col, vals, ...) {
     # This method only learns the eigenvectors
     lst = learnerArgsToControl(list, ...)
-    lst$x = data
+    lst$x = checkFDCols(data, col)
     rst = do.call("prcomp", lst)
     return(rst)
   }
@@ -294,25 +294,30 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
       na.action = na.action), lst))
   }
 
-  reextract = function(data, target = NULL, col, vals, args) {
+  reextract = function(data, target = NULL, col, vals) {
     data = checkFDCols(data, col)
     # Convert to list of rows
     rowlst = convertRowsToList(data)
 
-    requirePackages("tsfeatures", why = "time-series feature extraction")
+    requirePackages("tsfeatures", default.method = "load")
     # We do not compute some features as they are very unstable.
     # Examples: heterogeneity, hw_parameters
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
       "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
       "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
 
-    tsfeats = do.call(tsfeatures::tsfeatures, c(features = rowlst, args))
+
+    # Bad implementation in tsfeatures  matches scale to multiple arguments
+    #   do.call("tsfeatures", c(list(tslist = rowlst, features = feats), vals))
+
+    tsfeats = tsfeatures::tsfeatures(tslist = rowlst, features = feats, scale = vals$scale,
+      trim = vals$trim, parallel = vals$parallel, trim_amount = vals$trim_amount, na.action = vals$na.action)
+
 
     # Get rid of series and type columns
     tsfeats = data.frame(lapply(tsfeats, as.numeric))
     # Get rid of constant features
     const.feats = which(viapply(tsfeats, function(x) length(unique(x))) == 1L)
-
     return(tsfeats[, - const.feats])
   }
   ps = makeParamSet(

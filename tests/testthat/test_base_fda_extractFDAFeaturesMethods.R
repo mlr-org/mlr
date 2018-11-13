@@ -93,8 +93,7 @@ test_that("extract and reextract MultiRes", {
 })
 
 
-
-test_that("extractFPCAFeatures is equivalent to package", {
+test_that("extractFPCAFeatures is equivalent to prcomp", {
   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
 
   extr = extractFDAPCA()
@@ -127,20 +126,22 @@ test_that("extract and reextract FPCA", {
 
 
 test_that("Fourier equal to package", {
-  gp1 = data.frame(v1 = 1:5, v2 = 2:6, v3 = 3:7, v4 = 4:8)
-  lrn = extractFDAFourier()$learn
-  fourier.gp = lrn(data = gp1, trafo.coeff = "phase")
-  expect_equal(nrow(fourier.gp), nrow(gp1))
+  gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
+  extr = extractFDAFourier()
+  fourier.vals = extr$learn(data = gp$data, col = "fd", trafo.coeff = "phase")
+  fourier.gp = extr$reextract(data = gp$data, col = "fd", vals = fourier.vals)
+  expect_equal(nrow(fourier.gp), nrow(gp$data))
+
   # Phase (arctan(...) in range(-pi/2, pi/2) )
   expect_true(all(fourier.gp < pi / 2 & fourier.gp > - pi / 2))
 
-  fourier.a.gp = lrn(data = gp1, trafo.coeff = "amplitude")
-  expect_equal(nrow(fourier.a.gp), nrow(gp1))
+  fourier.vals = extr$learn(data = gp$data, col = "fd", trafo.coeff = "amplitude")
+  fourier.gp = extr$reextract(data = gp$data, col = "fd", vals = fourier.vals)
   # Amplitude sqrt(Re^2 + Im^2) >= 0
-  expect_true(all(fourier.a.gp >= 0))
+  expect_true(all(fourier.gp >= 0))
 
   # Calculate fourier coefficients (row wise) which are complex numbers
-  fft.trafo = t(apply(gp1, 1, fft))
+  fft.trafo = t(apply(gp$data, 1, fft))
   # Extract amplitude or phase of fourier coefficients which are real numbers
   fft.pa = switch("amplitude",
     amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
@@ -153,9 +154,9 @@ test_that("Fourier equal to package", {
   }
   # Add more legible column names to the output
   df = as.data.frame(fft.pa)
-  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)))
+  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)), sep = ".")
 
-  expect_equal(df, fourier.a.gp)
+  expect_equal(df, fourier.gp)
 
   # Can not have factors
   gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
@@ -164,17 +165,18 @@ test_that("Fourier equal to package", {
 
 
 test_that("tsfeatures works", {
-
   requirePackagesOrSkip("tsfeatures")
   gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30, ]
   lrn = extractFDATsfeatures()$learn
-  gpfeats = lrn(data = gp1, col = "UVVIS")
+  gpvals = lrn(data = gp1, col = "UVVIS")
+  gpfeats = extractFDATsfeatures()$reextract(data = gp1, col = "UVVIS", vals = gpvals)
   expect_equal(nrow(gpfeats), nrow(gp1))
 
   extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
-  # FIXME: Decide on extraction subset before testing versus method.
-  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35), extr$desc)
-  # FIXME: Tests
+  expect_true(ncol(getTaskData(extr$task)) == 29L)
+
+  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35, features = 2), extr$desc)
+  expect_true(ncol(getTaskData(reextr)) == 29L)
 })
 
 test_that("dtw extract works", {

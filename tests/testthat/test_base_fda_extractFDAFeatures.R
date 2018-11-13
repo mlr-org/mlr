@@ -130,3 +130,4 @@ test_that("extract reextract feat.methods all", {
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
 })
+
