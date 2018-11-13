@@ -74,8 +74,9 @@ trainLearner.TuneWrapper = function(.learner, .task, .subset = NULL,  ...) {
 
 #' @export
 predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
-  # setHyperPars not used because par.vals are not acessed anymore
-  arglist = list(.learner = .learner$next.learner, .model = .model$learner.model$next.model, .newdata = .newdata)
+  # setHyperPars just set for completivnes, Actual hyperparams are in ...
+  lrn = setHyperPars(.learner$next.learner, par.vals = .model$learner.model$opt.result$x)
+  arglist = list(.learner = lrn, .model = .model$learner.model$next.model, .newdata = .newdata)
   arglist = insert(arglist, list(...))
 
   # get x from opt result and only select those that are used for predition
