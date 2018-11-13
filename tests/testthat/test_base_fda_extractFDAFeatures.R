@@ -7,7 +7,7 @@ test_that("extractFDAFeatures", {
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
   expect_equal(nrow(df), 129L)
-  expect_subset(colnames(df), c(paste0("NIR.phase", seq_len(231)),
+  expect_subset(colnames(df), c(paste0("NIR.phase.", seq_len(231)),
     paste0("UVVIS.multires.", seq_len(9)), "heatan", "h20"))
 })
 
@@ -21,7 +21,7 @@ test_that("extractFeatures multiple times", {
   expect_class(df, "data.frame")
   expect_true(nrow(df) == 129L)
   expect_true(ncol(df) == 154L)
-  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase", seq_len(134)),
+  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase.", seq_len(134)),
     paste0("NIR.multires.", seq_len(9)), paste0("UVVIS.multires.", seq_len(9))))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
@@ -34,7 +34,7 @@ test_that("extractFeatures multiple times", {
   expect_subset(colnames(df),
     c("heatan", "h20",
       paste0("UVVIS.multires.", seq_len(9)), paste0("NIR.multires.", seq_len(9)),
-      paste0("UVVIS.phase", seq_len(134)), paste0("NIR.phase", seq_len(231))))
+      paste0("UVVIS.phase.", seq_len(134)), paste0("NIR.phase.", seq_len(231))))
 })
 
 

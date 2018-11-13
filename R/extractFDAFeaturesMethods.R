@@ -299,7 +299,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     # Convert to list of rows
     rowlst = convertRowsToList(data)
 
-    requirePackages("tsfeatures", default.method = "load")
+    requirePackages("tsfeatures", default.method = "attach")
     # We do not compute some features as they are very unstable.
     # Examples: heterogeneity, hw_parameters
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
