@@ -1,0 +1,232 @@
+test_that("Wavelet method are equal to package", {
+  requirePackagesOrSkip("wavelets", default.method = "load")
+  gp = getTaskData(gunpoint.task, subset = seq_len(10), target.extra = TRUE, functionals.as = "matrix")
+
+  # Extractor
+  extr = extractFDAWavelets()
+  set.seed(getOption("mlr.debug.seed"))
+  wav.vals = extr$learn(data = gp$data, target = "X1", col = "fd", filter = "la8", boundary = "reflection")
+  wavelets.gp = extr$reextract(data = gp$data, target = "X1", col = "fd", vals = wav.vals, args = NULL)
+
+  # Reference
+  df = BBmisc::convertRowsToList(gp$data[, "fd", drop = FALSE])
+  set.seed(getOption("mlr.debug.seed"))
+  wtdata = t(BBmisc::dapply(df, fun = function(x) {
+    wt = wavelets::dwt(as.numeric(x), filter = "la8", boundary = "reflection")
+    unlist(c(wt@W, wt@V[[wt@level]]))
+  }))
+  df = as.data.frame(wtdata)
+  colnames(df) = stringi::stri_paste("wav", "la8", seq_len(ncol(wtdata)), sep = ".")
+
+  expect_equal(nrow(wavelets.gp), nrow(gp$data))
+  expect_equal(wavelets.gp, df)
+  # Too many vanishing moments (support width) expected
+  expect_error(extractWaveletFeatures(data = gp, filter = "d10"))
+})
+
+test_that("extract and reextract Wavelets", {
+  requirePackagesOrSkip("wavelets", default.method = "load")
+  gp.subset = subsetTask(gunpoint.task, features = 1L)
+  fm = list("fd" = extractFDAWavelets(filter = "haar", boundary = "reflection"))
+  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t4 = reextractFDAFeatures(gp.subset, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+})
+
+test_that("getFDAMultiResFeatures works on data.frame", {
+  gp = getTaskData(fda.binary.gp.task.small, functionals.as = "matrix")
+
+  ngp1 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", res.level = 3,
+    shift = 0.5, seg.lens = NULL)
+  ngp1 = extractFDAMultiResFeatures()$reextract(data = gp, col = "fd", vals = ngp1)
+  expect_true(nrow(ngp1) == nrow(gp))
+  expect_true(ncol(ngp1) == 9L)
+
+  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", seg.lens = c(25, 25),
+    res.level = 3, shift = 0.5)
+  ngp2 = extractFDAMultiResFeatures()$reextract(data = gp, col = "fd", vals = ngp2)
+  expect_true(nrow(ngp2) == nrow(gp))
+  expect_true(ncol(ngp2) == 16L)
+
+  df = getTaskData(fuelsubset.task, functionals.as = "matrix")
+
+  # Learn args equal to method args
+  vals1 = extractFDAMultiResFeatures()$learn(df, col = "UVVIS", res.level = 2L, shift = 0.25)
+  dfn1 = extractFDAMultiResFeatures()$reextract(df, col = "UVVIS", vals =  vals1)
+  expect_true(nrow(df) == nrow(dfn))
+  expect_true(ncol(dfn) == 9L)
+
+  extr = extractFDAMultiResFeatures(res.level = 2L, shift = 0.25)
+  vals2 = extr$learn(df, col = "UVVIS")
+  dfn2 = extr$reextract(df, col = "UVVIS", vals =  vals2)
+  expect_true(nrow(df) == nrow(dfn2))
+  expect_true(ncol(dfn2) == 9L)
+  expect_equal(dfn, dfn2)
+
+
+  extr = extractFDAMultiResFeatures()
+  vals3 = extr$learn(df, col = "NIR", res.level = 3L, shift = 0.5, seg.lens = c(100L, 131L))
+  dfn3 = extr$reextract(df, col = "NIR", vals =  vals3)
+  expect_true(nrow(df) == nrow(dfn3))
+  expect_true(ncol(dfn3) == 19L)
+
+
+  extr = extractFDAMultiResFeatures()
+  vals4 = extr$learn(df, col = "NIR", res.level = 1L, shift = 0.2, seg.lens = 231L)
+  dfn4 = extr$reextract(df, col = "NIR", vals =  vals4)
+  expect_true(nrow(df) == nrow(dfn4))
+  expect_true(ncol(dfn4) ==  1L)
+
+})
+
+test_that("extract and reextract MultiRes", {
+  gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
+  fm = list("fd" = extractFDAMultiResFeatures(3L, 0.4))
+  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t4 = reextractFDAFeatures(gp.subset, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 12L))
+})
+
+
+
+test_that("extractFPCAFeatures is equivalent to package", {
+  gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
+
+  extr = extractFDAPCA()
+  fpca.vals = extr$learn(data = gp$data, target = "X1", col = "fd", rank. = 5L)
+  fpca.df = extr$reextract(data = gp$data, target = "X1", col = "fd", vals = fpca.vals)
+  expect_true((nrow(gp$data) == nrow(fpca.df)))
+  expect_true((ncol(fpca.df) == 5L))
+  expect_match(names(fpca.df), regexp = "[FPCA]")
+
+  # Is it equivalent to the mlr version?
+  set.seed(getOption("mlr.debug.seed"))
+  gp.mat = gp$data$fd
+  fpca.df2 = predict(prcomp(gp.mat, rank. = 5L), gp.mat)
+  expect_true((nrow(gp.mat) == nrow(fpca.df2)))
+  expect_true((ncol(fpca.df2) == 5L))
+  expect_equivalent(fpca.df, data.frame(fpca.df2))
+})
+
+test_that("extract and reextract FPCA", {
+  gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
+  fm = list("fd" = extractFDAPCA(rank. = 5))
+  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t4 = reextractFDAFeatures(gp.subset, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 5L))
+})
+
+
+
+test_that("Fourier equal to package", {
+  gp1 = data.frame(v1 = 1:5, v2 = 2:6, v3 = 3:7, v4 = 4:8)
+  lrn = extractFDAFourier()$learn
+  fourier.gp = lrn(data = gp1, trafo.coeff = "phase")
+  expect_equal(nrow(fourier.gp), nrow(gp1))
+  # Phase (arctan(...) in range(-pi/2, pi/2) )
+  expect_true(all(fourier.gp < pi / 2 & fourier.gp > - pi / 2))
+
+  fourier.a.gp = lrn(data = gp1, trafo.coeff = "amplitude")
+  expect_equal(nrow(fourier.a.gp), nrow(gp1))
+  # Amplitude sqrt(Re^2 + Im^2) >= 0
+  expect_true(all(fourier.a.gp >= 0))
+
+  # Calculate fourier coefficients (row wise) which are complex numbers
+  fft.trafo = t(apply(gp1, 1, fft))
+  # Extract amplitude or phase of fourier coefficients which are real numbers
+  fft.pa = switch("amplitude",
+    amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
+    phase = apply(fft.trafo, 2, function(x) atan(Im(x) / Re(x)))
+  )
+
+  # If there is only one row in data, fft returns an array
+  if (!inherits(fft.pa, "matrix")) {
+    fft.pa = as.data.frame(matrix(fft.pa, nrow = 1))
+  }
+  # Add more legible column names to the output
+  df = as.data.frame(fft.pa)
+  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)))
+
+  expect_equal(df, fourier.a.gp)
+
+  # Can not have factors
+  gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
+  expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
+})
+
+
+test_that("tsfeatures works", {
+
+  requirePackagesOrSkip("tsfeatures")
+  gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30, ]
+  lrn = extractFDATsfeatures()$learn
+  gpfeats = lrn(data = gp1, col = "UVVIS")
+  expect_equal(nrow(gpfeats), nrow(gp1))
+
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  # FIXME: Decide on extraction subset before testing versus method.
+  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35), extr$desc)
+  # FIXME: Tests
+})
+
+test_that("dtw extract works", {
+  requirePackagesOrSkip("rucrdtw")
+  task = subsetTask(fuelsubset.task, features = "UVVIS")
+  daf = getTaskData(task, functionals.as = "matrix")
+  daf = daf$UVVIS
+  fmethods = list("UVVIS" = extractFDADTWKernel())
+  res = extractFDAFeatures(fuelsubset.task, feat.methods = fmethods)
+  # check output data
+  df = getTaskData(res$task, functionals.as = "matrix")
+  expect_is(df, "data.frame")
+  expect_equal(nrow(df), 129)
+  expect_equal(ncol(df), 9)
+})
+
+test_that("extraction returns correct cols", {
+  requirePackagesOrSkip("tsfeatures")
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 3:10), extr$desc)
+  expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
+  expect_equal(colnames(getTaskData(extr$task, functionals.as = "matrix")),
+    colnames(getTaskData(reextr, functionals.as = "matrix")))
+})
+
+
+test_that("extract and reextract have correct args", {
+  lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = list("all" = extractFDAFourier()))
+  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"), subsetTask(fuelsubset.task, subset = 1:20))
+  prd = predict(mod, subsetTask(fuelsubset.task, subset = 21:40))
+  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$args$trafo.coeff, "amplitude")
+  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$args$trafo.coeff, "amplitude")
+})
+
+
+test_that("extractBsignal features", {
+  methods = list("UVVIS" = extractFDABsignal(), "NIR" = extractFDABsignal())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
+  t2 = reextractFDAFeatures(fuelsubset.task, t$desc)
+  # check output data
+  df = getTaskData(t$task)
+  expect_is(df, "data.frame")
+  expect_equal(nrow(df), 129L)
+  expect_equal(ncol(df), 30L)
+})
+
+test_that("extractFDAFeaturesDTW", {
+  methods = list("UVVIS" = extractFDADTW(), "NIR" = extractFDADTW())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
+  # check output data
+  df = getTaskData(t$task)
+  expect_is(df, "data.frame")
+  expect_equal(nrow(df), 129)
+})
+

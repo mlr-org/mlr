@@ -116,12 +116,6 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   desc$extractFDAFeat = extracts
   extracted = reextractFDAFeatures(obj, desc)
 
-  if (!is.data.frame(extracted)) {
-    stop("feat.method needs to return a data.frame with one row per observation in the original data.")
-  } else if (nrow(extracted) != nrow(obj)) {
-    stop("feat.method needs to return a data.frame with one row per observation in the original data and equal nrow per column.")
-  }
-
   list(data = extracted, desc = desc)
 }
 
@@ -184,7 +178,14 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
   # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.col) {
-      do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col, vals = x$extractor.vals)))
+      df = do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col, vals = x$extractor.vals)))
+      # Check returned vals
+      if (!is.data.frame(df)) {
+        stop("feat.method needs to return a data.frame with one row per observation in the original data.")
+      } else if (nrow(df) != nrow(obj)) {
+        stop("feat.method needs to return a data.frame with one row per observation in the original data and equal nrow per column.")
+      }
+      return(df)
     },
     xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
