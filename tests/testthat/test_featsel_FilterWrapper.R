@@ -38,7 +38,7 @@ test_that("Filterwrapper permutation.importance (issue #814)", {
 test_that("FilterWrapper with ensemble function in a train call", {
   lrn = makeLearner("classif.lda")
 
-  # np basal.method as ensemble method
+  # no basal.method as ensemble method if fw.basal.methods !is.null
   expect_error(makeFilterWrapper(lrn, fw.method = "FSelectorRcpp_gain.ratio",
     fw.basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
 

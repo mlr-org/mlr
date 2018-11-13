@@ -85,6 +85,12 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
     # check if ONLY basal-methods are supplied along with an ensemble method
     lapply(fw.basal.methods, function (x) assertChoice(x, choices = ls(.FilterRegister)))
   }
+
+  # if fw.basal.methods are supplied, fw.method must be an ensemble filter
+  if (!is.null(fw.basal.methods)) {
+    assertChoice(fw.method, choices = ls(.FilterEnsembleRegister))
+  }
+
   ddd = list(...)
   assertList(ddd, names = "named")
 

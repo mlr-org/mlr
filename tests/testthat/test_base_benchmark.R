@@ -291,10 +291,10 @@ test_that("benchmark works with ensemble filters", {
   tune_ctrl = makeTuneControlRandom(maxit = 3)
 
   tune_wrapper_svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
-                                     control = tune_ctrl, show.info = TRUE,
+                                     control = tune_ctrl, show.info = FALSE,
                                      measures = list(acc))
 
-  expect_silent(benchmark(learners = tune_wrapper_svm, task = tasks, resampling = rin,
-                  measures = list(acc))
-  )
+  expect_class(benchmark(learners = tune_wrapper_svm, task = tasks,
+                 resampling = rin, measures = list(acc)), "BenchmarkResult"
+               )
 })
