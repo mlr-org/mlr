@@ -1,7 +1,7 @@
 Package: mlr
 Title: Machine Learning in R
 Version: 2.13.9000
-Authors@R: 
+Authors@R:
     c(person(given = "Bernd",
              family = "Bischl",
              role = c("aut", "cre"),
@@ -260,13 +260,14 @@ Suggests:
     TH.data,
     wavelets,
     xgboost (>= 0.6-2)
-VignetteBuilder: 
+VignetteBuilder:
     knitr
-Remotes: 
+Remotes:
     berndbischl/BBmisc,
     berndbischl/parallelMap,
     berndbischl/ParamHelpers,
-    jimhester/lintr
+    jimhester/lintr,
+    robjhyndman/tsfeatures
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes

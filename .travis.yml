@@ -11,13 +11,6 @@ env:
     - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 ggpubr FSelectorRcpp praznik'
 
 
-r_github_packages:
-  - berndbischl/BBmisc
-  - berndbischl/parallelMap
-  - berndbischl/ParamHelpers
-  - jimhester/lintr
-  - robjhyndman/tsfeatures
-
 jobs:
   include:
     - stage: warmup
