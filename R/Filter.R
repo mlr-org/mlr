@@ -707,7 +707,10 @@ praznik_filter = function(fun) {
   force(fun)
 
   function(task, nselect, ...) {
-    requireNamespace("praznik")
+    if (!requireNamespace("praznik", quietly = TRUE)) {
+      stop("Package \"praznik\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
     fun = getFromNamespace(fun, ns = "praznik")
 
     data = getTaskData(task)
@@ -813,7 +816,10 @@ FSelectorRcpp.filter = function(type) {
   force(type)
 
   function(task, nselect, ...) {
-    requireNamespace("FSelectorRcpp")
+    if (!requireNamespace("FSelectorRcpp", quietly = TRUE)) {
+      stop("Package \"FSelectorRcpp\" needed for this function to work. Please install it.",
+           call. = FALSE)
+    }
     data = getTaskData(task)
     X = data[getTaskFeatureNames(task)]
     y = data[[getTaskTargetNames(task)]]
