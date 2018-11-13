@@ -131,3 +131,10 @@ test_that("extract reextract feat.methods all", {
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
 })
 
+test_that("extract and reextract have correct args", {
+  lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = list("all" = extractFDAFourier()))
+  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"), subsetTask(fuelsubset.task, subset = 1:20))
+  prd = predict(mod, subsetTask(fuelsubset.task, subset = 21:40))
+  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$extractor.vals$trafo.coeff, "amplitude")
+  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$extractor.vals$trafo.coeff, "amplitude")
+})

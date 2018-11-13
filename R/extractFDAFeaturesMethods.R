@@ -372,10 +372,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
     assertChoice(class(refs), c("matrix", "integer", "NULL"))
     assertNumber(dtwwindow)
 
-    # Check and transform data to matrix
-    assertClass(data, "data.frame")
-    data = as.matrix(data[, col, drop = FALSE])
-    assertNumeric(data)
+    data = checkFDCols(data, col)
 
     # Obtain reference curves
     if (is.null(refs) | is.integer(refs)) {
@@ -388,7 +385,6 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
       assert_true(nrow(refs) == nrow(data))
       refs.data = refs
     }
-
     # This method only stores and returns the data points we compare against
     return(list(refs = refs.data, dtwwindow = dtwwindow))
   }
@@ -396,7 +392,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
   reextract = function(data, target = NULL, col, vals, args) {
     data = checkFDCols(data, col)
 
-    feats.dtw = t(apply(data, 1L, function(x) getDtwDist(x, vals$refs.data, vals$dtwwindow)))
+    feats.dtw = t(apply(data, 1L, function(x) getDtwDist(x, vals$refs, vals$dtwwindow)))
 
     # Add more legible column names to the output
     df = as.data.frame(feats.dtw)

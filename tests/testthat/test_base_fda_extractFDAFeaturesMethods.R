@@ -179,6 +179,16 @@ test_that("tsfeatures works", {
   expect_true(ncol(getTaskData(reextr)) == 29L)
 })
 
+test_that("extraction returns correct cols", {
+  requirePackagesOrSkip("tsfeatures")
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:7), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 8:14), extr$desc)
+  expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
+  expect_equal(colnames(getTaskData(extr$task, functionals.as = "matrix")),
+    colnames(getTaskData(reextr, functionals.as = "matrix")))
+})
+
+
 test_that("dtw extract works", {
   requirePackagesOrSkip("rucrdtw")
   task = subsetTask(fuelsubset.task, features = "UVVIS")
@@ -191,24 +201,6 @@ test_that("dtw extract works", {
   expect_is(df, "data.frame")
   expect_equal(nrow(df), 129)
   expect_equal(ncol(df), 9)
-})
-
-test_that("extraction returns correct cols", {
-  requirePackagesOrSkip("tsfeatures")
-  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
-  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 3:10), extr$desc)
-  expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
-  expect_equal(colnames(getTaskData(extr$task, functionals.as = "matrix")),
-    colnames(getTaskData(reextr, functionals.as = "matrix")))
-})
-
-
-test_that("extract and reextract have correct args", {
-  lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = list("all" = extractFDAFourier()))
-  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"), subsetTask(fuelsubset.task, subset = 1:20))
-  prd = predict(mod, subsetTask(fuelsubset.task, subset = 21:40))
-  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$args$trafo.coeff, "amplitude")
-  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$args$trafo.coeff, "amplitude")
 })
 
 
@@ -224,7 +216,7 @@ test_that("extractBsignal features", {
 })
 
 test_that("extractFDAFeaturesDTW", {
-  methods = list("UVVIS" = extractFDADTW(), "NIR" = extractFDADTW())
+  methods = list("UVVIS" = extractFDADTWKernel(), "NIR" = extractFDADTWKernel())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
