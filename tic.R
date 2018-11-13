@@ -57,7 +57,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_step(step_build_pkgdown(document = FALSE))
+      add_code_step(pkgbuild::compile_dll()) %>%
+      add_step(step_build_pkgdown())
 
     # only deploy in master branch
     if (ci()$get_branch() == "master") {
