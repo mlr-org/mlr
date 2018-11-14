@@ -1,3 +1,5 @@
+context("extactFDAFeaturesMethods")
+
 test_that("Wavelet method are equal to package", {
   requirePackagesOrSkip("wavelets", default.method = "load")
   gp = getTaskData(gunpoint.task, subset = seq_len(10), target.extra = TRUE, functionals.as = "matrix")

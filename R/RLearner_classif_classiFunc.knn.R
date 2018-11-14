@@ -64,18 +64,16 @@ makeRLearner.classif.classiFunc.knn = function() {
 trainLearner.classif.classiFunc.knn = function(.learner, .task, .subset, ...) {
 
   # Get and transform functional data
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE,
-                  functionals.as = "matrix")
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
 
-  learned.model = do.call(classiFunc::classiKnn, c(list(classes = d$target,
-                                                        fdata = fd),
-                                                   getLearnerParVals(.learner)))
+  args = learnerArgsToControl("list", ...)
+  do.call(classiFunc::classiKnn, c(list(classes = d$target, fdata = fd), args))
 }
 
 #' @export
 predictLearner.classif.classiFunc.knn = function(.learner, .model, .newdata, ...) {
   # extract data in matrix format
   .newdata = getFunctionalFeatures(.newdata)
-  classiFunc::predict(.model$learner.model, newdata = .newdata, predict.type = .learner$predict.type, ...)
+  predict(.model$learner.model, newdata = .newdata, predict.type = .learner$predict.type, ...)
 }

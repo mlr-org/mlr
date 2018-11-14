@@ -72,14 +72,14 @@ trainLearner.classif.classiFunc.kernel = function(.learner, .task, .subset, ...)
                   functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
 
-  learned.model = do.call(classiFunc::classiKernel, c(list(classes = d$target,
-                                                           fdata = fd),
-                                                      getLearnerParVals(.learner)))
+  args = learnerArgsToControl("list", ...)
+  do.call(classiFunc::classiKernel, c(list(classes = d$target, fdata = fd),
+    args))
 }
 
 #' @export
 predictLearner.classif.classiFunc.kernel = function(.learner, .model, .newdata, ...) {
   # extract data in matrix format
   .newdata = getFunctionalFeatures(.newdata)
-  classiFunc::predict(.model$learner.model, newdata = .newdata, predict.type = .learner$predict.type, ...)
+  predict(.model$learner.model, newdata = .newdata, predict.type = .learner$predict.type, ...)
 }

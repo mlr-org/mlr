@@ -1,4 +1,4 @@
-context("extactFeaturesWrapper")
+context("extactFDAFeaturesWrapper")
 
 test_that("extractFDAFeaturesWrapper", {
   methods = list("UVVIS" = extractFDAMultiResFeatures(), "NIR" = extractFDAFourier())
@@ -33,7 +33,8 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
 
 test_that("extractFDAFeaturesWrapper ParSet Works II", {
   methods = list("fd1" = extractFDAFourier())
-  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
+  # Suppress missing NA arg from xgboost
+  lrn = suppressWarnings(makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods))
   ps = getLearnerParamSet(lrn)
 
   # Check whether all Ids are contained in the resulting param set

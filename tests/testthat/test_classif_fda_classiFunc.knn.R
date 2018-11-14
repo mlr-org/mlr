@@ -97,14 +97,14 @@ test_that("classiFunc.knn can be predicted in parallel", {
 
   # Parallelize across 2 CPUs
   # set up parallelization
-  parallelStartSocket(cpus = 2L) # parallelStartMulticore(cpus = 2L) for Linux
+  parallelMap::parallelStartSocket(cpus = 2L) # parallelStartMulticore(cpus = 2L) for Linux
 
   # predict in parallel
   # specify parallel = TRUE and batchsize > 1L for parallelization
   cp.parallel = predict(m, task = task, parallel = TRUE, batches = 2L)
 
   # clean up parallelization
-  parallelStop()
+  parallelMap::parallelStop()
 
   # results do not change
   expect_equal(cp$data, cp.parallel$data)
@@ -117,8 +117,8 @@ test_that("rucrdtw can be used as distance measure in classiFunc.knn", {
   data(ArrowHead, package = "classiFunc")
 
   lrn =  makeLearner("classif.classiFunc.knn",
-                     par.vals = list(metric = "L2", knn = 3),
-                     predict.type = "prob")
+    par.vals = list(metric = "L2", knn = 3),
+    predict.type = "prob")
 
   # create task
   fdata = makeFunctionalData(ArrowHead, exclude.cols = "target")
