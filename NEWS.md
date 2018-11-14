@@ -17,21 +17,37 @@
   It can be triggered with the new `cache` argument in `makeFilterWrapper()` or `filterFeatures()` (@pat-s, #2463).
 
 ## filter - new
-* praznik.JMI
-* praznik.DISR
-* praznik.JMIM
-* praznik.MIM
-* praznik.NJMIM
-* praznik.MRMR
-* praznik.CMIM
+* praznik_JMI
+* praznik_DISR
+* praznik_JMIM
+* praznik_MIM
+* praznik_NJMIM
+* praznik_MRMR
+* praznik_CMIM
+* FSelectorRcpp_gain.ratio
+* FSelectorRcpp_information.gain
+* FSelectorRcpp_symuncert
 
 ## filter - general
-* Replaced filters `information.gain`, `gainratio` and `symmetrical.uncertainty`depending on package `FSelector` by package `FSelectorRcpp`. 
-  The change comes with a ~ 100 times speedup.
-
+* Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
+  These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
+  Please note that both implementations do things slightly different internally and the `FSelectorRcpp` methods should not be seen as direct replacement for the `FSelector` pkg.
+* prefixed all filters from pkg `FSelector` with `FSelector` to distinguish them from the new `FSelectorRcpp` filters
+  - `information.gain` -> `FSelector_information.gain`
+  - `gain.ratio` -> `FSelector_gain.ratio`
+  - `symmetrical.uncertainty` -> `FSelector_symmetrical.uncertainty`
+  - `chi.squared` -> `FSelector_chi.squared`
+  - `relief` -> `FSelector_relief`
+  - `oneR` -> `FSelector_oneR`
+  
 ## learners - new
 * classif.liquidSVM (@PhilippPro, #2428)
 * regr.liquidSVM (@PhilippPro, #2428)
+
+## featSel - general
+ * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
+ * The slot `x` now always contains the real feature names and not the bit.names
+ * This fixes a bug and makes `makeFeatSelWrapper` usable with custom `bit.names`.
 
 # mlr 2.13:
 

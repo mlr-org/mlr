@@ -312,21 +312,21 @@
 <h1 class="hasAnchor">
 <a href="#classes-constructors-and-naming-schemes" class="anchor"></a>Classes, constructors, and naming schemes</h1>
 <p>As you already know <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> generates an object of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"classif.lda"</span>))</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</span></a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"regr.lm"</span>))</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</span></a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"surv.coxph"</span>))</a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</span></a>
-<a class="sourceLine" id="cb1-9" title="9"></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"cluster.kmeans"</span>))</a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</span></a>
-<a class="sourceLine" id="cb1-12" title="12"></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>))</a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">## [4] "Learner"</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"classif.lda"</span>))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"regr.lm"</span>))</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"surv.coxph"</span>))</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"cluster.kmeans"</span>))</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">class</span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>))</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## [4] "Learner"</span></a></code></pre></div>
 <p>The first element of each class attribute vector is the name of the learner class passed to the <code>cl</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Obviously, this adheres to the naming conventions</p>
 <ul>
 <li>
@@ -359,62 +359,62 @@
 <p>Next, we add information on the properties of the learner (see also the section on <a href="learner.html" target="_blank">learners</a>). Which types of features are supported (numerics, factors)? Are case weights supported? Are class weights supported? Can the method deal with missing values in the features and deal with NA’s in a meaningful way (not <code>na.omit</code>)? Are one-class, two-class, multi-class problems supported? Can the learner predict posterior probabilities?</p>
 <p>If the learner supports class weights the name of the relevant learner parameter can be specified via argument <code>class.weights.param</code>.</p>
 <p>Sometimes parameters allow certain values that don’t “fit” the formal parameter types. Often, these are also the default values. For example: A numeric parameter that accepts values as <code>NA</code>, <code>NULL</code>, <code>"auto"</code>, and so on. For these there is the option <code>special.vals</code>, which allows to list these extra values as feasible. An example is the <code>missing</code> argument in <code>xgboost</code>. It accepts numeric values (that’s why it’s set as a numeric parameter) and <code>NULL</code> but the default is <code>NA</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"missing"</span>, <span class="dt">default =</span> <span class="ot">NA</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>, <span class="dt">when =</span> <span class="st">"both"</span>,</a>
-<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">special.vals =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="ot">NA_real_</span>, <span class="ot">NULL</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"missing"</span>, <span class="dt">default =</span> <span class="ot">NA</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>, <span class="dt">when =</span> <span class="st">"both"</span>,</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">special.vals =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="ot">NA_real_</span>, <span class="ot">NULL</span>))</a></code></pre></div>
 <p>If a parameter depends on another one, the <code>requires</code> attribute is added as an argument. Dependent parameters with a <code>requires</code> field must use <code>quote()</code> and not <code>expression()</code> to define it.</p>
 <p>Below is the complete code for the definition of the LDA learner. It has one discrete parameter, <code>method</code>, and two continuous ones, <code>nu</code> and <code>tol</code>. It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables. It can predict posterior probabilities.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">makeRLearner.classif.lda =<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb3-2" title="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerClassif</a></span>(</a>
-<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">cl =</span> <span class="st">"classif.lda"</span>,</a>
-<a class="sourceLine" id="cb3-4" title="4">    <span class="dt">package =</span> <span class="st">"MASS"</span>,</a>
-<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb3-6" title="6">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"method"</span>, <span class="dt">default =</span> <span class="st">"moment"</span>, </a>
-<a class="sourceLine" id="cb3-7" title="7">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"moment"</span>, <span class="st">"mle"</span>, <span class="st">"mve"</span>, <span class="st">"t"</span>)),</a>
-<a class="sourceLine" id="cb3-8" title="8">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"nu"</span>, <span class="dt">lower =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb3-9" title="9">        <span class="dt">requires =</span> <span class="kw">quote</span>(method <span class="op">==</span><span class="st"> "t"</span>)),</a>
-<a class="sourceLine" id="cb3-10" title="10">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"tol"</span>, <span class="dt">default =</span> <span class="fl">1e-4</span>, <span class="dt">lower =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb3-11" title="11">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"predict.method"</span>, </a>
-<a class="sourceLine" id="cb3-12" title="12">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"plug-in"</span>, <span class="st">"predictive"</span>, <span class="st">"debiased"</span>),</a>
-<a class="sourceLine" id="cb3-13" title="13">        <span class="dt">default =</span> <span class="st">"plug-in"</span>, <span class="dt">when =</span> <span class="st">"predict"</span>),</a>
-<a class="sourceLine" id="cb3-14" title="14">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"CV"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-15" title="15">    ),</a>
-<a class="sourceLine" id="cb3-16" title="16">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"twoclass"</span>, <span class="st">"multiclass"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"prob"</span>),</a>
-<a class="sourceLine" id="cb3-17" title="17">    <span class="dt">name =</span> <span class="st">"Linear Discriminant Analysis"</span>,</a>
-<a class="sourceLine" id="cb3-18" title="18">    <span class="dt">short.name =</span> <span class="st">"lda"</span>,</a>
-<a class="sourceLine" id="cb3-19" title="19">    <span class="dt">note =</span> <span class="st">"Learner param 'predict.method' maps to 'method' in predict.lda."</span></a>
-<a class="sourceLine" id="cb3-20" title="20">  )</a>
-<a class="sourceLine" id="cb3-21" title="21">}</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">makeRLearner.classif.lda =<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerClassif</a></span>(</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">cl =</span> <span class="st">"classif.lda"</span>,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="dt">package =</span> <span class="st">"MASS"</span>,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"method"</span>, <span class="dt">default =</span> <span class="st">"moment"</span>, </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"moment"</span>, <span class="st">"mle"</span>, <span class="st">"mve"</span>, <span class="st">"t"</span>)),</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"nu"</span>, <span class="dt">lower =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="dt">requires =</span> <span class="kw">quote</span>(method <span class="op">==</span><span class="st"> "t"</span>)),</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"tol"</span>, <span class="dt">default =</span> <span class="fl">1e-4</span>, <span class="dt">lower =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"predict.method"</span>, </a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"plug-in"</span>, <span class="st">"predictive"</span>, <span class="st">"debiased"</span>),</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">        <span class="dt">default =</span> <span class="st">"plug-in"</span>, <span class="dt">when =</span> <span class="st">"predict"</span>),</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"CV"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    ),</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"twoclass"</span>, <span class="st">"multiclass"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"prob"</span>),</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">    <span class="dt">name =</span> <span class="st">"Linear Discriminant Analysis"</span>,</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">    <span class="dt">short.name =</span> <span class="st">"lda"</span>,</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">    <span class="dt">note =</span> <span class="st">"Learner param 'predict.method' maps to 'method' in predict.lda."</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">  )</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">}</a></code></pre></div>
 </div>
 <div id="creating-the-training-function-of-the-learner" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-the-training-function-of-the-learner" class="anchor"></a>Creating the training function of the learner</h2>
 <p>Once the learner has been defined, we need to tell <code>mlr</code> how to call it to train a model. The name of the function has to start with <code>trainLearner.</code>, followed by the <code>mlr</code> name of the learner as defined above (<code>classif.lda</code> here). The prototype of the function looks as follows.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) { }</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) { }</a></code></pre></div>
 <p>This function must fit a model on the data of the task <code>.task</code> with regard to the subset defined in the integer vector <code>.subset</code> and the parameters passed in the <code>...</code> arguments. Usually, the data should be extracted from the task using <code><a href="../../reference/getTaskData.html">getTaskData()</a></code>. This will take care of any subsetting as well. It must return the fitted model. <code>mlr</code> assumes no special data type for the return value – it will be passed to the predict function we are going to define below, so any special code the learner may need can be encapsulated there.</p>
 <p>For our example, the definition of the function looks like this. In addition to the data of the task, we also need the formula that describes what to predict. We use the function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> to extract this from the task.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">trainLearner.classif.lda =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb5-2" title="2">{</a>
-<a class="sourceLine" id="cb5-3" title="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
-<a class="sourceLine" id="cb5-4" title="4">    MASS<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">lda</a></span>(f, <span class="dt">data =</span> <span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), ...)</a>
-<a class="sourceLine" id="cb5-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">trainLearner.classif.lda =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    MASS<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">lda</a></span>(f, <span class="dt">data =</span> <span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), ...)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">}</a></code></pre></div>
 </div>
 <div id="creating-the-prediction-method" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-the-prediction-method" class="anchor"></a>Creating the prediction method</h2>
 <p>Finally, the prediction function needs to be defined. The name of this function starts with <code>predictLearner.</code>, followed again by the <code>mlr</code> name of the learner. The prototype of the function is as follows.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="cf">function</span>(.learner, .model, .newdata, ...) { }</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="cf">function</span>(.learner, .model, .newdata, ...) { }</a></code></pre></div>
 <p>It must predict for the new observations in the <code>data.frame</code> <code>.newdata</code> with the wrapped model <code>.model</code>, which is returned from the training function. The actual model the learner built is stored in the <code>$learner.model</code> member and can be accessed simply through <code>.model$learner.model</code>.</p>
 <p>For classification, you have to return a factor of predicted classes if <code>.learner$predict.type</code> is <code>"response"</code>, or a matrix of predicted probabilities if <code>.learner$predict.type</code> is <code>"prob"</code> and this type of prediction is supported by the learner. In the latter case the matrix must have the same number of columns as there are classes in the task and the columns have to be named by the class names.</p>
 <p>The definition for LDA looks like this. It is pretty much just a straight pass-through of the arguments to the <code>base::predict()</code> function and some extraction of prediction data depending on the type of prediction requested.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">predictLearner.classif.lda =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, <span class="dt">predict.method =</span> <span class="st">"plug-in"</span>, </a>
-<a class="sourceLine" id="cb7-2" title="2">    ...) </a>
-<a class="sourceLine" id="cb7-3" title="3">{</a>
-<a class="sourceLine" id="cb7-4" title="4">    p =<span class="st"> </span><span class="kw">predict</span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">method =</span> predict.method, </a>
-<a class="sourceLine" id="cb7-5" title="5">        ...)</a>
-<a class="sourceLine" id="cb7-6" title="6">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) </a>
-<a class="sourceLine" id="cb7-7" title="7">        <span class="kw">return</span>(p<span class="op">$</span>class)</a>
-<a class="sourceLine" id="cb7-8" title="8">    <span class="cf">else</span> <span class="kw">return</span>(p<span class="op">$</span>posterior)</a>
-<a class="sourceLine" id="cb7-9" title="9">}</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">predictLearner.classif.lda =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, <span class="dt">predict.method =</span> <span class="st">"plug-in"</span>, </a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    ...) </a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">{</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    p =<span class="st"> </span><span class="kw">predict</span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">method =</span> predict.method, </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">        ...)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">        <span class="kw">return</span>(p<span class="op">$</span>class)</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="cf">else</span> <span class="kw">return</span>(p<span class="op">$</span>posterior)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">}</a></code></pre></div>
 </div>
 </div>
 <div id="regression" class="section level1">
@@ -422,41 +422,41 @@
 <a href="#regression" class="anchor"></a>Regression</h1>
 <p>The main difference for regression is that the type of predictions are different (numeric instead of labels or probabilities) and that not all of the properties are relevant. In particular, whether one-, two-, or multi-class problems and posterior probabilities are supported is not applicable.</p>
 <p>Apart from this, everything explained above applies. Below is the definition for the <code><a href="http://www.rdocumentation.org/packages/earth/topics/earth">earth::earth()</a></code> learner.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">makeRLearner.regr.earth =<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb8-2" title="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerRegr</a></span>(</a>
-<a class="sourceLine" id="cb8-3" title="3">    <span class="dt">cl =</span> <span class="st">"regr.earth"</span>,</a>
-<a class="sourceLine" id="cb8-4" title="4">    <span class="dt">package =</span> <span class="st">"earth"</span>,</a>
-<a class="sourceLine" id="cb8-5" title="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb8-6" title="6">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"keepxy"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb8-7" title="7">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"trace"</span>, <span class="dt">default =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">10</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb8-8" title="8">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"degree"</span>, <span class="dt">default =</span> 1L, <span class="dt">lower =</span> 1L),</a>
-<a class="sourceLine" id="cb8-9" title="9">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"penalty"</span>),</a>
-<a class="sourceLine" id="cb8-10" title="10">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"nk"</span>, <span class="dt">lower =</span> 0L),</a>
-<a class="sourceLine" id="cb8-11" title="11">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"thres"</span>, <span class="dt">default =</span> <span class="fl">0.001</span>),</a>
-<a class="sourceLine" id="cb8-12" title="12">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"minspan"</span>, <span class="dt">default =</span> 0L),</a>
-<a class="sourceLine" id="cb8-13" title="13">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"endspan"</span>, <span class="dt">default =</span> 0L),</a>
-<a class="sourceLine" id="cb8-14" title="14">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"newvar.penalty"</span>, <span class="dt">default =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb8-15" title="15">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"fast.k"</span>, <span class="dt">default =</span> 20L, <span class="dt">lower =</span> 0L),</a>
-<a class="sourceLine" id="cb8-16" title="16">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"fast.beta"</span>, <span class="dt">default =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb8-17" title="17">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"pmethod"</span>, <span class="dt">default =</span> <span class="st">"backward"</span>,</a>
-<a class="sourceLine" id="cb8-18" title="18">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"backward"</span>, <span class="st">"none"</span>, <span class="st">"exhaustive"</span>, <span class="st">"forward"</span>, <span class="st">"seqrep"</span>, <span class="st">"cv"</span>)),</a>
-<a class="sourceLine" id="cb8-19" title="19">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"nprune"</span>)</a>
-<a class="sourceLine" id="cb8-20" title="20">    ),</a>
-<a class="sourceLine" id="cb8-21" title="21">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"numerics"</span>, <span class="st">"factors"</span>),</a>
-<a class="sourceLine" id="cb8-22" title="22">    <span class="dt">name =</span> <span class="st">"Multivariate Adaptive Regression Splines"</span>,</a>
-<a class="sourceLine" id="cb8-23" title="23">    <span class="dt">short.name =</span> <span class="st">"earth"</span>,</a>
-<a class="sourceLine" id="cb8-24" title="24">    <span class="dt">note =</span> <span class="st">""</span></a>
-<a class="sourceLine" id="cb8-25" title="25">  )</a>
-<a class="sourceLine" id="cb8-26" title="26">}</a></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">trainLearner.regr.earth =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb9-2" title="2">{</a>
-<a class="sourceLine" id="cb9-3" title="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
-<a class="sourceLine" id="cb9-4" title="4">    earth<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/earth/topics/earth">earth</a></span>(f, <span class="dt">data =</span> <span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), ...)</a>
-<a class="sourceLine" id="cb9-5" title="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">predictLearner.regr.earth =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb10-2" title="2">{</a>
-<a class="sourceLine" id="cb10-3" title="3">    <span class="kw">predict</span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata)[, 1L]</a>
-<a class="sourceLine" id="cb10-4" title="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">makeRLearner.regr.earth =<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerRegr</a></span>(</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">    <span class="dt">cl =</span> <span class="st">"regr.earth"</span>,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="dt">package =</span> <span class="st">"earth"</span>,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"keepxy"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"trace"</span>, <span class="dt">default =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">10</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"degree"</span>, <span class="dt">default =</span> 1L, <span class="dt">lower =</span> 1L),</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"penalty"</span>),</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"nk"</span>, <span class="dt">lower =</span> 0L),</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"thres"</span>, <span class="dt">default =</span> <span class="fl">0.001</span>),</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"minspan"</span>, <span class="dt">default =</span> 0L),</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"endspan"</span>, <span class="dt">default =</span> 0L),</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"newvar.penalty"</span>, <span class="dt">default =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"fast.k"</span>, <span class="dt">default =</span> 20L, <span class="dt">lower =</span> 0L),</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"fast.beta"</span>, <span class="dt">default =</span> <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"pmethod"</span>, <span class="dt">default =</span> <span class="st">"backward"</span>,</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"backward"</span>, <span class="st">"none"</span>, <span class="st">"exhaustive"</span>, <span class="st">"forward"</span>, <span class="st">"seqrep"</span>, <span class="st">"cv"</span>)),</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"nprune"</span>)</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">    ),</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"numerics"</span>, <span class="st">"factors"</span>),</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">    <span class="dt">name =</span> <span class="st">"Multivariate Adaptive Regression Splines"</span>,</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">    <span class="dt">short.name =</span> <span class="st">"earth"</span>,</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">    <span class="dt">note =</span> <span class="st">""</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">  )</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">}</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">trainLearner.regr.earth =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">    earth<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/earth/topics/earth">earth</a></span>(f, <span class="dt">data =</span> <span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), ...)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">predictLearner.regr.earth =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">    <span class="kw">predict</span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata)[, 1L]</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">}</a></code></pre></div>
 <p>Again most of the data is passed straight through to/from the train/predict functions of the learner.</p>
 </div>
 <div id="survival-analysis" class="section level1">
@@ -465,79 +465,79 @@
 <p>For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the <a href="measures.html" target="_blank">cindex</a> (for <code>.learner$predict.type</code> == <code>"response"</code>). For <code>.learner$predict.type</code> == <code>"prob"</code>, there is no substantially meaningful measure (yet). You may either ignore this case or return something like predicted survival curves (cf. example below).</p>
 <p>There are three properties that are specific to survival learners: “rcens”, “lcens” and “icens”, defining the type(s) of censoring a learner can handle – right, left and/or interval censored.</p>
 <p>Let’s have a look at how the Cox Proportional Hazard Model (<code><a href="http://www.rdocumentation.org/packages/survival/topics/coxph">survival::coxph()</a></code>) from package <code>survival</code> has been integrated into the survival learner <code>surv.coxph</code> in <code>mlr</code> as an example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">makeRLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb11-2" title="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerSurv</a></span>(</a>
-<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">cl =</span> <span class="st">"surv.coxph"</span>,</a>
-<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">package =</span> <span class="st">"survival"</span>,</a>
-<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb11-6" title="6">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"ties"</span>, <span class="dt">default =</span> <span class="st">"efron"</span>, </a>
-<a class="sourceLine" id="cb11-7" title="7">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"efron"</span>, <span class="st">"breslow"</span>, <span class="st">"exact"</span>)),</a>
-<a class="sourceLine" id="cb11-8" title="8">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"singular.ok"</span>, <span class="dt">default =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb11-9" title="9">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"eps"</span>, <span class="dt">default =</span> <span class="fl">1e-09</span>, <span class="dt">lower =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb11-10" title="10">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"toler.chol"</span>, </a>
-<a class="sourceLine" id="cb11-11" title="11">        <span class="dt">default =</span> .Machine<span class="op">$</span>double.eps<span class="op">^</span><span class="fl">0.75</span>, <span class="dt">lower =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb11-12" title="12">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"iter.max"</span>, <span class="dt">default =</span> 20L, <span class="dt">lower =</span> 1L),</a>
-<a class="sourceLine" id="cb11-13" title="13">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"toler.inf"</span>, </a>
-<a class="sourceLine" id="cb11-14" title="14">        <span class="dt">default =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps<span class="op">^</span><span class="fl">0.75</span>), <span class="dt">lower =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb11-15" title="15">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"outer.max"</span>, <span class="dt">default =</span> 10L, <span class="dt">lower =</span> 1L),</a>
-<a class="sourceLine" id="cb11-16" title="16">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"model"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb11-17" title="17">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"x"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb11-18" title="18">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"y"</span>, <span class="dt">default =</span> <span class="ot">TRUE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb11-19" title="19">    ),</a>
-<a class="sourceLine" id="cb11-20" title="20">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"missings"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"weights"</span>, <span class="st">"prob"</span>, <span class="st">"rcens"</span>),</a>
-<a class="sourceLine" id="cb11-21" title="21">    <span class="dt">name =</span> <span class="st">"Cox Proportional Hazard Model"</span>,</a>
-<a class="sourceLine" id="cb11-22" title="22">    <span class="dt">short.name =</span> <span class="st">"coxph"</span>,</a>
-<a class="sourceLine" id="cb11-23" title="23">    <span class="dt">note =</span> <span class="st">""</span></a>
-<a class="sourceLine" id="cb11-24" title="24">  )</a>
-<a class="sourceLine" id="cb11-25" title="25">}</a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">trainLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb12-2" title="2">{</a>
-<a class="sourceLine" id="cb12-3" title="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
-<a class="sourceLine" id="cb12-4" title="4">    data =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, <span class="dt">subset =</span> .subset)</a>
-<a class="sourceLine" id="cb12-5" title="5">    <span class="cf">if</span> (<span class="kw">is.null</span>(.weights)) {</a>
-<a class="sourceLine" id="cb12-6" title="6">        survival<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/survival/topics/coxph">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, ...)</a>
-<a class="sourceLine" id="cb12-7" title="7">    }</a>
-<a class="sourceLine" id="cb12-8" title="8">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb12-9" title="9">        survival<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/survival/topics/coxph">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, <span class="dt">weights =</span> .weights, </a>
-<a class="sourceLine" id="cb12-10" title="10">            ...)</a>
-<a class="sourceLine" id="cb12-11" title="11">    }</a>
-<a class="sourceLine" id="cb12-12" title="12">}</a></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">predictLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb13-2" title="2">{</a>
-<a class="sourceLine" id="cb13-3" title="3">    <span class="kw">predict</span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">type =</span> <span class="st">"lp"</span>, </a>
-<a class="sourceLine" id="cb13-4" title="4">        ...)</a>
-<a class="sourceLine" id="cb13-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">makeRLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerSurv</a></span>(</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">    <span class="dt">cl =</span> <span class="st">"surv.coxph"</span>,</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="dt">package =</span> <span class="st">"survival"</span>,</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">      <span class="kw">makeDiscreteLearnerParam</span>(<span class="dt">id =</span> <span class="st">"ties"</span>, <span class="dt">default =</span> <span class="st">"efron"</span>, </a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"efron"</span>, <span class="st">"breslow"</span>, <span class="st">"exact"</span>)),</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"singular.ok"</span>, <span class="dt">default =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"eps"</span>, <span class="dt">default =</span> <span class="fl">1e-09</span>, <span class="dt">lower =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"toler.chol"</span>, </a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">        <span class="dt">default =</span> .Machine<span class="op">$</span>double.eps<span class="op">^</span><span class="fl">0.75</span>, <span class="dt">lower =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"iter.max"</span>, <span class="dt">default =</span> 20L, <span class="dt">lower =</span> 1L),</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">      <span class="kw">makeNumericLearnerParam</span>(<span class="dt">id =</span> <span class="st">"toler.inf"</span>, </a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">        <span class="dt">default =</span> <span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps<span class="op">^</span><span class="fl">0.75</span>), <span class="dt">lower =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb11-15" data-line-number="15">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"outer.max"</span>, <span class="dt">default =</span> 10L, <span class="dt">lower =</span> 1L),</a>
+<a class="sourceLine" id="cb11-16" data-line-number="16">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"model"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb11-17" data-line-number="17">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"x"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb11-18" data-line-number="18">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"y"</span>, <span class="dt">default =</span> <span class="ot">TRUE</span>, <span class="dt">tunable =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb11-19" data-line-number="19">    ),</a>
+<a class="sourceLine" id="cb11-20" data-line-number="20">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"missings"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"weights"</span>, <span class="st">"prob"</span>, <span class="st">"rcens"</span>),</a>
+<a class="sourceLine" id="cb11-21" data-line-number="21">    <span class="dt">name =</span> <span class="st">"Cox Proportional Hazard Model"</span>,</a>
+<a class="sourceLine" id="cb11-22" data-line-number="22">    <span class="dt">short.name =</span> <span class="st">"coxph"</span>,</a>
+<a class="sourceLine" id="cb11-23" data-line-number="23">    <span class="dt">note =</span> <span class="st">""</span></a>
+<a class="sourceLine" id="cb11-24" data-line-number="24">  )</a>
+<a class="sourceLine" id="cb11-25" data-line-number="25">}</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">trainLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">    data =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, <span class="dt">subset =</span> .subset)</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">    <span class="cf">if</span> (<span class="kw">is.null</span>(.weights)) {</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">        survival<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/survival/topics/coxph">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, ...)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">    }</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">    <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">        survival<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/survival/topics/coxph">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, <span class="dt">weights =</span> .weights, </a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">            ...)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">    }</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">predictLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">    <span class="kw">predict</span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">type =</span> <span class="st">"lp"</span>, </a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">        ...)</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">}</a></code></pre></div>
 </div>
 <div id="clustering" class="section level1">
 <h1 class="hasAnchor">
 <a href="#clustering" class="anchor"></a>Clustering</h1>
 <p>For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to. The numbering should start at 1.</p>
 <p>Below is the definition for the <code>FarthestFirst</code> (<code><a href="http://www.rdocumentation.org/packages/RWeka/topics/Weka_clusterers">RWeka::FarthestFirst()</a></code>) learner from the <code>RWeka</code> package. Weka starts the IDs of the clusters at 0, so we add 1 to the predicted clusters. RWeka has a different way of setting learner parameters; we use the special <code>Weka_control</code> function to do this.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">makeRLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb14-2" title="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerCluster</a></span>(</a>
-<a class="sourceLine" id="cb14-3" title="3">    <span class="dt">cl =</span> <span class="st">"cluster.FarthestFirst"</span>,</a>
-<a class="sourceLine" id="cb14-4" title="4">    <span class="dt">package =</span> <span class="st">"RWeka"</span>,</a>
-<a class="sourceLine" id="cb14-5" title="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb14-6" title="6">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"N"</span>, <span class="dt">default =</span> 2L, <span class="dt">lower =</span> 1L),</a>
-<a class="sourceLine" id="cb14-7" title="7">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"S"</span>, <span class="dt">default =</span> 1L, <span class="dt">lower =</span> 1L),</a>
-<a class="sourceLine" id="cb14-8" title="8">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"output-debug-info"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb14-9" title="9">        <span class="dt">tunable =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb14-10" title="10">    ),</a>
-<a class="sourceLine" id="cb14-11" title="11">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"numerics"</span>),</a>
-<a class="sourceLine" id="cb14-12" title="12">    <span class="dt">name =</span> <span class="st">"FarthestFirst Clustering Algorithm"</span>,</a>
-<a class="sourceLine" id="cb14-13" title="13">    <span class="dt">short.name =</span> <span class="st">"farthestfirst"</span></a>
-<a class="sourceLine" id="cb14-14" title="14">  )</a>
-<a class="sourceLine" id="cb14-15" title="15">}</a></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">trainLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb15-2" title="2">{</a>
-<a class="sourceLine" id="cb15-3" title="3">    ctrl =<span class="st"> </span>RWeka<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RWeka/topics/Weka_control">Weka_control</a></span>(...)</a>
-<a class="sourceLine" id="cb15-4" title="4">    RWeka<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RWeka/topics/Weka_clusterers">FarthestFirst</a></span>(<span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), <span class="dt">control =</span> ctrl)</a>
-<a class="sourceLine" id="cb15-5" title="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">predictLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb16-2" title="2">{</a>
-<a class="sourceLine" id="cb16-3" title="3">    <span class="kw">as.integer</span>(<span class="kw">predict</span>(.model<span class="op">$</span>learner.model, .newdata, ...)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">        </span>1L</a>
-<a class="sourceLine" id="cb16-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">makeRLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerCluster</a></span>(</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">    <span class="dt">cl =</span> <span class="st">"cluster.FarthestFirst"</span>,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">    <span class="dt">package =</span> <span class="st">"RWeka"</span>,</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"N"</span>, <span class="dt">default =</span> 2L, <span class="dt">lower =</span> 1L),</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"S"</span>, <span class="dt">default =</span> 1L, <span class="dt">lower =</span> 1L),</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">      <span class="kw">makeLogicalLearnerParam</span>(<span class="dt">id =</span> <span class="st">"output-debug-info"</span>, <span class="dt">default =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">        <span class="dt">tunable =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">    ),</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"numerics"</span>),</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">    <span class="dt">name =</span> <span class="st">"FarthestFirst Clustering Algorithm"</span>,</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">    <span class="dt">short.name =</span> <span class="st">"farthestfirst"</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14">  )</a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">}</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">trainLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">    ctrl =<span class="st"> </span>RWeka<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RWeka/topics/Weka_control">Weka_control</a></span>(...)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">    RWeka<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RWeka/topics/Weka_clusterers">FarthestFirst</a></span>(<span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), <span class="dt">control =</span> ctrl)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">predictLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">    <span class="kw">as.integer</span>(<span class="kw">predict</span>(.model<span class="op">$</span>learner.model, .newdata, ...)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">        </span>1L</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">}</a></code></pre></div>
 </div>
 <div id="multilabel-classification" class="section level1">
 <h1 class="hasAnchor">
@@ -546,29 +546,29 @@
 <p>At this moment the only problem transformation method implemented in <code>mlr</code> is the binary relevance method (<code><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper()</a></code>). Integrating more of these methods requires good knowledge of the architecture of the <code>mlr</code> package.</p>
 <p>The integration of an algorithm adaptation multilabel classification learner is easier and works very similar to the normal multiclass-classification. In contrast to the multiclass case, not all of the learner properties are relevant. In particular, whether one-, two-, or multi-class problems are supported is not applicable. Furthermore the prediction function output must be a matrix with each prediction of a label in one column and the names of the labels as column names. If <code>.learner$predict.type</code> is <code>"response"</code> the predictions must be logical. If <code>.learner$predict.type</code> is <code>"prob"</code> and this type of prediction is supported by the learner, the matrix must consist of predicted probabilities.</p>
 <p>Below is the definition of the <code><a href="http://www.rdocumentation.org/packages/rFerns/topics/rFerns">rFerns::rFerns()</a></code> learner from the <code>rFerns</code> package, which does not support probability predictions.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">makeRLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb17-2" title="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerMultilabel</a></span>(</a>
-<a class="sourceLine" id="cb17-3" title="3">    <span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>,</a>
-<a class="sourceLine" id="cb17-4" title="4">    <span class="dt">package =</span> <span class="st">"rFerns"</span>,</a>
-<a class="sourceLine" id="cb17-5" title="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb17-6" title="6">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"depth"</span>, <span class="dt">default =</span> 5L),</a>
-<a class="sourceLine" id="cb17-7" title="7">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"ferns"</span>, <span class="dt">default =</span> 1000L)</a>
-<a class="sourceLine" id="cb17-8" title="8">    ),</a>
-<a class="sourceLine" id="cb17-9" title="9">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span>),</a>
-<a class="sourceLine" id="cb17-10" title="10">    <span class="dt">name =</span> <span class="st">"Random ferns"</span>,</a>
-<a class="sourceLine" id="cb17-11" title="11">    <span class="dt">short.name =</span> <span class="st">"rFerns"</span>,</a>
-<a class="sourceLine" id="cb17-12" title="12">    <span class="dt">note =</span> <span class="st">""</span></a>
-<a class="sourceLine" id="cb17-13" title="13">  )</a>
-<a class="sourceLine" id="cb17-14" title="14">}</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">trainLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb18-2" title="2">{</a>
-<a class="sourceLine" id="cb18-3" title="3">    d =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset, <span class="dt">target.extra =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb18-4" title="4">    rFerns<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rFerns/topics/rFerns">rFerns</a></span>(<span class="dt">x =</span> d<span class="op">$</span>data, <span class="dt">y =</span> <span class="kw">as.matrix</span>(d<span class="op">$</span>target), ...)</a>
-<a class="sourceLine" id="cb18-5" title="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">predictLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb19-2" title="2">{</a>
-<a class="sourceLine" id="cb19-3" title="3">    <span class="kw">as.matrix</span>(<span class="kw">predict</span>(.model<span class="op">$</span>learner.model, .newdata, ...))</a>
-<a class="sourceLine" id="cb19-4" title="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">makeRLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">  <span class="kw"><a href="../../reference/RLearner.html">makeRLearnerMultilabel</a></span>(</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">    <span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>,</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">    <span class="dt">package =</span> <span class="st">"rFerns"</span>,</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">    <span class="dt">par.set =</span> <span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"depth"</span>, <span class="dt">default =</span> 5L),</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">      <span class="kw">makeIntegerLearnerParam</span>(<span class="dt">id =</span> <span class="st">"ferns"</span>, <span class="dt">default =</span> 1000L)</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">    ),</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">    <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span>),</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">    <span class="dt">name =</span> <span class="st">"Random ferns"</span>,</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11">    <span class="dt">short.name =</span> <span class="st">"rFerns"</span>,</a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">    <span class="dt">note =</span> <span class="st">""</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">  )</a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">trainLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">    d =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset, <span class="dt">target.extra =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">    rFerns<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rFerns/topics/rFerns">rFerns</a></span>(<span class="dt">x =</span> d<span class="op">$</span>data, <span class="dt">y =</span> <span class="kw">as.matrix</span>(d<span class="op">$</span>target), ...)</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">predictLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">    <span class="kw">as.matrix</span>(<span class="kw">predict</span>(.model<span class="op">$</span>learner.model, .newdata, ...))</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">}</a></code></pre></div>
 </div>
 <div id="creating-a-new-method-for-extracting-feature-importance-values" class="section level1">
 <h1 class="hasAnchor">
@@ -581,17 +581,17 @@
 </ul>
 <p>This method takes the <code><a href="../../reference/makeLearner.html">Learner()</a></code> <code>.learner</code>, the WrappedModel (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) <code>.model</code> and potential further arguments and calculates or extracts the feature importance. It must return a named vector of importance values.</p>
 <p>Below are two simple examples. In case of <code>"classif.rpart"</code> the feature importance values can be easily extracted from the fitted model.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">getFeatureImportanceLearner.classif.rpart =<span class="st"> </span><span class="cf">function</span> (.learner, .model, ...) </a>
-<a class="sourceLine" id="cb20-2" title="2">{</a>
-<a class="sourceLine" id="cb20-3" title="3">    mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb20-4" title="4">    mod<span class="op">$</span>variable.importance</a>
-<a class="sourceLine" id="cb20-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">getFeatureImportanceLearner.classif.rpart =<span class="st"> </span><span class="cf">function</span> (.learner, .model, ...) </a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">    mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">    mod<span class="op">$</span>variable.importance</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">}</a></code></pre></div>
 <p>For the <code><a href="http://www.rdocumentation.org/packages/randomForestSRC/topics/rfsrc">randomForestSRC::rfsrc()</a></code> from package <code>randomForestSRC</code> function <code><a href="http://www.rdocumentation.org/packages/randomForestSRC/topics/vimp.rfsrc">randomForestSRC::vimp()</a></code> is called.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">getFeatureImportanceLearner.classif.randomForestSRC =<span class="st"> </span><span class="cf">function</span> (.learner, .model, ...) </a>
-<a class="sourceLine" id="cb21-2" title="2">{</a>
-<a class="sourceLine" id="cb21-3" title="3">    mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb21-4" title="4">    randomForestSRC<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForestSRC/topics/vimp.rfsrc">vimp</a></span>(mod, ...)<span class="op">$</span>importance[, <span class="st">"all"</span>]</a>
-<a class="sourceLine" id="cb21-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">getFeatureImportanceLearner.classif.randomForestSRC =<span class="st"> </span><span class="cf">function</span> (.learner, .model, ...) </a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">    mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">    randomForestSRC<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForestSRC/topics/vimp.rfsrc">vimp</a></span>(mod, ...)<span class="op">$</span>importance[, <span class="st">"all"</span>]</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">}</a></code></pre></div>
 </div>
 <div id="creating-a-new-method-for-extracting-out-of-bag-predictions" class="section level1">
 <h1 class="hasAnchor">
@@ -603,33 +603,33 @@
 <li>implement a new S3 method for function <code><a href="../../reference/getOOBPredsLearner.html">getOOBPredsLearner()</a></code> (which later is called internally by <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code>).</li>
 </ul>
 <p>This method takes the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) <code>.learner</code> and the WrappedModel (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) <code>.model</code> and extracts the OOB predictions. It must return the predictions in the same format as the <code><a href="../../reference/predictLearner.html">predictLearner()</a></code> function.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">getOOBPredsLearner.classif.randomForest =<span class="st"> </span><span class="cf">function</span> (.learner, .model) </a>
-<a class="sourceLine" id="cb22-2" title="2">{</a>
-<a class="sourceLine" id="cb22-3" title="3">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
-<a class="sourceLine" id="cb22-4" title="4">        m =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb22-5" title="5">        <span class="kw">unname</span>(m<span class="op">$</span>predicted)</a>
-<a class="sourceLine" id="cb22-6" title="6">    }</a>
-<a class="sourceLine" id="cb22-7" title="7">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb22-8" title="8">        <span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)<span class="op">$</span>votes</a>
-<a class="sourceLine" id="cb22-9" title="9">    }</a>
-<a class="sourceLine" id="cb22-10" title="10">}</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">getOOBPredsLearner.classif.randomForest =<span class="st"> </span><span class="cf">function</span> (.learner, .model) </a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">        m =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">        <span class="kw">unname</span>(m<span class="op">$</span>predicted)</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">    }</a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">    <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">        <span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)<span class="op">$</span>votes</a>
+<a class="sourceLine" id="cb22-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb22-10" data-line-number="10">}</a></code></pre></div>
 </div>
 <div id="registering-your-learner" class="section level1">
 <h1 class="hasAnchor">
 <a href="#registering-your-learner" class="anchor"></a>Registering your learner</h1>
 <p>If your interface code to a new learning algorithm exists only locally, i.e., it is not (yet) merged into <code>mlr</code> or does not live in an extra package with a proper namespace you might want to register the new S3 methods to make sure that these are found by, e.g., <code><a href="../../reference/listLearners.html">listLearners()</a></code>. You can do this as follows:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">registerS3method</span>(<span class="st">"makeRLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>, </a>
-<a class="sourceLine" id="cb23-2" title="2">  makeRLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="kw">registerS3method</span>(<span class="st">"trainLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>, </a>
-<a class="sourceLine" id="cb23-4" title="4">  trainLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a>
-<a class="sourceLine" id="cb23-5" title="5"><span class="kw">registerS3method</span>(<span class="st">"predictLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>, </a>
-<a class="sourceLine" id="cb23-6" title="6">  predictLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">registerS3method</span>(<span class="st">"makeRLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>, </a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">  makeRLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">registerS3method</span>(<span class="st">"trainLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>, </a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">  trainLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">registerS3method</span>(<span class="st">"predictLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>, </a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">  predictLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a></code></pre></div>
 <p>If you have written more methods, for example in order to extract feature importance values or out-of-bag predictions these also need to be registered in the same manner, for example:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">registerS3method</span>(<span class="st">"getFeatureImportanceLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>,</a>
-<a class="sourceLine" id="cb24-2" title="2">  getFeatureImportanceLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">registerS3method</span>(<span class="st">"getFeatureImportanceLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>,</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">  getFeatureImportanceLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</a></code></pre></div>
 <p>For the new learner to work with parallelization, you may have to export the new methods explicitly:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">parallelExport</span>(<span class="st">"trainLearner.&lt;awesome_new_learner_class&gt;"</span>, </a>
-<a class="sourceLine" id="cb25-2" title="2">  <span class="st">"predictLearner.&lt;awesome_new_learner_class&gt;"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">parallelExport</span>(<span class="st">"trainLearner.&lt;awesome_new_learner_class&gt;"</span>, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">  <span class="st">"predictLearner.&lt;awesome_new_learner_class&gt;"</span>)</a></code></pre></div>
 </div>
 <div id="further-information-for-developers" class="section level1">
 <h1 class="hasAnchor">
@@ -649,54 +649,54 @@
 <p>The tests make sure that we get the same results when the learner is invoked through the <code>mlr</code> interface and when using the original functions. If you are not familiar or want to learn more about unit testing and package <code>testthat</code> have a look at <a href="http://r-pkgs.had.co.nz/tests.html" target="_blank">the Testing chapter in Hadley Wickham’s R packages</a>.</p>
 <p>In <code>mlr</code> all unit tests are in the following directory: <a href="https://github.com/mlr-org/mlr/tree/master/tests/testthat" class="uri">https://github.com/mlr-org/mlr/tree/master/tests/testthat</a>. For each learner interface there is an individual file whose name follows the scheme <code>test_&lt;type&gt;_&lt;learner_name&gt;.R</code>, for example <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R</a>.</p>
 <p>Below is a snippet from the tests of the lda interface <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R</a>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">test_that</span>(<span class="st">"classif_lda"</span>, {</a>
-<a class="sourceLine" id="cb26-2" title="2">  <span class="kw">requirePackagesOrSkip</span>(<span class="st">"MASS"</span>, <span class="dt">default.method =</span> <span class="st">"load"</span>)</a>
-<a class="sourceLine" id="cb26-3" title="3"></a>
-<a class="sourceLine" id="cb26-4" title="4">  <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
-<a class="sourceLine" id="cb26-5" title="5">  m =<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">lda</a></span>(<span class="dt">formula =</span> multiclass.formula, <span class="dt">data =</span> multiclass.train)</a>
-<a class="sourceLine" id="cb26-6" title="6">  <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
-<a class="sourceLine" id="cb26-7" title="7">  p =<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> multiclass.test)</a>
-<a class="sourceLine" id="cb26-8" title="8"></a>
-<a class="sourceLine" id="cb26-9" title="9">  <span class="kw">testSimple</span>(<span class="st">"classif.lda"</span>, multiclass.df, multiclass.target, multiclass.train.inds, p<span class="op">$</span>class)</a>
-<a class="sourceLine" id="cb26-10" title="10">  <span class="kw">testProb</span>(<span class="st">"classif.lda"</span>, multiclass.df, multiclass.target, multiclass.train.inds, p<span class="op">$</span>posterior)</a>
-<a class="sourceLine" id="cb26-11" title="11">})</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">test_that</span>(<span class="st">"classif_lda"</span>, {</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">  <span class="kw">requirePackagesOrSkip</span>(<span class="st">"MASS"</span>, <span class="dt">default.method =</span> <span class="st">"load"</span>)</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">  <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">  m =<span class="st"> </span>MASS<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">lda</a></span>(<span class="dt">formula =</span> multiclass.formula, <span class="dt">data =</span> multiclass.train)</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">  <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
+<a class="sourceLine" id="cb26-7" data-line-number="7">  p =<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> multiclass.test)</a>
+<a class="sourceLine" id="cb26-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb26-9" data-line-number="9">  <span class="kw">testSimple</span>(<span class="st">"classif.lda"</span>, multiclass.df, multiclass.target, multiclass.train.inds, p<span class="op">$</span>class)</a>
+<a class="sourceLine" id="cb26-10" data-line-number="10">  <span class="kw">testProb</span>(<span class="st">"classif.lda"</span>, multiclass.df, multiclass.target, multiclass.train.inds, p<span class="op">$</span>posterior)</a>
+<a class="sourceLine" id="cb26-11" data-line-number="11">})</a></code></pre></div>
 <p>The tests make use of numerous helper objects and helper functions. All of these are defined in the <code>helper_</code> files in <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/</a>.</p>
 <p>In the above code the first line just loads package <code>MASS</code> or skips the test if the package is not available. The objects <code>multiclass.formula</code>, <code>multiclass.train</code>, <code>multiclass.test</code> etc. are defined in <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_objects.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_objects.R</a>. We tried to choose fairly self-explanatory names: For example <code>multiclass</code> indicates a multi-class classification problem, <code>multiclass.train</code> contains data for training, <code>multiclass.formula</code> a <code>formula</code> object etc.</p>
 <p>The test fits an lda model on the training set and makes predictions on the test set using the original functions <code><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code> and <code>MASS:predict.lda()</code>. The helper functions <code>testSimple</code> and <code>testProb</code> perform training and prediction on the same data using the <code>mlr</code> interface – <code>testSimple</code> for <code>predict.type = "response</code> and <code>testProbs</code> for <code>predict.type = "prob"</code> – and check if the predicted class labels and probabilities coincide with the outcomes <code>p$class</code> and <code>p$posterior</code>.</p>
 <p>In order to get reproducible results seeding is required for many learners. The <code>"mlr.debug.seed"</code> works as follows: When invoking the tests the option <code>"mlr.debug.seed"</code> is set (see <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_zzz.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_zzz.R</a>), and <code>set.seed(getOption("mlr.debug.seed"))</code> is used to specify the seed. Internally, <code>mlr</code>’s <a href="https://github.com/mlr-org/mlr/blob/master/R/train.R#L73">train</a> and <a href="https://github.com/mlr-org/mlr/blob/master/R/predict.R#L100">predict.WrappedModel</a> functions check if the <code>"mlr.debug.seed"</code> option is set and if yes, also specify the seed.</p>
 <p>Note that the option <code>"mlr.debug.seed"</code> is only set for testing, so no seeding happens in normal usage of <code>mlr</code>.</p>
 <p>Let’s look at a second example. Many learners have parameters that are commonly changed or tuned and it is important to make sure that these are passed through correctly. Below is a snippet from <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_regr_randomForest.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_regr_randomForest.R</a>.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">test_that</span>(<span class="st">"regr_randomForest"</span>, {</a>
-<a class="sourceLine" id="cb27-2" title="2">  <span class="kw">requirePackagesOrSkip</span>(<span class="st">"randomForest"</span>, <span class="dt">default.method =</span> <span class="st">"load"</span>)</a>
-<a class="sourceLine" id="cb27-3" title="3"></a>
-<a class="sourceLine" id="cb27-4" title="4">  parset.list =<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb27-5" title="5">    <span class="kw">list</span>(),</a>
-<a class="sourceLine" id="cb27-6" title="6">    <span class="kw">list</span>(<span class="dt">ntree =</span> <span class="dv">5</span>, <span class="dt">mtry =</span> <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb27-7" title="7">    <span class="kw">list</span>(<span class="dt">ntree =</span> <span class="dv">5</span>, <span class="dt">mtry =</span> <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb27-8" title="8">    <span class="kw">list</span>(<span class="dt">proximity =</span> <span class="ot">TRUE</span>, <span class="dt">oob.prox =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb27-9" title="9">    <span class="kw">list</span>(<span class="dt">nPerm =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb27-10" title="10">  )</a>
-<a class="sourceLine" id="cb27-11" title="11"></a>
-<a class="sourceLine" id="cb27-12" title="12">  old.predicts.list =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb27-13" title="13"></a>
-<a class="sourceLine" id="cb27-14" title="14">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(parset.list)) {</a>
-<a class="sourceLine" id="cb27-15" title="15">    parset =<span class="st"> </span>parset.list[[i]]</a>
-<a class="sourceLine" id="cb27-16" title="16">    pars =<span class="st"> </span><span class="kw">list</span>(<span class="dt">formula =</span> regr.formula, <span class="dt">data =</span> regr.train)</a>
-<a class="sourceLine" id="cb27-17" title="17">    pars =<span class="st"> </span><span class="kw">c</span>(pars, parset)</a>
-<a class="sourceLine" id="cb27-18" title="18">    <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
-<a class="sourceLine" id="cb27-19" title="19">    m =<span class="st"> </span><span class="kw">do.call</span>(randomForest<span class="op">::</span>randomForest, pars)</a>
-<a class="sourceLine" id="cb27-20" title="20">    <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
-<a class="sourceLine" id="cb27-21" title="21">    p =<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> regr.test, <span class="dt">type =</span> <span class="st">"response"</span>)</a>
-<a class="sourceLine" id="cb27-22" title="22">    old.predicts.list[[i]] =<span class="st"> </span>p</a>
-<a class="sourceLine" id="cb27-23" title="23">  }</a>
-<a class="sourceLine" id="cb27-24" title="24"></a>
-<a class="sourceLine" id="cb27-25" title="25">  <span class="kw">testSimpleParsets</span>(<span class="st">"regr.randomForest"</span>, regr.df, regr.target,</a>
-<a class="sourceLine" id="cb27-26" title="26">    regr.train.inds, old.predicts.list, parset.list)</a>
-<a class="sourceLine" id="cb27-27" title="27">})</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">test_that</span>(<span class="st">"regr_randomForest"</span>, {</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">  <span class="kw">requirePackagesOrSkip</span>(<span class="st">"randomForest"</span>, <span class="dt">default.method =</span> <span class="st">"load"</span>)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">  parset.list =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">    <span class="kw">list</span>(),</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">    <span class="kw">list</span>(<span class="dt">ntree =</span> <span class="dv">5</span>, <span class="dt">mtry =</span> <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">    <span class="kw">list</span>(<span class="dt">ntree =</span> <span class="dv">5</span>, <span class="dt">mtry =</span> <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8">    <span class="kw">list</span>(<span class="dt">proximity =</span> <span class="ot">TRUE</span>, <span class="dt">oob.prox =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">    <span class="kw">list</span>(<span class="dt">nPerm =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb27-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb27-12" data-line-number="12">  old.predicts.list =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(parset.list)) {</a>
+<a class="sourceLine" id="cb27-15" data-line-number="15">    parset =<span class="st"> </span>parset.list[[i]]</a>
+<a class="sourceLine" id="cb27-16" data-line-number="16">    pars =<span class="st"> </span><span class="kw">list</span>(<span class="dt">formula =</span> regr.formula, <span class="dt">data =</span> regr.train)</a>
+<a class="sourceLine" id="cb27-17" data-line-number="17">    pars =<span class="st"> </span><span class="kw">c</span>(pars, parset)</a>
+<a class="sourceLine" id="cb27-18" data-line-number="18">    <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
+<a class="sourceLine" id="cb27-19" data-line-number="19">    m =<span class="st"> </span><span class="kw">do.call</span>(randomForest<span class="op">::</span>randomForest, pars)</a>
+<a class="sourceLine" id="cb27-20" data-line-number="20">    <span class="kw">set.seed</span>(<span class="kw">getOption</span>(<span class="st">"mlr.debug.seed"</span>))</a>
+<a class="sourceLine" id="cb27-21" data-line-number="21">    p =<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> regr.test, <span class="dt">type =</span> <span class="st">"response"</span>)</a>
+<a class="sourceLine" id="cb27-22" data-line-number="22">    old.predicts.list[[i]] =<span class="st"> </span>p</a>
+<a class="sourceLine" id="cb27-23" data-line-number="23">  }</a>
+<a class="sourceLine" id="cb27-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb27-25" data-line-number="25">  <span class="kw">testSimpleParsets</span>(<span class="st">"regr.randomForest"</span>, regr.df, regr.target,</a>
+<a class="sourceLine" id="cb27-26" data-line-number="26">    regr.train.inds, old.predicts.list, parset.list)</a>
+<a class="sourceLine" id="cb27-27" data-line-number="27">})</a></code></pre></div>
 <p>All tested parameter configurations are collected in the <code>parset.list</code>. In order to make sure that the default parameter configuration is tested the first element of the <code>parset.list</code> is an empty <code>list</code> (<code><a href="http://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code>). Then we simply loop over all parameter settings and store the resulting predictions in <code>old.predicts.list</code>. Again the helper function <code>testSimpleParsets</code> does the same using the <code>mlr</code> interface and compares the outcomes.</p>
 <p>Additional to tests for individual learners we also have general tests that loop through all integrated learners and make for example sure that learners have the correct properties (e.g. a learner with property <code>"factors"</code> can cope with <code>factor</code> (<code><a href="http://www.rdocumentation.org/packages/base/topics/factor">base::factor()</a></code>) features, a learner with property <code>"weights"</code> takes observation weights into account properly etc.). For example <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R</a> runs through all classification learners. Similar tests exist for all types of learning methods like regression, cluster and survival analysis as well as multilabel classification.</p>
 <p>In order to run all tests for, e.g., classification learners on your machine you can invoke the tests from within <strong>R</strong> by</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/test">test</a></span>(<span class="st">"mlr"</span>, <span class="dt">filter =</span> <span class="st">"classif"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/test">test</a></span>(<span class="st">"mlr"</span>, <span class="dt">filter =</span> <span class="st">"classif"</span>)</a></code></pre></div>
 <p>or from the command line using <a href="https://github.com/rdatsci/rt">Michel’s rt tool</a></p>
 <pre><code>rtest --filter=classif</code></pre>
 </div>

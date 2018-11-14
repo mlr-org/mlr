@@ -17,6 +17,7 @@ library("rpart")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Resampling strategies are usually used to assess the performance of a learning algorithm:
@@ -85,7 +86,7 @@ In the $b$-th of the $K$ iterations, the $b$-th subset is used for testing, whil
 As usual, you can either pass a Learner (`makeLearner()`) object to `resample()` or, as done here, provide the class name `"regr.lm"` of the learner.
 Since no performance measure is specified the default for regression learners (mean squared error, [mse](measures.html){target="_blank"}) is calculated.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 # Specify the resampling strategy (3-fold cross-validation)
 rdesc = makeResampleDesc("CV", iters = 3)
 
@@ -93,6 +94,29 @@ rdesc = makeResampleDesc("CV", iters = 3)
 r = resample("regr.lm", bh.task, rdesc)
 
 r
+```
+
+```{r eval = FALSE}
+# Specify the resampling strategy (3-fold cross-validation)
+rdesc = makeResampleDesc("CV", iters = 3)
+
+# Calculate the performance
+r = resample("regr.lm", bh.task, rdesc)
+## Resampling: cross-validation
+## Measures:             mse
+## [Resample] iter 1:    25.1371739
+## [Resample] iter 2:    23.1279497
+## [Resample] iter 3:    21.9152672
+## 
+## Aggregated Result: mse.test.mean=23.3934636
+## 
+
+r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.test.mean=23.3934636
+## Runtime: 0.0375051
 ```
 
 The result `r` is an object of class `resample()` result.
@@ -121,7 +145,7 @@ If there is just one iteration, the strategy is commonly called *holdout* or *te
 You can calculate several measures at once by passing a `list` of Measures (`makeMeasure()`)s to `resample()`.
 Below, the error rate ([mmce](measures.html){target="_blank"}), false positive and false negative rates ([fpr](measures.html){target="_blank"}, [fnr](measures.html){target="_blank"}), and the time it takes to train the learner ([timetrain](measures.html){target="_blank"}) are estimated by *subsampling* with 5 iterations.
 
-```{r}
+```{r echo = FALSE, results='hide', message=FALSE}
 # Subsampling with 5 iterations and default split ratio 2/3
 rdesc = makeResampleDesc("Subsample", iters = 5)
 
@@ -133,15 +157,55 @@ lrn = makeLearner("classif.rpart", parms = list(split = "information"))
 
 # Calculate the performance measures
 r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
+```
+
+```{r eval = FALSE}
+# Subsampling with 5 iterations and default split ratio 2/3
+rdesc = makeResampleDesc("Subsample", iters = 5)
+
+# Subsampling with 5 iterations and 4/5 training data
+rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
+
+# Classification tree with information splitting criterion
+lrn = makeLearner("classif.rpart", parms = list(split = "information"))
+
+# Calculate the performance measures
+r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
+## Resampling: subsampling
+## Measures:             mmce        fpr         fnr         timetrain
+## [Resample] iter 1:    0.4047619   0.5416667   0.2222222   0.0110000
+## [Resample] iter 2:    0.1666667   0.1200000   0.2352941   0.0070000
+## [Resample] iter 3:    0.3333333   0.1333333   0.4444444   0.0100000
+## [Resample] iter 4:    0.2380952   0.3913043   0.0526316   0.0280000
+## [Resample] iter 5:    0.3095238   0.2800000   0.3529412   0.0080000
+## 
+## Aggregated Result: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000
+## 
 
 r
+## Resample Result
+## Task: Sonar-example
+## Learner: classif.rpart
+## Aggr perf: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000
+## Runtime: 0.10692
 ```
 
 If you want to add further measures afterwards, use `addRRMeasure()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 # Add balanced error rate (ber) and time used to predict
 addRRMeasure(r, list(ber, timepredict))
+```
+
+```{r eval = FALSE}
+# Add balanced error rate (ber) and time used to predict
+addRRMeasure(r, list(ber, timepredict))
+
+## Resample Result
+## Task: Sonar-example
+## Learner: classif.rpart
+## Aggr perf: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000,ber.test.mean=0.2773838,timepredict.test.mean=0.0032000
+## Runtime: 0.10692
 ```
 
 By default, `resample()` prints progress messages and intermediate results. You can turn this off by setting `show.info = FALSE`, as done in the code chunk below. 
@@ -150,11 +214,24 @@ By default, `resample()` prints progress messages and intermediate results. You 
 In the above example, the Learner (`makeLearner()`) was explicitly constructed. 
 For convenience you can also specify the learner as a string and pass any learner parameters via the `...` argument of `resample()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 r = resample("classif.rpart", parms = list(split = "information"), sonar.task, rdesc,
   measures = list(mmce, fpr, fnr, timetrain), show.info = FALSE)
 
 r
+```
+
+```{r eval = FALSE}
+r = resample("classif.rpart", parms = list(split = "information"), sonar.task, rdesc,
+  measures = list(mmce, fpr, fnr, timetrain), show.info = FALSE)
+
+r
+
+## Resample Result
+## Task: Sonar-example
+## Learner: classif.rpart
+## Aggr perf: mmce.test.mean=0.2428571,fpr.test.mean=0.2968173,fnr.test.mean=0.1970195,timetrain.test.mean=0.0084000
+## Runtime: 0.0791025
 ```
 
 ## Accessing resample results
@@ -168,11 +245,48 @@ If you do not want to keep them, e.g., in order to conserve memory, set `keep.pr
 
 The predictions are stored in slot `$pred` of the resampling result, which can also be accessed by function `getRRPredictions()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 r$pred
 
 pred = getRRPredictions(r)
 pred
+```
+
+```{r eval = FALSE}
+r$pred
+## Resampled Prediction for:
+## Resample description: subsampling with 5 iterations and 0.80 split rate.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##    id truth response iter  set
+## 1  18     R        M    1 test
+## 2 189     M        M    1 test
+## 3  88     R        R    1 test
+## 4 121     M        R    1 test
+## 5 165     M        R    1 test
+## 6 111     M        M    1 test
+## ... (#rows: 210, #cols: 5)
+
+pred = getRRPredictions(r)
+pred
+## Resampled Prediction for:
+## Resample description: subsampling with 5 iterations and 0.80 split rate.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##    id truth response iter  set
+## 1  18     R        M    1 test
+## 2 189     M        M    1 test
+## 3  88     R        R    1 test
+## 4 121     M        R    1 test
+## 5 165     M        R    1 test
+## 6 111     M        M    1 test
+## ... (#rows: 210, #cols: 5)
 ```
 
 `pred` is an object of class `resample()` Prediction.
@@ -196,7 +310,7 @@ In any case, this is necessary for some bootstrap methods (*b632* and *b632+*) a
 
 Below, we use simple Holdout, i.e., split the data once into a training and test set, as resampling strategy and make predictions on both sets.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 # Make predictions on both training and test sets
 rdesc = makeResampleDesc("Holdout", predict = "both")
 
@@ -206,14 +320,66 @@ r
 r$measures.train
 ```
 
+```{r eval = FALSE}
+# Make predictions on both training and test sets
+rdesc = makeResampleDesc("Holdout", predict = "both")
+
+r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
+r
+## Resample Result
+## Task: iris-example
+## Learner: classif.lda
+## Aggr perf: mmce.test.mean=0.0200000
+## Runtime: 0.00993848
+
+r$measures.train
+##   iter mmce
+## 1    1 0.02
+```
+
 (Please note that nonetheless the misclassification rate `r$aggr` is estimated on the test data only.
 How to calculate performance measures on the training sets is shown below.)
 
 A second function to extract predictions from resample results is `getRRPredictionList()` which returns a `list` of predictions split by data set (train/test) and resampling iteration.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 predList = getRRPredictionList(r)
 predList
+```
+
+```{r eval = FALSE}
+predList = getRRPredictionList(r)
+predList
+## $train
+## $train$`1`
+## Prediction: 100 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##      id      truth   response
+## 96   96 versicolor versicolor
+## 130 130  virginica  virginica
+## 120 120  virginica  virginica
+## 77   77 versicolor versicolor
+## 23   23     setosa     setosa
+## 59   59 versicolor versicolor
+## ... (#rows: 100, #cols: 3)
+## 
+## 
+## $test
+## $test$`1`
+## Prediction: 50 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##      id      truth   response
+## 92   92 versicolor versicolor
+## 58   58 versicolor versicolor
+## 48   48     setosa     setosa
+## 103 103  virginica  virginica
+## 70   70 versicolor versicolor
+## 82   82 versicolor versicolor
+## ... (#rows: 50, #cols: 3)
 ```
 
 ### Learner models
@@ -288,12 +454,25 @@ it may happen that observations of less frequent classes are missing in some of 
 sets which can decrease the performance of the learner, or lead to model crashes.
 In order to conduct stratified resampling, set ``stratify = TRUE`` in `makeResampleDesc()`.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 # 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
 
 r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
 r
+```
+
+```{r eval = FALSE}
+# 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
+
+r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
+r
+## Resample Result
+## Task: iris-example
+## Learner: classif.lda
+## Aggr perf: mmce.test.mean=0.0200000
+## Runtime: 0.0176296
 ```
 
 Stratification is also available for survival tasks.
@@ -304,11 +483,23 @@ Here the stratification balances the censoring rate.
 Sometimes it is required to also stratify on the input data, e.g., to ensure that all subgroups are represented in all training and test sets.
 To stratify on the input columns, specify `factor` columns of your task data via ``stratify.cols``.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 rdesc = makeResampleDesc("CV", iters = 3, stratify.cols = "chas")
 
 r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE)
 r
+```
+
+```{r eval = FALSE}
+rdesc = makeResampleDesc("CV", iters = 3, stratify.cols = "chas")
+
+r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE)
+r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.rpart
+## Aggr perf: mse.test.mean=23.8843587
+## Runtime: 0.0268815
 ```
 
 ### Blocking: CV with flexible predefined indices
@@ -469,16 +660,26 @@ Each performance `Measure` (`makeMeasure()`) in `mlr` has a corresponding defaul
 The default aggregation for most measures is `test.mean`(`aggregations()`).
 One exception is the root mean square error ([rmse](measures.html){target="_blank"}).
 
-```{r}
+```{r eval = FALSE}
 # Mean misclassification error
 mmce$aggr
+## Aggregation function: test.mean
 
 mmce$aggr$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## mean(perf.test)
+## <bytecode: 0xc8eade8>
+## <environment: namespace:mlr>
 
 # Root mean square error
 rmse$aggr
+## Aggregation function: test.rmse
 
 rmse$aggr$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## sqrt(mean(perf.test^2))
+## <bytecode: 0x23ad72d8>
+## <environment: namespace:mlr>
 ```
 
 You can change the aggregation method of a `Measure` (`makeMeasure()`) via function `setAggregation()`.
@@ -488,7 +689,7 @@ All available aggregation schemes are listed on the `aggregations()` documentati
 
 The aggregation schemes `test.median` (`aggregations()`), `test.min` (`aggregations()`), and `text.max` (`aggregations()`) compute the median, minimum, and maximum of the performance values on the test sets.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 mseTestMedian = setAggregation(mse, test.median)
 mseTestMin = setAggregation(mse, test.min)
 mseTestMax = setAggregation(mse, test.max)
@@ -497,10 +698,44 @@ mseTestMedian
 
 rdesc = makeResampleDesc("CV", iters = 3)
 r = resample("regr.lm", bh.task, rdesc, measures = list(mse, mseTestMedian, mseTestMin, mseTestMax))
+```
+
+```{r eval = FALSE}
+mseTestMedian = setAggregation(mse, test.median)
+mseTestMin = setAggregation(mse, test.min)
+mseTestMax = setAggregation(mse, test.max)
+
+mseTestMedian
+## Name: Mean of squared errors
+## Performance measure: mse
+## Properties: regr,req.pred,req.truth
+## Minimize: TRUE
+## Best: 0; Worst: Inf
+## Aggregated by: test.median
+## Arguments: 
+## Note: Defined as: mean((response - truth)^2)
+
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("regr.lm", bh.task, rdesc, measures = list(mse, mseTestMedian, mseTestMin, mseTestMax))
+## Resampling: cross-validation
+## Measures:             mse       mse       mse       mse
+## [Resample] iter 1:    24.078202624.078202624.078202624.0782026
+## [Resample] iter 2:    29.498307729.498307729.498307729.4983077
+## [Resample] iter 3:    18.689471818.689471818.689471818.6894718
+## 
+## Aggregated Result: mse.test.mean=24.0886607,mse.test.median=24.0782026,mse.test.min=18.6894718,mse.test.max=29.4983077
+## 
 
 r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.test.mean=24.0886607,mse.test.median=24.0782026,mse.test.min=18.6894718,mse.test.max=29.4983077
+## Runtime: 0.0288048
 
 r$aggr
+##   mse.test.mean mse.test.median    mse.test.min    mse.test.max 
+##        24.08866        24.07820        18.68947        29.49831
 ```
 
 ### Example: Calculating the training error
@@ -559,9 +794,40 @@ However, when quickly trying out some learners, it can get tedious to type all t
 As mentioned above, `mlr` includes some pre-defined resample description objects for frequently used strategies like, e.g., 5-fold cross-validation (`cv5` (`makeResampleDesc()`)).
 Moreover, `mlr` provides special functions for the most common resampling methods, for example `holdout` (`resample()`), `crossval` (`resample()`), or `bootstrapB632` (`resample()`).
 
-```{r}
-crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
+```{r echo = FALSE, results='hide'}
+test1 = crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
 
-bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
+test2 = bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
 ```
 
+```{r eval = FALSE}
+crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
+## Resampling: cross-validation
+## Measures:             mmce      ber
+## [Resample] iter 1:    0.0200000 0.0238095
+## [Resample] iter 2:    0.0400000 0.0370370
+## [Resample] iter 3:    0.0000000 0.0000000
+## 
+## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0202822
+## 
+## Resample Result
+## Task: iris-example
+## Learner: classif.lda
+## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0202822
+## Runtime: 0.0205457
+
+bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
+## Resampling: OOB bootstrapping
+## Measures:             mse.train   mae.train   mse.test    mae.test
+## [Resample] iter 1:    24.6425511  3.4107320   16.3415466  3.0123263
+## [Resample] iter 2:    17.0963191  2.9809210   29.6056968  3.7131236
+## [Resample] iter 3:    23.1440608  3.5079975   24.4183753  3.3467443
+## 
+## Aggregated Result: mse.b632plus=22.9359054,mae.b632plus=3.3459751
+## 
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.b632plus=22.9359054,mae.b632plus=3.3459751
+## Runtime: 0.0419419
+```

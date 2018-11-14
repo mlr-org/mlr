@@ -24,11 +24,13 @@ Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
 \item{bit.names}{[character]\cr
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-Per default these are the feature names of the task.}
+Per default these are the feature names of the task.
+Has to be used together with `bits.to.features`.}
 
 \item{bits.to.features}{[function(x, task)]\cr
 Function which transforms an integer-0-1 vector into a character vector of selected features.
-Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.}
+Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
+The vector `x` will correspond to the `bit.names` and has to be of the same length.}
 
 \item{control}{[see [FeatSelControl])
 Control object for search method.

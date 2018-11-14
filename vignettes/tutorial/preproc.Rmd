@@ -16,6 +16,7 @@ library("lattice")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Data preprocessing refers to any transformation of the data done before applying a learning
@@ -286,7 +287,7 @@ lrn
 
 Let's compare the cross-validated mean squared error ([mse](measures.html){target="_blank"}) on the Boston Housing data set (`mlbench::BostonHousing()`) with and without scaling.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 rdesc = makeResampleDesc("CV", iters = 3)
 
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
@@ -295,6 +296,29 @@ r
 lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r
+```
+
+```{r eval = FALSE}
+rdesc = makeResampleDesc("CV", iters = 3)
+
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.nnet.preproc
+## Aggr perf: mse.test.mean=26.6997095
+## Runtime: 0.083282
+
+lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.nnet
+## Aggr perf: mse.test.mean=56.8645496
+## Runtime: 0.0463462
 ```
 
 ## Joint tuning of preprocessing and learner parameters
@@ -337,7 +361,8 @@ res = tuneParams(lrn, bh.task, rdesc, par.set = ps, control = ctrl, show.info = 
 
 res
 
-as.data.frame(res$opt.path)
+df = as.data.frame(res$opt.path)
+df[, -ncol(df)]
 ```
 
 ## Preprocessing wrapper functions

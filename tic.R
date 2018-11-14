@@ -24,17 +24,20 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   }
 
   get_stage("script") %>%
+    add_code_step(pkgbuild::compile_dll()) %>%
     add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck("--as-cran", warnings_are_errors = FALSE, notes_are_errors = FALSE))
 
-  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
+  # only deploy in master branch
+  if (ci()$get_branch() == "master") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
+      add_code_step(pkgbuild::compile_dll()) %>%
       add_code_step(devtools::document()) %>%
-      add_step(step_push_deploy(commit_paths = "man/"))
+      add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
   }
 }
 
@@ -50,15 +53,15 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_install_cran("magick")) %>% # favicon creation
     add_step(step_install_cran("pander"))
 
-  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
-
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_code_step(devtools::document()) %>%
-      add_step(step_build_pkgdown()) #%>%
-      #add_step(step_push_deploy(commit_paths = "docs/*"))
+      add_step(step_build_pkgdown(document = FALSE))
 
-  }
+    # only deploy in master branch
+    if (ci()$get_branch() == "master") {
+      get_stage("deploy") %>%
+        add_step(step_push_deploy(commit_paths = "docs/*"))
+    }
 }
