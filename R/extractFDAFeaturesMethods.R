@@ -140,12 +140,12 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     "haar"
   )
 
-  lrn = function(data, target = NULL, col, filter, boundary) {
+  lrn = function(data, target = NULL, col, ...) {
     assertChoice(filter, filter.vals)
     assertChoice(boundary, c("periodic", "reflection"))
 
     # Convert to list in order to catch params that do not have defaults (n.levels)
-    vals = learnerArgsToControl(list, filter = filter, boundary = boundary)
+    vals = learnerArgsToControl(list, ...)
     return(vals)
   }
 

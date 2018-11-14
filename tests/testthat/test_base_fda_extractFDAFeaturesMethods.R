@@ -57,15 +57,14 @@ test_that("getFDAMultiResFeatures works on data.frame", {
   # Learn args equal to method args
   vals1 = extractFDAMultiResFeatures()$learn(df, col = "UVVIS", res.level = 2L, shift = 0.25)
   dfn1 = extractFDAMultiResFeatures()$reextract(df, col = "UVVIS", vals =  vals1)
-  expect_true(nrow(df) == nrow(dfn))
-  expect_true(ncol(dfn) == 9L)
+  expect_true(nrow(df) == nrow(dfn1))
+  expect_true(ncol(dfn1) == 5L)
 
-  extr = extractFDAMultiResFeatures(res.level = 2L, shift = 0.25)
-  vals2 = extr$learn(df, col = "UVVIS")
-  dfn2 = extr$reextract(df, col = "UVVIS", vals =  vals2)
-  expect_true(nrow(df) == nrow(dfn2))
-  expect_true(ncol(dfn2) == 9L)
-  expect_equal(dfn, dfn2)
+  fm = list("UVVIS" = extractFDAMultiResFeatures(res.level = 2L, shift = 0.25))
+  dfn2 = extractFDAFeatures(df, feat.methods = fm)
+  expect_true(nrow(df) == nrow(dfn2$data))
+  expect_true(ncol(dfn2$data) == 5L + 3L)
+  expect_equal(dfn1, setNames(dfn2$data[, seq_len(5)], colnames(dfn1)))
 
 
   extr = extractFDAMultiResFeatures()

@@ -33,13 +33,13 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
 
 test_that("extractFDAFeaturesWrapper ParSet Works II", {
   methods = list("fd1" = extractFDAFourier())
-  # Suppress missing NA arg from xgboost
+  # Suppress missing=NA arg from xgboost param set
   lrn = suppressWarnings(makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods))
   ps = getLearnerParamSet(lrn)
 
   # Check whether all Ids are contained in the resulting param set
-  ps.rpart = getLearnerParamSet(makeLearner("classif.xgboost"))
-  expect_subset(getParamIds(ps.rpart), getParamIds(ps))
+  ps.xgboost = suppressWarnings(getLearnerParamSet(makeLearner("classif.xgboost")))
+  expect_subset(getParamIds(ps.xgboost), getParamIds(ps))
   expect_subset(getParamIds(methods$fd1$par.set), getParamIds(ps))
 
   ps2 = makeParamSet(makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")))
@@ -51,21 +51,22 @@ test_that("extractFDAFeaturesWrapper ParSet Works II", {
 
 
 test_that("extractFDAFeaturesWrapper ParSet Works", {
-  methods = list("fd" = extractFDATsfeatures())
-  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
+  methods = list("fd" = extractFDAWavelets())
+  lrn = makeExtractFDAFeatsWrapper("classif.rpart", feat.methods = methods)
   ps = makeParamSet(
-    makeNumericParam("eta", lower = 0.01, upper = 0.3),
-    makeLogicalParam("scale", default = TRUE))
+    makeNumericParam("cp", lower = 0.01, upper = 0.3),
+    makeDiscreteParam("filter", values = c("la8", "haar"))
+    )
   lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 5L))
-  mod = suppressWarnings(train(lrn, subsetTask(gunpoint.task, subset = 2:30)))
+  mod = train(lrn, subsetTask(gunpoint.task, subset = 2:10))
   expect_class(mod, "TuneModel")
 })
 
 test_that("extractFDAFeaturesWrapper works for dtwkernel", {
   methods = list("fd" = extractFDADTWKernel(n.refs = 0.7))
-  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
+  lrn = makeExtractFDAFeatsWrapper("classif.rpart", feat.methods = methods)
   ps = makeParamSet(
-    makeNumericParam("eta", lower = 0.01, upper = 0.3),
+    makeNumericParam("cp", lower = 0.01, upper = 0.3),
     makeNumericParam("n.refs", lower = 0.01, upper = 0.05)
     )
   lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlRandom(budget = 2L))
