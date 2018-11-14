@@ -34,9 +34,12 @@
 #' @section Caching:
 #' If `cache = TRUE`, the default mlr cache directory is used to cache
 #' filter values. The directory is operating system dependent and can be
-#' checked with `get_cache_dir()`. \cr
-#' Alternatively a custom directory can be passed to store the cache.\cr
+#' checked with `get_cache_dir()`.
+#' Alternatively a custom directory can be passed to store the cache.
 #' The cache can be cleared with `delete_cache()`.
+#' Caching is disabled by default.
+#' Care should be taken when operating on large clusters due to possible write
+#' conflicts to disk if multiple workers try to write the same cache at the same time.
 #'
 #' @template ret_learner
 #' @export
