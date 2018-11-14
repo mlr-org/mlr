@@ -4,6 +4,7 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #'
+#' @importFrom purrr walk
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
@@ -38,8 +39,8 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
-  if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
-    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+  if (any(sapply(filter, function(x) !isScalarNA(filter$pkg))))
+    walk(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
   check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
@@ -63,7 +64,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   # auto-setup more.args as list
   if (length(dot.args) > 0L) {
     if (length(method) == 1L)
-     more.args = namedList(method, dot.args)
+      more.args = namedList(method, dot.args)
     else
       stopf("You use more than 1 filter method. Please pass extra arguments via 'more.args' and not '...' to filter methods!")
   }
@@ -177,17 +178,17 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
     plt = plt + facet_wrap(~ method, scales = "free_y",
-      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+                           nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
     plt = plt + labs(title = sprintf("%s (%i features)",
-                                              fvalues$task.desc$id,
-                                              sum(fvalues$task.desc$n.feat)),
-                              x = "", y = "")
+                                     fvalues$task.desc$id,
+                                     sum(fvalues$task.desc$n.feat)),
+                     x = "", y = "")
   } else {
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
-                                              fvalues$task.desc$id,
-                                              sum(fvalues$task.desc$n.feat),
-                                              methods),
-                              x = "", y = "")
+                                     fvalues$task.desc$id,
+                                     sum(fvalues$task.desc$n.feat),
+                                     methods),
+                     x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(plt)
