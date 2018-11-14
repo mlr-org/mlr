@@ -3,7 +3,6 @@
 #' @description
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
-#'
 #' @importFrom purrr walk
 #' @template arg_task
 #' @param method ([character])\cr
@@ -64,7 +63,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   # auto-setup more.args as list
   if (length(dot.args) > 0L) {
     if (length(method) == 1L)
-      more.args = namedList(method, dot.args)
+     more.args = namedList(method, dot.args)
     else
       stopf("You use more than 1 filter method. Please pass extra arguments via 'more.args' and not '...' to filter methods!")
   }
@@ -178,17 +177,17 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
     plt = plt + facet_wrap(~ method, scales = "free_y",
-                           nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
     plt = plt + labs(title = sprintf("%s (%i features)",
-                                     fvalues$task.desc$id,
-                                     sum(fvalues$task.desc$n.feat)),
-                     x = "", y = "")
+                                              fvalues$task.desc$id,
+                                              sum(fvalues$task.desc$n.feat)),
+                              x = "", y = "")
   } else {
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
-                                     fvalues$task.desc$id,
-                                     sum(fvalues$task.desc$n.feat),
-                                     methods),
-                     x = "", y = "")
+                                              fvalues$task.desc$id,
+                                              sum(fvalues$task.desc$n.feat),
+                                              methods),
+                              x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(plt)

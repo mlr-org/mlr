@@ -37,12 +37,12 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
   assertCharacter(supported.features, any.missing = FALSE)
   assertFunction(fun, c("task", "nselect"))
   obj =  makeS3Obj("Filter",
-                   name = name,
-                   desc = desc,
-                   pkg = pkg,
-                   supported.tasks = supported.tasks,
-                   supported.features = supported.features,
-                   fun = fun
+    name = name,
+    desc = desc,
+    pkg = pkg,
+    supported.tasks = supported.tasks,
+    supported.features = supported.features,
+    fun = fun
   )
   .FilterRegister[[name]] = obj
   obj
@@ -203,7 +203,7 @@ rf.importance = makeFilter(
   fun = function(task, nselect, method = "permute", ...) {
     assertChoice(method, choices = c("permute", "random", "anti", "permute.ensemble", "random.ensemble",  "anti.ensemble"))
     im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE,
-                                forest = FALSE, importance = method, ...)$importance
+      forest = FALSE, importance = method, ...)$importance
     if (inherits(task, "ClassifTask")) {
       ns = rownames(im)
       y = im[, "all"]
@@ -240,7 +240,7 @@ rf.min.depth = makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-                                     method = method, verbose = FALSE, ...)$md.obj$order
+      method = method, verbose = FALSE, ...)$md.obj$order
     setNames(-im[, 1L], rownames(im))
   }
 )
@@ -314,7 +314,7 @@ makeFilter(
     type = if (method == "oob.accuracy") 1L else 2L
     # no need to set importance = TRUE for node impurity (type = 2)
     rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task),
-                                    keep.forest = FALSE, importance = (type != 2L))
+      keep.forest = FALSE, importance = (type != 2L))
     im = randomForest::importance(rf, type = type, ...)
     setNames(im, rownames(im))
   }
@@ -659,9 +659,9 @@ makeFilter(
   fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
                  aggregation = mean, nmc = 50L, replace = FALSE, nselect) {
     imp = generateFeatureImportanceData(task, "permutation.importance",
-                                        imp.learner, interaction = FALSE, measure = measure,
-                                        contrast = contrast, aggregation = aggregation,
-                                        nmc = nmc, replace = replace, local = FALSE)
+      imp.learner, interaction = FALSE, measure = measure,
+      contrast = contrast, aggregation = aggregation,
+      nmc = nmc, replace = replace, local = FALSE)
     imp = as.numeric(imp$res)
     names(imp) = getTaskFeatureNames(task)
     return(imp)
