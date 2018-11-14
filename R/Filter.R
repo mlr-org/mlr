@@ -30,9 +30,7 @@
 makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun) {
   assertString(name)
   assertString(desc)
-  assert_choice(pkg, choices = c("FSelectorRcpp", "FSelector", "praznik",
-                                 "randomForestSRC", "randomForest", "care", "party", "mRMRe", "randomForest",
-                                 "ranger"), null.ok = TRUE)
+  assertCharacter(pkg, null.ok = TRUE)
   assertCharacter(supported.tasks, any.missing = FALSE)
   assertCharacter(supported.features, any.missing = FALSE)
   assertFunction(fun, c("task", "nselect"))
