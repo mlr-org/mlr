@@ -123,9 +123,6 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
-#  @param n.levels [\code{integer(1)}]\cr
-#    Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
-#    FIXME: Find out how to set this.
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
@@ -144,7 +141,6 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     assertChoice(filter, filter.vals)
     assertChoice(boundary, c("periodic", "reflection"))
 
-    # Convert to list in order to catch params that do not have defaults (n.levels)
     vals = learnerArgsToControl(list, ...)
     return(vals)
   }
@@ -185,6 +181,10 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' @param rank. (`integer(1)`)\cr
 #'   Number of principal components to extract.
 #'   Default is `NULL`
+#' @param center (`logical(1)`) \cr
+#'   Should data be centered before applying pca?
+#' @param scale (`logical(1)`) \cr
+#'   Should data be scaled before applying pca?
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
