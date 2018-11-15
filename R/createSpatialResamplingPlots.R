@@ -2,7 +2,6 @@
 #'
 #' @description Visualize partitioning of resample objects with spatial information.
 #' @import ggplot2
-#' @importFrom purrr map_int flatten imap
 #' @family plot
 #' @author Patrick Schratz
 #' @param task [Task] \cr
@@ -153,9 +152,9 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   }
 
   # create plot list with length = folds
-  nfolds = map_int(resample, ~ .x$pred$instance$desc$folds)[1]
+  nfolds = vnapply(resample, function(x) x$pred$instance$desc$folds)[1]
 
-  plot.list.out.all = map(resample, function(.r) {
+  plot.list.out.all = lapply(resample, function(r) {
 
     # bind coordinates to data
     data = cbind(task$env$data, task$coordinates)
@@ -164,14 +163,15 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     data = sf::st_as_sf(data, coords = names(task$coordinates), crs = crs)
 
     # create plot list with length = folds
-    plot.list = map(1:(nfolds * repetitions), ~ data)
+    plot.list = lapply(1:(nfolds * repetitions), function(x) data)
 
-    plot.list.out = imap(plot.list, ~ ggplot(.x) +
+    plot.list.out = imap(plot.list, function (.x, .y) {
+      ggplot(.x) +
       geom_sf(data = subset(.x, as.integer(rownames(.x)) %in%
-                       .r$pred$instance[["train.inds"]][[.y]]),
+                       r$pred$instance[["train.inds"]][[.y]]),
         color = color.train, size = point.size, ) +
       geom_sf(data = subset(.x,as.integer(rownames(.x)) %in%
-                       .r$pred$instance[["test.inds"]][[.y]]),
+                       r$pred$instance[["test.inds"]][[.y]]),
         color = color.test, size = point.size) +
       scale_x_continuous(breaks = x.axis.breaks) +
       scale_y_continuous(breaks = y.axis.breaks) +
@@ -180,11 +180,12 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
       theme(axis.text.x = element_text(size = axis.text.size),
         axis.text.y = element_text(size = axis.text.size),
         plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm"))
+      }
     )
     return(plot.list.out)
   })
 
-  plot.list = flatten(plot.list.out.all)
+  plot.list = unlist(plot.list.out.all)
 
   # more than 1 repetition?
   if (repetitions > 1) {
