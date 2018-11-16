@@ -44,7 +44,7 @@ getResamplingIndices = function(object, inner = FALSE) {
 
     # now translate the inner inds back to the outer inds so we have the correct indices https://github.com/mlr-org/mlr/issues/2409
 
-    inner_inds_translated = lapply(seq_len(inner_inds), function(z) # map over number of outer folds
+    inner_inds_translated = lapply(seq_along(inner_inds), function(z) # map over number of outer folds
 
       setNames(
         lapply(c("train.inds", "test.inds"), function(u) # map over train/test level
