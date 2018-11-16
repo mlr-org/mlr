@@ -33,9 +33,12 @@
 #' @section Caching:
 #' If `cache = TRUE`, the default mlr cache directory is used to cache
 #' filter values. The directory is operating system dependent and can be
-#' checked with `getCacheDir()`. \cr
-#' Alternatively a custom directory can be passed to store the cache.\cr
-#' The cache can be cleared with `deleteCacheDir()`.
+#' checked with `getCacheDir()`.\cr
+#' The default cache can be cleared with `deleteCacheDir()`.
+#' Alternatively, a custom directory can be passed to store the cache.
+#'
+#' Note that caching is not thread safe. It will work for parallel
+#' computation on many systems, but there is no guarantee.
 #'
 #' @template ret_task
 #' @export
