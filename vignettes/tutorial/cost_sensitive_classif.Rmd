@@ -103,12 +103,31 @@ costs
 
 We start by fitting a logistic regression model (`nnet::multinom()`) to the German Credit data set (`caret::GermanCredit()`) and predict posterior probabilities.
 
-```{r}
+```{r echo = FALSE, results='hide'}
+# Train and predict posterior probabilities
+lrn = makeLearner("classif.multinom", predict.type = "prob", trace = FALSE)
+mod = train(lrn, credit.task)
+pred = predict(mod, task = credit.task)
+```
+
+```{r eval = FALSE}
 # Train and predict posterior probabilities
 lrn = makeLearner("classif.multinom", predict.type = "prob", trace = FALSE)
 mod = train(lrn, credit.task)
 pred = predict(mod, task = credit.task)
 pred
+## Prediction: 1000 observations
+## predict.type: prob
+## threshold: Bad=0.50,Good=0.50
+## time: 0.01
+##   id truth   prob.Bad prob.Good response
+## 1  1  Good 0.03525092 0.9647491     Good
+## 2  2   Bad 0.63222363 0.3677764      Bad
+## 3  3  Good 0.02807414 0.9719259     Good
+## 4  4  Good 0.25182703 0.7481730     Good
+## 5  5   Bad 0.75193275 0.2480673      Bad
+## 6  6  Good 0.26230149 0.7376985     Good
+## ... (#rows: 1000, #cols: 5)
 ```
 
 The default thresholds for both classes are 0.5.

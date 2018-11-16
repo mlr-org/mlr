@@ -42,7 +42,7 @@ r = generateLearningCurveData(
   measures = list(tp, fp, tn, fn),
   resampling = makeResampleDesc(method = "CV", iters = 5),
   show.info = FALSE)
-plotLearningCurve(r)
+# plotLearningCurve(r)
 ```
 
 ```{r LearningCurveTPFP-1, fig.asp = 7/9, eval = FALSE}
@@ -53,7 +53,7 @@ r = generateLearningCurveData(
   measures = list(tp, fp, tn, fn),
   resampling = makeResampleDesc(method = "CV", iters = 5),
   show.info = FALSE)
-# plotLearningCurve(r)
+plotLearningCurve(r)
 ```
 
 ```{r echo = FALSE}
