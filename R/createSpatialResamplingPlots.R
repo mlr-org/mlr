@@ -152,7 +152,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   }
 
   # create plot list with length = folds
-  nfolds = vnapply(resample, function(x) x$pred$instance$desc$folds)[1]
+  nfolds = resample[[1]]$pred$instance$desc$folds
 
   plot.list.out.all = lapply(resample, function(r) {
 
