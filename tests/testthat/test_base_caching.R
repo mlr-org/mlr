@@ -11,7 +11,8 @@ test_that("caching works with most filters", {
   filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
 
   # tune over various filters using all possible caching options
-  out = lapply(list(NULL, TRUE, tempdir()), function (i) {
+  # TRUE is not tested, as we are not allowed to write in the user's home dir
+  out = lapply(list(FALSE, tempdir()), function (i) {
 
     tune_out = lapply(filter.list.regr, function(.x) {
       lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = .x, cache = i)
@@ -37,11 +38,12 @@ test_that("caching works with most filters", {
 })
 
 test_that("cache dir is successfully deleted", {
+  skip_on_cran() # we are not allowed to write to the user's home dir!
+  dir = getCacheDir()
+  if (!dir.exists(dir))
+    dir.create(dir, recursive = TRUE)
+  expect_true(dir.exists(getCacheDir()))
 
-  dir.create(get_cache_dir())
-  expect_true(dir.exists(get_cache_dir()))
-
-  delete_cache()
-  expect_false(dir.exists(get_cache_dir()))
-
+  deleteCacheDir()
+  expect_false(dir.exists(getCacheDir()))
 })

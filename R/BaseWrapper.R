@@ -18,7 +18,7 @@
 #' @keywords internal
 #' @export
 makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
-  par.vals = list(), learner.subclass, model.subclass, cache = NULL) {
+  par.vals = list(), learner.subclass, model.subclass, cache = FALSE) {
   if (inherits(next.learner, "OptWrapper") && is.element("TuneWrapper", learner.subclass))
     stop("Cannot wrap a tuning wrapper around another optimization wrapper!")
   ns = intersect(names(par.set$pars), names(next.learner$par.set$pars))

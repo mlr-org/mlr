@@ -1,23 +1,23 @@
-#' Get or delete mlr cache directory
+#' @title Get or delete mlr cache directory
 #'
 #' @description Helper functions to deal with mlr caching.
-#' @name cache-helpers
-#' @rdname cache-helpers
+#' @name cache_helpers
+#' @rdname cache_helpers
 #' @details
-#' `get_cache_dir()` returns the default mlr cache directory \cr\cr
-#'  `delete_cache()` clears the default mlr cache directory. Custom cache
+#' `getCacheDir()` returns the default mlr cache directory \cr
+#' `deleteCacheDir()` clears the default mlr cache directory. Custom cache
 #'  directories must be deleted by hand.
 NULL
 
-#' @rdname cache-helpers
+#' @rdname cache_helpers
 #' @export
-get_cache_dir = function() {
+getCacheDir = function() {
   rappdirs::user_cache_dir("mlr", "mlr-org")
 }
 
-#' @rdname cache-helpers
+#' @rdname cache_helpers
 #' @export
-delete_cache = function() {
+deleteCacheDir = function() {
   unlink(rappdirs::user_cache_dir("mlr", "mlr-org"), recursive = TRUE)
   catf("Successfully cleared directory '%s'.", rappdirs::user_cache_dir("mlr", "mlr-org"))
 }

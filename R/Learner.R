@@ -2,7 +2,7 @@
 # when a learner object is constructed.
 # in contains a minimal number of member vars, that every Learner object should have
 # derived constructors can of course add more member vars
-makeLearnerBaseConstructor = function(classes, id, type, package, properties, par.set, par.vals, predict.type, cache = NULL) {
+makeLearnerBaseConstructor = function(classes, id, type, package, properties, par.set, par.vals, predict.type, cache = FALSE) {
   if (length(par.vals) == 0L)
     names(par.vals) = character(0L)
 

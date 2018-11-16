@@ -34,9 +34,9 @@
 #' @section Caching:
 #' If `cache = TRUE`, the default mlr cache directory is used to cache
 #' filter values. The directory is operating system dependent and can be
-#' checked with `get_cache_dir()`.
+#' checked with `getCacheDir()`.
 #' Alternatively a custom directory can be passed to store the cache.
-#' The cache can be cleared with `delete_cache()`.
+#' The cache can be cleared with `deleteCacheDir()`.
 #' Caching is disabled by default.
 #' Care should be taken when operating on large clusters due to possible write
 #' conflicts to disk if multiple workers try to write the same cache at the same time.
@@ -60,7 +60,7 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
   fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, cache = NULL, ...) {
+  fw.mandatory.feat = NULL, cache = FALSE, ...) {
 
   #learner$cache = cache
 
