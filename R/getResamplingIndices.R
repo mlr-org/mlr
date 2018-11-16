@@ -49,7 +49,7 @@ getResamplingIndices = function(object, inner = FALSE) {
         sapply(inner_inds[[z]][[u]], function(m) # map over number of inner folds
           outer_inds[["train.inds"]][[z]][m], # the inner test.inds are a subset of the outer train.inds! That's why "train.inds" is hardcoded here
           simplify = FALSE),
-      )
+        simplify = FALSE)
     )
 
     return(inner_inds_translated)
