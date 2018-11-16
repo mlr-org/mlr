@@ -163,7 +163,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     data = sf::st_as_sf(data, coords = names(task$coordinates), crs = crs)
 
     # create plot list with length = folds
-    plot.list = lapply(1:(nfolds * repetitions), function(x) data)
+    plot.list = rep(list(data), nfolds * repetitions)
 
     plot.list.out = imap(plot.list, function (.x, .y) {
       ggplot(.x) +
