@@ -404,18 +404,19 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3">mod.lm =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.lm, bh.task, <span class="dt">subset =</span> train.set)</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">task.pred.lm =<span class="st"> </span><span class="kw">predict</span>(mod.lm, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.set)</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">task.pred.lm</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## Prediction: 253 observations</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">## predict.type: se</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">## threshold: </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">## time: 0.00</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">##    id truth response        se</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">## 2   2  21.6 24.83734 0.7501615</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">## 4   4  33.4 28.38206 0.8742590</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">## 6   6  28.7 25.16725 0.8652139</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## 8   8  27.1 19.38145 1.1963265</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">## 10 10  18.9 18.66449 1.1793944</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">## 12 12  18.9 21.25802 1.0727918</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">## ... (#rows: 253, #cols: 4)</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">## Prediction: 253 observations</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">## predict.type: se</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">## threshold: </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">## time: 0.00</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">##    id truth response        se</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">## 2   2  21.6 24.83734 0.7501615</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">## 4   4  33.4 28.38206 0.8742590</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## 6   6  28.7 25.16725 0.8652139</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">## 8   8  27.1 19.38145 1.1963265</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">## 10 10  18.9 18.66449 1.1793944</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">## 12 12  18.9 21.25802 1.0727918</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">## ... (#rows: 253, #cols: 4)</span></a></code></pre></div>
 <p>The standard errors can then be extracted using <code><a href="../../reference/getPredictionResponse.html">getPredictionSE()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionSE</a></span>(task.pred.lm))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">## [1] 0.7501615 0.8742590 0.8652139 1.1963265 1.1793944 1.0727918</span></a></code></pre></div>
@@ -445,7 +446,7 @@
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">## Prediction: 150 observations</span></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">## predict.type: response</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">## threshold: </span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">## time: 0.00</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">## time: 0.01</span></a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">##   id  truth response</span></a>
 <a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">## 1  1 setosa   setosa</span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">## 2  2 setosa   setosa</span></a>
@@ -630,19 +631,19 @@
 <p>The plot title displays the ID of the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (in the following example CART), its parameters, its training performance and its cross-validation performance. <a href="measures.html" target="_blank">mmce</a> stands for <em>mean misclassification error</em>, i.e., the error rate. See the sections on <a href="performance.html" target="_blank">performance</a> and <a href="resample.html" target="_blank">resampling</a> for further explanations.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">id =</span> <span class="st">"CART"</span>)</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> iris.task)</a></code></pre></div>
-<p><img src="predict_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
+<p><img src="predict_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>For <em>clustering</em> we also get a scatter plot of two selected features. The color of the points indicates the predicted cluster.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> mtcars.task, <span class="dt">features =</span> <span class="kw">c</span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), <span class="dt">cv =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</span></a>
 <a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</span></a></code></pre></div>
-<p><img src="predict_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p><img src="predict_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>For <em>regression</em>, there are two types of plots. The 1D plot shows the target values in relation to a single feature, the regression curve and, if the chosen learner supports this, the estimated standard error.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="st">"lstat"</span>, <span class="dt">task =</span> bh.task)</a></code></pre></div>
-<p><img src="predict_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<p><img src="predict_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
 <p>The 2D variant, as in the classification case, generates a scatter plot of 2 features. The fill color of the dots illustrates the value of the target variable <code>"medv"</code>, the background colors show the estimated mean. The plot does not represent the estimated standard error.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="kw">c</span>(<span class="st">"lstat"</span>, <span class="st">"rm"</span>), <span class="dt">task =</span> bh.task)</a></code></pre></div>
-<p><img src="predict_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<p><img src="predict_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
 </div>
   </div>
