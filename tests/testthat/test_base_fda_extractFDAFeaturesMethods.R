@@ -174,10 +174,10 @@ test_that("tsfeatures works", {
   expect_equal(nrow(gpfeats), nrow(gp1))
 
   extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
-  expect_true(ncol(getTaskData(extr$task)) == 29L)
+  expect_true(ncol(getTaskData(extr$task)) == 32L)
 
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35, features = 2), extr$desc)
-  expect_true(ncol(getTaskData(reextr)) == 29L)
+  expect_true(ncol(getTaskData(reextr)) == 32L)
 })
 
 test_that("extraction returns correct cols", {
