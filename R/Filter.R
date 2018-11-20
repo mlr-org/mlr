@@ -518,33 +518,35 @@ univariate = makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
     typ = getTaskType(task)
-    if (is.null(perf.learner))
+    if (is.null(perf.learner)) {
       if (typ == "classif")
         perf.learner = "classif.rpart"
       else if (typ == "regr")
         perf.learner = "regr.rpart"
       else if (typ == "surv")
         perf.learner = "surv.rpart"
-      if (is.null(perf.measure))
-        perf.measure = getDefaultMeasure(task)
-      perf.learner = checkLearner(perf.learner)
-      perf.measure = checkMeasures(perf.measure, perf.learner)
-      if (length(perf.measure) != 1L)
-        stop("Exactly one measure must be provided")
-      if (is.null(perf.resampling))
-        perf.resampling = makeResampleDesc("Subsample", iters = 1L, split = 0.67)
-      if (getTaskType(task) != perf.learner$type)
-        stopf("Expected task of type '%s', not '%s'", getTaskType(task), perf.learner$type)
+    }
+    if (is.null(perf.measure)) {
+      perf.measure = getDefaultMeasure(task)
+    }
+    perf.learner = checkLearner(perf.learner)
+    perf.measure = checkMeasures(perf.measure, perf.learner)
+    if (length(perf.measure) != 1L)
+      stop("Exactly one measure must be provided")
+    if (is.null(perf.resampling))
+      perf.resampling = makeResampleDesc("Subsample", iters = 1L, split = 0.67)
+    if (getTaskType(task) != perf.learner$type)
+      stopf("Expected task of type '%s', not '%s'", getTaskType(task), perf.learner$type)
 
-      fns = getTaskFeatureNames(task)
-      res = double(length(fns))
-      for (i in seq_along(fns)) {
-        subtask = subsetTask(task, features = fns[i])
-        res[i] = resample(learner = perf.learner, task = subtask, resampling = perf.resampling, measures = perf.measure, keep.pred = FALSE, show.info = FALSE)$aggr
-      }
-      if (perf.measure[[1L]]$minimize)
-        res = -1.0 * res
-      setNames(res, fns)
+    fns = getTaskFeatureNames(task)
+    res = double(length(fns))
+    for (i in seq_along(fns)) {
+      subtask = subsetTask(task, features = fns[i])
+      res[i] = resample(learner = perf.learner, task = subtask, resampling = perf.resampling, measures = perf.measure, keep.pred = FALSE, show.info = FALSE)$aggr
+    }
+    if (perf.measure[[1L]]$minimize)
+      res = -1.0 * res
+    setNames(res, fns)
   }
 )
 .FilterRegister[["univariate"]] = univariate
