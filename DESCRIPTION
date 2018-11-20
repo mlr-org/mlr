@@ -147,7 +147,6 @@ Imports:
     ggplot2,
     methods,
     parallelMap (>= 1.3),
-    purrr,
     stats,
     stringi,
     survival,
