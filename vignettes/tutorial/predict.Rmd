@@ -151,12 +151,32 @@ listLearners("regr", check.packages = FALSE, properties = "se")[c("class", "name
 In this example we train a linear regression model (`stats::lm()`) on the `BostonHousing` (`bh.task()`) dataset. 
 In order to calculate standard errors set the `predict.type` to `"se"`:
 
-```{r}
+```{r, echo=FALSE, results='hide'}
+### Create learner and specify predict.type
+lrn.lm = makeLearner("regr.lm", predict.type = 'se')
+mod.lm = train(lrn.lm, bh.task, subset = train.set)
+task.pred.lm = predict(mod.lm, task = bh.task, subset = test.set)
+```
+
+```{r eval = FALSE}
 ### Create learner and specify predict.type
 lrn.lm = makeLearner("regr.lm", predict.type = 'se')
 mod.lm = train(lrn.lm, bh.task, subset = train.set)
 task.pred.lm = predict(mod.lm, task = bh.task, subset = test.set)
 task.pred.lm
+
+## Prediction: 253 observations
+## predict.type: se
+## threshold: 
+## time: 0.00
+##    id truth response        se
+## 2   2  21.6 24.83734 0.7501615
+## 4   4  33.4 28.38206 0.8742590
+## 6   6  28.7 25.16725 0.8652139
+## 8   8  27.1 19.38145 1.1963265
+## 10 10  18.9 18.66449 1.1793944
+## 12 12  18.9 21.25802 1.0727918
+## ... (#rows: 253, #cols: 4)
 ```
 
 The standard errors can then be extracted using `getPredictionSE()`.
