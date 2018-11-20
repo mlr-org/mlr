@@ -8,6 +8,8 @@
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
+#' @param nselect (`integer(1)`)\cr
+#'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
 #' @param more.args (named [list])\cr
