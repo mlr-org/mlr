@@ -57,6 +57,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
+      add_step(step_install_github("r-lib/pkgdown")) %>%
       add_step(step_build_pkgdown(document = FALSE))
 
     # only deploy in master branch
