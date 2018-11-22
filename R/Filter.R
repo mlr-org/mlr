@@ -30,7 +30,7 @@
 makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun) {
   assertString(name)
   assertString(desc)
-  assertCharacter(pkg, null.ok = TRUE)
+  assertCharacter(pkg, any.missing = FALSE)
   assertCharacter(supported.tasks, any.missing = FALSE)
   assertCharacter(supported.features, any.missing = FALSE)
   assertFunction(fun, c("task", "nselect"))
