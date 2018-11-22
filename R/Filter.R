@@ -331,7 +331,7 @@ NULL
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
-  pkg  = character(0),
+  pkg  = character(0L),
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
@@ -352,7 +352,7 @@ NULL
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
-  pkg  = character(0),
+  pkg  = character(0L),
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
@@ -514,7 +514,7 @@ NULL
 univariate = makeFilter(
   name = "univariate.model.score",
   desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
-  pkg  = character(0),
+  pkg  = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
@@ -570,7 +570,7 @@ NULL
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
-  pkg = character(0),
+  pkg = character(0L),
   supported.tasks = "classif",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
@@ -599,7 +599,7 @@ NULL
 makeFilter(
   name = "kruskal.test",
   desc = "Kruskal Test for binary and multiclass classification tasks",
-  pkg = character(0),
+  pkg = character(0L),
   supported.tasks = "classif",
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
@@ -625,7 +625,7 @@ NULL
 makeFilter(
   name = "variance",
   desc = "A simple variance filter",
-  pkg = character(0),
+  pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = "numerics",
   fun = function(task, nselect, na.rm = TRUE, ...) {
@@ -654,7 +654,7 @@ NULL
 makeFilter(
   name = "permutation.importance",
   desc = "Aggregated difference between feature permuted and unpermuted predictions",
-  pkg = character(0),
+  pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
@@ -684,7 +684,7 @@ NULL
 makeFilter(
   name = "auc",
   desc = "AUC filter for binary classification tasks",
-  pkg  = character(0),
+  pkg  = character(0L),
   supported.tasks = "classif",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
