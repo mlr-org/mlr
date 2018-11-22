@@ -37,7 +37,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
-  if (any(sapply(filter, function(x) is.null(filter$pkg)))) {
+  if (any(sapply(filter, function(x) length(x$pkg) > 0))) {
     pkgs = unlist(lapply(filter, function(x) x$pkg))
     pkgs = lapply(pkgs, function(x) requirePackages(x, why = "generateFilterValuesData", default.method = "load"))
   }
