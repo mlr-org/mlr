@@ -278,7 +278,12 @@
 <a href="#filter-methods">Filter methods</a><ul>
 <li><a href="#calculating-the-feature-importance">Calculating the feature importance</a></li>
       <li><a href="#selecting-a-feature-subset">Selecting a feature subset</a></li>
-      <li><a href="#fuse-a-learner-with-a-filter-method">Fuse a learner with a filter method</a></li>
+      <li>
+<a href="#fuse-a-learner-with-a-filter-method">Fuse a learner with a filter method</a><ul>
+<li><a href="#using-fixed-parameters">Using fixed parameters</a></li>
+      <li><a href="#tuning-the-size-of-the-feature-subset">Tuning the size of the feature subset</a></li>
+      </ul>
+</li>
       </ul>
 </li>
       <li>
@@ -328,7 +333,7 @@
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">## 4  Petal.Width numeric                      0.9554360</span></a></code></pre></div>
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">fv2<span class="op">$</span>data</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">##           name    type FSelectorRcpp_information.gain</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## 1 Sepal.Length numeric                      0.4521286</span></a>
@@ -341,7 +346,7 @@
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">## 3             0.9346311</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">## 4             0.9432359</span></a></code></pre></div>
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggpubr/topics/theme_pubr">theme_pubr</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggpubr/topics/theme_pubr">theme_pubr</a></span>()</a></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
 <p>By default <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code> will create facetted subplots if multiple filter methods are passed as input to <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>.</p>
 <p>According to the <code>"information.gain"</code> measure, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information about the target variable <code>Species</code>.</p>
@@ -389,7 +394,7 @@
 <div id="using-fixed-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-fixed-parameters" class="anchor"></a>Using fixed parameters</h3>
-<p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="http://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
+<p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="https://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"classif.fnn"</span>, </a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">fw.method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">fw.abs =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
@@ -398,8 +403,8 @@
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## mmce.test.mean </span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">##           0.04</span></a></code></pre></div>
 <p>You may want to know which features have been used. Luckily, we have called <code><a href="../../reference/resample.html">resample()</a></code> with the argument <code>models = TRUE</code>, which means that <code>r$models</code> contains a <code>list</code> of models (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) fitted in the individual resampling iterations. In order to access the selected feature subsets we can call <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code> on each model.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw">sapply</span>(r<span class="op">$</span>models, getFilteredFeatures)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">table</span>(sfeats)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(r<span class="op">$</span>models, getFilteredFeatures)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(sfeats)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">## sfeats</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">## Petal.Length  Petal.Width </span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">##           10           10</span></a></code></pre></div>
@@ -414,7 +419,7 @@
 <li>The absolute number of features selected (<code>fw.abs</code>)</li>
 <li>The threshold of the filter method (<code>fw.threshold</code>)</li>
 </ul>
-<p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="http://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
+<p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="https://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ksvm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeNumericParam</span>(<span class="st">"fw.perc"</span>, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">1</span>),</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">                  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>, </a>
@@ -448,8 +453,8 @@
 <a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">## Op. pars: fw.perc=0.338; C=321; sigma=0.138</span></a>
 <a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">## mse.test.mean=21.3827291</span></a></code></pre></div>
 <p>The performance of all percentage values visited during tuning is:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df =<span class="st"> </span><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">df[, <span class="op">-</span><span class="kw">ncol</span>(df)]</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">df[, <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(df)]</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">##     fw.perc         C      sigma mse.test.mean dob eol error.message</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">## 1 0.8461958 -5.262548  4.0975570      86.13944   1  NA          &lt;NA&gt;</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">## 2 0.1076088  5.581377 -4.8978863      63.84920   2  NA          &lt;NA&gt;</span></a>
@@ -504,7 +509,7 @@
 <h2 class="hasAnchor">
 <a href="#select-a-feature-subset" class="anchor"></a>Select a feature subset</h2>
 <p>Feature selection can be conducted with function <code><a href="../../reference/selectFeatures.html">selectFeatures()</a></code>.</p>
-<p>In the following example we perform an exhaustive search on the <code>Wisconsin Prognostic Breast Cancer</code> (<code><a href="http://www.rdocumentation.org/packages/TH.data/topics/wpbc">TH.data::wpbc()</a></code>) data set. As learning method we use the <code>Cox proportional hazards model</code> (<code><a href="http://www.rdocumentation.org/packages/survival/topics/coxph">survival::coxph()</a></code>). The performance is assessed by the holdout estimate of the concordance index <a href="measures.html" target="_blank">cindex</a>).</p>
+<p>In the following example we perform an exhaustive search on the <code>Wisconsin Prognostic Breast Cancer</code> (<code><a href="https://www.rdocumentation.org/packages/TH.data/topics/wpbc">TH.data::wpbc()</a></code>) data set. As learning method we use the <code>Cox proportional hazards model</code> (<code><a href="https://www.rdocumentation.org/packages/survival/topics/coxph">survival::coxph()</a></code>). The performance is assessed by the holdout estimate of the concordance index <a href="measures.html" target="_blank">cindex</a>).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Specify the search strategy</span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlRandom</a></span>(<span class="dt">maxit =</span> 20L)</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">ctrl</a>
@@ -536,7 +541,7 @@
 <a class="sourceLine" id="cb13-7" data-line-number="7">sfeats<span class="op">$</span>y</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">## cindex.test.mean </span></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">##        0.7014085</span></a></code></pre></div>
-<p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="http://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
+<p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="https://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Specify the search strategy</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlSequential</a></span>(<span class="dt">method =</span> <span class="st">"sfs"</span>, <span class="dt">alpha =</span> <span class="fl">0.02</span>)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"></a>
@@ -605,7 +610,7 @@
 <a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">## cindex.test.mean </span></a>
 <a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">##        0.6861781</span></a></code></pre></div>
 <p>The selected feature sets in the individual resampling iterations can be extracted as follows:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">lapply</span>(r<span class="op">$</span>models, getFeatSelResult)</a>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(r<span class="op">$</span>models, getFeatSelResult)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">## [[1]]</span></a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">## FeatSel result:</span></a>
 <a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">## Features (18): mean_radius, mean_perimeter, mean_compactness, ...</span></a>
@@ -637,7 +642,7 @@
 <a href="#feature-importance-from-trained-models" class="anchor"></a>Feature importance from trained models</h1>
 <p>Some algorithms internally compute a feature importance during training. By using <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code> it is possible to extract this part from the trained model.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, <span class="dt">importance =</span> <span class="kw">c</span>(<span class="st">"permutation"</span>))</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, <span class="dt">importance =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"permutation"</span>))</a>
 <a class="sourceLine" id="cb21-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</a>
 <a class="sourceLine" id="cb21-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="../../reference/getFeatureImportance.html">getFeatureImportance</a></span>(mod)</a>
@@ -666,7 +671,12 @@
 <a href="#filter-methods">Filter methods</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#calculating-the-feature-importance">Calculating the feature importance</a></li>
       <li><a href="#selecting-a-feature-subset">Selecting a feature subset</a></li>
-      <li><a href="#fuse-a-learner-with-a-filter-method">Fuse a learner with a filter method</a></li>
+      <li>
+<a href="#fuse-a-learner-with-a-filter-method">Fuse a learner with a filter method</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#using-fixed-parameters">Using fixed parameters</a></li>
+      <li><a href="#tuning-the-size-of-the-feature-subset">Tuning the size of the feature subset</a></li>
+      </ul>
+</li>
       </ul>
 </li>
       <li>

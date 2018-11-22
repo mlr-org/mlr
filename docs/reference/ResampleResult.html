@@ -334,23 +334,23 @@ task and learner ids, aggregated measures and runtime for the resampling." />
     
     <p>A resample result is created by <a href='resample.html'>resample</a> and
 contains the following object members:</p><dl class='dl-horizontal'>
-<dt>task.id (<code>character(1)</code>):</dt><dd><p>Name of the Task.</p></dd>
-<dt>learner.id (<code>character(1)</code>):</dt><dd><p>Name of the Learner.</p></dd>
-<dt>measures.test (data.frame):</dt><dd><p>Gives you access to performance measurements
+<dt>task.id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>):</dt><dd><p>Name of the Task.</p></dd>
+<dt>learner.id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>):</dt><dd><p>Name of the Learner.</p></dd>
+<dt>measures.test (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
 on the individual test sets. Rows correspond to sets in resampling iterations,
 columns to performance measures.</p></dd>
-<dt>measures.train (data.frame):</dt><dd><p>Gives you access to performance measurements
+<dt>measures.train (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
 on the individual training sets. Rows correspond to sets in resampling iterations,
 columns to performance measures. Usually not available, only if specifically requested,
 see general description above.</p></dd>
-<dt>aggr (numeric):</dt><dd><p>Named vector of aggregated performance values. Names are coded like
+<dt>aggr (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>):</dt><dd><p>Named vector of aggregated performance values. Names are coded like
 this &lt;measure&gt;.&lt;aggregation&gt;.</p></dd>
-<dt>err.msgs (data.frame):</dt><dd><p>Number of rows equals resampling iterations
+<dt>err.msgs (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>):</dt><dd><p>Number of rows equals resampling iterations
 and columns are: &#8220;iter&#8221;, &#8220;train&#8221;, &#8220;predict&#8221;.
 Stores error messages generated during train or predict, if these were caught
 via <a href='configureMlr.html'>configureMlr</a>.</p></dd>
-<dt>err.dumps (list of list of dump.frames):</dt><dd><p>List with length equal to number of resampling iterations. Contains lists
-of <code>dump.frames</code> objects that can be fed to <code>debugger()</code> to inspect
+<dt>err.dumps (list of list of <a href='https://www.rdocumentation.org/packages/utils/topics/debugger'>dump.frames</a>):</dt><dd><p>List with length equal to number of resampling iterations. Contains lists
+of <code>dump.frames</code> objects that can be fed to <code><a href='https://www.rdocumentation.org/packages/utils/topics/debugger'>debugger()</a></code> to inspect
 error dumps generated on learner errors. One iteration can generate more than
 one error dump depending on which of training, prediction on training set,
 or prediction on test set, operations fail. Therefore the lists have named
@@ -358,8 +358,8 @@ slots <code>$train</code>, <code>$predict.train</code>, or <code>$predict.test</
 The error dumps are only saved when option <code>on.error.dump</code> is <code>TRUE</code>.</p></dd>
 <dt>pred (<a href='ResamplePrediction.html'>ResamplePrediction</a>):</dt><dd><p>Container for all predictions during resampling.</p></dd>
 <dt>models [list of <a href='makeWrappedModel.html'>WrappedModel</a>):</dt><dd><p>List of fitted models or <code>NULL</code>.</p></dd>
-<dt>extract (list):</dt><dd><p>List of extracted parts from fitted models or <code>NULL</code>.</p></dd>
-<dt>runtime (<code>numeric(1)</code>):</dt><dd><p>Time in seconds it took to execute the resampling.</p></dd>
+<dt>extract (<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>):</dt><dd><p>List of extracted parts from fitted models or <code>NULL</code>.</p></dd>
+<dt>runtime (<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>):</dt><dd><p>Time in seconds it took to execute the resampling.</p></dd>
 </dl><p>The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling.</p>
     

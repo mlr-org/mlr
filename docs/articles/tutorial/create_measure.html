@@ -294,7 +294,7 @@
 <h1 class="hasAnchor">
 <a href="#performance-measures-and-aggregation-schemes" class="anchor"></a>Performance measures and aggregation schemes</h1>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). For example the <a href="measures.html" target="_blank">mse</a> (mean squared error) looks as follows.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">str</span>(mse)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(mse)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## List of 10</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">##  $ id        : chr "mse"</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">##  $ minimize  : logi TRUE</span></a>
@@ -341,7 +341,7 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## [13] "req.prob"</span></a></code></pre></div>
 <p>Additional to its properties, each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) knows its extreme values <code>$best</code> and <code>$worst</code> and if it wants to be minimized or maximized (<code>$minimize</code>) during <a href="tune.html" target="_blank">tuning</a> or <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <p>For resampling slot <code>$aggr</code> specifies how the overall performance across all resampling iterations is calculated. Typically, this is just a matter of aggregating the performance values obtained on the test sets <code>perf.test</code> or the training sets <code>perf.train</code> by a simple function. The by far most common scheme is <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), i.e., the unweighted mean of the performances on the test sets.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">str</span>(test.mean)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(test.mean)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## List of 4</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">##  $ id        : chr "test.mean"</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">##  $ name      : chr "Test mean"</span></a>
@@ -366,21 +366,21 @@
 <p>See the <strong>R</strong> documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> for more details on the various parameters.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Define a function that calculates the misclassification rate</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">my.mmce.fun =<span class="st"> </span><span class="cf">function</span>(task, model, pred, feats, extra.args) {</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  tb =<span class="st"> </span><span class="kw">table</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred), <span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(tb)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(tb)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  tb =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred), <span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(tb)) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(tb)</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">}</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Generate the Measure object</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">my.mmce =<span class="st"> </span><span class="kw"><a href="../../reference/makeMeasure.html">makeMeasure</a></span>(</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="dt">id =</span> <span class="st">"my.mmce"</span>, <span class="dt">name =</span> <span class="st">"My Mean Misclassification Error"</span>,</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">  <span class="dt">properties =</span> <span class="kw">c</span>(<span class="st">"classif"</span>, <span class="st">"classif.multi"</span>, <span class="st">"req.pred"</span>, <span class="st">"req.truth"</span>),</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">  <span class="dt">properties =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"classif"</span>, <span class="st">"classif.multi"</span>, <span class="st">"req.pred"</span>, <span class="st">"req.truth"</span>),</a>
 <a class="sourceLine" id="cb4-11" data-line-number="11">  <span class="dt">minimize =</span> <span class="ot">TRUE</span>, <span class="dt">best =</span> <span class="dv">0</span>, <span class="dt">worst =</span> <span class="dv">1</span>,</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12">  <span class="dt">fun =</span> my.mmce.fun</a>
 <a class="sourceLine" id="cb4-13" data-line-number="13">)</a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># Train a learner and make predictions</span></a>
 <a class="sourceLine" id="cb4-16" data-line-number="16">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, iris.task)</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> iris.task)</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> iris.task)</a>
 <a class="sourceLine" id="cb4-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co"># Calculate the performance using the new measure</span></a>
 <a class="sourceLine" id="cb4-20" data-line-number="20"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.mmce)</a>
@@ -399,8 +399,8 @@
 <p>To create a measure that involves ordinary, i.e., class-dependent misclassification costs you can use function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>. You first need to define the cost matrix. The rows indicate true and the columns predicted classes and the rows and columns have to be named by the class labels. The cost matrix can then be wrapped in a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object and predictions can be evaluated as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code> for details on the various parameters.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Create the cost matrix</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">costs =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">rownames</span>(costs) =<span class="st"> </span><span class="kw">colnames</span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(iris.task)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">costs =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(iris.task)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># Encapsulate the cost matrix in a Measure object</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">my.costs =<span class="st"> </span><span class="kw"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span>(</a>
@@ -411,7 +411,7 @@
 <a class="sourceLine" id="cb5-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># Train a learner and make a prediction</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, iris.task)</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> iris)</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</a>
 <a class="sourceLine" id="cb5-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co"># Calculate the average costs</span></a>
 <a class="sourceLine" id="cb5-17" data-line-number="17"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.costs)</a>
@@ -422,7 +422,7 @@
 <h1 class="hasAnchor">
 <a href="#creating-an-aggregation-scheme" class="anchor"></a>Creating an aggregation scheme</h1>
 <p>It is possible to create your own aggregation scheme using function <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. You need to specify an identifier <code>id</code>, the <code>properties</code>, and write a function that does the actual aggregation. Optionally, you can <code>name</code> your aggregation scheme.</p>
-<p>Possible settings for <code>properties</code> are <code>"req.test"</code> and <code>"req.train"</code> if predictions on either the training or test sets are required, and the vector <code>c("req.train", "req.test")</code> if both are needed.</p>
+<p>Possible settings for <code>properties</code> are <code>"req.test"</code> and <code>"req.train"</code> if predictions on either the training or test sets are required, and the vector <code><a href="https://www.rdocumentation.org/packages/base/topics/c">c("req.train", "req.test")</a></code> if both are needed.</p>
 <p>The aggregation function must have a certain signature detailed in the documentation of <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Usually, you will only need the performance values on the test sets <code>perf.test</code> or the training sets <code>perf.train</code>. In rare cases, e.g., the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object <code>pred</code> or information stored in the <code><a href="../../reference/Task.html">Task()</a></code> object might be required to obtain the aggregated performance. For an example have a look at the <a href="https://github.com/mlr-org/mlr/blob/master/R/aggregations.R#L211">definition</a> of function <code>test.join</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>).</p>
 </div>
 <div id="example-evaluating-the-range-of-measures" class="section level1">
@@ -432,7 +432,7 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">my.range.aggr =<span class="st"> </span><span class="kw"><a href="../../reference/makeAggregation.html">makeAggregation</a></span>(<span class="dt">id =</span> <span class="st">"test.range"</span>, <span class="dt">name =</span> <span class="st">"Test Range"</span>,</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="dt">properties =</span> <span class="st">"req.test"</span>,</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">fun =</span> <span class="cf">function</span> (task, perf.test, perf.train, measure, group, pred)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="kw">diff</span>(<span class="kw">range</span>(perf.test))</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diff">diff</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/range">range</a></span>(perf.test))</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">)</a></code></pre></div>
 <p><code>perf.train</code> and <code>perf.test</code> are both numerical vectors containing the performances on the train and test data sets. In most cases (unless you are using bootstrap as resampling strategy or have set <code>predict = "both"</code> in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) the <code>perf.train</code> vector is empty.</p>
 <p>Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.</p>
@@ -448,12 +448,12 @@
 <a class="sourceLine" id="cb7-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Feature selection</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">res =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(ms1, ms2, ms1min, ms1max),</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">res =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(ms1, ms2, ms1min, ms1max),</a>
 <a class="sourceLine" id="cb7-14" data-line-number="14">  <span class="dt">control =</span> <span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlExhaustive</a></span>(), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co"># Optimization path, i.e., performances for the 16 possible feature subsets</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">perf.data =<span class="st"> </span><span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="kw">head</span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">perf.data =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</a>
 <a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</span></a>
 <a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">## 1            0           0            0           0     0.70000000</span></a>
 <a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">## 2            1           0            0           0     0.36666667</span></a>
@@ -471,10 +471,10 @@
 <a class="sourceLine" id="cb7-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb7-34" data-line-number="34">pd =<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.005</span>, <span class="dt">height =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb7-35" data-line-number="35">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mmce.test.range, <span class="dt">y =</span> mmce.test.mean, <span class="dt">ymax =</span> mmce.test.max, <span class="dt">ymin =</span> mmce.test.min,</a>
-<a class="sourceLine" id="cb7-36" data-line-number="36">  <span class="dt">color =</span> <span class="kw">as.factor</span>(Sepal.Width), <span class="dt">pch =</span> <span class="kw">as.factor</span>(Petal.Width)), <span class="dt">data =</span> perf.data) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-36" data-line-number="36">  <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(Sepal.Width), <span class="dt">pch =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(Petal.Width)), <span class="dt">data =</span> perf.data) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-37" data-line-number="37"><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">position =</span> pd) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-38" data-line-number="38"><span class="st">  </span><span class="kw">coord_flip</span>()</a>
-<a class="sourceLine" id="cb7-39" data-line-number="39"><span class="kw">print</span>(p)</a></code></pre></div>
+<a class="sourceLine" id="cb7-39" data-line-number="39"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p)</a></code></pre></div>
 <p><img src="create_measure_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>The plot shows the range versus the mean misclassification error. The value on the y-axis thus corresponds to the length of the error bars. (Note that the points and error bars are jittered in y-direction.)</p>
 </div>

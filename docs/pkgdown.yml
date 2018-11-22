@@ -1,6 +1,6 @@
 pandoc: 2.3.1
-pkgdown: 1.1.0
-pkgdown_sha: ~
+pkgdown: 1.2.0.9000
+pkgdown_sha: 9bdb29a0f2560417c56cb061f791864751d5e814
 articles:
   mlr: mlr.html
   _pdf_wrapper: pdf/_pdf_wrapper.html

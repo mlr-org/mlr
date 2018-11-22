@@ -345,7 +345,7 @@ fomr since for should never be used as a variable name in an object." />
     <pre class="usage"><span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)
 
 <span class='co'># S3 method for ROCMeasures</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>abbreviations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='kw'>abbreviations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -362,12 +362,12 @@ Created by calculateROCMeasures.</p></td>
     </tr>
     <tr>
       <th>abbreviations</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If <code>TRUE</code> a short paragraph with explanations of the used measures is printed additionally.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Number of digits the measures are rounded to.</p></td>
     </tr>
     <tr>
@@ -405,7 +405,7 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
 <span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)</div><div class='output co'>#&gt;     predicted
 #&gt; true M        R                             
 #&gt;    M 95       16        tpr: 0.86 fnr: 0.14 
