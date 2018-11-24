@@ -308,11 +308,11 @@ for multiclass and multilabel problems." />
     
     <p>Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
-Uses <a href='http://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for normal binary class problems and <a href='http://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a>
+Uses <a href='https://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for normal binary class problems and <a href='https://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a>
 for multiclass and multilabel problems.</p>
     
 
-    <pre class="usage"><span class='fu'>tuneThreshold</span>(<span class='no'>pred</span>, <span class='no'>measure</span>, <span class='no'>task</span>, <span class='no'>model</span>, <span class='kw'>nsub</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+    <pre class="usage"><span class='fu'>tuneThreshold</span>(<span class='no'>pred</span>, <span class='no'>measure</span>, <span class='no'>task</span>, <span class='no'>model</span>, <span class='kw'>nsub</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -342,21 +342,21 @@ only when required for the performance measure.</p></td>
     </tr>
     <tr>
       <th>nsub</th>
-      <td><p>(<code>integer(1)</code>)<br />
-Passed to <a href='http://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for 2class problems.
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+Passed to <a href='https://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for 2class problems.
 Default is 20.</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>(list)<br />
-Control object for <a href='http://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a> when used.
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+Control object for <a href='https://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a> when used.
 Default is empty list.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(list). A named list with with the following components:
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>). A named list with with the following components:
 <code>th</code> is the optimal threshold, <code>perf</code> the performance value.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

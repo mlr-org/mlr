@@ -322,9 +322,9 @@
 <a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">## Aggregated Result: mmce.test.mean=0.1000000</span></a>
 <a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">## </span></a></code></pre></div>
 <p>You can suppress the output for this Learner <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and this <code><a href="../../reference/resample.html">resample()</a></code> call as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">config =</span> <span class="kw">list</span>(<span class="dt">show.learner.output =</span> <span class="ot">FALSE</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">config =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">show.learner.output =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, iris.task, rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>(Note that <code><a href="http://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code> has a <code>trace</code> switch that can alternatively be used to turn off the progress messages.)</p>
+<p>(Note that <code><a href="https://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code> has a <code>trace</code> switch that can alternatively be used to turn off the progress messages.)</p>
 <p>To globally suppress the output for all subsequent learners and calls to <code><a href="../../reference/resample.html">resample()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code> etc. do the following:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/configureMlr.html">configureMlr</a></span>(<span class="dt">show.learner.output =</span> <span class="ot">FALSE</span>, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.multinom"</span>, iris.task, rdesc)</a></code></pre></div>
@@ -332,7 +332,7 @@
 <div id="accessing-and-resetting-the-configuration" class="section level1">
 <h1 class="hasAnchor">
 <a href="#accessing-and-resetting-the-configuration" class="anchor"></a>Accessing and resetting the configuration</h1>
-<p>Function <code><a href="../../reference/getMlrOptions.html">getMlrOptions()</a></code> returns a <code><a href="http://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code> with the current configuration.</p>
+<p>Function <code><a href="../../reference/getMlrOptions.html">getMlrOptions()</a></code> returns a <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code> with the current configuration.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span>()</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">## $show.info</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## [1] FALSE</span></a>
@@ -387,7 +387,7 @@
 <div id="example-turning-off-parameter-checking" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-turning-off-parameter-checking" class="anchor"></a>Example: Turning off parameter checking</h1>
-<p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
+<p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Support Vector Machine with linear kernel and new parameter 'newParam'</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">kernel =</span> <span class="st">"vanilladot"</span>, <span class="dt">newParam =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">## Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span></a>
@@ -458,7 +458,7 @@
 <a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">## [1] "Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n"</span></a>
 <a class="sourceLine" id="cb8-28" data-line-number="28"></a>
 <a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co"># predict and performance return NA's</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">pred =<span class="st"> </span><span class="kw">predict</span>(mod, iris.task)</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, iris.task)</a>
 <a class="sourceLine" id="cb8-31" data-line-number="31">pred</a>
 <a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">## Prediction: 150 observations</span></a>
 <a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">## predict.type: response</span></a>

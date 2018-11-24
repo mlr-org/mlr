@@ -278,7 +278,15 @@
       <li>
 <a href="#constructing-a-learner">Constructing a learner</a><ul>
 <li><a href="#algorithm-adaptation-methods">Algorithm adaptation methods</a></li>
-      <li><a href="#problem-transformation-methods">Problem transformation methods</a></li>
+      <li>
+<a href="#problem-transformation-methods">Problem transformation methods</a><ul>
+<li><a href="#binary-relevance">Binary relevance</a></li>
+      <li><a href="#classifier-chains">Classifier chains</a></li>
+      <li><a href="#nested-stacking">Nested stacking</a></li>
+      <li><a href="#dependent-binary-relevance">Dependent binary relevance</a></li>
+      <li><a href="#stacking">Stacking</a></li>
+      </ul>
+</li>
       </ul>
 </li>
       <li><a href="#train">Train</a></li>
@@ -303,7 +311,7 @@
 <a href="#creating-a-task" class="anchor"></a>Creating a task</h1>
 <p>The first thing you have to do for multilabel classification in <code>mlr</code> is to get your data in the right format. You need a <code>data.frame</code> which consists of the features and a logical vector for each label which indicates if the label is present in the observation or not. After that you can create a <code>MultilabelTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) like a normal <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>). Instead of one target name you have to specify a vector of targets which correspond to the names of logical variables in the <code>data.frame</code>. In the following example we get the yeast data frame from the already existing <code><a href="../../reference/yeast.task.html">yeast.task()</a></code>, extract the 14 label names and create the task again.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">yeast =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(yeast.task)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">labels =<span class="st"> </span><span class="kw">colnames</span>(yeast)[<span class="dv">1</span><span class="op">:</span><span class="dv">14</span>]</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">labels =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(yeast)[<span class="dv">1</span><span class="op">:</span><span class="dv">14</span>]</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">yeast.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeMultilabelTask</a></span>(<span class="dt">id =</span> <span class="st">"multi"</span>, <span class="dt">data =</span> yeast, <span class="dt">target =</span> labels)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">yeast.task</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## Supervised task: multi</span></a>
@@ -404,7 +412,7 @@
 <a href="#train" class="anchor"></a>Train</h1>
 <p>You can <code><a href="../../reference/train.html">train()</a></code> a model as usual with a multilabel learner and a multilabel task as input. You can also pass <code>subset</code> and <code>weights</code> arguments if the learner supports this.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.br, yeast.task)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.br, yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1500</span>, <span class="dt">weights =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">1500</span>, <span class="dv">1500</span>))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.br, yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1500</span>, <span class="dt">weights =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">/</span><span class="dv">1500</span>, <span class="dv">1500</span>))</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">mod</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Model for learner.id=multilabel.binaryRelevance.classif.rpart; learner.class=MultilabelBinaryRelevanceWrapper</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">## Trained on: task.id = multi; obs = 1500; features = 103</span></a>
@@ -420,9 +428,9 @@
 <h1 class="hasAnchor">
 <a href="#predict" class="anchor"></a>Predict</h1>
 <p>Prediction can be done as usual in <code>mlr</code> with <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and by passing a trained model and either the task to the <code>task</code> argument or some new data to the <code>newdata</code> argument. As always you can specify a <code>subset</code> of the data which should be predicted.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> yeast[<span class="dv">1501</span><span class="op">:</span><span class="dv">1600</span>,])</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">names</span>(<span class="kw">as.data.frame</span>(pred))</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">newdata =</span> yeast[<span class="dv">1501</span><span class="op">:</span><span class="dv">1600</span>,])</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(pred))</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">##  [1] "truth.label1"     "truth.label2"     "truth.label3"    </span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##  [4] "truth.label4"     "truth.label5"     "truth.label6"    </span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">##  [7] "truth.label7"     "truth.label8"     "truth.label9"    </span></a>
@@ -438,8 +446,8 @@
 <a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## [37] "response.label9"  "response.label10" "response.label11"</span></a>
 <a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## [40] "response.label12" "response.label13" "response.label14"</span></a>
 <a class="sourceLine" id="cb5-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">pred2 =<span class="st"> </span><span class="kw">predict</span>(mod2, <span class="dt">task =</span> yeast.task)</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="kw">names</span>(<span class="kw">as.data.frame</span>(pred2))</a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">pred2 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod2, <span class="dt">task =</span> yeast.task)</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(pred2))</a>
 <a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">##  [1] "id"               "truth.label1"     "truth.label2"    </span></a>
 <a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">##  [4] "truth.label3"     "truth.label4"     "truth.label5"    </span></a>
 <a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">##  [7] "truth.label6"     "truth.label7"     "truth.label8"    </span></a>
@@ -458,7 +466,7 @@
 <p>The performance of your prediction can be assessed via function <code><a href="../../reference/performance.html">performance()</a></code>. You can specify via the <code>measures</code> argument which <a href="measures.html" target="_blank">measure(s)</a> to calculate. The default measure for multilabel classification is the Hamming loss <a href="measures.html" target="_blank">multilabel.hamloss</a>. All available measures for multilabel classification can be shown by <code><a href="../../reference/listMeasures.html">listMeasures()</a></code> and found in the table of performance <a href="measures.html" target="_blank">measures</a> and the <code>?measures()</code> documentation page.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred2, <span class="dt">measures =</span> <span class="kw">list</span>(multilabel.subset01, multilabel.hamloss, multilabel.acc,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred2, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(multilabel.subset01, multilabel.hamloss, multilabel.acc,</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">  multilabel.f1, timepredict))</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc </span></a>
@@ -495,7 +503,7 @@
 <h1 class="hasAnchor">
 <a href="#binary-performance" class="anchor"></a>Binary performance</h1>
 <p>If you want to calculate a binary performance measure like, e.g., the <a href="measures.html" target="_blank">accuracy</a>, the <a href="measures.html" target="_blank">mmce</a> or the <a href="measures.html" target="_blank">auc</a> for each label, you can use function <code><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances()</a></code>. You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. For calculating the <a href="measures.html" target="_blank">auc</a> you need predicted probabilities.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(acc, mmce, auc))</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce, auc))</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">##         acc.test.mean mmce.test.mean auc.test.mean</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">## label1           0.75           0.25     0.6321925</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">## label2           0.64           0.36     0.6547917</span></a>
@@ -512,7 +520,7 @@
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## label13          0.75           0.25     0.5938610</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">## label14          1.00           0.00            NA</span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(r<span class="op">$</span>pred, <span class="dt">measures =</span> <span class="kw">list</span>(acc, mmce))</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(r<span class="op">$</span>pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce))</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">##         acc.test.mean mmce.test.mean</span></a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">## label1     0.69424907      0.3057509</span></a>
 <a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">## label2     0.59122880      0.4087712</span></a>
@@ -541,7 +549,15 @@
       <li>
 <a href="#constructing-a-learner">Constructing a learner</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#algorithm-adaptation-methods">Algorithm adaptation methods</a></li>
-      <li><a href="#problem-transformation-methods">Problem transformation methods</a></li>
+      <li>
+<a href="#problem-transformation-methods">Problem transformation methods</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#binary-relevance">Binary relevance</a></li>
+      <li><a href="#classifier-chains">Classifier chains</a></li>
+      <li><a href="#nested-stacking">Nested stacking</a></li>
+      <li><a href="#dependent-binary-relevance">Dependent binary relevance</a></li>
+      <li><a href="#stacking">Stacking</a></li>
+      </ul>
+</li>
       </ul>
 </li>
       <li><a href="#train">Train</a></li>

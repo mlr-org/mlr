@@ -316,8 +316,8 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
 
     <pre class="usage"><span class='fu'>generatePartialDependenceData</span>(<span class='no'>obj</span>, <span class='no'>input</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>derivative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>individual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fu'>qnorm</span>(<span class='fl'>0.025</span>), <span class='fu'>qnorm</span>(<span class='fl'>0.975</span>)), <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>, <span class='fl'>NA</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>qnorm</a></span>(<span class='fl'>0.975</span>)), <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -329,18 +329,18 @@ Result of <a href='train.html'>train</a>.</p></td>
     </tr>
     <tr>
       <th>input</th>
-      <td><p>(data.frame | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>character<br />
+      <td><p><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a><br />
 A vector of feature names contained in the training data.
 If not specified all features in the <code>input</code> will be used.</p></td>
     </tr>
     <tr>
       <th>interaction</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether the <code>features</code> should be interacted or not. If <code>TRUE</code> then the Cartesian product of the
 prediction grid for each feature is taken, and the partial dependence at each unique combination of
 values of the features is estimated. Note that if the length of <code>features</code> is greater than two,
@@ -351,20 +351,20 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>derivative</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not the partial derivative of the learned function with respect to the features should be
 estimated. If <code>TRUE</code> <code>interaction</code> must be <code>FALSE</code>. The partial derivative of individual
 observations may be estimated. Note that computation time increases as the learned prediction function
 is evaluated at <code>gridsize</code> points * the number of points required to estimate the partial derivative.
-Additional arguments may be passed to <a href='http://www.rdocumentation.org/packages/numDeriv/topics/grad'>numDeriv::grad</a> (for regression or survival tasks) or
-<a href='http://www.rdocumentation.org/packages/numDeriv/topics/jacobian'>numDeriv::jacobian</a> (for classification tasks). Note that functions which are not smooth may
+Additional arguments may be passed to <a href='https://www.rdocumentation.org/packages/numDeriv/topics/grad'>numDeriv::grad</a> (for regression or survival tasks) or
+<a href='https://www.rdocumentation.org/packages/numDeriv/topics/jacobian'>numDeriv::jacobian</a> (for classification tasks). Note that functions which are not smooth may
 result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
 or estimates trending towards +/- infinity (at discontinuities).
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>individual</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
 rather than aggregating (using <code>fun</code>) the partial dependences of <code>features</code>, plot the
 partial dependences of all observations in <code>data</code> across all values of the <code>features</code>.
@@ -384,14 +384,14 @@ in which case the default is the proportion of observations predicted to be in e
     </tr>
     <tr>
       <th>bounds</th>
-      <td><p>(<code>numeric(2)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(2)</a></code>)<br />
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 confidence region for a partial dependence. Ignored if <code>predict.type != "se"</code> for the learner.
 Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.</p></td>
     </tr>
     <tr>
       <th>uniform</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not the prediction grid for the <code>features</code> is a uniform grid of size <code>n[1]</code> or sampled with
 replacement from the <code>input</code>.
 Default is <code>TRUE</code>.</p></td>
@@ -406,7 +406,7 @@ The default for <code>n[1]</code> is 10, and the default for <code>n[2]</code> i
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments to be passed to <a href='http://www.rdocumentation.org/packages/mmpf/topics/marginalPrediction'>mmpf::marginalPrediction</a>.</p></td>
+      <td><p>additional arguments to be passed to <a href='https://www.rdocumentation.org/packages/mmpf/topics/marginalPrediction'>mmpf::marginalPrediction</a>.</p></td>
     </tr>
     </table>
     
@@ -416,7 +416,7 @@ The default for <code>n[1]</code> is 10, and the default for <code>n[2]</code> i
 input data, target, features, task description, and other arguments controlling the type of
 partial dependences made.</p>
 <p>Object members:</p>
-<dt>data</dt><dd><p>data.frame<br />
+<dt>data</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a><br />
 Has columns for the prediction: one column for regression and
 survival analysis, and a column for class and the predicted probability for classification as well
 as a a column for each element of <code>features</code>. If <code>individual = TRUE</code> then there is an
@@ -425,13 +425,13 @@ additional column <code>idx</code> which gives the index of the <code>data</code
 Task description.</p></dd>
 <dt>target</dt><dd><p>Target feature for regression, target feature levels for classification,
 survival and event indicator for survival.</p></dd>
-<dt>features</dt><dd><p>character<br />
+<dt>features</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a><br />
 Features argument input.</p></dd>
-<dt>interaction</dt><dd><p>(<code>logical(1)</code>)<br />
+<dt>interaction</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not the features were interacted (i.e. conditioning).</p></dd>
-<dt>derivative</dt><dd><p>(<code>logical(1)</code>)<br />
+<dt>derivative</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not the partial derivative was estimated.</p></dd>
-<dt>individual</dt><dd><p>(<code>logical(1)</code>)<br />
+<dt>individual</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether the partial dependences were aggregated or the individual curves are retained.</p></dd>
 
     

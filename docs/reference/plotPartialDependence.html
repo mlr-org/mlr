@@ -330,7 +330,7 @@ Default is &#8220;line&#8221;.</p></td>
     </tr>
     <tr>
       <th>facet</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The name of a feature to be used for facetting.
 This feature must have been an element of the <code>features</code> argument to
 <a href='generatePartialDependenceData.html'>generatePartialDependenceData</a> and is only applicable when said argument had length
@@ -343,20 +343,20 @@ Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>facet.wrap.nrow, facet.wrap.ncol</th>
-      <td><p>(integer)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
 Number of rows and columns for facetting. Default for both is <code>NULL</code>.
 In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p></td>
     </tr>
     <tr>
       <th>p</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 If <code>individual = TRUE</code> then <code>sample</code> allows the user to sample without replacement
 from the output to make the display more readable. Each row is sampled with probability <code>p</code>.
 Default is <code>1</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>(data.frame)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
 Data points to plot. Usually the training data. For survival and binary classification tasks a rug plot
 wherein ticks represent failures or instances of the positive class are shown. For regression tasks
 points are shown. For multiclass classification tasks ticks are shown and colored according to their class.

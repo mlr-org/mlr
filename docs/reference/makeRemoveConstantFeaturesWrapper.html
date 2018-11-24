@@ -307,7 +307,7 @@
     
 
     <pre class="usage"><span class='fu'>makeRemoveConstantFeaturesWrapper</span>(<span class='no'>learner</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>dont.rm</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>na.ignore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>dont.rm</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>na.ignore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>tol</span> <span class='kw'>=</span> <span class='no'>.Machine</span>$<span class='no'>double.eps</span>^<span class='fl'>0.5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -315,25 +315,25 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>perc</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 The percentage of a feature values in [0, 1) that must differ from the mode value.
 Default is 0, which means only constant features with exactly one observed level are removed.</p></td>
     </tr>
     <tr>
       <th>dont.rm</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Names of the columns which must not be deleted.
 Default is no columns.</p></td>
     </tr>
     <tr>
       <th>na.ignore</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should NAs be ignored in the percentage calculation?
 (Or should they be treated as a single, extra level in the percentage calculation?)
 Note that if the feature has only missing values, it is always removed.
@@ -341,10 +341,10 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tol</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Numerical tolerance to treat two numbers as equal.
 Variables stored as <code>double</code> will get rounded accordingly before computing the mode.
-Default is <code>sqrt(.Maschine$double.eps)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>sqrt(.Maschine$double.eps)</a></code>.</p></td>
     </tr>
     </table>
     

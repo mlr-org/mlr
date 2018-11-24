@@ -343,13 +343,13 @@ something like a new &#8220;class.weights&#8221; parameter for the learner via o
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The classification learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>wcw.param</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Name of already existing learner parameter, which allows class weighting.
 The default (<code>wcw.param = NULL</code>) will use the parameter defined in
 the learner (<code>class.weights.param</code>). During training, the parameter
@@ -358,7 +358,7 @@ number of classes.</p></td>
     </tr>
     <tr>
       <th>wcw.weight</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 Weight for each class.
 Must be a vector of the same number of elements as classes are in task,
 and must also be in the same order as the class levels are in
@@ -403,21 +403,21 @@ Default is 1.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>123</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>123</span>)
 <span class='co'># using the direct parameter of the SVM (which is already defined in the learner)</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>wcw.weight</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.5428571 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.5428571</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
+<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.5428571 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.5428571</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
 #&gt; true     M  R -err.-
 #&gt;   M      0 38     38
 #&gt;   R      0 32      0
 #&gt;   -err.- 0 38     38</div><div class='input'>
 <span class='co'># using the observation weights of logreg</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.logreg"</span>, <span class='kw'>wcw.weight</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.2714286 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.2714286</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
+<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.3142857 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3142857</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
 #&gt; true      M  R -err.-
-#&gt;   M      34  4      4
-#&gt;   R      15 17     15
-#&gt;   -err.- 15  4     19</div><div class='input'>
+#&gt;   M      27 14     14
+#&gt;   R       8 21      8
+#&gt;   -err.-  8 14     22</div><div class='input'>
 <span class='co'># tuning the imbalancy param and the SVM param in one go</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>wcw.param</span> <span class='kw'>=</span> <span class='st'>"class.weights"</span>)
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
@@ -430,9 +430,9 @@ Default is 1.</p></td>
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner weightedclasses.classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>              Type len Def    Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>wcw.weight numeric   -   -   1 to 10   -    TRUE     -</span>
 #&gt; <span class='message'>C          numeric   -   - -12 to 12   -    TRUE     Y</span>
-#&gt; <span class='message'>sigma      numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: wcw.weight=5.17; C=39.4; sigma=16</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: wcw.weight=6.15; C=29.7; sigma=13.7</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: wcw.weight=3.6; C=0.00123; sigma=2.19e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: wcw.weight=5.17; C=39.4; sigma=16 : mmce.test.mean=0.4663462</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
-#&gt; Op. pars: wcw.weight=5.17; C=39.4; sigma=16
-#&gt; mmce.test.mean=0.4663462</div><div class='input'># print(res$opt.path)
+#&gt; <span class='message'>sigma      numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: wcw.weight=3.48; C=10.6; sigma=115</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: wcw.weight=4.6; C=1.4e+03; sigma=0.162</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.3413462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: wcw.weight=4.82; C=0.0286; sigma=6.42</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: wcw.weight=4.6; C=1.4e+03; sigma=0.162 : mmce.test.mean=0.3413462</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+#&gt; Op. pars: wcw.weight=4.6; C=1.4e+03; sigma=0.162
+#&gt; mmce.test.mean=0.3413462</div><div class='input'># print(res$opt.path)
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

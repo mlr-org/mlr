@@ -309,7 +309,7 @@ For a list of features, use <a href='listFilterMethods.html'>listFilterMethods</
     
 
     <pre class="usage"><span class='fu'>generateFilterValuesData</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC.rfsrc"</span>,
-  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>), <span class='no'>...</span>, <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>), <span class='no'>...</span>, <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -321,13 +321,13 @@ The task.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Filter method(s), see above.
 Default is &#8220;randomForestSRC.rfsrc&#8221;.</p></td>
     </tr>
     <tr>
       <th>nselect</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Number of scores to request. Scores are getting calculated for all features per default.</p></td>
     </tr>
     <tr>
@@ -337,7 +337,7 @@ Passed down to selected method. Can only be use if <code>method</code> contains 
     </tr>
     <tr>
       <th>more.args</th>
-      <td><p>(named list)<br />
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Extra args passed down to filter methods. List elements are named with the filter
 <code>method</code> name the args should be passed down to.
 A more general and flexible option than <code>...</code>.
@@ -350,13 +350,13 @@ Default is empty list.</p></td>
     <p>(FilterValues). A <code>list</code> containing:</p>
 <dt>task.desc</dt><dd><p>[<a href='TaskDesc.html'>TaskDesc</a>)<br />
 Task description.</p></dd>
-<dt>data</dt><dd><p>(data.frame) with columns:
+<dt>data</dt><dd><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>) with columns:
 <ul>
-<li><p><code>name</code>(character)<br />
+<li><p><code>name</code>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Name of feature.</p></li>
-<li><p><code>type</code>(character)<br />
+<li><p><code>type</code>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Feature column type.</p></li>
-<li><p><code>method</code>(numeric)<br />
+<li><p><code>method</code>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 One column for each method with the feature importance values.</p></li>
 </ul></p></dd>
 

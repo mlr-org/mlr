@@ -330,8 +330,8 @@ see function arguments.</p>
 under <a href='imputations.html'>imputations</a> or create one yourself using <a href='makeImputeMethod.html'>makeImputeMethod</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>impute</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
-  <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>),
+    <pre class="usage"><span class='fu'>impute</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
+  <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>),
   <span class='kw'>dummy.type</span> <span class='kw'>=</span> <span class='st'>"factor"</span>, <span class='kw'>force.dummies</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>impute.new.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>recode.factor.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -340,50 +340,50 @@ under <a href='imputations.html'>imputations</a> or create one yourself using <a
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(data.frame | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Name of the column(s) specifying the response.
-Default is <code>character(0)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>classes</th>
-      <td><p>(named list)<br />
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Named list containing imputation techniques for classes of columns.
-E.g. <code>list(numeric = imputeMedian())</code>.</p></td>
+E.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(numeric = imputeMedian())</a></code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(named list)<br />
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overrules imputation set via
 <code>classes</code>.</p></td>
     </tr>
     <tr>
       <th>dummy.classes</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Classes of columns to create dummy columns for.
-Default is <code>character(0)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>dummy.cols</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Column names to create dummy columns (containing binary missing indicator) for.
-Default is <code>character(0)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>dummy.type</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 How dummy columns are encoded. Either as 0/1 with type &#8220;numeric&#8221;
 or as &#8220;factor&#8221;.
 Default is &#8220;factor&#8221;.</p></td>
     </tr>
     <tr>
       <th>force.dummies</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
@@ -392,14 +392,14 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.new.levels</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>recode.factor.levels</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Recode factor levels after reimputation, so they match the respective element of
 <code>lvls</code> (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.
@@ -409,23 +409,23 @@ Default is <code>TRUE</code>.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(list)</p>
-<dt>data (data.frame)</dt><dd><p>Imputed data.</p></dd>
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</p>
+<dt>data (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)</dt><dd><p>Imputed data.</p></dd>
 <dt>desc (<code>ImputationDesc</code>)</dt><dd><p>Description object.</p></dd>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The description object contains these slots</p><dl class='dl-horizontal'>
-<dt>target (character)</dt><dd><p>See argument.</p></dd>
-<dt>features (character)</dt><dd><p>Feature names (column names of <code>data</code>).</p></dd>,
-<dt>classes (character)</dt><dd><p>Feature classes (storage type of <code>data</code>).</p></dd>
-<dt>lvls (named list)</dt><dd><p>Mapping of column names of factor features to their levels,
+<dt>target (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)</dt><dd><p>See argument.</p></dd>
+<dt>features (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)</dt><dd><p>Feature names (column names of <code>data</code>).</p></dd>,
+<dt>classes (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)</dt><dd><p>Feature classes (storage type of <code>data</code>).</p></dd>
+<dt>lvls (named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</dt><dd><p>Mapping of column names of factor features to their levels,
 including newly created ones during imputation.</p></dd>
-<dt>impute (named list)</dt><dd><p>Mapping of column names to imputation functions.</p></dd>
-<dt>dummies (named list)</dt><dd><p>Mapping of column names to imputation functions.</p></dd>
-<dt>impute.new.levels (<code>logical(1)</code>)</dt><dd><p>See argument.</p></dd>
-<dt>recode.factor.levels (<code>logical(1)</code>)</dt><dd><p>See argument.</p></dd>
+<dt>impute (named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</dt><dd><p>Mapping of column names to imputation functions.</p></dd>
+<dt>dummies (named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</dt><dd><p>Mapping of column names to imputation functions.</p></dd>
+<dt>impute.new.levels (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>See argument.</p></dd>
+<dt>recode.factor.levels (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>See argument.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -436,12 +436,12 @@ including newly created ones during imputation.</p></dd>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>NA</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>)), <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>)
-<span class='no'>imputed</span> <span class='kw'>=</span> <span class='fu'>impute</span>(<span class='no'>df</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0</span>), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>99</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='imputations.html'>imputeMode</a></span>()))
-<span class='fu'>print</span>(<span class='no'>imputed</span>$<span class='no'>data</span>)</div><div class='output co'>#&gt;    x y z
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>NA</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>)), <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>)
+<span class='no'>imputed</span> <span class='kw'>=</span> <span class='fu'>impute</span>(<span class='no'>df</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0</span>), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>99</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='imputations.html'>imputeMode</a></span>()))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>imputed</span>$<span class='no'>data</span>)</div><div class='output co'>#&gt;    x y z
 #&gt; 1  1 a 1
 #&gt; 2  1 a 2
-#&gt; 3 99 b 3</div><div class='input'><span class='fu'><a href='reimpute.html'>reimpute</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>), <span class='no'>imputed</span>$<span class='no'>desc</span>)</div><div class='output co'>#&gt;    x y  z
+#&gt; 3 99 b 3</div><div class='input'><span class='fu'><a href='reimpute.html'>reimpute</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>), <span class='no'>imputed</span>$<span class='no'>desc</span>)</div><div class='output co'>#&gt;    x y  z
 #&gt; 1 99 a NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

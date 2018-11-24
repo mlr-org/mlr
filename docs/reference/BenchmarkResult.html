@@ -317,7 +317,7 @@ You can also convert the object using as.data.frame." />
     
     <p>Result of a benchmark experiment conducted by <a href='benchmark.html'>benchmark</a>
 with the following members:</p><dl class='dl-horizontal'>
-<dt>results (list of <a href='ResampleResult.html'>ResampleResult</a>):</dt><dd><p>A nested list of resample results,
+<dt>results (list of <a href='ResampleResult.html'>ResampleResult</a>):</dt><dd><p>A nested <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> of resample results,
 first ordered by task id, then by learner id.</p></dd>
 <dt>measures (list of <a href='makeMeasure.html'>Measure</a>):</dt><dd><p>The performance measures used in the benchmark experiment.</p></dd>
 <dt>learners (list of <a href='makeLearner.html'>Learner</a>):</dt><dd><p>The learning algorithms compared in the benchmark experiment.</p></dd>
@@ -327,7 +327,7 @@ first ordered by task id, then by learner id.</p></dd>
 for all tasks and learners.</p>
 <p>It is recommended to
 retrieve required information via the <code>getBMR*</code> getter functions.
-You can also convert the object using as.data.frame.</p>
+You can also convert the object using <a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a>.</p>
     
 
         
