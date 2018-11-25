@@ -321,26 +321,26 @@ The task.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The method used to compute the feature importance.
 The only method available is &#8220;permutation.importance&#8221;.
 Default is &#8220;permutation.importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 The features to compute the importance of.
 The default is all of the features contained in the <a href='Task.html'>Task</a>.</p></td>
     </tr>
     <tr>
       <th>interaction</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether to compute the importance of the <code>features</code> argument jointly.
 For <code>method = "permutation.importance"</code> this entails permuting the values of
 all <code>features</code> together and then contrasting the performance with that of
@@ -369,7 +369,7 @@ The default is <code>mean</code>.</p></td>
     </tr>
     <tr>
       <th>nmc</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 The number of Monte-Carlo iterations to use in computing the feature importance.
 If <code>nmc == -1</code> and <code>method = "permutation.importance"</code> then all
 permutations of the <code>features</code> are used.
@@ -377,13 +377,13 @@ The default is 50.</p></td>
     </tr>
     <tr>
       <th>replace</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not to sample the feature values with or without replacement.
 The default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>local</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether to compute the per-observation importance.
 The default is <code>FALSE</code>.</p></td>
     </tr>
@@ -393,10 +393,10 @@ The default is <code>FALSE</code>.</p></td>
 
     <p>(<code>FeatureImportance</code>). A named list which contains the computed feature importance and the input arguments.</p>
 <p>Object members:</p>
-<dt>res</dt><dd><p>(data.frame)<br />
+<dt>res</dt><dd><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
 Has columns for each feature or combination of features (colon separated) for which the importance is computed.
 A row coresponds to importance of the feature specified in the column for the target.</p></dd>
-<dt>interaction</dt><dd><p>(<code>logical(1)</code>)<br />
+<dt>interaction</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not the importance of the <code>features</code> was computed jointly rather than individually.</p></dd>
 <dt>measure</dt><dd><p>(<a href='makeMeasure.html'>Measure</a>)</p></dd>
 The measure used to compute performance.
@@ -404,13 +404,13 @@ The measure used to compute performance.
 The function used to compare the performance of predictions.</p></dd>
 <dt>aggregation</dt><dd><p>(<code>function</code>)<br />
 The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.</p></dd>
-<dt>replace</dt><dd><p>(<code>logical(1)</code>)<br />
+<dt>replace</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether or not, when <code>method = "permutation.importance"</code>, the feature values
 are sampled with replacement.</p></dd>
-<dt>nmc</dt><dd><p>(<code>integer(1)</code>)<br />
+<dt>nmc</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 The number of Monte-Carlo iterations used to compute the feature importance.
 When <code>nmc == -1</code> and <code>method = "permutation.importance"</code> all permutations are used.</p></dd>
-<dt>local</dt><dd><p>(<code>logical(1)</code>)<br />
+<dt>local</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether observation-specific importance is computed for the <code>features</code>.</p></dd>
 
     

@@ -332,22 +332,22 @@ learner shortnames or ids.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>(<code>character(1)</code> | numeric)<br />
-If <code>character(1)</code>, the algorithm to use in generating probability bins.
-See hist for details.
-If numeric, the cut points for the bins.
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+If <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>, the algorithm to use in generating probability bins.
+See <a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a> for details.
+If <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>, the cut points for the bins.
 Default is &#8220;Sturges&#8221;.</p></td>
     </tr>
     <tr>
       <th>groups</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 The number of bins to construct.
 If specified, <code>breaks</code> is ignored.
 Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>task.id</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Selected task in <a href='BenchmarkResult.html'>BenchmarkResult</a> to do plots for, ignored otherwise.
 Default is first task.</p></td>
     </tr>
@@ -355,8 +355,8 @@ Default is first task.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>CalibrationData. A list containing:</p>
-<dt>proportion</dt><dd><p>data.frame with columns:
+    <p>CalibrationData. A <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> containing:</p>
+<dt>proportion</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> with columns:
 <ul>
 <li><p><code>Learner</code> Name of learner.</p></li>
 <li><p><code>bin</code> Bins calculated according to the <code>breaks</code> or <code>groups</code> argument.</p></li>
@@ -365,7 +365,7 @@ Default is first task.</p></td>
 observations with posterior probabilities of class <code>Class</code> within the
 interval given in <code>bin</code>.</p></li>
 </ul></p></dd>
-<dt>data</dt><dd><p>data.frame with columns:
+<dt>data</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> with columns:
 <ul>
 <li><p><code>Learner</code> Name of learner.</p></li>
 <li><p><code>truth</code> True class label.</p></li>

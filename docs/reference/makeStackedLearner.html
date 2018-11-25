@@ -328,7 +328,7 @@ The following stacking methods are available:</p>
 
     <pre class="usage"><span class='fu'>makeStackedLearner</span>(<span class='no'>base.learners</span>, <span class='kw'>super.learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"stack.nocv"</span>, <span class='kw'>use.feat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parset</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -407,22 +407,22 @@ The default `NULL` uses 5-fold CV.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>  <span class='co'># Classification</span>
-  <span class='fu'>data</span>(<span class='no'>iris</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
   <span class='no'>tsk</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-  <span class='no'>base</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"classif.rpart"</span>, <span class='st'>"classif.lda"</span>, <span class='st'>"classif.svm"</span>)
-  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'>lapply</span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
-  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'>lapply</span>(<span class='no'>lrns</span>, <span class='no'>setPredictType</span>, <span class='st'>"prob"</span>)
+  <span class='no'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"classif.rpart"</span>, <span class='st'>"classif.lda"</span>, <span class='st'>"classif.svm"</span>)
+  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
+  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>setPredictType</span>, <span class='st'>"prob"</span>)
   <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'>makeStackedLearner</span>(<span class='kw'>base.learners</span> <span class='kw'>=</span> <span class='no'>lrns</span>,
     <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hill.climb"</span>)
-  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div><div class='input'>
+  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div><div class='input'>
   <span class='co'># Regression</span>
-  <span class='fu'>data</span>(<span class='no'>BostonHousing</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"mlbench"</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"mlbench"</span>)
   <span class='no'>tsk</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
-  <span class='no'>base</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"regr.rpart"</span>, <span class='st'>"regr.svm"</span>)
-  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'>lapply</span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
+  <span class='no'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"regr.rpart"</span>, <span class='st'>"regr.svm"</span>)
+  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
   <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'>makeStackedLearner</span>(<span class='kw'>base.learners</span> <span class='kw'>=</span> <span class='no'>lrns</span>,
     <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"compress"</span>)
-  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div></pre>
+  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

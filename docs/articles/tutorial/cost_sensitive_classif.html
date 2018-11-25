@@ -275,8 +275,18 @@
 <a href="#toc" class="anchor"></a>Table of Contents</h3>
       <ul>
 <li><a href="#class-dependent-misclassification-costs">Class-dependent misclassification costs</a></li>
-      <li><a href="#binary-classification-problems">Binary classification problems</a></li>
-      <li><a href="#multi-class-problems">Multi-class problems</a></li>
+      <li>
+<a href="#binary-classification-problems">Binary classification problems</a><ul>
+<li><a href="#thresholding">1. Thresholding</a></li>
+      <li><a href="#rebalancing">2. Rebalancing</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#multi-class-problems">Multi-class problems</a><ul>
+<li><a href="#thresholding-1">1. Thresholding</a></li>
+      <li><a href="#rebalancing-1">2. Rebalancing</a></li>
+      </ul>
+</li>
       <li><a href="#example-dependent-misclassification-costs">Example-dependent misclassification costs</a></li>
       </ul>
 </div>
@@ -295,7 +305,7 @@
 <div id="class-dependent-misclassification-costs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#class-dependent-misclassification-costs" class="anchor"></a>Class-dependent misclassification costs</h2>
-<p>There are some classification methods that can accomodate misclassification costs directly. One example is <code><a href="http://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code>.</p>
+<p>There are some classification methods that can accomodate misclassification costs directly. One example is <code><a href="https://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code>.</p>
 <p>Alternatively, we can use cost-insensitive methods and manipulate the predictions or the training data in order to take misclassification costs into account. <code>mlr</code> supports <em>thresholding</em> and <em>rebalancing</em>.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Thresholding</strong>: The thresholds used to turn posterior probabilities into class labels are chosen such that the costs are minimized. This requires a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) that can predict posterior probabilities. During training the costs are not taken into account.</p></li>
@@ -331,7 +341,7 @@
 </tr>
 </tbody></table>
 <p>Often, the diagonal entries are zero or the cost matrix is rescaled to achieve zeros in the diagonal (see for example <a href="http://machinelearning.org/archive/icml2008/papers/150.pdf">O’Brien et al, 2008</a>).</p>
-<p>A well-known cost-sensitive classification problem is posed by the German Credit data set (<code><a href="http://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) (see also the <a href="https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data)">UCI Machine Learning Repository</a>). The corresponding cost matrix (though <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf">Elkan (2001)</a> argues that this matrix is economically unreasonable) is given as:</p>
+<p>A well-known cost-sensitive classification problem is posed by the German Credit data set (<code><a href="https://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) (see also the <a href="https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data)">UCI Machine Learning Repository</a>). The corresponding cost matrix (though <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf">Elkan (2001)</a> argues that this matrix is economically unreasonable) is given as:</p>
 <table class="table"><tbody>
 <tr class="odd">
 <td>true/pred.</td>
@@ -351,7 +361,7 @@
 </tbody></table>
 <p>As in the table above, the rows indicate true and the columns predicted classes.</p>
 <p>In case of class-dependent costs it is sufficient to generate an ordinary <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>). A <code>CostSensTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) is only needed if the costs are example-dependent. In the <strong>R</strong> code below we create the <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>), remove two constant features from the data set and generate the cost matrix. Per default, Bad is the positive class.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">data</span>(GermanCredit, <span class="dt">package =</span> <span class="st">"caret"</span>)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(GermanCredit, <span class="dt">package =</span> <span class="st">"caret"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">credit.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">data =</span> GermanCredit, <span class="dt">target =</span> <span class="st">"Class"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">credit.task =<span class="st"> </span><span class="kw"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span>(credit.task)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Removing 2 columns: Purpose.Vacation,Personal.Female.Single</span></a>
@@ -373,8 +383,8 @@
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">##  300  700 </span></a>
 <a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">## Positive class: Bad</span></a>
 <a class="sourceLine" id="cb1-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">costs =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">0</span>), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="kw">colnames</span>(costs) =<span class="st"> </span><span class="kw">rownames</span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(credit.task)</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">costs =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">0</span>), <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(credit.task)</a>
 <a class="sourceLine" id="cb1-25" data-line-number="25">costs</a>
 <a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">##      Bad Good</span></a>
 <a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">## Bad    0    5</span></a>
@@ -382,11 +392,11 @@
 <div id="thresholding" class="section level3">
 <h3 class="hasAnchor">
 <a href="#thresholding" class="anchor"></a>1. Thresholding</h3>
-<p>We start by fitting a logistic regression model (<code><a href="http://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code>) to the German Credit data set (<code><a href="http://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) and predict posterior probabilities.</p>
+<p>We start by fitting a logistic regression model (<code><a href="https://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code>) to the German Credit data set (<code><a href="https://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) and predict posterior probabilities.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Train and predict posterior probabilities</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, credit.task)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> credit.task)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> credit.task)</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">pred</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Prediction: 1000 observations</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## predict.type: prob</span></a>
@@ -405,7 +415,7 @@
 <h4 class="hasAnchor">
 <a href="#i--theoretical-thresholding" class="anchor"></a>i. Theoretical thresholding</h4>
 <p>The theoretical threshold for the <em>positive</em> class can be calculated from the cost matrix as <span class="math display">\[t^* = \frac{c(+1,-1) - c(-1,-1)}{c(+1,-1) - c(+1,+1) + c(-1,+1) - c(-1,-1)}.\]</span> For more details see <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf">Elkan (2001)</a>.</p>
-<p>Below the theoretical threshold for the German Credit data set (<code><a href="http://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) is calculated and used to predict class labels. Since the diagonal of the cost matrix is zero the formula given above simplifies accordingly.</p>
+<p>Below the theoretical threshold for the German Credit data set (<code><a href="https://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) is calculated and used to predict class labels. Since the diagonal of the cost matrix is zero the formula given above simplifies accordingly.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Calculate the theoretical threshold for the positive class</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">th =<span class="st"> </span>costs[<span class="dv">2</span>,<span class="dv">1</span>]<span class="op">/</span>(costs[<span class="dv">2</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>costs[<span class="dv">1</span>,<span class="dv">2</span>])</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">th</a>
@@ -441,29 +451,29 @@
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## Note:</span></a></code></pre></div>
 <p>Then the average costs can be computed by function <code><a href="../../reference/performance.html">performance()</a></code>. Below we compare the average costs and the error rate (<a href="measures.html" target="_blank">mmce</a>) of the learning algorithm with both default thresholds 0.5 and theoretical thresholds.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Performance with default thresholds 0.5</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">## credit.costs         mmce </span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">##        0.774        0.214</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co"># Performance with theoretical thresholds</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred.th, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred.th, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">## credit.costs         mmce </span></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">##        0.478        0.346</span></a></code></pre></div>
 <p>These performance values may be overly optimistic as we used the same data set for training and prediction, and resampling strategies should be preferred. In the <strong>R</strong> code below we make use of the <code>predict.threshold</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> to set the threshold before doing a 3-fold cross-validation on the <code>credit.task()</code>. Note that we create a <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) (<code>rin</code>) that is used throughout the next several code chunks to get comparable performance values.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Cross-validated performance with theoretical thresholds</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">task =</span> credit.task)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">predict.threshold =</span> th, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, <span class="dt">resampling =</span> rin, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, <span class="dt">resampling =</span> rin, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">r</a></code></pre></div>
 <p>If we are also interested in the cross-validated performance for the default threshold values we can call <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> on the resample prediction (<code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code>) <code>r$pred</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Cross-validated performance with default thresholds</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(r<span class="op">$</span>pred, <span class="fl">0.5</span>), <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(r<span class="op">$</span>pred, <span class="fl">0.5</span>), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">## credit.costs         mmce </span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">##    0.8390396    0.2470225</span></a></code></pre></div>
 <p>Theoretical thresholding is only reliable if the predicted posterior probabilities are correct. If there is bias the thresholds have to be shifted accordingly.</p>
 <p>Useful in this regard is function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> that you can use to plot the average costs as well as any other performance measure versus possible threshold values for the positive class in <span class="math inline">\([0,1]\)</span>. The underlying data is generated by <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>.</p>
 <p>The following plots show the cross-validated costs and error rate (<a href="measures.html" target="_blank">mmce</a>). The theoretical threshold <code>th</code> calculated above is indicated by the vertical line. As you can see from the left-hand plot the theoretical threshold seems a bit large.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span>(r, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span>(r, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span>(d, <span class="dt">mark.th =</span> th)</a></code></pre></div>
 <p><img src="cost_sensitive_classif_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
@@ -475,7 +485,7 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co"># 3-fold cross-validation</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, <span class="dt">resampling =</span> rin, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, <span class="dt">resampling =</span> rin, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">r</a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">## Resample Result</span></a>
@@ -502,7 +512,7 @@
 <a href="#rebalancing" class="anchor"></a>2. Rebalancing</h3>
 <p>In order to minimize the average costs, observations from the less costly class should be given higher importance during training. This can be achieved by <em>weighting</em> the classes, provided that the learner under consideration has a ‘class weights’ or an ‘observation weights’ argument. To find out which learning methods support either type of weights have a look at the list of <a href="integrated_learners.html" target="_blank">integrated learners</a> in the Appendix or use <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Learners that accept observation weights</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"weights"</span>)[<span class="kw">c</span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"weights"</span>)[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">##              class     package</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">## 1 classif.binomial       stats</span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">## 2      classif.C50         C50</span></a>
@@ -513,7 +523,7 @@
 <a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">## ... (#rows: 24, #cols: 2)</span></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co"># Learners that can deal with class weights</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"class.weights"</span>)[<span class="kw">c</span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"class.weights"</span>)[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
 <a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">##                       class   package</span></a>
 <a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">## 1              classif.ksvm   kernlab</span></a>
 <a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">## 2  classif.LiblineaRL1L2SVC LiblineaR</span></a>
@@ -534,13 +544,13 @@
 <a class="sourceLine" id="cb12-3" data-line-number="3">w</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">## [1] 5</span></a></code></pre></div>
 <p>A unified and convenient way to assign class weights to a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (and tune them) is provided by function <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>. The class weights are specified using argument <code>wcw.weight</code>. For learners that support observation weights a suitable weight vector is then generated internally during training or resampling. If the learner can deal with class weights, the weights are basically passed on to the appropriate learner parameter. The advantage of using the wrapper in this case is the unified way to specify the class weights.</p>
-<p>Below is an example using learner <code>"classif.multinom"</code> (<code><a href="http://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code>) from package <code>nnet</code>) which accepts observation weights. For binary classification problems it is sufficient to specify the weight <code>w</code> for the positive class. The negative class then automatically receives weight 1.</p>
+<p>Below is an example using learner <code>"classif.multinom"</code> (<code><a href="https://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code>) from package <code>nnet</code>) which accepts observation weights. For binary classification problems it is sufficient to specify the weight <code>w</code> for the positive class. The negative class then automatically receives weight 1.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Weighted learner</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn, <span class="dt">wcw.weight =</span> w)</a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">lrn</a>
 <a class="sourceLine" id="cb13-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, rin, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, rin, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">r</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">## Resample Result</span></a>
@@ -548,11 +558,11 @@
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">## Learner: weightedclasses.classif.multinom</span></a>
 <a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">## Aggr perf: credit.costs.test.mean=0.5680531,mmce.test.mean=0.3599887</span></a>
 <a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">## Runtime: 0.20412</span></a></code></pre></div>
-<p>For classification methods like <code>"classif.ksvm"</code> (the support vector machine <code><a href="http://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code> in package <code>kernlab</code>) that support class weights you can pass them directly.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">class.weights =</span> <span class="kw">c</span>(<span class="dt">Bad =</span> w, <span class="dt">Good =</span> <span class="dv">1</span>))</a></code></pre></div>
+<p>For classification methods like <code>"classif.ksvm"</code> (the support vector machine <code><a href="https://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code> in package <code>kernlab</code>) that support class weights you can pass them directly.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">class.weights =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">Bad =</span> w, <span class="dt">Good =</span> <span class="dv">1</span>))</a></code></pre></div>
 <p>Or, more conveniently, you can again use <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">wcw.weight =</span> w)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, rin, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, rin, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">r</a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">## Resample Result</span></a>
@@ -563,16 +573,16 @@
 <p>Just like the theoretical threshold, the theoretical weights may not always be suitable, therefore you can tune the weight for the positive class as shown in the following example. Calculating the theoretical weight beforehand may help to narrow down the search interval.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span>(lrn)</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeDiscreteParam</span>(<span class="st">"wcw.weight"</span>, <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">12</span>, <span class="fl">0.5</span>)))</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeDiscreteParam</span>(<span class="st">"wcw.weight"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">4</span>, <span class="dv">12</span>, <span class="fl">0.5</span>)))</a>
 <a class="sourceLine" id="cb16-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
 <a class="sourceLine" id="cb16-5" data-line-number="5">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, credit.task, <span class="dt">resampling =</span> rin, <span class="dt">par.set =</span> ps,</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb16-7" data-line-number="7">tune.res</a>
 <a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">## Tune result:</span></a>
 <a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">## Op. pars: wcw.weight=6</span></a>
 <a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">## credit.costs.test.mean=0.5220250,mmce.test.mean=0.3619967</span></a>
 <a class="sourceLine" id="cb16-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw">as.data.frame</span>(tune.res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(tune.res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
 <a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">##    wcw.weight credit.costs.test.mean mmce.test.mean</span></a>
 <a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">## 1           4              0.5430370      0.3190046</span></a>
 <a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">## 2         4.5              0.5320410      0.3320087</span></a>
@@ -596,12 +606,12 @@
 <h4 class="hasAnchor">
 <a href="#ii--over--and-undersampling" class="anchor"></a>ii. Over- and undersampling</h4>
 <p>If the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) supports neither observation nor class weights the proportions of the classes in the training data can be changed by over- or undersampling.</p>
-<p>In the GermanCredit data set (<code><a href="http://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) the positive class Bad should receive a theoretical weight of <code>w = (1 - th)/th = 5</code>. This can be achieved by oversampling class Bad with a <code>rate</code> of 5 or by undersampling class Good with a <code>rate</code> of 1/5 (using functions <code><a href="../../reference/oversample.html">oversample()</a></code> or undersample (<code><a href="../../reference/oversample.html">undersample()</a></code>).</p>
+<p>In the GermanCredit data set (<code><a href="https://www.rdocumentation.org/packages/caret/topics/GermanCredit">caret::GermanCredit()</a></code>) the positive class Bad should receive a theoretical weight of <code>w = (1 - th)/th = 5</code>. This can be achieved by oversampling class Bad with a <code>rate</code> of 5 or by undersampling class Good with a <code>rate</code> of 1/5 (using functions <code><a href="../../reference/oversample.html">oversample()</a></code> or undersample (<code><a href="../../reference/oversample.html">undersample()</a></code>).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">credit.task.over =<span class="st"> </span><span class="kw"><a href="../../reference/oversample.html">oversample</a></span>(credit.task, <span class="dt">rate =</span> w, <span class="dt">cl =</span> <span class="st">"Bad"</span>)</a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb17-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, credit.task.over)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> credit.task)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce))</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> credit.task)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">## credit.costs         mmce </span></a>
 <a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">##        0.434        0.314</span></a></code></pre></div>
 <p>Note that in the above example the learner was trained on the oversampled task <code>credit.task.over</code>. In order to get the training performance on the original task predictions were calculated for <code>credit.task</code>.</p>
@@ -618,7 +628,7 @@
 <a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">## Predict-Type: response</span></a>
 <a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">## Hyperparameters: trace=FALSE,osw.rate=5,osw.cl=Bad</span></a>
 <a class="sourceLine" id="cb18-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, rin, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, credit.task, rin, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb18-14" data-line-number="14">r</a>
 <a class="sourceLine" id="cb18-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">## Resample Result</span></a>
@@ -629,9 +639,9 @@
 <p>Of course, we can also tune the oversampling rate. For this purpose we again have to create an OversampleWrapper (<code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>). Optimal values for parameter <code>osw.rate</code> can be obtained using function <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span>(lrn, <span class="dt">osw.cl =</span> <span class="st">"Bad"</span>)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeDiscreteParam</span>(<span class="st">"osw.rate"</span>, <span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="fl">0.25</span>)))</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeDiscreteParam</span>(<span class="st">"osw.rate"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="fl">0.25</span>)))</a>
 <a class="sourceLine" id="cb19-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, credit.task, rin, <span class="dt">par.set =</span> ps, <span class="dt">measures =</span> <span class="kw">list</span>(credit.costs, mmce),</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, credit.task, rin, <span class="dt">par.set =</span> ps, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(credit.costs, mmce),</a>
 <a class="sourceLine" id="cb19-6" data-line-number="6">  <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb19-7" data-line-number="7">tune.res</a>
 <a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">## Tune result:</span></a>
@@ -643,7 +653,7 @@
 <div id="multi-class-problems" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multi-class-problems" class="anchor"></a>Multi-class problems</h2>
-<p>We consider the waveform <code><a href="http://www.rdocumentation.org/packages/mlbench/topics/mlbench.waveform">mlbench::mlbench.waveform()</a></code> data set from package <code>mlbench::mlbench()</code> and add an artificial cost matrix:</p>
+<p>We consider the waveform <code><a href="https://www.rdocumentation.org/packages/mlbench/topics/mlbench.waveform">mlbench::mlbench.waveform()</a></code> data set from package <code>mlbench::mlbench()</code> and add an artificial cost matrix:</p>
 <table class="table"><tbody>
 <tr class="odd">
 <td>true/pred.</td>
@@ -672,12 +682,12 @@
 </tbody></table>
 <p>We start by creating the <code><a href="../../reference/Task.html">Task()</a></code>, the cost matrix and the corresponding performance measure.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># Task</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">df =<span class="st"> </span>mlbench<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/mlbench/topics/mlbench.waveform">mlbench.waveform</a></span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">wf.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">id =</span> <span class="st">"waveform"</span>, <span class="dt">data =</span> <span class="kw">as.data.frame</span>(df), <span class="dt">target =</span> <span class="st">"classes"</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">df =<span class="st"> </span>mlbench<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mlbench/topics/mlbench.waveform">mlbench.waveform</a></span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">wf.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">id =</span> <span class="st">"waveform"</span>, <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(df), <span class="dt">target =</span> <span class="st">"classes"</span>)</a>
 <a class="sourceLine" id="cb20-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co"># Cost matrix</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6">costs =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">80</span>, <span class="dv">4</span>, <span class="dv">0</span>), <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="kw">colnames</span>(costs) =<span class="st"> </span><span class="kw">rownames</span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(wf.task)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">costs =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">80</span>, <span class="dv">4</span>, <span class="dv">0</span>), <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(wf.task)</a>
 <a class="sourceLine" id="cb20-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co"># Performance measure</span></a>
 <a class="sourceLine" id="cb20-10" data-line-number="10">wf.costs =<span class="st"> </span><span class="kw"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span>(<span class="dt">id =</span> <span class="st">"wf.costs"</span>, <span class="dt">name =</span> <span class="st">"Waveform costs"</span>, <span class="dt">costs =</span> costs,</a>
@@ -690,7 +700,7 @@
 <p>Again this can be done by function <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> as shown in the following example (or alternatively by the <code>predict.threshold</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>). Note that the threshold vector needs to have names that correspond to the class labels.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb21-2" data-line-number="2">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">task =</span> wf.task)</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, wf.task, rin, <span class="dt">measures =</span> <span class="kw">list</span>(wf.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, wf.task, rin, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(wf.costs, mmce), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb21-4" data-line-number="4">r</a>
 <a class="sourceLine" id="cb21-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">## Resample Result</span></a>
@@ -700,15 +710,15 @@
 <a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">## Runtime: 0.0586474</span></a>
 <a class="sourceLine" id="cb21-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co"># Calculate thresholds as 1/(average costs of true classes)</span></a>
-<a class="sourceLine" id="cb21-13" data-line-number="13">th =<span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="kw">rowSums</span>(costs)</a>
-<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="kw">names</span>(th) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(wf.task)</a>
+<a class="sourceLine" id="cb21-13" data-line-number="13">th =<span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colSums">rowSums</a></span>(costs)</a>
+<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(th) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(wf.task)</a>
 <a class="sourceLine" id="cb21-15" data-line-number="15">th</a>
 <a class="sourceLine" id="cb21-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb21-17" data-line-number="17"><span class="co">##          1          2          3 </span></a>
 <a class="sourceLine" id="cb21-18" data-line-number="18"><span class="co">## 0.01818182 0.22222222 0.11111111</span></a>
 <a class="sourceLine" id="cb21-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb21-20" data-line-number="20">pred.th =<span class="st"> </span><span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(r<span class="op">$</span>pred, <span class="dt">threshold =</span> th)</a>
-<a class="sourceLine" id="cb21-21" data-line-number="21"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred.th, <span class="dt">measures =</span> <span class="kw">list</span>(wf.costs, mmce))</a>
+<a class="sourceLine" id="cb21-21" data-line-number="21"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred.th, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(wf.costs, mmce))</a>
 <a class="sourceLine" id="cb21-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb21-23" data-line-number="23"><span class="co">##  wf.costs      mmce </span></a>
 <a class="sourceLine" id="cb21-24" data-line-number="24"><span class="co">## 4.6863021 0.2919823</span></a></code></pre></div>
@@ -726,7 +736,7 @@
 <a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">## $perf</span></a>
 <a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">## [1] 4.03285</span></a></code></pre></div>
 <p>For comparison we show the standardized version of the theoretically motivated threshold vector chosen above.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">th<span class="op">/</span><span class="kw">sum</span>(th)</a>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">th<span class="op">/</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(th)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">##          1          2          3 </span></a>
 <a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">## 0.05172414 0.63218391 0.31609195</span></a></code></pre></div>
 </div>
@@ -745,7 +755,7 @@
 <a class="sourceLine" id="cb24-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>()</a>
 <a class="sourceLine" id="cb24-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb24-7" data-line-number="7">tune.res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, wf.task, <span class="dt">resampling =</span> rin, <span class="dt">par.set =</span> ps,</a>
-<a class="sourceLine" id="cb24-8" data-line-number="8">  <span class="dt">measures =</span> <span class="kw">list</span>(wf.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(wf.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb24-9" data-line-number="9">tune.res</a>
 <a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">## Tune result:</span></a>
 <a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">## Op. pars: wcw.weight=0.456,0.245,...</span></a>
@@ -757,11 +767,11 @@
 <h1 class="hasAnchor">
 <a href="#example-dependent-misclassification-costs" class="anchor"></a>Example-dependent misclassification costs</h1>
 <p>In case of example-dependent costs we have to create a special <code><a href="../../reference/Task.html">Task()</a></code> via function <code><a href="../../reference/Task.html">makeCostSensTask()</a></code>. For this purpose the feature values <span class="math inline">\(x\)</span> and an <span class="math inline">\(n \times K\)</span> <code>cost</code> matrix that contains the cost vectors for all <span class="math inline">\(n\)</span> examples in the data set are required.</p>
-<p>We use the iris (<code><a href="http://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code>) data and generate an artificial cost matrix (see <a href="https://doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>).</p>
+<p>We use the iris (<code><a href="https://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code>) data and generate an artificial cost matrix (see <a href="https://doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>).</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">df =<span class="st"> </span>iris</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">cost =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">150</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2000</span>), <span class="dv">150</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">diag</span>(<span class="dv">3</span>))[df<span class="op">$</span>Species,] <span class="op">+</span><span class="st"> </span><span class="kw">runif</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw">colnames</span>(cost) =<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw">rownames</span>(cost) =<span class="st"> </span><span class="kw">rownames</span>(iris)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">cost =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">150</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2000</span>), <span class="dv">150</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">3</span>))[df<span class="op">$</span>Species,] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(cost) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(iris<span class="op">$</span>Species)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(cost) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(iris)</a>
 <a class="sourceLine" id="cb25-5" data-line-number="5">df<span class="op">$</span>Species =<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb25-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb25-7" data-line-number="7">costsens.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeCostSensTask</a></span>(<span class="dt">id =</span> <span class="st">"iris"</span>, <span class="dt">data =</span> df, <span class="dt">cost =</span> cost)</a>
@@ -820,7 +830,7 @@
 <a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span></a>
 <a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">## Hyperparameters: trace=FALSE</span></a></code></pre></div>
 <p><code>mlr</code> provides some performance measures for example-specific cost-sensitive classification. In the following example we calculate the mean costs of the predicted class labels (<a href="measures.html" target="_blank">meancosts</a>) and the misclassification penalty (<a href="measures.html" target="_blank">mcp</a>). The latter measure is the average difference between the costs caused by the predicted class labels, i.e., <a href="measures.html" target="_blank">meancosts</a>, and the costs resulting from choosing the class with lowest cost for each observation. In order to compute these measures the costs for the test observations are required and therefore the <code><a href="../../reference/Task.html">Task()</a></code> has to be passed to <code><a href="../../reference/performance.html">performance()</a></code>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> costsens.task)</a>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> costsens.task)</a>
 <a class="sourceLine" id="cb28-2" data-line-number="2">pred</a>
 <a class="sourceLine" id="cb28-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">## Prediction: 150 observations</span></a>
@@ -836,7 +846,7 @@
 <a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">## 6  6   setosa</span></a>
 <a class="sourceLine" id="cb28-15" data-line-number="15"><span class="co">## ... (#rows: 150, #cols: 2)</span></a>
 <a class="sourceLine" id="cb28-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw">list</span>(meancosts, mcp), <span class="dt">task =</span> costsens.task)</a>
+<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(meancosts, mcp), <span class="dt">task =</span> costsens.task)</a>
 <a class="sourceLine" id="cb28-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb28-19" data-line-number="19"><span class="co">## meancosts       mcp </span></a>
 <a class="sourceLine" id="cb28-20" data-line-number="20"><span class="co">##  129.5971  124.8077</span></a></code></pre></div>
@@ -850,8 +860,18 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#class-dependent-misclassification-costs">Class-dependent misclassification costs</a></li>
-      <li><a href="#binary-classification-problems">Binary classification problems</a></li>
-      <li><a href="#multi-class-problems">Multi-class problems</a></li>
+      <li>
+<a href="#binary-classification-problems">Binary classification problems</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#thresholding">1. Thresholding</a></li>
+      <li><a href="#rebalancing">2. Rebalancing</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#multi-class-problems">Multi-class problems</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#thresholding-1">1. Thresholding</a></li>
+      <li><a href="#rebalancing-1">2. Rebalancing</a></li>
+      </ul>
+</li>
       <li><a href="#example-dependent-misclassification-costs">Example-dependent misclassification costs</a></li>
       </ul>
 </div>

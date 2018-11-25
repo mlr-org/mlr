@@ -280,7 +280,7 @@
 <div class="contents">
 <p>Some learners like random forest use bagging. Bagging means that the learner consists of an ensemble of several base learners and each base learner is trained with a different random subsample or bootstrap sample from all observations. A prediction made for an observation in the original data set using only base learners not trained on this particular observation is called out-of-bag (OOB) prediction. These predictions are not prone to overfitting, as each prediction is only made by learners that did not use the observation for training.</p>
 <p>To get a list of learners that provide OOB predictions, you can call <code><a href="../../reference/listLearners.html">listLearners(obj = NA, properties = "oobpreds")</a></code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="dt">obj =</span> <span class="ot">NA</span>, <span class="dt">properties =</span> <span class="st">"oobpreds"</span>)[<span class="kw">c</span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="dt">obj =</span> <span class="ot">NA</span>, <span class="dt">properties =</span> <span class="st">"oobpreds"</span>)[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">##                     class         package</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## 1    classif.randomForest    randomForest</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## 2 classif.randomForestSRC randomForestSRC</span></a>
@@ -307,7 +307,7 @@
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">## 6  6     R 0.4417684 0.5582316        R</span></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">## ... (#rows: 208, #cols: 5)</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(oob, <span class="dt">measures =</span> <span class="kw">list</span>(auc, mmce))</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(oob, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(auc, mmce))</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">##       auc      mmce </span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">## 0.9238414 0.2067308</span></a></code></pre></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>

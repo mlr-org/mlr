@@ -308,13 +308,13 @@ in the par.set passed to tuneParams." />
     
     <p>A basic grid search can handle all kinds of parameter types.
 You can either use their correct param type and <code>resolution</code>,
-or discretize them yourself by always using <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/Param'>ParamHelpers::makeDiscreteParam</a>
+or discretize them yourself by always using <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/Param'>ParamHelpers::makeDiscreteParam</a>
 in the <code>par.set</code> passed to <a href='tuneParams.html'>tuneParams</a>.</p>
     
 
     <pre class="usage"><span class='fu'>makeTuneControlGrid</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -322,13 +322,13 @@ in the <code>par.set</code> passed to <a href='tuneParams.html'>tuneParams</a>.<
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.val</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -342,16 +342,16 @@ in the same order as your measures.</p></td>
     </tr>
     <tr>
       <th>resolution</th>
-      <td><p>(integer)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
 Resolution of the grid for each numeric/integer parameter in <code>par.set</code>.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
-See <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/generateGridDesign'>ParamHelpers::generateGridDesign</a>.
+See <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/generateGridDesign'>ParamHelpers::generateGridDesign</a>.
 Default is 10.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -359,23 +359,23 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold.args</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Further arguments for threshold tuning that are passed down to <a href='tuneThreshold.html'>tuneThreshold</a>.
 Default is none.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code>character(1)</code>)<br />
+      <td><p>(<code>function</code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code>character(1)</code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> small increase
 in run time.
-Otherwise <code>character(1)</code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from gc).
+(the latter two both taken from <a href='https://www.rdocumentation.org/packages/base/topics/gc'>gc</a>).
 See the implementation for details.</p></td>
     </tr>
     <tr>
@@ -386,7 +386,7 @@ Default is <code>NULL</code> which will not change anything.</p></td>
     </tr>
     <tr>
       <th>budget</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Maximum budget for tuning. This value restricts the number of function
 evaluations. If set, must equal the size of the grid.</p></td>
     </tr>

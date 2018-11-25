@@ -306,7 +306,7 @@ After being wrapped the learner will support missing values although this will o
     </div>
 
     
-    <p>Fuses a learner with preprocessing methods provided by <a href='http://www.rdocumentation.org/packages/caret/topics/preProcess'>caret::preProcess</a>.
+    <p>Fuses a learner with preprocessing methods provided by <a href='https://www.rdocumentation.org/packages/caret/topics/preProcess'>caret::preProcess</a>.
 Before training the preprocessing will be performed and the preprocessing model will be stored.
 Before prediction the preprocessing model will transform the test data according to the trained model.</p>
 <p>After being wrapped the learner will support missing values although this will only be the case if <code>ppc.knnImpute</code>, <code>ppc.bagImpute</code> or <code>ppc.medianImpute</code> is set to <code>TRUE</code>.</p>
@@ -319,14 +319,14 @@ Before prediction the preprocessing model will transform the test data according
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>(any)<br />
-See <a href='http://www.rdocumentation.org/packages/caret/topics/preProcess'>caret::preProcess</a> for parameters not listed above.
+See <a href='https://www.rdocumentation.org/packages/caret/topics/preProcess'>caret::preProcess</a> for parameters not listed above.
 If you use them you might want to define them in the <code>add.par.set</code> so that they can be tuned.</p></td>
     </tr>
     </table>

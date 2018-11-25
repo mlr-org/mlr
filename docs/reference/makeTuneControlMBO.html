@@ -306,13 +306,13 @@ Please refer to https://github.com/mlr-org/mlrMBO for further info." />
 
     
     <p>Model-based / Bayesian optimization with the function
-<a href='http://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a> from the <span class="pkg">mlrMBO</span> package.
+<a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a> from the <span class="pkg">mlrMBO</span> package.
 Please refer to <a href='https://github.com/mlr-org/mlrMBO'>https://github.com/mlr-org/mlrMBO</a> for further info.</p>
     
 
     <pre class="usage"><span class='fu'>makeTuneControlMBO</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
@@ -321,13 +321,13 @@ Please refer to <a href='https://github.com/mlr-org/mlrMBO'>https://github.com/m
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.val</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -343,17 +343,17 @@ in the same order as your measures.</p></td>
       <th>learner</th>
       <td><p>(<a href='makeLearner.html'>Learner</a> | <code>NULL</code>)<br />
 The surrogate learner: A regression learner to model performance landscape.
-For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOLearner'>mlrMBO::makeMBOLearner</a>.</p></td>
+For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOLearner'>mlrMBO::makeMBOLearner</a>.</p></td>
     </tr>
     <tr>
       <th>mbo.control</th>
-      <td><p>(<a href='http://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
 Control object for model-based optimization tuning.
-For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::makeMBOControl</a>.</p></td>
+For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::makeMBOControl</a>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -361,32 +361,32 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold.args</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Further arguments for threshold tuning that are passed down to <a href='tuneThreshold.html'>tuneThreshold</a>.
 Default is none.</p></td>
     </tr>
     <tr>
       <th>continue</th>
-      <td><p>(<code>logical(1)</code>)<br />
-Resume calculation from previous run using <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/mboContinue'>mlrMBO::mboContinue</a>?
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Resume calculation from previous run using <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mboContinue'>mlrMBO::mboContinue</a>?
 Requires &#8220;save.file.path&#8221; to be set.
-Note that the <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a> in the <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/OptResult'>mlrMBO::OptResult</a>
+Note that the <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a> in the <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/OptResult'>mlrMBO::OptResult</a>
 will only include the evaluations after the continuation.
 The complete OptPath will be found in the slot <code>$mbo.result$opt.path</code>.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code>character(1)</code>)<br />
+      <td><p>(<code>function</code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code>character(1)</code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> small increase
 in run time.
-Otherwise <code>character(1)</code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from gc).
+(the latter two both taken from <a href='https://www.rdocumentation.org/packages/base/topics/gc'>gc</a>).
 See the implementation for details.</p></td>
     </tr>
     <tr>
@@ -397,16 +397,16 @@ Default is <code>NULL</code> which will not change anything.</p></td>
     </tr>
     <tr>
       <th>budget</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Maximum budget for tuning. This value restricts the number of function evaluations.</p></td>
     </tr>
     <tr>
       <th>mbo.design</th>
-      <td><p>(data.frame | <code>NULL</code>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <code>NULL</code>)<br />
 Initial design as data frame.
 If the parameters have corresponding trafo functions,
 the design must not be transformed before it is passed!
-For the default, <code>NULL</code>, a default design is created like described in <a href='http://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a>.</p></td>
+For the default, <code>NULL</code>, a default design is created like described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a>.</p></td>
     </tr>
     </table>
     

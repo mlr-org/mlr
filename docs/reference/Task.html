@@ -331,33 +331,33 @@ It also contains a description object detailing further aspects of the data.</p>
 <p>Object members:</p><dl class='dl-horizontal'>
 <dt>env (<code>environment</code>)</dt><dd><p>Environment where data for the task are stored.
 Use <a href='getTaskData.html'>getTaskData</a> in order to access it.</p></dd>
-<dt>weights (numeric)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
-<dt>blocking (factor)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
+<dt>weights (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
+<dt>blocking (<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
 <dt>task.desc (<a href='TaskDesc.html'>TaskDesc</a>)</dt><dd><p>Encapsulates further information about the task.</p></dd>
 </dl>
     
 
-    <pre class="usage"><span class='fu'>makeClassifTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+    <pre class="usage"><span class='fu'>makeClassifTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
   <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>makeClusterTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>makeClusterTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
   <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>makeCostSensTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>costs</span>,
+<span class='fu'>makeCostSensTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>costs</span>,
   <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
   <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>makeMultilabelTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+<span class='fu'>makeMultilabelTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
   <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>makeRegrTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+<span class='fu'>makeRegrTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
   <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>makeSurvTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+<span class='fu'>makeSurvTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
   <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -366,18 +366,18 @@ Use <a href='getTaskData.html'>getTaskData</a> in order to access it.</p></dd>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Id string for object.
 Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>(data.frame)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
 A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code>character(1)</code> | <code>character(2)</code> | <code>character(n.classes)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
 Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
 so it has length 2. For multilabel classification it contains the names of the logical
@@ -386,14 +386,14 @@ number of classes.</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 Optional, non-negative case weight vector to be used during fitting.
 Cannot be set for cost-sensitive learning.
 Default is <code>NULL</code> which means no (= equal) weights.</p></td>
     </tr>
     <tr>
       <th>blocking</th>
-      <td><p>(factor)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
 An optional factor of the same length as the number of observations.
 Observations with the same blocking level &#8220;belong together&#8221;.
 Specifically, they are either put all in the training or the test set
@@ -402,20 +402,20 @@ Default is <code>NULL</code> which means no blocking.</p></td>
     </tr>
     <tr>
       <th>coordinates</th>
-      <td><p>(data.frame)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
 Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 Coordinates have to be numeric values.
-Provided data.frame needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
+Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
     </tr>
     <tr>
       <th>positive</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Positive class for binary classification (otherwise ignored and set to NA).
 Default is the first factor level of the target attribute.</p></td>
     </tr>
     <tr>
       <th>fixup.data</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Should some basic cleaning up of data be performed?
 Currently this means removing empty factor levels for the columns.
 Possible choices are:
@@ -426,14 +426,14 @@ Default is &#8220;warn&#8221;.</p></td>
     </tr>
     <tr>
       <th>check.data</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>costs</th>
-      <td><p>(data.frame)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
 A numeric matrix or data frame containing the costs of misclassification.
 We assume the general case of observation specific costs.
 This means we have n rows, corresponding to the observations, in the same order as <code>data</code>.
@@ -464,15 +464,15 @@ is then a char vector that points to these columns.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>requireNamespace</span>(<span class='st'>"mlbench"</span>)) {
-  <span class='fu'>library</span>(<span class='no'>mlbench</span>)
-  <span class='fu'>data</span>(<span class='no'>BostonHousing</span>)
-  <span class='fu'>data</span>(<span class='no'>Ionosphere</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mlbench</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Ionosphere</span>)
 
   <span class='fu'>makeClassifTask</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
   <span class='fu'>makeRegrTask</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='co'># an example of a classification task with more than those standard arguments:</span>
-  <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='fu'>c</span>(<span class='fu'>rep</span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'>rep</span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
+  <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
   <span class='fu'>makeClassifTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"myIonosphere"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Ionosphere</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>,
     <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"good"</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='no'>blocking</span>)
   <span class='fu'>makeClusterTask</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])

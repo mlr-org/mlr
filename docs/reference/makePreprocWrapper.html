@@ -311,14 +311,14 @@ If the train or predict function is called on data / a task, the preprocessing i
     
 
     <pre class="usage"><span class='fu'>makePreprocWrapper</span>(<span class='no'>learner</span>, <span class='no'>train</span>, <span class='no'>predict</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(),
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -329,7 +329,7 @@ Function to preprocess the data before training.
 <code>target</code> is a string and denotes the target variable in <code>data</code>.
 <code>args</code> is a list of further arguments and parameters to influence the
 preprocessing.
-Must return a <code>list(data, control)</code>, where <code>data</code> is the preprocessed
+Must return a <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(data, control)</a></code>, where <code>data</code> is the preprocessed
 data and <code>control</code> stores all information necessary to do the preprocessing
 before predictions.</p></td>
     </tr>
@@ -344,14 +344,14 @@ Must return the processed data.</p></td>
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
-Parameter set of <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/LearnerParam'>ParamHelpers::LearnerParam</a> objects to describe the
+      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
+Parameter set of <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/LearnerParam'>ParamHelpers::LearnerParam</a> objects to describe the
 parameters in <code>args</code>.
 Default is empty set.</p></td>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Named list of default values for params in <code>args</code> respectively <code>par.set</code>.
 Default is empty list.</p></td>
     </tr>
