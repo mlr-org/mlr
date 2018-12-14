@@ -380,23 +380,23 @@ repeatedly generated until the setting is satisfied.</p></dd>
 
     <pre class="usage"><span class='fu'>makeFeatSelControlExhaustive</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>max.features</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>,
-  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
+  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
   <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)
 
 <span class='fu'>makeFeatSelControlGA</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>max.features</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>,
   <span class='kw'>comma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='no'>lambda</span>, <span class='kw'>crossover.rate</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>mutation.rate</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)
 
 <span class='fu'>makeFeatSelControlRandom</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
   <span class='kw'>max.features</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)
 
 <span class='fu'>makeFeatSelControlSequential</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>method</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>beta</span> <span class='kw'>=</span> -<span class='fl'>0.001</span>,
   <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>max.features</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>,
-  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
+  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
   <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -404,24 +404,24 @@ repeatedly generated until the setting is satisfied.</p></dd>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>maxit</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Maximal number of iterations. Note, that this is usually not equal to the number
 of function evaluations.</p></td>
     </tr>
     <tr>
       <th>max.features</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Maximal number of features.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the threshold be tuned for the measure at hand, after each feature set evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -429,28 +429,28 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold.args</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Further arguments for threshold tuning that are passed down to <a href='tuneThreshold.html'>tuneThreshold</a>.
 Default is none.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code>character(1)</code>)<br />
+      <td><p>(<code>function</code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code>character(1)</code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> small increase
 in run time.
-Otherwise <code>character(1)</code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from gc).
+(the latter two both taken from <a href='https://www.rdocumentation.org/packages/base/topics/gc'>gc</a>).
 See the implementation for details.</p></td>
     </tr>
     <tr>
       <th>impute.val</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -464,55 +464,55 @@ in the same order as your measures.</p></td>
     </tr>
     <tr>
       <th>comma</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Parameter of the GA feature selection, indicating whether to use a (<code>mu</code>, <code>lambda</code>)
 or (<code>mu</code> + <code>lambda</code>) GA. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>mu</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Parameter of the GA feature selection. Size of the parent population.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Parameter of the GA feature selection. Size of the children population (should be smaller
 or equal to <code>mu</code>).</p></td>
     </tr>
     <tr>
       <th>crossover.rate</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Parameter of the GA feature selection. Probability of choosing a bit from the first parent
 within the crossover mutation.</p></td>
     </tr>
     <tr>
       <th>mutation.rate</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Parameter of the GA feature selection. Probability of flipping a feature bit, i.e. switch
 between selecting / deselecting a feature.</p></td>
     </tr>
     <tr>
       <th>prob</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Parameter of the random feature selection. Probability of choosing a feature.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Parameter of the sequential feature selection. A character representing the method. Possible
 values are <code>sfs</code> (forward search), <code>sbs</code> (backward search), <code>sffs</code>
 (floating forward search) and <code>sfbs</code> (floating backward search).</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Parameter of the sequential feature selection.
 Minimal required value of improvement difference for a forward / adding step.
 Default is 0.01.</p></td>
     </tr>
     <tr>
       <th>beta</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Parameter of the sequential feature selection.
 Minimal required value of improvement difference for a backward / removing step.
 Negative values imply that you allow a slight decrease for the removal of a feature.

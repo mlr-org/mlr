@@ -332,7 +332,7 @@ See <a href='tuneParams.html'>tuneParams</a> for more details.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -353,7 +353,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></td>
@@ -365,7 +365,7 @@ Control object for search method. Also selects the optimization algorithm for tu
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
@@ -423,32 +423,32 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>)
 <span class='co'># stupid mini grid</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
 )
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeTuneWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>inner</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='getTuneResult.html'>getTuneResult</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'mod' not found</span></div><div class='input'><span class='co'># nested resampling for evaluation</span>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='getTuneResult.html'>getTuneResult</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'mod' not found</span></div><div class='input'><span class='co'># nested resampling for evaluation</span>
 <span class='co'># we also extract tuned hyper pars in each iteration</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getTuneResult</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.1200000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.1200000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.1200000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.1200000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.1200000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0800000 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0933333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0666667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0533333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; Tune result:
-#&gt; Op. pars: cp=0.1; minsplit=10
-#&gt; mmce.test.mean=0.1200000
+#&gt; Op. pars: cp=0.05; minsplit=20
+#&gt; mmce.test.mean=0.0400000
 #&gt; 
 #&gt; [[2]]
 #&gt; Tune result:
-#&gt; Op. pars: cp=0.1; minsplit=10
-#&gt; mmce.test.mean=0.0400000
+#&gt; Op. pars: cp=0.05; minsplit=10
+#&gt; mmce.test.mean=0.0800000
 #&gt; </div><div class='input'><span class='fu'><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a></span>(<span class='no'>r</span>)
-<span class='fu'><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt;    cp minsplit
-#&gt; 1 0.1       10
-#&gt; 2 0.1       10</div></pre>
+<span class='fu'><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt;     cp minsplit
+#&gt; 1 0.05       20
+#&gt; 2 0.05       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

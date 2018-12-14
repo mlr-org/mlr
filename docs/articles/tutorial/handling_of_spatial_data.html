@@ -325,7 +325,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 <div id="spatial-cross-validation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#spatial-cross-validation" class="anchor"></a>Spatial Cross-Validation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">data</span>(<span class="st">"spatial.task"</span>)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"spatial.task"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">spatial.task</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## Supervised task: ecuador</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Type: classif</span></a>
@@ -347,9 +347,9 @@ Nested Spatial and Non-Spatial Cross-Validation
 <a class="sourceLine" id="cb1-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb1-21" data-line-number="21">resampling =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"SpRepCV"</span>, <span class="dt">fold =</span> <span class="dv">5</span>, <span class="dt">reps =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb1-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">123</span>)</a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">out =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> learner.rf, <span class="dt">task =</span> spatial.task,</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">  <span class="dt">resampling =</span> resampling, <span class="dt">measures =</span> <span class="kw">list</span>(auc))</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">  <span class="dt">resampling =</span> resampling, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(auc))</a>
 <a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">## Resampling: repeated spatial cross-validation</span></a>
 <a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">## Measures:             auc</span></a>
 <a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">## [Resample] iter 1:    0.6750295</span></a>
@@ -381,7 +381,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 <a class="sourceLine" id="cb1-54" data-line-number="54"><span class="co">## Aggregated Result: auc.test.mean=0.6294690</span></a>
 <a class="sourceLine" id="cb1-55" data-line-number="55"><span class="co">## </span></a>
 <a class="sourceLine" id="cb1-56" data-line-number="56"></a>
-<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="kw">mean</span>(out<span class="op">$</span>measures.test<span class="op">$</span>auc)</a>
+<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(out<span class="op">$</span>measures.test<span class="op">$</span>auc)</a>
 <a class="sourceLine" id="cb1-58" data-line-number="58"><span class="co">## [1] 0.629469</span></a></code></pre></div>
 <p>We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting. To do so, we simply choose <code>RepCV</code> instead of <code>SpRepCV</code>. There is no need to remove <code>coordinates</code> from the task as it is only used if <code>SpCV</code> or <code>SpRepCV</code> is selected as the resampling strategy.</p>
 </div>
@@ -392,9 +392,9 @@ Nested Spatial and Non-Spatial Cross-Validation
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">resampling =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"RepCV"</span>, <span class="dt">fold =</span> <span class="dv">5</span>, <span class="dt">reps =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">123</span>)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">out =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> learner.rf, <span class="dt">task =</span> spatial.task,</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="dt">resampling =</span> resampling, <span class="dt">measures =</span> <span class="kw">list</span>(auc))</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="dt">resampling =</span> resampling, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(auc))</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">## Resampling: repeated cross-validation</span></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">## Measures:             auc</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">## [Resample] iter 1:    0.7362637</span></a>
@@ -426,7 +426,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 <a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">## Aggregated Result: auc.test.mean=0.7562201</span></a>
 <a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">## </span></a>
 <a class="sourceLine" id="cb2-38" data-line-number="38"></a>
-<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="kw">mean</span>(out<span class="op">$</span>measures.test<span class="op">$</span>auc)</a>
+<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(out<span class="op">$</span>measures.test<span class="op">$</span>auc)</a>
 <a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">## [1] 0.7562201</span></a></code></pre></div>
 <p>The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC.</p>
 </div>
@@ -434,10 +434,10 @@ Nested Spatial and Non-Spatial Cross-Validation
 <div id="visualization-of-spatial-partitions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualization-of-spatial-partitions" class="anchor"></a>Visualization of spatial partitions</h1>
-<p>You can visualize the spatial partitioning using <code><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. This function creates multiple <code>ggplot2</code> objects that can then be visualized in a gridded way using your favorite “plot arrangement” function We recommend to use <code><a href="http://www.rdocumentation.org/packages/cowplot/topics/plot_grid">cowplot::plot_grid()</a></code> and <code><a href="http://www.rdocumentation.org/packages/cowplot/topics/save_plot">cowplot::save_plot()</a></code> for this.</p>
-<p>You can pass multiple <code>resample</code> result objects as inputs. This is useful to visualize the differences between a spatial and non-spatial partitioning. If you pass the <code>resample</code> objects in a named list, those names will be populated as plot titles. By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument <code>datum</code>. If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using <code><a href="http://www.rdocumentation.org/packages/purrr/topics/map">purrr::map()</a></code>, <code><a href="http://www.rdocumentation.org/packages/base/topics/lapply">base::lapply()</a></code> or similar functions.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(mlr)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(cowplot)</a>
+<p>You can visualize the spatial partitioning using <code><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. This function creates multiple <code>ggplot2</code> objects that can then be visualized in a gridded way using your favorite “plot arrangement” function We recommend to use <code><a href="https://www.rdocumentation.org/packages/cowplot/topics/plot_grid">cowplot::plot_grid()</a></code> and <code><a href="https://www.rdocumentation.org/packages/cowplot/topics/save_plot">cowplot::save_plot()</a></code> for this.</p>
+<p>You can pass multiple <code>resample</code> result objects as inputs. This is useful to visualize the differences between a spatial and non-spatial partitioning. If you pass the <code>resample</code> objects in a named list, those names will be populated as plot titles. By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument <code>datum</code>. If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using <code><a href="https://www.rdocumentation.org/packages/purrr/topics/map">purrr::map()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/lapply">base::lapply()</a></code> or similar functions.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mlr)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cowplot)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## Loading required package: ggplot2</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## Attaching package: 'cowplot'</span></a>
@@ -451,9 +451,9 @@ Nested Spatial and Non-Spatial Cross-Validation
 <a class="sourceLine" id="cb3-13" data-line-number="13">r2 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.qda"</span>), spatial.task, rdesc2, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"> </a>
 <a class="sourceLine" id="cb3-15" data-line-number="15">plots =<span class="st"> </span><span class="kw"><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots</a></span>(spatial.task,</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">  <span class="kw">list</span>(<span class="st">"SpRepCV"</span> =<span class="st"> </span>r1, <span class="st">"RepCV"</span> =<span class="st"> </span>r2), <span class="dt">crs =</span> <span class="dv">32717</span>, <span class="dt">repetitions =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">  <span class="dt">x.axis.breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">79.075</span>), <span class="dt">y.axis.breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">3.975</span>))</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw"><a href="http://www.rdocumentation.org/packages/cowplot/topics/plot_grid">plot_grid</a></span>(<span class="dt">plotlist =</span> plots[[<span class="st">"Plots"</span>]], <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">nrow =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"SpRepCV"</span> =<span class="st"> </span>r1, <span class="st">"RepCV"</span> =<span class="st"> </span>r2), <span class="dt">crs =</span> <span class="dv">32717</span>, <span class="dt">repetitions =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">  <span class="dt">x.axis.breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">79.075</span>), <span class="dt">y.axis.breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">3.975</span>))</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/cowplot/topics/plot_grid">plot_grid</a></span>(<span class="dt">plotlist =</span> plots[[<span class="st">"Plots"</span>]], <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">nrow =</span> <span class="dv">2</span>,</a>
 <a class="sourceLine" id="cb3-19" data-line-number="19">  <span class="dt">labels =</span> plots[[<span class="st">"Labels"</span>]], <span class="dt">label_size =</span> <span class="dv">8</span>)</a></code></pre></div>
 <p><img src="handling_of_spatial_data_files/figure-html/unnamed-chunk-6-1.png" width="800px" style="display: block; margin: auto;"></p>
 </div>

@@ -317,10 +317,10 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
     </div>
 
     
-    <p>mlr supports different methods to activate parallel computing capabilities through the integration of the <a href='http://www.rdocumentation.org/packages/parallelMap/topics/parallelMap'>parallelMap::parallelMap</a> package, which supports all major parallelization backends for R.
-You can start parallelization with <code><a href='http://www.rdocumentation.org/packages/parallelMap/topics/parallelStart'>parallelStart</a>*</code>, where <code>*</code> should be replaced with the chosen backend.
-<a href='http://www.rdocumentation.org/packages/parallelMap/topics/parallelStop'>parallelMap::parallelStop</a> is used to stop all parallelization backends.</p>
-<p>Parallelization is divided into different levels and will automatically be carried out for the first level that occurs, e.g. if you call <code><a href='resample.html'>resample()</a></code> after <a href='http://www.rdocumentation.org/packages/parallelMap/topics/parallelStart'>parallelMap::parallelStart</a>, each resampling iteration is a parallel job and possible underlying calls like parameter tuning won't be parallelized further.</p>
+    <p>mlr supports different methods to activate parallel computing capabilities through the integration of the <a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelMap'>parallelMap::parallelMap</a> package, which supports all major parallelization backends for R.
+You can start parallelization with <code><a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelStart'>parallelStart</a>*</code>, where <code>*</code> should be replaced with the chosen backend.
+<a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelStop'>parallelMap::parallelStop</a> is used to stop all parallelization backends.</p>
+<p>Parallelization is divided into different levels and will automatically be carried out for the first level that occurs, e.g. if you call <code><a href='resample.html'>resample()</a></code> after <a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelStart'>parallelMap::parallelStart</a>, each resampling iteration is a parallel job and possible underlying calls like parameter tuning won't be parallelized further.</p>
 <p>The supported levels of parallelization are:</p><dl class='dl-horizontal'>
 <dt><code>"mlr.resample"</code></dt><dd><p>Each resampling iteration (a train/test step) is a parallel job.</p></dd>
 <dt><code>"mlr.benchmark"</code></dt><dd><p>Each experiment "run this learner on this data set" is a parallel job.</p></dd>

@@ -343,7 +343,7 @@ The following code shows how to access the message.</p>
 <span class='no'>data</span>$<span class='no'>newfeat</span> <span class='kw'>=</span> <span class='fl'>1</span> <span class='co'># will make LDA crash</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>task</span>) <span class='co'># LDA crashed, but mlr catches this</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Could not train learner classif.lda: Error in lda.default(x, grouping, ...) : </span>
-#&gt; <span class='warning'>  variable 5 appears to be constant within groups</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; <span class='warning'>  variable 5 appears to be constant within groups</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
 #&gt; Trained on: task.id = data; obs = 150; features = 5
 #&gt; Hyperparameters: 
 #&gt; Training failed: Error in lda.default(x, grouping, ...) : 
@@ -351,8 +351,8 @@ The following code shows how to access the message.</p>
 #&gt; 
 #&gt; Training failed: Error in lda.default(x, grouping, ...) : 
 #&gt;   variable 5 appears to be constant within groups
-#&gt; </div><div class='input'><span class='fu'>print</span>(<span class='no'>m</span>$<span class='no'>learner.model</span>) <span class='co'># the error message</span></div><div class='output co'>#&gt; [1] "Error in lda.default(x, grouping, ...) : \n  variable 5 appears to be constant within groups\n"</div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>task</span>) <span class='co'># this will predict NAs</span>
-<span class='fu'>print</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; Prediction: 150 observations
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>m</span>$<span class='no'>learner.model</span>) <span class='co'># the error message</span></div><div class='output co'>#&gt; [1] "Error in lda.default(x, grouping, ...) : \n  variable 5 appears to be constant within groups\n"</div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>m</span>, <span class='no'>task</span>) <span class='co'># this will predict NAs</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
 #&gt; time: NA
@@ -363,7 +363,7 @@ The following code shows how to access the message.</p>
 #&gt; 4  4 setosa     &lt;NA&gt;
 #&gt; 5  5 setosa     &lt;NA&gt;
 #&gt; 6  6 setosa     &lt;NA&gt;
-#&gt; ... (#rows: 150, #cols: 3)</div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>p</span>))</div><div class='output co'>#&gt; mmce 
+#&gt; ... (#rows: 150, #cols: 3)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>p</span>))</div><div class='output co'>#&gt; mmce 
 #&gt;   NA </div><div class='input'><span class='fu'><a href='configureMlr.html'>configureMlr</a></span>(<span class='kw'>on.learner.error</span> <span class='kw'>=</span> <span class='st'>"stop"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

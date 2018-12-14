@@ -357,12 +357,12 @@ Default is the first measure used in the benchmark experiment.</p></td>
     </tr>
     <tr>
       <th>p.value</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 P-value for the critical difference. Default: 0.05</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>(<code>character(1)</code>): (<code>learner.id</code>) <br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>): (<code>learner.id</code>) <br />
 Select a <code>learner.id</code> as baseline for the <code>test = "bd"</code>
 ("Bonferroni-Dunn") critical differences
 diagram. The critical difference interval will then be positioned arround this learner.
@@ -372,14 +372,14 @@ comparisons</em>.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>(<code>character(1)</code>) <br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>) <br />
 Test for which the critical differences are computed. <br />
 &#8220;bd&#8221; for the Bonferroni-Dunn Test, which is comparing all
 classifiers to a <code>baseline</code>, thus performing a comparison
 of one classifier to all others. <br />
 Algorithms not connected by a single line are statistically different
 from the baseline. <br />
-&#8220;nemenyi&#8221; for the <a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
+&#8220;nemenyi&#8221; for the <a href='https://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
 which is comparing all classifiers to each other. The null hypothesis that
 there is a difference between the classifiers can not be rejected for all
 classifiers that have a single grey bar connecting them.</p></td>
@@ -393,11 +393,11 @@ classifiers that have a single grey bar connecting them.</p></td>
 part of the plot</p></dd>
 <dt>friedman.nemenyi.test</dt><dd><p>(list) of class <code>pairwise.htest</code> <br />
 contains the calculated
-<a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a></p></dd>
+<a href='https://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a></p></dd>
 <dt>cd.info</dt><dd><p>(list) containing info on the critical difference
 and its positioning</p></dd>
 <dt>baseline</dt><dd><p><code>baseline</code> chosen for plotting</p></dd>
-<dt>p.value</dt><dd><p>p.value used for the <a href='http://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
+<dt>p.value</dt><dd><p>p.value used for the <a href='https://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
 and for computation of the critical difference</p></dd>
 
     

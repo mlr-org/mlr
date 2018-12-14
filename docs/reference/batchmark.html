@@ -345,14 +345,14 @@ of dataset IDs easily with
     
 
     <pre class="usage"><span class='fu'>batchmark</span>(<span class='no'>learners</span>, <span class='no'>tasks</span>, <span class='no'>resamplings</span>, <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
+  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learners</th>
-      <td><p>(list of <a href='makeLearner.html'>Learner</a> | character)<br />
+      <td><p>(list of <a href='makeLearner.html'>Learner</a> | <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Learning algorithms which should be compared, can also be a single learner.
 If you pass strings the learners will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -376,7 +376,7 @@ If missing, the default measure of the first task is used.</p></td>
     </tr>
     <tr>
       <th>models</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should all fitted models be stored in the <a href='ResampleResult.html'>ResampleResult</a>?
 Default is <code>TRUE</code>.</p></td>
     </tr>

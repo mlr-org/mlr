@@ -307,25 +307,25 @@ For constant features most methods fail, special behaviour for this case is impl
 
     
     <p>Normalize features by different methods.
-Internally <a href='http://www.rdocumentation.org/packages/BBmisc/topics/normalize'>BBmisc::normalize</a> is used for every feature column.
+Internally <a href='https://www.rdocumentation.org/packages/BBmisc/topics/normalize'>BBmisc::normalize</a> is used for every feature column.
 Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.</p>
     
 
-    <pre class="usage"><span class='fu'>normalizeFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"standardize"</span>,
-  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>on.constant</span> <span class='kw'>=</span> <span class='st'>"quiet"</span>)</pre>
+    <pre class="usage"><span class='fu'>normalizeFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"standardize"</span>,
+  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>on.constant</span> <span class='kw'>=</span> <span class='st'>"quiet"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(data.frame | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code>character(1)</code> | <code>character(2)</code> | <code>character(n.classes)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
 Name(s) of the target variable(s).
 Only used when <code>obj</code> is a data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
@@ -336,7 +336,7 @@ classes.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Normalizing method. Available are:<br />
 &#8220;center&#8221;: Subtract mean.<br />
 &#8220;scale&#8221;: Divide by standard deviation.<br />
@@ -345,18 +345,18 @@ Normalizing method. Available are:<br />
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Columns to normalize. Default is to use all numeric columns.</p></td>
     </tr>
     <tr>
       <th>range</th>
-      <td><p>(<code>numeric(2)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(2)</a></code>)<br />
 Range for method &#8220;range&#8221;.
-Default is <code>c(0,1)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0,1)</a></code>.</p></td>
     </tr>
     <tr>
       <th>on.constant</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 How should constant vectors be treated? Only used, of &#8220;method != center&#8221;,
 since this methods does not fail for constant vectors. Possible actions are:<br />
 &#8220;quiet&#8221;: Depending on the method, treat them quietly:<br />
@@ -371,11 +371,11 @@ will be returned untouched.<br />
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
+    <p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='http://www.rdocumentation.org/packages/BBmisc/topics/normalize'>BBmisc::normalize</a></p>
+    <div class='dont-index'><p><a href='https://www.rdocumentation.org/packages/BBmisc/topics/normalize'>BBmisc::normalize</a></p>
 <p>Other eda_and_preprocess: <code><a href='capLargeValues.html'>capLargeValues</a></code>,
   <code><a href='createDummyFeatures.html'>createDummyFeatures</a></code>,
   <code><a href='dropFeatures.html'>dropFeatures</a></code>,
