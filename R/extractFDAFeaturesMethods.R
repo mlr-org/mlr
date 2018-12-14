@@ -296,21 +296,12 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
       "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
       "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
 
-    #  FIXME: The current implementation is stupid but I have a hard time coming up with something
-    #         better. We do not want to return constant features, but what happens
-    #         if feats are constant in train but not in prediction.
-
     tsfeats = tsfeatures::tsfeatures(tslist = rowlst, features = feats, scale = vals$scale,
       trim = vals$trim, parallel = vals$parallel, trim_amount = vals$trim_amount, na.action = vals$na.action)
 
-
     # Get rid of series and type columns
     tsfeats = data.frame(lapply(tsfeats, as.numeric))
-    # Get rid of constant features
 
-    # See FIXME above
-    # const.feats = which(viapply(tsfeats, function(x) length(unique(x))) == 1L)
-    # tesfeats = tsfeats[, - const.feats]
     return(tsfeats)
   }
   ps = makeParamSet(
