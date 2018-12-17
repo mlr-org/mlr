@@ -10,12 +10,15 @@ makeRLearner.regr.h2o.gbm = function() {
       makeNumericLearnerParam("learn_rate", lower = 0, upper = 1, default = 0.1),
       makeIntegerLearnerParam("nbins", lower = 1L, default = 20L),
       makeIntegerLearnerParam("nbins_cats", lower = 1L, default = 1024),
+      makeDiscreteLearnerParam("distribution",
+                               values = c("poisson", "laplace", "tweedie", "gaussian", "huber", "gamma", "quantile"),
+                               default = "gaussian"),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
     properties = c("numerics", "factors", "missings"),
     name = "h2o.gbm",
     short.name = "h2o.gbm",
-    note = "'distribution' is set automatically to 'gaussian'.",
+    note = "",
     callees = "h2o.gbm"
   )
 }
@@ -31,7 +34,7 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
   h2of = h2o::as.h2o(d)
-  model = h2o::h2o.gbm(y = y, x = x, training_frame = h2of, distribution = "gaussian", ...)
+  model = h2o::h2o.gbm(y = y, x = x, training_frame = h2of, ...)
   h2o::h2o.rm(h2of)
   return(model)
 }
