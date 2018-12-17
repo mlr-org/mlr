@@ -42,7 +42,7 @@ makeRLearner.regr.h2o.gbm = function() {
       makeNumericLearnerParam("stopping_tolerance", lower = 0, upper = Inf, default = 0.001, tunable = FALSE),
       makeNumericLearnerParam("quantile_alpha", lower = 0, upper = 100, default = 0.5,
                               requires = expression(distribution == "quantile")),
-      makeNumericLearnerParam("tweedie_power", lower = 1, upper = 2, default = 1.5, special.vals = c(0),
+      makeNumericLearnerParam("tweedie_power", lower = 1, upper = 2, default = 1.5, special.vals = list(0),
                               requires = expression(distribution == "tweedie")),
       makeNumericLearnerParam("tweedie_power", lower = 0, upper = 1, default = 0.9,
                               requires = expression(distribution == "huber"))
