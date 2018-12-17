@@ -46,8 +46,6 @@ makeRLearner.regr.h2o.gbm = function() {
                               requires = expression(distribution == "tweedie")),
       makeNumericLearnerParam("tweedie_power", lower = 0, upper = 1, default = 0.9,
                               requires = expression(distribution == "huber"))
-
-
     ),
     properties = c("numerics", "factors", "missings"),
     name = "h2o.gbm",
@@ -63,6 +61,7 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
+    options("h2o.use.data.table" = TRUE)
   }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
