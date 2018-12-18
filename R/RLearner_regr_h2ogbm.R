@@ -44,7 +44,7 @@ makeRLearner.regr.h2o.gbm = function() {
                               requires = expression(distribution == "quantile")),
       makeNumericLearnerParam("tweedie_power", lower = 1, upper = 2, default = 1.5, special.vals = list(0),
                               requires = expression(distribution == "tweedie")),
-      makeNumericLearnerParam("tweedie_power", lower = 0, upper = 1, default = 0.9,
+      makeNumericLearnerParam("huber_alpha", lower = 0, upper = 1, default = 0.9,
                               requires = expression(distribution == "huber"))
     ),
     properties = c("numerics", "factors", "missings"),
