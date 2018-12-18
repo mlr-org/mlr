@@ -8,7 +8,6 @@ makeRLearner.regr.h2o.gbm = function() {
       makeIntegerLearnerParam("ntrees", lower = 1L, default = 50L),
       makeIntegerLearnerParam("max_depth", lower = 1L, default = 5L),
       makeIntegerLearnerParam("min_rows", lower = 1L,  default = 10L),
-      makeNumericLearnerParam("learn_rate", lower = 0, upper = 1, default = 0.1),
       makeIntegerLearnerParam("nbins", lower = 1L, default = 20L),
       makeIntegerLearnerParam("nbins_cats", lower = 1L, default = 1024),
       makeIntegerLearnerParam("nbins_top_level", lower = 1L, default = 1024),
