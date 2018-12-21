@@ -173,7 +173,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'   Default is `NULL`
 #' @param center (`logical(1)`) \cr
 #'   Should data be centered before applying pca?
-#' @param scale (`logical(1)`) \cr
+#' @param scale. (`logical(1)`) \cr
 #'   Should data be scaled before applying pca?
 #' @return ([data.frame]).
 #' @export
