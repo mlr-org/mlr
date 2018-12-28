@@ -56,7 +56,7 @@ For each of these learning problems some specifics are described below.
 
 For classification the target column has to be a `factor`.
 
-In the following example we define a classification task for the `mlbench::BreastCancer()` data set and exclude the variable ``Id`` from all furthercmodel fitting and evaluation.
+In the following example we define a classification task for the `mlbench::BreastCancer()` data set and exclude the variable ``Id`` from all further model fitting and evaluation.
 
 ```{r}
 data(BreastCancer, package = "mlbench")
