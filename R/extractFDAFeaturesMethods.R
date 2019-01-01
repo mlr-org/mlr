@@ -166,7 +166,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'
 #' @description
 #' The function extracts the functional principal components from a data.frame
-#' containing functional features.
+#' containing functional features. Currently uses `stats::prcomp`. 
 #'
 #' @param rank. (`integer(1)`)\cr
 #'   Number of principal components to extract.
@@ -178,7 +178,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
-extractFDAPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
+extractFDAFPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
   assertCount(rank., null.ok = TRUE)
 
   lrn = function(data, target, col, vals, ...) {
