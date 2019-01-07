@@ -97,7 +97,7 @@ test_that("extract and reextract MultiRes", {
 test_that("extractFPCAFeatures is equivalent to prcomp", {
   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
 
-  extr = extractFDAPCA()
+  extr = extractFDAFPCA()
   fpca.vals = extr$learn(data = gp$data, target = "X1", col = "fd", rank. = 5L)
   fpca.df = extr$reextract(data = gp$data, target = "X1", col = "fd", vals = fpca.vals)
   expect_true((nrow(gp$data) == nrow(fpca.df)))
@@ -115,7 +115,7 @@ test_that("extractFPCAFeatures is equivalent to prcomp", {
 
 test_that("extract and reextract FPCA", {
   gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
-  fm = list("fd" = extractFDAPCA(rank. = 5))
+  fm = list("fd" = extractFDAFPCA(rank. = 5))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reextractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
