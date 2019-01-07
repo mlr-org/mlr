@@ -43,6 +43,7 @@ makeRLearner.classif.classiFunc.knn = function() {
                                     lower = 0, upper = 1),
       # additional arguments to metrics in computeDistMat
       makeNumericLearnerParam(id = "p", default = 2),
+      makeNumericLearnerParam(id = "dtwwindow", lower = 0, upper = 1, requires = quote(metric == "rucrdtw")),
       # TODO additional arguments to Data2fd
       # TODO additional arguments to custom metric
       keys = c("task"),
