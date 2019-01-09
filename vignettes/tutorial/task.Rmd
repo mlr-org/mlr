@@ -66,7 +66,7 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 classif.task
 ```
 
-In binary classification the two classes are usually referred to as *positive* andc*negative* class with the positive class being the category of greater interest.
+In binary classification the two classes are usually referred to as *positive* and *negative* class with the positive class being the category of greater interest.
 This is relevant for many [performance measures](performance.html){target="_blank"} like the *true positive rate* or [ROC analysis](roc_analysis.html){target="_blank"}.
 Moreover, `mlr`, where possible, permits to set options (like the `setThreshold()` or `makeWeightedClassesWrapper()`) and returns and plots results (like class posterior probabilities) for the positive class only.
 
@@ -98,9 +98,9 @@ In multilabel classification each object can belong to more than one category at
 
 The `data` are expected to contain as many target columns as there are class labels.
 The target columns should be logical vectors that indicate which class labels are present.
-The names of the target columns are taken as class labels and need to be passed to the `target` argument of `makeMultilabelTask `Task()`.
+The names of the target columns are taken as class labels and need to be passed to the `target` argument of `makeMultilabelTask()`.
 
-In the following example we get the data of the yeast data set, extract the label names, and pass them to the ``target`` argument in `makeMultilabelTask `Task()`.
+In the following example we get the data of the yeast data set, extract the label names, and pass them to the ``target`` argument in `makeMultilabelTask()`.
 
 ```{r}
 yeast = getTaskData(yeast.task)
