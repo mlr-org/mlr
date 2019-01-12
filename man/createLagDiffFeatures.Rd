@@ -8,7 +8,7 @@ createLagDiffFeatures(obj, target = character(0L), lag = 0L,
   difference = 0L, difference.lag = 0L, cols = NULL,
   seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
   seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
-  na.pad = FALSE, return.nonlag = FALSE, grouping = NULL,
+  na.pad = FALSE, return.nonlag = FALSE, group_var = NULL,
   add_var = FALSE, TTR.funcs = NULL, date.col)
 }
 \arguments{
@@ -62,7 +62,7 @@ A logical to denote whether the data should be padded to the original size with 
 \item{return.nonlag}{\code{\link{logical}}\cr
 A logical to denote whether the original unlagged features should be returned}
 
-\item{grouping}{\code{\link{character}}\cr
+\item{group_var}{\code{\link{character}}\cr
 The name of the column to be passed to data.table's \code{by} function. This will take lags and differences wrt the groups.}
 
 \item{add_var}{\code{\link{logical}}

@@ -76,12 +76,24 @@ makeResampleInstance = function(desc, task, size, ...) {
       stop("Blocking always needs the task!")
     levs = levels(blocking)
     size2 = length(levs)
-    # create instance for blocks
-    inst = instantiateResampleInstance(desc, size2, task)
-    # now exchange block indices with indices of elements of this block and shuffle
-    inst$train.inds = lapply(inst$train.inds, function(i) sample(which(blocking %in% levs[i])))
-    ti = sample(size)
-    inst$test.inds = lapply(inst$train.inds, function(x) setdiff(ti, x))
+    if (!(desc$id == "Growing" | desc$id == "Fixed")) {
+      # create instance for blocks
+      inst = instantiateResampleInstance(desc, size2, task)
+      # now exchange block indices with indices of elements of this block and shuffle
+      inst$train.inds = lapply(inst$train.inds, function(i) sample(which(blocking %in% levs[i])))
+      ti = sample(size)
+      inst$test.inds = lapply(inst$train.inds, function(x) setdiff(ti, x))
+    } else {
+      inst = instantiateResampleInstance(desc, size, task)
+      for (i in seq_len(length(inst$train.inds))) {
+        max_block = max(inst$train.inds[[i]])
+        max_date = suppressWarnings(max(which(as.Date(blocking[max_block]) == as.Date(blocking[inst$test.inds[[i]]]))))
+        if (is.infinite(max_date)) next
+        inst$train.inds[[i]] = c(inst$train.inds[[i]], (max_block + 1):(max_block + max_date))
+        inst$test.inds[[i]] = inst$test.inds[[i]] + max_date
+        inst$test.inds[[i]] = inst$test.inds[[i]][inst$test.inds[[i]] < size]
+      }
+    }
     inst$size = size
   } else if (desc$stratify || !is.null(desc$stratify.cols)) {
     if (is.null(task))

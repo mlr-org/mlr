@@ -63,7 +63,7 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 
   if (is.null(parlist$objective))
     parlist$objective = "reg:linear"
-
+  gc()
   task.data = getTaskData(.task, .subset, target.extra = TRUE)
   parlist$data = xgboost::xgb.DMatrix(data = data.matrix(task.data$data), label = task.data$target)
 

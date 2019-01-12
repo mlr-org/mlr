@@ -34,7 +34,7 @@ globalVariables(c("dates", "..data_cols", "V1"))
 #' An integer denoting the period to seasonaly difference over
 #' @param return.nonlag [`logical`]\cr
 #' A logical to denote whether the original unlagged features should be returned
-#' @param grouping [`character`]\cr
+#' @param group_var [`character`]\cr
 #' The name of the column to be passed to data.table's \code{by} function. This will take lags and differences wrt the groups.
 #' @param TTR.funcs [`list`]\cr
 #' A list of TTR functions such as \code{list(runSum = list(n = 1:10, cumulative = TRUE))}
@@ -57,7 +57,7 @@ globalVariables(c("dates", "..data_cols", "V1"))
 createLagDiffFeatures = function(obj, target = character(0L), lag = 0L, difference = 0L, difference.lag = 0L,
   cols = NULL, seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
   seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
-  na.pad = FALSE, return.nonlag = FALSE, grouping = NULL, add_var = FALSE, TTR.funcs = NULL, date.col) {
+  na.pad = FALSE, return.nonlag = FALSE, group_var = NULL, add_var = FALSE, TTR.funcs = NULL, date.col) {
 
   assertIntegerish(lag, lower = 0L, upper = 100000L)
   assertIntegerish(difference, lower = 0L, upper = 100000L)
@@ -79,7 +79,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   lag = 0L, difference = 0L, difference.lag = 0L,
   cols = NULL, seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
   seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
-  na.pad = FALSE, return.nonlag = FALSE, grouping = NULL, add_var = FALSE,
+  na.pad = FALSE, return.nonlag = FALSE, group_var = NULL, add_var = FALSE,
   TTR.funcs = NULL, date.col) {
 
   work.cols = colnames(obj)
@@ -88,25 +88,23 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   } else {
     data = as.data.table(obj)
     data[, dates := date.col]
-    suppressWarnings(setkeyv(data, c(grouping, "dates")))
+    suppressWarnings(setkeyv(data, c(group_var, "dates")))
   }
   if (!is.null(cols)) {
     assertSubset(cols, work.cols)
-    x = data[, c(cols, grouping), with = FALSE]
+    x = data[, c(cols, group_var), with = FALSE]
   } else {
     cols = work.cols
     x = data[, cols, with = FALSE]
   }
   if (!is.null(seasonal.cols)) {
-    if (!(target %in% seasonal.cols))
-      work.seasonal.cols = c(seasonal.cols, target)
-      assertSubset(seasonal.cols, work.seasonal.cols)
-    x = data[, c(seasonal.cols, grouping), with = FALSE]
+    assertSubset(seasonal.cols, cols)
+    x = data[, c(union(union(seasonal.cols, cols), group_var)), with = FALSE]
   } else {
     seasonal.cols = cols
   }
-  cols = cols[!(cols %in% grouping)]
-  seasonal.cols = seasonal.cols[!(seasonal.cols %in% grouping)]
+  cols = cols[!(cols %in% group_var)]
+  seasonal.cols = seasonal.cols[!(seasonal.cols %in% group_var)]
   lag.diff.full.names = vector(mode = "character")
 
   if (any(lag > 0)) {
@@ -114,7 +112,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     lag.value = lag
     lag.names = do.call("paste", c(CJ(lag.vars, "lag", lag.value,
       sorted = FALSE), sep = "_"))
-    x[, c(lag.names) := shift(.SD, lag.value), by = eval(c(grouping)), .SDcols = lag.vars]
+    x[, c(lag.names) := shift(.SD, lag.value), by = eval(c(group_var)), .SDcols = lag.vars]
     lag.diff.full.names = c(lag.diff.full.names, lag.names)
   }
 
@@ -125,7 +123,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
 
   if (add_var) {
     var.lag.names = do.call("paste", c(CJ("var", target, lag.value, sorted = FALSE), sep = "_"))
-    x[,(var.lag.names) :=  lapply(.SD, function(x) pad(cumsum(na.omit((get(target) - x)^2)),length(x))) , by = eval(c(grouping)), .SDcols = lag.names]
+    x[,(var.lag.names) :=  lapply(.SD, function(x) pad(cumsum(na.omit((get(target) - x)^2)),length(x))) , by = eval(c(group_var)), .SDcols = lag.names]
     lag.diff.full.names = c(lag.diff.full.names, var.lag.names)
   }
 
@@ -151,7 +149,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
       diff.names = do.call("paste", c(CJ(diff.vars, "diff", diff.iter[1], "lag", diff.iter[2], sorted = FALSE), sep = "_"))
       x[, c(diff.names) := lapply(.SD,
         function(xx) pad(diff(xx, lag = diff.iter[2], differences = diff.iter[1]), length(xx))),
-        by = eval(c(grouping)), .SDcols = diff.vars]
+        by = eval(c(group_var)), .SDcols = diff.vars]
       diff.full.names[[i]] = diff.names
     }
     lag.diff.full.names = c(lag.diff.full.names, unlist(diff.full.names))
@@ -175,7 +173,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
         x[, c(TTR.var.names) :=  lapply(.SD, function(xx) {
           do.call(get(TTR.func.name),
                   unlist(list(x = list(xx), TTR.arg.list), recursive = FALSE))
-          }),
+          }), c(group_var),
           .SDcols = cols]
         lag.diff.full.names = c(lag.diff.full.names, TTR.var.names)
       }
@@ -184,15 +182,13 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
 
 
   if (frequency > 1L) {
-    if (any(seasonal.lag > 0)) {
-
-      seasonal.lag.vars = seasonal.cols
-      seasonal.lag.value = seasonal.lag * frequency
-      seasonal.lag.levels = as.vector(vapply(seasonal.lag.value, function(levels) rep(levels, length(seasonal.lag.vars)),
-        c(rep(1.0, length(seasonal.lag.vars)))))
-      seasonal.lag.names = do.call("paste", c(CJ(seasonal.lag.vars, ".lag.", unique(seasonal.lag.levels), sorted = FALSE), sep = "_"))
-      x[, c(seasonal.lag.names) := shift(.SD, seasonal.lag.value), by = eval(c(grouping)), .SDcols = seasonal.lag.vars]
-      lag.diff.full.names = c(lag.diff.full.names, seasonal.lag.names)
+    if (any(seasonal.lag >= 0)) {
+      lag.vars = seasonal.cols
+      lag.value = seasonal.lag
+      lag.names = do.call("paste", c(CJ(lag.vars, "seaonal_lag", lag.value,
+        sorted = FALSE), sep = "_"))
+      x[, c(lag.names) := shift(.SD, lag.value), by = eval(c(group_var)), .SDcols = lag.vars]
+      lag.diff.full.names = c(lag.diff.full.names, lag.names)
     }
 
     if (any(seasonal.difference > 0) | any(seasonal.difference.lag > 0)) {
@@ -224,7 +220,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
 
         x[, c(seasonal.diff.names) := lapply(.SD,
           function(xx) pad(diff(xx, lag = seasonal.diff.iter[2], differences = seasonal.diff.iter[1]), length(xx))),
-          by = eval(c(grouping)), .SDcols = seasonal.diff.vars]
+          by = eval(c(group_var)), .SDcols = seasonal.diff.vars]
         seasonal.diff.full.names[[i]] = seasonal.diff.names
       }
       lag.diff.full.names = c(lag.diff.full.names, unlist(seasonal.diff.full.names))
@@ -255,7 +251,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     data = cbind(data[, ..data_cols], x[, c(lag.diff.full.names), with = FALSE])
   }
   if (!na.pad) {
-    data = data[, .SD[-max.shift, ], by = eval(c(grouping))]
+    data = data[, .SD[-max.shift, ], by = eval(c(group_var))]
   }
   setkey(data, "dates")
   data$dates = NULL
@@ -267,7 +263,7 @@ createLagDiffFeatures.Task = function(obj, target = character(0L),
   lag = 0L, difference = 0L, difference.lag = 0L,
   cols = NULL, seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
   seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
-  na.pad = FALSE, return.nonlag = FALSE, grouping = NULL,
+  na.pad = FALSE, return.nonlag = FALSE, group_var = NULL,
   add_var = FALSE, TTR.funcs = NULL, date.col) {
 
   target = getTaskTargetNames(obj)
@@ -294,7 +290,7 @@ createLagDiffFeatures.Task = function(obj, target = character(0L),
     seasonal.difference = seasonal.difference,
     seasonal.difference.lag = seasonal.difference.lag,
     frequency = frequency, add_dates = add_dates, na.pad = na.pad,
-    return.nonlag = return.nonlag, grouping = grouping,
+    return.nonlag = return.nonlag, group_var = group_var,
     add_var = add_var, TTR.funcs = TTR.funcs, date.col = date.col)
 
   obj = changeData(obj, data = data)
@@ -303,7 +299,7 @@ createLagDiffFeatures.Task = function(obj, target = character(0L),
     max(difference) * max(difference.lag),
     max(seasonal.difference * frequency) * max(seasonal.difference.lag * frequency))
   data.original = data.table(data.original)
-  data.original = data.original[,.SD[ (.N - max.shift):.N,], by = eval(c(grouping))]
+  data.original = data.original[,.SD[ (.N - max.shift):.N,], by = eval(c(group_var))]
 
   obj$task.desc$pre.proc$data.original = data.original
   obj$task.desc$pre.proc$par.vals = list(lag = lag, difference = difference,
@@ -313,7 +309,7 @@ createLagDiffFeatures.Task = function(obj, target = character(0L),
     seasonal.difference = seasonal.difference,
     seasonal.difference.lag = seasonal.difference.lag,
     frequency = frequency, add_dates = add_dates, na.pad = na.pad,
-    return.nonlag = return.nonlag, grouping = grouping, add_var = add_var,
+    return.nonlag = return.nonlag, group_var = group_var, add_var = add_var,
     TTR.funcs = TTR.funcs, date.col = date.col)
   obj
 }
