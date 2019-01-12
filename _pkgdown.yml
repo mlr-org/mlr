@@ -133,9 +133,9 @@ navbar:
     - text: mlrCPO
       href: https://github.com/mlr-org/mlrCPO
     - text: mlrHyperopt
-      href: http://jakob-r.de/mlrHyperopt/index.html
+      href: https://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
-      href: http://openml.github.io/openml-r/vignettes/OpenML.html
+      href: https://openml.github.io/openml-r/vignettes/OpenML.html
 
   right:
   - icon: fa-github fa-lg
