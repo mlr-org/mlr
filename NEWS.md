@@ -29,6 +29,7 @@
   - `chi.squared` -> `FSelector_chi.squared`
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
+* filter `mrmr` was removed because package _mRMRe_ was removed from CRAN on 11-01-2019.
   
 ## learners - new
 * classif.liquidSVM
