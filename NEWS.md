@@ -4,7 +4,7 @@
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
 
 ## functions - general
-* getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
 
 ## filter - new
 * praznik_JMI
@@ -29,6 +29,7 @@
   - `chi.squared` -> `FSelector_chi.squared`
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
+* fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
   
 ## learners - new
 * classif.liquidSVM
