@@ -116,47 +116,6 @@ print.Filter = function(x, ...) {
   catf("Supported features: %s", collapse(x$supported.features))
 }
 
-#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
-#' mutual information between the target and each individual feature minus the
-#' average mutual information of previously selected features and this feature
-#' using the \pkg{mRMRe} package.
-#'
-#' @rdname makeFilter
-#' @name makeFilter
-NULL
-
-# mrmr ----------------
-
-makeFilter(
-  name = "mrmr",
-  desc = "Minimum redundancy, maximum relevance filter",
-  pkg  = "mRMRe",
-  supported.tasks = c("regr", "surv"),
-  supported.features = c("numerics", "ordered"),
-  fun = function(task, nselect, ...) {
-    if (inherits(task, "SurvTask")) {
-      data = getTaskData(task, target.extra = TRUE, recode.target = "surv")
-      data = cbind(..surv = data$target, data$data)
-      target.ind = 1L
-    } else {
-      data = getTaskData(task)
-      target.ind = match(getTaskTargetNames(task), colnames(data))
-    }
-
-    # some required conversions
-    ind = which(vlapply(data, is.integer))
-    data[ind] = lapply(data[ind], as.double)
-    data = mRMRe::mRMR.data(data = data)
-
-    threads.before = mRMRe::get.thread.count()
-    on.exit(mRMRe::set.thread.count(threads.before))
-    mRMRe::set.thread.count(1L)
-    res = mRMRe::mRMR.classic(data = data, target_indices = target.ind, feature_count = nselect, ...)
-    scores = as.numeric(mRMRe::scores(res)[[1L]])
-    setNames(scores, res@feature_names[as.integer(mRMRe::solutions(res)[[1L]])])
-  }
-)
-
 # carscore ----------------
 
 #' Filter \dQuote{carscore} determines the \dQuote{Correlation-Adjusted (marginal) coRelation
