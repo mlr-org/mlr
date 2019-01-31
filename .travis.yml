@@ -59,7 +59,6 @@ jobs:
           packages:
            - libgmp-dev
            - libgsl0-dev
-           - libmagick++-dev # for favicon
            - libgdal-dev # for sf
            - libproj-dev # for sf
            - libgeos-dev # for sf
