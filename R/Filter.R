@@ -222,7 +222,7 @@ rfsrc_importance = makeFilter(
 
 # rfsrc_var.select ----------------
 
-#' Filter \dQuote{randomForestSRC.var.select} uses the minimal depth variable
+#' Filter \dQuote{rfsrc_var.select} uses the minimal depth variable
 #' selection proposed by Ishwaran et al. (2010) (`method = "md"`) or a
 #' variable hunting approach (`method = "vh"` or `method = "vh.vimp"`).
 #' The minimal depth measure is the default.
