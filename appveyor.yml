@@ -15,7 +15,9 @@ install:
   - cmd: R -q -e "if (!requireNamespace('curl')) install.packages('curl')"
   - cmd: R -q -e "if (!requireNamespace('BiocManager')) install.packages('BiocManager')"
   - cmd: R -q -e "if (!requireNamespace('genefilter')) BiocManager::install('genefilter')"
-  - cmd: R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+  - cmd: R -q -e "if (!requireNamespace('tic')) remotes::install_github('ropenscilabs/tic')"
+  - cmd: R -q -e "tic::prepare_all_stages()"
+  - cmd: R -q -e "tic::before_install()"
 
 
 cache:
