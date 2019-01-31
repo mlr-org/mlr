@@ -322,15 +322,14 @@
 <p>Different methods for calculating the feature importance are built into <code>mlr</code>’s function <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>. Currently, classification, regression and survival analysis tasks are supported. A table showing all available methods can be found in article <a href="filter_methods.html" target="_blank">filter methods</a>.</p>
 <p>The most basic approach is to use <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> directly on a <code><a href="../../reference/Task.html">Task()</a></code> with a character string specifying the filter method.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fv =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## Loading required namespace: FSelectorRcpp</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">fv</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## FilterValues:</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## Task: iris-example</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">##           name    type FSelectorRcpp_information.gain</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 1 Sepal.Length numeric                      0.4521286</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 2  Sepal.Width numeric                      0.2672750</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## 3 Petal.Length numeric                      0.9402853</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">## 4  Petal.Width numeric                      0.9554360</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">fv</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## FilterValues:</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Task: iris-example</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">##           name    type FSelectorRcpp_information.gain</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## 1 Sepal.Length numeric                      0.4521286</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 2  Sepal.Width numeric                      0.2672750</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 3 Petal.Length numeric                      0.9402853</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## 4  Petal.Width numeric                      0.9554360</span></a></code></pre></div>
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
