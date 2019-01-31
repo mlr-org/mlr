@@ -174,10 +174,6 @@ rfsrc_importance = makeFilter(
 )
 .FilterRegister[["rfsrc_importance"]] = rfsrc_importance
 .FilterRegister[["rfsrc_importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
-# .FilterRegister[["rfsrc_importance"]]$fun = function(...) {
-#   .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForest.importance' (package randomForest) or Filter 'randomForestSRC.rfsrc' (package randomForestSRC)")
-#   .FilterRegister[["rfsrc_importance"]]$fun(...)
-# }
 
 # rfsrc_var.select ----------------
 
@@ -204,10 +200,6 @@ rfsrc_var.select = makeFilter(
 )
 .FilterRegister[["rfsrc_var.select"]] = rfsrc_var.select
 .FilterRegister[["rfsrc_var.select"]]$desc = "Minimal depth of random forest fitted in package 'randomForestSRC. (DEPRECATED)"
-# .FilterRegister[["rfsrc_var.select"]]$fun = function(...) {
-#   .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC.var.select'")
-#   .FilterRegister[["randomForestSRC.var.select"]]$fun(...)
-# }
 
 # cforest.importance ----------------
 

@@ -14,7 +14,7 @@
 #' @template arg_learner
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods].
-#'   Default is \dQuote{randomForestSRC.rfsrc}.
+#'   Default is \dQuote{rfsrc_importance}.
 #' @param fw.perc (`numeric(1)`)\cr
 #'   If set, select `fw.perc`*100 top scoring features.
 #'   Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
