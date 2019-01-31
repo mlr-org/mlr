@@ -35,8 +35,6 @@ platform: x64
 image: Visual Studio 2017
 
 environment:
-  GITHUB_PAT:
-    secure: V55U9UnApb09OaMrW7myVV2Rnfb1RDeWEjFtfC49qu7Nm/1yqzYTOv0gu88UNVCi
   R_ARCH: x64
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
