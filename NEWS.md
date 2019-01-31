@@ -18,6 +18,10 @@
 * FSelectorRcpp_information.gain
 * FSelectorRcpp_symuncert
 
+Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. 
+Exeptions are filters included in base R packages. 
+In this case, the package name is omitted.
+
 ## filter - general
 * Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
   These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
