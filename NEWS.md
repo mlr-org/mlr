@@ -1,7 +1,7 @@
 # mlr 2.14:
 
 ## general
-* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)t
 
 ## functions - general
 * getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
