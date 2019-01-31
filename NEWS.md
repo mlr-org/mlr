@@ -4,7 +4,7 @@
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
 
 ## functions - general
-* getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
 
 ## filter - new
 * praznik_JMI
@@ -30,6 +30,7 @@
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
 * filter `mrmr` was removed because package _mRMRe_ was removed from CRAN on 11-01-2019 (@pat-s, #2532).
+* fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
   
 ## learners - new
 * classif.liquidSVM

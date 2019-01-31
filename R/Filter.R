@@ -478,15 +478,17 @@ univariate = makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
     typ = getTaskType(task)
-    if (is.null(perf.learner))
+    if (is.null(perf.learner)) {
       if (typ == "classif")
         perf.learner = "classif.rpart"
       else if (typ == "regr")
         perf.learner = "regr.rpart"
       else if (typ == "surv")
         perf.learner = "surv.rpart"
-    if (is.null(perf.measure))
+    }
+    if (is.null(perf.measure)) {
       perf.measure = getDefaultMeasure(task)
+    }
     perf.learner = checkLearner(perf.learner)
     perf.measure = checkMeasures(perf.measure, perf.learner)
     if (length(perf.measure) != 1L)
@@ -667,7 +669,6 @@ praznik_filter = function(fun) {
   force(fun)
 
   function(task, nselect, ...) {
-    requireNamespace("praznik")
     fun = getFromNamespace(fun, ns = "praznik")
 
     data = getTaskData(task)
@@ -773,7 +774,6 @@ FSelectorRcpp.filter = function(type) {
   force(type)
 
   function(task, nselect, ...) {
-    requireNamespace("FSelectorRcpp")
     data = getTaskData(task)
     X = data[getTaskFeatureNames(task)]
     y = data[[getTaskTargetNames(task)]]

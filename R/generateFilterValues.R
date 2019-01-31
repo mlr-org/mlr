@@ -3,7 +3,6 @@
 #' @description
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
-#'
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
@@ -38,8 +37,10 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
-  if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
-    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+  if (any(sapply(filter, function(x) length(x$pkg) > 0))) {
+    pkgs = unlist(lapply(filter, function(x) x$pkg))
+    pkgs = lapply(pkgs, function(x) requirePackages(x, why = "generateFilterValuesData", default.method = "load"))
+  }
   check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
