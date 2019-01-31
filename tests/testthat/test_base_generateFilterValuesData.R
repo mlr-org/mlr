@@ -90,11 +90,8 @@ test_that("plotFilterValues", {
 
 test_that("args are passed down to filter methods", { # we had an issue here, see #941
 
-  expect_error(generateFilterValuesData(regr.num.task, method = c("mrmr", "univariate.model.score"),
-    nselect = 3, perf.learner = "regr.lm"), "Please pass extra arguments")
-
-  # check that we can pass down perf.learner to univariate.model.score, and get no error from mrmr call
-  f = generateFilterValuesData(regr.num.task, method = c("mrmr", "univariate.model.score"),
+  # check that we can pass down perf.learner to univariate.model.score
+  f = generateFilterValuesData(regr.num.task, method = "univariate.model.score",
     nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "regr.lm")))
 
   # create stupid dummy data and check that we can change the na.rm arg of filter "variance" in multiple ways
@@ -113,9 +110,9 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
 })
 
 test_that("errors for unsupported task and feature types", {
-  expect_error(generateFilterValuesData(multiclass.task, method = c("mrmr", "variance", "linear.correlation")), "Filter(s) 'mrmr', 'linear.correlation' not compatible with task of type 'classif'", fixed = TRUE)
-  expect_error(generateFilterValuesData(regr.task, method = c("mrmr", "carscore")), "Filter(s) 'mrmr', 'carscore' not compatible with features of type 'factors', and 'factors' respectively", fixed = TRUE)
-  expect_error(generateFilterValuesData(regr.task, method = "carscore"), "Filter(s) 'carscore' not compatible with features of type 'factors' respectively", fixed = TRUE)
+  expect_error(generateFilterValuesData(multiclass.task, method = c("variance", "linear.correlation")), "Filter(s) 'linear.correlation' not compatible with task of type 'classif'", fixed = TRUE)
+  expect_error(generateFilterValuesData(regr.task, method = "carscore"), "Filter(s) 'carscore' not compatible with features of type 'factors'", fixed = TRUE)
+  expect_error(generateFilterValuesData(regr.task, method = "carscore"), "Filter(s) 'carscore' not compatible with features of type 'factors'", fixed = TRUE)
 })
 
 test_that("filter values are named and ordered correctly", { # we had an issue here, see #940
