@@ -4,7 +4,7 @@
 \alias{makeFilterWrapper}
 \title{Fuse learner with a feature filter method.}
 \usage{
-makeFilterWrapper(learner, fw.method = "randomForestSRC.rfsrc",
+makeFilterWrapper(learner, fw.method = "rfsrc_importance",
   fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.mandatory.feat = NULL, ...)
 }
@@ -15,7 +15,7 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{fw.method}{(\code{character(1)})\cr
 Filter method. See \link{listFilterMethods}.
-Default is \dQuote{randomForestSRC.rfsrc}.}
+Default is \dQuote{rfsrc_importance}.}
 
 \item{fw.perc}{(\code{numeric(1)})\cr
 If set, select \code{fw.perc}*100 top scoring features.

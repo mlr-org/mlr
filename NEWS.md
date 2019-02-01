@@ -1,10 +1,20 @@
 # mlr 2.14:
 
 ## general
-* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)t
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
+
+## functions - new
+* `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
+* `getCacheDir()`: Return the default mlr cache directory (@pat-s, #2463)
 
 ## functions - general
-* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (@pat-s, #2413).
+
+## filter - general
+* Caching is now used when generating filter values.
+  This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations.
+  This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold`.
+  It can be triggered with the new `cache` argument in `makeFilterWrapper()` or `filterFeatures()` (@pat-s, #2463).
 
 ## filter - new
 * praznik_JMI
@@ -18,23 +28,31 @@
 * FSelectorRcpp_information.gain
 * FSelectorRcpp_symuncert
 
+Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. 
+Exeptions are filters included in base R packages. 
+In this case, the package name is omitted.
+
 ## filter - general
 * Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
   These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
   Please note that both implementations do things slightly different internally and the `FSelectorRcpp` methods should not be seen as direct replacement for the `FSelector` pkg.
-* prefixed all filters from pkg `FSelector` with `FSelector` to distinguish them from the new `FSelectorRcpp` filters
+* filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (@pat-s, #2533)
   - `information.gain` -> `FSelector_information.gain`
   - `gain.ratio` -> `FSelector_gain.ratio`
   - `symmetrical.uncertainty` -> `FSelector_symmetrical.uncertainty`
   - `chi.squared` -> `FSelector_chi.squared`
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
+  - `randomForestSRC.rfsrc` -> `rfsrc_importance`
+  - `rf.min.depth` -> `rfsrc_var.select`
+  - `randomForest.importance` -> `randomForest_importance`
+  
 * filter `mrmr` was removed because package _mRMRe_ was removed from CRAN on 11-01-2019 (@pat-s, #2532).
 * fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
   
 ## learners - new
-* classif.liquidSVM
-* regr.liquidSVM
+* classif.liquidSVM (@PhilippPro, #2428)
+* regr.liquidSVM (@PhilippPro, #2428)
 
 ## featSel - general
  * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
