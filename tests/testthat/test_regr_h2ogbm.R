@@ -38,7 +38,6 @@ test_that("regr_h2ogbm", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    print(parset)
     parset = c(parset, list(x = colnames(regr.train[, -regr.class.col]),
       y = regr.target,
       training_frame = h2o::as.h2o(regr.train)))
