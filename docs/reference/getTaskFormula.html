@@ -309,7 +309,7 @@ For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;
     
 
     <pre class="usage"><span class='fu'>getTaskFormula</span>(<span class='no'>x</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskTargetNames.html'>getTaskTargetNames</a></span>(<span class='no'>x</span>),
-  <span class='kw'>explicit.features</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>())</pre>
+  <span class='kw'>explicit.features</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -321,27 +321,27 @@ Task or its description object.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Left hand side of the formula.
 Default is defined by task <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>explicit.features</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the features (right hand side of the formula) be explicitly listed?
 Default is <code>FALSE</code>, i.e., they will be represented as <code>"."</code>.</p></td>
     </tr>
     <tr>
       <th>env</th>
-      <td><p>(environment)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/environment'>environment</a>)<br />
 Environment of the formula.
-Default is <code>parent.frame()</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame()</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(formula).</p>
+    <p>(<a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a>).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

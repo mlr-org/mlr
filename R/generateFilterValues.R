@@ -3,11 +3,10 @@
 #' @description
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
-#'
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
-#'   Default is \dQuote{randomForestSRC.rfsrc}.
+#'   Default is \dQuote{rfsrc_importance}.
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
@@ -33,15 +32,17 @@
 #' @family filter
 #' @aliases FilterValues
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
+generateFilterValuesData = function(task, method = "rfsrc_importance",
   nselect = getTaskNFeats(task), ..., more.args = list()) {
 
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
-  if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
-    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+  if (any(sapply(filter, function(x) length(x$pkg) > 0))) {
+    pkgs = unlist(lapply(filter, function(x) x$pkg))
+    pkgs = lapply(pkgs, function(x) requirePackages(x, why = "generateFilterValuesData", default.method = "load"))
+  }
   check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
@@ -71,6 +72,8 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc",
   }
 
   fn = getTaskFeatureNames(task)
+
+  fval = do.call(filter[[1]]$fun, c(list(task = task, nselect = nselect), more.args[[filter[[1]]$name]]))
 
   fval = lapply(filter, function(x) {
     x = do.call(x$fun, c(list(task = task), nselect = nselect, more.args[[x$name]]))

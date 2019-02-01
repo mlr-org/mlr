@@ -327,37 +327,37 @@ down to the next learner.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>fw.method</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
 Default is &#8220;randomForestSRC.rfsrc&#8221;.</p></td>
     </tr>
     <tr>
       <th>fw.perc</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 If set, select <code>fw.perc</code>*100 top scoring features.
 Mutually exclusive with arguments <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.abs</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 If set, select <code>fw.abs</code> top scoring features.
 Mutually exclusive with arguments <code>fw.perc</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.threshold</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 If set, select features whose score exceeds <code>fw.threshold</code>.
 Mutually exclusive with arguments <code>fw.perc</code> and <code>fw.abs</code>.</p></td>
     </tr>
     <tr>
       <th>fw.mandatory.feat</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Mandatory features which are always included regardless of their scores</p></td>
     </tr>
     <tr>
@@ -411,10 +411,10 @@ Additional parameters passed down to the filter.</p></td>
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFilterWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
-})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "Petal.Length" "Petal.Width" 
 #&gt; 
 #&gt; [[2]]

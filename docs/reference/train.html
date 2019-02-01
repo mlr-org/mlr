@@ -315,7 +315,7 @@ which can be used for predictions on new data.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -326,13 +326,13 @@ The task.</p></td>
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>(integer | logical | <code>NULL</code>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a> | <code>NULL</code>)<br />
 Selected cases. Either a logical or an index vector.
 By default <code>NULL</code> if all observations are used.</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as <code>subset</code> and in corresponding order.
 By default <code>NULL</code> which means no weights are used unless specified in the task (<a href='Task.html'>Task</a>).
@@ -350,16 +350,16 @@ Weights from the task will be overwritten.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>training.set</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fu'>seq_len</span>(<span class='fu'>nrow</span>(<span class='no'>iris</span>)), <span class='fu'>nrow</span>(<span class='no'>iris</span>) / <span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='no'>training.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_len</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>iris</span>)), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>iris</span>) / <span class='fl'>2</span>)
 
 <span class='co'>## use linear discriminant analysis to classify iris data</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>learner</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(mod): object 'mod' not found</span></div><div class='input'>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(mod): object 'mod' not found</span></div><div class='input'>
 <span class='co'>## use random forest to classify iris data</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>learner</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>minsplit</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(mod): object 'mod' not found</span></div></pre>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(mod): object 'mod' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

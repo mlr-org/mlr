@@ -306,7 +306,7 @@
     <p>This can be used to implement custom feature FDA extraction.</p>
     
 
-    <pre class="usage"><span class='fu'>makeExtractFDAFeatMethod</span>(<span class='no'>learn</span>, <span class='no'>reextract</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+    <pre class="usage"><span class='fu'>makeExtractFDAFeatMethod</span>(<span class='no'>learn</span>, <span class='no'>reextract</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,17 +316,17 @@
       <td><p>(<code>function(data, target, col, ...)</code>)<br />
 Function to learn and extract information on functional column <code>col</code>.
 Arguments are:</p><ul>
-<li><p>data data.frame<br />
+<li><p>data <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a><br />
 Data.frame with one row per observation of a single functional feature
 or time series and one column per measurement time point.
 All entries need to be numeric.</p></li>
-<li><p>data data.frame<br />
+<li><p>data <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a><br />
 Data.frame containing matricies with one row per observation of a single functional
 or time series and one column per measurement time point. All entries need to be numeric.</p></li>
-<li><p>target character<br />
+<li><p>target <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a><br />
 Name of the target variable. Default: &#8220;NULL&#8221;.
 The variable is only set to be consistent with the API.</p></li>
-<li><p>col (character | numeric)<br />
+<li><p>col (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a> | <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 column names or indices, the extraction should be performed on.
 The function has to return a named list of values.</p></li>
 </ul></td>
@@ -339,7 +339,7 @@ Can be equal to <code>learn</code>.</p></td>
     </tr>
     <tr>
       <th>args</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Named list of arguments to pass to <code>learn</code> via <code>...</code>.</p></td>
     </tr>
     </table>

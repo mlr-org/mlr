@@ -305,7 +305,7 @@ If you call this function with an empty argument list, everything is set to its 
     </div>
 
     
-    <p>Configuration is done by setting custom options.</p>
+    <p>Configuration is done by setting custom <a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a>.</p>
 <p>If you do not set an option here, its current value will be kept.</p>
 <p>If you call this function with an empty argument list, everything is set to its defaults.</p>
     
@@ -319,7 +319,7 @@ If you call this function with an empty argument list, everything is set to its 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>show.info</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Some methods of mlr support a <code>show.info</code> argument to enable
 verbose output on the console. This option sets the default value for these arguments.
 Setting the argument manually in one of these functions will overwrite the default
@@ -328,7 +328,7 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>on.learner.error</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 What should happen if an error in an underlying learning algorithm is caught:<br />
 &#8220;stop&#8221;: R exception is generated.<br />
 &#8220;warn&#8221;: A <code>FailureModel</code> will be created, which predicts only NAs and a warning will be generated.<br />
@@ -337,7 +337,7 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.learner.warning</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 What should happen if a warning in an underlying learning algorithm is generated:<br />
 &#8220;warn&#8221;: The warning is generated as usual.<br />
 &#8220;quiet&#8221;: The warning is suppressed.<br />
@@ -345,7 +345,7 @@ Default is &#8220;warn&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.par.without.desc</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 What should happen if a parameter of a learner is set to a value, but no parameter description object exists,
 indicating a possibly wrong name:<br />
 &#8220;stop&#8221;: R exception is generated.<br />
@@ -355,7 +355,7 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.par.out.of.bounds</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 What should happen if a parameter of a learner is set to an out of bounds value.<br />
 &#8220;stop&#8221;: R exception is generated.<br />
 &#8220;warn&#8221;: Warning, but parameter is still passed along to learner.<br />
@@ -364,7 +364,7 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.measure.not.applicable</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 What should happen if a measure is not applicable to a learner.<br />
 &#8220;stop&#8221;: R exception is generated.<br />
 &#8220;warn&#8221;: Warning, but value of the measure will be <code>NA</code>.<br />
@@ -373,14 +373,14 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>show.learner.output</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the output of the learning algorithm during training and prediction be shown or captured and
 suppressed?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>on.error.dump</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Specify whether <a href='FailureModel.html'>FailureModel</a> models and failed predictions should contain an error dump
 that can be used with <code>debugger</code> to inspect an error. This option is only effective if <code>on.learner.error</code>
 is &#8220;warn&#8221; or &#8220;quiet&#8221;. If it is <code>TRUE</code>, the dump can be accessed using
@@ -391,7 +391,7 @@ Default is <code>FALSE</code>.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code>invisible(NULL)</code>).</p>
+    <p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(NULL)</a></code>).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

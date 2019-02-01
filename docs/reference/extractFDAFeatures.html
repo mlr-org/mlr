@@ -320,50 +320,50 @@ extraction during the predict-phase is returned. This can be used with
 <a href='reextractFDAFeatures.html'>reextractFDAFeatures</a> in order to extract features during the prediction phase.</p>
     
 
-    <pre class="usage"><span class='fu'>extractFDAFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+    <pre class="usage"><span class='fu'>extractFDAFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<a href='Task.html'>Task</a> | data.frame)<br />
+      <td><p>(<a href='Task.html'>Task</a> | <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
 Task or data.frame to extract functional features from.
 Must contain functional features as matrix columns.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Task target column. Only neccessary for data.frames
-Default is <code>character(0)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>feat.methods</th>
-      <td><p>(named list)<br />
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 List of functional features along with the desired methods for each functional feature.
 &#8220;all&#8221; applies the extractFDAFeatures method to each
 functional feature.
 Names of <code>feat.methods</code> must match column names of functional features.
 Available feature extraction methods are available under family <code>fda_featextractor</code>.
-Default is list which does nothing.</p></td>
+Default is <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> which does nothing.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(list)</p>
-<dt>data (data.frame | <a href='Task.html'>Task</a>)</dt><dd><p>Extracted features, returns a data.frame when
-given a data.frame and a Task when given a Task.</p></dd>
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</p>
+<dt>data (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)</dt><dd><p>Extracted features, returns a data.frame when
+given a <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> and a Task when given a Task.</p></dd>
 <dt>desc (<code>extractFDAFeatDesc</code>)</dt><dd><p>Description object. See description for details.</p></dd>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The description object contains these slots</p><dl class='dl-horizontal'>
-<dt>target character</dt><dd><p>See argument.</p></dd>
-<dt>coln character</dt><dd><p>colum names of data.</p></dd>
-<dt>fd.cols character</dt><dd><p>Functional feature names.</p></dd>
-<dt>extractFDAFeat list</dt><dd><p>Contains <code>feature.methods</code> and relevant
+<dt>target <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></dt><dd><p>See argument.</p></dd>
+<dt>coln <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></dt><dd><p>colum names of data.</p></dd>
+<dt>fd.cols <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></dt><dd><p>Functional feature names.</p></dd>
+<dt>extractFDAFeat <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></dt><dd><p>Contains <code>feature.methods</code> and relevant
 parameters for reextraction</p></dd>.
 </dl>
     

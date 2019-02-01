@@ -304,12 +304,12 @@
 <a href="#example-bagging-wrapper" class="anchor"></a>Example: Bagging wrapper</h1>
 <p>In this section we exemplary describe the bagging wrapper to create a random forest which supports weights. To achieve that we combine several decision trees from the <code>rpart</code> package to create our own custom random forest.</p>
 <p>First, we create a weighted toy task.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">data</span>(iris)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>, <span class="dt">weights =</span> <span class="kw">as.integer</span>(iris<span class="op">$</span>Species))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(iris)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>, <span class="dt">weights =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/integer">as.integer</a></span>(iris<span class="op">$</span>Species))</a></code></pre></div>
 <p>Next, we use <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code> to create the base learners and the bagged learner. We choose to set equivalents of <code>ntree</code> (100 base learners) and <code>mtry</code> (proportion of randomly selected features).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">base.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">wrapped.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper</a></span>(base.lrn, <span class="dt">bw.iters =</span> <span class="dv">100</span>, <span class="dt">bw.feats =</span> <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">print</span>(wrapped.lrn)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(wrapped.lrn)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Learner classif.rpart.bagged from package rpart</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Type: classif</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Name: ; Short name: </span></a>
@@ -318,7 +318,7 @@
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">## Predict-Type: response</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></a></code></pre></div>
 <p>As we can see in the output, the wrapped learner inherited all properties from the base learner, especially the “weights” attribute is still present. We can use this newly constructed learner like all base learners, i.e. we can use it in <code><a href="../../reference/train.html">train()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code>, <code><a href="../../reference/resample.html">resample()</a></code>, etc.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">tasks =</span> task, <span class="dt">learners =</span> <span class="kw">list</span>(base.lrn, wrapped.lrn))</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">tasks =</span> task, <span class="dt">learners =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(base.lrn, wrapped.lrn))</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## Task: iris, Learner: classif.rpart</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## Resampling: cross-validation</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## Measures:             mmce</span></a>
@@ -379,7 +379,7 @@
 <a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="kw">makeNumericParam</span>(<span class="st">"bw.feats"</span>, <span class="dt">lower =</span> <span class="fl">0.25</span>, <span class="dt">upper =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">)</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">tuned.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(wrapped.lrn, rdesc, mmce, par.set, ctrl)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw">print</span>(tuned.lrn)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(tuned.lrn)</a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## Learner classif.rpart.bagged.tuned from package rpart</span></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## Type: classif</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## Name: ; Short name: </span></a>
@@ -423,7 +423,7 @@
 <a class="sourceLine" id="cb6-27" data-line-number="27"><span class="co">## [Tune-y] 10: mmce.test.mean=0.0466667; time: 0.0 min</span></a>
 <a class="sourceLine" id="cb6-28" data-line-number="28"><span class="co">## [Tune] Result: minsplit=10; bw.feats=0.632 : mmce.test.mean=0.0400000</span></a>
 <a class="sourceLine" id="cb6-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="kw">print</span>(lrn)</a>
+<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(lrn)</a>
 <a class="sourceLine" id="cb6-31" data-line-number="31"><span class="co">## Model for learner.id=classif.rpart.bagged.tuned; learner.class=TuneWrapper</span></a>
 <a class="sourceLine" id="cb6-32" data-line-number="32"><span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span></a>
 <a class="sourceLine" id="cb6-33" data-line-number="33"><span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></a></code></pre></div>

@@ -215,7 +215,6 @@ Suggests:
     mlrMBO,
     mmpf,
     modeltools,
-    mRMRe,
     neuralnet,
     nnet,
     nodeHarvest (>= 0.7-3),

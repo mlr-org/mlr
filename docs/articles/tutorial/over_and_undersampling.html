@@ -274,9 +274,19 @@
       <h3 class="hasAnchor">
 <a href="#toc" class="anchor"></a>Table of Contents</h3>
       <ul>
-<li><a href="#sampling-based-approaches">Sampling-based approaches</a></li>
+<li>
+<a href="#sampling-based-approaches">Sampling-based approaches</a><ul>
+<li><a href="#simple-over--and-undersampling">(Simple) over- and undersampling</a></li>
+      <li><a href="#over--and-undersampling-wrappers">Over- and undersampling wrappers</a></li>
+      <li><a href="#extensions-to-oversampling">Extensions to oversampling</a></li>
+      </ul>
+</li>
       <li><a href="#tuning-the-probability-threshold">Tuning the probability threshold</a></li>
-      <li><a href="#cost-based-approaches">Cost-based approaches</a></li>
+      <li>
+<a href="#cost-based-approaches">Cost-based approaches</a><ul>
+<li><a href="#weighted-classes-wrapper">Weighted classes wrapper</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       
@@ -306,25 +316,25 @@
 <a href="#simple-over--and-undersampling" class="anchor"></a>(Simple) over- and undersampling</h3>
 <p>As mentioned above <em>undersampling</em> always refers to the majority class, while <em>oversampling</em> affects the minority class. By the use of <em>undersampling</em>, randomly chosen observations of the majority class are eliminated. Through (simple) <em>oversampling</em> all observations of the minority class are considered at least once when fitting the model. In addition, exact copies of minority class cases are created by random sampling with repetitions.</p>
 <p>First, let’s take a look at the effect for a classification <a href="task.html" target="_blank">task</a>. Based on a simulated <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) with imbalanced classes two new tasks (<code>task.over</code>, <code>task.under</code>) are created via <code>mlr</code> functions <code><a href="../../reference/oversample.html">oversample()</a></code> and <code><a href="../../reference/oversample.html">undersample()</a></code>, respectively.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">data.imbal.train =<span class="st"> </span><span class="kw">rbind</span>(</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">"A"</span>),</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">5000</span>, <span class="dt">mean =</span> <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">"B"</span>)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">data.imbal.train =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">"A"</span>),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">5000</span>, <span class="dt">mean =</span> <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">"B"</span>)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">data =</span> data.imbal.train, <span class="dt">target =</span> <span class="st">"class"</span>)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">task.over =<span class="st"> </span><span class="kw"><a href="../../reference/oversample.html">oversample</a></span>(task, <span class="dt">rate =</span> <span class="dv">8</span>)</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">task.under =<span class="st"> </span><span class="kw"><a href="../../reference/oversample.html">undersample</a></span>(task, <span class="dt">rate =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">8</span>)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">table</span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task))</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task))</a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">## </span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##    A    B </span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  100 5000</span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw">table</span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task.over))</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task.over))</a>
 <a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## </span></a>
 <a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##    A    B </span></a>
 <a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##  800 5000</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw">table</span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task.under))</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task.under))</a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">## </span></a>
 <a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">##   A   B </span></a>
 <a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">## 100 625</span></a></code></pre></div>
@@ -334,20 +344,20 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">mod.over =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task.over)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">mod.under =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task.under)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">data.imbal.test =<span class="st"> </span><span class="kw">rbind</span>(</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">"A"</span>),</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">500</span>, <span class="dt">mean =</span> <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">"B"</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">data.imbal.test =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">"A"</span>),</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">500</span>, <span class="dt">mean =</span> <span class="dv">2</span>), <span class="dt">class =</span> <span class="st">"B"</span>)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">## 0.01960784 0.50000000 0.50000000</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">## 0.02745098 0.50400000 0.63480000</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">## 0.04509804 0.46400000 0.57730000</span></a></code></pre></div>
 <p>In this case the <em>performance measure</em> has to be considered very carefully. As the <em>misclassification rate</em> (<a href="measures.html" target="_blank">mmce</a>) evaluates the overall accuracy of the predictions, the <em>balanced error rate</em> (<a href="measures.html" target="_blank">ber</a>) and <em>area under the ROC Curve</em> (<a href="measures.html" target="_blank">auc</a>) might be more suitable here, as the misclassifications within each class are separately taken into account.</p>
@@ -363,15 +373,15 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">mod.over =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.over, task)</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">mod.under =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.under, task)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## 0.01960784 0.50000000 0.50000000</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## 0.03137255 0.50600000 0.56500000</span></a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">## 0.01960784 0.50000000 0.50000000</span></a></code></pre></div>
 </div>
@@ -385,19 +395,19 @@
 <p>As the duplicating of the minority class observations can lead to overfitting, within <em>SMOTE</em> the “new cases” are constructed in a different way. For each new observation, one randomly chosen minority class observation as well as one of its <em>randomly chosen next neighbours</em> are interpolated, so that finally a new <em>artificial observation</em> of the minority class is created. The <code><a href="../../reference/smote.html">smote()</a></code> function in <code>mlr</code> handles numeric as well as factor features, as the gower distance is used for nearest neighbour calculation. The factor level of the new artificial case is sampled from the given levels of the two input observations.</p>
 <p>Analogous to oversampling, <em>SMOTE preprocessing</em> is possible via modification of the task.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">task.smote =<span class="st"> </span><span class="kw"><a href="../../reference/smote.html">smote</a></span>(task, <span class="dt">rate =</span> <span class="dv">8</span>, <span class="dt">nn =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">table</span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task))</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## </span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">##    A    B </span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##  100 5000</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw">table</span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task.smote))</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(task.smote))</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## </span></a>
 <a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">##    A    B </span></a>
 <a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">##  800 5000</span></a></code></pre></div>
 <p>Alternatively, a new wrapped learner can be created via <code><a href="../../reference/makeSMOTEWrapper.html">makeSMOTEWrapper()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrn.smote =<span class="st"> </span><span class="kw"><a href="../../reference/makeSMOTEWrapper.html">makeSMOTEWrapper</a></span>(lrn, <span class="dt">sw.rate =</span> <span class="dv">8</span>, <span class="dt">sw.nn =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">mod.smote =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.smote, task)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">predict</span>(mod.smote, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.smote, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">##       mmce        ber        auc </span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## 0.02745098 0.50400000 0.65200000</span></a></code></pre></div>
 <p>By default the number of nearest neighbours considered within the algorithm is set to 5.</p>
@@ -414,14 +424,14 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">r1 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">r1<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">##     0.01960784     0.50000000     0.50000000</span></a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(obw.lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">r2 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> obw.lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">r2<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span></a>
 <a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">##     0.02941176     0.50054893     0.52111805</span></a></code></pre></div>
@@ -431,14 +441,14 @@
 <a class="sourceLine" id="cb8-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">r1 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">r1<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">##     0.03294118     0.50190765     0.54761961</span></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(obw.lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">r2 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> obw.lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber, auc))</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">r2<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">##     0.04294118     0.50700127     0.50172581</span></a></code></pre></div>
@@ -503,7 +513,7 @@
 <a class="sourceLine" id="cb10-43" data-line-number="43"><span class="co">## </span></a>
 <a class="sourceLine" id="cb10-44" data-line-number="44"><span class="co">## Aggregated Result: mmce.test.mean=0.0556385</span></a>
 <a class="sourceLine" id="cb10-45" data-line-number="45"><span class="co">## </span></a>
-<a class="sourceLine" id="cb10-46" data-line-number="46"><span class="kw">print</span>(r<span class="op">$</span>extract)</a>
+<a class="sourceLine" id="cb10-46" data-line-number="46"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(r<span class="op">$</span>extract)</a>
 <a class="sourceLine" id="cb10-47" data-line-number="47"><span class="co">## [[1]]</span></a>
 <a class="sourceLine" id="cb10-48" data-line-number="48"><span class="co">## Tune result:</span></a>
 <a class="sourceLine" id="cb10-49" data-line-number="49"><span class="co">## Op. pars: interaction.depth=5</span></a>
@@ -548,9 +558,19 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#sampling-based-approaches">Sampling-based approaches</a></li>
+<li>
+<a href="#sampling-based-approaches">Sampling-based approaches</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#simple-over--and-undersampling">(Simple) over- and undersampling</a></li>
+      <li><a href="#over--and-undersampling-wrappers">Over- and undersampling wrappers</a></li>
+      <li><a href="#extensions-to-oversampling">Extensions to oversampling</a></li>
+      </ul>
+</li>
       <li><a href="#tuning-the-probability-threshold">Tuning the probability threshold</a></li>
-      <li><a href="#cost-based-approaches">Cost-based approaches</a></li>
+      <li>
+<a href="#cost-based-approaches">Cost-based approaches</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#weighted-classes-wrapper">Weighted classes wrapper</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
