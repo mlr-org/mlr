@@ -33,6 +33,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   if (inherits(ci(), "AppVeyorCI")) {
     get_stage("script") %>%
+      add_code_step(pkgbuild::compile_dll()) %>%
       add_code_step(devtools::document()) %>%
       add_step(step_rcmdcheck(args = c("--as-cran", "--no-manual", "--no-vignettes",
         "--no-build-vignettes"), build_args = c("--no-build-vignettes"),
