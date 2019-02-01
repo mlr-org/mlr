@@ -342,7 +342,7 @@
 <a href="#filter---general" class="anchor"></a>filter - general</h2>
 <ul>
 <li>Added filters <code>FSelectorRcpp_gain.ratio</code>, <code>FSelectorRcpp_information.gain</code> and <code>FSelectorRcpp_symmetrical.uncertainty</code> from package <code>FSelectorRcpp</code>. These filters are ~ 100 times faster than the implementation of the <code>FSelector</code> pkg. Please note that both implementations do things slightly different internally and the <code>FSelectorRcpp</code> methods should not be seen as direct replacement for the <code>FSelector</code> pkg.</li>
-<li>filter names have been harmonized using the following scheme: <pkgname>_<filtername>.
+<li>filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2533'>#2533</a>)
 <ul>
 <li>
 <code>information.gain</code> -&gt; <code>FSelector_information.gain</code>
