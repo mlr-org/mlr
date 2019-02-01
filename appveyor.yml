@@ -18,8 +18,6 @@ install:
   - cmd: R -q -e "if (!requireNamespace('tic')) remotes::install_github('ropenscilabs/tic')"
   - cmd: R -q -e "tic::prepare_all_stages()"
   - cmd: R -q -e "tic::before_install()"
-  - cmd: R -q -e "Sys.getenv()"
-
 
 cache:
   - C:\RLibrary\

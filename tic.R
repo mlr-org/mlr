@@ -23,11 +23,6 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
                                              "-install-package", "thirdparty/XMeans1.0.4.zip")))
   }
 
-  get_stage("script") %>%
-    add_code_step(pkgbuild::compile_dll()) %>%
-    add_code_step(devtools::document()) %>%
-    add_step(step_rcmdcheck("--as-cran", error_on = "error"))
-
   if (inherits(ci(), "TravisCI")) {
 
     get_stage("script") %>%
