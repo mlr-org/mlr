@@ -335,13 +335,14 @@
 <li>FSelectorRcpp_information.gain</li>
 <li>FSelectorRcpp_symuncert</li>
 </ul>
+<p>Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. Exeptions are filters included in base R packages. In this case, the package name is omitted.</filtername></pkgname></p>
 </div>
 <div id="filter---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filter---general" class="anchor"></a>filter - general</h2>
 <ul>
 <li>Added filters <code>FSelectorRcpp_gain.ratio</code>, <code>FSelectorRcpp_information.gain</code> and <code>FSelectorRcpp_symmetrical.uncertainty</code> from package <code>FSelectorRcpp</code>. These filters are ~ 100 times faster than the implementation of the <code>FSelector</code> pkg. Please note that both implementations do things slightly different internally and the <code>FSelectorRcpp</code> methods should not be seen as direct replacement for the <code>FSelector</code> pkg.</li>
-<li>prefixed all filters from pkg <code>FSelector</code> with <code>FSelector</code> to distinguish them from the new <code>FSelectorRcpp</code> filters
+<li>filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2533'>#2533</a>)
 <ul>
 <li>
 <code>information.gain</code> -&gt; <code>FSelector_information.gain</code>
@@ -361,7 +362,16 @@
 <li>
 <code>oneR</code> -&gt; <code>FSelector_oneR</code>
 </li>
-</ul>
+<li>
+<code>randomForestSRC.rfsrc</code> -&gt; <code>rfsrc_importance</code>
+</li>
+<li>
+<code>rf.min.depth</code> -&gt; <code>rfsrc_var.select</code>
+</li>
+<li>
+<code>randomForest.importance</code> -&gt; <code>randomForest_importance</code>
+</li>
+</ul></filtername></pkgname>
 </li>
 <li>filter <code>mrmr</code> was removed because package <em>mRMRe</em> was removed from CRAN on 11-01-2019 (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2532'>#2532</a>).</li>
 <li>fixed a bug related to the loading of namespaces for required filter packages (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2483'>#2483</a>)</li>

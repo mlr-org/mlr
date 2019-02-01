@@ -7,10 +7,10 @@ test_that("filterFeatures", {
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   # univariate.model.score, permutation.importance and auc are handled extra test below
-  # 'univariate', 'rf.importance' and 'rf.min.depth' are deprecated
+  # 'univariate', 'randomForest_importance' and 'rfsrc_var.select' are deprecated
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "rf.importance", "rf.min.depth"))
+    "univariate", "randomForest_importance", "rfsrc_var.select"))
   for (filter in filter.list.classif) {
     filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
   }

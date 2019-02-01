@@ -18,17 +18,25 @@
 * FSelectorRcpp_information.gain
 * FSelectorRcpp_symuncert
 
+Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. 
+Exeptions are filters included in base R packages. 
+In this case, the package name is omitted.
+
 ## filter - general
 * Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
   These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
   Please note that both implementations do things slightly different internally and the `FSelectorRcpp` methods should not be seen as direct replacement for the `FSelector` pkg.
-* prefixed all filters from pkg `FSelector` with `FSelector` to distinguish them from the new `FSelectorRcpp` filters
+* filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (@pat-s, #2533)
   - `information.gain` -> `FSelector_information.gain`
   - `gain.ratio` -> `FSelector_gain.ratio`
   - `symmetrical.uncertainty` -> `FSelector_symmetrical.uncertainty`
   - `chi.squared` -> `FSelector_chi.squared`
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
+  - `randomForestSRC.rfsrc` -> `rfsrc_importance`
+  - `rf.min.depth` -> `rfsrc_var.select`
+  - `randomForest.importance` -> `randomForest_importance`
+  
 * filter `mrmr` was removed because package _mRMRe_ was removed from CRAN on 11-01-2019 (@pat-s, #2532).
 * fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
   

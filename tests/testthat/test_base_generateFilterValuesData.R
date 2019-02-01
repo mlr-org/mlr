@@ -17,7 +17,7 @@ test_that("filterFeatures", {
   feat.imp.new = suppressWarnings(generateFilterValuesData(binaryclass.task))
   expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC.rfsrc"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "rfsrc_importance"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
@@ -74,7 +74,7 @@ test_that("plotFilterValues", {
   plotFilterValues(fv)
 
   path = file.path(tempdir(), "test.svg")
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC.rfsrc"))
+  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "rfsrc_importance"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)

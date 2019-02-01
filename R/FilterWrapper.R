@@ -14,7 +14,7 @@
 #' @template arg_learner
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods].
-#'   Default is \dQuote{randomForestSRC.rfsrc}.
+#'   Default is \dQuote{rfsrc_importance}.
 #' @param fw.perc (`numeric(1)`)\cr
 #'   If set, select `fw.perc`*100 top scoring features.
 #'   Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
@@ -45,7 +45,7 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+makeFilterWrapper = function(learner, fw.method = "rfsrc_importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
@@ -72,7 +72,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.pe
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.method = "rfsrc_importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold, mandatory.feat = fw.mandatory.feat), .learner$more.args))
