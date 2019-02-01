@@ -318,7 +318,7 @@ Internally uses <a href='filterFeatures.html'>filterFeatures</a> before every mo
 down to the next learner.</p>
     
 
-    <pre class="usage"><span class='fu'>makeFilterWrapper</span>(<span class='no'>learner</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC.rfsrc"</span>,
+    <pre class="usage"><span class='fu'>makeFilterWrapper</span>(<span class='no'>learner</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"rfsrc_importance"</span>,
   <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fw.mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
@@ -335,7 +335,7 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
       <th>fw.method</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
-Default is &#8220;randomForestSRC.rfsrc&#8221;.</p></td>
+Default is &#8220;rfsrc_importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>fw.perc</th>
