@@ -26,8 +26,21 @@
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param cache (`character(1)` | [logical])\cr
+#'   Whether to use caching during filter value creation. See details.
 #' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
+#'
+#' @section Caching:
+#' If `cache = TRUE`, the default mlr cache directory is used to cache
+#' filter values. The directory is operating system dependent and can be
+#' checked with `getCacheDir()`.
+#' Alternatively a custom directory can be passed to store the cache.
+#' The cache can be cleared with `deleteCacheDir()`.
+#' Caching is disabled by default.
+#' Care should be taken when operating on large clusters due to possible write
+#' conflicts to disk if multiple workers try to write the same cache at the same time.
+#'
 #' @template ret_learner
 #' @export
 #' @family filter
@@ -45,7 +58,10 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "rfsrc_importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+makeFilterWrapper = function(learner, fw.method = "rfsrc_importance",
+  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
+  fw.mandatory.feat = NULL, cache = FALSE, ...) {
+
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
@@ -64,18 +80,25 @@ makeFilterWrapper = function(learner, fw.method = "rfsrc_importance", fw.perc = 
       makeNumericLearnerParam(id = "fw.threshold"),
       makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
-    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
-    learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
+    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc,
+      fw.abs = fw.abs, fw.threshold = fw.threshold,
+      fw.mandatory.feat = fw.mandatory.feat)),
+    learner.subclass = "FilterWrapper", model.subclass = "FilterModel",
+    cache = cache)
   lrn$more.args = ddd
   lrn
 }
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "rfsrc_importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.method = "rfsrc_importance", fw.perc = NULL, fw.abs = NULL,
+  fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold, mandatory.feat = fw.mandatory.feat), .learner$more.args))
+  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
+     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
+     mandatory.feat = fw.mandatory.feat,
+     cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }

@@ -1,10 +1,20 @@
 # mlr 2.14:
 
 ## general
-* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`)
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
+
+## functions - new
+* `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
+* `getCacheDir()`: Return the default mlr cache directory (@pat-s, #2463)
 
 ## functions - general
-* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)
+* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (@pat-s, #2413).
+
+## filter - general
+* Caching is now used when generating filter values.
+  This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations.
+  This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold`.
+  It can be triggered with the new `cache` argument in `makeFilterWrapper()` or `filterFeatures()` (@pat-s, #2463).
 
 ## filter - new
 * praznik_JMI
@@ -41,8 +51,8 @@ In this case, the package name is omitted.
 * fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
   
 ## learners - new
-* classif.liquidSVM
-* regr.liquidSVM
+* classif.liquidSVM (@PhilippPro, #2428)
+* regr.liquidSVM (@PhilippPro, #2428)
 
 ## featSel - general
  * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits

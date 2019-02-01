@@ -32,7 +32,9 @@
 #' @family filter
 #' @aliases FilterValues
 #' @export
-generateFilterValuesData = function(task, method = "rfsrc_importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "rfsrc_importance",
+  nselect = getTaskNFeats(task), ..., more.args = list()) {
+
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
@@ -74,7 +76,7 @@ generateFilterValuesData = function(task, method = "rfsrc_importance", nselect =
   fval = do.call(filter[[1]]$fun, c(list(task = task, nselect = nselect), more.args[[filter[[1]]$name]]))
 
   fval = lapply(filter, function(x) {
-    x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
+    x = do.call(x$fun, c(list(task = task), nselect = nselect, more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
     x[match(fn, names(x))]
@@ -96,38 +98,7 @@ print.FilterValues = function(x, ...) {
   catf("Task: %s", x$task.desc$id)
   printHead(x$data, ...)
 }
-#' @title Calculates feature filter values.
-#'
-#' @family filter
-#' @family generate_plot_data
-#'
-#' @description
-#' Calculates numerical filter values for features.
-#' For a list of features, use [listFilterMethods].
-#'
-#' @template arg_task
-#' @param method (`character(1)`)\cr
-#'   Filter method, see above.
-#'   Default is \dQuote{rfsrc_importance}.
-#' @param nselect (`integer(1)`)\cr
-#'   Number of scores to request. Scores are getting calculated for all features per default.
-#' @param ... (any)\cr
-#'   Passed down to selected method.
-#' @return ([FilterValues]).
-#' @note `getFilterValues` is deprecated in favor of [generateFilterValuesData].
-#' @family filter
-#' @export
-getFilterValues = function(task, method = "rfsrc_importance", nselect = getTaskNFeats(task), ...) {
-  .Deprecated("generateFilterValuesData")
-  assertChoice(method, choices = ls(.FilterRegister))
-  out = generateFilterValuesData(task, method, nselect, ...)
-  colnames(out$data)[3] = "val"
-  out$data = out$data[, c(1, 3, 2)]
-  makeS3Obj("FilterValues",
-            task.desc = out$task.desc,
-            method = method,
-            data = out$data)
-}
+
 #' Plot filter values using ggplot2.
 #'
 #' @family filter

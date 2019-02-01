@@ -20,11 +20,6 @@ test_that("filterFeatures", {
   }
 
   # extra test of univariate filter
-  fv = suppressWarnings(getFilterValues(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
-      perf.learner = makeLearner("classif.rpart"), measures = mmce))
-  expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data[, 2L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
-
   fv = generateFilterValuesData(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
     perf.learner = makeLearner("classif.rpart"), measures = mmce)
   expect_class(fv, classes = "FilterValues")
