@@ -151,8 +151,7 @@ makeFilter(
 #' @rdname makeFilter
 #' @name makeFilter
 NULL
-
-rfsrc_importance = makeFilter(
+makeFilter(
   name = "rfsrc_importance",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
@@ -172,8 +171,6 @@ rfsrc_importance = makeFilter(
     setNames(y, ns)
   }
 )
-.FilterRegister[["rfsrc_importance"]] = rfsrc_importance
-.FilterRegister[["rfsrc_importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
 
 # rfsrc_var.select ----------------
 
@@ -186,7 +183,7 @@ rfsrc_importance = makeFilter(
 #' @name makeFilter
 NULL
 
-rfsrc_var.select = makeFilter(
+makeFilter(
   name = "rfsrc_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg  = "randomForestSRC",
@@ -198,14 +195,12 @@ rfsrc_var.select = makeFilter(
     setNames(-im[, 1L], rownames(im))
   }
 )
-.FilterRegister[["rfsrc_var.select"]] = rfsrc_var.select
-.FilterRegister[["rfsrc_var.select"]]$desc = "Minimal depth of random forest fitted in package 'randomForestSRC. (DEPRECATED)"
 
 # cforest.importance ----------------
 
 #' Permutation importance of random forests fitted in package \pkg{party}.
 #' The implementation follows the principle of mean decrese in accuracy used
-#' by the \pkg{randomForest} package (see description of \dQuote{randomForest.importance})
+#' by the \pkg{randomForest} package (see description of \dQuote{randomForest_importance})
 #' filter.
 #'
 #' @rdname makeFilter
@@ -241,7 +236,7 @@ makeFilter(
 
 # randomForest_importance ----------------
 
-#' Filter \dQuote{randomForest.importance} makes use of the [randomForest::importance]
+#' Filter \dQuote{randomForest_importance} makes use of the [randomForest::importance]
 #' from package \pkg{randomForest}. The importance measure to use is selected via
 #' the `method` parameter:
 #' \describe{

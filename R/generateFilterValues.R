@@ -70,6 +70,9 @@ generateFilterValuesData = function(task, method = "rfsrc_importance", nselect =
   }
 
   fn = getTaskFeatureNames(task)
+  browser()
+
+  fval = do.call(filter[[1]]$fun, c(list(task = task, nselect = nselect), more.args[[filter[[1]]$name]]))
 
   fval = lapply(filter, function(x) {
     x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))

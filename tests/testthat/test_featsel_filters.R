@@ -7,10 +7,10 @@ test_that("filterFeatures", {
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   # univariate.model.score, permutation.importance and auc are handled extra test below
-  # 'univariate', 'rf.importance' and 'rf.min.depth' are deprecated
+  # 'univariate', 'randomForest_importance' and 'rfsrc_var.select' are deprecated
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "rf.importance", "rf.min.depth"))
+    "univariate", "randomForest_importance", "rfsrc_var.select"))
   for (filter in filter.list.classif) {
     filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
   }
@@ -41,8 +41,8 @@ test_that("filterFeatures", {
   expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test for rf.min.depth filter (#1066)
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rf.min.depth",
-    more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
+  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rfsrc_var.select",
+    more.args = list("rfsrc_var.select" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
