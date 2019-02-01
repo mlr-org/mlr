@@ -36,7 +36,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       add_code_step(pkgbuild::compile_dll()) %>%
       add_code_step(devtools::document()) %>%
       add_step(step_rcmdcheck(args = c("--as-cran", "--no-manual", "--no-vignettes",
-        "--no-build-vignettes"), build_args = c("--no-build-vignettes"),
+        "--no-build-vignettes", "--no-multiarch"), build_args = c("--no-build-vignettes"),
         error_on = "error"))
   }
 

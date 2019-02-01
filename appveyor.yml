@@ -34,9 +34,11 @@ on_finish: R -q -e "tic::after_script()"
 
 # Adapt as necessary starting from here
 
+platform: x64
 image: Visual Studio 2017
 
 environment:
+  R_ARCH: x64
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
   WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 testthat'
