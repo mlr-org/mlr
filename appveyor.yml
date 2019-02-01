@@ -23,19 +23,11 @@ install:
 
 cache:
   - C:\RLibrary\
-  - C:\Program Files\Pandoc\
 
 before_build: R -q -e "tic::before_install()"
 build_script: R -q -e "tic::install()"
 # after_build: R -q -e "tic::after_install()"
-before_test:
- - ps: >-
-      if (-Not (Test-Path "C:\Program Files\Pandoc\")) {
-        cinst pandoc
-      }
- - ps: $env:Path += ";C:\Program Files\Pandoc\"
- - pandoc -v
- - R -q -e "tic::before_script()"
+before_test: R -q -e "tic::before_script()"
 test_script: R -q -e "tic::script()"
 before_deploy: R -q -e "tic::before_deploy()"
 deploy_script: R -q -e "tic::deploy()"
@@ -44,11 +36,9 @@ on_finish: R -q -e "tic::after_script()"
 
 # Adapt as necessary starting from here
 
-platform: x64
 image: Visual Studio 2017
 
 environment:
-  R_ARCH: x64
   RCMDCHECK: TRUE
   _R_CHECK_FORCE_SUGGESTS_: false
   WARMUPPKGS: 'roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 testthat'
