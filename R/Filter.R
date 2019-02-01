@@ -151,7 +151,11 @@ makeFilter(
 #' @rdname makeFilter
 #' @name makeFilter
 NULL
-makeFilter(
+
+# for some reason we cannot call 'rfsrc_importance' directly as we then face
+# nested recursion problems when using other methods than "md".
+
+rf.importance = makeFilter(
   name = "rfsrc_importance",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
@@ -171,6 +175,12 @@ makeFilter(
     setNames(y, ns)
   }
 )
+.FilterRegister[["rf.importance"]] = rf.importance
+.FilterRegister[["rf.importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
+.FilterRegister[["rf.importance"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'rfsrc_importance' (package randomForest) or Filter 'randomForestSRC.rfsrc' (package randomForestSRC)")
+  .FilterRegister[["rfsrc_importance"]]$fun(...)
+}
 
 # rfsrc_var.select ----------------
 
@@ -183,7 +193,9 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-makeFilter(
+# for some reason we cannot call 'rfsrc_var.select' directly as we then face
+# nested recursion problems when using other methods than "md".
+rf.min.depth = makeFilter(
   name = "rfsrc_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg  = "randomForestSRC",
@@ -195,6 +207,12 @@ makeFilter(
     setNames(-im[, 1L], rownames(im))
   }
 )
+.FilterRegister[["rf.min.depth"]] = rf.min.depth
+.FilterRegister[["rf.min.depth"]]$desc = "Minimal depth of random forest fitted in package 'randomForestSRC. (DEPRECATED)"
+.FilterRegister[["rf.min.depth"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'rfsrc_var.select'")
+  .FilterRegister[["rfsrc_var.select"]]$fun(...)
+}
 
 # cforest.importance ----------------
 
