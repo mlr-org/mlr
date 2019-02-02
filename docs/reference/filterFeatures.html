@@ -310,7 +310,7 @@ Features are then selected via <code>select</code> and <code>val</code>.</p>
 
     <pre class="usage"><span class='fu'>filterFeatures</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rfsrc_importance"</span>, <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)</pre>
+  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -338,7 +338,7 @@ Default is <code>NULL</code> and not used.</p></td>
       <th>perc</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 If set, select <code>perc</code>*100 top scoring features.
-Mutually exclusive with arguments <code>abs</code> and <code>threshold</code>.</p></td>
+<code>perc = 1</code> means to select all features.<code>Mutually exclusive with arguments</code>abs<code>and</code>threshold`.</p></td>
     </tr>
     <tr>
       <th>abs</th>
@@ -358,6 +358,11 @@ Mutually exclusive with arguments <code>perc</code> and <code>abs</code>.</p></t
 Mandatory features which are always included regardless of their scores</p></td>
     </tr>
     <tr>
+      <th>cache</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
+Whether to use caching during filter value creation. See details.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>(any)<br />
 Passed down to selected filter method.</p></td>
@@ -368,10 +373,20 @@ Passed down to selected filter method.</p></td>
 
     <p><a href='Task.html'>Task</a>.</p>
     
+    <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
+
+    
+    <p>If <code>cache = TRUE</code>, the default mlr cache directory is used to cache
+filter values. The directory is operating system dependent and can be
+checked with <code><a href='cache_helpers.html'>getCacheDir()</a></code>.<br />
+The default cache can be cleared with <code><a href='cache_helpers.html'>deleteCacheDir()</a></code>.
+Alternatively, a custom directory can be passed to store the cache.</p>
+<p>Note that caching is not thread safe. It will work for parallel
+computation on many systems, but there is no guarantee.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='getFilterValues.html'>getFilterValues</a></code>,
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
   <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
@@ -385,6 +400,8 @@ Passed down to selected filter method.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#caching">Caching</a></li>
 
       <li><a href="#see-also">See also</a></li>
           </ul>
