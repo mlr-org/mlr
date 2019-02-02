@@ -178,7 +178,7 @@ rf.importance = makeFilter(
 .FilterRegister[["rf.importance"]] = rf.importance
 .FilterRegister[["rf.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["rf.importance"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
 
@@ -205,7 +205,7 @@ randomForestSRC.rfsrc = makeFilter(
 .FilterRegister[["randomForestSRC.rfsrc"]] = randomForestSRC.rfsrc
 .FilterRegister[["randomForestSRC.rfsrc"]]$desc = "(DEPRECATED)"
 .FilterRegister[["randomForestSRC.rfsrc"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'randomForestSRC.rfsrc'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
+  .Deprecated(old = "Filter 'randomForestSRC.rfsrc'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
 
@@ -237,7 +237,7 @@ rf.min.depth = makeFilter(
 .FilterRegister[["rf.min.depth"]] = rf.min.depth
 .FilterRegister[["rf.min.depth"]]$desc = "(DEPRECATED)"
 .FilterRegister[["rf.min.depth"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC_var.select'")
+  .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC_var.select'")
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
 
@@ -256,7 +256,7 @@ randomForestSRC.var.select = makeFilter(
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
 .FilterRegister[["randomForestSRC.var.select"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'randomForestSRC.var.select'", new = "Filter 'randomForestSRC_var.select' (package randomForestSRC)")
+  .Deprecated(old = "Filter 'randomForestSRC.var.select'", new = "Filter 'randomForestSRC_var.select' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
 
@@ -328,7 +328,7 @@ cforest.importance = makeFilter(
 .FilterRegister[["cforest.importance"]] = cforest.importance
 .FilterRegister[["cforest.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["cforest.importance"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'cforest.importance'", new = "Filter 'party_cforest.importance' (package party)")
+  .Deprecated(old = "Filter 'cforest.importance'", new = "Filter 'party_cforest.importance' (package party)")
   .FilterRegister[["party_cforest.importance"]]$fun(...)
 }
 
@@ -383,7 +383,7 @@ randomForest.importance = makeFilter(
 .FilterRegister[["randomForest.importance"]] = randomForest.importance
 .FilterRegister[["randomForest.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["randomForest.importance"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'randomForest.importance'", new = "Filter 'randomForest_importance' (package randomForest)")
+  .Deprecated(old = "Filter 'randomForest.importance'", new = "Filter 'randomForest_importance' (package randomForest)")
   .FilterRegister[["randomForest_importance"]]$fun(...)
 }
 
@@ -463,7 +463,7 @@ information.gain = makeFilter(
 .FilterRegister[["information.gain"]] = information.gain
 .FilterRegister[["information.gain"]]$desc = "(DEPRECATED)"
 .FilterRegister[["information.gain"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'information.gain'", new = "Filter 'FSelector_information.gain' (package FSelector)")
+  .Deprecated(old = "Filter 'information.gain'", new = "Filter 'FSelector_information.gain' (package FSelector)")
   .FilterRegister[["FSelector_information.gain"]]$fun(...)
 }
 
@@ -502,7 +502,7 @@ gain.ratio = makeFilter(
 .FilterRegister[["gain.ratio"]] = gain.ratio
 .FilterRegister[["gain.ratio"]]$desc = "(DEPRECATED)"
 .FilterRegister[["gain.ratio"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'gain.ratio'", new = "Filter 'FSelector_gain.ratio' (package FSelector)")
+  .Deprecated(old = "Filter 'gain.ratio'", new = "Filter 'FSelector_gain.ratio' (package FSelector)")
   .FilterRegister[["FSelector_gain.ratio"]]$fun(...)
 }
 
@@ -540,7 +540,7 @@ symmetrical.uncertainty = makeFilter(
 .FilterRegister[["symmetrical.uncertainty"]] = symmetrical.uncertainty
 .FilterRegister[["symmetrical.uncertainty"]]$desc = "(DEPRECATED)"
 .FilterRegister[["symmetrical.uncertainty"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'symmetrical.uncertainty'", new = "Filter 'FSelector_symmetrical.uncertainty' (package FSelector)")
+  .Deprecated(old = "Filter 'symmetrical.uncertainty'", new = "Filter 'FSelector_symmetrical.uncertainty' (package FSelector)")
   .FilterRegister[["FSelector_symmetrical.uncertainty"]]$fun(...)
 }
 
@@ -584,7 +584,7 @@ chi.squared = makeFilter(
 .FilterRegister[["chi.squared"]] = chi.squared
 .FilterRegister[["chi.squared"]]$desc = "(DEPRECATED)"
 .FilterRegister[["chi.squared"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'chi.squared'", new = "Filter 'FSelector_chi.squared' (package FSelector)")
+  .Deprecated(old = "Filter 'chi.squared'", new = "Filter 'FSelector_chi.squared' (package FSelector)")
   .FilterRegister[["FSelector_chi.squared"]]$fun(...)
 }
 
@@ -635,7 +635,7 @@ relief = makeFilter(
 .FilterRegister[["relief"]] = relief
 .FilterRegister[["relief"]]$desc = "(DEPRECATED)"
 .FilterRegister[["relief"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'relief'", new = "Filter 'FSelector_relief' (package FSelector)")
+  .Deprecated(old = "Filter 'relief'", new = "Filter 'FSelector_relief' (package FSelector)")
   .FilterRegister[["FSelector_relief"]]$fun(...)
 }
 
@@ -678,7 +678,7 @@ oneR = makeFilter(
 .FilterRegister[["oneR"]] = oneR
 .FilterRegister[["oneR"]]$desc = "(DEPRECATED)"
 .FilterRegister[["oneR"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'oneR'", new = "Filter 'FSelector_oneR' (package FSelector)")
+  .Deprecated(old = "Filter 'oneR'", new = "Filter 'FSelector_oneR' (package FSelector)")
   .FilterRegister[["FSelector_oneR"]]$fun(...)
 }
 
@@ -736,7 +736,7 @@ univariate = makeFilter(
 .FilterRegister[["univariate"]] = univariate
 .FilterRegister[["univariate"]]$desc = "(DEPRECATED)"
 .FilterRegister[["univariate"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
+  .Deprecated(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
   .FilterRegister[["univariate.model.score"]]$fun(...)
 }
 
@@ -1081,7 +1081,7 @@ ranger.permutation = makeFilter(
 .FilterRegister[["ranger.permutation"]] = ranger.permutation
 .FilterRegister[["ranger.permutation"]]$desc = "(DEPRECATED)"
 .FilterRegister[["ranger.permutation"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'ranger.permutation'", new = "Filter 'ranger_permutation' (package ranger)")
+  .Deprecated(old = "Filter 'ranger.permutation'", new = "Filter 'ranger_permutation' (package ranger)")
   .FilterRegister[["ranger_permutation"]]$fun(...)
 }
 
@@ -1127,6 +1127,6 @@ ranger.impurity = makeFilter(
 .FilterRegister[["ranger.impurity"]] = ranger.impurity
 .FilterRegister[["ranger.impurity"]]$desc = "(DEPRECATED)"
 .FilterRegister[["ranger.impurity"]]$fun = function(...) {
-  .(DEPRECATED)(old = "Filter 'ranger.impurity'", new = "Filter 'ranger_impurity' (package ranger)")
+  .Deprecated(old = "Filter 'ranger.impurity'", new = "Filter 'ranger_impurity' (package ranger)")
   .FilterRegister[["ranger_impurity"]]$fun(...)
 }
