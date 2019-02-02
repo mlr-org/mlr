@@ -70,7 +70,6 @@ Other generate_plot_data: \code{\link{generateCritDifferencesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
 Other calibration: \code{\link{plotCalibration}}

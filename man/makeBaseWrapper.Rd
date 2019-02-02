@@ -6,7 +6,7 @@
 \usage{
 makeBaseWrapper(id, type, next.learner, package = character(0L),
   par.set = makeParamSet(), par.vals = list(), learner.subclass,
-  model.subclass)
+  model.subclass, cache = FALSE)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
