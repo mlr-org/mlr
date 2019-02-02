@@ -10,7 +10,7 @@ test_that("filterFeatures", {
   # 'univariate', 'randomForest_importance' and 'rfsrc_var.select' are deprecated
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "randomForest_importance", "rfsrc_var.select"))
+    "univariate", "randomForest_importance", "randomForestSRC_var.select"))
   for (filter in filter.list.classif) {
     filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
   }

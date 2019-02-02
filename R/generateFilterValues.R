@@ -6,7 +6,7 @@
 #' @template arg_task
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
-#'   Default is \dQuote{rfsrc_importance}.
+#'   Default is \dQuote{randomForestSRC_importance}.
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
@@ -32,7 +32,7 @@
 #' @family filter
 #' @aliases FilterValues
 #' @export
-generateFilterValuesData = function(task, method = "rfsrc_importance",
+generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   nselect = getTaskNFeats(task), ..., more.args = list()) {
 
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
