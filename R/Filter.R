@@ -333,7 +333,7 @@ makeFilter(
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "FSelector.information.gain",
+  name = "FSelector_information.gain",
   desc = "Entropy-based information gain between feature and target",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
