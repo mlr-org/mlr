@@ -53,11 +53,9 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
 Other filter: \code{\link{filterFeatures}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
