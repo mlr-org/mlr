@@ -363,20 +363,6 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">cforest.importance</td>
-<td align="left"><a href="https://cran.r-project.org/package=party">party</a></td>
-<td align="left">Permutation importance of random forest fitted in package ‘party’</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center">X</td>
-</tr>
-<tr class="odd">
 <td align="left">FSelector_chi.squared</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
 <td align="left">Chi-squared statistic of independence between feature and target</td>
@@ -390,10 +376,10 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">FSelector_gain.ratio</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
-<td align="left">Entropy-based gain ratio between feature and target</td>
+<td align="left">Chi-squared statistic of independence between feature and target</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -404,7 +390,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FSelector_information.gain</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
 <td align="left">Entropy-based information gain between feature and target</td>
@@ -418,7 +404,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">FSelector_oneR</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
 <td align="left">oneR association rule</td>
@@ -432,7 +418,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FSelector_relief</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
 <td align="left">RELIEF algorithm</td>
@@ -446,7 +432,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">FSelector_symmetrical.uncertainty</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
 <td align="left">Entropy-based symmetrical uncertainty between feature and target</td>
@@ -460,7 +446,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FSelectorRcpp_gain.ratio</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
 <td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
@@ -474,7 +460,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">FSelectorRcpp_information.gain</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
 <td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
@@ -488,7 +474,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FSelectorRcpp_symmetrical.uncertainty</td>
 <td align="left"><a href="https://cran.r-project.org/package=FSelectorRcpp">FSelectorRcpp</a></td>
 <td align="left">Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute</td>
@@ -502,7 +488,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">kruskal.test</td>
 <td align="left"></td>
 <td align="left">Kruskal Test for binary and multiclass classification tasks</td>
@@ -516,7 +502,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">linear.correlation</td>
 <td align="left"></td>
 <td align="left">Pearson correlation between feature and target</td>
@@ -529,6 +515,20 @@
 <td align="center"></td>
 <td align="center">X</td>
 <td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">party_cforest.importance</td>
+<td align="left"><a href="https://cran.r-project.org/package=party">party</a></td>
+<td align="left">Permutation importance of random forest fitted in package ‘party’</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
 </tr>
 <tr class="even">
 <td align="left">permutation.importance</td>
@@ -657,6 +657,34 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
+<td align="left">randomForestSRC_importance</td>
+<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
+<td align="left">Importance of random forests fitted in package ‘randomForestSRC’. Importance is calculated using argument ‘permute’.</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="even">
+<td align="left">randomForestSRC_var.select</td>
+<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
+<td align="left">Minimal depth of / variable hunting via method var.select on random forests fitted in package ‘randomForestSRC’.</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="odd">
 <td align="left">ranger_impurity</td>
 <td align="left"><a href="https://cran.r-project.org/package=ranger">ranger</a></td>
 <td align="left">Variable importance based on ranger impurity importance</td>
@@ -699,34 +727,6 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">rfsrc_importance</td>
-<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
-<td align="left">Importance of random forests fitted in package ‘randomForestSRC’. Importance is calculated using argument ‘permute’.</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center">X</td>
-</tr>
-<tr class="odd">
-<td align="left">rfsrc_var.select</td>
-<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
-<td align="left">Minimal depth of / variable hunting via method var.select on random forests fitted in package ‘randomForestSRC’.</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center">X</td>
-</tr>
-<tr class="even">
 <td align="left">univariate.model.score</td>
 <td align="left"></td>
 <td align="left">Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.</td>
@@ -761,20 +761,6 @@
 <h1 class="hasAnchor">
 <a href="#deprecated-methods" class="anchor"></a>Deprecated methods</h1>
 <table class="table">
-<colgroup>
-<col width="5%">
-<col width="23%">
-<col width="53%">
-<col width="3%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-</colgroup>
 <thead><tr class="header">
 <th align="left">Method</th>
 <th align="left">Package</th>
@@ -791,9 +777,9 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">rf.importance</td>
-<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
-<td align="left">Importance of random forests fitted in package ‘randomForestSRC’. Importance is calculated using argument ‘permute’. (DEPRECATED)</td>
+<td align="left">cforest.importance</td>
+<td align="left"><a href="https://cran.r-project.org/package=party">party</a></td>
+<td align="left">(DEPRECATED)</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -805,9 +791,93 @@
 <td align="center">X</td>
 </tr>
 <tr class="even">
-<td align="left">rf.min.depth</td>
+<td align="left">chi.squared</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">gain.ratio</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">information.gain</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">oneR</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">randomForest.importance</td>
+<td align="left"><a href="https://cran.r-project.org/package=randomForest">randomForest</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">randomForestSRC.rfsrc</td>
 <td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
-<td align="left">Minimal depth of random forest fitted in package ’randomForestSRC. (DEPRECATED)</td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="even">
+<td align="left">randomForestSRC.var.select</td>
+<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
+<td align="left">(DEPRECATED)</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -819,9 +889,93 @@
 <td align="center">X</td>
 </tr>
 <tr class="odd">
+<td align="left">ranger.impurity</td>
+<td align="left"><a href="https://cran.r-project.org/package=ranger">ranger</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="even">
+<td align="left">ranger.permutation</td>
+<td align="left"><a href="https://cran.r-project.org/package=ranger">ranger</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="odd">
+<td align="left">relief</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">rf.importance</td>
+<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="odd">
+<td align="left">rf.min.depth</td>
+<td align="left"><a href="https://cran.r-project.org/package=randomForestSRC">randomForestSRC</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr class="even">
+<td align="left">symmetrical.uncertainty</td>
+<td align="left"><a href="https://cran.r-project.org/package=FSelector">FSelector</a></td>
+<td align="left">(DEPRECATED)</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
 <td align="left">univariate</td>
 <td align="left"></td>
-<td align="left">Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner. (DEPRECATED)</td>
+<td align="left">(DEPRECATED)</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center">X</td>
