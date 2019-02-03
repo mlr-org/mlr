@@ -7,7 +7,7 @@
 #' @template arg_task
 #' @param method (`character(1)`)\cr
 #'   See [listFilterMethods].
-#'   Default is \dQuote{rfsrc_importance}.
+#'   Default is \dQuote{randomForestSRC_importance}.
 #' @param fval ([FilterValues])\cr
 #'   Result of [generateFilterValuesData].
 #'   If you pass this, the filter values in the object are used for feature filtering.
@@ -43,7 +43,7 @@
 #' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(task, method = "rfsrc_importance", fval = NULL,
+filterFeatures = function(task, method = "randomForestSRC_importance", fval = NULL,
     perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
     cache = FALSE, ...) {
   assertClass(task, "SupervisedTask")
