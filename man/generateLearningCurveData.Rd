@@ -68,7 +68,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
 Other learning_curve: \code{\link{plotLearningCurve}}

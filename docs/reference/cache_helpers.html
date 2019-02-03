@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Create a feature filter. — makeFilter • mlr</title>
+<title>Get or delete mlr cache directory — cache_helpers • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,12 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create a feature filter. — makeFilter" />
+<meta property="og:title" content="Get or delete mlr cache directory — cache_helpers" />
 
-<meta property="og:description" content="Creates and registers custom feature filters. Implemented filters
-can be listed with listFilterMethods. Additional
-documentation for the fun parameter specific to each filter can
-be found in the description." />
+<meta property="og:description" content="Helper functions to deal with mlr caching." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -301,91 +298,31 @@ be found in the description." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a feature filter.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Filter.R'><code>R/Filter.R</code></a></small>
+    <h1>Get or delete mlr cache directory</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/cache_helpers.R'><code>R/cache_helpers.R</code></a></small>
     </div>
 
     
-    <p>Creates and registers custom feature filters. Implemented filters
-can be listed with <a href='listFilterMethods.html'>listFilterMethods</a>. Additional
-documentation for the <code>fun</code> parameter specific to each filter can
-be found in the description.</p>
+    <p>Helper functions to deal with mlr caching.</p>
     
 
-    <pre class="usage"><span class='fu'>makeFilter</span>(<span class='no'>name</span>, <span class='no'>desc</span>, <span class='no'>pkg</span>, <span class='no'>supported.tasks</span>, <span class='no'>supported.features</span>, <span class='no'>fun</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>name</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Identifier for the filter.</p></td>
-    </tr>
-    <tr>
-      <th>desc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Short description of the filter.</p></td>
-    </tr>
-    <tr>
-      <th>pkg</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Source package where the filter is implemented.</p></td>
-    </tr>
-    <tr>
-      <th>supported.tasks</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
-Task types supported.</p></td>
-    </tr>
-    <tr>
-      <th>supported.features</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
-Feature types supported.</p></td>
-    </tr>
-    <tr>
-      <th>fun</th>
-      <td><p>(<code>function(task, nselect, ...</code>)<br />
-Function which takes a task and returns a named numeric vector of scores,
-one score for each feature of <code>task</code>.
-Higher scores mean higher importance of the feature.
-At least <code>nselect</code> features must be calculated, the remaining may be
-set to <code>NA</code> or omitted, and thus will not be selected.
-the original order will be restored if necessary.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='fu'>getCacheDir</span>()
 
-    <p>Object of class &#8220;Filter&#8221;.</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+<span class='fu'>deleteCacheDir</span>()</pre>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Kira, Kenji and Rendell, Larry (1992). The Feature Selection Problem: Traditional
-Methods and a New Algorithm. AAAI-92 Proceedings.</p>
-<p>Kononenko, Igor et al. Overcoming the myopia of inductive learning algorithms
-with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
-  <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
-  <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
+    <p><code>getCacheDir()</code> returns the default mlr cache directory <br />
+<code>deleteCacheDir()</code> clears the default mlr cache directory. Custom cache
+directories must be deleted by hand.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

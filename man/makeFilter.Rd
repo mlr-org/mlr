@@ -49,7 +49,6 @@ with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.
 \seealso{
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},

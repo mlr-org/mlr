@@ -45,7 +45,7 @@ test_that("BaseEnsemble", {
     list(rpart.xval = 0L, rpart.minsplit = 2L,
       ksvm.filtered.oversampled.fit = FALSE,
       ksvm.filtered.oversampled.C = 2,
-      ksvm.filtered.oversampled.fw.method = "rfsrc_importance",
+      ksvm.filtered.oversampled.fw.method = "randomForestSRC_importance",
       ksvm.filtered.oversampled.fw.perc = 0.5,
       ksvm.filtered.oversampled.osw.rate = 1)))
   # check removing hyperpars
