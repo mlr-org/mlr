@@ -308,9 +308,9 @@ Features are then selected via select and val." />
 Features are then selected via <code>select</code> and <code>val</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>filterFeatures</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rfsrc_importance"</span>, <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>filterFeatures</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
+  <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -324,7 +324,7 @@ The task.</p></td>
       <th>method</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 See <a href='listFilterMethods.html'>listFilterMethods</a>.
-Default is &#8220;rfsrc_importance&#8221;.</p></td>
+Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>fval</th>
