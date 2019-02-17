@@ -43,7 +43,7 @@ In this case, the package name is omitted.
   - `chi.squared` -> `FSelector_chi.squared`
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
-  - `randomForestSRC.randomForestSRC` -> `randomForestSRC_importance`
+  - `randomForestSRC.rfsrc` -> `randomForestSRC_importance`
   - `randomForestSRC.var.select` -> `randomForestSRC_var.select`
   - `randomForest.importance` -> `randomForest_importance`
   
