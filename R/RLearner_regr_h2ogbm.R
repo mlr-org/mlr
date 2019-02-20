@@ -65,8 +65,13 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
+  weights_col = NULL
+  if (!missing(.weights)) {
+    wcol = ".mlr.weights"
+    d[[wcol]] = .weights
+  }
   h2of = h2o::as.h2o(d)
-  model = h2o::h2o.gbm(y = y, x = x, training_frame = h2of, ...)
+  model = h2o::h2o.gbm(y = y, x = x, training_frame = h2of, weights_column = wcol, ...)
   h2o::h2o.rm(h2of)
   return(model)
 }
