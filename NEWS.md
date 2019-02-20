@@ -43,11 +43,10 @@ In this case, the package name is omitted.
   - `chi.squared` -> `FSelector_chi.squared`
   - `relief` -> `FSelector_relief`
   - `oneR` -> `FSelector_oneR`
-  - `randomForestSRC.randomForestSRC` -> `randomForestSRC_importance`
+  - `randomForestSRC.rfsrc` -> `randomForestSRC_importance`
   - `randomForestSRC.var.select` -> `randomForestSRC_var.select`
   - `randomForest.importance` -> `randomForest_importance`
   
-* filter `mrmr` was removed because package _mRMRe_ was removed from CRAN on 11-01-2019 (@pat-s, #2532).
 * fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
   
 ## learners - new
