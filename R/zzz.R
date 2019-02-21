@@ -31,6 +31,7 @@ mlr$learner.properties = list(
     "functionals", "single.functional"),
   multiregr = c("numerics", "factors", "ordered", "missings", "weights", "se", "functionals", "single.functional"),
   mixedoutput       = c("numerics", "factors", "ordered", "missings", "weights", "functionals", "single.functional"),
+  multioutput       = c("numerics", "factors", "ordered", "missings", "weights", "functionals", "single.functional"),
   ordinal    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass", "class.weights", "featimp", "oobpreds", "functionals", "single.functional"),
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "functionals",
     "single.functional"),

@@ -137,7 +137,7 @@ getPredictionResponse.PredictionMultiRegr = function(pred) {
 }
 
 #' @export
-getPredictionResponse.PredictionMixedOutput = function(pred) {
+getPredictionResponse.PredictionMultioutput = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^response\\.")
   m = pred$data[, i]
   setColNames(m, pred$task.desc$class.levels)
@@ -197,7 +197,7 @@ getPredictionTruth.PredictionMultiRegr = function(pred) {
 }
 
 #' @export
-getPredictionTruth.PredictionMixedOutput = function(pred) {
+getPredictionTruth.PredictionMultioutput = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = pred$data[, i]
   setColNames(m, pred$task.desc$class.levels)
