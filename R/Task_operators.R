@@ -214,7 +214,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   type = td$type
   if (type == "surv") {
     target = sprintf("Surv(%s, %s, type = \"right\")", target[1L], target[2L])
-  } else if (type %in% c("multilabel", "multiregr", "mixedoutput")) {
+  } else if (type %in% c("multilabel", "multiregr", "mixedoutput", "multioutput")) {
     target = collapse(target, "+")
   } else if (type == "costsens") {
     stop("There is no formula available for cost-sensitive learning.")
@@ -478,7 +478,8 @@ changeData = function(task, data, costs, weights, coordinates) {
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "multiregr" = makeMultiRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
-    "mixedoutput" = makeMixedOutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    # "mixedoutput" = makeMixedOutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "multioutput" = makeMultioutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "ordinal" = makeOrdinalTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
   )
 

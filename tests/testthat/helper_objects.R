@@ -194,24 +194,24 @@ multiregr.small.train = multiregr.small.df[multiregr.small.train.inds, ]
 multiregr.small.test  = multiregr.small.df[multiregr.small.test.inds, ]
 multiregr.small.task = makeMultiRegrTask("multiregrtask", data = multiregr.small.df, target = multiregr.small.target)
 
-#mixedoutput
-mixedoutput.df = BostonHousing
-mixedoutput.df$medv = as.factor(ifelse(mixedoutput.df$medv > 20, "high", "low"))
-mixedoutput.formula = medv + lstat ~ .
-mixedoutput.target = c("medv", "lstat")
-mixedoutput.train.inds = seq(1, 506, 7)
-mixedoutput.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
-mixedoutput.train = mixedoutput.df[regr.train.inds, ]
-mixedoutput.test  = mixedoutput.df[regr.test.inds, ]
-mixedoutput.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.df, target = mixedoutput.target)
-mixedoutput.class.col = c(13, 14)
-
-mixedoutput.small.df = BostonHousing[150:160, ]
-mixedoutput.small.df$medv = as.factor(ifelse(mixedoutput.small.df$medv > 20, "high", "low"))
-mixedoutput.small.formula = medv + lstat ~ .
-mixedoutput.small.target = c("medv", "lstat")
-mixedoutput.small.train.inds = 1:7
-mixedoutput.small.test.inds  = setdiff(seq_len(nrow(mixedoutput.small.df)), mixedoutput.small.train.inds)
-mixedoutput.small.train = mixedoutput.small.df[mixedoutput.small.train.inds, ]
-mixedoutput.small.test  = mixedoutput.small.df[mixedoutput.small.test.inds, ]
-mixedoutput.small.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.small.df, target = mixedoutput.small.target)
+# #mixedoutput
+# mixedoutput.df = BostonHousing
+# mixedoutput.df$medv = as.factor(ifelse(mixedoutput.df$medv > 20, "high", "low"))
+# mixedoutput.formula = medv + lstat ~ .
+# mixedoutput.target = c("medv", "lstat")
+# mixedoutput.train.inds = seq(1, 506, 7)
+# mixedoutput.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
+# mixedoutput.train = mixedoutput.df[regr.train.inds, ]
+# mixedoutput.test  = mixedoutput.df[regr.test.inds, ]
+# mixedoutput.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.df, target = mixedoutput.target)
+# mixedoutput.class.col = c(13, 14)
+#
+# mixedoutput.small.df = BostonHousing[150:160, ]
+# mixedoutput.small.df$medv = as.factor(ifelse(mixedoutput.small.df$medv > 20, "high", "low"))
+# mixedoutput.small.formula = medv + lstat ~ .
+# mixedoutput.small.target = c("medv", "lstat")
+# mixedoutput.small.train.inds = 1:7
+# mixedoutput.small.test.inds  = setdiff(seq_len(nrow(mixedoutput.small.df)), mixedoutput.small.train.inds)
+# mixedoutput.small.train = mixedoutput.small.df[mixedoutput.small.train.inds, ]
+# mixedoutput.small.test  = mixedoutput.small.df[mixedoutput.small.test.inds, ]
+# mixedoutput.small.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.small.df, target = mixedoutput.small.target)

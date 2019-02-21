@@ -228,7 +228,7 @@ makePrediction.MultiRegrTaskDesc = function(task.desc, row.names, id, truth, pre
 }
 
 #' @export
-makePrediction.MixedOutputTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+makePrediction.MultioutputTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
   data = namedList(c("id", "truth", "response", "se", "prob"))
   data$id = id
   data$truth = truth
@@ -242,7 +242,7 @@ makePrediction.MixedOutputTaskDesc = function(task.desc, row.names, id, truth, p
   #   data$response = y
   # }
 
-  p = makeS3Obj(c("PredictionMixedOutput", "Prediction"),
+  p = makeS3Obj(c("PredictionMultioutput", "Prediction"),
     predict.type = predict.type,
     data = setRowNames(as.data.frame(filterNull(data)), row.names),
     threshold = NA_real_,

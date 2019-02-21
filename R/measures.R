@@ -1287,6 +1287,18 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
   }
 )
 
+#' @export multioutput.dummy
+#' @rdname measures
+#' @format none
+multioutput.dummy = makeMeasure(id = "multioutput.dummy", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multioutput"),
+  name = "dummy (multioutput)",
+  note = "just a dummy measure. always returns 1",
+  fun = function(task, model, pred, feats, extra.args) {
+    1
+  }
+)
+
 #' @export measureMultilabelACC
 #' @rdname measures
 #' @format none

@@ -67,7 +67,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   requirePackages(package, why = stri_paste("learner", id, sep = " "), default.method = "load")
 
   assertString(id)
-  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens", "multiregr", "mixedoutput", "ordinal"))
+  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens", "multiregr", "mixedoutput", "multioutput", "ordinal"))
   assertSubset(properties, listLearnerProperties(type))
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
@@ -178,11 +178,11 @@ makeRLearnerMultiRegr = function(cl, package, par.set, par.vals = list(), proper
 
 #' @export
 #' @rdname RLearner
-makeRLearnerMixedOutput = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+makeRLearnerMultioutput = function(cl, package, par.set, par.vals = list(), properties = character(0L),
   name = cl, short.name = cl, note = "", callees = character(0L)) {
   addClasses(
-    makeRLearnerInternal(cl, "mixedoutput", package, par.set, par.vals, properties, name, short.name, note, callees),
-    c(cl, "RLearnerMixedOutput")
+    makeRLearnerInternal(cl, "multioutput", package, par.set, par.vals, properties, name, short.name, note, callees),
+    c(cl, "RLearnerMultiOutput")
   )
 }
 

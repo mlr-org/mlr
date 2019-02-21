@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.mixedoutput.randomForestSRC = function() {
-  makeRLearnerMixedOutput(
-      cl = "mixedoutput.randomForestSRC",
+makeRLearner.multioutput.randomForestSRC = function() {
+  makeRLearnerMultioutput(
+      cl = "multioutput.randomForestSRC",
       package = "randomForestSRC",
       par.set = makeParamSet(
         makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
@@ -58,7 +58,7 @@ makeRLearner.mixedoutput.randomForestSRC = function() {
 }
 
 #' @export
-trainLearner.mixedoutput.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.multioutput.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
   d = getTaskData(.task, .subset)
@@ -66,7 +66,7 @@ trainLearner.mixedoutput.randomForestSRC = function(.learner, .task, .subset, .w
 }
 
 #' @export
-predictLearner.mixedoutput.randomForestSRC = function(.learner, .model, .newdata, ...) {
+predictLearner.multioutput.randomForestSRC = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, importance = "none", ...)
   regr.output = sapply(p$regrOutput, function(x) x$predicted)
   classif.output = sapply(p$classOutput, function(x) x$class)
