@@ -38,7 +38,7 @@
 #' plotBMRRanksAsBarChart(bmr, pos = "stack")
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
-benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
+benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, keep.extract = TRUE, show.info = getMlrOption("show.info")) {
   learners = ensureBenchmarkLearners(learners)
   tasks = ensureBenchmarkTasks(tasks)
   resamplings = ensureBenchmarkResamplings(resamplings, tasks)
@@ -55,7 +55,8 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
     task = grid$task,
     learner = grid$learner,
     more.args = list(learners = learners, tasks = tasks, resamplings = resamplings,
-      measures = measures, keep.pred = keep.pred, models = models, show.info = show.info),
+      measures = measures, keep.pred = keep.pred, models = models, show.info = show.info,
+      keep.extract = keep.extract),
     level = plevel
   )
   results.by.task = split(results, unlist(grid$task))
@@ -100,14 +101,16 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
 NULL
 
 
-benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info) {
+benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info,
+  keep.extract = TRUE) {
   setSlaveOptions()
   if (show.info)
     messagef("Task: %s, Learner: %s", task, learner)
   lrn = learners[[learner]]
   extract.this = getExtractor(lrn)
   r = resample(lrn, tasks[[task]], resamplings[[task]],
-    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
+    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info,
+    keep.extract = keep.extract)
   # store used learner in result
   r$learner = lrn
   return(r)

@@ -73,7 +73,7 @@
 #'   measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(r$aggr)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  extract, keep.pred = TRUE, keep.extract = TRUE, ..., show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
@@ -132,7 +132,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   time2 = Sys.time()
   runtime = as.numeric(difftime(time2, time1, units = "secs"))
   addClasses(
-    mergeResampleResult(learner$id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
+    mergeResampleResult(learner$id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime, keep.extract),
     "ResampleResult"
   )
 }
@@ -244,7 +244,8 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
 
 
 #Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
-mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
+mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime,
+  keep.extract) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -292,6 +293,9 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   if (!keep.pred)
     pred = NULL
+
+  if (!keep.extract)
+    extract = NULL
 
   list(
     learner.id = learner.id,
