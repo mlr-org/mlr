@@ -304,11 +304,11 @@ Non factor features will be left untouched and passed to the result." />
     </div>
 
     
-    <p>Replace all factor features with their dummy variables. Internally model.matrix is used.
+    <p>Replace all factor features with their dummy variables. Internally <a href='https://www.rdocumentation.org/packages/stats/topics/model.matrix'>model.matrix</a> is used.
 Non factor features will be left untouched and passed to the result.</p>
     
 
-    <pre class="usage"><span class='fu'>createDummyFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"1-of-n"</span>,
+    <pre class="usage"><span class='fu'>createDummyFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"1-of-n"</span>,
   <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -316,12 +316,12 @@ Non factor features will be left untouched and passed to the result.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(data.frame | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code>character(1)</code> | <code>character(2)</code> | <code>character(n.classes)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
 Name(s) of the target variable(s).
 Only used when <code>obj</code> is a data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
@@ -332,7 +332,7 @@ classes.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Available are:</p><dl class='dl-horizontal'>
 <dt>"1-of-n":</dt><dd><p>For n factor levels there will be n dummy variables.</p></dd>
 <dt>"reference":</dt><dd><p>There will be n-1 dummy variables leaving out the first factor level of each variable.</p></dd>
@@ -340,14 +340,14 @@ Available are:</p><dl class='dl-horizontal'>
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Columns to create dummy features for. Default is to use all columns.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
+    <p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

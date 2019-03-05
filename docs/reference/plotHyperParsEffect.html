@@ -328,27 +328,27 @@ Result of <a href='generateHyperParsEffectData.html'>generateHyperParsEffectData
     </tr>
     <tr>
       <th>x</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Specify what should be plotted on the x axis. Must be a column from
 <code>HyperParsEffectData$data</code>. For partial dependence, this is assumed to
 be a hyperparameter.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Specify what should be plotted on the y axis. Must be a column from
 <code>HyperParsEffectData$data</code></p></td>
     </tr>
     <tr>
       <th>z</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Specify what should be used as the extra axis for a particular geom. This
 could be for the fill on a heatmap or color aesthetic for a line. Must be a
 column from <code>HyperParsEffectData$data</code>. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>plot.type</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Specify the type of plot: &#8220;scatter&#8221; for a scatterplot, &#8220;heatmap&#8221; for a
 heatmap, &#8220;line&#8221; for a scatterplot with a connecting line, or &#8220;contour&#8221; for a
 contour plot layered ontop of a heatmap.
@@ -356,7 +356,7 @@ Default is &#8220;scatter&#8221;.</p></td>
     </tr>
     <tr>
       <th>loess.smooth</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If <code>TRUE</code>, will add loess smoothing line to plots where possible. Note that
 this is probably only useful when <code>plot.type</code> is set to either
 &#8220;scatter&#8221; or &#8220;line&#8221;. Must be a column from
@@ -365,7 +365,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>facet</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Specify what should be used as the facet axis for a particular geom. When
 using nested cross validation, set this to &#8220;nested_cv_run&#8221; to obtain a facet
 for each outer loop. Must be a column from <code>HyperParsEffectData$data</code>
@@ -373,7 +373,7 @@ Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>global.only</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If <code>TRUE</code>, will only plot the current global optima when setting
 x = "iteration" and y as a performance measure from
 <code>HyperParsEffectData$measures</code>. Set this to FALSE to always plot the
@@ -383,7 +383,7 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>interpolate</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 If not <code>NULL</code>, will interpolate non-complete grids in order to visualize a more
 complete path. Only meaningful when attempting to plot a heatmap or contour.
 This will fill in &#8220;empty&#8221; cells in the heatmap or contour plot. Note that
@@ -395,7 +395,7 @@ Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>show.experiments</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If <code>TRUE</code>, will overlay the plot with points indicating where an experiment
 ran. This is only useful when creating a heatmap or contour plot with
 interpolation so that you can see which points were actually on the
@@ -405,7 +405,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>show.interpolated</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If <code>TRUE</code>, will overlay the plot with points indicating where interpolation
 ran. This is only useful when creating a heatmap or contour plot with
 interpolation so that you can see which points were interpolated. Not used
@@ -422,7 +422,7 @@ Default is <code>mean</code>.</p></td>
     </tr>
     <tr>
       <th>partial.dep.learn</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The regression learner used to learn partial dependence. Must be specified if
 &#8220;partial.dep&#8221; is set to <code>TRUE</code> in
 <a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a>. Accepts either a <a href='makeLearner.html'>Learner</a>

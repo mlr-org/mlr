@@ -340,19 +340,19 @@ probabilities are predicted by considering the proportions of all predicted labe
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>obw.iters</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 Number of fitted models in bagging.
 Default is 10.</p></td>
     </tr>
     <tr>
       <th>obw.rate</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Factor to upsample a class in each bag.
 Must be between 1 and <code>Inf</code>,
 where 1 means no oversampling and 2 would mean doubling the class size.
@@ -360,7 +360,7 @@ Default is 1.</p></td>
     </tr>
     <tr>
       <th>obw.maxcl</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 How should other class (usually larger class) be handled?
 &#8220;all&#8221; means every instance of the class gets in each bag,
 &#8220;boot&#8221; means the class instances are bootstrapped in each iteration.
@@ -368,7 +368,7 @@ Default is &#8220;boot&#8221;.</p></td>
     </tr>
     <tr>
       <th>obw.cl</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Which class should be over- or undersampled. If <code>NULL</code>, <code>makeOverBaggingWrapper</code>
 will take the smaller class.</p></td>
     </tr>

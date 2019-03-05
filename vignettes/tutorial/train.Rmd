@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Training a learner means fitting a model to a given data set.
@@ -67,6 +68,7 @@ In the following example we cluster the `Ruspini` (`cluster::ruspini()`) data se
 data(ruspini, package = "cluster")
 plot(y ~ x, ruspini)
 ```
+
 ```{r}
 # Generate the task
 ruspini.task = makeClusterTask(data = ruspini)
@@ -84,8 +86,6 @@ names(mod)
 mod$learner
 
 mod$features
-
-mod$time
 
 # Extract the fitted model
 getLearnerModel(mod)

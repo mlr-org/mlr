@@ -309,22 +309,112 @@
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>general</h2>
 <ul>
-<li>add option to use fully predefined indices in resampling (<code><a href="../reference/makeResampleDesc.html">makeResampleDesc(fixed = TRUE)</a></code>)</li>
+<li>add option to use fully predefined indices in resampling (<code><a href="../reference/makeResampleDesc.html">makeResampleDesc(fixed = TRUE)</a></code>) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2412'>#2412</a>).</li>
+</ul>
+</div>
+<div id="functions---new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functions---new" class="anchor"></a>functions - new</h2>
+<ul>
+<li>
+<code><a href="../reference/cache_helpers.html">deleteCacheDir()</a></code>: Clear the default mlr cache directory (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2463'>#2463</a>)</li>
+<li>
+<code><a href="../reference/cache_helpers.html">getCacheDir()</a></code>: Return the default mlr cache directory (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2463'>#2463</a>)</li>
 </ul>
 </div>
 <div id="functions---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions---general" class="anchor"></a>functions - general</h2>
 <ul>
-<li>getResamplingIndices(inner = TRUE) now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set)</li>
+<li>
+<code><a href="../reference/getResamplingIndices.html">getResamplingIndices(inner = TRUE)</a></code> now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2413'>#2413</a>).</li>
+</ul>
+</div>
+<div id="filter---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filter---general" class="anchor"></a>filter - general</h2>
+<ul>
+<li>Caching is now used when generating filter values. This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations. This change inherits a significant speed-up when tuning <code>fw.perc</code>, <code>fw.abs</code> or <code>fw.threshold</code>. It can be triggered with the new <code>cache</code> argument in <code><a href="../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code> or <code><a href="../reference/filterFeatures.html">filterFeatures()</a></code> (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2463'>#2463</a>).</li>
+</ul>
+</div>
+<div id="filter---new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filter---new" class="anchor"></a>filter - new</h2>
+<ul>
+<li>praznik_JMI</li>
+<li>praznik_DISR</li>
+<li>praznik_JMIM</li>
+<li>praznik_MIM</li>
+<li>praznik_NJMIM</li>
+<li>praznik_MRMR</li>
+<li>praznik_CMIM</li>
+<li>FSelectorRcpp_gain.ratio</li>
+<li>FSelectorRcpp_information.gain</li>
+<li>FSelectorRcpp_symuncert</li>
+</ul>
+<p>Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. Exeptions are filters included in base R packages. In this case, the package name is omitted.</filtername></pkgname></p>
+</div>
+<div id="filter---general-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filter---general-1" class="anchor"></a>filter - general</h2>
+<ul>
+<li>Added filters <code>FSelectorRcpp_gain.ratio</code>, <code>FSelectorRcpp_information.gain</code> and <code>FSelectorRcpp_symmetrical.uncertainty</code> from package <code>FSelectorRcpp</code>. These filters are ~ 100 times faster than the implementation of the <code>FSelector</code> pkg. Please note that both implementations do things slightly different internally and the <code>FSelectorRcpp</code> methods should not be seen as direct replacement for the <code>FSelector</code> pkg.</li>
+<li>filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2533'>#2533</a>)
+<ul>
+<li>
+<code>information.gain</code> -&gt; <code>FSelector_information.gain</code>
+</li>
+<li>
+<code>gain.ratio</code> -&gt; <code>FSelector_gain.ratio</code>
+</li>
+<li>
+<code>symmetrical.uncertainty</code> -&gt; <code>FSelector_symmetrical.uncertainty</code>
+</li>
+<li>
+<code>chi.squared</code> -&gt; <code>FSelector_chi.squared</code>
+</li>
+<li>
+<code>relief</code> -&gt; <code>FSelector_relief</code>
+</li>
+<li>
+<code>oneR</code> -&gt; <code>FSelector_oneR</code>
+</li>
+<li>
+<code>randomForestSRC.rfsrc</code> -&gt; <code>randomForestSRC_importance</code>
+</li>
+<li>
+<code>randomForestSRC.var.select</code> -&gt; <code>randomForestSRC_var.select</code>
+</li>
+<li>
+<code>randomForest.importance</code> -&gt; <code>randomForest_importance</code>
+</li>
+</ul></filtername></pkgname>
+</li>
+<li>fixed a bug related to the loading of namespaces for required filter packages (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2483'>#2483</a>)</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learners---new" class="anchor"></a>learners - new</h2>
 <ul>
-<li>classif.liquidSVM</li>
-<li>regr.liquidSVM</li>
+<li>classif.liquidSVM (<a href='https://github.com/PhilippPro'>@PhilippPro</a>, <a href='https://github.com/mlr-org/mlr/issues/2428'>#2428</a>)</li>
+<li>regr.liquidSVM (<a href='https://github.com/PhilippPro'>@PhilippPro</a>, <a href='https://github.com/mlr-org/mlr/issues/2428'>#2428</a>)</li>
+</ul>
+</div>
+<div id="learners---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<ul>
+<li>regr.h2o.gbm: Various parameters added, <code>"h2o.use.data.table" = TRUE</code> is now the default (<a href='https://github.com/j-hartshorn'>@j-hartshorn</a>, <a href='https://github.com/mlr-org/mlr/issues/2508'>#2508</a>)</li>
+</ul>
+</div>
+<div id="featsel---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#featsel---general" class="anchor"></a>featSel - general</h2>
+<ul>
+<li>The FeatSelResult object now contains an additional slot <code>x.bit.names</code> that stores the optimal bits</li>
+<li>The slot <code>x</code> now always contains the real feature names and not the bit.names</li>
+<li>This fixes a bug and makes <code>makeFeatSelWrapper</code> usable with custom <code>bit.names</code>.</li>
 </ul>
 </div>
 </div>
@@ -347,17 +437,17 @@
 <li>plotHyperParsEffect: add colors</li>
 </ul>
 </div>
-<div id="functions---new" class="section level2">
+<div id="functions---new-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---new" class="anchor"></a>functions - new</h2>
+<a href="#functions---new-1" class="anchor"></a>functions - new</h2>
 <ul>
 <li>getResamplingIndices</li>
 <li>createSpatialResamplingPlots</li>
 </ul>
 </div>
-<div id="learners---general" class="section level2">
+<div id="learners---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-1" class="anchor"></a>learners - general</h2>
 <ul>
 <li>regr.nnet: Removed unneeded params linout, entropy, softmax and censored</li>
 <li>regr.ranger: Add weight handling</li>
@@ -408,9 +498,9 @@
 <li>PreprocWrapperCaret: Add param “ppc.corr”, “ppc.zv”, “ppc.nzv”, “ppc.n.comp”, “ppc.cutoff”, “ppc.freqCut”, “ppc.uniqueCut”</li>
 </ul>
 </div>
-<div id="functions---new-1" class="section level2">
+<div id="functions---new-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---new-1" class="anchor"></a>functions - new</h2>
+<a href="#functions---new-2" class="anchor"></a>functions - new</h2>
 <ul>
 <li>makeClassificationViaRegressionWrapper</li>
 <li>getPredictionTaskDesc</li>
@@ -449,9 +539,9 @@
 <li>cindex.uno, iauc.uno</li>
 </ul>
 </div>
-<div id="learners---general-1" class="section level2">
+<div id="learners---general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-1" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-2" class="anchor"></a>learners - general</h2>
 <ul>
 <li>unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized</li>
 <li>fixed a bug where surv.cforest gave wrong risk predictions (<a href='https://github.com/mlr-org/mlr/issues/1833'>#1833</a>)</li>
@@ -493,9 +583,9 @@
 <li>testgroup.sd</li>
 </ul>
 </div>
-<div id="filter---new" class="section level2">
+<div id="filter---new-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#filter---new" class="anchor"></a>filter - new</h2>
+<a href="#filter---new-1" class="anchor"></a>filter - new</h2>
 <ul>
 <li>auc</li>
 <li>ranger.permutation, ranger.impurity</li>
@@ -528,9 +618,9 @@
 <li>Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription. New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.</li>
 </ul>
 </div>
-<div id="functions---new-2" class="section level2">
+<div id="functions---new-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---new-2" class="anchor"></a>functions - new</h2>
+<a href="#functions---new-3" class="anchor"></a>functions - new</h2>
 <ul>
 <li>getOOBPreds: get out-of-bag predictions from trained models for learners that store them – these learners have the new “oobpreds” property</li>
 <li>listTaskTypes, listLearnerProperties</li>
@@ -549,9 +639,9 @@
 <li>kendalltau, spearmanrho</li>
 </ul>
 </div>
-<div id="learners---general-2" class="section level2">
+<div id="learners---general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-2" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-3" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.plsdaCaret: added parameter “method”.</li>
 <li>regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = “jackknife”.</li>
@@ -605,9 +695,9 @@
 <li>New “dummy” learners (that disregard features completely) can be fitted now for baseline comparisons, see “featureless” learners below.</li>
 </ul>
 </div>
-<div id="functions---new-3" class="section level2">
+<div id="functions---new-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---new-3" class="anchor"></a>functions - new</h2>
+<a href="#functions---new-4" class="anchor"></a>functions - new</h2>
 <ul>
 <li>filter: randomForest.importance</li>
 <li>generateFeatureImportanceData: permutation-based feature importance and local importance</li>
@@ -642,9 +732,9 @@
 <li>mergeBenchmarkResultLearner, mergeBenchmarkResultTask</li>
 </ul>
 </div>
-<div id="learners---general-3" class="section level2">
+<div id="learners---general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-3" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-4" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.ada: fixed some param problem with rpart.control params</li>
 <li>classif.cforest, regr.cforest, surv.cforest: removed parameters “minprob”, “pvalue”, “randomsplits” as these are set internally and cannot be changed by the user</li>
@@ -710,9 +800,9 @@
 <li>added new arguments “facet.wrap.nrow” and “facet.wrap.ncol” which enable arrangement of facets in rows and columns to plotting functions</li>
 </ul>
 </div>
-<div id="functions---new-4" class="section level2">
+<div id="functions---new-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---new-4" class="anchor"></a>functions - new</h2>
+<a href="#functions---new-5" class="anchor"></a>functions - new</h2>
 <ul>
 <li>generateHyperParsEffectData, plotHyperParsEffect</li>
 <li>makeMultilabelClassifierChainsWrapper, makeMultilabelDBRWrapper makeMultilabelNestedStackingWrapper, makeMultilabelStackingWrapper</li>
@@ -736,9 +826,9 @@
 <li>plotPartialPredictionGGVIS to plotPartialDependenceGGVIS</li>
 </ul>
 </div>
-<div id="learners---general-4" class="section level2">
+<div id="learners---general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-4" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-5" class="anchor"></a>learners - general</h2>
 <ul>
 <li>fixed weight handling and weight tag for some learners</li>
 <li>remove unnecessary linear.output parameter for classif.neuralnet</li>

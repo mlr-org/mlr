@@ -147,7 +147,6 @@ Imports:
     ggplot2,
     methods,
     parallelMap (>= 1.3),
-    purrr,
     stats,
     stringi,
     survival,
@@ -189,6 +188,7 @@ Suggests:
     fpc,
     frbs,
     FSelector,
+    FSelectorRcpp (>= 0.2.1),
     gbm,
     GenSA,
     glmnet,
@@ -209,6 +209,7 @@ Suggests:
     mboost,
     mco,
     mda,
+    memoise,
     mlbench,
     mldr,
     mlrMBO,
@@ -224,9 +225,11 @@ Suggests:
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
+    praznik (>= 5.0.0),
     randomForest,
     randomForestSRC (>= 2.7.0),
     ranger (>= 0.8.0),
+    rappdirs,
     refund,
     rex,
     rFerns,
@@ -265,4 +268,4 @@ ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(wrap = FALSE, markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

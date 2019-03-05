@@ -312,40 +312,34 @@ documentation for the <code>fun</code> parameter specific to each filter can
 be found in the description.</p>
     
 
-    <pre class="usage"><span class='fu'>makeFilter</span>(<span class='no'>name</span>, <span class='no'>desc</span>, <span class='no'>pkg</span>, <span class='no'>supported.tasks</span>, <span class='no'>supported.features</span>, <span class='no'>fun</span>)
-
-<span class='no'>rf.importance</span>
-
-<span class='no'>rf.min.depth</span>
-
-<span class='no'>univariate</span></pre>
+    <pre class="usage"><span class='fu'>makeFilter</span>(<span class='no'>name</span>, <span class='no'>desc</span>, <span class='no'>pkg</span>, <span class='no'>supported.tasks</span>, <span class='no'>supported.features</span>, <span class='no'>fun</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Identifier for the filter.</p></td>
     </tr>
     <tr>
       <th>desc</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Short description of the filter.</p></td>
     </tr>
     <tr>
       <th>pkg</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Source package where the filter is implemented.</p></td>
     </tr>
     <tr>
       <th>supported.tasks</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Task types supported.</p></td>
     </tr>
     <tr>
       <th>supported.features</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Feature types supported.</p></td>
     </tr>
     <tr>
@@ -359,10 +353,6 @@ set to <code>NA</code> or omitted, and thus will not be selected.
 the original order will be restored if necessary.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>Filter</code> of length 6.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -379,7 +369,6 @@ with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.</p>
 
     <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
   <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='getFilterValues.html'>getFilterValues</a></code>,
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
   <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
@@ -392,8 +381,6 @@ with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#value">Value</a></li>
 
       <li><a href="#references">References</a></li>

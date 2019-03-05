@@ -317,7 +317,7 @@ test examples for each iteration.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>desc</th>
-      <td><p>(<a href='makeResampleDesc.html'>ResampleDesc</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeResampleDesc.html'>ResampleDesc</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Resampling description object or name of resampling strategy.
 In the latter case <a href='makeResampleDesc.html'>makeResampleDesc</a> will be called internally on the string.</p></td>
     </tr>
@@ -329,7 +329,7 @@ Prefer to pass this instead of <code>size</code>.</p></td>
     </tr>
     <tr>
       <th>size</th>
-      <td><p>(integer)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
 Size of the data set to resample.
 Can be used instead of <code>task</code>.</p></td>
     </tr>
@@ -350,10 +350,10 @@ Otherwise ignored.</p></td>
 
     <p>Object slots:</p><dl class='dl-horizontal'>
 <dt>desc (<a href='makeResampleDesc.html'>ResampleDesc</a>)</dt><dd><p>See argument.</p></dd>
-<dt>size (<code>integer(1)</code>)</dt><dd><p>See argument.</p></dd>
-<dt>train.inds (list of integer)</dt><dd><p>List of of training indices for all iterations.</p></dd>
-<dt>test.inds (list of integer)</dt><dd><p>List of of test indices for all iterations.</p></dd>
-<dt>group (factor)</dt><dd><p>Optional grouping of resampling iterations. This encodes whether
+<dt>size (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>See argument.</p></dd>
+<dt>train.inds (list of <a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)</dt><dd><p>List of of training indices for all iterations.</p></dd>
+<dt>test.inds (list of <a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)</dt><dd><p>List of of test indices for all iterations.</p></dd>
+<dt>group (<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)</dt><dd><p>Optional grouping of resampling iterations. This encodes whether
 specific iterations 'belong together' (e.g. repeated CV), and it can later be used to
 aggregate performance values accordingly. Default is 'factor()'.</p></dd>
 </dl>
@@ -374,7 +374,7 @@ aggregate performance values accordingly. Default is 'factor()'.</p></dd>
 <span class='no'>rin</span> <span class='kw'>=</span> <span class='fu'>makeResampleInstance</span>(<span class='no'>rdesc</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
 
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>50</span>)
-<span class='no'>rin</span> <span class='kw'>=</span> <span class='fu'>makeResampleInstance</span>(<span class='no'>rdesc</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>iris</span>))
+<span class='no'>rin</span> <span class='kw'>=</span> <span class='fu'>makeResampleInstance</span>(<span class='no'>rdesc</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>iris</span>))
 
 <span class='no'>rin</span> <span class='kw'>=</span> <span class='fu'>makeResampleInstance</span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)</div></pre>
   </div>

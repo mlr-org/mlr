@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 The package supports a larger number of tuning algorithms, which can all be looked up and
@@ -22,8 +23,6 @@ One of the cooler algorithms is iterated F-racing from the `irace::irace()` pack
 This not only works for arbitrary parameter types (numeric, integer, discrete, logical), but also for so-called dependent / hierarchical parameters:
 
 ```{r}
-set.seed(555666)
-
 ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeDiscreteParam("kernel", values = c("vanilladot", "polydot", "rbfdot")),
@@ -36,7 +35,8 @@ ctrl = makeTuneControlIrace(maxExperiments = 200L)
 rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl,
   show.info = FALSE)
-print(head(as.data.frame(res$opt.path)))
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 ```
 
 See how we made the kernel parameters like `sigma` and `degree` dependent on the `kernel` selection parameters? 
@@ -60,8 +60,6 @@ Function `makeModelMultiplexerParamSet()` offers a simple way to construct a par
 The parameter names are prefixed automatically and the `requires` element is set, too, to make all parameters subordinate to `selected.learner`.
 
 ```{r}
-set.seed(555666)
-
 ps = makeModelMultiplexerParamSet(lrn,
   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeIntegerParam("ntree", lower = 1L, upper = 500L)
@@ -72,7 +70,8 @@ rdesc = makeResampleDesc("CV", iters = 2L)
 ctrl = makeTuneControlIrace(maxExperiments = 200L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl,
   show.info = FALSE)
-print(head(as.data.frame(res$opt.path)))
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 ```
 
 # Multi-criteria evaluation and optimization
@@ -86,8 +85,6 @@ As search strategy we choose a random search.
 For all available multi-criteria tuning algorithms see `TuneMultiCritControl()`.
 
 ```{r}
-set.seed(555666)
-
 ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
@@ -99,7 +96,7 @@ res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task,
   measures = list(fpr, fnr), control = ctrl, show.info = FALSE)
 res
 
-head(as.data.frame(trafoOptPath(res$opt.path)))
+print(head(df[, -ncol(df)]))
 ```
 
 The results can be visualized with function `plotTuneMultiCritResult()`.

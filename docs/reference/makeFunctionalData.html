@@ -325,12 +325,12 @@ of the generated output.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>(data.frame) <br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>) <br />
 A data.frame that contains the functional features as numeric columns.</p></td>
     </tr>
     <tr>
       <th>fd.features</th>
-      <td><p>(list) <br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>) <br />
 Named list containing <code>integer</code> column indices or <code>character</code> column names.
 Each element defines a functional feature, in the given order of the indices or column names.
 The name of the list element defines the name of the functional feature.
@@ -340,7 +340,7 @@ to be a single functional &#8220;fd1&#8221;.</p></td>
     </tr>
     <tr>
       <th>exclude.cols</th>
-      <td><p>(character | integer)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a> | <a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
 Column names or indices to exclude from conversion to functionals, even if they
 are in included in <code>fd.features</code>.
 Default is not to exclude anything.</p></td>
@@ -349,14 +349,14 @@ Default is not to exclude anything.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(data.frame).</p>
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># data.frame where columns 1:6 and 8:10 belong to a functional feature</span>
-<span class='no'>d1</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='st'>"target"</span> <span class='kw'>=</span> <span class='fu'>seq_len</span>(<span class='fl'>10</span>))
+<span class='no'>d1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='st'>"target"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_len</a></span>(<span class='fl'>10</span>))
 <span class='co'># Transform to functional data</span>
-<span class='no'>d2</span> <span class='kw'>=</span> <span class='fu'>makeFunctionalData</span>(<span class='no'>d1</span>, <span class='kw'>fd.features</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"fd1"</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>6</span>, <span class='st'>"fd2"</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>10</span>))
+<span class='no'>d2</span> <span class='kw'>=</span> <span class='fu'>makeFunctionalData</span>(<span class='no'>d1</span>, <span class='kw'>fd.features</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"fd1"</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>6</span>, <span class='st'>"fd2"</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>10</span>))
 <span class='co'># Create a regression task</span>
 <span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d2</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"target"</span>)</div><div class='output co'>#&gt; Supervised task: d2
 #&gt; Type: regr

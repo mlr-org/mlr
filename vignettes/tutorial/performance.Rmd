@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 The quality of the predictions of a model in `mlr` can be assessed with respect to a number of different performance measures.
@@ -92,8 +93,14 @@ Note that in order to calculate some performance measures it is required that yo
 
 For example in order to assess the time needed for training ([timetrain](measures.html){target="_blank"}), the fitted model has to be passed.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 performance(pred, measures = timetrain, model = mod)
+```
+
+```{r eval = FALSE}
+performance(pred, measures = timetrain, model = mod)
+## timetrain 
+##     0.055
 ```
 
 For many performance measures in cluster analysis the `Task()` is required.

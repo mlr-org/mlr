@@ -5,7 +5,7 @@ selectFeaturesRandom = function(learner, task, resampling, measures, bit.names, 
     max.features = control$max.features, prob = control$extra.args$prob))
   evalOptimizationStatesFeatSel(learner, task, resampling, measures, bits.to.features,
     control, opt.path, show.info, states, 1L, NA_integer_)
-  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path)
+  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, task = task, bits.to.features = bits.to.features)
 }
 
 # help function in order to respect max.features
