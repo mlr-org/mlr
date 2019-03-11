@@ -38,7 +38,8 @@ Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
 JMLR, 2006
 }
 \seealso{
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
@@ -71,3 +72,5 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRSummary}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}
+\concept{plot}

@@ -7,8 +7,8 @@
 \usage{
 makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = "default", final.dw.perc = NULL,
-  budget = NULL, ...)
+  tune.threshold.args = list(), log.fun = "default",
+  final.dw.perc = NULL, budget = NULL, ...)
 }
 \arguments{
 \item{impute.val}{(\link{numeric})\cr
@@ -102,3 +102,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

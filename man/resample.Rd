@@ -21,8 +21,8 @@ crossval(learner, task, iters = 10L, stratify = FALSE, measures,
   models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
-repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE,
+  measures, models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
 holdout(learner, task, split = 2/3, stratify = FALSE, measures,
@@ -41,8 +41,8 @@ bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
   models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
-bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+bootstrapB632plus(learner, task, iters = 30, stratify = FALSE,
+  measures, models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
 growingcv(learner, task, horizon = 1, initial.window = 0.5, skip = 0,
@@ -169,3 +169,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}}
 }
+\concept{resample}

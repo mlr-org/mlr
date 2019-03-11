@@ -5,7 +5,8 @@
 \title{Plot a partial dependence with ggplot2.}
 \usage{
 plotPartialDependence(obj, geom = "line", facet = NULL,
-  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL, p = 1, data = NULL)
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL, p = 1,
+  data = NULL)
 }
 \arguments{
 \item{obj}{\link{PartialDependenceData}\cr
@@ -55,7 +56,8 @@ Plot a partial dependence from \link{generatePartialDependenceData} using ggplot
 \seealso{
 Other partial_dependence: \code{\link{generatePartialDependenceData}}
 
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
@@ -64,3 +66,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{partial_dependence}
+\concept{plot}

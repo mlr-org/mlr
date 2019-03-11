@@ -7,12 +7,8 @@
 getDefaultMeasure(x)
 }
 \arguments{
-\item{x}{([character(1)` | [Task] | [TaskDesc] | [Learner])\cr
-Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
-
-[character(1)` | [Task]: R:character(1)%60%20%7C%20[Task
-[TaskDesc]: R:TaskDesc
-[Learner]: R:Learner}
+\item{x}{([character(1)` | \link{Task} | \link{TaskDesc} | \link{Learner})\cr
+Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").}
 }
 \value{
 (\link{Measure}).

@@ -4,9 +4,9 @@
 \alias{plotBMRBoxplots}
 \title{Create box or violin plots for a BenchmarkResult.}
 \usage{
-plotBMRBoxplots(bmr, measure = NULL, style = "box", order.lrns = NULL,
-  order.tsks = NULL, pretty.names = TRUE, facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL)
+plotBMRBoxplots(bmr, measure = NULL, style = "box",
+  order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -45,7 +45,8 @@ of the resampling strategy, faceted by the \code{task.id}.
 # see benchmark
 }
 \seealso{
-Other plot: \code{\link{plotBMRRanksAsBarChart}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
@@ -78,3 +79,5 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}
+\concept{plot}

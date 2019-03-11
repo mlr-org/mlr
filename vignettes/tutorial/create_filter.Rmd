@@ -1,0 +1,114 @@
+---
+title: "Integrating Another Filter Method"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+A lot of feature filter methods are already integrated in `mlr` and a complete list is given in the [Appendix](filter_methods.html){target="_blank"} or can be obtained using `listFilterMethods()`.
+You can easily add another filter, be it a brand new one or a method which is already implemented in another package, via function `makeFilter()`.
+
+# Filter objects
+
+In `mlr` all filter methods are objects of class Filter (`makeFilter()`) and are registered in an environment called `.FilterRegister` (where `listFilterMethods()` looks them up to compile the list of available methods).
+To get to know their structure let's have a closer look at the `"rank.correlation"` filter.
+
+```{r}
+filters = as.list(mlr:::.FilterRegister)
+filters$rank.correlation
+
+str(filters$rank.correlation)
+
+filters$rank.correlation$fun
+```
+
+The core element is `$fun` which calculates the feature importance.
+For the `"rank.correlation"` filter it just extracts the data and formula from the `task` and passes them on to the `base::cor()` function.
+
+Additionally, each Filter (`makeFilter()`) object has a `$name`, which should be short and is for example used to annotate graphics (cp. `plotFilterValues()`), and a slightly more detailed description in slot `$desc`.
+If the filter method is implemented by another package its name is given in the `$pkg` member.
+Moreover, the supported task types and feature types are listed.
+
+# Writing a new filter method
+
+You can integrate your own filter method using `makeFilter()`.
+This function generates a Filter (`makeFilter()`) object and also registers it in the `.FilterRegister` environment.
+
+The arguments of `makeFilter()` correspond to the slot names of the Filter (`makeFilter()`) object above.
+Currently, feature filtering is only supported for supervised learning tasks and possible values for `supported.tasks` are `"regr"`, `"classif"` and `"surv"`.
+`supported.features` can be `"numerics"`, `"factors"` and `"ordered"`.
+
+`fun` must be a function with at least the following formal arguments:
+
+* `task` is a `mlr` learning `Task()`.
+* `nselect` corresponds to the argument of `generateFilterValuesData()` of the same name and specifies the number of features for which to calculate importance scores.
+  Some filter methods have the option to stop after a certain number of top-ranked features have been found in order to save time and ressources when the number of features is high.
+  The majority of filter methods integrated in `mlr` doesn't support this and thus `nselect` is ignored in most cases.
+  An exception is the minimum redundancy maximum relevance filter from package `mRMRe`.
+* `...` for additional arguments.
+
+`fun` must return a named vector of feature importance values.
+By convention the most important features receive the highest scores.
+
+If you are making use of the `nselect` option `fun` can either return a vector of `nselect` scores or a vector as long as the total numbers of features in the task filled with `NAs` for all features whose scores weren't calculated.
+
+When writing `fun` many of the getter functions for `Task()`s come in handy,
+particularly `getTaskData()`, `getTaskFormula()` and `getTaskFeatureNames()`.
+It's worth having a closer look at `getTaskData()` which provides many options for
+formatting the data and recoding the target variable.
+
+As a short demonstration we write a totally meaningless filter that determines the
+importance of features according to alphabetical order, i.e., giving highest scores to features with names that come first (`decreasing = TRUE`) or last (`decreasing = FALSE`) in the alphabet.
+
+```{r, cache = FALSE}
+makeFilter(
+  name = "nonsense.filter",
+  desc = "Calculates scores according to alphabetical order of features",
+  pkg = "",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, decreasing = TRUE, ...) {
+    feats = getTaskFeatureNames(task)
+    imp = order(feats, decreasing = decreasing)
+    names(imp) = feats
+    imp
+  }
+)
+```
+
+The `nonsense.filter` is now registered in `mlr` and shown by `listFilterMethods()`.
+
+```{r}
+listFilterMethods()$id
+```
+
+You can use it like any other filter method already integrated in `mlr` (i.e., via the `method` argument of `generateFilterValuesData()` or the `fw.method` argument of
+`makeFilterWrapper()`; see also the page on [feature selection](feature_selection.html){target="_blank"}.
+
+```{r}
+d = generateFilterValuesData(iris.task, method = c("nonsense.filter", "anova.test"))
+d
+
+plotFilterValues(d)
+iris.task.filtered = filterFeatures(iris.task, method = "nonsense.filter", abs = 2)
+iris.task.filtered
+
+getTaskFeatureNames(iris.task.filtered)
+```
+
+You might also want to have a look at the [source code](https://github.com/mlr-org/mlr/blob/master/R/Filter.R#L95) of the filter methods already integrated in `mlr` for some more complex and meaningful examples.
+
+```{r, echo = FALSE}
+rm("nonsense.filter", envir = mlr:::.FilterRegister)
+```

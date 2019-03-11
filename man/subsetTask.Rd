@@ -43,3 +43,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}}
 }
+\concept{task}

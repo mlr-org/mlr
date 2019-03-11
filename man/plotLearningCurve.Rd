@@ -34,7 +34,8 @@ Visualizes data size (percentage used for model) vs. performance measure(s).
 \seealso{
 Other learning_curve: \code{\link{generateLearningCurveData}}
 
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
@@ -43,3 +44,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{learning_curve}
+\concept{plot}
