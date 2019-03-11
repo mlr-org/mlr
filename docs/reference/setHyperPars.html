@@ -306,14 +306,14 @@
     <p>Set the hyperparameters of a learner object.</p>
     
 
-    <pre class="usage"><span class='fu'>setHyperPars</span>(<span class='no'>learner</span>, <span class='no'>...</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+    <pre class="usage"><span class='fu'>setHyperPars</span>(<span class='no'>learner</span>, <span class='no'>...</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -325,7 +325,7 @@ using the <code>par.vals</code> argument.</p></td>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Optional list of named (hyper)parameter settings. The arguments in
 <code>...</code> take precedence over values in this list.</p></td>
     </tr>
@@ -361,8 +361,8 @@ closest (hyper)parameter names will be output in case the user mistyped.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>cl1</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>cl2</span> <span class='kw'>=</span> <span class='fu'>setHyperPars</span>(<span class='no'>cl1</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='fl'>2</span>))
-<span class='fu'>print</span>(<span class='no'>cl1</span>)</div><div class='output co'>#&gt; Learner classif.ksvm from package kernlab
+<span class='no'>cl2</span> <span class='kw'>=</span> <span class='fu'>setHyperPars</span>(<span class='no'>cl1</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='fl'>2</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>cl1</span>)</div><div class='output co'>#&gt; Learner classif.ksvm from package kernlab
 #&gt; Type: classif
 #&gt; Name: Support Vector Machines; Short name: ksvm
 #&gt; Class: classif.ksvm
@@ -370,7 +370,7 @@ closest (hyper)parameter names will be output in case the user mistyped.</p>
 #&gt; Predict-Type: response
 #&gt; Hyperparameters: fit=FALSE,sigma=1
 #&gt; </div><div class='input'><span class='co'># note the now set and altered hyperparameters:</span>
-<span class='fu'>print</span>(<span class='no'>cl2</span>)</div><div class='output co'>#&gt; Learner classif.ksvm from package kernlab
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>cl2</span>)</div><div class='output co'>#&gt; Learner classif.ksvm from package kernlab
 #&gt; Type: classif
 #&gt; Name: Support Vector Machines; Short name: ksvm
 #&gt; Class: classif.ksvm

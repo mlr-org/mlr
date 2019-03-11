@@ -332,7 +332,7 @@ The task.</p></td>
     </tr>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -343,14 +343,14 @@ Training predictions. Only needed if test predictions are passed.</p></td>
     </tr>
     <tr>
       <th>iter</th>
-      <td><p>(integer)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
 Iteration number. Default 1, usually you don't need to specify this. Only needed if test predictions are passed.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(data.frame). Relative overfitting estimate(s), named by measure(s), for each resampling iteration.</p>
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>). Relative overfitting estimate(s), named by measure(s), for each resampling iteration.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -378,10 +378,10 @@ Iteration number. Default 1, usually you don't need to specify this. Only needed
 <span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.knn"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
 #&gt; 1:    1          -0.02173913
 #&gt; 2:    2           0.02127660</div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
-#&gt; 1:    1           0.02040816
-#&gt; 2:    2          -0.02083333</div><div class='input'><span class='no'>rpred</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='st'>"classif.knn"</span>, <span class='no'>task</span>, <span class='no'>rdesc</span>)$<span class='no'>pred</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0000000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rpred</span>, <span class='no'>acc</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt;    iter relative.overfit.acc
-#&gt; 1:    1           -0.1111111
-#&gt; 2:    2            0.1000000</div></pre>
+#&gt; 1:    1                    0
+#&gt; 2:    2                    0</div><div class='input'><span class='no'>rpred</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='st'>"classif.knn"</span>, <span class='no'>task</span>, <span class='no'>rdesc</span>)$<span class='no'>pred</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rpred</span>, <span class='no'>acc</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt;    iter relative.overfit.acc
+#&gt; 1:    1          -0.04347826
+#&gt; 2:    2           0.04166667</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

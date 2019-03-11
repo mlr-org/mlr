@@ -300,7 +300,7 @@ test_that("2+ hyperparams", {
   dir = tempdir()
   path = file.path(dir, "test.svg")
   ggsave(path)
-  expect_equal(class(plt$layers[[1]]$geom)[1], "GeomTile")
+  expect_equal(class(plt$layers[[1]]$geom)[1], "GeomRaster")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")

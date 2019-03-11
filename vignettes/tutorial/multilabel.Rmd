@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Multilabel classification is a classification problem where multiple target labels can be assigned to each observation instead of only one like in multiclass classification.
@@ -140,11 +141,25 @@ You can specify via the `measures` argument which [measure(s)](measures.html){ta
 The default measure for multilabel classification is the Hamming loss [multilabel.hamloss](measures.html){target="_blank"}.
 All available measures for multilabel classification can be shown by `listMeasures()` and found in the table of performance [measures](measures.html){target="_blank"} and the `?measures()` documentation page.
 
-```{r}
+```{r echo = FALSE, results = 'hide'}
 performance(pred)
 
 performance(pred2, measures = list(multilabel.subset01, multilabel.hamloss, multilabel.acc,
   multilabel.f1, timepredict))
+
+listMeasures("multilabel")
+```
+
+```{r eval = FALSE}
+performance(pred)
+
+performance(pred2, measures = list(multilabel.subset01, multilabel.hamloss, multilabel.acc,
+  multilabel.f1, timepredict))
+
+## multilabel.subset01  multilabel.hamloss      multilabel.acc 
+##           0.8721556           0.2047402           0.4611732 
+##       multilabel.f1         timepredict 
+##           0.5715320           0.9210000
 
 listMeasures("multilabel")
 ```
@@ -156,13 +171,34 @@ As usual you have to define a resampling strategy, either via `makeResampleDesc(
 After that you can run the `resample()` function. 
 Below the default measure Hamming loss is calculated.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 rdesc = makeResampleDesc(method = "CV", stratify = FALSE, iters = 3)
 r = resample(learner = lrn.br, task = yeast.task, resampling = rdesc, show.info = FALSE)
 r
 
 r = resample(learner = lrn.rFerns, task = yeast.task, resampling = rdesc, show.info = FALSE)
 r
+```
+
+```{r eval = FALSE}
+rdesc = makeResampleDesc(method = "CV", stratify = FALSE, iters = 3)
+r = resample(learner = lrn.br, task = yeast.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: multi
+## Learner: multilabel.binaryRelevance.classif.rpart
+## Aggr perf: multilabel.hamloss.test.mean=0.2200186
+## Runtime: 6.67501
+
+r = resample(learner = lrn.rFerns, task = yeast.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: multi
+## Learner: multilabel.rFerns
+## Aggr perf: multilabel.hamloss.test.mean=0.4762392
+## Runtime: 0.320362
 ```
 
 # Binary performance

@@ -314,7 +314,7 @@ features for which less than &#8220;perc&#8221; percent of the observations
 differ from the mode value.</p>
     
 
-    <pre class="usage"><span class='fu'>removeConstantFeatures</span>(<span class='no'>obj</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>dont.rm</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>),
+    <pre class="usage"><span class='fu'>removeConstantFeatures</span>(<span class='no'>obj</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>dont.rm</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>),
   <span class='kw'>na.ignore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='no'>.Machine</span>$<span class='no'>double.eps</span>^<span class='fl'>0.5</span>,
   <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))</pre>
     
@@ -323,24 +323,24 @@ differ from the mode value.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(data.frame | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>perc</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 The percentage of a feature values in [0, 1) that must differ from the mode value.
 Default is 0, which means only constant features with exactly one observed level are removed.</p></td>
     </tr>
     <tr>
       <th>dont.rm</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Names of the columns which must not be deleted.
 Default is no columns.</p></td>
     </tr>
     <tr>
       <th>na.ignore</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should NAs be ignored in the percentage calculation?
 (Or should they be treated as a single, extra level in the percentage calculation?)
 Note that if the feature has only missing values, it is always removed.
@@ -348,14 +348,14 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tol</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Numerical tolerance to treat two numbers as equal.
 Variables stored as <code>double</code> will get rounded accordingly before computing the mode.
-Default is <code>sqrt(.Maschine$double.eps)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>sqrt(.Maschine$double.eps)</a></code>.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
@@ -363,7 +363,7 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
+    <p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

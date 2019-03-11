@@ -50,8 +50,10 @@ getPrediction = function(object, newdata, ...) {
     point
 }
 
-
-
+# replacement for purrr::imap()
+imap = function(.x, .f) {
+  Map(.f, .x = .x, .y = seq_along(.x))
+}
 
 
 

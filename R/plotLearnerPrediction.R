@@ -173,11 +173,11 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         # max of rows is prob for selected class
         prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
-        p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
+        p = p + geom_raster(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
           show.legend = TRUE) + scale_fill_discrete(drop = FALSE)
         p = p + scale_alpha(limits = range(grid$.prob.pred.class))
       } else {
-        p = p + geom_tile(mapping = aes_string(fill = target))
+        p = p + geom_raster(mapping = aes_string(fill = target))
       }
       # print normal points
       p = p + geom_point(data = subset(data, !data$.err),
@@ -219,7 +219,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       #FIXME: color are not scaled correctly? can be improved?
       # plot background from model / grid
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
-      p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
+      p = p + geom_raster(data = grid, mapping = aes_string(fill = target))
       p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       # plot point, with circle and interior color for y
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),

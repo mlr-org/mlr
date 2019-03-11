@@ -312,7 +312,7 @@ discretized into specific values." />
     <p>Constructs a grid of tuning parameters from a learner of the <code>caret</code>
 R-package. These values are then converted into a list of non-tunable
 parameters (<code>par.vals</code>) and a tunable
-<a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a> (<code>par.set</code>), which can be used by
+<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a> (<code>par.set</code>), which can be used by
 <a href='tuneParams.html'>tuneParams</a> for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
 discretized into specific values.</p>
@@ -325,14 +325,14 @@ discretized into specific values.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The name of the learner from <code>caret</code>
 (cf. <a href='https://topepo.github.io/caret/available-models.html'>https://topepo.github.io/caret/available-models.html</a>). Note that the
 names in <code>caret</code> often differ from the ones in <code>mlr</code>.</p></td>
     </tr>
     <tr>
       <th>length</th>
-      <td><p>(<code>integer(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
 A length / precision parameter which is used by <code>caret</code> for
 generating the grid of tuning parameters. <code>caret</code> generates either as
 many values per tuning parameter / dimension as defined by <code>length</code>
@@ -345,7 +345,7 @@ Learning task, which might be requested for creating the tuning grid.</p></td>
     </tr>
     <tr>
       <th>discretize</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the numerical parameters be discretized? Alternatively, they will
 be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p></td>
     </tr>
@@ -353,25 +353,25 @@ be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code>list(2)</code>). A list of parameters:</p><ul>
+    <p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(2)</a></code>). A list of parameters:</p><ul>
 <li><p><code>par.vals</code> contains a list of all constant tuning parameters</p></li>
-<li><p><code>par.set</code> is a <a href='http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>, containing all the configurable
+<li><p><code>par.set</code> is a <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>, containing all the configurable
 tuning parameters</p></li>
 </ul>
 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>requireNamespace</span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'>requireNamespace</span>(<span class='st'>"mlbench"</span>)) {
-  <span class='fu'>library</span>(<span class='no'>caret</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>caret</span>)
   <span class='no'>classifTask</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
   <span class='co'># (1) classification (random forest) with discretized parameters</span>
   <span class='fu'>getCaretParamSet</span>(<span class='st'>"rf"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>classifTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
   <span class='co'># (2) regression (gradient boosting machine) without discretized parameters</span>
-  <span class='fu'>library</span>(<span class='no'>mlbench</span>)
-  <span class='fu'>data</span>(<span class='no'>BostonHousing</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mlbench</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>)
   <span class='no'>regrTask</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='fu'>getCaretParamSet</span>(<span class='st'>"gbm"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>regrTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>

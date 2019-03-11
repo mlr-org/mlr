@@ -15,6 +15,7 @@ library("ggplot2")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 In some cases, you might want to evaluate a `Prediction()` or `ResamplePrediction()` with a `Measure` (`makeMeasure()`) which is not yet implemented in `mlr`. 
@@ -25,12 +26,43 @@ This could be either a performance measure which is not listed in the [Appendix]
 Performance measures in `mlr` are objects of class `Measure` (`makeMeasure()`).
 For example the [mse](measures.html){target="_blank"} (mean squared error) looks as follows.
 
-```{r}
+```{r eval = FALSE}
 str(mse)
+## List of 10
+##  $ id        : chr "mse"
+##  $ minimize  : logi TRUE
+##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"
+##  $ fun       :function (task, model, pred, feats, extra.args)  
+##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478
+##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x5596902b5300> 
+##  $ extra.args: list()
+##  $ best      : num 0
+##  $ worst     : num Inf
+##  $ name      : chr "Mean of squared errors"
+##  $ note      : chr "Defined as: mean((response - truth)^2)"
+##  $ aggr      :List of 4
+##   ..$ id        : chr "test.mean"
+##   ..$ name      : chr "Test mean"
+##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  
+##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157
+##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x55969028dc98> 
+##   ..$ properties: chr "req.test"
+##   ..- attr(*, "class")= chr "Aggregation"
+##  - attr(*, "class")= chr "Measure"
 
 mse$fun
+## function(task, model, pred, feats, extra.args) {
+##     measureMSE(pred$data$truth, pred$data$response)
+##   }
+## <bytecode: 0x55968f621870>
+## <environment: namespace:mlr>
 
 measureMSE
+## function(truth, response) {
+##   mean((response - truth)^2)
+## }
+## <bytecode: 0x559691533288>
+## <environment: namespace:mlr>
 ```
 
 See the `Measure` (`makeMeasure()`) documentation page for a detailed description of the object slots.
@@ -61,10 +93,26 @@ For resampling slot `$aggr` specifies how the overall performance across all res
 Typically, this is just a matter of aggregating the performance values obtained on the test sets `perf.test` or the training sets `perf.train` by a simple function. 
 The by far most common scheme is `test.mean` (`aggregations()`), i.e., the unweighted mean of the performances on the test sets.
 
-```{r}
+```{r echo = FALSE, results='hide'}
 str(test.mean)
 
 test.mean$fun
+```
+
+```{r eval = FALSE}
+str(test.mean)
+## List of 4
+##  $ id        : chr "test.mean"
+##  $ name      : chr "Test mean"
+##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)  
+##  $ properties: chr "req.test"
+##  - attr(*, "class")= chr "Aggregation"
+
+test.mean$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## mean(perf.test)
+## <bytecode: 0xc0a82e8>
+## <environment: namespace:mlr>
 ```
 
 All aggregation schemes are objects of class `Aggregation()` with the function in slot `$fun` doing the actual work.

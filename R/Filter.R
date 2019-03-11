@@ -123,6 +123,10 @@ print.Filter = function(x, ...) {
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
+# mrmr ----------------
+
 makeFilter(
   name = "mrmr",
   desc = "Minimum redundancy, maximum relevance filter",
@@ -150,7 +154,10 @@ makeFilter(
     res = mRMRe::mRMR.classic(data = data, target_indices = target.ind, feature_count = nselect, ...)
     scores = as.numeric(mRMRe::scores(res)[[1L]])
     setNames(scores, res@feature_names[as.integer(mRMRe::solutions(res)[[1L]])])
-})
+  }
+)
+
+# carscore ----------------
 
 #' Filter \dQuote{carscore} determines the \dQuote{Correlation-Adjusted (marginal) coRelation
 #' scores} (short CAR scores). The CAR scores for a set of features are defined as the
@@ -158,6 +165,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "carscore",
   desc = "CAR scores",
@@ -171,7 +180,9 @@ makeFilter(
   }
 )
 
-#' Filter \dQuote{randomForestSRC.rfsrc} computes the importance of random forests
+# randomForestSRC_importance ----------------
+
+#' Filter \dQuote{randomForestSRC_importance} computes the importance of random forests
 #' fitted in package \pkg{randomForestSRC}. The concrete method is selected via
 #' the `method` parameter. Possible values are `permute` (default), `random`,
 #' `anti`, `permute.ensemble`, `random.ensemble`, `anti.ensemble`.
@@ -180,8 +191,13 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
+# for some reason we cannot call 'randomForestSRC_importance' directly as we then face
+# nested recursion problems when using other methods than "md".
+
 rf.importance = makeFilter(
-  name = "randomForestSRC.rfsrc",
+  name = "randomForestSRC_importance",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
@@ -201,21 +217,54 @@ rf.importance = makeFilter(
   }
 )
 .FilterRegister[["rf.importance"]] = rf.importance
-.FilterRegister[["rf.importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
+.FilterRegister[["rf.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["rf.importance"]]$fun = function(...) {
-  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForest.importance' (package randomForest) or Filter 'randomForestSRC.rfsrc' (package randomForestSRC)")
-  .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
+  .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
 
-#' Filter \dQuote{randomForestSRC.var.select} uses the minimal depth variable
+randomForestSRC.rfsrc = makeFilter(
+  name = "randomForestSRC_importance",
+  desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
+  pkg  = "randomForestSRC",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, method = "permute", ...) {
+    assertChoice(method, choices = c("permute", "random", "anti", "permute.ensemble", "random.ensemble",  "anti.ensemble"))
+    im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE,
+      forest = FALSE, importance = method, ...)$importance
+    if (inherits(task, "ClassifTask")) {
+      ns = rownames(im)
+      y = im[, "all"]
+    } else {
+      ns = names(im)
+      y = unname(im)
+    }
+    setNames(y, ns)
+  }
+)
+.FilterRegister[["randomForestSRC.rfsrc"]] = randomForestSRC.rfsrc
+.FilterRegister[["randomForestSRC.rfsrc"]]$desc = "(DEPRECATED)"
+.FilterRegister[["randomForestSRC.rfsrc"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'randomForestSRC.rfsrc'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
+  .FilterRegister[["randomForestSRC_importance"]]$fun(...)
+}
+
+# randomForestSRC_var.select ----------------
+
+#' Filter \dQuote{randomForestSRC_var.select} uses the minimal depth variable
 #' selection proposed by Ishwaran et al. (2010) (`method = "md"`) or a
 #' variable hunting approach (`method = "vh"` or `method = "vh.vimp"`).
 #' The minimal depth measure is the default.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
+# for some reason we cannot call 'randomForestSRC_var.select' directly as we then face
+# nested recursion problems when using other methods than "md".
 rf.min.depth = makeFilter(
-  name = "randomForestSRC.var.select",
+  name = "randomForestSRC_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
@@ -227,21 +276,44 @@ rf.min.depth = makeFilter(
   }
 )
 .FilterRegister[["rf.min.depth"]] = rf.min.depth
-.FilterRegister[["rf.min.depth"]]$desc = "Minimal depth of random forest fitted in package 'randomForestSRC. (DEPRECATED)"
+.FilterRegister[["rf.min.depth"]]$desc = "(DEPRECATED)"
 .FilterRegister[["rf.min.depth"]]$fun = function(...) {
-  .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC.var.select'")
-  .FilterRegister[["randomForestSRC.var.select"]]$fun(...)
+  .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC_var.select'")
+  .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
+
+randomForestSRC.var.select = makeFilter(
+  name = "randomForestSRC_var.select",
+  desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
+  pkg  = "randomForestSRC",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, method = "md", ...) {
+    im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
+      method = method, verbose = FALSE, ...)$md.obj$order
+    setNames(-im[, 1L], rownames(im))
+  }
+)
+.FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
+.FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
+.FilterRegister[["randomForestSRC.var.select"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'randomForestSRC.var.select'", new = "Filter 'randomForestSRC_var.select' (package randomForestSRC)")
+  .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
+}
+
+# party_cforest.importance ----------------
 
 #' Permutation importance of random forests fitted in package \pkg{party}.
 #' The implementation follows the principle of mean decrese in accuracy used
-#' by the \pkg{randomForest} package (see description of \dQuote{randomForest.importance})
+#' by the \pkg{randomForest} package (see description of \dQuote{randomForest_importance})
 #' filter.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "cforest.importance",
+  name = "party_cforest.importance",
   desc = "Permutation importance of random forest fitted in package 'party'",
   pkg = "party",
   supported.tasks = c("classif", "regr", "surv"),
@@ -267,7 +339,43 @@ makeFilter(
   }
 )
 
-#' Filter \dQuote{randomForest.importance} makes use of the [randomForest::importance]
+cforest.importance = makeFilter(
+  name = "party_cforest.importance",
+  desc = "Permutation importance of random forest fitted in package 'party'",
+  pkg = "party",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, mtry = 5L, ...) {
+    args = list(...)
+    # we need to set mtry, which is 5 by default in cforest, to p if p < mtry
+    # otherwise we get a warning
+    p = getTaskNFeats(task)
+    if (p < mtry)
+      args$mtry = p
+    cforest.args = as.list(base::args(party::cforest))
+    cforest.args = args[names(args) %in% names(cforest.args)]
+    control.args = as.list(base::args(party::cforest_control))
+    control.args = args[names(args) %in% names(control.args)]
+    varimp.args = as.list(base::args(party::varimp))
+    varimp.args = args[names(args) %in% names(varimp.args)]
+    ctrl = do.call(party::cforest_unbiased, control.args)
+    fit = do.call(party::cforest, c(list(formula = getTaskFormula(task), data = getTaskData(task), controls = ctrl),
+      cforest.args))
+    im = do.call(party::varimp, c(list(obj = fit), varimp.args))
+    im
+  }
+)
+
+.FilterRegister[["cforest.importance"]] = cforest.importance
+.FilterRegister[["cforest.importance"]]$desc = "(DEPRECATED)"
+.FilterRegister[["cforest.importance"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'cforest.importance'", new = "Filter 'party_cforest.importance' (package party)")
+  .FilterRegister[["party_cforest.importance"]]$fun(...)
+}
+
+# randomForest_importance ----------------
+
+#' Filter \dQuote{randomForest_importance} makes use of the [randomForest::importance]
 #' from package \pkg{randomForest}. The importance measure to use is selected via
 #' the `method` parameter:
 #' \describe{
@@ -277,8 +385,10 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "randomForest.importance",
+  name = "randomForest_importance",
   desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
   pkg = "randomForest",
   supported.tasks = c("classif", "regr"),
@@ -294,11 +404,39 @@ makeFilter(
   }
 )
 
+randomForest.importance = makeFilter(
+  name = "randomForest_importance",
+  desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
+  pkg = "randomForest",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, method = "oob.accuracy", ...) {
+    assertChoice(method, choices = c("oob.accuracy", "node.impurity"))
+    type = if (method == "oob.accuracy") 1L else 2L
+    # no need to set importance = TRUE for node impurity (type = 2)
+    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task),
+      keep.forest = FALSE, importance = (type != 2L))
+    im = randomForest::importance(rf, type = type, ...)
+    setNames(im, rownames(im))
+  }
+)
+
+.FilterRegister[["randomForest.importance"]] = randomForest.importance
+.FilterRegister[["randomForest.importance"]]$desc = "(DEPRECATED)"
+.FilterRegister[["randomForest.importance"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'randomForest.importance'", new = "Filter 'randomForest_importance' (package randomForest)")
+  .FilterRegister[["randomForest_importance"]]$fun(...)
+}
+
+# linear.correlation ----------------
+
 #' The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
 #' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in [cor]).
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
@@ -311,11 +449,15 @@ makeFilter(
   }
 )
 
+# rank.correlation ----------------
+
 #' The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
 #' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in [cor]).
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
@@ -328,13 +470,15 @@ makeFilter(
   }
 )
 
+# FSelector_information.gain ----------------
+
 #' Filter \dQuote{information.gain} uses the entropy-based information gain
 #' between each feature and target individually as an importance measure.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "information.gain",
+  name = "FSelector_information.gain",
   desc = "Entropy-based information gain between feature and target",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
@@ -345,13 +489,35 @@ makeFilter(
   }
 )
 
+information.gain = makeFilter(
+  name = "FSelector_information.gain",
+  desc = "Entropy-based information gain between feature and target",
+  pkg  = "FSelector",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    y = FSelector::information.gain(getTaskFormula(task), data = getTaskData(task))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+  }
+)
+
+.FilterRegister[["information.gain"]] = information.gain
+.FilterRegister[["information.gain"]]$desc = "(DEPRECATED)"
+.FilterRegister[["information.gain"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'information.gain'", new = "Filter 'FSelector_information.gain' (package FSelector)")
+  .FilterRegister[["FSelector_information.gain"]]$fun(...)
+}
+
+
+# FSelector_gain.ratio ----------------
+
 #' Filter \dQuote{gain.ratio} uses the entropy-based information gain ratio
 #' between each feature and target individually as an importance measure.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "gain.ratio",
+  name = "FSelector_gain.ratio",
   desc = "Entropy-based gain ratio between feature and target",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
@@ -362,13 +528,34 @@ makeFilter(
   }
 )
 
+gain.ratio = makeFilter(
+  name = "FSelector_gain.ratio",
+  desc = "Entropy-based gain ratio between feature and target",
+  pkg  = "FSelector",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    y = FSelector::gain.ratio(getTaskFormula(task), data = getTaskData(task))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+  }
+)
+
+.FilterRegister[["gain.ratio"]] = gain.ratio
+.FilterRegister[["gain.ratio"]]$desc = "(DEPRECATED)"
+.FilterRegister[["gain.ratio"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'gain.ratio'", new = "Filter 'FSelector_gain.ratio' (package FSelector)")
+  .FilterRegister[["FSelector_gain.ratio"]]$fun(...)
+}
+
+# FSelector_symmetrical.uncertainty ----------------
+
 #' Filter \dQuote{symmetrical.uncertainty} uses the entropy-based symmetrical uncertainty
 #' between each feature and target individually as an importance measure.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "symmetrical.uncertainty",
+  name = "FSelector_symmetrical.uncertainty",
   desc = "Entropy-based symmetrical uncertainty between feature and target",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
@@ -379,6 +566,27 @@ makeFilter(
   }
 )
 
+symmetrical.uncertainty = makeFilter(
+  name = "FSelector_symmetrical.uncertainty",
+  desc = "Entropy-based symmetrical uncertainty between feature and target",
+  pkg  = "FSelector",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    y = FSelector::symmetrical.uncertainty(getTaskFormula(task), data = getTaskData(task))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+  }
+)
+
+.FilterRegister[["symmetrical.uncertainty"]] = symmetrical.uncertainty
+.FilterRegister[["symmetrical.uncertainty"]]$desc = "(DEPRECATED)"
+.FilterRegister[["symmetrical.uncertainty"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'symmetrical.uncertainty'", new = "Filter 'FSelector_symmetrical.uncertainty' (package FSelector)")
+  .FilterRegister[["FSelector_symmetrical.uncertainty"]]$fun(...)
+}
+
+# FSelector_chi.squared ----------------
+
 #' The chi-square test is a statistical test of independence to determine whether
 #' two variables are independent. Filter \dQuote{chi.squared} applies this
 #' test in the following way. For each feature the chi-square test statistic is
@@ -388,8 +596,10 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "chi.squared",
+  name = "FSelector_chi.squared",
   desc = "Chi-squared statistic of independence between feature and target",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
@@ -399,6 +609,27 @@ makeFilter(
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
+
+chi.squared = makeFilter(
+  name = "FSelector_gain.ratio",
+  desc = "Chi-squared statistic of independence between feature and target",
+  pkg  = "FSelector",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    y = FSelector::chi.squared(getTaskFormula(task), data = getTaskData(task))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+  }
+)
+
+.FilterRegister[["chi.squared"]] = chi.squared
+.FilterRegister[["chi.squared"]]$desc = "(DEPRECATED)"
+.FilterRegister[["chi.squared"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'chi.squared'", new = "Filter 'FSelector_chi.squared' (package FSelector)")
+  .FilterRegister[["FSelector_chi.squared"]]$fun(...)
+}
+
+# FSelector_relief ----------------
 
 #' Filter \dQuote{relief} is based on the feature selection algorithm \dQuote{ReliefF}
 #' by Kononenko et al., which is a generalization of the orignal \dQuote{Relief}
@@ -416,8 +647,10 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "relief",
+  name = "FSelector_relief",
   desc = "RELIEF algorithm",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
@@ -428,6 +661,27 @@ makeFilter(
   }
 )
 
+relief = makeFilter(
+  name = "FSelector_relief",
+  desc = "RELIEF algorithm",
+  pkg  = "FSelector",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    y = FSelector::relief(getTaskFormula(task), data = getTaskData(task), ...)
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+  }
+)
+
+.FilterRegister[["relief"]] = relief
+.FilterRegister[["relief"]]$desc = "(DEPRECATED)"
+.FilterRegister[["relief"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'relief'", new = "Filter 'FSelector_relief' (package FSelector)")
+  .FilterRegister[["FSelector_relief"]]$fun(...)
+}
+
+# FSelector_oneR ----------------
+
 #' Filter \dQuote{oneR} makes use of a simple \dQuote{One-Rule} (OneR) learner to
 #' determine feature importance. For this purpose the OneR learner generates one
 #' simple association rule for each feature in the data individually and computes
@@ -436,8 +690,10 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "oneR",
+  name = "FSelector_oneR",
   desc = "oneR association rule",
   pkg  = "FSelector",
   supported.tasks = c("classif", "regr"),
@@ -448,6 +704,27 @@ makeFilter(
   }
 )
 
+oneR = makeFilter(
+  name = "FSelector_oneR",
+  desc = "oneR association rule",
+  pkg  = "FSelector",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+  }
+)
+
+.FilterRegister[["oneR"]] = oneR
+.FilterRegister[["oneR"]]$desc = "(DEPRECATED)"
+.FilterRegister[["oneR"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'oneR'", new = "Filter 'FSelector_oneR' (package FSelector)")
+  .FilterRegister[["FSelector_oneR"]]$fun(...)
+}
+
+# univariate ----------------
+
 #' The \dQuote{univariate.model.score} feature filter resamples an \pkg{mlr}
 #' learner specified via `perf.learner` for each feature individually
 #' with randomForest from package \pkg{rpart} being the default learner.
@@ -456,6 +733,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 univariate = makeFilter(
   name = "univariate.model.score",
   desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
@@ -464,15 +743,17 @@ univariate = makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
     typ = getTaskType(task)
-    if (is.null(perf.learner))
+    if (is.null(perf.learner)) {
       if (typ == "classif")
         perf.learner = "classif.rpart"
       else if (typ == "regr")
         perf.learner = "regr.rpart"
       else if (typ == "surv")
         perf.learner = "surv.rpart"
-    if (is.null(perf.measure))
+    }
+    if (is.null(perf.measure)) {
       perf.measure = getDefaultMeasure(task)
+    }
     perf.learner = checkLearner(perf.learner)
     perf.measure = checkMeasures(perf.measure, perf.learner)
     if (length(perf.measure) != 1L)
@@ -494,11 +775,13 @@ univariate = makeFilter(
   }
 )
 .FilterRegister[["univariate"]] = univariate
-.FilterRegister[["univariate"]]$desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner. (DEPRECATED)"
+.FilterRegister[["univariate"]]$desc = "(DEPRECATED)"
 .FilterRegister[["univariate"]]$fun = function(...) {
   .Deprecated(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
   .FilterRegister[["univariate.model.score"]]$fun(...)
 }
+
+# anova.test ----------------
 
 #' Filter \dQuote{anova.test} is based on the Analysis of Variance (ANOVA) between
 #' feature and class. The value of the F-statistic is used as a measure of feature
@@ -506,6 +789,8 @@ univariate = makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
@@ -522,6 +807,8 @@ makeFilter(
   }
 )
 
+# kruskal.test ----------------
+
 #' Filter \dQuote{kruskal.test} applies a Kruskal-Wallis rank sum test of the
 #' null hypothesis that the location parameters of the distribution of a feature
 #' are the same in each class and considers the test statistic as an variable
@@ -531,6 +818,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "kruskal.test",
   desc = "Kruskal Test for binary and multiclass classification tasks",
@@ -547,12 +836,16 @@ makeFilter(
   }
 )
 
+# variance ----------------
+
 #' Simple filter based on the variance of the features indepentent of each other.
 #' Features with higher variance are considered more important than features with
 #' low importance.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "variance",
   desc = "A simple variance filter",
@@ -567,6 +860,8 @@ makeFilter(
   }
 )
 
+# permutation.importance ----------------
+
 #' Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
 #' learner before and after a feature is permuted. Special arguments to the filter function are
 #' `imp.learner`, a ([Learner] or `character(1)]) which specifies the learner
@@ -578,6 +873,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "permutation.importance",
   desc = "Aggregated difference between feature permuted and unpermuted predictions",
@@ -596,6 +893,8 @@ makeFilter(
   }
 )
 
+# auc ----------------
+
 #' Filter \dQuote{auc} determines for each feature, how well the target
 #' variable can be predicted only based on this feature. More precisely, the
 #' prediction rule is: class 1 if the feature exceeds a threshold and class 0
@@ -604,6 +903,8 @@ makeFilter(
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
   name = "auc",
   desc = "AUC filter for binary classification tasks",
@@ -619,15 +920,179 @@ makeFilter(
   }
 )
 
+#' Filters from the package \pkg{praznik} use the mutual information criteria in a greedy forward fashion:
+#' \dQuote{praznik_CMIM}, \dQuote{praznik_DISR}, \dQuote{praznik_JMIM}, \dQuote{praznik_JMI},
+#' \dQuote{praznik_MIM}, \dQuote{praznik_MRMR}, \dQuote{praznik_NJMIM}.
+#' As the calculated feature scores are not guaranteed to be monotone, the scores returned by \pkg{mlr} reflect the
+#' selection order instead. The selected features get scores \code{1}, \code{(n-1)/n}, ..., \code{1/n} where \code{n}
+#' is the total number of features.
+#' @rdname makeFilter
+#' @name makeFilter
+NULL
 
-#' Filter \dQuote{ranger.permutation} trains a ranger learner with
+praznik_filter = function(fun) {
+  force(fun)
+
+  function(task, nselect, ...) {
+    fun = getFromNamespace(fun, ns = "praznik")
+
+    data = getTaskData(task)
+    X = data[getTaskFeatureNames(task)]
+    Y = data[[getTaskTargetNames(task)]]
+    k = max(min(nselect, ncol(X)), 1L)
+    selected = names(fun(X, Y, k = k)$selection)
+    score = setNames(rev(seq_along(selected)) / length(selected), selected)
+
+    if (length(score) < ncol(X)) {
+      unscored = sample(setdiff(names(X), names(score)))
+      score = c(score, setNames(rep.int(NA_real_, length(unscored)), unscored))
+    }
+
+    score
+  }
+}
+
+# praznik_JMI ----------------
+
+makeFilter(
+  name = "praznik_JMI",
+  desc = "Joint mutual information filter",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("JMI")
+)
+
+# praznik_DISR ----------------
+
+makeFilter(
+  name = "praznik_DISR",
+  desc = "Double input symmetrical relevance filter",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("DISR")
+)
+
+# praznik_JMIM ----------------
+
+makeFilter(
+  name = "praznik_JMIM",
+  desc = "Minimal joint mutual information maximisation filter",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("JMIM")
+)
+
+# praznik_MIM ----------------
+
+makeFilter(
+  name = "praznik_MIM",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("MIM")
+)
+
+# praznik_NJMIM ----------------
+
+makeFilter(
+  name = "praznik_NJMIM",
+  desc = "Minimal normalised joint mutual information maximisation filter",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("NJMIM")
+)
+
+# praznik_MRMR ----------------
+
+makeFilter(
+  name = "praznik_MRMR",
+  desc = "Minimum redundancy maximal relevancy filter",
+  pkg = "praznik",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("MRMR")
+)
+
+# praznik_CMIM ----------------
+
+makeFilter(
+  name = "praznik_CMIM",
+  desc = "Minimal conditional mutual information maximisation filter",
+  pkg = "praznik",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = praznik_filter("CMIM")
+)
+
+#' Entropy based filters from the package \pkg{FSelectorRcpp}:
+#' \dQuote{FSelectorRcpp_gainratio}, dQuote{FSelectorRcpp_infogain}, \dQuote{FSelectorRcpp_symuncert}.
+#' @rdname makeFilter
+#' @name makeFilter
+NULL
+
+FSelectorRcpp.filter = function(type) {
+  force(type)
+
+  function(task, nselect, ...) {
+    data = getTaskData(task)
+    X = data[getTaskFeatureNames(task)]
+    y = data[[getTaskTargetNames(task)]]
+    res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
+    res = setNames(res$importance, res$attributes)
+    replace(res, is.nan(res), 0) # FIXME: this is a technical fix, need to report upstream
+  }
+}
+
+# FSelectorRcpp_info.gain ----------------
+
+makeFilter(
+  name = "FSelectorRcpp_information.gain",
+  desc = "Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute",
+  pkg  = "FSelectorRcpp",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors", "integer", "logical", "character"),
+  fun = FSelectorRcpp.filter("infogain")
+)
+
+# FSelectorRcpp_gain.ratio ----------------
+
+makeFilter(
+  name = "FSelectorRcpp_gain.ratio",
+  desc = "Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute",
+  pkg  = "FSelectorRcpp",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors", "integer", "logical", "character"),
+  fun = FSelectorRcpp.filter("gainratio")
+)
+
+# FSelectorRcpp_symuncert ----------------
+
+makeFilter(
+  name = "FSelectorRcpp_symmetrical.uncertainty",
+  desc = "Entropy-based Filters: Algorithms that find ranks of importance of discrete attributes, basing on their entropy with a continous class attribute",
+  pkg  = "FSelectorRcpp",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors", "integer", "logical", "character"),
+  fun = FSelectorRcpp.filter("symuncert")
+)
+
+# ranger_permutation ----------------
+
+#' Filter \dQuote{ranger.permutation} trains a \pkg{ranger} learner with
 #' \dQuote{importance = "permutation"} and assesses the variable
 #' importance for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "ranger.permutation",
+  name = "ranger_permutation",
   desc = "Variable importance based on ranger permutation importance",
   pkg  = "ranger",
   supported.tasks = c("classif", "regr", "surv"),
@@ -640,15 +1105,39 @@ makeFilter(
   }
 )
 
+ranger.permutation = makeFilter(
+  name = "ranger_permutation",
+  desc = "Variable importance based on ranger permutation importance",
+  pkg  = "ranger",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, ...) {
+    lrn.type = paste0(getTaskType(task), ".ranger")
+    lrn = makeLearner(lrn.type, importance = "permutation", ...)
+    mod = train(lrn, task)
+    ranger::importance(mod$learner.model)
+  }
+)
 
-#' Filter \dQuote{ranger.impurity} trains a ranger learner with
+.FilterRegister[["ranger.permutation"]] = ranger.permutation
+.FilterRegister[["ranger.permutation"]]$desc = "(DEPRECATED)"
+.FilterRegister[["ranger.permutation"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'ranger.permutation'", new = "Filter 'ranger_permutation' (package ranger)")
+  .FilterRegister[["ranger_permutation"]]$fun(...)
+}
+
+# ranger_impurity ----------------
+
+#' Filter \dQuote{ranger.impurity} trains a \pkg{ranger} learner with
 #' \dQuote{importance = "impurity"} and assesses the variable
 #' importance for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
+NULL
+
 makeFilter(
-  name = "ranger.impurity",
+  name = "ranger_impurity",
   desc = "Variable importance based on ranger impurity importance",
   pkg  = "ranger",
   supported.tasks = c("classif", "regr"),
@@ -661,3 +1150,24 @@ makeFilter(
   }
 )
 
+ranger.impurity = makeFilter(
+  name = "ranger_impurity",
+  desc = "Variable importance based on ranger impurity importance",
+  pkg  = "ranger",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, ...) {
+    lrn.type = paste0(getTaskType(task), ".ranger")
+    lrn = makeLearner(lrn.type, importance = "impurity", ...)
+    mod = train(lrn, task)
+    ranger::importance(mod$learner.model)
+  }
+)
+
+
+.FilterRegister[["ranger.impurity"]] = ranger.impurity
+.FilterRegister[["ranger.impurity"]]$desc = "(DEPRECATED)"
+.FilterRegister[["ranger.impurity"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'ranger.impurity'", new = "Filter 'ranger_impurity' (package ranger)")
+  .FilterRegister[["ranger_impurity"]]$fun(...)
+}

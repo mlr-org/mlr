@@ -318,7 +318,7 @@ Prediction object.</p></td>
     </tr>
     <tr>
       <th>cl</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Names of classes.
 Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.</p></td>
     </tr>
@@ -326,7 +326,7 @@ Default is either all classes for multi-class / multilabel problems or the posit
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(data.frame) with numerical columns or a numerical vector if length of <code>cl</code> is 1.
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>) with numerical columns or a numerical vector if length of <code>cl</code> is 1.
 Order of columns is defined by <code>cl</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -343,11 +343,11 @@ Order of columns is defined by <code>cl</code>.</p>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='co'># predict probabilities</span>
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris): object 'mod' not found</span></div><div class='input'>
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris): object 'mod' not found</span></div><div class='input'>
 <span class='co'># Get probabilities for all classes</span>
-<span class='fu'>head</span>(<span class='fu'>getPredictionProbabilities</span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>getPredictionProbabilities</span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'>
 <span class='co'># Get probabilities for a subset of classes</span>
-<span class='fu'>head</span>(<span class='fu'>getPredictionProbabilities</span>(<span class='no'>pred</span>, <span class='fu'>c</span>(<span class='st'>"setosa"</span>, <span class='st'>"virginica"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>getPredictionProbabilities</span>(<span class='no'>pred</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"setosa"</span>, <span class='st'>"virginica"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
