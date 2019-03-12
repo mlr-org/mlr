@@ -4,7 +4,8 @@ test_that("cluster_MiniBatchKmeans", {
   requirePackagesOrSkip("ClusterR", default.method = "load")
 
   parset.list = list(
-    list()
+    list(),
+    list(clusters = 3L, batch_size = 5L)
   )
 
   old.predicts.list = list()
@@ -12,9 +13,22 @@ test_that("cluster_MiniBatchKmeans", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
-    m = ClusterR::MiniBatchKmeans(noclass.train, clusters = 2L, batch_size = 10L)
+
+    if ("clusters" %in% names(parset)) {
+      clst = parset[["clusters"]]
+    } else {
+      clst = 2L
+    }
+
+    if ("batch_size" %in% names(parset)) {
+      btch_size = parset[["batch_size"]]
+    } else {
+      btch_size = 10L
+    }
+
+    m = ClusterR::MiniBatchKmeans(noclass.train,
+      clusters = clst, batch_size = btch_size)
     p = as.integer(ClusterR::predict_MBatchKMeans(data = noclass.test, CENTROIDS = m$centroids, fuzzy = FALSE))
-    p[p == 0] = NA
     old.predicts.list[[i]] = p
   }
 
