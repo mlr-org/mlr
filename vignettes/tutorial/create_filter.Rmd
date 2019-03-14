@@ -96,7 +96,7 @@ importance of features according to alphabetical order, i.e., giving highest sco
 makeFilter(
   name = "nonsense.filter",
   desc = "Calculates scores according to alphabetical order of features",
-  pkg = "",
+  pkg = character(0),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, decreasing = TRUE, ...) {

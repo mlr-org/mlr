@@ -59,7 +59,7 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
 
   if (pos == "tile") {
     p = ggplot(df, aes_string("rank", "task.id", fill = "learner.id"))
-    p = p + geom_tile()
+    p = p + geom_raster()
     p = p + ylab(NULL)
   } else {
     p = ggplot(df, aes_string("rank", fill = "learner.id"))

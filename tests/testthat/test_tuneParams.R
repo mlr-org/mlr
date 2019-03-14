@@ -66,5 +66,3 @@ test_that("tuneParams output works as documented", {
   expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.user, show.info = TRUE),
     "^Hi")
 })
-
-
