@@ -13,6 +13,6 @@ test_that("no crash with sffs", {
   lrn = makeFeatSelWrapper(mL, resampling = inner, control = ctrl)
   outer = makeResampleDesc("CV", iters = 2, stratify = TRUE)
   # No error occurs
-  expect_error( resample(lrn, mCT, outer, extract = getFeatSelResult, measures = list(mlr::auc, mlr::acc, mlr::brier), models=TRUE),
+  expect_error(resample(lrn, mCT, outer, extract = getFeatSelResult, measures = list(mlr::auc, mlr::acc, mlr::brier), models=TRUE),
                 NA)
 })
