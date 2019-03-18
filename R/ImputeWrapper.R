@@ -3,7 +3,7 @@
 #' @description
 #' Fuses a base learner with an imputation method. Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses \code{\link{impute}} before training the learner and \code{\link{reimpute}}
+#' Internally uses [impute] before training the learner and [reimpute]
 #' before predicting.
 #'
 #' @template arg_learner
@@ -29,6 +29,7 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
+  lrn$id = stri_replace(lrn$id, replacement = ".imputed", regex = "[.]preproc$")
   addClasses(lrn, "ImputeWrapper")
 }
 

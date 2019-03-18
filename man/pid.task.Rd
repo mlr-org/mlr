@@ -8,8 +8,7 @@
 Contains the task (\code{pid.task}).
 }
 \references{
-See \code{\link[mlbench]{PimaIndiansDiabetes}}.
-  Note that this is the uncorrected version from mlbench.
+See \link[mlbench:PimaIndiansDiabetes]{mlbench::PimaIndiansDiabetes}.
+Note that this is the uncorrected version from mlbench.
 }
 \keyword{data}
-

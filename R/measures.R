@@ -6,26 +6,29 @@
 #' of the prediction (or maybe only the model, think AIC).
 #' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 #'
-#' All supported measures can be found by \code{\link{listMeasures}} or as a table
-#' in the tutorial appendix: \url{http://mlr-org.github.io/mlr-tutorial/release/html/measures/}.
+#' All supported measures can be found by [listMeasures] or as a table
+#' in the tutorial appendix: <https://mlr.mlr-org.com/articles/tutorial/measures.html>.
 #'
-#' If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
-#' If you want to implement your own measure, look at \code{\link{makeMeasure}}.
+#' If you want a measure for a misclassification cost matrix, look at [makeCostMeasure].
+#' If you want to implement your own measure, look at [makeMeasure].
 #'
 #' Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
 #'
 #' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 #' starting with 1. If this is not the case, some of the measures will generate warnings.
 #'
-#' @param truth [\code{factor}]\cr
+#' Some measure have parameters. Their defaults are set in the constructor [makeMeasure] and can be
+#' overwritten using [setMeasurePars].
+#'
+#' @param truth ([factor])\cr
 #'   Vector of the true class.
-#' @param response [\code{factor}]\cr
+#' @param response ([factor])\cr
 #'   Vector of the predicted class.
-#' @param negative [\code{character(1)}]\cr
+#' @param negative (`character(1)`)\cr
 #'   The name of the negative class.
-#' @param positive [\code{character(1)}]\cr
+#' @param positive (`character(1)`)\cr
 #'   The name of the positive class.
-#' @param probabilities [\code{numeric} | \code{matrix}]\cr
+#' @param probabilities ([numeric] | [matrix])\cr
 #'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
 #'   b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
 #'   columns are named with class labels.
@@ -92,6 +95,7 @@ timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
 sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Sum of squared errors",
+  note = "Defined as: sum((response - truth)^2)",
   fun = function(task, model, pred, feats, extra.args) {
     measureSSE(pred$data$truth, pred$data$response)
   }
@@ -110,6 +114,7 @@ measureSSE = function(truth, response) {
 mse = makeMeasure(id = "mse", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Mean of squared errors",
+  note = "Defined as: mean((response - truth)^2)",
   fun = function(task, model, pred, feats, extra.args) {
     measureMSE(pred$data$truth, pred$data$response)
   }
@@ -128,7 +133,7 @@ measureMSE = function(truth, response) {
 #' @format none
 rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
-  name = "Root mean square error",
+  name = "Root mean squared error",
   note = "The RMSE is aggregated as sqrt(mean(rmse.vals.on.test.sets^2)). If you don't want that, you could also use `test.mean`.",
   fun = function(task, model, pred, feats, extra.args) {
     measureRMSE(pred$data$truth, pred$data$response)
@@ -149,6 +154,7 @@ measureRMSE = function(truth, response) {
 medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Median of squared errors",
+  note = "Defined as: median((response - truth)^2).",
   fun = function(task, model, pred, feats, extra.args) {
     measureMEDSE(pred$data$truth, pred$data$response)
   }
@@ -167,6 +173,7 @@ measureMEDSE = function(truth, response) {
 sae = makeMeasure(id = "sae", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Sum of absolute errors",
+  note = "Defined as: sum(abs(response - truth))",
   fun = function(task, model, pred, feats, extra.args) {
     measureSAE(pred$data$truth, pred$data$response)
   }
@@ -185,6 +192,7 @@ measureSAE = function(truth, response) {
 mae = makeMeasure(id = "mae", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Mean of absolute errors",
+  note = "Defined as: mean(abs(response - truth))",
   fun = function(task, model, pred, feats, extra.args) {
     measureMAE(pred$data$truth, pred$data$response)
   }
@@ -203,6 +211,7 @@ measureMAE = function(truth, response) {
 medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Median of absolute errors",
+  note = "Defined as: median(abs(response - truth)).",
   fun = function(task, model, pred, feats, extra.args) {
     measureMEDAE(pred$data$truth, pred$data$response)
   }
@@ -233,6 +242,10 @@ rsq = makeMeasure(id = "rsq", minimize = FALSE, best = 1, worst = -Inf,
 measureRSQ = function(truth, response) {
   rss = measureSSE(truth, response)
   ess = sum((truth - mean(truth))^2L)
+  if (ess == 0){
+    warning("Measure is undefined if all truth values are equal.")
+    return(NA_real_)
+  }
   1 - rss / ess
 }
 
@@ -254,22 +267,189 @@ expvar = makeMeasure(id = "expvar", minimize = FALSE, best = 1, worst = 0,
 measureEXPVAR = function(truth, response) {
   regss = sum((response - mean(truth))^2L)
   ess = sum((truth - mean(truth))^2L)
+  if (ess == 0){
+    warning("Measure is undefined if all truth values are equal.")
+    return(NA_real_)
+  }
   regss / ess
 }
 
 #' @export arsq
 #' @rdname measures
 #' @format none
-arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
+arsq = makeMeasure(id = "arsq", minimize = FALSE, best = 1, worst = 0,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Adjusted coefficient of determination",
-  note = "Adjusted R-squared is only defined for normal linear regression.",
+  note = "Defined as: 1 - (1 - rsq) * (p / (n - p - 1L)). Adjusted R-squared is only defined for normal linear regression.",
   fun = function(task, model, pred, feats, extra.args) {
     n = length(pred$data$truth)
     p = length(model$features)
+    if (n == p + 1){
+      warning("Adjusted R-squared is undefined if the number observations is equal to the number of independent variables plus one.")
+      return(NA_real_)
+    }
     1 - (1 - measureRSQ(pred$data$truth, pred$data$response)) * (p / (n - p - 1L))
   }
 )
+
+#' @export rrse
+#' @rdname measures
+#' @format none
+rrse = makeMeasure(id = "rrse", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Root relative squared error",
+  note = "Defined as sqrt (sum_of_squared_errors / total_sum_of_squares). Undefined for single instances and when every truth value is identical. In this case the output will be NA.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRRSE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRRSE
+#' @rdname measures
+#' @format none
+measureRRSE = function(truth, response){
+  tss = sum((truth - mean(truth))^2L)
+  if (tss == 0){
+    warning("Measure is undefined if all truth values are equal.")
+    return(NA_real_)
+  }
+  sqrt(measureSSE(truth, response) / tss)
+}
+
+#' @export rae
+#' @rdname measures
+#' @format none
+rae = makeMeasure(id = "rae", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Relative absolute error",
+  note = "Defined as sum_of_absolute_errors / mean_absolute_deviation. Undefined for single instances and when every truth value is identical. In this case the output will be NA.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRAE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRAE
+#' @rdname measures
+#' @format none
+measureRAE = function(truth, response){
+  meanad = sum(abs(truth - mean(truth)))
+  if (meanad == 0){
+    warning("Measure is undefined if all truth values are equal.")
+    return(NA_real_)
+  }
+  return(measureSAE(truth, response) / meanad)
+}
+
+#' @export mape
+#' @rdname measures
+#' @format none
+mape = makeMeasure(id = "mape", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Mean absolute percentage error",
+  note = "Defined as the abs(truth_i - response_i) / truth_i. Won't work if any truth value is equal to zero. In this case the output will be NA.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureMAPE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureMAPE
+#' @rdname measures
+#' @format none
+measureMAPE = function(truth, response){
+  if (any(truth == 0)){
+    warning("Measure is undefined if any truth value is equal to 0.")
+    return(NA_real_)
+  }
+  return(mean(abs((truth - response) / truth)))
+}
+
+#' @export msle
+#' @rdname measures
+#' @format none
+msle = makeMeasure(id = "msle", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Mean squared logarithmic error",
+  note = "Defined as: mean((log(response + 1, exp(1)) - log(truth + 1, exp(1)))^2).
+  This measure is mostly used for count data, note that all predicted and actual target values must be greater or equal '-1'
+  to compute the measure.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureMSLE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureMSLE
+#' @rdname measures
+#' @format none
+measureMSLE = function(truth, response) {
+  if (any(truth < -1))
+    stop("All truth values must be greater or equal -1")
+  if (any(response < -1))
+    stop("All predicted values must be greater or equal -1")
+
+  mean((log(response + 1) - log(truth + 1))^2)
+}
+
+#' @export rmsle
+#' @rdname measures
+#' @format none
+rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Root mean squared logarithmic error",
+  note = "Defined as: sqrt(msle). Definition taken from:
+  Definition taken from: https: / /www.kaggle.com / wiki / RootMeanSquaredLogarithmicError.
+  This measure is mostly used for count data, note that all predicted and actual target values
+  must be greater or equal '-1' to compute the measure.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRMSLE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRMSLE
+#' @rdname measures
+#' @format none
+measureRMSLE = function(truth, response) {
+  sqrt(measureMSLE(truth, response))
+}
+
+#' @export kendalltau
+#' @rdname measures
+#' @format none
+kendalltau = makeMeasure(id = "kendalltau", minimize = FALSE, best = 1, worst = -1,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Kendall's tau",
+  note = "Defined as: Kendall's tau correlation between truth and response. Only looks at the order.
+  See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureKendallTau(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureKendallTau
+#' @rdname measures
+#' @format none
+measureKendallTau = function(truth, response) {
+  cor(truth, response, use = "na.or.complete", method = "kendall")
+}
+
+#' @export spearmanrho
+#' @rdname measures
+#' @format none
+spearmanrho = makeMeasure(id = "spearmanrho", minimize = FALSE, best = 1, worst = -1,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Spearman's rho",
+  note = "Defined as: Spearman's rho correlation between truth and response. Only looks at the order.
+  See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureSpearmanRho(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureSpearmanRho
+#' @rdname measures
+#' @format none
+measureSpearmanRho = function(truth, response) {
+  cor(truth, response, use = "na.or.complete", method = "spearman")
+}
 
 ###############################################################################
 ### classif multi ###
@@ -280,6 +460,7 @@ arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
 mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Mean misclassification error",
+  note = "Defined as: mean(response != truth)",
   fun = function(task, model, pred, feats, extra.args) {
     measureMMCE(pred$data$truth, pred$data$response)
   }
@@ -298,6 +479,7 @@ measureMMCE = function(truth, response) {
 acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Accuracy",
+  note = "Defined as: mean(response == truth)",
   fun = function(task, model, pred, feats, extra.args) {
     measureACC(pred$data$truth, pred$data$response)
   }
@@ -318,13 +500,19 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   name = "Balanced error rate",
   note = "Mean of misclassification error rates on all individual classes.",
   fun = function(task, model, pred, feats, extra.args) {
-    # special case for predictions from FailureModel
-    if (anyMissing(pred$data$response))
-      return(NA_real_)
-    n = length(pred$task.desc$class.levels) + 1L
-    mean(calculateConfusionMatrix(pred, relative = TRUE)$relative.row[-n, n])
+    measureBER(pred$data$truth, pred$data$response)
   }
 )
+
+#' @export measureBER
+#' @rdname measures
+#' @format none
+measureBER = function(truth, response) {
+  # special case for predictions from FailureModel
+  if (anyMissing(response))
+    return(NA_real_)
+  mean(diag(1 - (table(truth, response) / table(truth, truth))))
+}
 
 #' @export multiclass.aunu
 #' @rdname measures
@@ -342,6 +530,10 @@ multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNU = function(probabilities, truth) {
+  if (length(unique(truth)) != nlevels(truth)){
+    warning("Measure is undefined if there isn't at least one sample per class.")
+    return(NA_real_)
+  }
   mean(vnapply(1:nlevels(truth), function(i) colAUC(probabilities[, i], truth == levels(truth)[i])))
 }
 
@@ -361,7 +553,11 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+  if (length(unique(truth)) != nlevels(truth)){
+    warning("Measure is undefined if there isn't at least one sample per class.")
+    return(NA_real_)
+  }
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[, i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -382,7 +578,7 @@ multiclass.au1u = makeMeasure(id = "multiclass.au1u", minimize = FALSE, best = 1
 measureAU1U = function(probabilities, truth) {
   m = colAUC(probabilities, truth)
   c = c(combn(1:nlevels(truth), 2))
-  mean(m[cbind(rep(1:nrow(m), each = 2), c)])
+  mean(m[cbind(rep(seq_len(nrow(m)), each = 2), c)])
 }
 
 #' @export multiclass.au1p
@@ -405,7 +601,7 @@ measureAU1P = function(probabilities, truth) {
   weights = table(truth) / length(truth)
   m = m * matrix(rep(weights, each = nrow(m)), ncol = length(weights))
   c = c(combn(1:nlevels(truth), 2))
-  sum(m[cbind(rep(1:nrow(m), each = 2), c)]) / (nlevels(truth) - 1)
+  sum(m[cbind(rep(seq_len(nrow(m)), each = 2), c)]) / (nlevels(truth) - 1)
 }
 
 #' @export multiclass.brier
@@ -425,7 +621,7 @@ multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 
 #' @format none
 measureMulticlassBrier = function(probabilities, truth) {
   truth = factor(truth, levels = colnames(probabilities))
-  mat01 = model.matrix( ~ . -1, data = as.data.frame(truth))
+  mat01 = createDummyFeatures(truth)
   mean(rowSums((probabilities - mat01)^2))
 }
 
@@ -446,12 +642,12 @@ logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
 #' @format none
 measureLogloss = function(probabilities, truth){
   eps = 1e-15
-  #let's confine the predicted probabilities to [eps,1-eps], so logLoss doesn't reach infinity under any circumstance
-  probabilities[probabilities > 1-eps] = 1-eps
+  #let's confine the predicted probabilities to [eps,1 - eps], so logLoss doesn't reach infinity under any circumstance
+  probabilities[probabilities > 1 - eps] = 1 - eps
   probabilities[probabilities < eps] = eps
   truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)
-  -1*mean(log(p))
+  -1 * mean(log(p))
 }
 
 #' @export ssr
@@ -461,7 +657,7 @@ ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Spherical Scoring Rule",
   note = "Defined as: mean(p_i(sum_j(p_ij))), where p_i is the predicted probability of the true class of observation i and p_ij is the predicted probablity of observation i for class j.
-	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureSSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
   }
@@ -473,7 +669,7 @@ ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
 measureSSR = function(probabilities, truth){
   truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)
-  mean(p/sqrt(rowSums(probabilities^2)))
+  mean(p / sqrt(rowSums(probabilities^2)))
 }
 
 #' @export qsr
@@ -484,7 +680,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
   name = "Quadratic Scoring Rule",
   note = "Defined as: 1 - (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j.
   This scoring rule is the same as 1 - multiclass.brier.
-	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureQSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
   }
@@ -495,9 +691,9 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
 #' @format none
 measureQSR = function(probabilities, truth){
   #We add this line because binary tasks only output one probability column
-  if (is.null(dim(probabilities))) probabilities = cbind(probabilities,1 - probabilities)
+  if (is.null(dim(probabilities))) probabilities = cbind(probabilities, 1 - probabilities)
   truth = factor(truth, levels = colnames(probabilities))
-  1 - mean(rowSums((probabilities - model.matrix( ~ as.factor(truth) + 0))^2))
+  1 - mean(rowSums((probabilities - createDummyFeatures(truth))^2))
 }
 
 #' @export lsr
@@ -507,7 +703,7 @@ lsr = makeMeasure(id = "lsr", minimize = FALSE, best = 0, worst = -Inf,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Logarithmic Scoring Rule",
   note = "Defined as: mean(log(p_i)), where p_i is the predicted probability of the true class of observation i.
-	This scoring rule is the same as the negative logloss, self-information or surprisal.
+  This scoring rule is the same as the negative logloss, self-information or surprisal.
   See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureLSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
@@ -518,7 +714,74 @@ lsr = makeMeasure(id = "lsr", minimize = FALSE, best = 0, worst = -Inf,
 #' @rdname measures
 #' @format none
 measureLSR = function(probabilities, truth){
-  -1*measureLogloss(probabilities, truth)
+  -1 * measureLogloss(probabilities, truth)
+}
+
+#' @export kappa
+#' @rdname measures
+#' @format none
+kappa = makeMeasure(id = "kappa", minimize = FALSE, best = 1, worst = -1,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  name = "Cohen's kappa",
+  note = "Defined as: 1 - (1 - p0) / (1 - pe). With: p0 = 'observed frequency of
+    agreement' and pe = 'expected agremeent frequency under independence",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureKAPPA(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureKAPPA
+#' @rdname measures
+#' @format none
+measureKAPPA = function(truth, response) {
+  # get confusion matrix
+  conf.mat = table(truth, response)
+  conf.mat = conf.mat / sum(conf.mat)
+
+  # observed agreement frequency
+  p0 = sum(diag(conf.mat))
+
+  # get expected probs under independence
+  rowsum = rowSums(conf.mat)
+  colsum = colSums(conf.mat)
+  pe = sum(rowsum * colsum) / sum(conf.mat)^2
+
+  # calculate kappa
+  1 - (1 - p0) / (1 - pe)
+}
+
+#' @export wkappa
+#' @rdname measures
+#' @format none
+wkappa = makeMeasure(id = "wkappa", minimize = FALSE, best = 1, worst = -1,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  name = "Mean quadratic weighted kappa",
+  note = "Defined as: 1 - sum(weights * conf.mat) / sum(weights * expected.mat),
+    the weight matrix measures seriousness of disagreement with the squared euclidean metric.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureWKAPPA(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureWKAPPA
+#' @rdname measures
+#' @format none
+measureWKAPPA = function(truth, response) {
+  # get confusion matrix
+  conf.mat = table(truth, response)
+  conf.mat = conf.mat / sum(conf.mat)
+
+  # get expected probs under independence
+  rowsum = rowSums(conf.mat)
+  colsum = colSums(conf.mat)
+  expected.mat = rowsum %*% t(colsum)
+
+  # get weights
+  class.values = seq_along(levels(truth)) - 1L
+  weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
+
+  # calculate weighted kappa
+  1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
 
 ###############################################################################
@@ -530,8 +793,8 @@ measureLSR = function(probabilities, truth){
 auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth", "req.prob"),
   name = "Area under the curve",
+  note = "Integral over the graph that results from computing fpr and tpr for many different thresholds.",
   fun = function(task, model, pred, feats, extra.args) {
-    # ROCR does not work with NAs
     if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
     measureAUC(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
@@ -542,8 +805,23 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-  rpreds = asROCRPredictionIntern(probabilities, truth, negative, positive)
-  ROCR::performance(rpreds, "auc")@y.values[[1L]]
+  if (is.factor(truth)) {
+    i = as.integer(truth) == which(levels(truth) == positive)
+  } else {
+    i = truth == positive
+  }
+  if (length(unique(i)) < 2L) {
+    stop("truth vector must have at least two classes")
+  }
+  #Use fast ranking function from data.table for larger vectors
+  if (length(i) > 5000L) {
+    r = frankv(probabilities)
+  } else {
+    r = rank(probabilities)
+  }
+  n.pos = as.numeric(sum(i))
+  n.neg = length(i) - n.pos
+  (sum(r[i]) - n.pos * (n.pos + 1) / 2) / (n.pos * n.neg)
 }
 
 #' @export brier
@@ -595,23 +873,19 @@ measureBrierScaled = function(probabilities, truth, negative, positive) {
 #' @rdname measures
 #' @format none
 bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Balanced accuracy",
-  note = "Mean of true positive rate and true negative rate.",
+  note = "For binary tasks, mean of true positive rate and true negative rate.",
   fun = function(task, model, pred, feats, extra.args) {
-    mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
-      tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
+    measureBAC(pred$data$truth, pred$data$response)
   }
 )
 
 #' @export measureBAC
 #' @rdname measures
 #' @format none
-measureBAC = function(truth, response, negative, positive) {
-  mean(c(
-    measureTP(truth, response, positive) / sum(truth == positive),
-    measureTN(truth, response, negative) / sum(truth == negative)
-  ))
+measureBAC = function(truth, response) {
+    mean(diag(table(truth, response) / table(truth, truth)))
 }
 
 #' @export tp
@@ -620,6 +894,7 @@ measureBAC = function(truth, response, negative, positive) {
 tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "True positives",
+  note = "Sum of all correctly classified observations in the positive class.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTP(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -638,7 +913,7 @@ measureTP = function(truth, response, positive) {
 tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "True negatives",
-  note = "Also called correct rejections.",
+  note = "Sum of correctly classified observations in the negative class. Also called correct rejections.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTN(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -657,7 +932,7 @@ measureTN = function(truth, response, negative) {
 fp = makeMeasure(id = "fp", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False positives",
-  note = "Also called false alarms.",
+  note = "Sum of misclassified observations in the positive class. Also called false alarms.",
   fun = function(task, model, pred, feats, extra.args) {
     measureFP(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -676,7 +951,7 @@ measureFP = function(truth, response, positive) {
 fn = makeMeasure(id = "fn", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False negatives",
-  note = "Also called misses.",
+  note = "Sum of misclassified observations in the negative class. Also called misses.",
   fun = function(task, model, pred, feats, extra.args) {
     measureFN(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -695,7 +970,7 @@ measureFN = function(truth, response, negative) {
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "True positive rate",
-  note = "Also called hit rate or recall.",
+  note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall or sensitivity.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTPR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -714,7 +989,7 @@ measureTPR = function(truth, response, positive) {
 tnr = makeMeasure(id = "tnr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "True negative rate",
-  note = "Also called specificity.",
+  note = "Percentage of correctly classified observations in the negative class. Also called specificity.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTNR(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -731,9 +1006,9 @@ measureTNR = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif" , "req.pred", "req.truth"),
+  properties = c("classif", "req.pred", "req.truth"),
   name = "False positive rate",
-  note = "Also called false alarm rate or fall-out.",
+  note = "Percentage of misclassified observations in the positive class. Also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
     measureFPR(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
@@ -752,6 +1027,7 @@ measureFPR = function(truth, response, negative, positive) {
 fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False negative rate",
+  note = "Percentage of misclassified observations in the negative class.",
   fun = function(task, model, pred, feats, extra.args) {
     measureFNR(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
@@ -770,18 +1046,35 @@ measureFNR = function(truth, response, negative, positive) {
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
-  note = "Also called precision.",
+  note = "Defined as: tp / (tp + fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
   fun = function(task, model, pred, feats, extra.args) {
-    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive)
+    if (pred$predict.type == "prob") {
+      prob = getPredictionProbabilities(pred)
+    } else {
+      prob = NULL
+      }
+    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive, prob)
   }
 )
 
 #' @export measurePPV
 #' @rdname measures
 #' @format none
-measurePPV = function(truth, response, positive) {
-  measureTP(truth, response, positive) / sum(response == positive)
+
+measurePPV = function(truth, response, positive, probabilities = NULL) {
+  denominator = sum(response == positive)
+  ifelse(denominator == 0, measureEdgeCase(truth, positive, probabilities), measureTP(truth, response, positive) / denominator)
 }
+measureEdgeCase = function(truth, positive, prob) {
+  if (!is.null(prob)) {
+    rs = sort(prob, index.return = TRUE)
+    erst = ifelse(truth[getLast(rs$ix)] == positive, 1, 0)
+  } else {
+    erst = NA
+  }
+  erst
+}
+
 
 #' @export npv
 #' @rdname measures
@@ -789,6 +1082,7 @@ measurePPV = function(truth, response, positive) {
 npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Negative predictive value",
+  note = "Defined as: tn / (tn + fn).",
   fun = function(task, model, pred, feats, extra.args) {
     measureNPV(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -807,6 +1101,7 @@ measureNPV = function(truth, response, negative) {
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False discovery rate",
+  note = "Defined as: fp / (tp + fp).",
   fun = function(task, model, pred, feats, extra.args) {
     measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -825,6 +1120,7 @@ measureFDR = function(truth, response, positive) {
 mcc = makeMeasure(id = "mcc", minimize = FALSE,
   properties = c("classif", "req.pred", "req.truth"), best = 1, worst = -1,
   name = "Matthews correlation coefficient",
+  note = "Defined as (tp * tn - fp * fn) / sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
   fun = function(task, model, pred, feats, extra.args) {
     measureMCC(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
@@ -834,12 +1130,16 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE,
 #' @rdname measures
 #' @format none
 measureMCC = function(truth, response, negative, positive) {
-  tn = measureTN(truth, response, negative)
-  tp = measureTP(truth, response, positive)
-  fn = measureFN(truth, response, negative)
-  fp = measureFP(truth, response, positive)
-  (tp * tn - fp * fn) /
-    sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+  tn = as.numeric(measureTN(truth, response, negative))
+  tp = as.numeric(measureTP(truth, response, positive))
+  fn = as.numeric(measureFN(truth, response, negative))
+  fp = as.numeric(measureFP(truth, response, positive))
+
+  denom = sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+  # According to Wikipedia, the denominator can be set arbitrarily if it's 0. 1 seems to make as much sense as anything else.
+  if (denom == 0) denom = 1
+
+  (tp * tn - fp * fn) / denom
 }
 
 #' @export f1
@@ -848,11 +1148,15 @@ measureMCC = function(truth, response, negative, positive) {
 f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "F1 measure",
+  note = "Defined as: 2 * tp/ (sum(truth == positive) + sum(response == positive))",
   fun = function(task, model, pred, feats, extra.args) {
     measureF1(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
 
+#' @export measureF1
+#' @rdname measures
+#' @format none
 measureF1 = function(truth, response, positive) {
   2 * measureTP(truth, response, positive) /
     (sum(truth == positive) + sum(response == positive))
@@ -875,7 +1179,7 @@ gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
 #' @format none
 #' @references
 #' He, H. & Garcia, E. A. (2009)
-#' \emph{Learning from Imbalanced Data.}
+#' *Learning from Imbalanced Data.*
 #' IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 measureGMEAN = function(truth, response, negative, positive) {
   sqrt(measureTPR(truth, response, positive) * measureTNR(truth, response, negative))
@@ -886,7 +1190,8 @@ measureGMEAN = function(truth, response, negative, positive) {
 #' @format none
 gpr = makeMeasure(id = "gpr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
-  name = "Geometric mean of precision and recall",
+  name = "Geometric mean of precision and recall.",
+  note = "Defined as: sqrt(ppv * tpr)",
   fun = function(task, model, pred, feats, extra.args) {
     measureGPR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -908,8 +1213,8 @@ measureGPR = function(truth, response, positive) {
 multilabel.hamloss = makeMeasure(id = "multilabel.hamloss", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Hamming loss",
-  note = "Proportion of labels whose relevance is incorrectly predicted,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
+  note = "Proportion of labels that are predicted incorrectly, following the definition
+  by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelHamloss(getPredictionTruth.PredictionMultilabel(pred),
       getPredictionResponse.PredictionMultilabel(pred))
@@ -928,7 +1233,7 @@ measureMultilabelHamloss = function(truth, response) {
 multilabel.subset01 = makeMeasure(id = "multilabel.subset01", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Subset-0-1 loss",
-  note = "Proportion of observations where the complete multilabel set (all 0-1-labels) is not correctly predicted,
+  note = "Proportion of observations where the complete multilabel set (all 0-1-labels) is predicted incorrectly,
   following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelSubset01(getPredictionTruth.PredictionMultilabel(pred),
@@ -949,27 +1254,22 @@ measureMultilabelSubset01 = function(truth, response) {
 multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "F1 measure (multilabel)",
-  note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1),
-  following the definition by Montanes et al.: http://www.sciencedirect.com/science/article/pii/S0031320313004019.",
+  note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1), following the
+  definition by Montanes et al.: http: / /www.sciencedirect.com / science / article / pii / S0031320313004019.
+  Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureMultiLabelF1(getPredictionTruth.PredictionMultilabel(pred),
+    measureMultilabelF1(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
-#' @export measureMultiLabelF1
+#' @export measureMultilabelF1
 #' @rdname measures
 #' @format none
-measureMultiLabelF1 = function(truth, response) {
-  fi = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
-      fi[i] = 1
-    } else {
-      fi[i] = 2 * sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
-    }
-  }
-  mean(fi)
+measureMultilabelF1 = function(truth, response) {
+  numerator = 2 * rowSums(truth & response)
+  denominator = rowSums(truth + response)
+  mean(ifelse(denominator == 0, 1, numerator / denominator))
 }
 
 #' @export multilabel.acc
@@ -978,8 +1278,9 @@ measureMultiLabelF1 = function(truth, response) {
 multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Accuracy (multilabel)",
-  note = "Mean of proportion of correctly predicted labels with respect to the total number of labels for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
+  note = "Averaged proportion of correctly predicted labels with respect to the total number of labels for each instance,
+  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015 - 2 / charte-charte.pdf.
+  Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelACC(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -990,15 +1291,9 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
 #' @rdname measures
 #' @format none
 measureMultilabelACC = function(truth, response) {
-  acc = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
-      acc[i] = 1
-    } else {
-      acc[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
-    }
-  }
-  mean(acc)
+  numerator = rowSums(truth & response)
+  denominator = rowSums(truth | response)
+  mean(ifelse(denominator == 0, 1, numerator / denominator))
 }
 
 #' @export multilabel.ppv
@@ -1007,8 +1302,9 @@ measureMultilabelACC = function(truth, response) {
 multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Positive predictive value (multilabel)",
-  note = "Also called precision. Mean of ratio of truly predicted labels for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
+  note = "Also called precision. Averaged ratio of correctly predicted labels for each instance,
+  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015 - 2 / charte-charte.pdf.
+  Fractions where the denominator becomes 0 are ignored in the average calculation.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelPPV(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -1019,15 +1315,9 @@ multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, 
 #' @rdname measures
 #' @format none
 measureMultilabelPPV = function(truth, response) {
-  prec = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(response[i, ]) == 0) {
-      prec[i] = 1
-    } else {
-      prec[i] = sum(truth[i, ] * response[i, ]) / sum(response[i, ])
-    }
-  }
-  mean(prec)
+  numerator = rowSums(truth & response)
+  denominator = rowSums(response)
+  mean(numerator / denominator, na.rm = TRUE)
 }
 
 #' @export multilabel.tpr
@@ -1036,8 +1326,9 @@ measureMultilabelPPV = function(truth, response) {
 multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "TPR (multilabel)",
-  note = "Also called recall. Mean of proportion of predicted labels which are relevant for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
+  note = "Also called recall. Averaged proportion of predicted labels which are relevant for each instance,
+  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015 - 2 / charte-charte.pdf.
+  Fractions where the denominator becomes 0 are ignored in the average calculation.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelTPR(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -1048,15 +1339,9 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
 #' @rdname measures
 #' @format none
 measureMultilabelTPR = function(truth, response) {
-  rec = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(truth[i, ]) == 0) {
-      rec[i] = 1
-    } else {
-      rec[i] = sum(truth[i, ] * response[i, ]) / sum(truth[i, ])
-    }
-  }
-  mean(rec)
+  numerator = rowSums(truth & response)
+  denominator = rowSums(truth)
+  mean(numerator / denominator, na.rm = TRUE)
 }
 
 ###############################################################################
@@ -1067,16 +1352,90 @@ measureMultilabelTPR = function(truth, response) {
 #' @format none
 cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth"),
-  name = "Concordance index",
+  name = "Harrell's Concordance index",
+  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("Hmisc", default.method = "load")
-    resp = pred$data$response
-    if (anyMissing(resp))
+    requirePackages("_Hmisc")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
       return(NA_real_)
-    # FIXME: we need to convert to he correct survival type
-    s = Surv(pred$data$truth.time, pred$data$truth.event)
-    Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
+    s = getPredictionTruth(pred)
+    Hmisc::rcorr.cens(-1 * y, s)[["C Index"]]
   }
+)
+
+#' @export cindex.uno
+#' @rdname measures
+#' @format none
+#' @references
+#' H. Uno et al.
+#' *On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data*
+#' Statistics in medicine. 2011;30(10):1105-1117. <https://doi.org/10.1002/sim.4154>.
+cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
+  name = "Uno's Concordance index",
+  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno. Implemented in survAUC::UnoC.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    survAUC::UnoC(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), time = max.time, lpnew = y)
+  },
+  extra.args = list(max.time = NULL)
+)
+
+#' @export iauc.uno
+#' @rdname measures
+#' @format none
+#' @references
+#' H. Uno et al.
+#' *Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models*
+#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <https://www.jstor.org/stable/27639883>.
+iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
+  name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task). Implemented in survAUC::AUC.uno.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    times = seq(from = 0, to = max.time, length.out = extra.args$resolution)
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    survAUC::AUC.uno(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), times = times, lpnew = y)$iauc
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
+)
+
+#' @export ibrier
+#' @rdname measures
+#' @format none
+ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.truth", "req.model", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "Only works for methods for which probabilities are provided via pec::predictSurvProb. Currently these are only coxph and randomForestSRC. To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages(c("survival", "pec"))
+    targets = getTaskTargets(task)
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    newdata = getTaskData(task)[model$subset, ]
+    max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
+    grid = seq(0, max.time, length.out = extra.args$resolution)
+
+    probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
+    perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
+      maxtime = max.time, verbose = FALSE, reference = FALSE)
+
+
+    # FIXME: this might be the wrong number!
+    crps(perror, times = max.time)[1L, ]
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
 )
 
 ###############################################################################
@@ -1087,6 +1446,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf,
   properties = c("costsens", "req.pred", "req.task"),
   name = "Mean costs of the predicted choices",
+  note = "Defined as: mean(y), where y is the vector of costs for the predicted classes.",
   fun = function(task, model, pred, feats, extra.args) {
     classes = as.character(pred$data$response)
     ids = pred$data$id
@@ -1120,7 +1480,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
 db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Davies-Bouldin cluster separation measure",
-  note = "See `?clusterSim::index.DB`.",
+  note = "Ratio of the within cluster scatter, to the between cluster separation, averaged over the clusters. See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
     if (length(unique(pred$data$response)) > 1L) {
       requirePackages("clusterSim", default.method = "load")
@@ -1138,7 +1498,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
 dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Dunn index",
-  note = "See `?clValid::dunn`.",
+  note = "Defined as the ratio of the smallest distance between observations not in the same cluster to the largest intra-cluster distance. See `?clValid::dunn`.",
   fun = function(task, model, pred, feats, extra.args) {
     # produced a confusing note in some cases, see issue #232
     suppressMessages(requirePackages("clValid", default.method = "load"))
@@ -1150,10 +1510,10 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
 #' @export G1
 #' @rdname measures
 #' @format none
-G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
+G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,  # nolint
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Calinski-Harabasz pseudo F statistic",
-  note = "See `?clusterSim::index.G1`.",
+  note = "Defined as ratio of between-cluster variance to within cluster variance. See `?clusterSim::index.G1`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
     r = as.integer(as.factor(pred$data$response))
@@ -1164,10 +1524,10 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
 #' @export G2
 #' @rdname measures
 #' @format none
-G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
+G2 = makeMeasure(id = "G2", minimize = FALSE, best = 1, worst = 0,  # nolint
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
-  note = "See `?clusterSim::index.G2`.",
+  note = "Defined as: (number of concordant comparisons - number of discordant comparisons) / (number of concordant comparisons + number of discordant comparisons). See `?clusterSim::index.G2`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
     r = as.integer(as.factor(pred$data$response))
@@ -1181,7 +1541,7 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
 silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst = 0,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Rousseeuw's silhouette internal cluster quality index",
-  note = "See `?clusterSim::index.S`.",
+  note = "Silhouette value of an observation is a measure of how similar an object is to its own cluster compared to other clusters. The measure is calculated as the average of all silhouette values. See `?clusterSim::index.S`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
     r = as.integer(as.factor(pred$data$response))

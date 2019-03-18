@@ -2,7 +2,7 @@
 makeRLearner.classif.gaterSVM = function() {
   makeRLearnerClassif(
     cl = "classif.gaterSVM",
-    package = c("SwarmSVM", "e1071"),
+    package = "SwarmSVM",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "m", default = 3, lower = 1),
       makeNumericLearnerParam(id = "c", default = 1, lower = 0),
@@ -22,7 +22,8 @@ makeRLearner.classif.gaterSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Mixture of SVMs with Neural Network Gater Function",
     short.name = "gaterSVM",
-    note = "`m` set to `3` and `max.iter` set to `1` by default."
+    note = "`m` set to `3` and `max.iter` set to `1` by default.",
+    callees = "gaterSVM"
   )
 }
 

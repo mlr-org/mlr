@@ -42,10 +42,11 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered", "rcens", "weights", "featimp"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',
+    callees = "rfsrc"
   )
 }
 
@@ -58,6 +59,11 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
 #' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
+}
+
+#' @export
+getOOBPredsLearner.surv.randomForestSRC = function(.learner, .model) {
+  .model$learner.model$predicted.oob
 }
 
 #' @export

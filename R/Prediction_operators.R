@@ -1,16 +1,16 @@
 #' @export
-as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
+as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
   x$data
 }
 
 #' Get probabilities for some classes.
 #'
 #' @template arg_pred
-#' @param cl [\code{character}]\cr
+#' @param cl ([character])\cr
 #'   Names of classes.
 #'   Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.
-#' @return [\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.
-#'   Order of columns is defined by \code{cl}.
+#' @return ([data.frame]) with numerical columns or a numerical vector if length of `cl` is 1.
+#'   Order of columns is defined by `cl`.
 #' @export
 #' @family predict
 #' @examples
@@ -62,7 +62,20 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
-#' Deprecated, use \code{getPredictionProbabilities} instead.
+#' @title Get summarizing task description from prediction.
+#'
+#' @description See title.
+#'
+#' @template arg_pred
+#' @return ret_taskdesc
+#' @export
+#' @family predict
+getPredictionTaskDesc = function(pred) {
+  assertClass(pred, "Prediction")
+  pred$task.desc
+}
+
+#' Deprecated, use `getPredictionProbabilities` instead.
 #' @param pred Deprecated.
 #' @param cl Deprecated.
 #' @export
@@ -72,13 +85,13 @@ getProbabilities = function(pred, cl) {
 }
 
 #c.Prediction = function(...) {
-#	preds = list(...)
-#	id = Reduce(c, lapply(preds, function(x) x@id))
-#	response = Reduce(c, lapply(preds, function(x) x@response))
-#	target = Reduce(c, lapply(preds, function(x) x@target))
-#	weights = Reduce(c, lapply(preds, function(x) x@weights))
-#	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
-#	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
+#  preds = list(...)
+#  id = Reduce(c, lapply(preds, function(x) x@id))
+#  response = Reduce(c, lapply(preds, function(x) x@response))
+#  target = Reduce(c, lapply(preds, function(x) x@target))
+#  weights = Reduce(c, lapply(preds, function(x) x@weights))
+#  prob = Reduce(rbind, lapply(preds, function(x) x@prob))
+#  return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}
 
 
@@ -145,8 +158,7 @@ getPredictionTruth.PredictionCluster = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionSurv = function(pred) {
-  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-  Surv(pred$data$truth.time, pred$data$truth.event, type = lookup[pred$task.desc$censoring])
+  Surv(pred$data$truth.time, pred$data$truth.event, type = "right")
 }
 
 #' @export
@@ -154,4 +166,19 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @title Return the error dump of a failed Prediction.
+#'
+#' @description
+#' Returns the error dump that can be used with `debugger()` to evaluate errors.
+#' If [configureMlr] configuration `on.error.dump` is `FALSE` or if the
+#' prediction did not fail, this returns `NULL`.
+#'
+#' @template arg_pred
+#' @return (`last.dump`).
+#' @family debug
+#' @export
+getPredictionDump = function(pred) {
+  pred$dump
 }

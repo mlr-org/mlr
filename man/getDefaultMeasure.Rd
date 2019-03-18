@@ -7,22 +7,21 @@
 getDefaultMeasure(x)
 }
 \arguments{
-\item{x}{[\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
+\item{x}{([character(1)` | \link{Task} | \link{TaskDesc} | \link{Learner})\cr
 Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").}
 }
 \value{
-[\code{\link{Measure}}].
+(\link{Measure}).
 }
 \description{
 Get the default measure for a task type, task, task description or a learner.
 Currently these are:
- \tabular{ll}{
-   classif     \tab mmce\cr
-   regr        \tab mse\cr
-   cluster     \tab db\cr
-   surv        \tab cindex\cr
-   costsens    \tab mcp\cr
-   multilabel  \tab multilabel.hamloss\cr
+\tabular{ll}{
+classif     \tab mmce\cr
+regr        \tab mse\cr
+cluster     \tab db\cr
+surv        \tab cindex\cr
+costsens    \tab mcp\cr
+multilabel  \tab multilabel.hamloss\cr
 }
 }
-

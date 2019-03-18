@@ -8,11 +8,10 @@
 Contains the task (\code{costiris.task}).
 }
 \references{
-See \code{\link[datasets]{iris}}.
-  The cost matrix was generated artificially following
+See \link[datasets:iris]{datasets::iris}.
+The cost matrix was generated artificially following
 
-  Tu, H.-H. and Lin, H.-T. (2010), One-sided support vector regression for multiclass cost-sensitive classification.
-  In ICML, J. Fürnkranz and T. Joachims, Eds., Omnipress, 1095--1102.
+Tu, H.-H. and Lin, H.-T. (2010), One-sided support vector regression for multiclass cost-sensitive classification.
+In ICML, J. Fürnkranz and T. Joachims, Eds., Omnipress, 1095--1102.
 }
 \keyword{data}
-

@@ -5,13 +5,13 @@ test_that("regr_glmnet", {
 
   parset.list = list(
     list(),
-    list(alpha = 0.7),
+    list(alpha = 0.7, fdev = 0.0001),
     list(s = 0.3)
   )
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
     if (is.null(s)) s = 0.01
@@ -22,18 +22,19 @@ test_that("regr_glmnet", {
     y = regr.train[, ind]
     pars = list(x = as.matrix(x), y = y, family = "gaussian")
     pars = c(pars, parset)
+    glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
-      do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
+      on.exit(glmnet::glmnet.control(factory = TRUE))
+      do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
+      m = do.call(glmnet::glmnet, pars[!names(pars) %in% ctrl.args])
     } else {
       m = do.call(glmnet::glmnet, pars)
     }
-    newx = regr.test[,-ind]
+    newx = regr.test[, -ind]
     newx$chas = as.numeric(newx$chas)
-    old.predicts.list[[i]] = predict(m, as.matrix(newx), s = s)[,1]
+    old.predicts.list[[i]] = predict(m, as.matrix(newx), s = s)[, 1]
   }
   test.dat = regr.df
   test.dat$chas = as.numeric(test.dat$chas)

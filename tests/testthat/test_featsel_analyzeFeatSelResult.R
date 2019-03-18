@@ -3,11 +3,11 @@ context("analyzeFeatSelResult")
 test_that("analyzeFeatSelResult", {
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
-  ctrlSeq = makeFeatSelControlSequential(method = "sfs")
+  ctrl.seq = makeFeatSelControlSequential(method = "sfs")
   set.seed(getOption("mlr.debug.seed"))
-  sfSeq = selectFeatures(learner = lrn, task = multiclass.task, resampling = rdesc,
-    control = ctrlSeq, show.info = FALSE)
-  expect_output(analyzeFeatSelResult(sfSeq, reduce = TRUE), "Petal.Width")
+  sf.seq = selectFeatures(learner = lrn, task = multiclass.task, resampling = rdesc,
+    control = ctrl.seq, show.info = FALSE)
+  expect_output(analyzeFeatSelResult(sf.seq, reduce = TRUE), "Petal.Width")
 })
 
 test_that("analyzeFeatSelResult with tune threshold (cf. issue #245)", {

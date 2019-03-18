@@ -1,10 +1,10 @@
-#' @param maxit [\code{integer(1)}]\cr
+#' @param maxit (`integer(1)`)\cr
 #'   Number of iterations for random search.
 #'   Default is 100.
 #' @export
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlRandom = function(same.resampling.instance = TRUE,
-  maxit = 100L, log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  maxit = 100L, log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
   if (is.null(budget))
     budget = maxit

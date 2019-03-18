@@ -5,20 +5,20 @@
 #' whether they supports classification or regression.
 #'
 #' @template arg_task_or_type
-#' @param properties [\code{character}]\cr
+#' @param properties ([character])\cr
 #'   Set of required properties to filter for.
-#'   See \code{\link{Measure}} for some standardized properties.
-#'   Default is \code{character(0)}.
-#' @param create [\code{logical(1)}]\cr
+#'   See [Measure] for some standardized properties.
+#'   Default is `character(0)`.
+#' @param create (`logical(1)`)\cr
 #'   Instantiate objects (or return strings)?
-#'   Default is \code{FALSE}.
-#' @return [\code{character} | \code{list} of \code{\link{Measure}}]. Class names of matching
+#'   Default is `FALSE`.
+#' @return ([character` | `list` of [Measure]). Class names of matching
 #'   measures or instantiated objects.
 #' @export
 listMeasures = function(obj, properties = character(0L), create = FALSE) {
   if (!missing(obj))
     assert(checkCharacter(obj), checkClass(obj, "Task"))
-  assertCharacter(properties, any.missing = FALSE)
+  assertSubset(properties, listMeasureProperties())
   assertFlag(create)
   UseMethod("listMeasures")
 }
@@ -49,7 +49,7 @@ listMeasures.Task = function(obj, properties = character(0L), create = FALSE) {
 
 listMeasures2 = function(properties = character(0L), create = FALSE) {
   ee = as.environment("package:mlr")
-  res = Filter(function(x) inherits(x, "Measure") && all(properties %in% x$properties), as.list(ee))
+  res = Filter(function(x) inherits(x, "Measure") && all(properties %in% getMeasureProperties(x)), as.list(ee))
   if (create)
     res
   else

@@ -47,7 +47,8 @@ checkTunerParset = function(learner, par.set, measures, control) {
 
   # check requires / dependent params
   if (hasRequires(par.set) && cl %nin% c("TuneControlRandom", "TuneControlGrid",
-      "TuneControlDesign", "TuneControlIrace", "TuneControlMBO", "TuneMultiCritControlRandom"))
+      "TuneControlDesign", "TuneControlIrace", "TuneControlMBO", "TuneMultiCritControlRandom",
+      "TuneMultiCritControlMBO"))
     stopf("Tuning algorithm for '%s' cannot handle dependent parameters!", cl)
 
   if (inherits(control, "TuneMultiCritControl"))

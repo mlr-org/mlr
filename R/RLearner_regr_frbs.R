@@ -25,7 +25,7 @@ makeRLearner.regr.frbs = function() {
         requires = quote(method %in% c("WM", "HYFIS", "ANFIS", "FS.HGD", "GFS.THRIFT", "GFS.LT.RS"))),
       makeIntegerLearnerParam(id = "max.iter", default = 10L, lower = 1L,
         requires = quote(method %in% c("HYFIS", "ANFIS", "FS.HGD", "FIR.DM", "GFS.FR.MOGUL"))),
-      makeNumericLearnerParam(id = "step.size", default = 0.01, lower = 0, upper = 1, 
+      makeNumericLearnerParam(id = "step.size", default = 0.01, lower = 0, upper = 1,
         requires = quote(method %in% c("HYFIS", "ANFIS", "FIR.DM", "FS.HGD", "DENFIS"))),
       makeNumericLearnerParam(id = "r.a", default = 0.5, lower = .Machine$double.eps,
         requires = quote(method == "SBC")),
@@ -35,7 +35,7 @@ makeRLearner.regr.frbs = function() {
         requires = quote(method == "SBC")),
       makeNumericLearnerParam(id = "alpha.heuristic", default = 1, lower = .Machine$double.eps,
         requires = quote(method == "FS.HGD")),
-      makeNumericLearnerParam(id = "Dthr", default = 0.1, lower = 0, upper = 1, 
+      makeNumericLearnerParam(id = "Dthr", default = 0.1, lower = 0, upper = 1,
         requires = quote(method == "DENFIS")),
       makeNumericLearnerParam(id = "d", default = 2, requires = quote(method == "DENFIS")),
       makeNumericLearnerParam(id = "persen_cross", default = 1, lower = 0, upper = 1,
@@ -46,18 +46,19 @@ makeRLearner.regr.frbs = function() {
         requires = quote(method == "GFS.FR.MOGUL")),
       makeNumericLearnerParam(id = "persen_mutant", default = 1, lower = 0, upper = 1,
         requires = quote(method %in% c("GFS.FR.MOGUL", "GFS.THRIFT", "GFS.LT.RS"))),
-      makeNumericLearnerParam(id = "epsilon", default = 0.9, lower = 0, upper = 1, 
+      makeNumericLearnerParam(id = "epsilon", default = 0.9, lower = 0, upper = 1,
         requires = quote(method == "GFS.FR.MOGUL")),
       makeIntegerLearnerParam(id = "popu.size", default = 10L, lower = 1L,
         requires = quote(method %in% c("GFS.THRIFT", "GFS.LT.RS"))),
-      makeDiscreteLearnerParam(id = "mode.tuning", default = "GLOBAL", values = c("GLOBAL", "LOCAL"), 
+      makeDiscreteLearnerParam(id = "mode.tuning", default = "GLOBAL", values = c("GLOBAL", "LOCAL"),
         requires = quote(method == "GFS.LT.RS")),
       makeLogicalLearnerParam(id = "rule.selection", default = FALSE,
         requires = quote(method == "GFS.LT.RS"))
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Fuzzy Rule-based Systems",
-    short.name = "frbs"
+    short.name = "frbs",
+    callees = "frbs.learn"
   )
 }
 
@@ -77,5 +78,5 @@ trainLearner.regr.frbs = function(.learner, .task, .subset, .weights = NULL, ...
 
 #' @export
 predictLearner.regr.frbs = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, ...)[,1L]
+  predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

@@ -7,15 +7,15 @@
 setThreshold(pred, threshold)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
-\item{threshold}{[\code{numeric}]\cr
+\item{threshold}{(\link{numeric})\cr
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 Only for binary classification it can be a single numerical threshold for the positive class.}
 }
 \value{
-[\code{\link{Prediction}}] with changed threshold and corresponding response.
+(\link{Prediction}) with changed threshold and corresponding response.
 }
 \description{
 Set threshold of prediction object for classification or multilabel classification.
@@ -44,6 +44,5 @@ performance(pred, measures = mmce)
 head(as.data.frame(pred))
 }
 \seealso{
-\code{\link{predict.WrappedModel}}
+\link{predict.WrappedModel}
 }
-

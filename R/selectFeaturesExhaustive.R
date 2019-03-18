@@ -5,12 +5,12 @@ selectFeaturesExhaustive = function(learner, task, resampling, measures, bit.nam
     x = combn(seq_len(p), i)
     s = lapply(seq_col(x), function(j) {
         b = rep(0, p)
-        b[x[,j]] = 1
+        b[x[, j]] = 1
         b
     })
     states = c(states, s)
   }
   evalOptimizationStatesFeatSel(learner, task, resampling, measures, bits.to.features, control,
     opt.path, show.info, states, 1L, as.integer(NA))
-  makeFeatSelResultFromOptPath(learner, measures, control, opt.path)
+  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, task = task, bits.to.features = bits.to.features)
 }

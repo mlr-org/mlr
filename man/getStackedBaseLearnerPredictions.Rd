@@ -7,9 +7,9 @@
 getStackedBaseLearnerPredictions(model, newdata = NULL)
 }
 \arguments{
-\item{model}{[\code{WrappedModel}]\cr Wrapped model, result of train.}
+\item{model}{(\link{WrappedModel})\cr Wrapped model, result of train.}
 
-\item{newdata}{[\code{data.frame}]\cr
+\item{newdata}{(\link{data.frame})\cr
 New observations, for which the predictions using the specified base learners should be returned.
 Default is \code{NULL} and extracts the base learner predictions that were made during the training.}
 }
@@ -19,4 +19,3 @@ Returns the predictions for each base learner.
 \details{
 None.
 }
-

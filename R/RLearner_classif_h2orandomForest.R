@@ -17,9 +17,10 @@ makeRLearner.classif.h2o.randomForest = function() {
       makeIntegerLearnerParam("max_after_balance_size", lower = 0L, default = 5L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "missings", "prob"),
     name = "h2o.randomForest",
-    short.name = "h2o.rf"
+    short.name = "h2o.rf",
+    callees = "h2o.randomForest"
   )
 }
 
@@ -29,7 +30,7 @@ trainLearner.classif.h2o.randomForest = function(.learner, .task, .subset, .weig
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }   
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
@@ -43,16 +44,13 @@ predictLearner.classif.h2o.randomForest = function(.learner, .model, .newdata, .
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
-  
+
   # check if class names are integers. if yes, colnames of p.df need to be adapted
-  int = grepl("^[[:digit:]]+$", p.df$predict)
-  if (any(int)) {
-    pcol = grepl("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol)) {
-      colnames(p.df)[pcol] = gsub("p", "", colnames(p.df)[pcol])
-    }
-  }
-  
+  int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
+  pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
+  if (any(int) && any(pcol))
+    colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
+
   if (.learner$predict.type == "response") {
     return(p.df$predict)
   } else {
@@ -60,5 +58,3 @@ predictLearner.classif.h2o.randomForest = function(.learner, .model, .newdata, .
     return(as.matrix(p.df))
   }
 }
-
-

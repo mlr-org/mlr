@@ -7,7 +7,7 @@ test_that("multilabel task", {
   expect_equal(getTaskFormula(mt), y1 + y2 ~ .)
   y = getTaskTargets(mt)
   expect_true(is.data.frame(y) && ncol(y) == 2L)
-  expect_true(is.logical(y[,1]) && is.logical(y[,2L]))
+  expect_true(is.logical(y[, 1]) && is.logical(y[, 2L]))
   expect_equal(colnames(y), c("y1", "y2"))
 })
 
@@ -52,6 +52,15 @@ test_that("multilabel learning", {
   expect_true(!is.na(p))
 })
 
+test_that("MultilabelBinaryRelevanceWrapper with glmnet (#958)", {
+  # multilabelBinaryRelevanceWrapper was not working properly for classif.glmnet, we had a bug here
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn)
+  mod = train(lrn2, multilabel.task)
+  pred = predict(mod, multilabel.task)
+  expect_error(pred, NA)
+})
+
 testMultilabelWrapper = function(fun, ...) {
   desc = fun("classif.rpart")$model.subclass[1]
   test_that(desc, {
@@ -91,7 +100,7 @@ testMultilabelWrapper = function(fun, ...) {
     expect_true(is.data.frame(p))
     p = getPredictionProbabilities(r$pred, getTaskClassLevels(multilabel.task))
     expect_true(is.data.frame(p))
-    
+
     lrn1 = makeLearner("classif.rpart")
     lrn2 = fun(lrn1, ...)
     lrn2 = setPredictType(lrn2, "prob")
@@ -130,9 +139,9 @@ testMultilabelWrapper = function(fun, ...) {
     p = performance(pred)
     expect_true(!is.na(p))
     # 3 targets
-    threeTargetDf = getTaskData(multilabel.task)
-    threeTargetDf$y3 = threeTargetDf$y2
-    multilabel3t.task = makeMultilabelTask(data = threeTargetDf, target = c("y1", "y2", "y3"))
+    three.target.df = getTaskData(multilabel.task)
+    three.target.df$y3 = three.target.df$y2
+    multilabel3t.task = makeMultilabelTask(data = three.target.df, target = c("y1", "y2", "y3"))
     mod = train(lrn2, multilabel3t.task)
     pred = predict(mod, multilabel3t.task)
     p = performance(pred)
@@ -141,7 +150,7 @@ testMultilabelWrapper = function(fun, ...) {
     expect_true(!any(is.na(pmulti)))
     # check order
     args = list(...)
-    if(!is.null(args$order)) {
+    if (!is.null(args$order)) {
       lrn2 = fun(lrn1, ...)
       expect_error(train(lrn2, multilabel3t.task), "Must be equal to set")
     }

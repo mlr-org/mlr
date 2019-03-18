@@ -8,7 +8,6 @@
 Contains the task (\code{mtcars.task}).
 }
 \references{
-See \code{\link[datasets]{mtcars}}.
+See \link[datasets:mtcars]{datasets::mtcars}.
 }
 \keyword{data}
-

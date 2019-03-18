@@ -21,13 +21,14 @@ makeRLearner.classif.lssvm = function() {
       makeIntegerLearnerParam(id = "order", default = 1L,
         requires = quote(kernel == "besseldot")),
       makeNumericLearnerParam(id = "tol", default = 0.0001, lower = 0),
-      makeLogicalLearnerParam(id = "fitted", default = TRUE)
+      makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
-    par.vals = list(fitted = FALSE),
+    par.vals = list(fit = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors"),
     name = "Least Squares Support Vector Machine",
     short.name = "lssvm",
-    note = "`fitted` has been set to `FALSE` by default for speed."
+    note = "`fitted` has been set to `FALSE` by default for speed.",
+    callees = "lssvm"
   )
 }
 

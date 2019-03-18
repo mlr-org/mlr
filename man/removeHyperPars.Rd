@@ -7,16 +7,16 @@
 removeHyperPars(learner, ids = character(0L))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{ids}{[\code{character}]\cr
+\item{ids}{(\link{character})\cr
 Parameter names to remove settings for.
- Default is \code{character(0L)}.}
+Default is \code{character(0L)}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Remove settings (previously set through mlr) for some parameters.
@@ -25,9 +25,18 @@ Which means that the default behavior for that param will now be used.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
   \code{\link{makeLearner}}, \code{\link{setHyperPars}},
-  \code{\link{setId}}, \code{\link{setPredictThreshold}},
+  \code{\link{setId}}, \code{\link{setLearnerId}},
+  \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-
+\concept{learner}

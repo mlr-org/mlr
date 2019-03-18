@@ -8,7 +8,6 @@
 Contains the task (\code{agri.task}).
 }
 \references{
-See \code{\link[cluster]{agriculture}}.
+See \link[cluster:agriculture]{cluster::agriculture}.
 }
 \keyword{data}
-

@@ -1,19 +1,20 @@
 context("learners_all_clusters")
 
 test_that("learners work: cluster", {
-  
+
   # settings to make learners faster and deal with small sample size
   hyperpars = list()
 
   # clustering, response
   task = noclass.task
   lrns = mylist(task, create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
-  
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
+
   # clustering, prob
   task = subsetTask(noclass.task, subset = 1:20, features = getTaskFeatureNames(noclass.task)[1:2])
   lrns = mylist(task, properties = "prob", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars,
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars,
     pred.type = "prob")
 
   # cluster with weights

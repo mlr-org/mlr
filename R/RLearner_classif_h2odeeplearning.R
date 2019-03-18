@@ -62,7 +62,7 @@
 # Unifrom: -value ... value, Normal: stddev
 
 # loss
-# Loss function: Automatic, CrossEntropy (for classification only), MeanSquare, Absolute (experimental) or Huber (experimental)
+# Loss function: Automatic, CrossEntropy (for classification only), Quadratic, Absolute (experimental) or Huber (experimental)
 
 # score_interval
 # Shortest time interval (in secs) between model scoring
@@ -164,9 +164,9 @@ makeRLearner.classif.h2o.deeplearning = function() {
         default = "Rectifier"),
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
-        len = NA_integer_, lower = 1L), 
+        len = NA_integer_, lower = 1L),
       makeNumericLearnerParam("epochs", default = 10L, lower = 1), # doc says can be fractional
-      makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
+      makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2),
       makeIntegerLearnerParam("seed", tunable = FALSE),
       makeLogicalLearnerParam("adaptive_rate", default = TRUE),
       makeNumericLearnerParam("rho", default = 0.99, lower = 0), # is there a upper limit for this?
@@ -188,7 +188,7 @@ makeRLearner.classif.h2o.deeplearning = function() {
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
       makeDiscreteLearnerParam("loss", values = c("Automatic", "CrossEntropy",
-        "MeanSquare", "Absolute", "Huber")),
+        "Quadratic", "Absolute", "Huber")),
       makeNumericLearnerParam("score_interval", default = 5),
       makeIntegerLearnerParam("score_training_samples", default = 10000),
       makeIntegerLearnerParam("score_validation_samples", default = 0),
@@ -219,9 +219,11 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings"),
     name = "h2o.deeplearning",
-    short.name = "h2o.dl"
+    short.name = "h2o.dl",
+    note = 'The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
+    callees = "h2o.deeplearning"
   )
 }
 
@@ -231,7 +233,7 @@ trainLearner.classif.h2o.deeplearning = function(.learner, .task, .subset, .weig
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }   
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
@@ -250,21 +252,17 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
-  
+
   # check if class names are integers. if yes, colnames of p.df need to be adapted
-  int = grepl("^[[:digit:]]+$", p.df$predict)
-  if (any(int)) {
-    pcol = grepl("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol)) {
-      colnames(p.df)[pcol] = gsub("p", "", colnames(p.df)[pcol])
-    }
-  }
-  
+  int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
+  pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
+  if (any(int) && any(pcol))
+    colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
+
   if (.learner$predict.type == "response") {
-    return(p.df$predict) 
+    return(p.df$predict)
   } else {
     p.df$predict = NULL
     return(as.matrix(p.df))
   }
 }
-

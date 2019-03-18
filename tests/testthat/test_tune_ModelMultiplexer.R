@@ -1,5 +1,4 @@
-context("ModelMultiplexer")
-
+context("Tuning ModelMultiplexer")
 
 test_that("makeModelMultiplexerParamSet works", {
   bls = list(
@@ -21,7 +20,7 @@ test_that("makeModelMultiplexerParamSet works", {
 
   ps3 = makeParamSet(
     makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
-    makeNumericParam("classif.ksvm.sigma", lower=-10, upper = 10, trafo = function(x) 2^x,
+    makeNumericParam("classif.ksvm.sigma", lower = -10, upper = 10, trafo = function(x) 2^x,
       requires = quote(selected.learner == "classif.ksvm")),
     makeIntegerParam("classif.randomForest.ntree", lower = 1L, upper = 500L,
       requires = quote(selected.learner == "classif.randomForest"))
@@ -54,7 +53,7 @@ test_that("ModelMultiplexer basic stuff works", {
   lrn2 = setPredictType(lrn, "prob")
   mod = train(lrn2, task = binaryclass.task)
   p = predict(mod, task = binaryclass.task)
-  getPredictionProbabilities(p)
+  expect_numeric(getPredictionProbabilities(p), any.missing = FALSE, lower = 0, upper = 1)
 })
 
 test_that("FailureModel works", {
@@ -69,14 +68,14 @@ test_that("FailureModel works", {
   expect_false(isFailureModel(mod))
 
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 0)
-  expect_warning(mod <- train(lrn, task = iris.task), "foo")
+  expect_warning({mod = train(lrn, task = iris.task)}, "foo")
   expect_true(isFailureModel(mod))
 
   tmp = getMlrOptions()$on.learner.error
   configureMlr(on.learner.error = "warn")
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
   lrn = removeHyperPars(lrn, "selected.learner")
-  expect_warning(mod <- train(lrn, task = iris.task))
+  expect_warning({mod = train(lrn, task = iris.task)})
   expect_true(isFailureModel(mod))
   configureMlr(on.learner.error = tmp)
 })
@@ -152,30 +151,30 @@ test_that("ModelMultiplexer handles tasks with no features", {
 
 # issue #760
 test_that("ModelMultiplexer passes on hyper pars in predict with both", {
-  testPS = makeRLearnerClassif("testPS", character(0),
-      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when="train"),
-                   makeIntegerLearnerParam("tpPREDICT", when="predict"),
-                   makeIntegerLearnerParam("tpBOTH", when="both")),
-      properties=c("numerics", "twoclass"))
-  testPS$fix.factors.prediction = TRUE
+  test.ps = makeRLearnerClassif("test.ps", character(0),
+      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when = "train"),
+                   makeIntegerLearnerParam("tpPREDICT", when = "predict"),
+                   makeIntegerLearnerParam("tpBOTH", when = "both")),
+      properties = c("numerics", "twoclass"))
+  test.ps$fix.factors.prediction = TRUE
 
   opts = NULL
-  trainLearner.testPS = function(.learner, .task, .subset, .weights=NULL, ...) {
-    opts <<- list(...)
+  trainLearner.test.ps = function(.learner, .task, .subset, .weights = NULL, ...) {
+    opts <<- list(...)  # nolint
     # the following to make the type checking happy
-    list(dummy=getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
+    list(dummy = getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
   }
-  registerS3method("trainLearner", "testPS", trainLearner.testPS)
+  registerS3method("trainLearner", "test.ps", trainLearner.test.ps)
 
-  predictLearner.testPS = function(.learner, .model, .newdata, ...) {
-    opts <<- list(...)
+  predictLearner.test.ps = function(.learner, .model, .newdata, ...) {
+    opts <<- list(...)  # nolint
     rep(.model$learner.model$dummy, nrow(.newdata))  # just do something
   }
-  registerS3method("predictLearner", "testPS", predictLearner.testPS)
+  registerS3method("predictLearner", "test.ps", predictLearner.test.ps)
 
-  testPSMM = makeModelMultiplexer(list(testPS))
-  testPSMMArgs = setHyperPars(testPSMM, testPS.tpTRAIN=1, testPS.tpPREDICT=2, testPS.tpBOTH=3)
-  trained = train(testPSMMArgs, pid.task)
+  test.ps.mm = makeModelMultiplexer(list(test.ps))
+  test.ps.mm.args = setHyperPars(test.ps.mm, test.ps.tpTRAIN = 1, test.ps.tpPREDICT = 2, test.ps.tpBOTH = 3)
+  trained = train(test.ps.mm.args, pid.task)
   expect_false(is.null(opts$tpBOTH))
   expect_false(is.null(opts$tpTRAIN))
   expect_true(is.null(opts$tpPREDICT))

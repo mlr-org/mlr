@@ -6,7 +6,7 @@ makeRLearner.classif.nodeHarvest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "nodesize", default = 10L, lower = 1L),
       makeIntegerLearnerParam(id = "nodes", default = 1000L, lower = 1L),
-      makeIntegerLearnerParam(id = "maxinter", default = 1L, lower = 1L),
+      makeIntegerLearnerParam(id = "maxinter", default = 2L, lower = 1L),
       makeDiscreteLearnerParam(id = "mode", default = "mean", values = c("mean", "outbag")),
       makeNumericLearnerParam(id = "lambda"),
       makeUntypedLearnerParam(id = "addto", default = NULL),
@@ -16,7 +16,8 @@ makeRLearner.classif.nodeHarvest = function() {
     ),
     properties = c("numerics", "factors", "twoclass", "prob"),
     name = "Node Harvest",
-    short.name = "nodeHarvest"
+    short.name = "nodeHarvest",
+    callees = "nodeHarvest"
   )
 }
 
@@ -31,7 +32,7 @@ predictLearner.classif.nodeHarvest = function(.learner, .model, .newdata, ...) {
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
   p = predict(.model$learner.model, .newdata, ...)
   if (.learner$predict.type == "prob") {
-    p = setColNames(cbind(1 - p, p), levs) 
+    p = setColNames(cbind(1 - p, p), levs)
   } else {
     p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
   }

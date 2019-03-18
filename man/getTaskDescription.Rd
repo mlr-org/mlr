@@ -2,28 +2,14 @@
 % Please edit documentation in R/Task_operators.R
 \name{getTaskDescription}
 \alias{getTaskDescription}
-\title{Get a summarizing task description.}
+\title{Deprecated, use \link{getTaskDesc} instead.}
 \usage{
 getTaskDescription(x)
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{(\link{Task} | \link{TaskDesc})\cr
 Task or its description object.}
 }
-\value{
-[\code{\link{TaskDesc}}].
-}
 \description{
-Get a summarizing task description.
+Deprecated, use \link{getTaskDesc} instead.
 }
-\seealso{
-Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskFeatureNames}},
-  \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
-  \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
-  \code{\link{getTaskTargetNames}},
-  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
-  \code{\link{subsetTask}}
-}
-

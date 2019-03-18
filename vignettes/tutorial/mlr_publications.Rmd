@@ -1,0 +1,20 @@
+---
+title: "mlr Publications"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+An overview of our mlr related publications:
+
+| Journal | Title | Description | Citation |
+|:--------|:----------------------|:-----------------------------------|:---------|
+| [jlmr](http://www.jmlr.org/) | [mlr: Machine Learning in R](http://jmlr.org/papers/v17/15-066.html) | Software paper about mlr|[bibtex](http://www.jmlr.org/papers/v17/15-066.bib) |
+| [arxiv](https://arxiv.org/) | [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373) | Bayesian optimization with mlrMBO|[bibtex](https://arxiv2bibtex.org/?q=https%3A%2F%2Farxiv.org%2Fabs%2F1703.03373&format=bibtex) |
+| [Journal of Statistical Computation and Simulation](https://www.tandfonline.com/toc/gscs20/current) | [Automatic model selection for high-dimensional survival analysis](https://www.tandfonline.com/doi/abs/10.1080/00949655.2014.929131) | Tuning with iterated F-Racing| [bibtex](https://www.tandfonline.com/action/showCitFormats?doi=10.1080%2F00949655.2014.929131) |
+| [Springer](https://link.springer.com/) | [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://link.springer.com/chapter/10.1007%2F978-3-319-28697-6_6) | Class imbalance correction algorithms | [bibtex](https://citation-needed.springer.com/v2/references/10.1007/978-3-319-28697-6_6?format=bibtex&flavour=citation) |
+| [R Journal](https://journal.r-project.org/) | [Multilabel Classification with R Package mlr](https://journal.r-project.org/archive/2017/RJ-2017-012/RJ-2017-012.pdf) | Benchmark on multilabel classification algorithms | [bibtex](https://journal.r-project.org/archive/2017/RJ-2017-012/) |
+| [Springer](https://link.springer.com/) | [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://link.springer.com/article/10.1007/s00180-017-0742-2) | Software paper about OpenML | [bibtex](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation) |
+| [JOSS](http://joss.theoj.org/) | [iml: An R package for Interpretable Machine Learning](http://joss.theoj.org/papers/9e8466400de93f5aabfb999f23db5072) | Software paper about iml | [bibtex](https://www.doi2bib.org/bib/https%3A%2F%2Fdoi.org%2F10.21105%2Fjoss.00786) |

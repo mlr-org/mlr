@@ -1,17 +1,17 @@
 #' @title Create box or violin plots for a BenchmarkResult.
 #'
 #' @description
-#' Plots box or violin plots for a selected \code{measure} across all iterations
-#' of the resampling strategy, faceted by the \code{task.id}.
+#' Plots box or violin plots for a selected `measure` across all iterations
+#' of the resampling strategy, faceted by the `task.id`.
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param style [\code{character(1)}]\cr
+#' @param style (`character(1)`)\cr
 #'   Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 #'   Default is \dQuote{box}.
-#' @param pretty.names [\code{logical(1)}]\cr
-#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
-#'   Default is \code{TRUE}.
+#' @param pretty.names (`logical(1)`)\cr
+#'   Whether to use the [Measure] name and the [Learner]
+#'   short name instead of the id. Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
 #' @template arg_order_lrns
 #' @template arg_order_tsks
@@ -31,6 +31,18 @@ plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL
   df = as.data.frame(bmr)
   df = orderBMRLrns(bmr, df, order.lrns)
   df = orderBMRTasks(bmr, df, order.tsks)
+
+  if (pretty.names) {
+    learner.short.names = getBMRLearnerShortNames(bmr)
+    checkDuplicatedLearnerNames(learner.short.names)
+
+    if (!is.null(order.lrns)) {
+      learner.ids = getBMRLearnerIds(bmr)
+      names(learner.short.names) = learner.ids
+      learner.short.names = learner.short.names[order.lrns]
+    }
+    levels(df$learner.id) = learner.short.names
+  }
 
   p = ggplot(df, aes_string("learner.id", measure$id))
   p = p + theme(axis.title.x = element_blank(), axis.text.x = element_text(angle = -45, hjust = 0))

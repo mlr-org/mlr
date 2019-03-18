@@ -4,18 +4,18 @@
 \alias{BenchmarkResult}
 \title{BenchmarkResult object.}
 \description{
-Result of a benchmark experiment conducted by \code{\link{benchmark}}
+Result of a benchmark experiment conducted by \link{benchmark}
 with the following members:
 \describe{
-\item{results [list of \code{\link{ResampleResult}}]:}{
-  A nested \code{list} of resample results,
-  first ordered by task id, then by learner id.
+\item{results (list of \link{ResampleResult}):}{
+A nested \link{list} of resample results,
+first ordered by task id, then by learner id.
 }
-\item{measures [list of \code{\link{Measure}}]:}{
-  The performance measures used in the benchmark experiment.
+\item{measures (list of \link{Measure}):}{
+The performance measures used in the benchmark experiment.
 }
-\item{learners [list of \code{\link{Learner}}]:}{
-  The learning algorithms compared in the benchmark experiment.
+\item{learners (list of \link{Learner}):}{
+The learning algorithms compared in the benchmark experiment.
 }
 }
 
@@ -24,10 +24,11 @@ for all tasks and learners.
 
 It is recommended to
 retrieve required information via the \code{getBMR*} getter functions.
-You can also convert the object using \code{\link[base]{as.data.frame}}.
+You can also convert the object using \link{as.data.frame}.
 }
 \seealso{
-Other benchmark: \code{\link{benchmark}},
+Other benchmark: \code{\link{batchmark}},
+  \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
@@ -42,11 +43,13 @@ Other benchmark: \code{\link{benchmark}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
-
+\concept{benchmark}

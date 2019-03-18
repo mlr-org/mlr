@@ -1,7 +1,23 @@
+#' @title Create control object for hyperparameter tuning with GenSA.
+#'
+#' @description
+#' Generalized simulated annealing with method [GenSA::GenSA].
+#' Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+#' For integers the internally proposed numeric values are automatically rounded.
+#'
+#' @inherit TuneControl
+#' @param budget (`integer(1)`)\cr
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. [GenSA::GenSA] defines the `budget` via
+#'   the argument `max.call`. However, one should note that this algorithm
+#'   does not stop its local search before its end. This behavior might lead
+#'   to an extension of the defined budget and will result in a warning.
+#' @aliases TuneControlGenSA
+#' @family tune
+#' @return ([TuneControlGenSA]).
 #' @export
-#' @rdname TuneControl
 makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = NULL,
-  start = NULL, tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL,
+  start = NULL, tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default",
   final.dw.perc = NULL, budget = NULL, ...) {
 
   args = list(...)

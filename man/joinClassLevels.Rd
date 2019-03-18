@@ -7,15 +7,15 @@
 joinClassLevels(task, new.levels)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{new.levels}{[\code{list} of \code{character}]\cr
+\item{new.levels}{(\code{list} of \code{character})\cr
 Element names specify the new class levels to create, while the corresponding element
 character vector specifies the existing class levels which will be joined to the new one.}
 }
 \value{
-[\code{\link{Task}}].
+\link{Task}.
 }
 \description{
 Join some class existing levels to new, larger class levels for classification problems.
@@ -23,4 +23,3 @@ Join some class existing levels to new, larger class levels for classification p
 \examples{
 joinClassLevels(iris.task, new.levels = list(foo = c("setosa", "virginica")))
 }
-

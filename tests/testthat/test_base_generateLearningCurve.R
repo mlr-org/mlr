@@ -7,13 +7,12 @@ test_that("generateLearningCurve", {
   expect_true(all(c("learner", "percentage", "acc", "timeboth") %in% colnames(r$data)))
   plotLearningCurve(r)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(r$measures)))
-  #expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)) - 1, equals(length(unique(r$data$learner))))
-  #expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)) - 1, equals(length(unique(r$data$learner))))
-  ## plotLearningCurveGGVIS(r)
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(r$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(r$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(r$data$learner))))
 
   r = generateLearningCurveData(learners = list("regr.lm", "regr.svm"),
     task = regr.num.task, percs = c(0.1, 0.2),
@@ -23,10 +22,9 @@ test_that("generateLearningCurve", {
   plotLearningCurve(r)
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(r$measures)))
-  #expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)) - 1, equals(length(unique(r$data$learner))))
-  #expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)) - 1, equals(length(unique(r$data$learner))))
-  ## plotLearningCurveGGVIS(r)
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(r$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(r$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(r$data$learner))))
 
   r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
     task = binaryclass.task, percs = c(0.1, 0.3),
@@ -35,10 +33,9 @@ test_that("generateLearningCurve", {
   plotLearningCurve(r)
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(r$measures)))
-  #expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)) - 1, equals(length(unique(r$data$learner))))
-  #expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)) - 1, equals(length(unique(r$data$learner))))
-  ## plotLearningCurveGGVIS(r)
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(r$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(r$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(r$data$learner))))
 
   # facetting works for plotLearningCurveData
 

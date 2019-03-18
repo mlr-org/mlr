@@ -1,7 +1,7 @@
 context("downsample")
 
 test_that("downsample",  {
-  down.tsk = downsample(multiclass.task, perc = 1/3)
+  down.tsk = downsample(multiclass.task, perc = 1 / 3)
   expect_equal(getTaskSize(down.tsk), 50L)
   rsm.methods = c("Bootstrap", "Subsample", "Holdout")
   for (rsm.method in rsm.methods) {
@@ -53,13 +53,28 @@ test_that("downsample wrapper works with weights, we had issue #838",  {
   lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
   m = train(lrn, task)
   u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == n/2 && all(u %in% w))
+  expect_equal(length(u), n / 2)
+  expect_subset(u, w)
 
   # weights from train
   lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
-  m = train(lrn, task, subset = 1:10, weights = 1:10)
+  m = train(lrn, task, subset = 11:20, weights = 1:10)
   u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == 5 && all(u %in% 1:10))
+  expect_equal(length(u), 5)
+  expect_subset(u, 1:10)
 })
 
+test_that("training performance works as expected (#1357)", {
+  num = makeMeasure(id = "num", minimize = FALSE,
+    properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+    name = "Number",
+    fun = function(task, model, pred, feats, extra.args) {
+      length(pred$data$response)
+    }
+  )
 
+  rdesc = makeResampleDesc("Holdout", predict = "both")
+  lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.1)
+  r = resample(lrn, multiclass.task, rdesc, measures = list(setAggregation(num, train.mean)))
+  expect_lte(r$measures.train$num, getTaskSize(multiclass.task) * 0.1)
+})

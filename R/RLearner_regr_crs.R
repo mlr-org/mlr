@@ -12,7 +12,7 @@ makeRLearner.regr.crs = function() {
         requires = quote(lambda.discrete == TRUE)),
       makeDiscreteLearnerParam(id = "cv", default = "nomad",
         values = c("nomad", "exhaustive", "none")),
-      makeIntegerLearnerParam(id = "cv.treshold", default = 10000, lower = 0),
+      makeIntegerLearnerParam(id = "cv.threshold", default = 10000, lower = 0),
       makeDiscreteLearnerParam(id = "cv.func", default = "cv.ls",
         values = c("cv.ls", "cv.gcv", "cv.aic")),
       makeLogicalLearnerParam(id = "kernel", default = TRUE),
@@ -21,7 +21,7 @@ makeRLearner.regr.crs = function() {
       makeIntegerLearnerParam(id = "degree.min", default = 0, lower = 0),
       makeIntegerLearnerParam(id = "segments.min", default = 1, lower = 1),
       makeIntegerLearnerParam(id = "cv.df.min", default = 1,
-        requires = quote(cv=="nomad")),
+        requires = quote(cv == "nomad")),
       makeDiscreteLearnerParam(id = "complexity", default = "degree-knots",
         values = c("degree-knots", "degree", "knots")),
       makeDiscreteLearnerParam(id = "knots", default = "quantiles",
@@ -42,7 +42,8 @@ makeRLearner.regr.crs = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Regression Splines",
-    short.name = "crs"
+    short.name = "crs",
+    callees = "crs"
   )
 }
 

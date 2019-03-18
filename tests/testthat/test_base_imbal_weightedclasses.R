@@ -1,7 +1,7 @@
 context("weightedclasses")
 
 test_that("WeightedClassesWrapper, binary",  {
-  pos = getTaskDescription(binaryclass.task)$positive
+  pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)

@@ -452,7 +452,7 @@ makeSuperLearnerTask = function(learner, data, target) {
     makeRegrTask(data = data, target = target)
   }
 }
-# TODOs:
+# FIXMEs:
 # - document + test + export
 # - benchmark stuff on openml
 # - allow base.learners to be character of learners (not only list of learners)

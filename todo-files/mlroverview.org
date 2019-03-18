@@ -1,0 +1,494 @@
+#+TITLE: MLR Overview
+This is an overview of mlr entities and associated functions. I created this list when I was learning to use mlr myself, so some of this might contain trivial errors. Also the list is about one year old, so new development since early 2016 are not reflected. -- mb706
+* Callgraphs
+-> constructs or is-argument
+=> Is the principal/only constructor
+-|-> is optional argument
+..> alternative argument
+** Usage
+*** learning
+{Learner Task} -> train() -> WrappedModel
+*** predicting
+{WrappedModel Task} -> predict() -> Prediction
+*** imputation
+ImputationDesc -> reimpute()
+*** resampling
+{Learner Task ResampleInstance} -> resample() -> ResampleResult
+Measure -|-> resample()
+*** feature selection
+{Learner Task ResampleInstance FeatSelControl} -> selectFeatures() -> FeatSelResult
+Measure -|-> selectFeatures()
+*** tuning
+{Learner Task ResampleInstance ParamSet TuneControl} -> tuneParams() -> TuneResult
+Measure -|-> tuneParams()
+
+{Learner Task ResampleInstance ParamSet TuneMultiCritControl} -> tuneParamsMultiCrit() -> TuneMultCritResult
+Measure -|-> tuneParamsMultiCrit()
+
+Prediction -> tuneThreshold()
+{Measure Task WrappedModel} -|-> tuneThreshold()
+*** benchmark
+{Learner Task ResampleInstance} -> benchmark() -> BenchmarkResult
+Measure -|-> benchmark()
+** Constructors
+*** Task
+makeClassifTask() -> Task
+makeClusterTask() -> Task
+makeCostSensTask() -> Task
+makeMultilabelTask() -> Task
+makeRegrTask() -> Task
+makeSurvTask() -> Task
+*** ImputationDesc
+impute() -> ImputationDesc
+*** Learner
+makeLearner() -> Learner
+*** Aggregation
+makeAggregation() -> Aggregation
+*** Measure
+Aggregation -|-> makeMeasure() -> Measure
+Task -> makeCostMeasure() -> Measure
+makeCustomResampledMeasure() -> Measure
+{Task TaskDesc Learner} ..> getDefaultMeasure() -> Measure
+*** Filter
+makeFilter() -> Filter
+*** ResampleInstance
+makeResampleDesc() -> ResampleDesc
+{ResampleDesc Task} -> makeResampleInstance() -> ResampleInstance
+makeFixedHoldoutInstance() -> ResampleInstance
+*** TuneControl
+makeTuneControl*() -> TuneControl
+makeTuneMultiCritControl*() -> TuneMultiCritControl
+*** FeatSelControl
+makeFeatSelControl*() -> FeatSelControl
+** Listing internals
+listFilterMethods()
+Task -|-> listLearners() -> Learner
+Task -|-> listMeasures() -> Measure
+** Wrappings
+*** Prediction
+Prediction -> setThreshold() -> Prediction
+*** Benchmark
+BenchmarkResult -> mergeBenchmarkResultTask() -> BenchmarkResult
+*** Learners
+Learner -> makeBaggingWrapper() -> Learner
+Learner -> makeCostSensClassifWrapper() -> Learner
+Learner -> makeCostSensRegrWrapper() -> Learner
+Learner -> makeCostSensWeightedPairsWrapper() -> Learner
+Learner -> makeDownsampleWrapper() -> Learner
+Learner -> makeFilterWrapper() -> Learner
+Learner -> makeImputeWrapper() -> Learner
+Learner -> makeMulticlassWrapper() -> Learner
+Learner -> makeMultilabelBinaryRelevanceWrapper() -> Learner
+Learner -> makeOverBaggingWrapper() -> Learner
+Learner -> makePreprocWrapperCaret() -> Learner
+Learner -> makeSMOTEWrapper() -> Learner
+Learner -> makeUndersampleWrapper() -> Learner
+Learner -> makeOversampleWrapper() -> Learner
+Learner -> makeWeightedClassWrapper() -> Learner
+Learner -> removeHyperPars() -> Learner
+Learner -> setHyperPars() -> Learner
+Learner -> setId() -> Learner
+Learner -> setPredictThreshold() -> Learner
+Learner -> setPredictType() -> Learner
+{Learner ResampleDesc} -> makeStackedLearner() -> Learner
+
+{Learner ResampleInstance FeatSelControl} -> makeFeatSelWrapper() -> Learner
+Measure -|->  makeFeatSelWrapper()
+
+Learner -> makePreprocWrapper() -> Learner
+ParamSet -|-> makePreprocWrapper()
+
+{Learner ResampleInstance ParamSet TuneControl} -> makeTuneWrapper() -> Learner
+Measure -|-> makeTuneWrapper()
+
+Learner -> makeModelMultiplexer() -> ModelMultiplexer
+Learner ::> ModelMultiplexer
+*** ParamSet
+{ParamSet Param ModelMultiplexer} ..> makeModelMultiplexerParamSet() -> ParamSet
+*** Task
+Task -> dropFeatures() -> Task
+Task -> joinClassLevels() -> Task
+Task -> smote() -> Task
+Task -> subsetTask() -> Task
+Task -> mergeSmallFactorLevels() -> Task
+Task -> normalizeFeatures() -> Task
+Task -> oversample() -> Task
+Task -> undersample() -> Task
+Task -> removeConstantFeatures() -> Task
+{Task FilterValues} -> filterFeatures() -> Task
+{Task ResampleInstance} ..> downsample()
+Task -|-> capLargeValues()
+Task -|-> createDummyFeatures()
+*** Measure
+{Measure Aggregation} -> setAggregation() -> Measure
+** Compatibility
+Prediction -> asROCRPrediction()
+convertMLBenchObjToTask() -> Task
+Task -|-> getCaretParamSet() -> ParamSet
+** Sinks
+*** FeatSelResult
+FeatSelResult -> analyzeFeatSelResult()
+*** BenchmarkResult
+BenchmarkResult -> convertBMRToRankMatrix()
+Measure -|-> convertBMRToRankMatrix()
+
+BenchmarkResult -> friedmanPostHocTestBMR()
+Measure -|-> friedmanPostHocTestBMR()
+
+BenchmarkResult -> friedmanTestBMR()
+Measure -|-> friedmanTestBMR()
+
+BenchmarkResult -> getBMRAggrPerformances()
+BenchmarkResult -> getBMRFeatSelResults() -> FeatSelResults
+BenchmarkResult -> getBMRFilteredFeatures() -> FilteredFeatures
+BenchmarkResult -> getBMRLearnerIds()
+BenchmarkResult -> getBMRLearners() -> Learner
+BenchmarkResult -> getBMRMeasureIds()
+BenchmarkResult -> getBMRMeasures() -> Measure
+BenchmarkResult -> getBMRPerformances()
+BenchmarkResult -> getBMRPredictions() -> ResamplePrediction
+BenchmarkResult -> getBMRTaskIds()
+BenchmarkResult -> getBMRTuneResults() -> TuneResult
+*** Learner
+Learner -> getClassWeightParam() -> LearnerParam
+Learner -> getLearnerProperties()
+Learner -> hasLearnerProperties()
+Learner -> getHyperPars()
+Learner -> getParamSet() -> ParamSet
+*** Prediction
+Prediction -> getConfMatrix()
+Prediction -> getPredictionProbabilities()
+Prediction -> getPredictionResponse()
+Prediction -> getPredictionSE()
+Prediction -> getPredictionTruth()
+
+Prediction -> getMultilabelBinaryPerformances()
+Measure -|-> getMultilabelBinaryPerformances()
+
+Prediction -> performance()
+{Measure Task WrappedModel} -|-> performance()
+*** Task
+{Task TaskDesc} ..> getTaskClassLevels()
+{Task TaskDesc} ..> getTaskDescription() -> TaskDesc
+{Task TaskDesc} ..> getTaskFormula()
+{Task TaskDesc} ..> getTaskId()
+{Task TaskDesc} ..> getTaskNFeats()
+{Task TaskDesc} ..> getTaskSize()
+{Task TaskDesc} ..> getTaskTargetNames()
+{Task TaskDesc} ..> getTaskType()
+Task -> getFilterValues() -> FilterValues
+Task -> getTaskData()
+Task -> getTaskFeatureNames()
+Task -> getTaskTargets()
+Task -> summarizeColumns()
+Task -> summarizeLevels()
+CostSensTask -> getTaskCost()
+Task ::> CostSensTask
+*** WrappedModel
+WrappedModel -> getFailureModelMsg()
+WrappedModel -> getFeatSelResult() -> FeatSelResult
+WrappedModel -> getFilteredFeatures()
+WrappedModel -> getLearnerModel()
+WrappedModel -> getStackedBaseLearnerPredictions()
+WrappedModel -> getTuneResult() -> TuneResult
+WrappedModel -> isFailureModel()
+
+{WrappedModel Learner} ..> estimateResidualVariance()
+RegrTask -|-> estimateResidualVariance()
+*** ResampleResult
+ResampleResult -> getNestedTuneResultsOptPathDf()
+ResampleResult -> getNestedTuneResultsX()
+ResampleResult -> getRRPredictions() -> ResamplePrediction
+** Plotting
+*** BenchmarkResult
+BenchmarkResult -> plotBenchmarkResult()
+Measure -|-> plotBenchmarkResult()
+
+BenchmarkResult -> generateBenchmarkSummaryData() -> BenchmarkSummaryData -> plotBenchmarkSummary()
+Measure -|-> generateBenchmarkSummaryData()
+
+BenchmarkResult -> generateCritDifferencesData() -> critDifferencesData -> plotCritDifferences()
+Measure -|-> generateCritDifferencesData()
+
+BenchmarkResult -> generateRankMatrixAsBarData() -> RankMatrixAsBar -> plotRankMatrixAsBar()
+Measure -|-> generateRankMatrixAsBarData()
+
+*** Prediction | ResampleResult | BenchmarkResult
+{Prediction ResampleResult BenchmarkResult} ..> generateCalibrationData() -> CalibrationData -> plotCalibration()
+{Prediction ResampleResult BenchmarkResult} ..> generateROCRCurvesData() -> ROCRCurvesData -> plotROCRCurves()
+{Prediction ResampleResult BenchmarkResult} ..> plotViperCharts()
+
+{Prediction ResampleResult BenchmarkResult} ..> generateThreshVsPerfData() -> ThreshVsPerfData -> plotThreshVsPerf()
+Measure -|-> generateThreshVsPerfData()
+
+{Prediction ResampleResult BenchmarkResult} ..> plotROCCurves()
+Measure -|-> plotROCCurves()
+*** Learner
+{Learner Task} -> plotLearnerPredictions()
+Measure -|-> plotLearnerPredictions()
+
+{Learner Task ResampleInstance} -> generateLearningCurveData() -> LearningCurveData -> plotLearningCurve()
+*** Task
+Task -> generateFilterValuesData() -> FilterValues -> plotFilterValues()
+*** WrappedModel
+WrappedModel -> generatePartialPredictionData() -> PartialPredictionData -> plotPartialPrediction()
+Task -> generatePartialPredictionData()
+*** ResampleDesc
+{ResampleDesc Task Learner} -> estimateRelativeOverfitting()
+Measure -|-> estimateRelativeOverfitting()
+*** Tuning
+    TuneMultiCritResult -> plotTuneMultiCritResult()
+* Other Functions
+** imputation
+makeImputeMethod()
+imputeConstant()
+imputeMedian()
+imputeMean()
+imputeMode()
+imputeMin()
+imputeMax()
+imputeNormal()
+imputeUniform()
+imputeHist()
+imputeLearner()
+** Various
+learnerArgsToControl()
+makeWrappedModel()
+** Config
+configureMlr()
+getMlrOptions()
+* Class Relationships
+-> contains one
+=> contains list of
+::> subclass
+** BenchmarkResult
+BenchmarkResult => ResampleResult
+BenchmarkResult => Measure
+BenchmarkResult => Learner
+** WrappedModel
+WrappedModel -> Learner
+WrappedModel -> TaskDesc
+WrappedModel ::> FailureModel
+** FeatSelControl
+FeatSelControl ::> FeatSelControlExhaustive
+FeatSelControl ::> FeatSelControlRandom
+FeatSelControl ::> FeatSelControlSequential
+FeatSelControl ::> FeatSelControlControlGA
+** TuneControl
+TuneControl ::> TuneControlGrid
+TuneControl ::> TuneControlRandom
+TuneControl ::> TuneControlCMAES
+TuneControl ::> TuneControlGenSA
+TuneControl ::> TuneControlIrace
+** TuneMultiCritControl
+TuneMultiCritControl ::> TuneMultiCritControlGrid
+TuneMultiCritControl ::> TuneMultiCritControlRandom
+TuneMultiCritControl ::> TuneMultiCritControlNSGA2
+** TuneResult
+TuneResult -> Learner
+TuneResult -> TuneControl
+TuneResult -> OptPath
+** FeatSelResult
+FeatSelResult -> Learner
+FeatSelResult -> FeatSelControl
+FeatSelResult -> OptPath
+** Task
+Task -> TaskDesc
+Task ::> CostSensTask
+** Measure
+Measure -> Aggregation
+** Learner
+Learner ::> ModelMultiplexer
+** ResampleInstance
+ResampleInstance -> ResampleDesc
+** Prediction
+Prediction -> TaskDesc
+** ResampleResult
+ResampleResult => ResamplePrediction
+ResampleResult => WrappedModel
+* Builtin Objects
+** Tasks
+- agri, bc, bh, costiris, iris, lung, mtcars, pid, sonar, wpbc, yeast
+
+* COMMENT the rest
+** Task
+*** object =Task=
+- created using =make*Task()=
+- =mergeSmallFactorLevels()=
+- =normalizeFeatures()=
+- =oversample()=
+- =undersample()=
+- =removeConstantFeatures()=
+- =getTaskData()=
+- =getTaskFeatureNames()=
+- =getTaskTargets()=
+- =summarizeColumns()=
+- =summarizeLevels()=
+- =getFilterValues()= # deprecated
+- =joinClassLevels()=
+- =smote()=
+- =subsetTask()=
+*** object =CostSensTask=
+- =getTaskCosts()=
+*** object =Task= | =TaskDesc=
+- =getTaskClassLevels()=
+- =getTaskDescription()=
+- =getTaskFormula()=
+- =getTaskId()=
+- =getTaskNFeats()=
+- =getTaskSize()=
+- =getTaskTargetNames()=
+- =getTaskType()=
+
+** Learner
+- create using =makeLearner()=
+- =getClassWeightParam()=
+- =getHyperPars()=
+- =getParamSet()=
+- =getLearnerProperties()=
+- =hasLearnerProperties()=
+- =makeModelMultiplexerParamSet()=
+*** Wrappers
+- =makeBagingWrapper()=
+- =makeCostSensRegrWrapper()=
+- =makeCostSensClassifWrapper()=
+- =makeCostSensWeightedPairsWrapper()=
+- =makeDownsampleWrapper()=
+- =makeFeatSelWrapper()=
+- =makeFilterWrapper()=
+- =makeImputeWrapper()=
+- =makeModelMultiplexer()=
+- =makeMulticlassWrapper()=
+- =makeMultilabelBinaryRelevanceWrapper()=
+- =makeOverBaggingWrapper()=
+- =makePreprocWrapper()=
+- =makePreprocWrapperCaret()=
+- =makeSMOTEWrapper()=
+- =makeStackedLearner()=
+- =makeTuneWrapper()=
+- =makeUndersampleWrapper()=
+- =makeOversampleWrapper()=
+- =makeWeightedClassWrapper()=
+- =removeHyperPars()=
+- =setHyperPars()=
+- =setId()=
+- =setPredictThreshold()=
+- =setPredictType()=
+
+** Resampling
+- objects =ResampleDesc=, =ResampleInstance=
+- create using =makeResampleDesc()=, =makeResampleInstance()=
+- =resample()=
+*** resampling functions
+- =crossval()=
+- =repcv()=
+- =holdout()=
+- =subsample()=
+- =bootstrapOOB()=
+- =bootstrapB632()=
+- =bootstrapB32plus()=
+*** object =ResampleResult=
+- =getNestedTuneResultsOptPathDf()= (need to run with =extract=getTuneResult=)
+- =getNestedTuneResultsX()= (need to run with =extract=getTuneResult=
+- =getRRPredictions()=
+
+** Measure
+- create using =makeMeasure()=
+- there are lots of measures...
+- =makeCostMeasure()=
+- =makeCustomResampledMeasure()=
+- =setAggregation()=
+*** Retrieval
+- =getDefaultMeasure()=
+** WrappedModel
+- create using =train()=
+- =getFailureModelMsg()=
+- =getFeatSelResult()=
+- =getFilteredFeatures()=
+- =getLearnerModel()=
+- =getStackedBaseLearnerPredictions()=
+- =getTuneResult()=
+- =isFailureModel()=
+** Aggregation
+- object =Aggregation=
+- create using =makeAggregation()=
+- builtin: ={train,test}.{mean,sd,median,min,max,sum}=, =b632{,plus}=, =testgroup.mean=, =test.join=
+- 
+** Filter
+- object =Filter=
+- create using =makeFilter()=
+** Feature Selection
+*** object =FeatSelControl=
+- =makeFeatSelControl{Exhaustive,GA,Random,Sequential}()=
+*** object =FeatSelResult=
+- create using =selectFeatures()=
+- =analyzeFeatSelResult()=
+
+** Predictions
+- object =Prediction=
+- create with =predict()=
+- =performance()=
+- =asROCRPrediction()=
+- =getConfMatrix()=
+- =getMultilabelBinaryPerformances()=
+- =getPrediction*()=
+- =setThreshold()=
+** Tuning
+- =tuneParams()=, =tuneParamsMultiCrit()=
+- =makeTuneControl{Grid,Random,Design,CMAES,GenSA,Irace}()=
+- =makeTuneMultiCritControl{Grid,Random,NSGA2}()=
+- =tuneThreshold()=
+** Benchmark
+- object =BenchmarkResult=
+- created by =benchmark()=
+- =mergeBenchmarkRez<sultTask()=
+- =convertBMRToRankMatrix()=
+- =friedmanPostHocTestBMR()=
+- =friedmanTestBMR()=
+- =getBMRAggrPerformances()=
+- =getBMRFeatSelResults()=
+- =getBMRFilteredFeatures()=
+- =getBMRLearnerIds()=
+- =getBMRLearners()=
+- =getBMRMeasureIds()=
+- =getBMRMeasures()=
+- =getBMRPerformances()=
+- =getBMRPredictions()=
+- =getBMRTaskIds()=
+- =getBMRTuneResults()=
+- =plotBenchmarkResult()=
+
+** Plotting
+*** Benchmark
+- =generateBenchmarkSummaryData()= -> =plotBenchmarkSummary()=
+- =generateCritDifferencesData()= -> =plotCritDifferences()=
+- =generateRankMatrixAsBarData()= -> =plotRankMatrixAsBar()=
+*** Other
+- =plotLearnerPrediction()=
+- =plotTuneMultiCritResult()=
+- =generateFilterValuesData()= -> =plotFilterValues()=
+- =generateROCRCurvesData()=
+- =generateLearningCurveData()= -> =plotLearningCurve()=
+- =generatePartialPredictionData()= -> =plotPartialPredictionData()=
+*** =Prediction= | =ResampleResult= | =BenchmarkResult=
+- =generateCalibrationData()= -> =plotCalibration()=
+- =generateROCRCurvesData()= -> =plotROCRCurves()=
+- =generateThreshVsPerfData()= -> =plotThreshVsPerf()=
+- =plotROCCurves()=
+- =plotViperCharts()=
+
+
+** Evaluation / Sinks
+- =estimateRelativeOverfitting()=
+- =estimateResidualVariance()=
+
+
+
+* Internals
+** ModelMultiplexer
+- calls makeBaseEnsemble(), where the par.sets are combined
+  - calls makeLearnerBaseConstructor
+    - id, type, package, properties, par.set, par.vals, predict.type
+  - par.set.bls: all parameters of the base learners.
+  - par.set: all these plus specific ensemble parameters
+- adds par.set.ens: only the selected.learner parameter

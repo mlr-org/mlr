@@ -12,12 +12,12 @@ test_that("surv_cvglmnet", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     y = as.matrix(surv.train[, surv.target])
     colnames(y) = c("time", "status")
     pars = c(list(y = Surv(time = surv.train[, surv.target[1]], event = surv.train[, surv.target[2]]),
-      x = as.matrix(surv.train[, -c(1,2,7)]), family = "cox"), parset)
+      x = as.matrix(surv.train[, -c(1, 2, 7)]), family = "cox"), parset)
     set.seed(getOption("mlr.debug.seed"))
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
@@ -28,7 +28,7 @@ test_that("surv_cvglmnet", {
     } else {
       m = do.call(glmnet::cv.glmnet, pars)
     }
-    p  = predict(m, newx = as.matrix(surv.test[, -c(1,2,7)]), type = "link")
+    p  = predict(m, newx = as.matrix(surv.test[, -c(1, 2, 7)]), type = "link")
     old.predicts.list[[i]] = as.numeric(p)
   }
 

@@ -7,13 +7,12 @@
 setHyperPars2(learner, par.vals)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
+\item{learner}{(\link{Learner})\cr
 The learner.}
 
-\item{par.vals}{[\code{list}]\cr
+\item{par.vals}{(\link{list})\cr
 List of named (hyper)parameter settings.}
 }
 \description{
 Only exported for internal use.
 }
-

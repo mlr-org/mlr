@@ -8,8 +8,7 @@
 Contains the task (\code{lung.task}).
 }
 \references{
-See \code{\link[survival]{lung}}.
- Incomplete cases have been removed from the task.
+See \link[survival:lung]{survival::lung}.
+Incomplete cases have been removed from the task.
 }
 \keyword{data}
-

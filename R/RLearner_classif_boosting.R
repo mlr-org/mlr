@@ -24,12 +24,13 @@ makeRLearner.classif.boosting = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "featimp"),
     name = "Adabag Boosting",
     short.name = "adabag",
-    note = "`xval` has been set to `0` by default for speed."
+    note = "`xval` has been set to `0` by default for speed.",
+    callees = c("boosting", "rpart.control")
   )
 }
 
 #' @export
-trainLearner.classif.boosting= function(.learner, .task, .subset, .weights = NULL, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval, ...) {
+trainLearner.classif.boosting = function(.learner, .task, .subset, .weights = NULL, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval, ...) {
   f = getTaskFormula(.task)
   ctrl = learnerArgsToControl(rpart::rpart.control, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval)
   adabag::boosting(f, data = getTaskData(.task, .subset), control = ctrl, ...)
@@ -50,6 +51,6 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.boosting = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$importance[.model$features]
 }

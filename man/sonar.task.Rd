@@ -8,7 +8,6 @@
 Contains the task (\code{sonar.task}).
 }
 \references{
-See \code{\link[mlbench]{Sonar}}.
+See \link[mlbench:Sonar]{mlbench::Sonar}.
 }
 \keyword{data}
-

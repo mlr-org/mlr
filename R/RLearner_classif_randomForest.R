@@ -22,11 +22,12 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "featimp"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "oobpreds", "featimp"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
-    note = "Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
+    note = "Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures.",
+    callees = "randomForest"
   )
 }
 
@@ -34,10 +35,10 @@ makeRLearner.classif.randomForest = function() {
 trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights = NULL, classwt = NULL, cutoff, ...) {
   f = getTaskFormula(.task)
   data = getTaskData(.task, .subset, recode.target = "drop.levels")
-  levs = levels(data[,getTaskTargetNames(.task)])
+  levs = levels(data[, getTaskTargetNames(.task)])
   n = length(levs)
   if (missing(cutoff))
-    cutoff = rep(1/n, n)
+    cutoff = rep(1 / n, n)
   if (!missing(classwt) && is.numeric(classwt) && length(classwt) == n && is.null(names(classwt)))
     names(classwt) = levs
   if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff)))
@@ -52,8 +53,18 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
+getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
+  if (.learner$predict.type == "response") {
+    m = getLearnerModel(.model, more.unwrap = TRUE)
+    unname(m$predicted)
+  } else {
+    getLearnerModel(.model, more.unwrap = TRUE)$votes
+  }
+}
+
+#' @export
 getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   ctrl = list(...)
   if (is.null(ctrl$type)) {
     ctrl$type = 2L
@@ -64,6 +75,6 @@ getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ..
         stop("You need to train the learner with parameter 'importance' set to TRUE")
     }
   }
-  
+
   randomForest::importance(mod, ctrl$type)[, 1]
 }

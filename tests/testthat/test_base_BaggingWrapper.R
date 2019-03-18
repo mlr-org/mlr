@@ -20,11 +20,11 @@ test_that("BaggingWrapper", {
   lrn2 = makeBaggingWrapper(lrn1, bw.size = 0.1, bw.replace = FALSE)
   m = train(lrn2, multiclass.task)
   bms = getLearnerModel(m)
-  expect_equal(unique(sapply(bms, function(m) length(bms[[1]]$subset))), 15L)
+  expect_equal(unique(sapply(extractSubList(bms, "subset", simplify = FALSE), length)), 15L)
   lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3L, bw.feats = 0.5)
   m = train(lrn2, multiclass.task)
   bms = getLearnerModel(m)
-  expect_equal(unique(sapply(bms, function(m) length(bms[[1]]$features))), 2L)
+  expect_equal(unique(sapply(extractSubList(bms, "features", simplify = FALSE), length)), 2L)
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3L)
   lrn2 = setPredictType(lrn2, "prob")
@@ -63,3 +63,12 @@ test_that("BaggingWrapper works with 1 obs in newdata", {
   p = predict(mod, newdata = nd)
   expect_true(!is.na(performance(p)))
 })
+
+test_that("BaggingWrapper with glmnet (#958)", {
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeBaggingWrapper(lrn)
+  mod = train(lrn2, multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_error(pred, NA)
+})
+

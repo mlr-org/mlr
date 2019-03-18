@@ -8,7 +8,6 @@
 Contains the task (\code{iris.task}).
 }
 \references{
-See \code{\link[datasets]{iris}}.
+See \link[datasets:iris]{datasets::iris}.
 }
 \keyword{data}
-

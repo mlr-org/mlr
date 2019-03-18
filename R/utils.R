@@ -13,13 +13,6 @@ getColEls = function(mat, inds) {
   getRowEls(t(mat), inds)
 }
 
-# prints more meaningful 'head' output indicating that there is more output
-printHead = function(x, n = 6L, ...) {
-  print(head(x, n = n, ...))
-  if (nrow(x) > n)
-    catf("... (%i rows, %i cols)\n", nrow(x), ncol(x))
-}
-
 # Do fuzzy string matching between input and a set of valid inputs
 # and return the most similar valid inputs.
 getNameProposals = function(input, possible.inputs, nproposals = 3L) {
@@ -34,26 +27,33 @@ getNameProposals = function(input, possible.inputs, nproposals = 3L) {
   return(possibles)
 }
 
-# generates a grid for a vector of features and returns a list
-# expand.grid can be applied to this to find all possible combinations of the features
-generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
-  sapply(features, function(feature) {
-      nunique = length(unique(data[[feature]]))
-      cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
-
-      if (is.factor(data[[feature]])) {
-        factor(rep(levels(data[[feature]]), length.out = cutoff),
-               levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
-      } else {
-        if (resample != "none") {
-          sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
-        } else {
-          if (is.integer(data[[feature]]))
-            sort(rep(fmin[[feature]]:fmax[[feature]], length.out = cutoff))
-          else
-            seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
-        }
-      }
-    }, simplify = FALSE)
+# shorter way of printing debug dumps
+#' @export
+print.mlr.dump = function(x, ...) {
+  cat("<debug dump>\n")
+  invisible(NULL)
 }
+
+
+# applys the appropriate getPrediction* helper function
+getPrediction = function(object, newdata, ...) {
+  pred = do.call("predict", c(list("object" = object, "newdata" = newdata), list(...)))
+  point = switch(object$task.desc$type,
+    "regr" = getPredictionResponse(pred),
+    "surv" = getPredictionResponse(pred),
+    "classif" = if (object$learner$predict.type == "response")
+      getPredictionResponse(pred) else getPredictionProbabilities(pred))
+
+  if (object$learner$predict.type == "se")
+    cbind("preds" = point, "se" = getPredictionSE(pred))
+  else
+    point
+}
+
+# replacement for purrr::imap()
+imap = function(.x, .f) {
+  Map(.f, .x = .x, .y = seq_along(.x))
+}
+
+
 

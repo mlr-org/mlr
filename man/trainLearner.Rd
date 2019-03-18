@@ -7,24 +7,24 @@
 trainLearner(.learner, .task, .subset, .weights = NULL, ...)
 }
 \arguments{
-\item{.learner}{[\code{\link{RLearner}}]\cr
+\item{.learner}{(\link{RLearner})\cr
 Wrapped learner.}
 
-\item{.task}{[\code{\link{Task}}]\cr
+\item{.task}{(\link{Task})\cr
 Task to train learner on.}
 
-\item{.subset}{[\code{integer}]\cr
+\item{.subset}{(\link{integer})\cr
 Subset of cases for training set, index the task with this.
-You probably want to use \code{\link{getTaskData}} for this purpose.}
+You probably want to use \link{getTaskData} for this purpose.}
 
-\item{.weights}{[\code{numeric}]\cr
+\item{.weights}{(\link{numeric})\cr
 Weights for each observation.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Additional (hyper)parameters, which need to be passed to the underlying train function.}
 }
 \value{
-[any]. Model of the underlying learner.
+(any). Model of the underlying learner.
 }
 \description{
 Mainly for internal use. Trains a wrapped learner on a given training set.
@@ -35,4 +35,3 @@ Your implementation must adhere to the following:
 The model must be fitted on the subset of \code{.task} given by \code{.subset}. All parameters
 in \code{...} must be passed to the underlying training function.
 }
-

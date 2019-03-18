@@ -1,16 +1,13 @@
 context("learners_all_classif")
 
-test_that("learners work: classif ", {
+test_that("learners work: classif", {
 
   # settings to make learners faster and deal with small data size
   hyperpars = list(
     classif.boosting = list(mfinal = 2L),
     classif.cforest = list(mtry = 1L),
-    classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-      # without this (and despite use_missing_data being TRUE), the test with missing data fails with a null point exception, which manifests itself as a completely different rJava error in the test
-      replace_missing_data_with_x_j_bar = TRUE,
-      num_iterations_after_burn_in = 10L),
     classif.bdk = list(ydim = 2L),
+    classif.earth = list(degree = 3L, nprune = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
@@ -23,40 +20,54 @@ test_that("learners work: classif ", {
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
-  lrns = mylist("classif", properties = "factors", create = TRUE)
+  lrns = mylist(task, properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with ordered factors
-  lrns = mylist("classif", properties = "ordered", create = TRUE)
+  lrns = mylist(task, properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with prob
   lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = binaryclass.task,
+  lapply(lrns, testBasicLearnerProperties, task = binaryclass.task,
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
-  lrns = mylist("classif", properties = "weights", create = TRUE)
+  lrns = mylist(binaryclass.task, properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
-    task = binaryclass.task, train.inds = binaryclass.train.inds, binaryclass.test.inds,
+    task = binaryclass.task, train.inds = binaryclass.train.inds, test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
   # classif with missing
-  lrns = mylist("classif", properties = "missings", create = TRUE)
+  lrns = mylist(task, properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
-  
+
+  # classif with oobpreds
+  lrns = mylist(task, properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+
+  # classif with oobpreds and probability
+  lrns = mylist(task, properties = c("oobpreds", "prob"), create = TRUE)
+  lrns = lapply(lrns, setPredictType, predict.type = "prob")
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+
   # classif with variable importance
-  lrns = mylist("classif", properties = "featimp", create = TRUE)
+  lrns = mylist(task, properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
+
+  # classif with only one feature
+  # min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
+  # lapply(lrns, testBasicLearnerProperties, task = min.task)
 })
 
 
 test_that("weightedClassWrapper on all binary learners",  {
-  pos = getTaskDescription(binaryclass.task)$positive
+  pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)

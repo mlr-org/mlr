@@ -8,8 +8,7 @@
 Contains the task (\code{wpbc.task}).
 }
 \references{
-See \code{\link[TH.data]{wpbc}}.
- Incomplete cases have been removed from the task.
+See \link[TH.data:wpbc]{TH.data::wpbc}.
+Incomplete cases have been removed from the task.
 }
 \keyword{data}
-

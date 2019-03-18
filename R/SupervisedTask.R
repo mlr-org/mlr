@@ -1,5 +1,5 @@
-makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
-  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data)
+makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data, coordinates) {
+  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data, coordinates = coordinates)
 
   if (check.data) {
     # costsens does not have a target col...
@@ -20,6 +20,8 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
   catf("Type: %s", td$type)
   if (print.target)
     catf("Target: %s", collapse(td$target))
+  if (inherits(x, "SurvTask"))
+    catf("Events: %i", sum(getTaskTargets(x)[, 2L]))
   catf("Observations: %i", td$size)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse = "\n"))
@@ -27,4 +29,5 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
+  catf("Has coordinates: %s", td$has.coordinates)
 }

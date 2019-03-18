@@ -1,0 +1,137 @@
+---
+title: "Wrapper"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+library("lattice")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+Wrappers can be employed to extend integrated learners (`makeLearner()`)  with new functionality.
+The broad scope of operations and methods which are implemented as wrappers underline the flexibility of the wrapping approach:
+
+* [Data preprocessing](preproc.html){target="_blank"}
+* [Imputation](impute.html){target="_blank"}
+* [Bagging](bagging.html){target="_blank"}
+* [Tuning](tune.html){target="_blank"}
+* [Feature selection](feature_selection.html){target="_blank"}
+* [Cost-sensitive classification](cost_sensitive_classif.html){target="_blank"}
+* [Over- and undersampling](over_and_undersampling.html){target="_blank"} for imbalanced classification problems
+* Multiclass extension (`makeMulticlassWrapper()`) for binary-class learners
+* [Multilabel classification](multilabel.html){target="_blank"}
+
+All these operations and methods have a few things in common:
+First, they all wrap around `mlr` learners (`makeLearner()`)  and they return a new learner.
+Therefore learners can be wrapped multiple times.
+Second, they are implemented using a *train* (pre-model hook) and *predict* (post-model hook) method.
+
+# Example: Bagging wrapper
+
+In this section we exemplary describe the bagging wrapper to create a random forest which supports weights.
+To achieve that we combine several decision trees from the `rpart` package to create our own custom random forest.
+
+First, we create a weighted toy task.
+
+```{r}
+data(iris)
+task = makeClassifTask(data = iris, target = "Species", weights = as.integer(iris$Species))
+```
+
+Next, we use `makeBaggingWrapper()` to create the base learners and the bagged learner.
+We choose to set equivalents of `ntree` (100 base learners) and `mtry` (proportion of randomly selected features).
+
+```{r}
+base.lrn = makeLearner("classif.rpart")
+wrapped.lrn = makeBaggingWrapper(base.lrn, bw.iters = 100, bw.feats = 0.5)
+print(wrapped.lrn)
+```
+
+As we can see in the output, the wrapped learner inherited all properties from the base learner, especially the "weights" attribute is still present.
+We can use this newly constructed learner like all base learners, i.e. we can use it in `train()`, `benchmark()`, `resample()`, etc.
+
+```{r}
+benchmark(tasks = task, learners = list(base.lrn, wrapped.lrn))
+```
+
+That far we are quite happy with our new learner.
+But we hope for a better performance by tuning some hyperparameters of both the decision trees and bagging wrapper.
+Let's have a look at the available hyperparameters of the fused learner:
+
+```{r}
+getParamSet(wrapped.lrn)
+```
+
+We choose to tune the parameters `minsplit` and `bw.feats` for the [mmce](measures.html){target="_blank"} using a random search (`TuneControl()`) in a 3-fold CV:
+
+```{r}
+ctrl = makeTuneControlRandom(maxit = 10)
+rdesc = makeResampleDesc("CV", iters = 3)
+par.set = makeParamSet(
+  makeIntegerParam("minsplit", lower = 1, upper = 10),
+  makeNumericParam("bw.feats", lower = 0.25, upper = 1)
+)
+tuned.lrn = makeTuneWrapper(wrapped.lrn, rdesc, mmce, par.set, ctrl)
+print(tuned.lrn)
+```
+
+Calling the train method of the newly constructed learner performs the following steps:
+
+1. The tuning wrapper sets parameters for the underlying model in slot `$next.learner` and calls its train method.
+2. Next learner is the bagging wrapper. The passed down argument `bw.feats` is used in the bagging wrapper training function, the argument `minsplit` gets passed down to `$next.learner`. 
+The base wrapper function calls the base learner `bw.iters` times and stores the resulting models.
+3. The bagged models are evaluated using the mean [mmce](measures.html){target="_blank"} (default aggregation for this performance measure) and new parameters are selected using the tuning method.
+4. This is repeated until the tuner terminates. Output is a tuned bagged learner.
+
+```{r echo = FALSE, results='hide', message=FALSE}
+lrn = train(tuned.lrn, task = task)
+
+print(lrn)
+```
+
+```{r eval = FALSE}
+lrn = train(tuned.lrn, task = task)
+## [Tune] Started tuning learner classif.rpart.bagged for parameter set:
+##             Type len Def    Constr Req Tunable Trafo
+## minsplit integer   -   -   1 to 10   -    TRUE     -
+## bw.feats numeric   -   - 0.25 to 1   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: minsplit=5; bw.feats=0.533
+## [Tune-y] 1: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune-x] 2: minsplit=3; bw.feats=0.377
+## [Tune-y] 2: mmce.test.mean=0.0600000; time: 0.0 min
+## [Tune-x] 3: minsplit=8; bw.feats=0.29
+## [Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min
+## [Tune-x] 4: minsplit=6; bw.feats=0.555
+## [Tune-y] 4: mmce.test.mean=0.0533333; time: 0.0 min
+## [Tune-x] 5: minsplit=9; bw.feats=0.699
+## [Tune-y] 5: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune-x] 6: minsplit=6; bw.feats=0.985
+## [Tune-y] 6: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune-x] 7: minsplit=10; bw.feats=0.632
+## [Tune-y] 7: mmce.test.mean=0.0400000; time: 0.0 min
+## [Tune-x] 8: minsplit=1; bw.feats=0.943
+## [Tune-y] 8: mmce.test.mean=0.0600000; time: 0.0 min
+## [Tune-x] 9: minsplit=9; bw.feats=0.715
+## [Tune-y] 9: mmce.test.mean=0.0533333; time: 0.0 min
+## [Tune-x] 10: minsplit=1; bw.feats=0.503
+## [Tune-y] 10: mmce.test.mean=0.0466667; time: 0.0 min
+## [Tune] Result: minsplit=10; bw.feats=0.632 : mmce.test.mean=0.0400000
+
+print(lrn)
+## Model for learner.id=classif.rpart.bagged.tuned; learner.class=TuneWrapper
+## Trained on: task.id = iris; obs = 150; features = 4
+## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5
+```

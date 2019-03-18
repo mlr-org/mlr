@@ -7,15 +7,15 @@
 convertMLBenchObjToTask(x, n = 100L, ...)
 }
 \arguments{
-\item{x}{[\code{character(1)}]\cr
+\item{x}{(\code{character(1)})\cr
 Name of an mlbench function or dataset.}
 
-\item{n}{[\code{integer(1)}]\cr
+\item{n}{(\code{integer(1)})\cr
 Number of observations for data simul functions.
 Note that for a few mlbench function this setting is not exactly respected by mlbench.
 Default is 100.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Passed on to data simul functions.}
 }
 \description{
@@ -26,4 +26,3 @@ convert logicals to factors.
 print(convertMLBenchObjToTask("Ionosphere"))
 print(convertMLBenchObjToTask("mlbench.spirals", n = 100, sd = 0.1))
 }
-

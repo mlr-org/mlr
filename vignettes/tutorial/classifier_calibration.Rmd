@@ -1,0 +1,93 @@
+---
+title: "Classifier Calibration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+A classifier is "calibrated" when the predicted probability of a class matches the expected frequency of that class. 
+`mlr` can visualize this by plotting estimated class probabilities (which are discretized) against the observed frequency of said class in the data using `generateCalibrationData()` and `plotCalibration()`.
+
+`generateCalibrationData()` takes as input `Prediction()`, `ResampleResult()`, `BenchmarkResult()`, or a named list of `Prediction()` or `ResampleResult()` objects on a classification (multiclass or binary) task with learner(s) that are capable of outputting probabiliites (i.e., learners must be constructed with `predict.type = "prob"`). The result is an object of class `CalibrationData` (`generateCalibrationData()`) which has elements `proportion`, `data`, and `task`. `proportion` gives the proportion of observations labelled with a given class for each predicted probability bin (e.g., for observations which are predicted to have class "A" with probability $(0, 0.1]$, what is the proportion of said observations which have class "A"?).
+
+```{r}
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+mod = train(lrn, task = sonar.task)
+pred = predict(mod, task = sonar.task)
+cal = generateCalibrationData(pred)
+cal$proportion
+```
+
+The manner in which the predicted probabilities are discretized is controlled by two arguments:
+`breaks` and `groups`. 
+By default `breaks = "Sturges"` which uses the Sturges algorithm in `graphics::hist()`. 
+This argument can specify other algorithms available in `graphics::hist()`, it can be a numeric vector specifying breakpoints for `base::cut()`, or a single integer specifying the number of bins to create (which are evenly spaced).
+Alternatively, `groups` can be set to a positive integer value (by default `groups = NULL`) in which case `Hmisc::cut2()` is used to create bins with an approximately equal number of observations in each bin.
+
+```{r}
+cal = generateCalibrationData(pred, groups = 3)
+cal$proportion
+```
+
+`generateCalibrationData()` objects can be plotted using `plotCalibration()`.
+`plotCalibration()` by default plots a reference line which shows perfect calibration and a "rag" plot, which is a rug plot on the top and bottom of the graph, where the top pertains to "positive" cases, where the predicted class matches the observed class, and the bottom pertains to "negative" cases, where the predicted class does not match the observed class.
+Perfect classifier performance would result in all the positive cases clustering in the top right (i.e., the correct classes are predicted with high probability) and the negative cases clustering in the bottom left.
+
+```{r, fig.asp = 3/4, eval = FALSE}
+plotCalibration(cal)
+```
+
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/classifier-calibration-4-1.png")
+```
+
+Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. 
+Though `smooth = FALSE` by default, setting this option to `TRUE` replaces the estimated proportions with a loess smoother.
+
+```{r, fig.asp = 3/4, eval = FALSE}
+
+cal = generateCalibrationData(pred)
+plotCalibration(cal, smooth = TRUE)
+```
+
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/classifier-calibration-5-1.png")
+```
+
+All of the above functionality works with multi-class classification as well.
+
+```{r, , fig.asp = 3/4, eval = FALSE}
+lrns = list(
+  makeLearner("classif.randomForest", predict.type = "prob"),
+  makeLearner("classif.nnet", predict.type = "prob", trace = FALSE)
+)
+mod = lapply(lrns, train, task = iris.task)
+pred = lapply(mod, predict, task = iris.task)
+names(pred) = c("randomForest", "nnet")
+cal = generateCalibrationData(pred, breaks = c(0, .3, .6, 1))
+plotCalibration(cal)
+```
+
+```{r echo = FALSE}
+### For some reason the resulting img changes in every run by a few bytes. 
+### To not trigger a false positive change in every run, we add the img by hand.
+### This is ofc bad bc changes in the code are not triggering a change in the img
+knitr::include_graphics("../../reference/figures/classifier-calibration-6-1.png")
+```

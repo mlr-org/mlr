@@ -1,0 +1,126 @@
+---
+title: "Use case: Regression"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+For the regression use case we use the well-known `mlbench::BostonHousing()` dataset. 
+The road map is as follows:
+
+* define the learning task  ([here](task.html)),
+* tune the model ([here](tune.html)),
+* conduct a benchmark experiment ([here](benchmark_experiments.html)) and
+* evaluate the performance of the model ([here](performance.html)).
+
+First, let's have a look at the data.
+
+```{r}
+data(BostonHousing, package = "mlbench")
+summary(BostonHousing)
+```
+
+This data set concerns housing in the suburban area of Boston. 
+The target variable, chosen for the regression task, is `medv` - the median value of owner-occupied homes in \$1000's. 
+Description of the others 13 attributes can be found at `mlbench::BostonHousing()`).
+
+# Define a task
+
+Now, let us continue with defining the regression [task](task.html).
+
+```{r}
+# Make a task
+regr.task = makeRegrTask(data = BostonHousing, target = "medv")
+regr.task
+```
+
+In order to get an overview of the features type, we can print out the `regr.task`. 
+This shows that there are 12 numeric and one factor variables in the data set.
+
+# Tuning
+
+By calling `listLearners("regr")` we can see which learners are available for the regression task.
+
+With so many learners it is difficult to choose which one would be optimal for this specific task. 
+As such we will choose a sample of these learners and compare their results. 
+This analysis uses the classical linear regression model (`regr.lm`), SVM (`kernlab::ksvm()`) with a radial basis kernel (`regr.ksvm`) and random forest from the ranger (`ranger::ranger()`) package (`regr.ranger`). 
+In order to get a quick overview of all learner-specific tunable parameters you can call `getLearnerParamSet()` or its alias `ParamHelpers::getParamSet()`, which will list learner's hyperparameters and their properties.
+
+Before setting up a [benchmark experiment](benchmark_experiments.html) we can specify which hyperparameters are going to be tuned. 
+The `mlr` package provides powerful tuning algorithms, such as iterated F-racing (`irace::irace()`), CMA Evolution Strategy (`cmaes::cma_es()`), model-based / Bayesian optimization (`mlrMBO::mbo()`) and generalized simulated annealing (`GenSA::GenSA()`). 
+See [Tuning](tuning.html) and [Advanced Tuning](advanced_tune.html) for more details.
+
+For each learner one hyperparameter will be tuned, i.e. kernel parameter `sigma` for SVM model and the number of trees (`num.trees`) in the random forest model. 
+We start with specifying a search space for each of these parameters. 
+With `makeTuneControlCMAES()` we set the tuning method to be CMA Evolution Strategy (`cmaes::cma_es()`). 
+Afterwards we take 5-fold cross validation as our [resampling strategy](resample.html) and root mean squared error (`rmse`) as optimization criterion. 
+Finally, we make tuning wrapper for each learner.
+
+```{r}
+set.seed(1234)
+
+# Define a search space for each learner'S parameter
+ps_ksvm = makeParamSet(
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+
+ps_rf = makeParamSet(
+  makeIntegerParam("num.trees", lower = 1L, upper = 200L)
+)
+
+# Choose a resampling strategy
+rdesc = makeResampleDesc("CV", iters = 5L)
+
+# Choose a performance measure
+meas = rmse
+
+# Choose a tuning method
+ctrl = makeTuneControlCMAES(budget = 100L)
+
+# Make tuning wrappers
+tuned.ksvm = makeTuneWrapper(learner = "regr.ksvm", resampling = rdesc, measures = meas,
+  par.set = ps_ksvm, control = ctrl, show.info = FALSE)
+tuned.rf = makeTuneWrapper(learner = "regr.ranger", resampling = rdesc, measures = meas,
+  par.set = ps_rf, control = ctrl, show.info = FALSE)
+```
+
+# Benchmark Experiment
+
+In order to conduct a [benchmark experiment](benchmark_experiments.html), it is necessary to choose an evaluation method. 
+We will use the resampling strategy and the performance measure from the previous section and then pass the tuning wrappers as arguments into the `benchmark()` function.
+
+```{r}
+# Four learners to be compared
+lrns = list(makeLearner("regr.lm"), tuned.ksvm, tuned.rf)
+
+# Conduct the benchmark experiment
+bmr = benchmark(learners = lrns, tasks = regr.task, resamplings = rdesc, measures = rmse, 
+  show.info = FALSE)
+```
+
+# Performance
+
+Now we want to evaluate the results.
+
+```{r}
+getBMRAggrPerformances(bmr)
+```
+
+A closer look at the boxplot reveals that RF outperforms the other learners for this specific task. 
+Despite the tuning procedure performed before, the benchmark experiment for linear and lasso regression yields similar but poor results.
+
+```{r}
+plotBMRBoxplots(bmr)
+```
+

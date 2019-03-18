@@ -10,17 +10,18 @@ and the optimization path which lead there.
 
 Object members:
 \describe{
-\item{learner [\code{\link{Learner}}]}{Learner that was optimized.}
-\item{control [\code{\link{TuneControl}}]}{Control object from tuning.}
-\item{x [\code{list}]}{List of lists of non-dominated hyperparameter settings in pareto set.
-  Note that when you have trafos on some of your params, \code{x} will always be
-  on the TRANSFORMED scale so you directly use it.}
-\item{y [\code{matrix}]}{Pareto front for \code{x}.}
-\item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.
-  Note that when you have trafos on some of your params, the opt.path always contains the
-  UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to
-  transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
-\item{measures [(list of) \code{\link{Measure}}]}{Performance measures.}
+\item{learner (\link{Learner})}{Learner that was optimized.}
+\item{control (\link{TuneControl})}{Control object from tuning.}
+\item{x (\link{list})}{List of lists of non-dominated hyperparameter settings in pareto set.
+Note that when you have trafos on some of your params, \code{x} will always be
+on the TRANSFORMED scale so you directly use it.}
+\item{y (\link{matrix})}{Pareto front for \code{x}.}
+\item{threshold}{Currently \code{NULL}.}
+\item{opt.path (\link[ParamHelpers:OptPath]{ParamHelpers::OptPath})}{Optimization path which lead to \code{x}.
+Note that when you have trafos on some of your params, the opt.path always contains the
+UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to
+transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
+\item{ind (\code{integer(n)})}{Indices of Pareto optimal params in \code{opt.path}.}
+\item{measures [(list of) \link{Measure})}{Performance measures.}
 }
 }
-

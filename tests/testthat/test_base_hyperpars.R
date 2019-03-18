@@ -9,7 +9,7 @@ test_that("hyperpars", {
   expect_equal(getHyperPars(m$learner), list(xval = 0, minsplit = 10))
 
   # test equality after removing using removeHyperPars
-  lrn = makeLearner("classif.J48", C=0.5)
+  lrn = makeLearner("classif.J48", C = 0.5)
   expect_identical(getHyperPars(makeLearner("classif.J48")),
     getHyperPars(removeHyperPars(lrn, "C")))
 
@@ -58,11 +58,11 @@ test_that("setting 'when' works for hyperpars", {
   m = train(lrn, regr.task)
   expect_equal(m$learner.model, list(foo = 1 + 3))
   p = predict(m, regr.task)
-  expect_equal(p$data$response, rep(1+2+2*3, getTaskSize(regr.task)))
+  expect_equal(p$data$response, rep(1 + 2 + 2 * 3, getTaskSize(regr.task)))
 })
 
 test_that("fuzzy matching works for mistyped hyperpars", {
-  msg = "classif.ksvm: Setting parameter sigm without available description object! \nDid you mean one of these hyperparameters instead: sigma fit type \nYou can switch off this check by using configureMlr!"
+  msg = "classif.ksvm: Setting parameter sigm without available description object!\nDid you mean one of these hyperparameters instead: sigma fit type\nYou can switch off this check by using configureMlr!"
   mlr.opts = getMlrOptions()
 
   # test if config arg works properly in combination with show.info
@@ -78,7 +78,7 @@ test_that("fuzzy matching works for mistyped hyperpars", {
   expect_warning(makeLearner("classif.ksvm", config = cw, sigm = 1), msg)
   configureMlr(on.par.without.desc = "warn")
   expect_warning(makeLearner("classif.ksvm", sigm = 1), msg)
-  
+
   # print message and error
   expect_error(makeLearner("classif.ksvm", config = cs, sigm = 1), msg)
   configureMlr(on.par.without.desc = "stop")

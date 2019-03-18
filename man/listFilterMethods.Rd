@@ -4,22 +4,37 @@
 \alias{listFilterMethods}
 \title{List filter methods.}
 \usage{
-listFilterMethods(desc = TRUE, tasks = FALSE, features = FALSE)
+listFilterMethods(desc = TRUE, tasks = FALSE, features = FALSE,
+  include.deprecated = FALSE)
 }
 \arguments{
-\item{desc}{[\code{logical(1)}]\cr
-Provide more detailed information about filters.}
+\item{desc}{(\code{logical(1)})\cr
+Provide more detailed information about filters.
+Default is \code{TRUE}.}
 
-\item{tasks}{[\code{logical(1)}]\cr
-Provide information on supported tasks.}
+\item{tasks}{(\code{logical(1)})\cr
+Provide information on supported tasks.
+Default is \code{FALSE}.}
 
-\item{features}{[\code{logical(1)}]\cr
-Provide information on supported features.}
+\item{features}{(\code{logical(1)})\cr
+Provide information on supported features.
+Default is \code{FALSE}.}
+
+\item{include.deprecated}{(\code{logical(1)})\cr
+Should deprecated filter methods be included in the list.
+Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame}].
+(\link{data.frame}).
 }
 \description{
 Returns a subset-able dataframe with filter information.
 }
-
+\seealso{
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+}
+\concept{filter}

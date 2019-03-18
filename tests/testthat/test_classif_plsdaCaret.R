@@ -5,13 +5,14 @@ test_that("classif_plsdaCaret", {
   parset.list = list(
     list(),
     list(ncomp = 4),
-    list(probMethod = "Bayes")
+    list(probMethod = "Bayes"),
+    list(method = "oscorespls")
   )
 
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     x = binaryclass.train
     y = x[, binaryclass.class.col]
@@ -25,14 +26,14 @@ test_that("classif_plsdaCaret", {
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = newx, type = "class")
     set.seed(getOption("mlr.debug.seed"))
-    p2 = predict(m, newdata = newx, type = "prob")[,1,1]
+    p2 = predict(m, newdata = newx, type = "prob")[, 1, 1]
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
 
   testSimpleParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets ("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)
 
 })

@@ -5,7 +5,7 @@
 #' for imbalancy correction when we have strongly unequal class sizes.
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' OverBagging is implemented as follows:
 #' For each iteration a random data subset is sampled. Class examples
@@ -19,21 +19,21 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #'
 #' @template arg_learner
-#' @param obw.iters [\code{integer(1)}]\cr
+#' @param obw.iters (`integer(1)`)\cr
 #'   Number of fitted models in bagging.
 #'   Default is 10.
-#' @param obw.rate [\code{numeric(1)}]\cr
+#' @param obw.rate (`numeric(1)`)\cr
 #'   Factor to upsample a class in each bag.
-#'   Must be between 1 and \code{Inf},
+#'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param obw.maxcl [\code{character(1)}]\cr
+#' @param obw.maxcl (`character(1)`)\cr
 #'   How should other class (usually larger class) be handled?
 #'   \dQuote{all} means every instance of the class gets in each bag,
 #'   \dQuote{boot} means the class instances are bootstrapped in each iteration.
 #'   Default is \dQuote{boot}.
-#' @param obw.cl [\code{character(1)}]\cr
-#'   Which class should be over- or undersampled. If \code{NULL}, \code{makeOverBaggingWrapper}
+#' @param obw.cl (`character(1)`)\cr
+#'   Which class should be over- or undersampled. If `NULL`, `makeOverBaggingWrapper`
 #'   will take the smaller class.
 #' @template ret_learner
 #' @family imbalancy
@@ -74,7 +74,7 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
 }
 
 #' @export
-trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.OverBaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
    obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
@@ -83,12 +83,19 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     z = getMinMaxClass(y)
     obw.cl = z$min.name
   }
-  models = lapply(seq_len(obw.iters), function(i) {
-    bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
-    train(.learner$next.learner, .task, subset = bag, weights = .weights)
-  })
+  args = list("y" = y, "obw.rate" = obw.rate, "obw.maxcl" = obw.maxcl, "obw.cl" = obw.cl, "learner" = .learner, "task" = .task, "weights" = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(doOverBaggingTrainIteration, i = seq_len(obw.iters), more.args = args)
   makeHomChainModel(.learner, models)
 }
+
+doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learner, task, weights) {
+  setSlaveOptions()
+  bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
+  train(learner$next.learner, task, subset = bag, weights = weights)
+}
+
 
 #' @export
 getLearnerProperties.OverBaggingWrapper = function(learner) {
