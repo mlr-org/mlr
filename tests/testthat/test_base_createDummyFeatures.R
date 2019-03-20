@@ -20,4 +20,11 @@ test_that("createDummyFeatures", {
   df$a = as.factor(df$a)
   expect_equal(c("a", "b", "c.A", "c.B"),
     colnames(createDummyFeatures(df, cols = "c")))
+
+  df = data.frame(quan = as.factor(sample(0:1, 10, replace = TRUE)))
+  levels(df$quan) = c("<5", ">5")
+  df.cdf = createDummyFeatures(df)
+  colnames = names(df.cdf)
+  expect_false("<5" %in% colnames ||  ">5" %in% colnames)
+  expect_true("quan..5" %in% colnames ||  "quan..5.1" %in% colnames)
 })

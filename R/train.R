@@ -1,19 +1,19 @@
 #' Train a learning algorithm.
 #'
-#' Given a \code{\link{Task}}, creates a model for the learning machine
+#' Given a [Task], creates a model for the learning machine
 #' which can be used for predictions on new data.
 #'
 #' @template arg_learner
 #' @template arg_task
 #' @template arg_subset
-#' @param weights [\code{numeric}]\cr
+#' @param weights ([numeric])\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
-#'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
+#'   If given, must be of same length as `subset` and in corresponding order.
+#'   By default `NULL` which means no weights are used unless specified in the task ([Task]).
 #'   Weights from the task will be overwritten.
-#' @return [\code{\link{WrappedModel}}].
+#' @return ([WrappedModel]).
 #' @export
-#' @seealso \code{\link{predict.WrappedModel}}
+#' @seealso [predict.WrappedModel]
 #' @examples
 #' training.set = sample(seq_len(nrow(iris)), nrow(iris) / 2)
 #'
@@ -83,7 +83,7 @@ train = function(learner, task, subset = NULL, weights = NULL) {
       set.seed(debug.seed)
     # for optwrappers we want to see the tuning / varsel logging
     # FIXME: is case really ok for optwrapper? can we supppress then too?
-    fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else capture.output
+    fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else function(x) capture.output(suppressMessages(x))
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
     fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
         withCallingHandlers(x, error = function(c) utils::dump.frames())

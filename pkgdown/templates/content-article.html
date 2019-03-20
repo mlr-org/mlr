@@ -1,0 +1,76 @@
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-header toc-ignore">
+      <h1>$title$</h1>
+      $if(subtitle)$
+      <h3 class="subtitle">$subtitle$</h3>
+      $endif$
+      $for(author)$
+      $if(author.name)$
+      <h4 class="author">$author.name$</h4>
+      $if(author.affiliation)$
+      <address class="author_afil">
+      $author.affiliation$<br>$endif$
+      $if(author.email)$
+      <a class="author_email" href="mailto:#">$author.email$</a>
+      </address>
+      $endif$
+      $else$
+      <h4 class="author">$author$</h4>
+      $endif$
+      $endfor$
+
+      $if(date)$
+      <h4 class="date">$date$</h4>
+      $endif$
+
+      <!--The 'toc' block was inserted manually by @pat-s. It triggeres the inline ToC in the vignettes.-->
+      $if(toc)$
+      <div id="toc">
+      <h3>Table of Contents</h3>
+      $toc$
+      </div>
+      $endif$
+
+      {{#source}}<small>{{{.}}}</small>{{/source}}
+
+    </div>
+
+    $for(include-before)$
+    $include-before$
+    $endfor$
+
+    $if(abstract)$
+    <div class="abstract">
+      <p class="abstract">Abstract</p>
+      $abstract$
+    </div>
+    $endif$
+
+<div class="contents">
+$body$
+</div>
+  </div>
+
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    {{#sidebar}}
+    {{{.}}}
+    {{/sidebar}}
+
+    $if(toc)$
+    <div id="tocnav">
+      <h2>Contents</h2>
+      $toc$
+    </div>
+    $endif$
+  </div>
+
+</div>
+
+$for(include-after)$
+$include-after$
+$endfor$

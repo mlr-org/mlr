@@ -1,6 +1,6 @@
 #' @rdname Task
 #' @export
-makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn", check.data = TRUE) {
+makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
@@ -8,16 +8,16 @@ makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL,
 
   task = makeUnsupervisedTask("cluster", data = data, weights = weights,
                               blocking = blocking, fixup.data = fixup.data,
-                              check.data = check.data, spatial = spatial)
-  task$task.desc = makeClusterTaskDesc(id, data, weights, blocking, spatial)
+                              check.data = check.data, coordinates = coordinates)
+  task$task.desc = makeClusterTaskDesc(id, data, weights, blocking, coordinates)
   addClasses(task, "ClusterTask")
 }
 
 #' @export
 #' @rdname makeTaskDesc
-makeClusterTaskDesc = function(id, data, weights, blocking, spatial) {
+makeClusterTaskDesc = function(id, data, weights, blocking, coordinates) {
   target = character(0L)
-  td = makeTaskDescInternal("cluster", id, data, target, weights, blocking, spatial)
+  td = makeTaskDescInternal("cluster", id, data, target, weights, blocking, coordinates)
   return(addClasses(td, c("ClusterTaskDesc", "UnsupervisedTaskDesc")))
 }
 

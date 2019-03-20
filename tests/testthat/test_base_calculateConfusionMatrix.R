@@ -118,3 +118,40 @@ test_that("calculateConfusionMatrix with different factor levels (#2030)", {
   expect_equal(cm$result[1, 4], 0)
   expect_equal(cm$result[4, 4], 5)
 })
+
+
+test_that("calculateConfusionMatrix set argument works", {
+    mod = train("classif.lda", iris.task)
+    pred1 = predict(mod, iris.task)
+    rdesc = makeResampleDesc("CV", iters = 10, predict = "both")
+    # here, you have set=train and set=test in pred3$data:
+    pred2 = resample("classif.rpart", iris.task, rdesc)$pred
+
+    # pred1$data has no column "set" => argument set="train" would *not* make sense
+    expect_error(calculateConfusionMatrix(pred1, set = "train"))
+
+    # pred3 was predicted on both train and test set. Both subsetted matrices should give
+    # a positive total count:
+    test.obs = table(pred2$data$set)["test"]
+    train.obs = table(pred2$data$set)["train"]
+    expect_equivalent(sum(calculateConfusionMatrix(pred2, set = "train")$result[1:3, 1:3]), train.obs)
+    expect_equivalent(sum(calculateConfusionMatrix(pred2, set = "test")$result[1:3, 1:3]), test.obs)
+})
+
+test_that("calculateConfusionMatrix raises error when set argument is 'wrong'", {
+    # if a resampled prediction was computed with predict = "train" and is passed
+    # with set = "test" (and vice-versa), calculateConfusionMatrix should raise
+    # an error
+
+    rdesc.test = makeResampleDesc("CV", iters = 3, predict = "test")
+    pred.test = resample("classif.rpart", iris.task, rdesc.test)$pred
+
+    expect_error(calculateConfusionMatrix(pred.test, set = "train"))
+})
+
+test_that("calculateConfusionMatrix returns all-zero matrix when prediction object is empty", {
+    mod = train("classif.lda", iris.task)
+    pred = predict(mod, iris.task)
+    pred$data = pred$data[FALSE, ]
+    expect_true(all(calculateConfusionMatrix(pred)$result == 0))
+})

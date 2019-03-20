@@ -8,12 +8,11 @@ test_that("generateThreshVsPerfData", {
   pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
   plotThreshVsPerf(pvs)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
-  ## plotThreshVsPerfGGVIS(pvs)
 
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggplot2::ggsave(path)
@@ -29,7 +28,6 @@ test_that("generateThreshVsPerfData", {
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
-  ## plotThreshVsPerfGGVIS(pvs)
 
   pvs = generateThreshVsPerfData(r, list(tpr, fpr, acc), aggregate = FALSE)
   plotThreshVsPerf(pvs, measures = list(tpr, fpr, acc))
@@ -59,7 +57,6 @@ test_that("generateThreshVsPerfData", {
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
   expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
-  ## plotThreshVsPerfGGVIS(pvs)
 
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = TRUE)
   ggplot2::ggsave(path)
@@ -94,7 +91,6 @@ test_that("generateThreshVsPerfData", {
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
   expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
-  ## plotThreshVsPerfGGVIS(pvs)
 
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = TRUE)
   ggplot2::ggsave(path)
@@ -126,7 +122,6 @@ test_that("generateThreshVsPerfData", {
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(1L))
-  ## plotThreshVsPerfGGVIS(pvs.custom)
 
   # test that facetting works for plotThreshVsPerf
 

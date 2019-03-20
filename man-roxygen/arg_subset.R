@@ -1,3 +1,4 @@
-#' @param subset [\code{integer} | \code{logical} | \code{NULL}]\cr
+#' @param subset ([integer] | [logical] | `NULL`)\cr
 #'   Selected cases. Either a logical or an index vector.
-#'   By default (\code{NULL}) all observations are used.
+#'   By default `NULL` if all observations are used.
+#' @md

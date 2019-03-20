@@ -17,7 +17,7 @@ test_that("filterFeatures", {
   feat.imp.new = suppressWarnings(generateFilterValuesData(binaryclass.task))
   expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC.rfsrc"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC_importance"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
@@ -73,14 +73,13 @@ test_that("plotFilterValues", {
   fv = generateFilterValuesData(regr.num.task, method = filter.regr)
   plotFilterValues(fv)
 
-  path = paste(tempdir(), "test.svg")
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC.rfsrc"))
+  path = file.path(tempdir(), "test.svg")
+  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC_importance"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
-  ## plotFilterValuesGGVIS(fv2)
 
   # facetting works:
   q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
@@ -124,7 +123,7 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
   mock.filter = makeFilter(
     "mock.filter",
     desc = "Mock Filter",
-    pkg = "",
+    pkg = character(0),
     supported.tasks = c("classif", "regr", "surv"),
     supported.features = c("numerics", "factors"),
     fun = function(task, nselect) {

@@ -1,19 +1,19 @@
 #' @title Create control object for hyperparameter tuning with CMAES.
 #'
 #' @description
-#' CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
+#' CMA Evolution Strategy with method [cmaes::cma_es].
 #' Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #' For integers the internally proposed numeric values are automatically rounded.
 #' The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
 #' parameter dimension.
 #'
 #' @inherit TuneControl
-#' @param budget [\code{integer(1)}]\cr
+#' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
-#'   evaluations. The \code{budget} corresponds to the product of the number of generations
-#'   (\code{maxit}) and the number of offsprings per generation
-#'   (\code{lambda}).
-#' @return [\code{\link{TuneControlCMAES}}]
+#'   evaluations. The `budget` corresponds to the product of the number of generations
+#'   (`maxit`) and the number of offsprings per generation
+#'   (`lambda`).
+#' @return ([TuneControlCMAES])
 #' @aliases TuneControlCMAES
 #' @family tune
 #' @export

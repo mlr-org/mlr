@@ -1,6 +1,6 @@
-makeUnsupervisedTask = function(type, data, weights, blocking, fixup.data, check.data, spatial) {
+makeUnsupervisedTask = function(type, data, weights, blocking, fixup.data, check.data, coordinates) {
   task = makeTask(type, data, weights, blocking, fixup.data = fixup.data, check.data = check.data,
-                  spatial = spatial)
+                  coordinates = coordinates)
   if (check.data) {
     # we can't use getTaskData to access the tasks's data here because we then
     # want to access the description object which is not existing yet
@@ -21,5 +21,5 @@ print.UnsupervisedTask = function(x, print.weights = TRUE, ...) {
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
-  catf("Is spatial: %s", td$is.spatial)
+  catf("Has coordinates: %s", td$has.coordinates)
 }

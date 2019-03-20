@@ -1,2 +1,2 @@
-#' @return [\code{\link[ParamHelpers]{ParamSet}}].
-
+#' @return [ParamSet].
+#' @md

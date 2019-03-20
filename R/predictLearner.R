@@ -4,17 +4,17 @@
 #' You have to implement this method if you want to add another learner to this package.
 #'
 #' Your implementation must adhere to the following:
-#' Predictions for the observations in \code{.newdata} must be made based on the fitted
-#' model (\code{.model$learner.model}).
-#' All parameters in \code{...} must be passed to the underlying predict function.
+#' Predictions for the observations in `.newdata` must be made based on the fitted
+#' model (`.model$learner.model`).
+#' All parameters in `...` must be passed to the underlying predict function.
 #'
-#' @param .learner [\code{\link{RLearner}}]\cr
+#' @param .learner ([RLearner])\cr
 #'   Wrapped learner.
-#' @param .model [\code{\link{WrappedModel}}]\cr
+#' @param .model ([WrappedModel])\cr
 #'   Model produced by training.
-#' @param .newdata [\code{data.frame}]\cr
+#' @param .newdata ([data.frame])\cr
 #'   New data to predict. Does not include target column.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Additional parameters, which need to be passed to the underlying predict function.
 #' @return
 #' \itemize{
@@ -58,54 +58,26 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
       .newdata[ns] = mapply(factor, x = .newdata[ns],
          levels = fls, SIMPLIFY = FALSE)
   }
-  if ("missings" %nin% getLearnerProperties(.learner))
-    no.na = removeNALines(.newdata)
-  else
-    no.na = list(newdata = .newdata, inserts = FALSE)
-  if (!nrow(no.na$newdata))
-    no.na = list(newdata = .newdata, inserts = FALSE)  # no choice if all lines contain NA
-  p = predictLearner(.learner, .model, no.na$newdata, ...)
+  p = predictLearner(.learner, .model, .newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
-  return(insertLines(p, no.na$inserts))
-}
-
-removeNALines = function(newdata) {
-  namat = is.na(newdata)
-  narows = apply(namat, 1, any)
-  return(list(newdata = newdata[!narows, , drop = FALSE], inserts = narows))
-}
-
-insertLines = function(prediction, inserts) {
-#  if (!any(inserts))
-#    return(prediction)
-  if (is.matrix(prediction)) {
-    ret = matrix(nrow = nrow(prediction) + sum(inserts), ncol = ncol(prediction))
-    ret[!inserts, ] = prediction
-    colnames(ret) = colnames(prediction)
-  } else {
-    ret = rep(NA, length(prediction) + sum(inserts))
-    ret[!inserts] = prediction
-    attributes(ret) = attributes(prediction)
-    names(ret) = NULL
-  }
-  return(ret)
+  return(p)
 }
 
 #' @title Check output returned by predictLearner.
 #'
 #' @description
 #' Check the output coming from a Learner's internal
-#' \code{predictLearner} function.
+#' `predictLearner` function.
 #'
 #' This function is for internal use.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
+#' @param learner ([Learner])\cr
 #'   The learner.
-#' @param model [\code{\link{WrappedModel}}]]\cr
+#' @param model ([WrappedModel])]\cr
 #'   Model produced by training.
-#' @param p [any]\cr
-#'   The prediction made by \code{learner}.
-#' @return [any]. A sanitized version of \code{p}.
+#' @param p (any)\cr
+#'   The prediction made by `learner`.
+#' @return (any). A sanitized version of `p`.
 #' @keywords internal
 #' @export
 checkPredictLearnerOutput = function(learner, model, p) {

@@ -8,21 +8,21 @@
 #' differ from the mode value.
 #'
 #' @template arg_taskdf
-#' @param perc [\code{numeric(1)}]\cr
+#' @param perc (`numeric(1)`)\cr
 #'   The percentage of a feature values in [0, 1) that must differ from the mode value.
 #'   Default is 0, which means only constant features with exactly one observed level are removed.
-#' @param dont.rm [\code{character}]\cr
+#' @param dont.rm ([character])\cr
 #'   Names of the columns which must not be deleted.
 #'   Default is no columns.
-#' @param na.ignore [\code{logical(1)}]\cr
+#' @param na.ignore (`logical(1)`)\cr
 #'   Should NAs be ignored in the percentage calculation?
 #'   (Or should they be treated as a single, extra level in the percentage calculation?)
 #'   Note that if the feature has only missing values, it is always removed.
-#'   Default is \code{FALSE}.
-#' @param tol [\code{numeric(1)}]\cr
+#'   Default is `FALSE`.
+#' @param tol (`numeric(1)`)\cr
 #'   Numerical tolerance to treat two numbers as equal.
-#'   Variables stored as \code{double} will get rounded accordingly before computing the mode.
-#'   Default is \code{sqrt(.Maschine$double.eps)}.
+#'   Variables stored as `double` will get rounded accordingly before computing the mode.
+#'   Default is `sqrt(.Maschine$double.eps)`.
 #' @template arg_showinfo
 #' @template ret_taskdf
 #' @export

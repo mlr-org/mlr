@@ -10,7 +10,7 @@ You have to classify whether a person raises up a gun or just an empty hand.
 }
 \references{
 See Ratanamahatana, C. A. & Keogh. E. (2004). Everything you know
-  about Dynamic Time Warping is Wrong. Proceedings of SIAM International
-  Conference on Data Mining (SDM05), 506-510.
+about Dynamic Time Warping is Wrong. Proceedings of SIAM International
+Conference on Data Mining (SDM05), 506-510.
 }
 \keyword{data}

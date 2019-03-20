@@ -1,40 +1,40 @@
 #' Iris classification task.
 #'
-#' Contains the task (\code{iris.task}).
+#' Contains the task (`iris.task`).
 #'
 #' @name iris.task
-#' @references See \code{\link[datasets]{iris}}.
+#' @references See [datasets::iris].
 #' @keywords data
 #' @docType data
 NULL
 
 #' Sonar classification task.
 #'
-#' Contains the task (\code{sonar.task}).
+#' Contains the task (`sonar.task`).
 #'
 #' @name sonar.task
-#' @references See \code{\link[mlbench]{Sonar}}.
+#' @references See [mlbench::Sonar].
 #' @keywords data
 #' @docType data
 NULL
 
 #' Wisconsin Breast Cancer classification task.
 #'
-#' Contains the task (\code{bc.task}).
+#' Contains the task (`bc.task`).
 #'
 #' @name bc.task
-#' @references See \code{\link[mlbench]{BreastCancer}}.
-#'   The column \code{"Id"} and all incomplete cases have been removed from the task.
+#' @references See [mlbench::BreastCancer].
+#'   The column `"Id"` and all incomplete cases have been removed from the task.
 #' @keywords data
 #' @docType data
 NULL
 
 #' PimaIndiansDiabetes classification task.
 #'
-#' Contains the task (\code{pid.task}).
+#' Contains the task (`pid.task`).
 #'
 #' @name pid.task
-#' @references See \code{\link[mlbench]{PimaIndiansDiabetes}}.
+#' @references See [mlbench::PimaIndiansDiabetes].
 #'   Note that this is the uncorrected version from mlbench.
 #' @keywords data
 #' @docType data
@@ -42,22 +42,22 @@ NULL
 
 #' Boston Housing regression task.
 #'
-#' Contains the task (\code{bh.task}).
+#' Contains the task (`bh.task`).
 #'
 #' @name bh.task
 #' @aliases bh.task
-#' @references See \code{\link[mlbench]{BostonHousing}}.
+#' @references See [mlbench::BostonHousing].
 #' @keywords data
 #' @docType data
 NULL
 
 #' Wisonsin Prognostic Breast Cancer (WPBC) survival task.
 #'
-#' Contains the task (\code{wpbc.task}).
+#' Contains the task (`wpbc.task`).
 #'
 #' @name wpbc.task
 #' @aliases wpbc.task
-#' @references See \code{\link[TH.data]{wpbc}}.
+#' @references See [TH.data::wpbc].
 #'  Incomplete cases have been removed from the task.
 #' @keywords data
 #' @docType data
@@ -65,11 +65,11 @@ NULL
 
 #' NCCTG Lung Cancer survival task.
 #'
-#' Contains the task (\code{lung.task}).
+#' Contains the task (`lung.task`).
 #'
 #' @name lung.task
 #' @aliases lung.task
-#' @references See \code{\link[survival]{lung}}.
+#' @references See [survival::lung].
 #'  Incomplete cases have been removed from the task.
 #' @keywords data
 #' @docType data
@@ -77,33 +77,33 @@ NULL
 
 #' Motor Trend Car Road Tests clustering task.
 #'
-#' Contains the task (\code{mtcars.task}).
+#' Contains the task (`mtcars.task`).
 #'
 #' @name mtcars.task
 #' @aliases mtcars.task
-#' @references See \code{\link[datasets]{mtcars}}.
+#' @references See [datasets::mtcars].
 #' @keywords data
 #' @docType data
 NULL
 
 #' European Union Agricultural Workforces clustering task.
 #'
-#' Contains the task (\code{agri.task}).
+#' Contains the task (`agri.task`).
 #'
 #' @name agri.task
 #' @aliases agri.task
-#' @references See \code{\link[cluster]{agriculture}}.
+#' @references See [cluster::agriculture].
 #' @keywords data
 #' @docType data
 NULL
 
 #' Iris cost-sensitive classification task.
 #'
-#' Contains the task (\code{costiris.task}).
+#' Contains the task (`costiris.task`).
 #'
 #' @name costiris.task
 #' @aliases costiris.task
-#' @references See \code{\link[datasets]{iris}}.
+#' @references See [datasets::iris].
 #'   The cost matrix was generated artificially following
 #'
 #'   Tu, H.-H. and Lin, H.-T. (2010), One-sided support vector regression for multiclass cost-sensitive classification.
@@ -114,10 +114,10 @@ NULL
 
 #' Yeast multilabel classification task.
 #'
-#' Contains the task (\code{yeast.task}).
+#' Contains the task (`yeast.task`).
 #'
 #' @name yeast.task
-#' @source \url{http://sourceforge.net/projects/mulan/files/datasets/yeast.rar}
+#' @source <https://archive.ics.uci.edu/ml/datasets/Yeast> (In long instead of wide format)
 #' @references Elisseeff, A., & Weston, J. (2001):
 #' A kernel method for multi-labelled classification.
 #' In Advances in neural information processing systems (pp. 681-687).
@@ -125,19 +125,36 @@ NULL
 #' @docType data
 NULL
 
-#' Basque pathogen infection spatial binary classification task.
+#' J. Muenchow's Ecuador landslide data set
 #'
-#' Contains the task (\code{bc.task.spatial}).
+#' Data set created by Jannes Muenchow, University of Erlangen-Nuremberg,
+#' Germany.
+#' These data should be cited as Muenchow et al. (2012) (see reference below).
+#' This publication also contains additional information on data collection and
+#' the geomorphology of the area. The data set provded here is (a subset of) the
+#' one from the 'natural' part of the RBSF area and corresponds to landslide
+#' distribution in the year 2000.
+#' @name spatial.task
 #'
-#' @name bc.task.spatial
-#' @references Iturritxa, E., Mesanza, N., & Brenning, A. (2014). Spatial
-#' analysis of the risk of major forest diseases in Monterey pine plantations.
-#' Plant Pathology, 64(4), 880-889. doi:10.1111/ppa.12328
+#' @keywords datasets
+#'
+#' @docType data
+#'
+#' @format a `data.frame` with point samples of landslide and
+#' non-landslide locations in a study area in the Andes of southern Ecuador.
+#'
+#' @references Muenchow, J., Brenning, A., Richter, M., 2012. Geomorphic process
+#' rates of landslides along a humidity gradient in the tropical Andes.
+#' Geomorphology, 139-140: 271-284.
+#'
+#' Brenning, A., 2005. Spatial prediction models for landslide hazards:
+#' review, comparison and evaluation.
+#' Natural Hazards and Earth System Sciences, 5(6): 853-862.
 NULL
 
 #' Gunpoint functional data classification task.
 #'
-#' Contains the task (\code{gunpoint.task}).
+#' Contains the task (`gunpoint.task`).
 #' You have to classify whether a person raises up a gun or just an empty hand.
 #'
 #' @name gunpoint.task
@@ -151,13 +168,13 @@ NULL
 
 #' FuelSubset functional data regression task.
 #'
-#' Contains the task (\code{fuelsubset.task}).
+#' Contains the task (`fuelsubset.task`).
 #' 2 functional covariates and 1 scalar covariate.
 #' You have to predict the heat value of some fuel based on the
 #' ultraviolet radiation spectrum and infrared ray radiation and one scalar
 #' column called h2o.
 #'
-#' The features and grids are scaled in the same way as in \code{\link[FDboost]{FDboost}}.
+#' The features and grids are scaled in the same way as in [FDboost::FDboost].
 #'
 #' @name fuelsubset.task
 #' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
@@ -167,7 +184,7 @@ NULL
 
 #' Phoneme functional data multilabel classification task.
 #'
-#' Contains the task (\code{phoneme.task}).
+#' Contains the task (`phoneme.task`).
 #' The task contains a single functional covariate and 5 equally big classes (aa, ao, dcl, iy, sh).
 #' The aim is to predict the class of the phoneme in the functional.
 #' The dataset is contained in the package fda.usc.
@@ -177,6 +194,16 @@ NULL
 #'   F. Ferraty and P. Vieu (2003) "Curve discrimination: a nonparametric functional approach", Computational Statistics and Data Analysis, 44(1-2), 161-173.
 #'   F. Ferraty and P. Vieu (2006) Nonparametric functional data analysis, New York: Springer.
 #'   T. Hastie and R. Tibshirani and J. Friedman (2009) The elements of statistical learning: Data mining, inference and prediction, 2nd edn, New York: Springer.
+#' @keywords data
+#' @docType data
+NULL
+
+#' Spam classification task.
+#'
+#' Contains the task (`spam.task`).
+#'
+#' @name spam.task
+#' @references See [kernlab::spam].
 #' @keywords data
 #' @docType data
 NULL

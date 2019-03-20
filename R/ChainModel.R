@@ -1,7 +1,7 @@
 #' Only exported for internal use.
-#' @param next.model [\code{WrappedModel}]\cr
+#' @param next.model ([WrappedModel])\cr
 #'   The next model.
-#' @param cl [\code{character}]\cr
+#' @param cl ([character])\cr
 #'   Subclass to assign to the resulting model.
 #'
 #' @keywords internal

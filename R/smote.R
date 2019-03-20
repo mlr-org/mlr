@@ -6,35 +6,35 @@
 #' for the minority class.
 #'
 #' The method handles factor features, too. The gower distance is used for nearest neighbor
-#' calculation, see \code{\link[cluster]{daisy}}.
+#' calculation, see [cluster::daisy].
 #' For interpolation, the new factor level for x3
 #' is sampled from the two given levels of x1 and x2 per feature.
 #'
 #' @template arg_task
-#' @param rate [\code{numeric(1)}]\cr
+#' @param rate (`numeric(1)`)\cr
 #'   Factor to upsample the smaller class.
-#'   Must be between 1 and \code{Inf},
+#'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
-#' @param nn [\code{integer(1)}]\cr
+#' @param nn (`integer(1)`)\cr
 #'   Number of nearest neighbors to consider.
 #'   Default is 5.
-#' @param standardize [\code{integer(1)}]\cr
+#' @param standardize (`integer(1)`)\cr
 #'   Standardize input variables before calculating the nearest neighbors
 #'   for data sets with numeric input variables only. For mixed variables
 #'   (numeric and factor) the gower distance is used and variables are
 #'   standardized anyway.
-#'   Default is \code{TRUE}.
-#' @param alt.logic [\code{integer(1)}]\cr
+#'   Default is `TRUE`.
+#' @param alt.logic (`integer(1)`)\cr
 #'   Use an alternative logic for selection of minority class observations.
 #'   Instead of sampling a minority class element AND one of its nearest
 #'   neighbors, each minority class element is taken multiple times (depending
 #'   on rate) for the interpolation and only the corresponding nearest neighbor
 #'   is sampled.
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @template ret_task
 #' @references
 #' Chawla, N., Bowyer, K., Hall, L., & Kegelmeyer, P. (2000)
-#' \emph{SMOTE: Synthetic Minority Over-sampling TEchnique.}
+#' *SMOTE: Synthetic Minority Over-sampling TEchnique.*
 #' In International Conference of Knowledge Based Computer Systems, pp. 46-57.
 #' National Center for Software Technology, Mumbai, India, Allied Press.
 #' @family imbalancy

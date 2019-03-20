@@ -5,29 +5,30 @@
 #' Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
-#' \code{\link{TuneMultiCritControl}}.
+#' [TuneMultiCritControl].
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+#' @param resampling ([ResampleInstance] | [ResampleDesc])\cr
 #'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are
 #'   evaluated on the same training/test sets.
-#'   If you want to change that behavior, look at \code{\link{TuneMultiCritControl}}.
-#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
+#'   If you want to change that behavior, look at [TuneMultiCritControl].
+#' @param par.set ([ParamHelpers::ParamSet])\cr
 #'   Collection of parameters and their constraints for optimization.
-#'   Dependent parameters with a \code{requires} field must use \code{quote} and not
-#'   \code{expression} to define it.
-#' @param measures [list of \code{\link{Measure}}]\cr
+#'   Dependent parameters with a `requires` field must use `quote` and not
+#'   `expression` to define it.
+#' @param measures [list of [Measure])\cr
 #'   Performance measures to optimize simultaneously.
-#' @param control [\code{\link{TuneMultiCritControl}}]\cr
+#' @param control ([TuneMultiCritControl])\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
-#' @param resample.fun [\code{closure}]\cr
-#'   The function to use for resampling. Defaults to \code{\link{resample}} and should take the
-#'   same arguments as, and return the same result type as, \code{\link{resample}}.
-#' @return [\code{\link{TuneMultiCritResult}}].
+#' @param resample.fun ([closure])\cr
+#'   The function to use for resampling. Defaults to [resample] and should take the
+#'   same arguments as, and return the same result type as, [resample].
+#' @return ([TuneMultiCritResult]).
 #' @family tune_multicrit
+#' @noMd
 #' @export
 #' @examples
 #' \donttest{

@@ -78,3 +78,22 @@ test_that("stratification on features work", {
   expect_true(setequal(apply(train[c("x", "y")], 1, collapse, sep = ""), c("aa", "ab", "ba", "bb")))
   expect_true(setequal(apply(test[c("x", "y")], 1, collapse, sep = ""), c("aa", "ab", "ba", "bb")))
 })
+
+test_that("stratification on integers work", {
+  df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"), times = 4), z = rep(1:2, each = 4))
+  task = makeClassifTask(data = df, target = "y")
+  rdesc = makeResampleDesc("Holdout", split = 0.5, stratify.cols = "z")
+  rin = makeResampleInstance(rdesc, task = task)
+  train = df[rin$train.inds[[1]], ]
+  test = df[rin$test.inds[[1]], ]
+  expect_equal(as.integer(table(train$z)), c(2L, 2L))
+  expect_equal(as.integer(table(test$z)), c(2L, 2L))
+})
+
+test_that("stratification on doubles does not work", {
+  df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"), times = 4), z = rep(1:2, each = 4))
+  df$z = as.double(df$z)
+  task = makeClassifTask(data = df, target = "y")
+  rdesc = makeResampleDesc("Holdout", split = 0.5, stratify.cols = "z")
+  expect_error(makeResampleInstance(rdesc, task = task), "double-precision")
+})

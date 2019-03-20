@@ -4,10 +4,10 @@
 #' Characters and logicals will be treated as factors.
 #'
 #' @template arg_taskdf
-#' @param cols [\code{character}]\cr
-#'   Restrict result to columns in \code{cols}.
-#'   Default is all factor, character and logical columns of \code{obj}.
-#' @return [\code{list}]. Named list of tables.
+#' @param cols ([character])\cr
+#'   Restrict result to columns in `cols`.
+#'   Default is all factor, character and logical columns of `obj`.
+#' @return ([list]). Named list of tables.
 #' @export
 #' @family eda_and_preprocess
 #' summarizeLevels(iris)
