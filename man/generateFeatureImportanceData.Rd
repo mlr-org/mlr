@@ -114,7 +114,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
 \concept{generate_plot_data}
