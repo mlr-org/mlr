@@ -306,7 +306,8 @@
     <p>Measures the quality of a prediction w.r.t. some performance measure.</p>
     
 
-    <pre class="usage"><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='no'>measures</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>feats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='no'>measures</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>feats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>simpleaggr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -338,6 +339,11 @@ Model built on training data, might be requested by performance measure, usually
 Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a <code>task</code>, you can also pass this instead and the features
 are extracted from it.</p></td>
+    </tr>
+    <tr>
+      <th>simpleaggr</th>
+      <td><p>[<code>logical</code>]<br />
+If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This is used internally for threshold tuning. Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
     

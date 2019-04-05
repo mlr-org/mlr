@@ -4,7 +4,8 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-performance(pred, measures, task = NULL, model = NULL, feats = NULL)
+performance(pred, measures, task = NULL, model = NULL, feats = NULL,
+  simpleaggr = FALSE)
 }
 \arguments{
 \item{pred}{(\link{Prediction})\cr
@@ -24,6 +25,9 @@ Model built on training data, might be requested by performance measure, usually
 Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a \code{task}, you can also pass this instead and the features
 are extracted from it.}
+
+\item{simpleaggr}{[\code{logical}]\cr
+If TRUE, aggregation of \code{ResamplePrediction} objects is skipped. This is used internally for threshold tuning. Default is \code{FALSE}.}
 }
 \value{
 (named \link{numeric}). Performance value(s), named by measure(s).
