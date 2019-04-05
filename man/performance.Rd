@@ -26,7 +26,7 @@ Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a \code{task}, you can also pass this instead and the features
 are extracted from it.}
 
-\item{simpleaggr}{[\code{logical}]\cr
+\item{simpleaggr}{(\link{logical})\cr
 If TRUE, aggregation of \code{ResamplePrediction} objects is skipped. This is used internally for threshold tuning. Default is \code{FALSE}.}
 }
 \value{
