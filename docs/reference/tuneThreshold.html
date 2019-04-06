@@ -32,8 +32,8 @@
 
 <meta property="og:description" content="Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
-Uses BBmisc::optimizeSubInts for normal binary class problems and cmaes::cma_es
-for multiclass and multilabel problems." />
+Uses BBmisc::optimizeSubInts for normal binary class problems and
+GenSA::GenSA for multiclass and multilabel problems." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -308,8 +308,8 @@ for multiclass and multilabel problems." />
     
     <p>Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
-Uses <a href='https://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for normal binary class problems and <a href='https://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a>
-for multiclass and multilabel problems.</p>
+Uses <a href='https://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for normal binary class problems and
+<a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a> for multiclass and multilabel problems.</p>
     
 
     <pre class="usage"><span class='fu'>tuneThreshold</span>(<span class='no'>pred</span>, <span class='no'>measure</span>, <span class='no'>task</span>, <span class='no'>model</span>, <span class='kw'>nsub</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
@@ -349,7 +349,7 @@ Default is 20.</p></td>
     <tr>
       <th>control</th>
       <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
-Control object for <a href='https://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a> when used.
+Control object for <a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a> when used.
 Default is empty list.</p></td>
     </tr>
     </table>
