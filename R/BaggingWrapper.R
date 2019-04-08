@@ -2,10 +2,10 @@
 #'
 #' @description
 #' Fuses a learner with the bagging method
-#' (i.e., similar to what a \code{randomForest} does).
+#' (i.e., similar to what a `randomForest` does).
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
@@ -18,23 +18,23 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #' For regression the mean value and the standard deviations across predictions is computed.
 #'
-#' Note that the passed base learner must always have \code{predict.type = 'response'},
+#' Note that the passed base learner must always have `predict.type = 'response'`,
 #' while the BaggingWrapper can estimate probabilities and standard errors, so it can
-#' be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
-#' \code{\link{setPredictType}}, the type is only set for the BaggingWrapper, not passed
+#' be set, e.g., to `predict.type = 'prob'`. For this reason, when you call
+#' [setPredictType], the type is only set for the BaggingWrapper, not passed
 #' down to the inner learner.
 #'
 #' @template arg_learner
-#' @param bw.iters [\code{integer(1)}]\cr
+#' @param bw.iters (`integer(1)`)\cr
 #'   Iterations = number of fitted models in bagging.
 #'   Default is 10.
-#' @param bw.replace [\code{logical(1)}]\cr
+#' @param bw.replace (`logical(1)`)\cr
 #'   Sample bags with replacement (bootstrapping)?
 #'   Default is TRUE.
-#' @param bw.size [\code{numeric(1)}]\cr
+#' @param bw.size (`numeric(1)`)\cr
 #'   Percentage size of sampled bags.
 #'   Default is 1 for bootstrapping and 0.632 for subsampling.
-#' @param bw.feats [\code{numeric(1)}]\cr
+#' @param bw.feats (`numeric(1)`)\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #'   At least one feature will always be selected.
@@ -68,7 +68,7 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeIntegerLearnerParam(id = "bw.iters", lower = 1L, default = 10L),
     makeLogicalLearnerParam(id = "bw.replace", default = TRUE),
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
-    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
+    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2 / 3)
   )
   makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "BaggingWrapper", model.subclass = "BaggingModel")
@@ -83,7 +83,7 @@ print.BaggingModel = function(x, ...) {
 }
 
 #' @export
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.BaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   bw.iters = 10, bw.replace = TRUE, bw.size, bw.feats = 1, ...) {
 
   if (missing(bw.size))
@@ -111,12 +111,12 @@ doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weight
 }
 
 #' @export
-predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.BaggingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    g(predict(m, newdata = nd, ...)$data$response)
+    g(predict(m, newdata = nd, subset = .subset, ...)$data$response)
   }))
   if (.learner$predict.type == "response") {
     if (.learner$type == "classif")
@@ -124,7 +124,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
     else
       rowMeans(p)
   } else {
-    if (.learner$type == 'classif') {
+    if (.learner$type == "classif") {
       levs = .model$task.desc$class.levels
       p = apply(p, 1L, function(x) {
         x = factor(x, levels = levs) # we need all level for the table and we need them in consistent order!

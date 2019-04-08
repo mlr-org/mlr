@@ -8,23 +8,23 @@ convertBMRToRankMatrix(bmr, measure = NULL, ties.method = "average",
   aggregation = "default")
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{[\code{\link{Measure}}]\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{ties.method}{[\code{character(1)}]\cr
-See \code{\link[base]{rank}} for details.}
+\item{ties.method}{(\code{character(1)})\cr
+See \link[base:rank]{base::rank} for details.}
 
-\item{aggregation}{[\code{character(1)}] \cr
-\dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}
+\item{aggregation}{(\code{character(1)}) \cr
+\dQuote{mean} or \dQuote{default}. See \link{getBMRAggrPerformances}
 for details on \dQuote{default}.}
 }
 \value{
-[\code{matrix}] with measure ranks as entries.
-  The matrix has one row for each \code{learner}, and one column for each \code{task}.
+(\link{matrix}) with measure ranks as entries.
+The matrix has one row for each \code{learner}, and one column for each \code{task}.
 }
 \description{
 Computes a matrix of all the ranks of different algorithms
@@ -38,7 +38,7 @@ for measures that are maximized, small ranks imply large scores.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
   \code{\link{generateCritDifferencesData}},
@@ -52,11 +52,13 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescriptions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}

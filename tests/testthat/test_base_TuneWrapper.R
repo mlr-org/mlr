@@ -48,14 +48,15 @@ test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
   tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
   # this resulted in an error as "s" was not passed to predict
-  resample(tw, binaryclass.task, rdesc)
+  res = resample(tw, binaryclass.task, rdesc)
+  expect_class(res, "ResampleResult")
 })
 
 test_that("TuneWrapper uses tune.threshold", {
   lrn = makeLearner("classif.lda", predict.type = "prob")
   rdesc = makeResampleDesc("Holdout")
   costs = matrix(c(0, 5, 1, 0), 2)
-  colnames(costs) = rownames(costs) = getTaskDescription(binaryclass.task)$class.levels
+  colnames(costs) = rownames(costs) = getTaskDesc(binaryclass.task)$class.levels
   mm = makeCostMeasure(id = "costs", costs = costs, best = 0, worst = 5)
   ps = makeParamSet(makeDiscreteParam("method", "moment"))
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
@@ -81,18 +82,18 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   opdf = getNestedTuneResultsOptPathDf(r)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 4)
-  
+
   # check trafo arg
-  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2, 
+  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2,
     trafo = function(x) 2^x))
-  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2, 
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2,
     control = makeTuneControlGrid())
-  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, 
+  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce,
     extract = getTuneResult)
   opdf = getNestedTuneResultsOptPathDf(r, trafo = TRUE)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 20)
-  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))                   
+  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))
 })
 
 
@@ -100,7 +101,7 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   ps = makeParamSet(
-    makeDiscreteParam("C", 2^(-1))
+    makeDiscreteParam("C", 2^ (-1))
   )
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),
@@ -108,3 +109,14 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   r = resample(lrn2, iris.task, rdesc, measures = mmce)
   expect_identical(sort(names(r$pred$threshold)), c("setosa", "versicolor", "virginica"))
 })
+
+test_that("TuneWrapper with glmnet (#958)", {
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
+    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),
+    control = makeTuneControlRandom())
+  mod = train(lrn2, multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_error(pred, NA)
+})
+

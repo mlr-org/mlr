@@ -51,7 +51,7 @@ doDPSSplit = function(x) {
   list(s1, s2)
 }
 
-doDPSSplits = function(x, k, inds = 1:nrow(x)) {
+doDPSSplits = function(x, k, inds = seq_len(nrow(x))) {
   if (log2(nrow(x)) < k) stop("Too many splits")
   if (k == 1L) {
     s.index = doDPSSplit(x)
@@ -176,7 +176,7 @@ doDPSSplit = function(x) {
   list(s1, s2)
 }
 
-doDPSSplits = function(x, k, inds = 1:nrow(x)) {
+doDPSSplits = function(x, k, inds = seq_len(nrow(x))) {
   if (log2(nrow(x)) < k) stop("Too many splits")
   if (k == 1L) {
     s.index = doDPSSplit(x)

@@ -8,7 +8,6 @@ makeRLearner.regr.cvglmnet = function() {
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "nfolds", default = 10L, lower = 3L),
       makeDiscreteLearnerParam(id = "type.measure", values = c("mse", "mae"), default = "mse"),
-      makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeDiscreteLearnerParam(id = "s", values = c("lambda.1se", "lambda.min"), default = "lambda.1se", when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
@@ -41,7 +40,8 @@ makeRLearner.regr.cvglmnet = function() {
     glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
     before setting the specified parameters and after training.
     If you are setting glmnet.control parameters through glmnet.control,
-    you need to save and re-set them after running the glmnet learner."
+    you need to save and re-set them after running the glmnet learner.",
+    callees = c("cv.glmnet", "glmnet", "glmnet.control", "predict.cv.glmnet")
   )
 }
 

@@ -4,13 +4,13 @@ makeRLearner.regr.blm = function() {
     cl = "regr.blm",
     package = "tgp",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "meanfn", default = "linear", 
-        values = c("constant", "linear")), 
-      makeDiscreteLearnerParam(id = "bprior", default = "bflat", 
+      makeDiscreteLearnerParam(id = "meanfn", default = "linear",
+        values = c("constant", "linear")),
+      makeDiscreteLearnerParam(id = "bprior", default = "bflat",
         values = c("b0", "b0not", "bflat", "bmle", "bmznot", "bmzt")),
-      makeIntegerVectorLearnerParam(id = "BTE", len = 3, 
-        default = c(1000, 4000, 3), lower = 0), 
-      makeIntegerLearnerParam(id = "R", default = 1, lower = 1), 
+      makeIntegerVectorLearnerParam(id = "BTE", len = 3,
+        default = c(1000, 4000, 3), lower = 0),
+      makeIntegerLearnerParam(id = "R", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "m0r1", default = TRUE),
       makeUntypedLearnerParam(id = "itemps", default = NULL),
       makeLogicalLearnerParam(id = "krige", default = TRUE),
@@ -22,7 +22,8 @@ makeRLearner.regr.blm = function() {
     ),
     properties = c("numerics", "se"),
     name = "Bayesian Linear Model",
-    short.name = "blm"
+    short.name = "blm",
+    callees = "blm"
   )
 }
 
@@ -40,5 +41,5 @@ predictLearner.regr.blm = function(.learner, .model, .newdata, ...) {
   } else {
     return(cbind(p$ZZ.km, sqrt(p$ZZ.ks2)))
   }
-  
-}  
+
+}

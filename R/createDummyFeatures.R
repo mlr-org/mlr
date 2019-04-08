@@ -1,18 +1,19 @@
 #' @title Generate dummy variables for factor features.
 #'
 #' @description
-#' Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
+#' Replace all factor features with their dummy variables. Internally [model.matrix] is used.
 #' Non factor features will be left untouched and passed to the result.
 #'
 #' @template arg_taskdf
 #' @template arg_taskdf_target
-#' @param method [\code{character(1)}]\cr
+#' @param method (`character(1)`)\cr
 #'   Available are:
 #'   \describe{
 #'     \item{"1-of-n":}{For n factor levels there will be n dummy variables.}
 #'     \item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
 #'   }
-#' @param cols [\code{character}]\cr
+#'   Default is \dQuote{1-of-n}.
+#' @param cols ([character])\cr
 #'   Columns to create dummy features for. Default is to use all columns.
 #' @template ret_taskdf
 #' @export
@@ -42,7 +43,7 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   options(na.action = "na.pass")
 
   prefix = colnames(obj[work.cols])
-  dfcol = obj[,work.cols]
+  dfcol = obj[, work.cols]
 
   dummies = as.data.frame(lapply(obj[work.cols], createDummyFeatures, method = method))
 

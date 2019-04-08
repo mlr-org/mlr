@@ -15,11 +15,12 @@ makeRLearner.surv.gbm = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    properties = c("missings", "numerics", "factors", "rcens", "prob", "weights", "featimp"),
+    properties = c("missings", "numerics", "factors", "weights", "featimp"),
     par.vals = list(keep.data = FALSE),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = "`keep.data` is set to FALSE to reduce memory requirements."
+    note = "`keep.data` is set to FALSE to reduce memory requirements.",
+    callees = "gbm"
   )
 }
 

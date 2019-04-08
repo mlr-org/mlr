@@ -12,12 +12,12 @@ RegistryToBMR = function(reg, learners, measures, imputeMissing = TRUE){
   })
   
   allLrns = c()
-  for(i in 1:length(learners)){allLrns =  c(allLrns, learners[[i]]$id)}
+  for(i in seq_along(learners)){allLrns =  c(allLrns, learners[[i]]$id)}
   nLrns = length(unique(allLrns))
   
   # Coerce to format list of tasks that contain ResampleResults of all learners for the task. 
   r = list()
-  for(i in 1:length(res)){
+  for(i in seq_along(res)){
     tnm = names(res[[i]])[1]
     lnm = names(res[[i]][[tnm]])[1]
     r[[tnm]][[lnm]] = res[[i]][[tnm]][[lnm]]
@@ -32,7 +32,7 @@ RegistryToBMR = function(reg, learners, measures, imputeMissing = TRUE){
     # Create copy
     rClean = newBMR$results
     # Get Number of learners:
-    for(i in 1:length(r)){
+    for(i in seq_along(r)){
       if(length(r[[i]]) < nLrns){
         print(paste0("Deleting task: ", names(r)[i]))
         rClean[[names(r)[i]]] = NULL
@@ -54,10 +54,10 @@ RegistryToBMR = function(reg, learners, measures, imputeMissing = TRUE){
   
     imputeBMR = function(bmr){
       # Write imputed resample result
-      for(i in 1:length(bmr$results)){
+      for(i in seq_along(bmr$results)){
         if(length(bmr$results[[i]])< nLrns){
           missing = setdiff(allLrns, names(bmr$results[[i]]))
-          for(j in 1:length(missing)){
+          for(j in seq_along(missing)){
             imp = imputeMissingResampRes(missing[[j]], names(bmr$results)[i])
             eval(parse(text = paste0("bmr$results[[", i ,"]][['", missing[[j]], "']] = imp")))
           }
@@ -100,7 +100,7 @@ if(FALSE){
   # test consitency
   res = reduceResultsList(reg, ids =  findDone(reg))
   
-  for(i in 1:length(res)){
+  for(i in seq_along(res)){
     z = c(z, res[[i]]$resample.res$task.id)
     t = c(t, res[[i]]$resample.res$learner.id)
   }
@@ -117,10 +117,10 @@ if(FALSE){
     impute$measures.test$timepredict = 3600L
     impute$aggr = c(1L, 1L, 3600L, 3600L)
     names(impute$aggr) = c("mmce.test.mean","ber.test.mean","timetrain.test.mean","timepredict.test.mean")
-    impute$pred = c("imputed")
+    impute$pred = "imputed"
     impute$measures.train = data.frame(c("imputed"))
-    impute$err.msgs = c("imputed")
-    impute$models  = c("imputed")
+    impute$err.msgs = "imputed"
+    impute$models  = "imputed"
     impute$runtime = 3600*10
     imp = impute
     save(imp, file = "impute.RData")

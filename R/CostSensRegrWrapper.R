@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Creates a wrapper, which can be used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' For each class in the task, an individual regression model is fitted for the costs of that class.
 #' During prediction, the class with the lowest predicted costs is selected.
@@ -23,13 +23,13 @@ makeCostSensRegrWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
+trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset = NULL, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   d = getTaskData(.task)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
-  models = parallelMap(doCostSensRegrTrainIteration, cl = getTaskDescription(.task)$class.levels,more.args = list("d" = d, "costs" = getTaskCosts(.task), "learner" = .learner), level = "mlr.ensemble")
+  models = parallelMap(doCostSensRegrTrainIteration, cl = getTaskDesc(.task)$class.levels, more.args = list("d" = d, "costs" = getTaskCosts(.task), "learner" = .learner), level = "mlr.ensemble")
   makeHomChainModel(.learner, models)
 }
 

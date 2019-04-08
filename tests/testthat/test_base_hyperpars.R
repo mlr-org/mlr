@@ -9,7 +9,7 @@ test_that("hyperpars", {
   expect_equal(getHyperPars(m$learner), list(xval = 0, minsplit = 10))
 
   # test equality after removing using removeHyperPars
-  lrn = makeLearner("classif.J48", C=0.5)
+  lrn = makeLearner("classif.J48", C = 0.5)
   expect_identical(getHyperPars(makeLearner("classif.J48")),
     getHyperPars(removeHyperPars(lrn, "C")))
 
@@ -58,7 +58,7 @@ test_that("setting 'when' works for hyperpars", {
   m = train(lrn, regr.task)
   expect_equal(m$learner.model, list(foo = 1 + 3))
   p = predict(m, regr.task)
-  expect_equal(p$data$response, rep(1+2+2*3, getTaskSize(regr.task)))
+  expect_equal(p$data$response, rep(1 + 2 + 2 * 3, getTaskSize(regr.task)))
 })
 
 test_that("fuzzy matching works for mistyped hyperpars", {

@@ -6,16 +6,16 @@
 #' For binary classification: The positive class is predicted if the probability value exceeds the threshold.
 #' For multiclass: Probabilities are divided by corresponding thresholds and the class with maximum resulting value is selected.
 #' The result of both are equivalent if in the multi-threshold case the values are greater than 0 and sum to 1.
-#' For multilabel classification: A label is predicted (with entry \code{TRUE}) if a probability matrix entry
+#' For multilabel classification: A label is predicted (with entry `TRUE`) if a probability matrix entry
 #' exceeds the threshold of the corresponding label.
 #'
 #' @template arg_pred
-#' @param threshold [\code{numeric}]\cr
+#' @param threshold ([numeric])\cr
 #'   Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 #'   Only for binary classification it can be a single numerical threshold for the positive class.
-#' @return [\code{\link{Prediction}}] with changed threshold and corresponding response.
+#' @return ([Prediction]) with changed threshold and corresponding response.
 #' @export
-#' @seealso \code{\link{predict.WrappedModel}}
+#' @seealso [predict.WrappedModel]
 #' @examples
 #' # create task and train learner (LDA)
 #' task = makeClassifTask(data = iris, target = "Species")
@@ -41,10 +41,10 @@ setThreshold = function(pred, threshold) {
   ttype = td$type
   levs = td$class.levels
   if (length(levs) == 2L && is.numeric(threshold) && length(threshold) == 1L) {
-    threshold = c(threshold, 1-threshold)
+    threshold = c(threshold, 1 - threshold)
     names(threshold) = c(td$positive, td$negative)
   }
-  if (length(threshold > 1L) && !setequal(levs, names(threshold)))
+  if (length(threshold) > 1L && !setequal(levs, names(threshold)))
     stop("Threshold names must correspond to classes!")
   p = getPredictionProbabilities(pred, cl = levs)
   # resort so we have same order in threshold and p
@@ -55,7 +55,9 @@ setThreshold = function(pred, threshold) {
     # 0 / 0 can produce NaNs. For a 0 threshold we always want Inf weight for that class
     p[is.nan(p)] = Inf
     ind = getMaxIndexOfRows(p)
-    pred$data$response = factor(ind, levels = seq_along(levs), labels = levs)
+    class(ind) = "factor"
+    attr(ind, "levels") = levs
+    pred$data$response = ind
   } else if (ttype == "multilabel") {
     # substract threshold from every entry, then check if > 0, then set response level
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "-", threshold)

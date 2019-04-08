@@ -13,38 +13,38 @@
 #' @aliases CalibrationData
 #'
 #' @template arg_plotroc_obj
-#' @param breaks [\code{character(1)} | \code{numeric}]\cr
-#'   If \code{character(1)}, the algorithm to use in generating probability bins.
-#'   See \code{\link{hist}} for details.
-#'   If \code{numeric}, the cut points for the bins.
+#' @param breaks (`character(1)` | [numeric])\cr
+#'   If `character(1)`, the algorithm to use in generating probability bins.
+#'   See [hist] for details.
+#'   If [numeric], the cut points for the bins.
 #'   Default is \dQuote{Sturges}.
-#' @param groups [\code{integer(1)}]\cr
+#' @param groups (`integer(1)`)\cr
 #'   The number of bins to construct.
-#'   If specified, \code{breaks} is ignored.
-#'   Default is \code{NULL}.
-#' @param task.id [\code{character(1)}]\cr
-#'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+#'   If specified, `breaks` is ignored.
+#'   Default is `NULL`.
+#' @param task.id (`character(1)`)\cr
+#'   Selected task in [BenchmarkResult] to do plots for, ignored otherwise.
 #'   Default is first task.
 #'
-#' @return [CalibrationData]. A \code{list} containing:
-#'   \item{proportion}{[\code{data.frame}] with columns:
+#' @return [CalibrationData]. A [list] containing:
+#'   \item{proportion}{[data.frame] with columns:
 #'     \itemize{
-#'       \item \code{Learner} Name of learner.
-#'       \item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
-#'       \item \code{Class} Class labels (for binary classification only the positive class).
-#'       \item \code{Proportion} Proportion of observations from class \code{Class} among all
-#'         observations with posterior probabilities of class \code{Class} within the
-#'         interval given in \code{bin}.
+#'       \item `Learner` Name of learner.
+#'       \item `bin` Bins calculated according to the `breaks` or `groups` argument.
+#'       \item `Class` Class labels (for binary classification only the positive class).
+#'       \item `Proportion` Proportion of observations from class `Class` among all
+#'         observations with posterior probabilities of class `Class` within the
+#'         interval given in `bin`.
 #'     }}
-#'   \item{data}{[\code{data.frame}] with columns:
+#'   \item{data}{[data.frame] with columns:
 #'     \itemize{
-#'       \item \code{Learner} Name of learner.
-#'       \item \code{truth} True class label.
-#'       \item \code{Class} Class labels (for binary classification only the positive class).
-#'       \item \code{Probability} Predicted posterior probability of \code{Class}.
-#'       \item \code{bin} Bin corresponding to \code{Probability}.
+#'       \item `Learner` Name of learner.
+#'       \item `truth` True class label.
+#'       \item `Class` Class labels (for binary classification only the positive class).
+#'       \item `Probability` Predicted posterior probability of `Class`.
+#'       \item `bin` Bin corresponding to `Probability`.
 #'     }}
-#'   \item{task}{[\code{\link{TaskDesc}}]\cr
+#'   \item{task}{([TaskDesc])\cr
 #'     Task description.}
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
@@ -113,11 +113,11 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     proportion = proportion[, !td$negative, with = FALSE]
     data = data[data$Class != td$negative, ]
   }
-  max_bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
+  max.bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
                    function(x) as.numeric(x[length(x)]))
-  proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max_bin)])
+  proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max.bin)])
   proportion = melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
-  data$bin = ordered(data$bin, levels = levels(data$bin)[order(max_bin)])
+  data$bin = ordered(data$bin, levels = levels(data$bin)[order(max.bin)])
   setDF(data)
   setDF(proportion)
 
@@ -129,23 +129,23 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @title Plot calibration data using ggplot2.
 #'
 #' @description
-#' Plots calibration data from \code{\link{generateCalibrationData}}.
+#' Plots calibration data from [generateCalibrationData].
 #'
 #' @family plot
 #' @family calibration
 #'
-#' @param obj [\code{CalibrationData}]\cr
-#'   Result of \code{\link{generateCalibrationData}}.
-#' @param smooth [\code{logical(1)}]\cr
+#' @param obj ([CalibrationData])\cr
+#'   Result of [generateCalibrationData].
+#' @param smooth (`logical(1)`)\cr
 #'   Whether to use a loess smoother.
-#'   Default is \code{FALSE}.
-#' @param reference [\code{logical(1)}]\cr
+#'   Default is `FALSE`.
+#' @param reference (`logical(1)`)\cr
 #'   Whether to plot a reference line showing perfect calibration.
-#'   Default is \code{TRUE}.
-#' @param rag [\code{logical(1)}]\cr
+#'   Default is `TRUE`.
+#' @param rag (`logical(1)`)\cr
 #'   Whether to include a rag plot which shows a rug plot on the top which pertains to
 #'   positive cases and on the bottom which pertains to negative cases.
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
@@ -189,12 +189,12 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, fa
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")
 
   if (rag) {
-    top_data = obj$data[obj$data$truth == obj$data$Class, ]
-    top_data$x = jitter(as.numeric(top_data$bin))
-    p = p + geom_rug(data = top_data, aes_string("x", y = 1), sides = "t", alpha = .25)
-    bottom_data = obj$data[obj$data$truth != obj$data$Class, ]
-    bottom_data$x = jitter(as.numeric(bottom_data$bin))
-    p = p + geom_rug(data = bottom_data, aes_string("x", y = 1), sides = "b", alpha = .25)
+    top.data = obj$data[obj$data$truth == obj$data$Class, ]
+    top.data$x = jitter(as.numeric(top.data$bin))
+    p = p + geom_rug(data = top.data, aes_string("x", y = 1), sides = "t", alpha = .25)
+    bottom.data = obj$data[obj$data$truth != obj$data$Class, ]
+    bottom.data$x = jitter(as.numeric(bottom.data$bin))
+    p = p + geom_rug(data = bottom.data, aes_string("x", y = 1), sides = "b", alpha = .25)
   }
   p = p + labs(x = "Probability Bin", y = "Class Proportion")
   p + theme(axis.text.x = element_text(angle = 90, hjust = 1))

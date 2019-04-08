@@ -17,7 +17,8 @@ makeRLearner.classif.PART = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "PART Decision Lists",
     short.name = "part",
-    note = "NAs are directly passed to WEKA with `na.action = na.pass`."
+    note = "NAs are directly passed to WEKA with `na.action = na.pass`.",
+    callees = c("PART", "Weka_control")
   )
 }
 

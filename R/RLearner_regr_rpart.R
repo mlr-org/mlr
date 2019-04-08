@@ -19,7 +19,8 @@ makeRLearner.regr.rpart = function() {
     properties = c("missings", "numerics", "factors", "ordered", "weights", "featimp"),
     name = "Decision Tree",
     short.name = "rpart",
-    note = "`xval` has been set to `0` by default for speed."
+    note = "`xval` has been set to `0` by default for speed.",
+    callees = c("rpart", "rpart.control")
   )
 }
 

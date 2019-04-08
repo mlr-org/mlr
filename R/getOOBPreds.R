@@ -1,19 +1,19 @@
 #' @title Extracts out-of-bag predictions from trained models.
 #'
 #' @description
-#' Learners like \code{randomForest} produce out-of-bag predictions. 
-#' \code{getOOBPreds} extracts this information from trained models and builds a 
-#' prediction object as provided by predict (with prediction time set to NA). 
-#' In the classification case: 
-#' What is stored exactly in the [\code{\link{Prediction}}] object depends
-#' on the \code{predict.type} setting of the \code{\link{Learner}}.
-#' 
-#' You can call \code{listLearners(properties = "oobpreds")} to get a list of learners 
-#' which provide this. 
+#' Learners like `randomForest` produce out-of-bag predictions.
+#' `getOOBPreds` extracts this information from trained models and builds a
+#' prediction object as provided by predict (with prediction time set to NA).
+#' In the classification case:
+#' What is stored exactly in the ([Prediction]) object depends
+#' on the `predict.type` setting of the [Learner].
+#'
+#' You can call `listLearners(properties = "oobpreds")` to get a list of learners
+#' which provide this.
 #'
 #' @template arg_wrappedmod
 #' @template arg_task
-#' @return [\code{\link{Prediction}}].
+#' @return ([Prediction]).
 #' @export
 #' @examples
 #' training.set = sample(1:150, 50)
@@ -32,7 +32,7 @@ getOOBPreds = function(model, task) {
   subset = model$subset
   data = getTaskData(task, subset)
   truth = data[, td$target]
-  
+
   p = getOOBPredsLearner(model$learner, model)
   # time is set to NA, as "no" time is required for getting the out of bag predictions
   checkPredictLearnerOutput(model$learner, model, p)
@@ -41,24 +41,30 @@ getOOBPreds = function(model, task) {
 }
 
 #' @title Provides out-of-bag predictions for a given model and the corresponding learner.
-#' 
-#' @description 
-#' This function is mostly for internal usage. To get out-of-bag predictions use \code{\link{getOOBPreds}}.
-#' 
-#' @param .learner [\code{\link{Learner}}]\cr
+#'
+#' @description
+#' This function is mostly for internal usage. To get out-of-bag predictions use [getOOBPreds].
+#'
+#' @param .learner ([Learner])\cr
 #'   The learner.
-#' @param .model [\code{\link{WrappedModel}}]\cr
+#' @param .model ([WrappedModel])\cr
 #'   Wrapped model.
-#' @return Same output structure as in [\code{\link{predictLearner}}].
+#' @return Same output structure as in ([predictLearner]).
 #' @export
 #' @keywords internal
 getOOBPredsLearner = function(.learner, .model) {
   UseMethod("getOOBPredsLearner")
 }
 
-# checks if the model was trained on the corresponding task by comparing 
+#' @export
+getOOBPredsLearner.BaseWrapper = function(.learner, .model) {
+  getOOBPredsLearner(.learner$next.learner, .model = .model)
+}
+
+# checks if the model was trained on the corresponding task by comparing
 # the descriptions
 checkModelCorrespondsTask = function(model, task) {
-  if(!identical(task$task.desc, model$task.desc))
+  compare = c("id", "type", "target", "n.feats", "has.weights", "has.blocking", "is.spatial", "positive")
+  if (!identical(task$task.desc[compare], model$task.desc[compare]))
     stopf("Description of the model does not correspond to the task")
 }

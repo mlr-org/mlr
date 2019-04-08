@@ -3,54 +3,50 @@
 #' Container for results of feature selection.
 #' Contains the obtained features, their performance values
 #' and the optimization path which lead there.  \cr
-#' You can visualize it using \code{\link{analyzeFeatSelResult}}.
+#' You can visualize it using [analyzeFeatSelResult].
 #'
 #' Object members:
 #' \describe{
-#' \item{learner [\code{\link{Learner}}]}{Learner that was optimized.}
-#' \item{control [\code{\link{FeatSelControl}}]}{ Control object from feature selection.}
-#' \item{x [\code{character}]}{Vector of feature names identified as optimal.}
-#' \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}
-#' \item{threshold [\code{numeric}]}{Vector of finally found and used thresholds
-#'   if \code{tune.threshold} was enabled in \code{\link{FeatSelControl}}, otherwise not present and
-#'   hence \code{NULL}.}
-#' \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.}
+#' \item{learner ([Learner])}{Learner that was optimized.}
+#' \item{control ([FeatSelControl])}{ Control object from feature selection.}
+#' \item{x ([character])}{Vector of feature names identified as optimal.}
+#' \item{y ([numeric])}{Performance values for optimal `x`.}
+#' \item{threshold ([numeric])}{Vector of finally found and used thresholds
+#'   if `tune.threshold` was enabled in [FeatSelControl], otherwise not present and
+#'   hence `NULL`.}
+#' \item{opt.path ([ParamHelpers::OptPath])}{Optimization path which lead to `x`.}
 #' }
 #' @name FeatSelResult
 #' @rdname FeatSelResult
 NULL
 
-
-makeFeatSelResult = function(learner, control, x, y, threshold, opt.path) {
-  makeOptResult(learner, control, x, y, threshold, opt.path, "FeatSelResult")
-}
-
-
 #' @export
 print.FeatSelResult = function(x, ...) {
   catf("FeatSel result:")
 
-  n.feats = length(x$x)
-  printed.features = 10L
-  if (n.feats > printed.features)
-    x = c(head(x, printed.features), "...")
-  else
-    x = head(x, printed.features)
+  shortenX = function(x) {
+    clipString(collapse(x, ", "), 50L)
+  }
 
-  catf("Features (%i): %s", n.feats, collapse(x$x, ", "))
+  if (!all.equal(x$x.bit.names, x$x)) {
+    catf("Bits (%i): %s", length(x$x.bit.names), shortenX(x$x.bit.names))
+  }
+  catf("Features (%i): %s", length(x$x), shortenX(x$x))
   if (!is.null(x$threshold))
     catf("Threshold: %s", collapse(sprintf("%2.2f", x$threshold)))
   catf("%s", perfsToString(x$y))
 }
 
-makeFeatSelResultFromOptPath = function(learner, measures, control, opt.path,
-  dob = opt.path$env$dob, ties = "random") {
+makeFeatSelResultFromOptPath = function(learner, measures, resampling, control, opt.path, dob = opt.path$env$dob, ties = "random", task, bits.to.features) {
 
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), dob = dob, ties = ties)
   e = getOptPathEl(opt.path, i)
   # if we had threshold tuning, get th from op and set it in result object
   threshold = if (control$tune.threshold) e$extra$threshold else NULL
-  makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, threshold, opt.path)
+  x.bits = unlist(e$x)
+  x.bit.names = names(e$x)[e$x == 1]
+  x = bits.to.features(x.bits, task)
+  makeOptResult(learner, control, x, e$y, resampling, threshold, opt.path, "FeatSelResult", x.bit.names = x.bit.names)
 }
 
 

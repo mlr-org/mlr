@@ -11,7 +11,7 @@ test_that("regr_glmnet", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
     if (is.null(s)) s = 0.01
@@ -32,9 +32,9 @@ test_that("regr_glmnet", {
     } else {
       m = do.call(glmnet::glmnet, pars)
     }
-    newx = regr.test[,-ind]
+    newx = regr.test[, -ind]
     newx$chas = as.numeric(newx$chas)
-    old.predicts.list[[i]] = predict(m, as.matrix(newx), s = s)[,1]
+    old.predicts.list[[i]] = predict(m, as.matrix(newx), s = s)[, 1]
   }
   test.dat = regr.df
   test.dat$chas = as.numeric(test.dat$chas)

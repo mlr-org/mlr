@@ -1,28 +1,28 @@
 #' @title RandomForest regression learner.
 #'
 #' @description
-#' mlr learner for regression tasks using \code{\link[randomForest]{randomForest}}.
+#' mlr learner for regression tasks using [randomForest::randomForest].
 #'
 #' This doc page exists, as we added additional uncertainty estimation functionality
-#' (\code{predict.type = "se"}) for the randomForest, which is not provided by the underlying package.
+#' (`predict.type = "se"`) for the randomForest, which is not provided by the underlying package.
 #'
 #' Currently implemented methods are:
 #'
 #' \itemize{
-#' \item If \code{se.method = "jackknife"}, the default, the standard error of a prediction
+#' \item If `se.method = "jackknife"` the standard error of a prediction
 #'   is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between
 #'   the prediction made by only using trees which did not contain said observation and
 #'   the ensemble prediction.
-#' \item If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by
+#' \item If `se.method = "bootstrap"` the standard error of a prediction is estimated by
 #'   bootstrapping the random forest, where the number of bootstrap replicates and the number of
-#'   trees in the ensemble are controlled by \code{se.boot} and \code{se.ntree} respectively,
+#'   trees in the ensemble are controlled by `se.boot` and `se.ntree` respectively,
 #'   and then taking the standard deviation of the bootstrap predictions. The "brute force" bootstrap
-#'   is executed when \code{ntree = se.ntree}, the latter of which controls the number of trees in the
-#'   individual random forests which are bootstrapped. The "noisy bootstrap" is executed when \code{se.ntree < ntree}
+#'   is executed when `ntree = se.ntree`, the latter of which controls the number of trees in the
+#'   individual random forests which are bootstrapped. The "noisy bootstrap" is executed when `se.ntree < ntree`
 #'   which is less computationally expensive. A Monte-Carlo bias correction may make the latter option
-#'   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{se.ntree = 100}.
+#'   prefarable in many cases. Defaults are `se.boot = 50` and `se.ntree = 100`.
 #'
-#' \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
+#' \item If `se.method = "sd"`, the default, the standard deviation of the predictions across trees is
 #'   returned as the variance estimate.
 #'   This can be computed quickly but is also a very naive estimator.
 #' }
@@ -30,16 +30,20 @@
 #' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and,
 #' in the case that this results in a negative variance estimate, the values are truncated at 0.
 #'
-#' Please note that all of the mentioned \code{se.method} variants do not affect the computation
+#' Note that when using the \dQuote{jackknife} procedure for se estimation, using a small number of
+#' trees can lead to training data observations that are never out-of-bag. The current implementation
+#' ignores these observations, but in the original definition, the resulting se estimation would be undefined.
+#'
+#' Please note that all of the mentioned `se.method` variants do not affect the computation
 #' of the posterior mean \dQuote{response} value. This is always the same as from the underlying
 #' randomForest.
 #'
-#' @references [Joseph Sexton] and [Petter Laake];
-#' [Standard errors for bagged and random forest estimators],
-#' Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
-#' Also see: [Stefan Wager], [Trevor Hastie], and [Bradley Efron];
-#' [Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife],
-#' Journal of Machine Learning Research Volume 15, 2014, [1625-1651].
+#' @references Joseph Sexton and Petter Laake;
+#' Standard errors for bagged and random forest estimators,
+#' Computational Statistics and Data Analysis Volume 53, 2009, 801-811.
+#' Also see: Stefan Wager, Trevor Hastie, and Bradley Efron;
+#' Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife,
+#' Journal of Machine Learning Research Volume 15, 2014, 1625-1651.
 #'
 #' @name regr.randomForest
 #' @rdname regr.randomForest
@@ -53,9 +57,9 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
-      makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
+      makeDiscreteLearnerParam(id = "se.method", default = "sd",
         values = c("bootstrap", "jackknife",  "sd"),
-        requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
+        requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE),
         when = "both"),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L, when = "both"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
@@ -76,12 +80,13 @@ makeRLearner.regr.randomForest = function() {
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
-    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE."
+    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE.",
+    callees = "randomForest"
   )
 }
 
 #' @export
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "sd", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
   data = getTaskData(.task, .subset, target.extra = TRUE)
   m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
     keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
@@ -96,7 +101,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
+predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "sd", ...) {
   if (se.method == "bootstrap")
     pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
   else
@@ -116,7 +121,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
 
 #' @export
 getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
-  .model$learner.model$predicted
+  getLearnerModel(.model, more.unwrap = TRUE)$predicted
 }
 
 # Computes brute force or noisy bootstrap
@@ -141,8 +146,8 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   #   )
   # )
   bias = rowSums(matrix(vapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2, numeric(nrow(pred.boot.all[[1]]))), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
-  bist = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) * bias
-  pred.boot.aggregated = extractSubList(pred.bagged, c("aggregate"))
+  bist = ((1 / se.ntree) - (1 / ntree)) / (se.boot * se.ntree * (se.ntree - 1)) * bias
+  pred.boot.aggregated = extractSubList(pred.bagged, "aggregate")
   pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
   var.boot = apply(pred.boot.aggregated, 1, var) - bias
   var.boot = pmax(var.boot, 0)
@@ -152,6 +157,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 # Computes the mc bias-corrected jackknife after bootstrap
 jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   model = .model$learner.model
+  model$inbag = model$inbag[rowSums(model$inbag == 0) > 0, , drop = FALSE]
   n = nrow(model$inbag)
   ntree = model$ntree
   pred = predict(model, newdata = .newdata, predict.all = TRUE, ...)

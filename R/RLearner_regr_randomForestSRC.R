@@ -44,7 +44,8 @@ makeRLearner.regr.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "ordered", "weights", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',
+    callees = "rfsrc"
   )
 }
 
@@ -63,11 +64,11 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
 
 #' @export
 getOOBPredsLearner.regr.randomForestSRC = function(.learner, .model) {
-  as.numeric(.model$learner.model$predicted.oob)
+  as.numeric(getLearnerModel(.model, more.unwrap = TRUE)$predicted.oob)
 }
 
 #' @rdname getFeatureImportanceLearner
 getFeatureImportanceLearner.regr.randomForestSRC = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   randomForestSRC::vimp(mod)$importance
 }

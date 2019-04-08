@@ -19,12 +19,12 @@ test_that("tune", {
   m2 = setAggregation(mmce, test.sd)
   tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl, measures = list(m1, m2))
   pp = as.data.frame(tr2$opt.path)
-  for (i in 1:nrow(tr$performances)) {
-    cp = tr$performances[i,"cp"]
-    ms = tr$performances[i,"minsplit"]
-    j = which(pp$cp == cp & pp$minsplit == ms )
-    expect_equal(tr$performances[i,"error"], pp[j,"mmce.test.mean"])
-    expect_equal(tr$performances[i,"dispersion"], pp[j,"mmce.test.sd"])
+  for (i in seq_len(nrow(tr$performances))) {
+    cp = tr$performances[i, "cp"]
+    ms = tr$performances[i, "minsplit"]
+    j = which(pp$cp == cp & pp$minsplit == ms)
+    expect_equal(tr$performances[i, "error"], pp[j, "mmce.test.mean"])
+    expect_equal(tr$performances[i, "dispersion"], pp[j, "mmce.test.sd"])
   }
   # test printing
   expect_output(print(ctrl), "Imputation value: <worst>")
@@ -45,7 +45,7 @@ test_that("tune", {
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(control = list(maxit = 2)))
   tr3 = tuneParams(lrn2, multiclass.task, rdesc, par.set = ps1, control = ctrl)
   op.df = as.data.frame(tr3$opt.path)
-  op.df = op.df[,grepl("threshold_", colnames(op.df))]
+  op.df = op.df[, grepl("threshold_", colnames(op.df))]
   expect_true(all(sapply(op.df, is.numeric)))
   expect_true(is.numeric(tr3$threshold) && length(tr3$threshold) == 3L && !any(is.na(tr3$threshold)))
 
@@ -149,7 +149,8 @@ test_that("Learner defined with expression in param requires, see #369 and PH #5
 
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom()
-  tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
+  res = tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
+  expect_class(res, "TuneResult")
 })
 
 
@@ -159,18 +160,20 @@ test_that("tuning does not break with small discrete values, see bug in #1115", 
     makeDiscreteParam("cp", values = c(1e-8, 1e-9))
   )
   # this next line created an exception in the bug
-  tuneParams("classif.rpart",multiclass.task, hout, par.set = ps, control = ctrl)
+  res = tuneParams("classif.rpart", multiclass.task, hout, par.set = ps, control = ctrl)
+  expect_class(res, "TuneResult")
 })
 
 test_that("tuning works with large param.sets", {
   lrn = makeLearner("classif.__mlrmocklearners__5")
-  ctrl = makeTuneControlRandom(maxit=3)
+  ctrl = makeTuneControlRandom(maxit = 3)
   # create long list of learner params
-  psLength = 200
-  longLearnerParams = do.call(base::c, lapply(seq_len(psLength), function(x) {
-    makeParamSet(makeIntegerLearnerParam(paste0('some.parameter', x), 1, 10))
+  ps.length = 200
+  long.learner.params = do.call(base::c, lapply(seq_len(ps.length), function(x) {
+    makeParamSet(makeIntegerLearnerParam(paste0("some.parameter", x), 1, 10))
   }))
-  lrn$par.set = c(lrn$par.set, longLearnerParams)
-  tuneParams(lrn, pid.task, cv5, par.set = longLearnerParams, control = ctrl, show.info=TRUE)
+  lrn$par.set = c(lrn$par.set, long.learner.params)
+  res = tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
+  expect_class(res, "TuneResult")
 })
 

@@ -2,7 +2,7 @@
 makeRLearner.regr.mob = function() {
   makeRLearnerRegr(
     cl = "regr.mob",
-    package = "party",
+    package = c("party", "modeltools"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 0.05, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "bonferroni", default = TRUE),
@@ -18,7 +18,8 @@ makeRLearner.regr.mob = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node",
-    short.name = "mob"
+    short.name = "mob",
+    callees = c("mob", "mob_control", "glinearModel", "linearModel")
   )
 }
 

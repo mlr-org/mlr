@@ -10,10 +10,10 @@ makeRLearner.regr.cforest = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632,
         requires = quote(replace == FALSE)),
-      makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = 'quad'),
+      makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = "quad"),
       makeDiscreteLearnerParam(id = "testtype",
         values = c("Bonferroni", "MonteCarlo", "Univariate", "Teststatistic"),
-        default = 'Univariate'),
+        default = "Univariate"),
       makeNumericLearnerParam(id = "mincriterion", lower = 0, default = 0),
       makeIntegerLearnerParam(id = "minsplit", lower = 1L, default = 20L),
       makeIntegerLearnerParam(id = "minbucket", lower = 1L, default = 7L),
@@ -27,14 +27,15 @@ makeRLearner.regr.cforest = function() {
     par.vals = list(),
     name = "Random Forest Based on Conditional Inference Trees",
     short.name = "cforest",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness.",
+    callees = c("cforest", "cforest_control", "ctree_control")
   )
 }
 
 #' @export
 trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
   ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion, minsplit,
-  minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats,...) {
+  minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))

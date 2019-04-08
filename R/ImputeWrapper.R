@@ -3,7 +3,7 @@
 #' @description
 #' Fuses a base learner with an imputation method. Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses \code{\link{impute}} before training the learner and \code{\link{reimpute}}
+#' Internally uses [impute] before training the learner and [reimpute]
 #' before predicting.
 #'
 #' @template arg_learner

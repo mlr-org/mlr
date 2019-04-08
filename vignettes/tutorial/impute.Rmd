@@ -1,0 +1,178 @@
+---
+title: "Imputation of Missing Values"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+library("lattice")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+`mlr` provides several imputation methods which are listed on the help page `imputations()`.
+These include standard techniques as imputation by a constant value (like a fixed constant, the mean, median or mode)
+and random numbers (either from the empirical distribution of the feature under consideration or a certain distribution family).
+Moreover, missing values in one feature can be replaced based on the other features by predictions from any supervised Learner (`makeLearner()`) integrated into `mlr`.
+
+If your favourite option is not implemented in `mlr` yet, you can easily create your own [imputation method](create_imputation.html){target="_blank"}.
+
+Also note that some of the learning algorithms included in `mlr` can deal with missing values in a sensible way, i.e., other than simply deleting observations with missing values.
+Those Learner (`makeLearner()`)s have the property ``"missings"`` and thus can be identified using `listLearners()`.
+
+```{r}
+# Regression learners that can deal with missing values
+listLearners("regr", properties = "missings")[c("class", "package")]
+```
+
+See also the list of [integrated learners](integrated_learners.html){target="_blank"} in the Appendix.
+
+# Imputation and reimputation
+
+Imputation can be done by function `impute()`.
+You can specify an imputation method for each feature individually or for classes of features like numerics or factors.
+Moreover, you can generate dummy variables that indicate which values are missing, also either for classes of features or for individual features.
+These allow to identify the patterns and reasons for missing data and permit to treat imputed and observed values differently in a subsequent analysis.
+
+Let's have a look at the airquality (`datasets::airquality()`) data set.
+
+```{r}
+data(airquality)
+summary(airquality)
+```
+
+There are 37 ``NA's`` in variable ``Ozone`` (ozone pollution) and 7 ``NA's`` in variable ``Solar.R`` (solar radiation).
+For demonstration purposes we insert artificial ``NA's`` in column ``Wind`` (wind speed) and coerce it into a `factor`.
+
+```{r}
+airq = airquality
+ind = sample(nrow(airq), 10)
+airq$Wind[ind] = NA
+airq$Wind = cut(airq$Wind, c(0,8,16,24))
+summary(airq)
+```
+
+If you want to impute ``NA's`` in all integer features (these include ``Ozone`` and ``Solar.R``) by the mean,
+in all factor features (``Wind``) by the mode and additionally generate dummy variables for all integer features,
+you can do this as follows:
+
+```{r}
+imp = impute(airq, classes = list(integer = imputeMean(), factor = imputeMode()),
+  dummy.classes = "integer")
+```
+
+`impute()` returns a `list` where slot ``$data`` contains the imputed data set.
+Per default, the dummy variables are factors with levels ``"TRUE"`` and ``"FALSE"``.
+It is also possible to create numeric zero-one indicator variables.
+
+```{r}
+head(imp$data, 10)
+```
+
+Slot ``$desc`` is an `ImputationDesc` (`impute()`) object that stores all relevant information about the imputation.
+For the current example this includes the means and the mode computed on the non-missing data.
+
+```{r}
+imp$desc
+```
+
+The imputation description shows the name of the target variable (not present), the number of features and the number of imputed features.
+Note that the latter number refers to the features for which an imputation method was specified (five integers plus one factor) and not to the features actually containing ``NA's``.
+``dummy.type`` indicates that the dummy variables are factors.
+For details on ``impute.new.levels`` and ``recode.factor.levels`` see the help page of function `impute()`.
+
+Let's have a look at another example involving a target variable.
+A possible learning task associated with the airquality (`datasets::airquality()`) data is to predict the ozone pollution based on the meteorological features.
+Since we do not want to use columns ``Day`` and ``Month`` we remove them.
+
+```{r}
+airq = subset(airq, select = 1:4)
+```
+
+The first 100 observations are used as training data set.
+
+```{r}
+airq.train = airq[1:100,]
+airq.test = airq[-c(1:100),]
+```
+
+In case of a supervised learning problem you need to pass the name of the target variable to `impute()`.
+This prevents imputation and creation of a dummy variable for the target variable itself and makes sure that the target variable is not used to impute the features.
+
+In contrast to the example above we specify imputation methods for individual features instead of classes of features.
+
+Missing values in ``Solar.R`` are imputed by random numbers drawn from the empirical distribution of the non-missing observations.
+
+Function `imputeLearner` (`imputations()`) allows to use all supervised learning algorithms integrated into `mlr` for imputation.
+The type of the Learner (`makeLearner()`) (``regr``, ``classif``) must correspond to the class of the feature to be imputed.
+The missing values in ``Wind`` are replaced by the predictions of a classification tree (`rpart::rpart()`).
+Per default, all available columns in ``airq.train`` except the target variable (``Ozone``) and the variable to
+be imputed (``Wind``) are used as features in the classification tree, here ``Solar.R`` and ``Temp``.
+You can also select manually which columns to use.
+Note that `rpart::rpart()` can deal with missing feature values, therefore the ``NA's`` in column ``Solar.R`` do not pose a problem.
+
+```{r}
+imp = impute(airq.train, target = "Ozone", cols = list(Solar.R = imputeHist(),
+  Wind = imputeLearner("classif.rpart")), dummy.cols = c("Solar.R", "Wind"))
+summary(imp$data)
+
+imp$desc
+```
+
+The `ImputationDesc` (`impute()`) object can be used by function `reimpute()` to impute the test data set the same way as the training data.
+
+```{r}
+airq.test.imp = reimpute(airq.test, imp$desc)
+head(airq.test.imp)
+```
+
+Especially when evaluating a machine learning method by some resampling technique you might want that
+`impute()`/`reimpute()` are called automatically each time before training/prediction.
+This can be achieved by creating an imputation wrapper.
+
+# Fusing a learner with imputation
+
+You can couple a Learner (`makeLearner()`) with imputation by function `makeImputeWrapper()` which basically has the same formal arguments as `impute()`.
+Like in the example above we impute ``Solar.R`` by random numbers from its empirical distribution,
+``Wind`` by the predictions of a classification tree and generate dummy variables for both features.
+
+```{r}
+lrn = makeImputeWrapper("regr.lm", cols = list(Solar.R = imputeHist(),
+  Wind = imputeLearner("classif.rpart")), dummy.cols = c("Solar.R", "Wind"))
+lrn
+```
+
+Before training the resulting Learner (`makeLearner()`), `impute()` is applied to the training set.
+Before prediction `reimpute()` is called on the test set and the `ImputationDesc` (`impute()`) object from the training stage.
+
+We again aim to predict the ozone pollution from the meteorological variables.
+In order to create the `Task()` we need to delete observations with missing values in the target variable.
+
+```{r}
+airq = subset(airq, subset = !is.na(airq$Ozone))
+task = makeRegrTask(data = airq, target = "Ozone")
+```
+
+In the following the 3-fold cross-validated [mean squared error](measures.html){target="_blank"} is calculated.
+
+```{r}
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample(lrn, task, resampling = rdesc, show.info = FALSE, models = TRUE)
+r$aggr
+```
+
+```{r}
+lapply(r$models, getLearnerModel, more.unwrap = TRUE)
+```
+
+A second possibility to fuse a learner with imputation is provided by `makePreprocWrapperCaret()`, which is an interface to `caret`s `caret::preProcess()` function.
+`caret::preProcess()` only works for numeric features and offers imputation by k-nearest neighbors, bagged trees, and by the median.

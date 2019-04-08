@@ -16,13 +16,14 @@ makeRLearner.classif.kknn = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "k-Nearest Neighbor",
-    short.name = "kknn"
+    short.name = "kknn",
+    callees = "kknn"
   )
 }
 
 #' @export
 trainLearner.classif.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  list(td = getTaskDescription(.task), data = getTaskData(.task, .subset), parset = list(...))
+  list(td = getTaskDesc(.task), data = getTaskData(.task, .subset), parset = list(...))
 }
 
 #' @export

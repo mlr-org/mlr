@@ -6,7 +6,7 @@ test_that("listLearners", {
   expect_set_equal(x1$type, c("classif", "regr", "cluster", "surv", "multilabel"))
   expect_subset(listLearnerProperties(), names(x1))
 
-  x1a = listLearners("classif", create = FALSE, properties = c("missings"), warn.missing.packages = FALSE)
+  x1a = listLearners("classif", create = FALSE, properties = "missings", warn.missing.packages = FALSE)
   expect_data_frame(x1a, min.rows = 10)
   expect_true(nrow(x1a) < nrow(x1))
   expect_character(x1a$note, any.missing = FALSE)
@@ -27,10 +27,11 @@ test_that("listLearners", {
 
 test_that("listLearners printer (#1336)", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
+  width = getOption("width")
   options(width = 1000)
   out = capture.output(print(x1), file = NULL)
-  expect_equal(length(stri_match_all(out, regex = '\n')), 9)
+  expect_equal(length(stri_match_all(out, regex = "\n")), 8)
   out = capture.output(print(x1, n = 10), file = NULL)
-  expect_equal(length(stri_match_all(out, regex = '\n')), 13)
-  options(width = 80)
+  expect_equal(length(stri_match_all(out, regex = "\n")), 12)
+  options(width = width)
 })

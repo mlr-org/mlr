@@ -1,4 +1,4 @@
-#' @param maxit [\code{integer(1)}]\cr
+#' @param maxit (`integer(1)`)\cr
 #'   Number of iterations for random search.
 #'   Default is 100.
 #' @export

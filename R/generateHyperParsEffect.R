@@ -4,34 +4,34 @@
 #' Generate cleaned hyperparameter effect data from a tuning result or from a
 #' nested cross-validation tuning result. The object returned can be used for
 #' custom visualization or passed downstream to an out of the box mlr method,
-#' \code{\link{plotHyperParsEffect}}.
+#' [plotHyperParsEffect].
 #'
-#' @param tune.result [\code{\link{TuneResult}} | \code{\link{ResampleResult}}]\cr
-#'  Result of \code{\link{tuneParams}} (or \code{\link{resample}} ONLY when used
+#' @param tune.result ([TuneResult] | [ResampleResult])\cr
+#'  Result of [tuneParams] (or [resample] ONLY when used
 #'  for nested cross-validation). The tuning result (or results if the
 #'  output is from nested cross-validation), also containing the
 #'  optimizer results. If nested CV output is passed, each element in the list
 #'  will be considered a separate run, and the data from each run will be
-#'  included in the dataframe within the returned \code{HyperParsEffectData}.
-#' @param include.diagnostics [\code{logical(1)}]\cr
+#'  included in the dataframe within the returned `HyperParsEffectData`.
+#' @param include.diagnostics (`logical(1)`)\cr
 #'  Should diagnostic info (eol and error msg) be included?
-#'  Default is \code{FALSE}.
-#' @param trafo [\code{logical(1)}]\cr
+#'  Default is `FALSE`.
+#' @param trafo (`logical(1)`)\cr
 #'  Should the units of the hyperparameter path be converted to the
 #'  transformed scale? This is only useful when trafo was used to create the
 #'  path.
-#'  Default is \code{FALSE}.
-#' @param partial.dep [\code{logical(1)}]\cr
+#'  Default is `FALSE`.
+#' @param partial.dep (`logical(1)`)\cr
 #'  Should partial dependence be requested based on converting to reg task? This
 #'  sets a flag so that we know to use partial dependence downstream. This
-#'  should most likely be set to \code{TRUE} if 2 or more hyperparameters were
+#'  should most likely be set to `TRUE` if 2 or more hyperparameters were
 #'  tuned simultaneously. Partial dependence should always be requested when
 #'  more than 2 hyperparameters were tuned simultaneously. Setting to
-#'  \code{TRUE} will cause \code{\link{plotHyperParsEffect}} to automatically
+#'  `TRUE` will cause [plotHyperParsEffect] to automatically
 #'  plot partial dependence when called downstream.
-#'  Default is \code{FALSE}.
+#'  Default is `FALSE`.
 #'
-#' @return [\code{HyperParsEffectData}]
+#' @return (`HyperParsEffectData`)
 #'  Object containing the hyperparameter effects dataframe, the tuning
 #'  performance measures used, the hyperparameters used, a flag for including
 #'  diagnostic info, a flag for whether nested cv was used, a flag for whether
@@ -74,10 +74,10 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
   # in case we have nested CV
   if (getClass1(tune.result) == "ResampleResult"){
     d = getNestedTuneResultsOptPathDf(tune.result, trafo = trafo)
-    num_hypers = length(tune.result$extract[[1]]$x)
-    if ((num_hypers > 2) && !partial.dep)
+    num.hypers = length(tune.result$extract[[1]]$x)
+    if ((num.hypers > 2) && !partial.dep)
       stopf("Partial dependence must be requested with partial.dep when tuning more than 2 hyperparameters")
-    for (hyp in 1:num_hypers) {
+    for (hyp in 1:num.hypers) {
       if (!is.numeric(d[, hyp]))
         d[, hyp] = type.convert(as.character(d[, hyp]))
     }
@@ -96,10 +96,10 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
       d = as.data.frame(tune.result$opt.path)
     }
     # what if we have numerics that were discretized upstream
-    num_hypers = length(tune.result$x)
-    if ((num_hypers > 2) && !partial.dep)
+    num.hypers = length(tune.result$x)
+    if ((num.hypers > 2) && !partial.dep)
       stopf("Partial dependence must be requested with partial.dep when tuning more than 2 hyperparameters")
-    for (hyp in 1:num_hypers) {
+    for (hyp in 1:num.hypers) {
       if (!is.numeric(d[, hyp]))
         d[, hyp] = type.convert(as.character(d[, hyp]))
     }
@@ -141,79 +141,79 @@ print.HyperParsEffectData = function(x, ...) {
 #'
 #' @description
 #' Plot hyperparameter validation path. Automated plotting method for
-#' \code{HyperParsEffectData} object. Useful for determining the importance
+#' `HyperParsEffectData` object. Useful for determining the importance
 #' or effect of a particular hyperparameter on some performance measure and/or
 #' optimizer.
 #'
-#' @param hyperpars.effect.data [\code{HyperParsEffectData}]\cr
-#'  Result of \code{\link{generateHyperParsEffectData}}
-#' @param x [\code{character(1)}]\cr
+#' @param hyperpars.effect.data (`HyperParsEffectData`)\cr
+#'  Result of [generateHyperParsEffectData]
+#' @param x (`character(1)`)\cr
 #'  Specify what should be plotted on the x axis. Must be a column from
-#'  \code{HyperParsEffectData$data}. For partial dependence, this is assumed to
+#'  `HyperParsEffectData$data`. For partial dependence, this is assumed to
 #'  be a hyperparameter.
-#' @param y [\code{character(1)}]\cr
+#' @param y (`character(1)`)\cr
 #'  Specify what should be plotted on the y axis. Must be a column from
-#'  \code{HyperParsEffectData$data}
-#' @param z [\code{character(1)}]\cr
+#'  `HyperParsEffectData$data`
+#' @param z (`character(1)`)\cr
 #'  Specify what should be used as the extra axis for a particular geom. This
 #'  could be for the fill on a heatmap or color aesthetic for a line. Must be a
-#'  column from \code{HyperParsEffectData$data}. Default is \code{NULL}.
-#' @param plot.type [\code{character(1)}]\cr
+#'  column from `HyperParsEffectData$data`. Default is `NULL`.
+#' @param plot.type (`character(1)`)\cr
 #'  Specify the type of plot: \dQuote{scatter} for a scatterplot, \dQuote{heatmap} for a
 #'  heatmap, \dQuote{line} for a scatterplot with a connecting line, or \dQuote{contour} for a
 #'  contour plot layered ontop of a heatmap.
 #'  Default is \dQuote{scatter}.
-#' @param loess.smooth [\code{logical(1)}]\cr
-#'  If \code{TRUE}, will add loess smoothing line to plots where possible. Note that
-#'  this is probably only useful when \code{plot.type} is set to either
+#' @param loess.smooth (`logical(1)`)\cr
+#'  If `TRUE`, will add loess smoothing line to plots where possible. Note that
+#'  this is probably only useful when `plot.type` is set to either
 #'  \dQuote{scatter} or \dQuote{line}. Must be a column from
-#'  \code{HyperParsEffectData$data}. Not used with partial dependence.
-#'  Default is \code{FALSE}.
-#' @param facet [\code{character(1)}]\cr
+#'  `HyperParsEffectData$data`. Not used with partial dependence.
+#'  Default is `FALSE`.
+#' @param facet (`character(1)`)\cr
 #'  Specify what should be used as the facet axis for a particular geom. When
 #'  using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
-#'  for each outer loop. Must be a column from \code{HyperParsEffectData$data}
-#'  Default is \code{NULL}.
-#' @param global.only [\code{logical(1)}]\cr
-#'  If \code{TRUE}, will only plot the current global optima when setting
+#'  for each outer loop. Must be a column from `HyperParsEffectData$data`
+#'  Default is `NULL`.
+#' @param global.only (`logical(1)`)\cr
+#'  If `TRUE`, will only plot the current global optima when setting
 #'  x = "iteration" and y as a performance measure from
-#'  \code{HyperParsEffectData$measures}. Set this to FALSE to always plot the
+#'  `HyperParsEffectData$measures`. Set this to FALSE to always plot the
 #'  performance of every iteration, even if it is not an improvement. Not used
 #'  with partial dependence.
-#'  Default is \code{TRUE}.
-#' @param interpolate [\code{\link{Learner}} | \code{character(1)}]\cr
-#'  If not \code{NULL}, will interpolate non-complete grids in order to visualize a more
+#'  Default is `TRUE`.
+#' @param interpolate ([Learner] | `character(1)`)\cr
+#'  If not `NULL`, will interpolate non-complete grids in order to visualize a more
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
 #'  cases of irregular hyperparameter paths, you will most likely need to use
 #'  this to have a meaningful visualization. Accepts either a regression \link{Learner}
 #'  object or the learner as a string for interpolation. This cannot be used with partial
 #'  dependence.
-#'  Default is \code{NULL}.
-#' @param show.experiments [\code{logical(1)}]\cr
-#'  If \code{TRUE}, will overlay the plot with points indicating where an experiment
+#'  Default is `NULL`.
+#' @param show.experiments (`logical(1)`)\cr
+#'  If `TRUE`, will overlay the plot with points indicating where an experiment
 #'  ran. This is only useful when creating a heatmap or contour plot with
 #'  interpolation so that you can see which points were actually on the
 #'  original path. Note: if any learner crashes occurred within the path, this
-#'  will become \code{TRUE}. Not used with partial dependence.
-#'  Default is \code{FALSE}.
-#' @param show.interpolated [\code{logical(1)}]\cr
-#'  If \code{TRUE}, will overlay the plot with points indicating where interpolation
+#'  will become `TRUE`. Not used with partial dependence.
+#'  Default is `FALSE`.
+#' @param show.interpolated (`logical(1)`)\cr
+#'  If `TRUE`, will overlay the plot with points indicating where interpolation
 #'  ran. This is only useful when creating a heatmap or contour plot with
 #'  interpolation so that you can see which points were interpolated. Not used
 #'  with partial dependence.
-#'  Default is \code{FALSE}.
-#' @param nested.agg [\code{function}]\cr
+#'  Default is `FALSE`.
+#' @param nested.agg (`function`)\cr
 #'  The function used to aggregate nested cross validation runs when plotting 2
 #'  hyperparameters. This is also used for nested aggregation in partial
 #'  dependence.
-#'  Default is \code{mean}.
-#' @param partial.dep.learn [\code{\link{Learner}} | \code{character(1)}]\cr
+#'  Default is `mean`.
+#' @param partial.dep.learn ([Learner] | `character(1)`)\cr
 #'  The regression learner used to learn partial dependence. Must be specified if
-#'  \dQuote{partial.dep} is set to \code{TRUE} in
-#'  \code{\link{generateHyperParsEffectData}}. Accepts either a \link{Learner}
+#'  \dQuote{partial.dep} is set to `TRUE` in
+#'  [generateHyperParsEffectData]. Accepts either a \link{Learner}
 #'  object or the learner as a string for learning partial dependence.
-#'  Default is \code{NULL}.
+#'  Default is `NULL`.
 #' @template ret_gg2
 #'
 #' @note Any NAs incurred from learning algorithm crashes will be indicated in
@@ -222,7 +222,7 @@ print.HyperParsEffectData = function(x, ...) {
 #' respective measure. Execution time will be replaced with the max.
 #' Interpolation by its nature will result in predicted values for the
 #' performance measure. Use interpolation with caution. If \dQuote{partial.dep}
-#' is set to \code{TRUE} in \code{\link{generateHyperParsEffectData}}, only
+#' is set to `TRUE` in [generateHyperParsEffectData], only
 #' partial dependence will be plotted.
 #'
 #' Since a ggplot2 plot object is returned, the user can change the axis labels
@@ -288,14 +288,14 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   if (na.flag){
     d$learner_status = ifelse(is.na(d[, "exec.time"]), "Failure", "Success")
     for (col in hyperpars.effect.data$measures) {
-      col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
+      col.name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
       if (heatcontour.flag){
-        d[,col][is.na(d[,col])] = get(col_name)$worst
+        d[, col][is.na(d[, col])] = get(col.name)$worst
       } else {
-        if (get(col_name)$minimize){
-          d[,col][is.na(d[,col])] = max(d[,col], na.rm = TRUE)
+        if (get(col.name)$minimize){
+          d[, col][is.na(d[, col])] = max(d[, col], na.rm = TRUE)
         } else {
-          d[,col][is.na(d[,col])] = min(d[,col], na.rm = TRUE)
+          d[, col][is.na(d[, col])] = min(d[, col], na.rm = TRUE)
         }
       }
     }
@@ -307,7 +307,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
 
   # we need to work differently depending on if we have partial dependence
-  if (partial.flag && !("iteration" %in% c(x,y,z))) {
+  if (partial.flag && !("iteration" %in% c(x, y, z))) {
     # collapse nested for partial dep input
     if (hyperpars.effect.data$nested) {
       averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run",
@@ -327,39 +327,39 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       d = generatePartialDependenceData(partial.fit, partial.task,
         interaction = TRUE)$data
       # need to aggregate grid
-      averaging = d[, c(hyperpars.effect.data$measures[1]), drop = FALSE]
-      combined_hypers = c(hyperpars.effect.data$hyperparams, x, y, z)
-      used_hypers = combined_hypers[duplicated(combined_hypers)]
-      hyperpars = lapply(d[, used_hypers], "[")
+      averaging = d[, c(hyperpars.effect.data$measures[1]), with = FALSE]
+      combined.hypers = c(hyperpars.effect.data$hyperparams, x, y, z)
+      used.hypers = combined.hypers[duplicated(combined.hypers)]
+      hyperpars = lapply(d[, used.hypers, with = FALSE], "[")
       d = aggregate(averaging, hyperpars, mean)
     }
   } else {
     # assign for global only
     if (global.only && x == "iteration" && y %in% hyperpars.effect.data$measures){
       for (col in hyperpars.effect.data$measures) {
-        col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
-        if (get(col_name)$minimize){
-          d[,col] = cummin(d[,col])
+        col.name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
+        if (get(col.name)$minimize){
+          d[, col] = cummin(d[, col])
         } else {
-          d[,col] = cummax(d[,col])
+          d[, col] = cummax(d[, col])
         }
       }
     }
 
     if ((!is.null(interpolate)) && z.flag && (heatcontour.flag)){
       # create grid
-      xo = seq(min(d[,x]), max(d[,x]), length.out = 100)
-      yo = seq(min(d[,y]), max(d[,y]), length.out = 100)
-      grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = F)
+      xo = seq(min(d[, x]), max(d[, x]), length.out = 100)
+      yo = seq(min(d[, y]), max(d[, y]), length.out = 100)
+      grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = FALSE)
       names(grid) = c(x, y)
 
       if (hyperpars.effect.data$nested){
-        d_new = d
-        new_d = data.frame()
+        d.new = d
+        new.d = data.frame()
         # for loop for each nested cv run
         for (run in unique(d$nested_cv_run)){
-          d_run = d_new[d_new$nested_cv_run == run, ]
-          regr.task = makeRegrTask(id = "interp", data = d_run[,c(x,y,z)],
+          d.run = d.new[d.new$nested_cv_run == run, ]
+          regr.task = makeRegrTask(id = "interp", data = d.run[, c(x, y, z)],
             target = z)
           mod = train(lrn, regr.task)
           prediction = predict(mod, newdata = grid)
@@ -367,25 +367,25 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           grid$learner_status = "Interpolated Point"
           grid$iteration = NA
           # combine the experiment data with interpolated data
-          combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], grid)
+          combined = rbind(d.run[, c(x, y, z, "learner_status", "iteration")], grid)
           # combine each loop
-          new_d = rbind(new_d, combined)
+          new.d = rbind(new.d, combined)
         }
-        grid = new_d
+        grid = new.d
       } else {
-        regr.task = makeRegrTask(id = "interp", data = d[,c(x,y,z)], target = z)
+        regr.task = makeRegrTask(id = "interp", data = d[, c(x, y, z)], target = z)
         mod = train(lrn, regr.task)
         prediction = predict(mod, newdata = grid)
         grid[, z] = prediction$data[, prediction$predict.type]
         grid$learner_status = "Interpolated Point"
         grid$iteration = NA
         # combine the experiment data with interpolated data
-        combined = rbind(d[,c(x,y,z,"learner_status", "iteration")], grid)
+        combined = rbind(d[, c(x, y, z, "learner_status", "iteration")], grid)
         grid = combined
       }
       # remove any values that would extrapolate the z
-      grid[grid[,z] < min(d[,z]), z] = min(d[,z])
-      grid[grid[,z] > max(d[,z]), z] = max(d[,z])
+      grid[grid[, z] < min(d[, z]), z] = min(d[, z])
+      grid[grid[, z] > max(d[, z]), z] = max(d[, z])
       d = grid
     }
 
@@ -402,7 +402,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
       }
       d = aggregate(averaging, hyperpars, nested.agg)
-      d$iteration = 1:nrow(d)
+      d$iteration = seq_len(nrow(d))
     }
   }
 
@@ -439,7 +439,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         }
       } else {
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
-          geom_tile()
+          geom_raster()
       }
       if ((na.flag || show.experiments) && !show.interpolated && !partial.flag){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success",
@@ -455,6 +455,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
       if (plot.type == "contour")
         plt = plt + geom_contour()
+      plt = plt + scale_fill_gradientn(colors = c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD", "#5E4FA2")) # RColorBrewer::brewer.pal(11, "Spectral")
     } else {
       plt = ggplot(d, aes_string(x = x, y = y, color = z))
       if (na.flag){

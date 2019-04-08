@@ -5,7 +5,7 @@ test_that("FailureModel", {
 
   # classif: response
   lrn = makeLearner("classif.qda", predict.type = "prob")
-  m = train(lrn, multiclass.task, subset = c(1,51,101))
+  m = train(lrn, multiclass.task, subset = c(1, 51, 101))
   expect_true(inherits(m, "FailureModel"))
   expect_true(!is.null(m$learner.model))
   expect_true(grep("some group is too small", getFailureModelMsg(m)) == 1L)
@@ -14,7 +14,7 @@ test_that("FailureModel", {
 
   # classif: probs
   lrn = makeLearner("classif.qda", predict.type = "prob")
-  m = train(lrn, multiclass.task, subset = c(1,51,101))
+  m = train(lrn, multiclass.task, subset = c(1, 51, 101))
   expect_true(inherits(m, "FailureModel"))
   expect_true(grep("some group is too small", getFailureModelMsg(m)) == 1L)
   expect_true(!is.null(m$learner.model))

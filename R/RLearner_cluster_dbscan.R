@@ -9,13 +9,14 @@ makeRLearner.cluster.dbscan = function() {
       makeIntegerLearnerParam(id = "MinPts", default = 5L, lower = 0L),
       makeLogicalLearnerParam(id = "scale", default = FALSE),
       makeLogicalLearnerParam(id = "showplot", default = FALSE, tunable = FALSE),
-      makeDiscreteLearnerParam(id = "method", values = c("hybrid", "raw", "dist"), default = 'hybrid')
+      makeDiscreteLearnerParam(id = "method", values = c("hybrid", "raw", "dist"), default = "hybrid")
     ),
     par.vals = list(eps = 1),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "DBScan Clustering",
-    note = 'A cluster index of NA indicates noise points. Specify `method = "dist"` if the data should be interpreted as dissimilarity matrix or object. Otherwise Euclidean distances will be used.',
-    short.name = "dbscan"
+    note = "A cluster index of NA indicates noise points. Specify `method = 'dist'` if the data should be interpreted as dissimilarity matrix or object. Otherwise Euclidean distances will be used.",
+    short.name = "dbscan",
+    callees = "dbscan"
   )
 }
 

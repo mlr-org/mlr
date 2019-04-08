@@ -5,20 +5,20 @@ test_that("regr_earth", {
 
   parset.list = list(
     list(),
-    list(degree=2),
-    list(penalty=4)
+    list(degree = 2),
+    list(penalty = 4)
     )
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(regr.formula, data=regr.train)
+    pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(earth::earth, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata=regr.test)[,1]
+    old.predicts.list[[i]] = predict(m, newdata = regr.test)[, 1]
   }
 
   testSimpleParsets("regr.earth", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)

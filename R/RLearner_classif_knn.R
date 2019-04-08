@@ -13,7 +13,8 @@ makeRLearner.classif.knn = function() {
     # knn also cannot handle factors in features apparantly
     properties = c("twoclass", "multiclass", "numerics"),
     name = "k-Nearest Neighbor",
-    short.name = "knn"
+    short.name = "knn",
+    callees = "knn"
   )
 }
 

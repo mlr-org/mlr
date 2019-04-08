@@ -2,16 +2,16 @@
 % Please edit documentation in R/ResampleResult_operators.R
 \name{getRRTaskDescription}
 \alias{getRRTaskDescription}
-\title{Get task description from resample results.}
+\title{Get task description from resample results (DEPRECATED).}
 \usage{
 getRRTaskDescription(res)
 }
 \arguments{
-\item{res}{[\code{ResampleResult}]\cr
-The result of \code{\link{resample}}.}
+\item{res}{(\link{ResampleResult})\cr
+The result of \link{resample}.}
 }
 \value{
-[\code{TaskDesc}].
+(\link{TaskDesc}).
 }
 \description{
 Get a summarizing task description.
@@ -21,7 +21,9 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{ResampleResult}}, \code{\link{addRRMeasure}},
   \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDesc}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
+\concept{resample}

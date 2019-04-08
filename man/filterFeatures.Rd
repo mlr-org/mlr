@@ -4,53 +4,69 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding filter values.}
 \usage{
-filterFeatures(task, method = "randomForestSRC.rfsrc", fval = NULL,
-  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
+filterFeatures(task, method = "randomForestSRC_importance",
+  fval = NULL, perc = NULL, abs = NULL, threshold = NULL,
+  mandatory.feat = NULL, cache = FALSE, ...)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{method}{[\code{character(1)}]\cr
-See \code{\link{listFilterMethods}}.
-Default is \dQuote{randomForestSRC.rfsrc}.}
+\item{method}{(\code{character(1)})\cr
+See \link{listFilterMethods}.
+Default is \dQuote{randomForestSRC_importance}.}
 
-\item{fval}{[\code{\link{FilterValues}}]\cr
-Result of \code{\link{generateFilterValuesData}}.
+\item{fval}{(\link{FilterValues})\cr
+Result of \link{generateFilterValuesData}.
 If you pass this, the filter values in the object are used for feature filtering.
 \code{method} and \code{...} are ignored then.
 Default is \code{NULL} and not used.}
 
-\item{perc}{[\code{numeric(1)}]\cr
+\item{perc}{(\code{numeric(1)})\cr
 If set, select \code{perc}*100 top scoring features.
-Mutually exclusive with arguments \code{abs} and \code{threshold}.}
+\code{perc = 1} means to select all features.\code{Mutually exclusive with arguments}abs\code{and}threshold`.}
 
-\item{abs}{[\code{numeric(1)}]\cr
+\item{abs}{(\code{numeric(1)})\cr
 If set, select \code{abs} top scoring features.
 Mutually exclusive with arguments \code{perc} and \code{threshold}.}
 
-\item{threshold}{[\code{numeric(1)}]\cr
+\item{threshold}{(\code{numeric(1)})\cr
 If set, select features whose score exceeds \code{threshold}.
 Mutually exclusive with arguments \code{perc} and \code{abs}.}
 
-\item{mandatory.feat}{[\code{character}]\cr
+\item{mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
 
-\item{...}{[any]\cr
+\item{cache}{(\code{character(1)} | \link{logical})\cr
+Whether to use caching during filter value creation. See details.}
+
+\item{...}{(any)\cr
 Passed down to selected filter method.}
 }
 \value{
-[\code{\link{Task}}].
+\link{Task}.
 }
 \description{
-First, calls \code{\link{generateFilterValuesData}}.
+First, calls \link{generateFilterValuesData}.
 Features are then selected via \code{select} and \code{val}.
 }
+\section{Caching}{
+
+If \code{cache = TRUE}, the default mlr cache directory is used to cache
+filter values. The directory is operating system dependent and can be
+checked with \code{getCacheDir()}.\cr
+The default cache can be cleared with \code{deleteCacheDir()}.
+Alternatively, a custom directory can be passed to store the cache.
+
+Note that caching is not thread safe. It will work for parallel
+computation on many systems, but there is no guarantee.
+}
+
 \seealso{
 Other filter: \code{\link{generateFilterValuesData}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
+\concept{filter}

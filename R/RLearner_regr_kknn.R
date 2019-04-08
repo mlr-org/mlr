@@ -15,13 +15,14 @@ makeRLearner.regr.kknn = function() {
     ),
     properties = c("numerics", "factors"),
     name = "K-Nearest-Neighbor regression",
-    short.name = "kknn"
+    short.name = "kknn",
+    callees = "kknn"
   )
 }
 
 #' @export
 trainLearner.regr.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  list(td = getTaskDescription(.task), data = getTaskData(.task, .subset), parset = list(...))
+  list(td = getTaskDesc(.task), data = getTaskData(.task, .subset), parset = list(...))
 }
 
 #' @export

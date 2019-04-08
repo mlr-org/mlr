@@ -76,7 +76,8 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
 
   # check that se works and is > 0
   if (pred.type == "se") {
-    s = p$data$se
+    s = getPredictionSE(p)
+    y = getPredictionResponse(p)
     expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
 
@@ -111,7 +112,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
+  d[, f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -129,7 +130,7 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
+  d[, f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -148,22 +149,22 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[1,f] = NA
+  d[1, f] = NA
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
-# Test that the extraction of the out-of-bag predictions for the learner that supports 
+# Test that the extraction of the out-of-bag predictions for the learner that supports
 # this works correctly
 
 testThatGetOOBPredsWorks = function(lrn, task) {
   type = lrn$type
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
-  
+
   if (type == "classif") {
-    if(lrn$predict.type == "response") {
+    if (lrn$predict.type == "response") {
       expect_is(oob$data, "data.frame")
       expect_equal(levels(oob$data$response), task$task.desc$class.levels)
     } else {
@@ -173,7 +174,7 @@ testThatGetOOBPredsWorks = function(lrn, task) {
   } else {
     if (type %in% c("regr", "surv")) {
       expect_is(oob$data$response, "numeric")
-    } 
+    }
   }
   expect_equal(nrow(oob$data), nrow(getTaskData(task)))
 }
@@ -212,4 +213,10 @@ testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
   pars = lrn$par.set$pars
   pv = lrn$par.vals
   expect_true(isSubset(names(pv), names(pars)))
+}
+
+testThatLearnerPredictsFeasibleSEValues = function(lrn, task) {
+  lrn = setPredictType(lrn, "se")
+  res = resample(lrn, task, makeResampleDesc("LOO"))
+  ses = getPredictionSE(res$pred)
 }

@@ -2,7 +2,7 @@
 # when a learner object is constructed.
 # in contains a minimal number of member vars, that every Learner object should have
 # derived constructors can of course add more member vars
-makeLearnerBaseConstructor = function(classes, id, type, package, properties, par.set, par.vals, predict.type) {
+makeLearnerBaseConstructor = function(classes, id, type, package, properties, par.set, par.vals, predict.type, cache = FALSE) {
   if (length(par.vals) == 0L)
     names(par.vals) = character(0L)
 
@@ -13,7 +13,8 @@ makeLearnerBaseConstructor = function(classes, id, type, package, properties, pa
     properties = unique(properties),
     par.set = par.set,
     par.vals = par.vals,
-    predict.type = predict.type
+    predict.type = predict.type,
+    cache = cache
   )
   return(learner)
 }
@@ -29,6 +30,6 @@ print.Learner = function(x, ...) {
     "Properties: ", collapse(getLearnerProperties(x)), "\n",
     "Predict-Type: ", x$predict.type, "\n",
     "Hyperparameters: ", getHyperParsString(x, show.missing.values = TRUE), "\n\n",
-    sep =""
+    sep = ""
   )
 }

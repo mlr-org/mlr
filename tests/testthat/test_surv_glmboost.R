@@ -6,20 +6,20 @@ test_that("surv_glmboost", {
   parset.list1 = list(
     list(family = mboost::CoxPH()),
     list(family = mboost::CoxPH(), control = mboost::boost_control(mstop = 100L, nu = 0.1)),
-    list(family = mboost::Weibull(nuirange = c(0,50.5)), control = mboost::boost_control(mstop = 50L, nu = 1)),
-    list(family = mboost::Gehan(), control = mboost::boost_control(mstop = 100L, nu = 0.5))  
+    list(family = mboost::Weibull(nuirange = c(0, 50.5)), control = mboost::boost_control(mstop = 50L, nu = 1)),
+    list(family = mboost::Gehan(), control = mboost::boost_control(mstop = 100L, nu = 0.5))
   )
-  
+
   parset.list2 = list(
     list(),
     list(mstop = 100L, nu = 0.1),
-    list(family = "Weibull", nuirange = c(0,50.5), mstop = 50L, nu = 1),
+    list(family = "Weibull", nuirange = c(0, 50.5), mstop = 50L, nu = 1),
     list(family = "Gehan", mstop = 100L, nu = 0.5)
   )
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     f = getTaskFormula(surv.task)
     pars = list(f, data = surv.train)

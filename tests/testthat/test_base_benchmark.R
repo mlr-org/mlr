@@ -120,7 +120,7 @@ test_that("benchmark", {
   expect_equal(ncol(trd), 5)
   expect_equal(nrow(trd), 4)
   expect_equal(unique(trd$task.id), factor(task.names))
-  expect_equal(unique(trd$learner.id), factor(c("classif.rpart.tuned")))
+  expect_equal(unique(trd$learner.id), factor("classif.rpart.tuned"))
   expect_equal(unique(trd$iter), 1:2)
 
   tf = getBMRFeatSelResults(res, as.df = FALSE)
@@ -140,7 +140,7 @@ test_that("benchmark", {
   expect_equal(ncol(tfd), 4)
   expect_equal(nrow(tfd), 61)
   expect_equal(unique(tfd$task.id), factor(task.names))
-  expect_equal(unique(tfd$learner.id), factor(c("classif.lda.featsel")))
+  expect_equal(unique(tfd$learner.id), factor("classif.lda.featsel"))
   expect_equal(unique(tfd$iter), 1:2)
 
   tff = getBMRFilteredFeatures(res, as.df = FALSE)
@@ -160,7 +160,7 @@ test_that("benchmark", {
   expect_equal(ncol(tffd), 4)
   expect_equal(nrow(tffd), 64)
   expect_equal(unique(tffd$task.id), factor(task.names))
-  expect_equal(unique(tffd$learner.id), factor(c("classif.lda.filtered")))
+  expect_equal(unique(tffd$learner.id), factor("classif.lda.filtered"))
   expect_equal(unique(tffd$iter), 1:2)
 
   f = function(tmp, cl) {
@@ -181,9 +181,9 @@ test_that("benchmark", {
 })
 
 test_that("keep.preds and models are passed down to resample()", {
-  task.names = c("binary")
+  task.names = "binary"
   tasks = list(binaryclass.task)
-  learner.names = c("classif.lda")
+  learner.names = "classif.lda"
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
@@ -217,7 +217,9 @@ test_that("keep.preds and models are passed down to resample()", {
 test_that("benchmark work with learner string", {
   # we had a bug here, check that learner(s) are created from string
   b = benchmark("classif.rpart", iris.task, hout)
+  expect_class(b, "BenchmarkResult")
   b = benchmark(c("classif.rpart", "classif.lda"), iris.task, hout)
+  expect_class(b, "BenchmarkResult")
 })
 
 test_that("drop option works for BenchmarkResults_operators", {

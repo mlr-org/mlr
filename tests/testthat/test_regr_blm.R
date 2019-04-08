@@ -11,7 +11,7 @@ test_that("regr_blm", {
   )
   y = regr.num.train[, regr.num.target]
   old.predicts.list = list()
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(X = regr.num.train[, -regr.num.class.col], Z = y, verb = 0, pred.n = FALSE)
     pars = c(pars, parset)

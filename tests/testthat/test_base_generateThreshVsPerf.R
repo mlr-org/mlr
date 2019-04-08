@@ -8,12 +8,11 @@ test_that("generateThreshVsPerfData", {
   pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
   plotThreshVsPerf(pvs)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
-  ## plotThreshVsPerfGGVIS(pvs)
 
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggplot2::ggsave(path)
@@ -29,7 +28,6 @@ test_that("generateThreshVsPerfData", {
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
-  ## plotThreshVsPerfGGVIS(pvs)
 
   pvs = generateThreshVsPerfData(r, list(tpr, fpr, acc), aggregate = FALSE)
   plotThreshVsPerf(pvs, measures = list(tpr, fpr, acc))
@@ -40,13 +38,13 @@ test_that("generateThreshVsPerfData", {
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(length(unique(pvs$data$iter))))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs$data$iter))))
 
   pvs = generateThreshVsPerfData(r, list(tpr, fpr), aggregate = FALSE)
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(rdesc$iters))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(rdesc$iters))
 
   ## benchmark result
   lrns = list(lrn, makeLearner("classif.lda", predict.type = "prob"))
@@ -59,18 +57,29 @@ test_that("generateThreshVsPerfData", {
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
   expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
-  ## plotThreshVsPerfGGVIS(pvs)
 
-  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = TRUE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(length(unique(pvs$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
+
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = FALSE)
+  ggplot2::ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(1))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(1))
 
   pvs = generateThreshVsPerfData(res, list(tpr, fpr), aggregate = FALSE)
-  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = TRUE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(rdesc$iters * length(unique(pvs$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(rdesc$iters * length(unique(pvs$data$learner))))
+
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = FALSE)
+  ggplot2::ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(rdesc$iters))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(rdesc$iters))
 
   ## list of resample predictions
   rs = lapply(lrns, crossval, task = binaryclass.task, iters = 2L)
@@ -82,20 +91,25 @@ test_that("generateThreshVsPerfData", {
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(pvs$measures)))
   expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
   expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
-  ## plotThreshVsPerfGGVIS(pvs)
 
-  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = TRUE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
-  expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(length(unique(pvs$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
+
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = FALSE)
+  ggplot2::ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(1))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(1))
 
   pvs = generateThreshVsPerfData(rs, list(tpr, fpr), aggregate = FALSE)
-  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = TRUE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
-  expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(rdesc$iters * length(unique(pvs$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(rdesc$iters * length(unique(pvs$data$learner))))
 
   ## test prediction obj with custom measure
   classes = levels(getTaskTargets(binaryclass.task))
@@ -108,7 +122,6 @@ test_that("generateThreshVsPerfData", {
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(1L))
-  ## plotThreshVsPerfGGVIS(pvs.custom)
 
   # test that facetting works for plotThreshVsPerf
 

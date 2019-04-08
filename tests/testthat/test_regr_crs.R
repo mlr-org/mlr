@@ -12,12 +12,12 @@ test_that("regr_crs", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    suppressWarnings(m <- do.call(crs::crs, pars))
+    suppressWarnings({m = do.call(crs::crs, pars)})
     set.seed(getOption("mlr.debug.seed"))
     pred = predict(m, newdata = regr.test)
     attr(pred, "lwr") = NULL

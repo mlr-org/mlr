@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Creates a wrapper, which can be used like any other learner object.
-#' The classification model can easily be accessed via \code{\link{getLearnerModel}}.
+#' The classification model can easily be accessed via [getLearnerModel].
 #'
 #' This is a very naive learner, where the costs are transformed into classification labels -
 #' the label for each case is the name of class with minimal costs.
@@ -25,7 +25,7 @@ makeCostSensClassifWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
+trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset = NULL, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   feats = getTaskData(.task)
@@ -41,7 +41,7 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   # if all equal, predict one class, stupid fringe case
   if (length(unique(newy)) == 1) {
     m = makeS3Obj("CostSensClassifModelConstant", y = newy[1L])
-    model = makeWrappedModel.Learner(.learner, m, getTaskDescription(.task), .subset, getTaskFeatureNames(.task),
+    model = makeWrappedModel.Learner(.learner, m, getTaskDesc(.task), .subset, getTaskFeatureNames(.task),
       getTaskFactorLevels(.task), 0)
   } else {
     data = cbind(feats, ..y.. = newy)

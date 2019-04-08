@@ -247,7 +247,7 @@ if (FALSE) {
   # consistent?
   testBMRConsistency = function(bmr){
       z = c()
-      for(i in 1:length(bmr$results)){
+      for(i in seq_along(bmr$results)){
         z = c(z, length(bmr$results[[i]]))
       }
     if(unique(z) == max(z)){

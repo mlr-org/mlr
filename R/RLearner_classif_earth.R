@@ -2,14 +2,14 @@
 makeRLearner.classif.earth = function() {
   makeRLearnerClassif(
     cl = "classif.earth",
-    package = "!earth",
+    package = c("!earth", "stats"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "trace", default = 0, upper = 5, tunable = FALSE),
-      makeLogicalLearnerParam(id = "keepxy",default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keepxy", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "penalty"),
       makeIntegerLearnerParam(id = "nk", lower = 1L),
-      makeNumericLearnerParam(id = "thres", default = 0.001),
+      makeNumericLearnerParam(id = "thresh", default = 0.001),
       makeIntegerLearnerParam(id = "minspan", default = 0L),
       makeIntegerLearnerParam(id = "endspan", default = 0L),
       makeNumericLearnerParam(id = "newvar.penalty", default = 0),
@@ -36,14 +36,15 @@ makeRLearner.classif.earth = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Flexible Discriminant Analysis",
     short.name = "fda",
-    note = "This learner performs flexible discriminant analysis using the earth algorithm. na.action is set to na.fail and only this is supported."
+    note = "This learner performs flexible discriminant analysis using the earth algorithm. na.action is set to na.fail and only this is supported.",
+    callees = c("earth", "glm", "glm.control", "binomial")
   )
 }
 
 #' @export
 trainLearner.classif.earth = function(.learner, .task, .subset, .weights = NULL, link = "logit", maxit = 25L, ...) {
   f = getTaskFormula(.task)
-  earth::earth(f, data = getTaskData(.task, .subset), weights = .weights, glm = list(family = binomial(link = link) , maxit = maxit), ...)
+  earth::earth(f, data = getTaskData(.task, .subset), weights = .weights, glm = list(family = binomial(link = link), maxit = maxit), ...)
 }
 
 #' @export

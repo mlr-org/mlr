@@ -36,7 +36,7 @@ makeRLearner.classif.glmnet = function() {
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = 
+    note =
       "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise.
       Factors automatically get converted to dummy columns, ordered factors to integer.
       Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
@@ -44,7 +44,8 @@ makeRLearner.classif.glmnet = function() {
       glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
       before setting the specified parameters and after training.
       If you are setting glmnet.control parameters through glmnet.control,
-      you need to save and re-set them after running the glmnet learner."
+      you need to save and re-set them after running the glmnet learner.",
+    callees = c("glmnet", "glmnet.control", "predict.glmnet")
   )
 }
 
@@ -57,7 +58,7 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
   if (!is.null(.weights))
     args$weights = .weights
 
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   args$family = ifelse(length(td$class.levels) == 2L, "binomial", "multinomial")
 
   glmnet::glmnet.control(factory = TRUE)
@@ -82,7 +83,7 @@ predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
     if (length(td$class.levels) == 2L) {
       p = setColNames(cbind(1 - p, p), td$class.levels)
     } else {
-      p = p[,,1]
+      p = p[, , 1]
     }
   } else {
     p = drop(predict(.model$learner.model, newx = .newdata, type = "class", ...))

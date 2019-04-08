@@ -11,7 +11,7 @@ test_that("regr_featureless", {
   # compute predictions manually
   expected.response = list(
     median = 3,
-    mean = (1 + 2 + 3 + 3 + 3)/5
+    mean = (1 + 2 + 3 + 3 + 3) / 5
   )
 
   for (m in method) {

@@ -11,7 +11,7 @@ test_that("regr_randomUniformForest", {
   tsk.train = makeRegrTask(data = regr.train, target = regr.target)
   tsk.test = makeRegrTask(data = regr.test, target = regr.target)
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = c(list(formula = regr.formula, data = regr.train, OOB = FALSE,
     importance = FALSE, unsupervised = FALSE, threads = 1L), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))

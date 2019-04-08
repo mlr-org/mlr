@@ -1,6 +1,6 @@
 setClass(
 		"PostprocWrapper",
-		contains = c("BaseWrapper"),
+		contains = "BaseWrapper",
 		representation = representation(
 				fun = "function"
 		)

@@ -4,7 +4,7 @@ makeRLearner.classif.mlp = function() {
     cl = "classif.mlp",
     package = "RSNNS",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "size", default = c(5), lower = 1),
+      makeIntegerVectorLearnerParam(id = "size", default = 5, lower = 1),
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 100),
       makeUntypedLearnerParam(id = "initFunc", default = "Randomize_Weights"),
       makeNumericVectorLearnerParam(id = "initFuncParams"),
@@ -20,9 +20,10 @@ makeRLearner.classif.mlp = function() {
       makeUntypedLearnerParam(id = "pruneFunc"),
       makeUntypedLearnerParam(id = "pruneFuncParams")
     ),
-    properties = c("twoclass", "multiclass","numerics", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Multi-Layer Perceptron",
-    short.name = "mlp"
+    short.name = "mlp",
+    callees = "mlp"
   )
 }
 
@@ -38,9 +39,9 @@ predictLearner.classif.mlp = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   pred = predict(.model$learner.model, .newdata)
   colnames(pred) = .model$factor.levels[[1]]
-  
+
   if (type == "class") {
-    classes <- colnames(pred)[max.col(pred)]
+    classes = colnames(pred)[max.col(pred)]
     return(as.factor(classes))
   }
   return(pred)

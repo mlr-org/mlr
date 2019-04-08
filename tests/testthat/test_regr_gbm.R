@@ -5,23 +5,23 @@ test_that("regr_gbm", {
 
   parset.list = list(
     list(),
-    list(n.trees=600),
+    list(n.trees = 600),
     list(interaction.depth = 2)
     )
 
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(regr.formula, data=regr.train, distribution="gaussian")
+    pars = list(regr.formula, data = regr.train, distribution = "gaussian")
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
-      m <- do.call(gbm::gbm, pars)
-    )
+    capture.output({
+      m = do.call(gbm::gbm, pars)
+    })
     set.seed(getOption("mlr.debug.seed"))
-    p = gbm::predict.gbm(m, newdata=regr.test, n.trees=length(m$trees))
+    p = gbm::predict.gbm(m, newdata = regr.test, n.trees = length(m$trees))
     old.predicts.list[[i]] = p
   }
 

@@ -20,7 +20,8 @@ makeRLearner.classif.LiblineaRL2LogReg = function() {
     class.weights.param = "wi",
     name = "L2-Regularized Logistic Regression",
     short.name = "liblinl2logreg",
-    note = "`type = 0` (the default) is primal and `type = 7` is dual problem."
+    note = "`type = 0` (the default) is primal and `type = 7` is dual problem.",
+    callees = "LiblineaR"
   )
 }
 

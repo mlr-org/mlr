@@ -5,50 +5,60 @@
 \title{Hyperparameter tuning.}
 \usage{
 tuneParams(learner, task, resampling, measures, par.set, control,
-  show.info = getMlrOption("show.info"))
+  show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{resampling}{[\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+\item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behavior, look at \code{\link{TuneControl}}.}
+If you want to change that behavior, look at \link{TuneControl}.}
 
-\item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
+\item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
+\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
 \code{expression} to define it.}
 
-\item{control}{[\code{\link{TuneControl}}]\cr
+\item{control}{(\link{TuneControl})\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
-\item{show.info}{[\code{logical(1)}]\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
+Default is set via \link{configureMlr}.}
+
+\item{resample.fun}{(\link{closure})\cr
+The function to use for resampling. Defaults to \link{resample}. If a user-given function
+is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
+\dQuote{measures}, and \dQuote{show.info}; see \link{resample}. Within this function,
+it is easiest to call \link{resample} and possibly modify the result.
+However, it is possible to return a list with only the following essential slots:
+the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
+(see \link{TuneControl}), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+This parameter must be the default when \code{mbo} tuning is performed.}
 }
 \value{
-[\code{\link{TuneResult}}].
+(\link{TuneResult}).
 }
 \description{
 Optimizes the hyperparameters of a learner.
 Allows for different optimization methods, such as grid search, evolutionary strategies,
 iterated F-race, etc. You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
-\code{\link{TuneControl}}.
+\link{TuneControl}.
 
-Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
+Multi-criteria tuning can be done with \link{tuneParamsMultiCrit}.
 }
 \note{
 If you would like to include results from the training data set, make
@@ -56,6 +66,7 @@ sure to appropriately adjust the resampling strategy and the aggregation for
 the measure. See example code below.
 }
 \examples{
+set.seed(123)
 # a grid search for an SVM (with a tiny number of points...)
 # note how easily we can optimize on a log-scale
 ps = makeParamSet(
@@ -67,11 +78,15 @@ rdesc = makeResampleDesc("CV", iters = 2L)
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 # access data for all evaluated points
-print(head(as.data.frame(res$opt.path)))
-print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+df = as.data.frame(res$opt.path)
+df1 = as.data.frame(res$opt.path, trafo = TRUE)
+print(head(df[, -ncol(df)]))
+print(head(df1[, -ncol(df)]))
 # access data for all evaluated points - alternative
-print(head(generateHyperParsEffectData(res)))
-print(head(generateHyperParsEffectData(res, trafo = TRUE)))
+df2 = generateHyperParsEffectData(res)
+df3 = generateHyperParsEffectData(res, trafo = TRUE)
+print(head(df2$data[, -ncol(df2$data)]))
+print(head(df3$data[, -ncol(df3$data)]))
 
 \dontrun{
 # we optimize the SVM over 3 kernels simultanously
@@ -89,25 +104,36 @@ ctrl = makeTuneControlIrace(maxExperiments = 5, nbIterations = 1, minNbSurvival 
 rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
-print(head(as.data.frame(res$opt.path)))
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 
 # include the training set performance as well
 rdesc = makeResampleDesc("Holdout", predict = "both")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 print(res)
-print(head(as.data.frame(res$opt.path)))
+df2 = as.data.frame(res$opt.path)
+print(head(df2[, -ncol(df2)]))
 }
 }
 \seealso{
-\code{\link{generateHyperParsEffectData}}
+\link{generateHyperParsEffectData}
 
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

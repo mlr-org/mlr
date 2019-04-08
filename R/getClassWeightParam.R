@@ -4,11 +4,11 @@
 #' Gets the class weight parameter of a learner.
 #'
 #' @template arg_learner
-#' @param lrn.id [\code{character(1)}]\cr 
-#'   Only used for \code{BaseEnsembles}. It is possible that multiple learners in a base 
+#' @param lrn.id ([character])\cr 
+#'   Only used for `BaseEnsembles`. It is possible that multiple learners in a base 
 #'   ensemble have a class weight param. Specify the learner from which the class weight should
 #'   be extracted.
-#' @return [\code{numeric \link{LearnerParam}}]:
+#' @return [numeric] [LearnerParam]:
 #'   A numeric parameter object, containing the class weight parameter of the given learner.
 #' @family learner
 #' @export
