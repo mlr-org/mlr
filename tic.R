@@ -26,8 +26,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   if (inherits(ci(), "TravisCI")) {
 
     get_stage("script") %>%
-      add_code_step(pkgbuild::compile_dll()) %>%
-      add_code_step(devtools::document()) %>%
+      add_step(step_install_deps()) %>%
       add_step(step_rcmdcheck("--as-cran", error_on = "error"))
   }
 
@@ -38,8 +37,6 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_code_step(pkgbuild::compile_dll()) %>%
-      add_code_step(devtools::document()) %>%
       add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
   }
 }
