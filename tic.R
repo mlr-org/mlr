@@ -1,10 +1,3 @@
-# remove possible lock files of packages in every stage
-
-get_stage("after_script") %>%
-  add_code_step(system("rm -rf $HOME/R/Library/00LOCK-*"))
-
-# condition on env variable
-
 if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("install") %>%
@@ -13,22 +6,15 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0) {
       paste0("Installing WARMUPPKGS", trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
       install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
-    }
-    ) %>%
-    add_code_step(remotes::update_packages(TRUE))
+    })
 
-  if (inherits(ci(), "TravisCI")) {
     get_stage("before_script") %>%
       add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                              "-install-package", "thirdparty/XMeans1.0.4.zip")))
-  }
-
-  if (inherits(ci(), "TravisCI")) {
 
     get_stage("script") %>%
       add_step(step_install_deps()) %>%
       add_step(step_rcmdcheck("--as-cran", error_on = "error"))
-  }
 
   # only deploy in master branch
   if (ci()$get_branch() == "master") {
@@ -56,6 +42,6 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_step(step_build_pkgdown(document = FALSE)) %>%
+      add_step(step_build_pkgdown()) %>%
       add_step(step_push_deploy(commit_paths = "docs/*"))
 }
