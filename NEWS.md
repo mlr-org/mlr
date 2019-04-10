@@ -2,6 +2,7 @@
 
 ## general
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
+* `Task` help pages are now split into separate ones, e.g. `RegrTask`, `ClassifTask` (@pat-s, #2564)
 
 ## functions - new
 * `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
