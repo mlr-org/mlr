@@ -1,4 +1,6 @@
-#' @rdname Task
+#' @title Create a cluster task.
+#' @inheritParams Task
+#' @seealso [Task] [ClassifTask] [CostSensTask] [MultilabelTask] [RegrTask] [SurvTask]
 #' @export
 makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
