@@ -25,7 +25,6 @@ jobs:
       before_install:
         - R -q -e 'if (!requireNamespace("BiocManager")) install.packages("BiocManager"); if (!requireNamespace("genefilter")) BiocManager::install("genefilter")'
         - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic@remove-glue"); tic::prepare_all_stages(); tic::before_install()'
-        - R -q -e 'remotes::install_github("r-lib/remotes#340")'
       install: R -q -e 'tic::install()'
       script: true
       after_script: R -q -e 'tic::after_script()'
