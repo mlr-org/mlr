@@ -322,25 +322,25 @@ which are not listed, as they are not basic R learning algorithms.
 The same applies for many multilabel methods, see, e.g., <a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>),
+    <pre class="usage"><span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for character</span>
 <span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for Task</span>
 <span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -349,34 +349,34 @@ The same applies for many multilabel methods, see, e.g., <a href='makeMultilabel
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<code>character(1)</code> | <a href='Task.html'>Task</a>)<br />
-Either <code>character(1)</code> task or the type of the task, in the latter case one of:
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='Task.html'>Task</a>)<br />
+Either <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> task or the type of the task, in the latter case one of:
 &#8220;classif&#8221; &#8220;regr&#8221; &#8220;surv&#8221; &#8220;costsens&#8221; &#8220;cluster&#8221; &#8220;multilabel&#8221;.
 Default is <code>NA</code> matching all types.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>(character)<br />
-Set of required properties to filter for. Default is <code>character(0)</code>.</p></td>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+Set of required properties to filter for. Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>warn.missing.packages</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>check.packages</th>
-      <td><p>(<code>logical(1)</code>)<br />
-Check if required packages are installed. Calls <code>find.package()</code>.
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Check if required packages are installed. Calls <code><a href='https://www.rdocumentation.org/packages/base/topics/find.package'>find.package()</a></code>.
 If <code>create</code> is <code>TRUE</code>, this is done implicitly and the value of this parameter is ignored.
 If <code>create</code> is <code>FALSE</code> and <code>check.packages</code> is <code>TRUE</code> the returned table only
 contains learners whose dependencies are installed.
@@ -386,7 +386,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>create</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Instantiate objects (or return info table)?
 Packages are loaded if and only if this option is <code>TRUE</code>.
 Default is <code>FALSE</code>.</p></td>
@@ -402,7 +402,7 @@ or a list of created learner objects (named by ids of listed learners).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>listLearners</span>(<span class='st'>"classif"</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"multiclass"</span>, <span class='st'>"prob"</span>))
+<span class='fu'>listLearners</span>(<span class='st'>"classif"</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"multiclass"</span>, <span class='st'>"prob"</span>))
 <span class='no'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='fu'>listLearners</span>(<span class='no'>task</span>)

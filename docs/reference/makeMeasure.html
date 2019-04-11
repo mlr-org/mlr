@@ -340,8 +340,8 @@ the fitted model and the prediction.</p>
 </dl>
     
 
-    <pre class="usage"><span class='fu'>makeMeasure</span>(<span class='no'>id</span>, <span class='no'>minimize</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='no'>fun</span>,
-  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>, <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>makeMeasure</span>(<span class='no'>id</span>, <span class='no'>minimize</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='no'>fun</span>,
+  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>, <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>id</span>, <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -446,8 +446,8 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>model</span>, <span class='no'>pred</span>, <span class='no'>extra.args</span>)
-  <span class='fu'>sum</span>((<span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>response</span> - <span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>truth</span>)^<span class='fl'>2</span>)
-<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>((<span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>response</span> - <span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>truth</span>)^<span class='fl'>2</span>)
+<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
 #&gt; Performance measure: my.sse
 #&gt; Properties: regr,response
 #&gt; Minimize: TRUE

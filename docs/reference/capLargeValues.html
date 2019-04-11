@@ -310,7 +310,7 @@ in a data.frame or task.
 Only numeric/integer columns are affected.</p>
     
 
-    <pre class="usage"><span class='fu'>capLargeValues</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>capLargeValues</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>impute</span> <span class='kw'>=</span> <span class='no'>threshold</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"abs"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -318,39 +318,39 @@ Only numeric/integer columns are affected.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(data.frame | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Name of the column(s) specifying the response.
 Target columns will not be capped.
-Default is <code>character(0)</code>.</p></td>
+Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Which columns to convert.
 Default is all numeric columns.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Threshold for capping.
 Every entry whose absolute value is equal or larger is converted.
 Default is <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>impute</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Replacement value for large entries.
 Large negative entries are converted to <code>-impute</code>.
 Default is <code>threshold</code>.</p></td>
     </tr>
     <tr>
       <th>what</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 What kind of entries are affected?
 &#8220;abs&#8221; means <code>abs(x) &gt; threshold</code>,
 &#8220;pos&#8221; means <code>abs(x) &gt; threshold &amp;&amp; x &gt; 0</code>,
@@ -361,7 +361,7 @@ Default is &#8220;abs&#8221;.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(data.frame)</p>
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

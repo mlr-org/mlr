@@ -37,7 +37,7 @@ test_that("Learner operators work", {
   expect_equal(getLearnerId(lrn2), "foo")
 
   # test that packages get combines
-  lrn2 = makeFilterWrapper(lrn, fw.method = "randomForest.importance")
+  lrn2 = makeFilterWrapper(lrn, fw.method = "randomForest_importance")
   expect_set_equal(getLearnerPackages(lrn2), c("MASS", "randomForest"))
 
   # test getLearnerShortName

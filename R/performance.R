@@ -12,6 +12,8 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a `task`, you can also pass this instead and the features
 #'   are extracted from it.
+#' @param simpleaggr ([logical])\cr
+#'   If TRUE, aggregation of \code{ResamplePrediction} objects is skipped. This is used internally for threshold tuning. Default is \code{FALSE}.
 #' @return (named [numeric]). Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -28,11 +30,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, simpleaggr = FALSE) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, simpleaggr = simpleaggr)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -42,7 +44,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, simpleaggr = simpleaggr) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -110,24 +112,28 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   }
 
   # if it's a ResamplePrediction, aggregate
-  if (inherits(pred, "ResamplePrediction")) {
-    if (is.null(pred$data$iter)) pred$data$iter = 1L
-    if (is.null(pred$data$set)) pred$data$set = "test"
-    fun = function(ss) {
-      is.train = ss$set == "train"
-      if (any(is.train)) {
-        pred$data = as.data.frame(ss[is.train, ])
-        perf.train = measure$fun(task, model, pred, feats, m$extra.args)
-      } else {
-        perf.train = NA_real_
-      }
-      pred$data = as.data.frame(ss[!is.train, ])
-      perf.test = measure$fun(task, model, pred, feats, m$extra.args)
-      list(perf.train = perf.train, perf.test = perf.test)
-    }
-    perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
-    measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
-  } else {
+  if (simpleaggr) {
     measure$fun(task, model, pred, feats, m$extra.args)
+  } else {
+    if (inherits(pred, "ResamplePrediction")) {
+      if (is.null(pred$data$iter)) pred$data$iter = 1L
+      if (is.null(pred$data$set)) pred$data$set = "test"
+      fun = function(ss) {
+        is.train = ss$set == "train"
+        if (any(is.train)) {
+          pred$data = as.data.frame(ss[is.train, ])
+          perf.train = measure$fun(task, model, pred, feats, m$extra.args)
+        } else {
+          perf.train = NA_real_
+        }
+        pred$data = as.data.frame(ss[!is.train, ])
+        perf.test = measure$fun(task, model, pred, feats, m$extra.args)
+        list(perf.train = perf.train, perf.test = perf.test)
+      }
+      perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
+      measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
+    } else {
+      measure$fun(task, model, pred, feats, m$extra.args)
+    }
   }
 }

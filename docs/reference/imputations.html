@@ -366,53 +366,53 @@ Constant valued use for imputation.</p></td>
     </tr>
     <tr>
       <th>multiplier</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Value that stored minimum or maximum is multiplied with when imputation is done.</p></td>
     </tr>
     <tr>
       <th>min</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Lower bound for uniform distribution.
 If NA (default), it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>max</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Upper bound for uniform distribution.
 If NA (default), it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>mu</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Mean of normal distribution. If missing it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>sd</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Standard deviation of normal distribution. If missing it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>(<code>numeric(1)</code>)<br />
-Number of breaks to use in <a href='http://www.rdocumentation.org/packages/graphics/topics/hist'>graphics::hist</a>. If missing,
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+Number of breaks to use in <a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>graphics::hist</a>. If missing,
 defaults to auto-detection via &#8220;Sturges&#8221;.</p></td>
     </tr>
     <tr>
       <th>use.mids</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 If <code>x</code> is numeric and a histogram is used, impute with bin mids (default)
 or instead draw uniformly distributed samples within bin range.</p></td>
     </tr>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Supervised learner. Its predictions will be used for imputations.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.
 Note that the target column is not available for this operation.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Features to use in <code>learner</code> for prediction.
 Default is <code>NULL</code> which uses all available features except the target column
 of the original task.</p></td>

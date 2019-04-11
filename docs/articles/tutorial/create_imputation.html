@@ -289,7 +289,7 @@
 <p>Function <code><a href="../../reference/makeImputeMethod.html">makeImputeMethod()</a></code> permits to create your own imputation method. For this purpose you need to specify a <em>learn</em> function that extracts the necessary information and an <em>impute</em> function that does the actual imputation. The <em>learn</em> and <em>impute</em> functions both have at least the following formal arguments:</p>
 <ul>
 <li>
-<code>data</code> is a <code><a href="http://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame()</a></code> with missing values in some features.</li>
+<code>data</code> is a <code><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame()</a></code> with missing values in some features.</li>
 <li>
 <code>col</code> indicates the feature to be imputed.</li>
 <li>
@@ -301,23 +301,23 @@
 <p>Let’s have a look at function imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">imputeMean =<span class="st"> </span><span class="cf">function</span> () </a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span>(<span class="dt">learn =</span> <span class="cf">function</span>(data, target, col) <span class="kw">mean</span>(data[[col]], </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span>(<span class="dt">learn =</span> <span class="cf">function</span>(data, target, col) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(data[[col]], </a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">impute =</span> simpleImpute)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">}</a></code></pre></div>
 <p>imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>) calls the unexported <code>mlr</code> function <code>simpleImpute</code> which is defined as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">simpleImpute =<span class="st"> </span><span class="cf">function</span> (data, target, col, const) </a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">if</span> (<span class="kw">is.na</span>(const)) </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(const)) </a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">        <span class="kw">stopf</span>(<span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, </a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">            col)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">    x =<span class="st"> </span>data[[col]]</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw">is.logical</span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.logical</span>(const)) {</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        x =<span class="st"> </span><span class="kw">as.factor</span>(x)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">is.logical</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">is.logical</a></span>(const)) {</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">        x =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(x)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">    }</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="cf">if</span> (<span class="kw">is.factor</span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>const <span class="op">%nin%</span><span class="st"> </span><span class="kw">levels</span>(x)) {</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">        <span class="kw">levels</span>(x) =<span class="st"> </span><span class="kw">c</span>(<span class="kw">levels</span>(x), <span class="kw">as.character</span>(const))</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">is.factor</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>const <span class="op">%nin%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x)) {</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(const))</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">    }</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="kw">replace</span>(x, <span class="kw">is.na</span>(x), const)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/replace">replace</a></span>(x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x), const)</a>
 <a class="sourceLine" id="cb2-14" data-line-number="14">}</a></code></pre></div>
 <p>The <em>learn</em> function calculates the mean of the non-missing observations in column <code>col</code>. The mean is passed via argument <code>const</code> to the <em>impute</em> function that replaces all missing values in feature <code>col</code>.</p>
 </div>
@@ -330,25 +330,25 @@
 <a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span>(</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">learn =</span> <span class="cf">function</span>(data, target, col) {</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">      x =<span class="st"> </span>data[[col]]</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">      ind =<span class="st"> </span><span class="kw">is.na</span>(x)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">      dind =<span class="st"> </span><span class="kw">diff</span>(ind)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">      lastValue =<span class="st"> </span><span class="kw">which</span>(dind <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)  <span class="co"># position of the last observed value previous to NA</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">      lastNA =<span class="st"> </span><span class="kw">which</span>(dind <span class="op">==</span><span class="st"> </span><span class="dv">-1</span>)    <span class="co"># position of the last of potentially several consecutive NA's</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">      ind =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">      dind =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diff">diff</a></span>(ind)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">      lastValue =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(dind <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)  <span class="co"># position of the last observed value previous to NA</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">      lastNA =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(dind <span class="op">==</span><span class="st"> </span><span class="dv">-1</span>)    <span class="co"># position of the last of potentially several consecutive NA's</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">      values =<span class="st"> </span>x[lastValue]         <span class="co"># last observed value previous to NA</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">      times =<span class="st"> </span>lastNA <span class="op">-</span><span class="st"> </span>lastValue    <span class="co"># number of consecutive NA's</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">      <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">values =</span> values, <span class="dt">times =</span> times))</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">values =</span> values, <span class="dt">times =</span> times))</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">    },</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="dt">impute =</span> <span class="cf">function</span>(data, target, col, values, times) {</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14">      x =<span class="st"> </span>data[[col]]</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">      <span class="kw">replace</span>(x, <span class="kw">is.na</span>(x), <span class="kw">rep</span>(values, times))</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/replace">replace</a></span>(x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(values, times))</a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">    }</a>
 <a class="sourceLine" id="cb3-17" data-line-number="17">  )</a>
 <a class="sourceLine" id="cb3-18" data-line-number="18">}</a></code></pre></div>
-<p>Note that this function is just for demonstration and is lacking some checks for real-world usage (for example ‘What should happen if the first value in <code>x</code> is already missing?’). Below it is used to impute the missing values in features <code>Ozone</code> and <code>Solar.R</code> in the airquality (<code><a href="http://www.rdocumentation.org/packages/datasets/topics/airquality">datasets::airquality()</a></code>) data set.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">data</span>(airquality)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">imp =<span class="st"> </span><span class="kw"><a href="../../reference/impute.html">impute</a></span>(airquality, <span class="dt">cols =</span> <span class="kw">list</span>(<span class="dt">Ozone =</span> <span class="kw">imputeLOCF</span>(), <span class="dt">Solar.R =</span> <span class="kw">imputeLOCF</span>()),</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">dummy.cols =</span> <span class="kw">c</span>(<span class="st">"Ozone"</span>, <span class="st">"Solar.R"</span>))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">head</span>(imp<span class="op">$</span>data, <span class="dv">10</span>)</a>
+<p>Note that this function is just for demonstration and is lacking some checks for real-world usage (for example ‘What should happen if the first value in <code>x</code> is already missing?’). Below it is used to impute the missing values in features <code>Ozone</code> and <code>Solar.R</code> in the airquality (<code><a href="https://www.rdocumentation.org/packages/datasets/topics/airquality">datasets::airquality()</a></code>) data set.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(airquality)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">imp =<span class="st"> </span><span class="kw"><a href="../../reference/impute.html">impute</a></span>(airquality, <span class="dt">cols =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">Ozone =</span> <span class="kw">imputeLOCF</span>(), <span class="dt">Solar.R =</span> <span class="kw">imputeLOCF</span>()),</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">dummy.cols =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Ozone"</span>, <span class="st">"Solar.R"</span>))</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(imp<span class="op">$</span>data, <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## 1     41     190  7.4   67     5   1       FALSE         FALSE</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## 2     36     118  8.0   72     5   2       FALSE         FALSE</span></a>

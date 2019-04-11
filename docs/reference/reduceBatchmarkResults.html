@@ -304,28 +304,28 @@ To setup the benchmark have a look at batchmark." />
     </div>
 
     
-    <p>This creates a <a href='BenchmarkResult.html'>BenchmarkResult</a> from a <a href='http://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>.
+    <p>This creates a <a href='BenchmarkResult.html'>BenchmarkResult</a> from a <a href='https://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>.
 To setup the benchmark have a look at <a href='batchmark.html'>batchmark</a>.</p>
     
 
     <pre class="usage"><span class='fu'>reduceBatchmarkResults</span>(<span class='kw'>ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>),
-  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
+  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ids</th>
-      <td><p>(data.frame or integer)<br />
-A <a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>base::data.frame</a> (or <a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table</a>)
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> or <a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
+A <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>base::data.frame</a> (or <a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table</a>)
 with a column named &#8220;job.id&#8221;.
 Alternatively, you may also pass a vector of integerish job ids.
-If not set, defaults to all successfully terminated jobs (return value of <a href='http://www.rdocumentation.org/packages/batchtools/topics/findJobs'>batchtools::findDone</a>.</p></td>
+If not set, defaults to all successfully terminated jobs (return value of <a href='https://www.rdocumentation.org/packages/batchtools/topics/findJobs'>batchtools::findDone</a>.</p></td>
     </tr>
     <tr>
       <th>keep.pred</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Keep the prediction data in the <code>pred</code> slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
@@ -334,14 +334,14 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     <tr>
       <th>reg</th>
-      <td><p>(<a href='http://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>)<br />
-Registry, created by <a href='http://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::makeExperimentRegistry</a>. If not explicitly passed,
+      <td><p>(<a href='https://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>)<br />
+Registry, created by <a href='https://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::makeExperimentRegistry</a>. If not explicitly passed,
 uses the last created registry.</p></td>
     </tr>
     </table>

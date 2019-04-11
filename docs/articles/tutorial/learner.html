@@ -303,7 +303,7 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">classif.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">fix.factors.prediction =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Regression gradient boosting machine, specify hyperparameters via a list</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">regr.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, <span class="dt">par.vals =</span> <span class="kw">list</span>(<span class="dt">n.trees =</span> <span class="dv">500</span>, <span class="dt">interaction.depth =</span> <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">regr.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n.trees =</span> <span class="dv">500</span>, <span class="dt">interaction.depth =</span> <span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Cox proportional hazards model with custom name</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">surv.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"surv.coxph"</span>, <span class="dt">id =</span> <span class="st">"cph"</span>)</a>
@@ -370,7 +370,7 @@
 <a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co"># Get the type of prediction</span></a>
 <a class="sourceLine" id="cb3-28" data-line-number="28">regr.lrn<span class="op">$</span>predict.type</a>
 <a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">## [1] "response"</span></a></code></pre></div>
-<p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="http://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
+<p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
 <p>Moreover, <code>mlr</code> provides function <code><a href="../../reference/getHyperPars.html">getHyperPars()</a></code> or its alternative <code><a href="../../reference/getLearnerParVals.html">getLearnerParVals()</a></code> to access the current hyperparameter setting of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> to get a description of all possible settings. These are particularly useful in case of wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, for example if a learner is fused with a feature selection strategy, and both, the learner as well the feature selection method, have hyperparameters. For details see the section on <a href="wrapper.html">wrapped learners</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Get current hyperparameter settings</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../../reference/getHyperPars.html">getHyperPars</a></span>(cluster.lrn)</a>
@@ -456,7 +456,7 @@
 <a class="sourceLine" id="cb7-16" data-line-number="16">cluster.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setHyperPars.html">setHyperPars</a></span>(cluster.lrn, <span class="dt">centers =</span> <span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb7-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co"># Go back to default hyperparameter values</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">regr.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/removeHyperPars.html">removeHyperPars</a></span>(regr.lrn, <span class="kw">c</span>(<span class="st">"n.trees"</span>, <span class="st">"interaction.depth"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb7-19" data-line-number="19">regr.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/removeHyperPars.html">removeHyperPars</a></span>(regr.lrn, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.trees"</span>, <span class="st">"interaction.depth"</span>))</a></code></pre></div>
 </div>
 <div id="listing-learners" class="section level1">
 <h1 class="hasAnchor">
@@ -465,7 +465,7 @@
 <p>If you would like a list of available learners, maybe only with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use function <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># List everything in mlr</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">lrns =<span class="st"> </span><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>()</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">head</span>(lrns[<span class="kw">c</span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(lrns[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">##                 class      package</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">## 1         classif.ada    ada,rpart</span></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">## 2  classif.adaboostm1        RWeka</span></a>
@@ -476,7 +476,7 @@
 <a class="sourceLine" id="cb8-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co"># List classifiers that can output probabilities</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">lrns =<span class="st"> </span><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"prob"</span>)</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="kw">head</span>(lrns[<span class="kw">c</span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(lrns[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">##                 class      package</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">## 1         classif.ada    ada,rpart</span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">## 2  classif.adaboostm1        RWeka</span></a>
@@ -487,7 +487,7 @@
 <a class="sourceLine" id="cb8-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co"># List classifiers that can be applied to iris (i.e., multiclass) and output probabilities</span></a>
 <a class="sourceLine" id="cb8-24" data-line-number="24">lrns =<span class="st"> </span><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(iris.task, <span class="dt">properties =</span> <span class="st">"prob"</span>)</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="kw">head</span>(lrns[<span class="kw">c</span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(lrns[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
 <a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">##                class      package</span></a>
 <a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">## 1 classif.adaboostm1        RWeka</span></a>
 <a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">## 2   classif.boosting adabag,rpart</span></a>
@@ -497,7 +497,7 @@
 <a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">## 6   classif.cvglmnet       glmnet</span></a>
 <a class="sourceLine" id="cb8-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co"># The calls above return character vectors, but you can also create learner objects</span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="kw">head</span>(<span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"cluster"</span>, <span class="dt">create =</span> <span class="ot">TRUE</span>), <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"cluster"</span>, <span class="dt">create =</span> <span class="ot">TRUE</span>), <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">## [[1]]</span></a>
 <a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">## Learner cluster.cmeans from package e1071,clue</span></a>
 <a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">## Type: cluster</span></a>
