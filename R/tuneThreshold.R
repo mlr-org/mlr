@@ -27,14 +27,17 @@
 #' @family tune
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
+
   checkPrediction(pred, task.type = c("classif", "multilabel"), predict.type = "prob")
   td = pred$task.desc
   ttype = td$type
   measure = checkMeasures(measure, td)[[1L]]
-  if (!missing(task))
+  if (!missing(task)) {
     assertClass(task, classes = "SupervisedTask")
-  if (!missing(model))
+  }
+  if (!missing(model)) {
     assertClass(model, classes = "WrappedModel")
+  }
   assertList(control)
 
   probs = getPredictionProbabilities(pred)
@@ -47,8 +50,10 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   cls = pred$task.desc$class.levels
   k = length(cls)
   fitn = function(x) {
-    if (ttype == "multilabel" || k > 2)
+
+    if (ttype == "multilabel" || k > 2) {
       names(x) = cls
+    }
     performance(setThreshold(pred, x), measure, task, model, simpleaggr = TRUE)
   }
 
@@ -63,7 +68,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$value
-  } else {# classif with k = 2
+  } else { # classif with k = 2
     or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
     th = or[[1]]
     perf = or$objective

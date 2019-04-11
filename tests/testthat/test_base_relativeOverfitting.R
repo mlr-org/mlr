@@ -83,4 +83,3 @@ test_that("relativeOverfitting works for regression with train/test", {
   expect_true(is.numeric(ro$relative.overfit.mse))
   expect_equal(nrow(ro), 1)
 })
-

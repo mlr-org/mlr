@@ -14,6 +14,7 @@
 #' @family tune
 #' @export
 makeTuneControlDesign = function(same.resampling.instance = TRUE, impute.val = NULL, design = NULL, tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default") {
+
   assertDataFrame(design, min.rows = 1)
   budget = nrow(design)
   makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,

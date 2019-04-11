@@ -14,20 +14,23 @@
 #' @noMd
 #' @export
 mergeBenchmarkResults = function(bmrs) {
+
   # check all objects have the class BenchmarkResult
   assertList(bmrs, types = "BenchmarkResult")
 
   # check if all task types are equal
   unique.tt = unique(unlist(lapply(bmrs, function(x) getBMRObjects(x, fun = getTaskType))))
-  if (length(unique.tt) != 1)
+  if (length(unique.tt) != 1) {
     stopf("Different task types found: %s", collapse(unique.tt))
+  }
 
   # check if resample descriptions are equal for each task
   task.rin = peelList(lapply(bmrs, function(bmr) getBMRObjects(bmr, fun = function(x) getRRPredictions(x)$instance$desc)))
   task.rin = groupNamedListByNames(task.rin)
   unique.rin = vlapply(task.rin, function(x) length(unique(x)) == 1)
-  if (any(!unique.rin))
+  if (any(!unique.rin)) {
     stopf("Different resample description found for tasks: %s", collapse(names(unique.rin)[!unique.rin]))
+  }
 
   # get unique learner ids and task ids
   learner.ids = unique(unlist(lapply(bmrs, getBMRLearnerIds)))
@@ -37,6 +40,7 @@ mergeBenchmarkResults = function(bmrs) {
   all.combos = expand.grid(task.id = task.ids, learner.id = learner.ids)
   all.combos = stri_paste(all.combos$task.id, all.combos$learner.id, sep = " - ")
   existing.combos = rbindlist(lapply(bmrs, function(bmr) {
+
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
   }))
   existing.combos = stri_paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
@@ -50,7 +54,7 @@ mergeBenchmarkResults = function(bmrs) {
 
   # get all learners from bmrs and merge
   lrns.merged = peelList(lapply(bmrs, getBMRLearners))
-  lrns.merged = unique(lrns.merged) #lrns.merged[!duplicated(lrns.merged)]
+  lrns.merged = unique(lrns.merged) # lrns.merged[!duplicated(lrns.merged)]
 
   # get ResampleResults from bmrs and merge them by setting the correct structure
   res.merged = peelList(extractSubList(bmrs, "results", simplify = FALSE))
@@ -73,14 +77,17 @@ mergeBenchmarkResults = function(bmrs) {
 
 # simple wrapper for unlist() with recursive set to FALSE
 peelList = function(x) {
+
   unlist(x, recursive = FALSE)
 }
 
 groupNamedListByNames = function(xs, name = sort(unique(names(xs)))) {
+
   assertList(xs, names = "named")
   assertCharacter(name)
 
   res = lapply(name, function(x) {
+
     ret = xs[names(xs) == x]
     names(ret) = NULL
     peelList(ret)

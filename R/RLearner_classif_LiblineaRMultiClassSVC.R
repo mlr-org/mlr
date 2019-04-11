@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.LiblineaRMultiClassSVC = function() {
+
   makeRLearnerClassif(
     cl = "classif.LiblineaRMultiClassSVC",
     package = "LiblineaR",
@@ -21,11 +22,13 @@ makeRLearner.classif.LiblineaRMultiClassSVC = function() {
 
 #' @export
 trainLearner.classif.LiblineaRMultiClassSVC = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR::LiblineaR(data = d$data, target = d$target, type = 4L, ...)
 }
 
 #' @export
 predictLearner.classif.LiblineaRMultiClassSVC = function(.learner, .model, .newdata, ...) {
-    as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
+
+  as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
 }

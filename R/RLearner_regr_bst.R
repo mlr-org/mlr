@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.bst = function() {
+
   makeRLearnerRegr(
     cl = "regr.bst",
     package = c("bst", "rpart"),
@@ -40,10 +41,11 @@ makeRLearner.regr.bst = function() {
 trainLearner.regr.bst = function(.learner, .task, .subset, .weights = NULL, mstop, nu, twinboost,
   f.init, xselect.init, center, trace, numsample, df, minsplit, minbucket, cp, maxsurrogate,
   usesurrogate, surrogatestyle, maxdepth, xval, Learner, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   ctrl = learnerArgsToControl(bst::bst_control, mstop, nu, twinboost, f.init,
     xselect.init, center, trace, numsample, df)
-  control.tree = learnerArgsToControl(list,  minsplit, minbucket, cp, maxsurrogate,
+  control.tree = learnerArgsToControl(list, minsplit, minbucket, cp, maxsurrogate,
     usesurrogate, surrogatestyle, maxdepth, xval)
   bst::bst(x = d$data, y = d$target, family = "gaussian", ctrl = ctrl,
     control.tree = control.tree, learner = Learner, ...)
@@ -51,5 +53,6 @@ trainLearner.regr.bst = function(.learner, .task, .subset, .weights = NULL, msto
 
 #' @export
 predictLearner.regr.bst = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, .newdata, ...)
 }

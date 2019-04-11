@@ -1,9 +1,10 @@
-#FIXME: I have no idea which routine internally prints to which fucking stream
+# FIXME: I have no idea which routine internally prints to which fucking stream
 # but neither verbose=FALSE can sicth off the iteration  output in all case, nor
 # can I suppress it with capture.output or suppressMessages
 
 #' @export
 makeRLearner.classif.bartMachine = function() {
+
   makeRLearnerClassif(
     cl = "classif.bartMachine",
     package = "bartMachine",
@@ -42,6 +43,7 @@ makeRLearner.classif.bartMachine = function() {
 
 #' @export
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
   td = getTaskDesc(.task)
@@ -52,9 +54,10 @@ trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights =
 
 #' @export
 predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
+
   td = .model$task.desc
   levs = c(td$positive, td$negative)
-  if (.learner$predict.type == "prob"){
+  if (.learner$predict.type == "prob") {
     p = predict(.model$learner.model, new_data = .newdata, type = "prob", ...)
     y = propVectorToMatrix(1 - p, levs)
   } else {

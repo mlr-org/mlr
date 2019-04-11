@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.liquidSVM = function() {
+
   makeRLearnerRegr(
     cl = "regr.liquidSVM",
     package = "liquidSVM",
@@ -7,7 +8,7 @@ makeRLearner.regr.liquidSVM = function() {
       makeIntegerLearnerParam(id = "d", lower = 0L, upper = 7L, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale", default = TRUE),
       makeIntegerLearnerParam(id = "threads", lower = -1L, default = 0),
-      makeDiscreteLearnerParam(id = "kernel", default = "gauss_rbf", values = c("gauss_rbf","poisson")),
+      makeDiscreteLearnerParam(id = "kernel", default = "gauss_rbf", values = c("gauss_rbf", "poisson")),
       makeIntegerLearnerParam(id = "partition_choice", lower = 0L, upper = 6L, default = 0),
       makeIntegerLearnerParam(id = "grid_choice", lower = -2L, upper = 2L),
       makeIntegerLearnerParam(id = "adaptivity_control", lower = 0L, upper = 2L, default = 0),
@@ -25,7 +26,7 @@ makeRLearner.regr.liquidSVM = function() {
       makeNumericVectorLearnerParam(id = "c_values", lower = 0),
       makeLogicalLearnerParam(id = "useCells", default = FALSE)
     ),
-    properties = c( "numerics", "factors"),
+    properties = c("numerics", "factors"),
     name = "Support Vector Machines (liquidSVM)",
     short.name = "liquidSVM",
     callees = "liquidSVM"
@@ -33,12 +34,14 @@ makeRLearner.regr.liquidSVM = function() {
 }
 
 #' @export
-trainLearner.regr.liquidSVM = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.liquidSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
-  liquidSVM::svm(f, getTaskData(.task, .subset),  ...)
- }
+  liquidSVM::svm(f, getTaskData(.task, .subset), ...)
+}
 
 #' @export
 predictLearner.regr.liquidSVM = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)
 }

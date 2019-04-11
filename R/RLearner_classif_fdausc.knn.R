@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.fdausc.knn = function() {
+
   makeRLearnerClassif(
     cl = "classif.fdausc.knn",
     package = "fda.usc",
@@ -32,7 +33,7 @@ trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = 
   par.cv = learnerArgsToControl(list, trim, draw)
   fda.usc::classif.knn(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
- }
+}
 
 #' @export
 predictLearner.classif.fdausc.knn = function(.learner, .model, .newdata, ...) {

@@ -10,8 +10,12 @@ test_that("classif_probit", {
   testSimple("classif.probit", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.class)
   testProb("classif.probit", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.prob)
 
-  tt = function(formula, data) {glm(formula, data = data, family = binomial(link = "probit"))}
+  tt = function(formula, data) {
+
+    glm(formula, data = data, family = binomial(link = "probit"))
+  }
   tp = function(model, newdata) {
+
     p = predict(model, newdata, type = "response")
     as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }

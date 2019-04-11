@@ -23,7 +23,8 @@
 #' @export
 #' @family performance
 makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean, best = NULL, worst = NULL,
-                           name = id, note = "") {
+  name = id, note = "") {
+
   assertString(id)
   assertFlag(minimize)
   assertMatrix(costs)
@@ -36,23 +37,28 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
     properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
-      #check costs
+
+      # check costs
       td = pred$task.desc
       levs = td$class.levels
       if (any(dim(costs))) {
-        if (any(dim(costs) != length(levs)))
+        if (any(dim(costs) != length(levs))) {
           stop("Dimensions of costs have to be the same as number of class levels!")
+        }
         rns = rownames(costs)
         cns = colnames(costs)
-        if (!setequal(rns, levs) || !setequal(cns, levs))
+        if (!setequal(rns, levs) || !setequal(cns, levs)) {
           stop("Row and column names of cost matrix have to equal class levels!")
+        }
       }
       costs = extra.args[[1L]]
       # cannot index with NA
       r = pred$data$response
-      if (anyMissing(r))
+      if (anyMissing(r)) {
         return(NA_real_)
+      }
       cc = function(truth, pred) {
+
         costs[truth, pred]
       }
       y = mapply(cc, as.character(pred$data$truth), as.character(r))

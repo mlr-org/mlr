@@ -17,6 +17,7 @@
 NULL
 
 crossover = function(x, y, rate = 0.5) {
+
   ratio = rbinom(length(x), 1, rate)
   ifelse(ratio == 1, x, y)
 }

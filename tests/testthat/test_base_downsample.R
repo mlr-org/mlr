@@ -1,6 +1,6 @@
 context("downsample")
 
-test_that("downsample",  {
+test_that("downsample", {
   down.tsk = downsample(multiclass.task, perc = 1 / 3)
   expect_equal(getTaskSize(down.tsk), 50L)
   rsm.methods = c("Bootstrap", "Subsample", "Holdout")
@@ -16,7 +16,7 @@ test_that("downsample",  {
   }
 })
 
-test_that("downsample wrapper",  {
+test_that("downsample wrapper", {
   # test it with classif
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.5)
@@ -30,7 +30,7 @@ test_that("downsample wrapper",  {
   expect_true(!is.na(r$aggr))
 })
 
-test_that("downsample wrapper works with xgboost, we had issue #492",  {
+test_that("downsample wrapper works with xgboost, we had issue #492", {
   skip_if_not_installed("xgboost") # xgboost broken on CRAN, they cannot run our tests
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn = makeDownsampleWrapper("classif.xgboost", dw.perc = 0.5)
@@ -39,7 +39,7 @@ test_that("downsample wrapper works with xgboost, we had issue #492",  {
   expect_true(!is.na(r$aggr))
 })
 
-test_that("downsample wrapper works with weights, we had issue #838",  {
+test_that("downsample wrapper works with weights, we had issue #838", {
   n = nrow(regr.df)
   w = 1:n
   task = makeRegrTask(data = regr.df, target = regr.target, weights = w)
@@ -69,9 +69,9 @@ test_that("training performance works as expected (#1357)", {
     properties = c("classif", "classif.multi", "req.pred", "req.truth"),
     name = "Number",
     fun = function(task, model, pred, feats, extra.args) {
+
       length(pred$data$response)
-    }
-  )
+    })
 
   rdesc = makeResampleDesc("Holdout", predict = "both")
   lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.1)

@@ -20,7 +20,7 @@ test_that("classif_h2ogbm", {
       training_frame = h2o::as.h2o(binaryclass.train)))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(h2o::h2o.gbm, parset)
-    p  = predict(m, newdata = h2o::as.h2o(binaryclass.test))
+    p = predict(m, newdata = h2o::as.h2o(binaryclass.test))
     old.probs.list[[i]] = as.data.frame(p)[, 2L]
   }
 
@@ -33,7 +33,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
   df = cbind(classx, df)
 
   classif.task = makeClassifTask(id = "example", data = df, target = "classx")
-  gb.lrn  = makeLearner("classif.h2o.gbm", predict.type = "prob")
+  gb.lrn = makeLearner("classif.h2o.gbm", predict.type = "prob")
   rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
   rin = makeResampleInstance(rdesc, task = classif.task)
   r = resample(gb.lrn, classif.task, rin)

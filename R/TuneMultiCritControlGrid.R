@@ -14,4 +14,3 @@ makeTuneMultiCritControlGrid = function(same.resampling.instance = TRUE,
     resolution = resolution, log.fun = log.fun, final.dw.perc = final.dw.perc,
     budget = budget, cl = "TuneMultiCritControlGrid")
 }
-

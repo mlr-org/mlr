@@ -48,7 +48,7 @@ test_that("BenchmarkResult", {
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
     grid.size = 2L, ordered = TRUE)
 
-   # check error when learner short names are not unique
+  # check error when learner short names are not unique
   lrns = list(
     rf = makeLearner("classif.randomForest", id = "rf1"),
     rf2 = makeLearner("classif.randomForest", id = "rf2")

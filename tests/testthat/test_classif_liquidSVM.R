@@ -14,7 +14,7 @@ test_that("classif_liquidSVM", {
     list(clipping = 0),
     list(gamma_steps = 5, min_gamma = 0.1, max_gamma = 25, lambda_steps = 5, min_lambda = 0.1, max_lambda = 25),
     list(useCells = TRUE),
-    list(gammas = c(0.1,1,10), lambdas = c(0.1,1,10), c_values = c(0.1,1,10))
+    list(gammas = c(0.1, 1, 10), lambdas = c(0.1, 1, 10), c_values = c(0.1, 1, 10))
   )
   # Kernel, more advanced parameters...
 
@@ -32,5 +32,4 @@ test_that("classif_liquidSVM", {
 
   testSimpleParsets("classif.liquidSVM", multiclass.df, multiclass.target,
     multiclass.train.inds, old.predicts.list, parset.list[1])
-
 })

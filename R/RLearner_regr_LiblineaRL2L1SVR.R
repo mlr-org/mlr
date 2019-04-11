@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.LiblineaRL2L1SVR = function() {
+
   makeRLearnerRegr(
     cl = "regr.LiblineaRL2L1SVR",
     package = "LiblineaR",
@@ -11,7 +12,7 @@ makeRLearner.regr.LiblineaRL2L1SVR = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    #provide default to get rid of warning message during training
+    # provide default to get rid of warning message during training
     par.vals = list(svr_eps = 0.1),
     properties = "numerics",
     name = "L2-Regularized L1-Loss Support Vector Regression",
@@ -23,11 +24,13 @@ makeRLearner.regr.LiblineaRL2L1SVR = function() {
 
 #' @export
 trainLearner.regr.LiblineaRL2L1SVR = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR::LiblineaR(data = d$data, target = d$target, type = 13L, ...)
 }
 
 #' @export
 predictLearner.regr.LiblineaRL2L1SVR = function(.learner, .model, .newdata, ...) {
-    predict(.model$learner.model, newx = .newdata, ...)$predictions
+
+  predict(.model$learner.model, newx = .newdata, ...)$predictions
 }

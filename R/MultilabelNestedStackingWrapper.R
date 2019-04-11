@@ -24,6 +24,7 @@
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds = 2) {
+
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = stri_paste("multilabel.nestedStacking", getLearnerId(learner), sep = ".")
   packs = getLearnerPackages(learner)
@@ -39,8 +40,9 @@ makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds =
 
 #' @export
 trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   if (is.null(.learner$order)) {
-    order = sample(getTaskTargetNames(.task)) #random order
+    order = sample(getTaskTargetNames(.task)) # random order
   } else {
     order = .learner$order
   }
@@ -55,11 +57,11 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
     tn = order[i]
     if (i >= 2) {
       tnprevious = order[i - 1]
-      data2 = data.frame(data.nst, data[tnprevious]) #for inner resampling to produce predicted labels
+      data2 = data.frame(data.nst, data[tnprevious]) # for inner resampling to produce predicted labels
       innertask = makeClassifTask(id = tnprevious, data = data2, target = tnprevious)
       rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
       r = resample(.learner$next.learner, innertask, rdesc, weights = .weights, show.info = FALSE)
-      predlabel = as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
+      predlabel = as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) # did not use getPredictionResponse, because of ordering
       data2 = data.frame(data.nst, data[tn])
       data2[[tnprevious]] = predlabel
       data.nst[[tnprevious]] = predlabel
@@ -74,6 +76,7 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
 
 #' @export
 predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
   predmatrix = matrix(ncol = length(models), nrow = nrow(.newdata), dimnames = list(NULL, names(models)))
   if (.learner$predict.type == "response") {
@@ -87,6 +90,5 @@ predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .new
       .newdata[tn] = predmatrix[, tn]
     }
   }
-  predmatrix[, .model$task.desc$class.levels] #bring labels back in original order
+  predmatrix[, .model$task.desc$class.levels] # bring labels back in original order
 }
-

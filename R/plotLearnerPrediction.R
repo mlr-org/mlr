@@ -60,7 +60,7 @@
 #' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
-plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
+plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L, ...,
   gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
@@ -86,10 +86,12 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type %in% c("classif", "cluster") && taskdim != 2L)
+  if (td$type %in% c("classif", "cluster") && taskdim != 2L) {
     stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
-  if (td$type == "regr" && taskdim %nin% 1:2)
+  }
+  if (td$type == "regr" && taskdim %nin% 1:2) {
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
+  }
 
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -107,8 +109,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   assertNumber(err.size, lower = 0)
   assertLogical(greyscale)
 
-  if (td$type == "classif" && err.mark == "cv" && cv == 0L)
+  if (td$type == "classif" && err.mark == "cv" && cv == 0L) {
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
+  }
 
   # subset to features, set hyperpars
   task = subsetTask(task, features = features)
@@ -117,17 +120,20 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   # some shortcut names
   target = td$target
   data = getTaskData(task)
-  if (td$type != "cluster")
+  if (td$type != "cluster") {
     y = getTaskTargets(task)
+  }
   x1n = features[1L]
   x1 = data[, x1n]
 
   # predictions
   # if learner supports prob or se, enable it
-  if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se"))
+  if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se")) {
     learner = setPredictType(learner, "se")
-  if (td$type == "classif" && hasLearnerProperties(learner, "prob"))
+  }
+  if (td$type == "classif" && hasLearnerProperties(learner, "prob")) {
     learner = setPredictType(learner, "prob")
+  }
   mod = train(learner, task)
   pred.train = predict(mod, task)
   yhat = pred.train$data$response
@@ -161,12 +167,13 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   grid[, target] = pred.grid$data$response
 
   if (td$type == "classif") {
-    data$.err = if (err.mark == "train")
+    data$.err = if (err.mark == "train") {
       y != yhat
-    else if (err.mark == "cv")
+    } else if (err.mark == "cv") {
       y != pred.cv$data[order(pred.cv$data$id), "response"]
-    else
+    } else {
       TRUE
+    }
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (hasLearnerProperties(learner, "prob") && prob.alpha) {
@@ -194,7 +201,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       # print error points
       p = p + geom_point(data = subset(data, data$.err),
         mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
-      p  = p + guides(alpha = FALSE)
+      p = p + guides(alpha = FALSE)
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {
@@ -216,7 +223,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         p = p + geom_ribbon(data = grid, mapping = aes_string(ymin = ".ymin", ymax = ".ymax"), alpha = 0.2)
       }
     } else if (taskdim == 2L) {
-      #FIXME: color are not scaled correctly? can be improved?
+      # FIXME: color are not scaled correctly? can be improved?
       # plot background from model / grid
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
       p = p + geom_raster(data = grid, mapping = aes_string(fill = target))
@@ -228,7 +235,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         size = pointsize, colour = "black", shape = 1)
       # plot point, with circle and interior color for y
       p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
-      p  = p + guides(colour = FALSE)
+      p = p + guides(colour = FALSE)
     }
   }
 

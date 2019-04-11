@@ -52,7 +52,7 @@ test_that("resample", {
   fit = resample(lrn1, ct, makeResampleDesc("CV", iters = 2))
 
   expect_error(resample("classif.rpart", multiclass.task, makeResampleDesc("Holdout"),
-      measures = list()), "length >= 1")
+    measures = list()), "length >= 1")
 })
 
 test_that("resampling, predicting train set works", {
@@ -81,9 +81,6 @@ test_that("resampling, predicting train set works", {
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
-
-
-
 })
 
 
@@ -162,7 +159,7 @@ test_that("resample is extended by an additional measure", {
       measures = list(mmce, ber, auc, brier)
       # set aggregation method
       measures = lapply(measures, setAggregation, a)
-      #if (p == "train") measures = lapply(measures, setAggregation, train.mean)
+      # if (p == "train") measures = lapply(measures, setAggregation, train.mean)
       # create ResampleResult with all measures
       res.all = resample(lrn, binaryclass.task, rdesc, measures)
       # create ResampleResult with one measure and add the other ones afterwards
@@ -196,8 +193,8 @@ test_that("resample printer respects show.info", {
 
 test_that("resample drops unseen factors in predict data set", {
   data = data.frame(a = c("a", "b", "a", "b", "a", "c"),
-      b = c(1, 1, 2, 2, 2, 1),
-      trg = c("a", "b", "a", "b", "a", "b"))
+    b = c(1, 1, 2, 2, 2, 1),
+    trg = c("a", "b", "a", "b", "a", "b"))
   task = makeClassifTask("unseen.factors", data, "trg")
   resinst = makeResampleInstance("Holdout", task)
   resinst$train.inds[[1]] = 1:4

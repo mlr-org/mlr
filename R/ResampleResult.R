@@ -63,6 +63,7 @@ NULL
 
 #' @export
 print.ResampleResult = function(x, ...) {
+
   cat("Resample Result\n")
   catf("Task: %s", x$task.id)
   catf("Learner: %s", x$learner.id)

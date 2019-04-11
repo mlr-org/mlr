@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.cforest = function() {
+
   makeRLearnerRegr(
     cl = "regr.cforest",
     package = "party",
@@ -36,6 +37,7 @@ makeRLearner.regr.cforest = function() {
 trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
   ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion, minsplit,
   minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
@@ -53,10 +55,12 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
+
   as.vector(predict(.model$learner.model, newdata = .newdata, ...))
 }
 
 #' @export
 getFeatureImportanceLearner.regr.cforest = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.classif.cforest(.learner, .model, auc = FALSE, ...)
 }

@@ -90,20 +90,23 @@
 #' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 makeMeasure = function(id, minimize, properties = character(0L),
   fun, extra.args = list(), aggr = test.mean, best = NULL, worst = NULL, name = id, note = "") {
+
   assertString(id)
   assertFlag(minimize)
   assertCharacter(properties, any.missing = FALSE)
   assertFunction(fun)
   assertList(extra.args)
   assertString(note)
-  if (is.null(best))
+  if (is.null(best)) {
     best = ifelse(minimize, -Inf, Inf)
-  else
+  } else {
     assertNumber(best)
-  if (is.null(worst))
+  }
+  if (is.null(worst)) {
     worst = ifelse(minimize, Inf, -Inf)
-  else
+  } else {
     assertNumber(worst)
+  }
 
   m = makeS3Obj("Measure",
     id = id,
@@ -138,16 +141,18 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #' @return ([Measure]).
 #' @export
 getDefaultMeasure = function(x) {
-  type = if (inherits(x, "TaskDesc"))
+
+  type = if (inherits(x, "TaskDesc")) {
     x$type
-  else if (inherits(x, "Task"))
+  } else if (inherits(x, "Task")) {
     x$task.desc$type
-  else if (inherits(x, "Learner"))
+  } else if (inherits(x, "Learner")) {
     x$type
-  else if (x %in% listLearners()$class)
+  } else if (x %in% listLearners()$class) {
     stri_split_fixed(x, ".", simplify = TRUE)[1]
-  else
+  } else {
     x
+  }
   switch(type,
     classif = mmce,
     cluster = db,
@@ -160,6 +165,7 @@ getDefaultMeasure = function(x) {
 
 #' @export
 print.Measure = function(x, ...) {
+
   catf("Name: %s", x$name)
   catf("Performance measure: %s", x$id)
   catf("Properties: %s", collapse(x$properties))

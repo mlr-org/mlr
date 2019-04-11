@@ -17,7 +17,7 @@ test_that("regr_slim", {
   for (i in seq_along(parset.list)) {
     pars = list(X = as.matrix(X), Y = y)
     pars = c(pars, parset.list[[i]])
-    if ("lambda.idx" %in%  names(pars)) {
+    if ("lambda.idx" %in% names(pars)) {
       idx = pars$lambda.idx
       pars$lambda.idx = NULL
     } else {

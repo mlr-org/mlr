@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.mob = function() {
+
   makeRLearnerRegr(
     cl = "regr.mob",
     package = c("party", "modeltools"),
@@ -32,26 +33,30 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   feats = getTaskFeatureNames(.task)
   # FIXME: document stuff
   # FIXME: think about these defaults, also ask julia
-  if (missing(part.feats))
+  if (missing(part.feats)) {
     part.feats = feats
-  if (missing(term.feats))
+  }
+  if (missing(term.feats)) {
     term.feats = feats
+  }
 
   target = getTaskTargetNames(.task)
   f = as.formula(stri_paste(target, "~", collapse(term.feats, sep = " + "), "|", collapse(part.feats, sep = " + "), sep = " "))
 
   if (is.null(.weights)) {
     model = party::mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
-  } else  {
+  } else {
     model = party::mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
   }
   # sometimes mob fails to fit a model but does not signal an exception.
-  if (anyMissing(coef(model)))
+  if (anyMissing(coef(model))) {
     stop("Failed to fit party::mob. Some coefficients are estimated as NA")
+  }
   model
 }
 
 #' @export
 predictLearner.regr.mob = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)
 }
