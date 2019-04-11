@@ -8,8 +8,8 @@ get_stage("after_script") %>%
 if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("install") %>%
-    add_step(step_install_cran("stringi", type = "both")) %>%
-    add_step(step_install_cran("digest", type = "both")) %>%
+    add_step(step_install_cran("stringi")) %>%
+    add_step(step_install_cran("digest")) %>%
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0) {
       paste0("Installing WARMUPPKGS", trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
       install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
