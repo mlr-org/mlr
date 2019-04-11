@@ -1,6 +1,6 @@
 language: r
 sudo: false
-dist: xenial
+dist: trusty
 cache: packages
 env:
   global:
@@ -22,7 +22,6 @@ jobs:
            - libproj-dev # for sf
            - libgeos-dev # for sf
            - libudunits2-dev # for sf
-           - libftgl2 # for rgl
       before_install:
         - R -q -e 'if (!requireNamespace("BiocManager")) install.packages("BiocManager"); if (!requireNamespace("genefilter")) BiocManager::install("genefilter")'
         - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic@remove-glue"); tic::prepare_all_stages(); tic::before_install()'
