@@ -39,7 +39,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_step(step_install_cran("pander")) %>%
     add_step(step_install_cran("caret")) %>%
     add_step(step_install_cran("irace")) %>%
-    add_step(step_install_cran("emoa"))
+    add_step(step_install_cran("emoa")) %>%
+    add_step(step_install_cran("PMCMR"))
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
