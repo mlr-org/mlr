@@ -36,7 +36,9 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
                                            "-install-package", "thirdparty/XMeans1.0.4.zip")))
 
   get_stage("install") %>%
-    add_step(step_install_cran("pander"))
+    add_step(step_install_cran("pander")) %>%
+    add_step(step_install_cran("caret")) %>%
+    add_step(step_install_cran("irace"))
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
