@@ -4,6 +4,7 @@ if (ci_has_env("Check")) {
     #add_step(step_install_cran("stringi")) %>%
     add_step(step_install_cran("digest")) %>%
     add_step(step_install_cran("pander")) %>% # for tutorial
+    add_step(step_install_cran("ggpubr")) %>% # for tutorial
     add_step(step_install_deps(repos = c(getOption("repos"), remotes::bioc_install_repos())))
 
     get_stage("before_script") %>%
