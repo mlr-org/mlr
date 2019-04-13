@@ -14,7 +14,7 @@ if (ci_has_env("Check")) {
       repos = c(getOption("repos"), remotes::bioc_install_repos()))
 
     # pkgdown
-    do_pkgdown_site(commit_paths = "docs/*")
+    do_pkgdown(commit_paths = "docs/*")
 
     # only deploy man files in in master branch
     if (ci_get_branch() == "master") {
