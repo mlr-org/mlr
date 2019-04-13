@@ -24,7 +24,7 @@ jobs:
       env: Check=TRUE
       before_install:
         - R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager"); if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
-        - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+        - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic@macro-pkgdown"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
       script: true
       after_script: R -q -e 'tic::after_script()'
