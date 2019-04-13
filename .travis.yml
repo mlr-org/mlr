@@ -53,7 +53,7 @@ jobs:
            all_branches: true
 
     - stage: Tutorial
-      env: TUTORIAL=HTML
+      env: TUTORIAL=TRUE
       addons:
         apt:
           packages:

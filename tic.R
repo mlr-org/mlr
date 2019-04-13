@@ -1,4 +1,4 @@
-if (Sys.getenv("RCMDCHECK") == "TRUE") {
+if (ci_has_env("RCMDCHECK")) {
 
   get_stage("install") %>%
     add_step(step_install_cran("stringi")) %>%
@@ -17,7 +17,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       add_step(step_rcmdcheck("--as-cran", error_on = "error"))
 
   # only deploy in master branch
-  if (ci()$get_branch() == "master") {
+  if (ci_get_branch("master")) {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
@@ -27,7 +27,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   }
 }
 
-if (Sys.getenv("TUTORIAL") == "HTML") {
+if (ci_has_env("TUTORIAL")) {
 
   get_stage("install") %>%
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0)
@@ -36,13 +36,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
                                            "-install-package", "thirdparty/XMeans1.0.4.zip")))
 
   get_stage("install") %>%
-    add_step(step_install_deps(repos = c(getOption("repos"), remotes::bioc_install_repos())))# %>%
-    # add_step(step_install_cran("pander")) %>%
-    # add_step(step_install_cran("caret")) %>%
-    # add_step(step_install_cran("irace")) %>%
-    # add_step(step_install_cran("emoa")) %>%
-    # add_step(step_install_cran("PMCMR")) %>%
-    # add_step(step_install_cran("GGally"))
+    add_step(step_install_deps(repos = c(getOption("repos"), remotes::bioc_install_repos())))
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
