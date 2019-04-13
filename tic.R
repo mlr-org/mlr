@@ -1,4 +1,4 @@
-if (ci_has_env("RCMDCHECK")) {
+if (ci_has_env("Check")) {
 
   get_stage("install") %>%
     #add_step(step_install_cran("stringi")) %>%
