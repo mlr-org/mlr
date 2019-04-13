@@ -19,7 +19,7 @@ if (ci_has_env("Check")) {
 
     get_stage("deploy") %>%
       add_step(step_build_pkgdown()) %>%
-      step_push_deploy(commit_paths = "docs/*")
+      add_step(step_push_deploy(commit_paths = "docs/*"))
 
     # only deploy man files in in master branch
     if (ci_get_branch() == "master") {
