@@ -6,22 +6,22 @@ env:
   global:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_TESTS_NLINES_=999
-    - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 ggpubr FSelectorRcpp praznik'
+
+addons:
+  apt:
+    packages:
+     - libgmp-dev
+     - libgsl0-dev
+     - libgdal-dev # for sf
+     - libproj-dev # for sf
+     - libgeos-dev # for sf
+     - libudunits2-dev # for sf
 
 jobs:
   include:
     - stage: warmup
       latex: false
       env: Check=TRUE
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-           - libgdal-dev # for sf
-           - libproj-dev # for sf
-           - libgeos-dev # for sf
-           - libudunits2-dev # for sf
       before_install:
         - R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager"); if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
         - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
@@ -31,15 +31,6 @@ jobs:
     - stage: check
       latex: true
       env: Check=TRUE
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-           - libgdal-dev # for sf
-           - libproj-dev # for sf
-           - libgeos-dev # for sf
-           - libudunits2-dev # for sf
       before_install: R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
