@@ -14,15 +14,18 @@ if (ci_has_env("Check")) {
       add_step(step_install_deps(repos = c(getOption("repos"), remotes::bioc_install_repos()))) %>%
       add_step(step_rcmdcheck("--as-cran", error_on = "error"))
 
-  # only deploy in master branch
-  if (ci_get_branch() == "master") {
-
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_code_step(devtools::document()) %>%
       add_step(step_build_pkgdown()) %>%
-      add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE", "docs/*")))
-  }
+      step_push_deploy(commit_paths = "docs/*")
+
+    # only deploy man files in in master branch
+    if (ci_get_branch() == "master") {
+
+      get_stage("deploy") %>%
+        add_code_step(devtools::document()) %>%
+        add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
+    }
 }
