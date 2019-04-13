@@ -1,13 +1,10 @@
 if (ci_has_env("RCMDCHECK")) {
 
   get_stage("install") %>%
-    add_step(step_install_cran("stringi")) %>%
+    #add_step(step_install_cran("stringi")) %>%
     add_step(step_install_cran("digest")) %>%
     add_step(step_install_cran("pander")) %>% # for tutorial
-    add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0) {
-      paste0("Installing WARMUPPKGS", trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
-      install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
-    })
+    add_step(step_install_deps(repos = c(getOption("repos"), remotes::bioc_install_repos())))
 
     get_stage("before_script") %>%
       add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
