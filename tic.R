@@ -18,7 +18,7 @@ if (ci_has_env("RCMDCHECK")) {
       add_step(step_rcmdcheck("--as-cran", error_on = "error"))
 
   # only deploy in master branch
-  if (ci_get_branch("master")) {
+  if (ci_get_branch() == "master") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
