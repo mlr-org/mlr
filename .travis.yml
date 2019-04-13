@@ -12,6 +12,7 @@ jobs:
   include:
     - stage: warmup
       latex: false
+      env: Check=TRUE
       addons:
         apt:
           packages:
@@ -29,6 +30,7 @@ jobs:
       after_script: R -q -e 'tic::after_script()'
     - stage: check
       latex: true
+      env: Check=TRUE
       addons:
         apt:
           packages:
