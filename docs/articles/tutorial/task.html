@@ -305,25 +305,25 @@
 <p>The tasks are organized in a hierarchy, with the generic <code><a href="../../reference/Task.html">Task()</a></code> at the top. The following tasks can be instantiated and all inherit from the virtual superclass <code><a href="../../reference/Task.html">Task()</a></code>:</p>
 <ul>
 <li>
-<code><a href="../../reference/Task.html">RegrTask()</a></code> for regression problems,</li>
+<code>RegrTask()</code> for regression problems,</li>
 <li>
-<code><a href="../../reference/Task.html">ClassifTask()</a></code> for binary and <a href="cost_sensitive_classif.html" target="_blank">multi-class classification problems</a> with class-dependent costs can be handled as well),</li>
+<code>ClassifTask()</code> for binary and <a href="cost_sensitive_classif.html" target="_blank">multi-class classification problems</a> with class-dependent costs can be handled as well),</li>
 <li>
-<code><a href="../../reference/Task.html">SurvTask()</a></code> for survival analysis,</li>
+<code>SurvTask()</code> for survival analysis,</li>
 <li>
-<code><a href="../../reference/Task.html">ClusterTask()</a></code> for cluster analysis,</li>
+<code>ClusterTask()</code> for cluster analysis,</li>
 <li>
-<code><a href="../../reference/Task.html">MultilabelTask()</a></code> for multilabel classification problems,</li>
+<code>MultilabelTask()</code> for multilabel classification problems,</li>
 <li>
-<code><a href="../../reference/Task.html">CostSensTask()</a></code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
+<code>CostSensTask()</code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
 </ul>
-<p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <code><a href="../../reference/Task.html">makeClassifTask()</a></code>. All tasks require an identifier (argument <code>id</code>) and a <code><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame()</a></code> (argument <code>data</code>). If no ID is provided it is automatically generated using the variable name of the data. The ID will be later used to name results, for example of <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>, and to annotate plots. Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.</p>
+<p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code>. All tasks require an identifier (argument <code>id</code>) and a <code><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame()</a></code> (argument <code>data</code>). If no ID is provided it is automatically generated using the variable name of the data. The ID will be later used to name results, for example of <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>, and to annotate plots. Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.</p>
 <div id="regression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression" class="anchor"></a>Regression</h2>
 <p>For supervised learning like regression (as well as classification and survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code> variable.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(BostonHousing, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">regr.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeRegrTask</a></span>(<span class="dt">id =</span> <span class="st">"bh"</span>, <span class="dt">data =</span> BostonHousing, <span class="dt">target =</span> <span class="st">"medv"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">regr.task =<span class="st"> </span><span class="kw"><a href="../../reference/RegrTask.html">makeRegrTask</a></span>(<span class="dt">id =</span> <span class="st">"bh"</span>, <span class="dt">data =</span> BostonHousing, <span class="dt">target =</span> <span class="st">"medv"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">regr.task</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Supervised task: bh</span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## Type: regr</span></a>
@@ -347,7 +347,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(BreastCancer, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">df =<span class="st"> </span>BreastCancer</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">df<span class="op">$</span>Id =<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">classif.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">id =</span> <span class="st">"BreastCancer"</span>, <span class="dt">data =</span> df, <span class="dt">target =</span> <span class="st">"Class"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">classif.task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">id =</span> <span class="st">"BreastCancer"</span>, <span class="dt">data =</span> df, <span class="dt">target =</span> <span class="st">"Class"</span>)</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">classif.task</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Supervised task: BreastCancer</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Type: classif</span></a>
@@ -365,8 +365,8 @@
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">##       458       241 </span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">## Positive class: benign</span></a></code></pre></div>
 <p>In binary classification the two classes are usually referred to as <em>positive</em> and <em>negative</em> class with the positive class being the category of greater interest. This is relevant for many <a href="performance.html" target="_blank">performance measures</a> like the <em>true positive rate</em> or <a href="roc_analysis.html" target="_blank">ROC analysis</a>. Moreover, <code>mlr</code>, where possible, permits to set options (like the <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> or <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>) and returns and plots results (like class posterior probabilities) for the positive class only.</p>
-<p><code><a href="../../reference/Task.html">makeClassifTask()</a></code> by default selects the first factor level of the target variable as the positive class, in the above example <code>benign</code>. Class <code>malignant</code> can be manually selected as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">classif.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">id =</span> <span class="st">"BreastCancer"</span>, <span class="dt">data =</span> df, <span class="dt">target =</span> <span class="st">"Class"</span>, <span class="dt">positive =</span> <span class="st">"malignant"</span>)</a></code></pre></div>
+<p><code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code> by default selects the first factor level of the target variable as the positive class, in the above example <code>benign</code>. Class <code>malignant</code> can be manually selected as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">classif.task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">id =</span> <span class="st">"BreastCancer"</span>, <span class="dt">data =</span> df, <span class="dt">target =</span> <span class="st">"Class"</span>, <span class="dt">positive =</span> <span class="st">"malignant"</span>)</a></code></pre></div>
 </div>
 <div id="survival-analysis" class="section level2">
 <h2 class="hasAnchor">
@@ -374,7 +374,7 @@
 <p>Survival tasks use two target columns. For left and right censored problems these consist of the survival time and a binary event indicator. For interval censored data the two target columns must be specified in the <code>"interval2"</code> format (see <code><a href="https://www.rdocumentation.org/packages/survival/topics/Surv">survival::Surv()</a></code>).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(lung, <span class="dt">package =</span> <span class="st">"survival"</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">lung<span class="op">$</span>status =<span class="st"> </span>(lung<span class="op">$</span>status <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="co"># convert to logical</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">surv.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeSurvTask</a></span>(<span class="dt">data =</span> lung, <span class="dt">target =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"time"</span>, <span class="st">"status"</span>))</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">surv.task =<span class="st"> </span><span class="kw"><a href="../../reference/SurvTask.html">makeSurvTask</a></span>(<span class="dt">data =</span> lung, <span class="dt">target =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"time"</span>, <span class="st">"status"</span>))</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">surv.task</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">## Supervised task: lung</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## Type: surv</span></a>
@@ -394,12 +394,12 @@
 <h2 class="hasAnchor">
 <a href="#multilabel-classification" class="anchor"></a>Multilabel classification</h2>
 <p>In multilabel classification each object can belong to more than one category at the same time.</p>
-<p>The <code>data</code> are expected to contain as many target columns as there are class labels. The target columns should be logical vectors that indicate which class labels are present. The names of the target columns are taken as class labels and need to be passed to the <code>target</code> argument of <code><a href="../../reference/Task.html">makeMultilabelTask()</a></code>.</p>
-<p>In the following example we get the data of the yeast data set, extract the label names, and pass them to the <code>target</code> argument in <code><a href="../../reference/Task.html">makeMultilabelTask()</a></code>.</p>
+<p>The <code>data</code> are expected to contain as many target columns as there are class labels. The target columns should be logical vectors that indicate which class labels are present. The names of the target columns are taken as class labels and need to be passed to the <code>target</code> argument of <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
+<p>In the following example we get the data of the yeast data set, extract the label names, and pass them to the <code>target</code> argument in <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">yeast =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(yeast.task)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">labels =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(yeast)[<span class="dv">1</span><span class="op">:</span><span class="dv">14</span>]</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">yeast.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeMultilabelTask</a></span>(<span class="dt">id =</span> <span class="st">"multi"</span>, <span class="dt">data =</span> yeast, <span class="dt">target =</span> labels)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">yeast.task =<span class="st"> </span><span class="kw"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span>(<span class="dt">id =</span> <span class="st">"multi"</span>, <span class="dt">data =</span> yeast, <span class="dt">target =</span> labels)</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">yeast.task</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## Supervised task: multi</span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## Type: multilabel</span></a>
@@ -424,7 +424,7 @@
 <a href="#cluster-analysis" class="anchor"></a>Cluster analysis</h2>
 <p>As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>. Below we create a learning task from the data set <code><a href="https://www.rdocumentation.org/packages/datasets/topics/mtcars">datasets::mtcars()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(mtcars, <span class="dt">package =</span> <span class="st">"datasets"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">cluster.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClusterTask</a></span>(<span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">cluster.task =<span class="st"> </span><span class="kw"><a href="../../reference/makeClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">cluster.task</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">## Unsupervised task: mtcars</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## Type: cluster</span></a>
@@ -441,15 +441,15 @@
 <h2 class="hasAnchor">
 <a href="#cost-sensitive-classification" class="anchor"></a>Cost-sensitive classification</h2>
 <p>The standard objective in classification is to obtain a high prediction accuracy, i.e., to minimize the number of errors. All types of misclassification errors are thereby deemed equally severe. However, in many applications different kinds of errors cause different costs.</p>
-<p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code><a href="../../reference/Task.html">ClassifTask()</a></code>.</p>
-<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code><a href="../../reference/Task.html">CostSensTask()</a></code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
-<p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code><a href="../../reference/Task.html">CostSensTask()</a></code>.</p>
+<p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code>ClassifTask()</code>.</p>
+<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code>CostSensTask()</code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
+<p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code>CostSensTask()</code>.</p>
 <p>In the following example we use the <code><a href="https://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code> data and an artificial cost matrix (which is generated as proposed by <a href="https://doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>):</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df =<span class="st"> </span>iris</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">cost =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">150</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2000</span>), <span class="dv">150</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">3</span>))[df<span class="op">$</span>Species,]</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">df<span class="op">$</span>Species =<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">costsens.task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeCostSensTask</a></span>(<span class="dt">data =</span> df, <span class="dt">cost =</span> cost)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">costsens.task =<span class="st"> </span><span class="kw"><a href="../../reference/CostSensTask.html">makeCostSensTask</a></span>(<span class="dt">data =</span> df, <span class="dt">cost =</span> cost)</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6">costsens.task</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Supervised task: df</span></a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Type: costsens</span></a>
