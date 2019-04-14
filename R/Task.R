@@ -6,11 +6,12 @@
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' Useful operators are: [getTaskFormula],
-#' [getTaskFeatureNames],
-#' [getTaskData],
-#' [getTaskTargets], and
-#' [subsetTask].
+#' Useful operators are:
+#' - [getTaskFormula],
+#' - [getTaskFeatureNames],
+#' - [getTaskData],
+#' - [getTaskTargets], and
+#' - [subsetTask].
 #'
 #' Object members:
 #' \describe{
@@ -20,11 +21,6 @@
 #' \item{blocking ([factor])}{See argument. `NULL` if not present.}
 #' \item{task.desc ([TaskDesc])}{Encapsulates further information about the task.}
 #' }
-#'
-#' @details
-#' For multilabel classification we assume that the presence of labels is encoded via logical
-#' columns in `data`. The name of the column specifies the name of the label. `target`
-#' is then a char vector that points to these columns.
 #'
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' [makeFunctionalData].
@@ -77,10 +73,10 @@
 #'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 #'   Coordinates have to be numeric values.
 #'   Provided [data.frame] needs to have the same number of rows as data and consist of at least two dimensions.
-#' @return ([Task]).
+#' @return [Task].
 #' @name Task
+#' @seealso [ClassifTask] [CostSensTask] [ClusterTask] [MultilabelTask] [RegrTask] [SurvTask]
 #' @rdname Task
-#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)
