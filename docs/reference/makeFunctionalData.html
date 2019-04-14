@@ -358,7 +358,7 @@ Default is not to exclude anything.</p></td>
 <span class='co'># Transform to functional data</span>
 <span class='no'>d2</span> <span class='kw'>=</span> <span class='fu'>makeFunctionalData</span>(<span class='no'>d1</span>, <span class='kw'>fd.features</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"fd1"</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>6</span>, <span class='st'>"fd2"</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>10</span>))
 <span class='co'># Create a regression task</span>
-<span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d2</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"target"</span>)</div><div class='output co'>#&gt; Supervised task: d2
+<span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d2</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"target"</span>)</div><div class='output co'>#&gt; Supervised task: d2
 #&gt; Type: regr
 #&gt; Target: target
 #&gt; Observations: 10

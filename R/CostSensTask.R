@@ -1,6 +1,9 @@
-#' @export
-#' @rdname Task
+#' @title Create a cost-sensitive classification task.
+#' @inheritParams Task
+#' @seealso [Task] [ClassifTask] [ClusterTask] [MultilabelTask] [RegrTask] [SurvTask]
+#' @rdname CostSensTask
 #' @family costsens
+#' @export
 makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

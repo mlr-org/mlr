@@ -27,8 +27,8 @@ preferred.)
 Then the classifier is fitted to that data and subsequently used for prediction.
 }
 \seealso{
-Other costsens: \code{\link{makeClassifTask}},
-  \code{\link{makeCostSensRegrWrapper}},
+Other costsens: \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeCostSensTask}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},

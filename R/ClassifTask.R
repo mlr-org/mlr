@@ -1,5 +1,8 @@
+#' @title Create a classification task.
+#' @inheritParams Task
+#' @seealso [Task] [CostSensTask] [ClusterTask] [MultilabelTask] [RegrTask] [SurvTask]
+#' @rdname ClassifTask
 #' @export
-#' @rdname Task
 makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
