@@ -1,7 +1,9 @@
 language: r
 sudo: false
 dist: trusty
-cache: packages
+cache:
+  - packages
+  - ccache
 latex: true
 env:
   global:
@@ -11,6 +13,7 @@ env:
 addons:
   apt:
     packages:
+     - ccache
      - libgmp-dev
      - libgsl0-dev
      - libgdal-dev # for sf
@@ -19,6 +22,7 @@ addons:
      - libudunits2-dev # for sf
 
 before_install:
+  - mkdir $HOME/.R && echo -e 'VER=\nCCACHE=ccache\nCC=$(CCACHE)\ngcc$(VER)CXX=$(CCACHE)\ng++$(VER)C11=$(CCACHE)\ng++$(VER)C14=$(CCACHE)g++$(VER)\nFC=$(CCACHE)gfortran$(VER)\nF77=$(CCACHE)gfortran$(VER)' > $HOME/.R/Makevars
   - R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
   - R -q -e 'if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
   - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
