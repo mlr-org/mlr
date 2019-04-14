@@ -5,7 +5,7 @@ test_that("regr_laGP", {
 
   parset.list = list(
     list(),
-    list(start = 6, end = 50, close = 50)
+    list(start = 6, end = 49, close = 50)
   )
   dd = regr.num.df[1:100, ]
   old.predicts.list = list()

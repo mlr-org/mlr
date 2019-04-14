@@ -15,6 +15,7 @@ library("ggplot2")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 As mentioned on the [tuning](tune.html){target="_blank"} tutorial page, tuning a machine learning algorithm typically involves:
@@ -63,7 +64,7 @@ Below we perform random search on the `C` parameter for SVM on the famous
 Pima Indians (`mlbench::PimaIndiansDiabetes()`) dataset.
 We generate the hyperparameter effect data so that the `C` parameter is on the transformed scale and we do not include diagnostic data:
 
-```{r gen_data}
+```{r echo = FALSE, results = 'hide'}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -74,9 +75,34 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
+```{r eval = FALSE}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlRandom(maxit = 100L)
+rdesc = makeResampleDesc("CV", iters = 2L)
+res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
+  measures = list(acc, mmce), resampling = rdesc, par.set = ps, show.info = FALSE)
+generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
+
+## HyperParsEffectData:
+## Hyperparameters: C
+## Measures: acc.test.mean,mmce.test.mean
+## Optimizer: TuneControlRandom
+## Nested CV Used: FALSE
+## Snapshot of data:
+##            C acc.test.mean mmce.test.mean iteration exec.time
+## 1 0.18477464     0.7317708      0.2682292         1     0.833
+## 2 0.19252244     0.7304688      0.2695312         2     0.041
+## 3 4.75219120     0.7200521      0.2799479         3     0.040
+## 4 0.05567812     0.6536458      0.3463542         4     0.579
+## 5 0.12179856     0.7161458      0.2838542         5     0.064
+## 6 6.25359181     0.7239583      0.2760417         6     0.056
+```
+
 As a reminder from the [resampling](resample.html){target="_blank"} tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
 
-```{r gen_data_train}
+```{r echo = FALSE, results = 'hide'}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -88,11 +114,44 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
+```{r eval = FALSE}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlRandom(maxit = 100L)
+rdesc = makeResampleDesc("CV", iters = 2L, predict = "both")
+res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
+  measures = list(acc, setAggregation(acc, train.mean), mmce, setAggregation(mmce,
+    train.mean)), resampling = rdesc, par.set = ps, show.info = FALSE)
+generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
+
+## HyperParsEffectData:
+## Hyperparameters: C
+## Measures: acc.test.mean,acc.train.mean,mmce.test.mean,mmce.train.mean
+## Optimizer: TuneControlRandom
+## Nested CV Used: FALSE
+## Snapshot of data:
+##            C acc.test.mean acc.train.mean mmce.test.mean mmce.train.mean
+## 1 0.07253028     0.6575521      0.6588542      0.3424479       0.3411458
+## 2 4.09306975     0.7617188      0.8906250      0.2382812       0.1093750
+## 3 2.23762232     0.7552083      0.8710938      0.2447917       0.1289062
+## 4 0.11080224     0.6940104      0.7187500      0.3059896       0.2812500
+## 5 3.37586150     0.7565104      0.8867188      0.2434896       0.1132812
+## 6 1.77872565     0.7669271      0.8567708      0.2330729       0.1432292
+##   iteration exec.time
+## 1         1     0.095
+## 2         2     0.079
+## 3         3     0.102
+## 4         4     0.092
+## 5         5     0.071
+## 6         6     0.088
+```
+
 In the example below, we perform grid search on the `C` parameter for SVM on the Pima Indians dataset using nested cross validation. We generate the hyperparameter effect data so that
 the `C` parameter is on the untransformed scale and we do not include diagnostic data. 
 As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.
 
-```{r gen_nested}
+```{r echo = FALSE, results='hide'}
 ps = makeParamSet(
   makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
 )
@@ -102,6 +161,71 @@ lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
   measures = list(acc, mmce), resampling = rdesc, par.set = ps, show.info = FALSE)
 res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult, show.info = FALSE)
 generateHyperParsEffectData(res)
+```
+```{r eval = FALSE}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlGrid()
+rdesc = makeResampleDesc("CV", iters = 2L)
+lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
+  measures = list(acc, mmce), resampling = rdesc, par.set = ps, show.info = FALSE)
+res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult, show.info = FALSE)
+generateHyperParsEffectData(res)
+
+## HyperParsEffectData:
+## Hyperparameters: C
+## Measures: acc.test.mean,mmce.test.mean
+## Optimizer: TuneControlGrid
+## Nested CV Used: TRUE
+## Snapshot of data:
+##            C acc.test.mean mmce.test.mean iteration exec.time
+## 1 -5.0000000     0.6536458      0.3463542         1     0.064
+## 2 -3.8888889     0.6536458      0.3463542         2     0.037
+## 3 -2.7777778     0.6718750      0.3281250         3     0.036
+## 4 -1.6666667     0.7291667      0.2708333         4     0.038
+## 5 -0.5555556     0.7369792      0.2630208         5     0.037
+## 6  0.5555556     0.7369792      0.2630208         6     0.051
+##   nested_cv_run
+## 1             1
+## 2             1
+## 3             1
+## 4             1
+## 5             1
+## 6             1
+```
+
+```{r eval = FALSE}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlGrid()
+rdesc = makeResampleDesc("CV", iters = 2L)
+lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
+  measures = list(acc, mmce), resampling = rdesc, par.set = ps, show.info = FALSE)
+res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult, show.info = FALSE)
+generateHyperParsEffectData(res)
+
+## HyperParsEffectData:
+## Hyperparameters: C
+## Measures: acc.test.mean,mmce.test.mean
+## Optimizer: TuneControlGrid
+## Nested CV Used: TRUE
+## Snapshot of data:
+##            C acc.test.mean mmce.test.mean iteration exec.time
+## 1 -5.0000000     0.6718750      0.3281250         1     0.066
+## 2 -3.8888889     0.6718750      0.3281250         2     0.077
+## 3 -2.7777778     0.6744792      0.3255208         3     0.070
+## 4 -1.6666667     0.7187500      0.2812500         4     0.049
+## 5 -0.5555556     0.7526042      0.2473958         5     0.049
+## 6  0.5555556     0.7630208      0.2369792         6     0.054
+##   nested_cv_run
+## 1             1
+## 2             1
+## 3             1
+## 4             1
+## 5             1
+## 6             1
 ```
 
 After generating the hyperparameter effect data, the next step is to visualize it. 

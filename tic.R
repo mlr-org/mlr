@@ -8,8 +8,8 @@ get_stage("after_script") %>%
 if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("install") %>%
-    add_step(step_install_cran("stringi", type = "both")) %>%
-    add_step(step_install_cran("digest", type = "both")) %>%
+    add_step(step_install_cran("stringi")) %>%
+    add_step(step_install_cran("digest")) %>%
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0) {
       paste0("Installing WARMUPPKGS", trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
       install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])
@@ -23,12 +23,16 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
                                              "-install-package", "thirdparty/XMeans1.0.4.zip")))
   }
 
-  get_stage("script") %>%
-    add_code_step(pkgbuild::compile_dll()) %>%
-    add_code_step(devtools::document()) %>%
-    add_step(step_rcmdcheck("--as-cran", warnings_are_errors = FALSE, notes_are_errors = FALSE))
+  if (inherits(ci(), "TravisCI")) {
 
-  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
+    get_stage("script") %>%
+      add_code_step(pkgbuild::compile_dll()) %>%
+      add_code_step(devtools::document()) %>%
+      add_step(step_rcmdcheck("--as-cran", error_on = "error"))
+  }
+
+  # only deploy in master branch
+  if (ci()$get_branch() == "master") {
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
@@ -36,7 +40,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     get_stage("deploy") %>%
       add_code_step(pkgbuild::compile_dll()) %>%
       add_code_step(devtools::document()) %>%
-      add_step(step_push_deploy(commit_paths = "man/"))
+      add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
   }
 }
 
@@ -49,17 +53,13 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
                                            "-install-package", "thirdparty/XMeans1.0.4.zip")))
 
   get_stage("install") %>%
-    add_step(step_install_cran("magick")) %>% # favicon creation
-    add_step(step_install_cran("pander"))
-
-  if (!Sys.getenv("TRAVIS_EVENT_TYPE") == "cron") {
+    add_step(step_install_cran("pander")) %>%
+    add_step(step_install_deps())
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
 
     get_stage("deploy") %>%
-      add_step(step_build_pkgdown(document = FALSE)) #%>%
-      #add_step(step_push_deploy(commit_paths = "docs/*"))
-
-  }
+      add_step(step_build_pkgdown(document = FALSE)) %>%
+      add_step(step_push_deploy(commit_paths = "docs/*"))
 }

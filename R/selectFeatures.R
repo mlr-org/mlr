@@ -104,6 +104,6 @@ selectFeatures = function(learner, task, resampling, measures,
     bits.to.features2, control, opt.path, show.info)
   if (show.info)
     messagef("[FeatSel] Result: %s (%i bits)",
-      clipString(collapse(or$x, ""), 30L), length(or$x), perfsToString(or$y))
+      clipString(collapse(or$x.bit.names), 30L), length(or$x.bit.names), perfsToString(or$y))
   return(or)
 }

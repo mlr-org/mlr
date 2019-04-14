@@ -42,6 +42,7 @@
 #' the measure. See example code below.
 #' @export
 #' @examples
+#' set.seed(123)
 #' # a grid search for an SVM (with a tiny number of points...)
 #' # note how easily we can optimize on a log-scale
 #' ps = makeParamSet(
@@ -53,11 +54,15 @@
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' # access data for all evaluated points
-#' print(head(as.data.frame(res$opt.path)))
-#' print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+#' df = as.data.frame(res$opt.path)
+#' df1 = as.data.frame(res$opt.path, trafo = TRUE)
+#' print(head(df[, -ncol(df)]))
+#' print(head(df1[, -ncol(df)]))
 #' # access data for all evaluated points - alternative
-#' print(head(generateHyperParsEffectData(res)))
-#' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
+#' df2 = generateHyperParsEffectData(res)
+#' df3 = generateHyperParsEffectData(res, trafo = TRUE)
+#' print(head(df2$data[, -ncol(df2$data)]))
+#' print(head(df3$data[, -ncol(df3$data)]))
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
@@ -75,17 +80,21 @@
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
 #'
 #' # include the training set performance as well
 #' rdesc = makeResampleDesc("Holdout", predict = "both")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
 #'   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#' df2 = as.data.frame(res$opt.path)
+#' print(head(df2[, -ncol(df2)]))
 #' }
 #' @seealso [generateHyperParsEffectData]
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
+tuneParams = function(learner, task, resampling, measures, par.set, control,
+  show.info = getMlrOption("show.info"), resample.fun = resample) {
+
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
@@ -121,7 +130,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("Imputation value: %g", control$impute.val)
   }
 
-  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
+  or = sel.func(learner, task, resampling, measures, par.set, control,
+                opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)

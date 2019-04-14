@@ -93,6 +93,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       state2 = seq.step(!forward, state, gns, compare)
       if (!is.null(state2)) {
         state = state2
+        state$x = unlist(state$x)
         fail = 0
       } else {
         fail = fail + 1
@@ -105,5 +106,5 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
 
   if (all(opt.path$env$eol[opt.path$env$dob == last] == last))
     last = last - 1
-  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, dob = last, ties = "first")
+  makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, dob = last, ties = "first", task = task, bits.to.features = bits.to.features)
 }

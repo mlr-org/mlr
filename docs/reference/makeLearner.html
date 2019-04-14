@@ -316,14 +316,14 @@ value selects the label. The threshold used to assign the label can later be cha
 
     <pre class="usage"><span class='fu'>makeLearner</span>(<span class='no'>cl</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>,
   <span class='kw'>predict.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fix.factors.prediction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cl</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Class of learner. By convention, all classification learners
 start with &#8220;classif.&#8221; all regression learners with
 &#8220;regr.&#8221; all survival learners start with &#8220;surv.&#8221;
@@ -334,13 +334,13 @@ A list of all integrated learners is available on the
     </tr>
     <tr>
       <th>id</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Id string for object. Used to display object.
 Default is <code>cl</code>.</p></td>
     </tr>
     <tr>
       <th>predict.type</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Classification: &#8220;response&#8221; (= labels) or &#8220;prob&#8221; (= probabilities and labels by selecting the ones with maximal probability).
 Regression: &#8220;response&#8221; (= mean response) or &#8220;se&#8221; (= standard errors and mean response).
 Survival: &#8220;response&#8221; (= some sort of orderable risk) or &#8220;prob&#8221; (= time dependent probabilities).
@@ -350,7 +350,7 @@ Default is &#8220;response&#8221;.</p></td>
     </tr>
     <tr>
       <th>predict.threshold</th>
-      <td><p>(numeric)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 Only for binary classification it can be a single numerical threshold for the positive class.
 See <a href='setThreshold.html'>setThreshold</a> for details on how it is applied.
@@ -358,7 +358,7 @@ Default is <code>NULL</code> which means 0.5 / an equal threshold for each class
     </tr>
     <tr>
       <th>fix.factors.prediction</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 In some cases, problems occur in underlying learners for factor features during prediction.
 If the new features have LESS factor levels than during training (a strict subset),
 the learner might produce an  error like
@@ -376,7 +376,7 @@ Alternatively these can be given using the <code>par.vals</code> argument.</p></
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(list)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Optional list of named (hyper)parameters. The arguments in
 <code>...</code> take precedence over values in this list. We strongly
 encourage you to use one or the other to pass (hyper)parameters
@@ -384,7 +384,7 @@ to the learner but not both.</p></td>
     </tr>
     <tr>
       <th>config</th>
-      <td><p>(named list)<br />
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
 Named list of config option to overwrite global settings set via <a href='configureMlr.html'>configureMlr</a>
 for this specific learner.</p></td>
     </tr>
@@ -430,7 +430,7 @@ for this specific learner.</p></td>
 #&gt; Predict-Type: prob
 #&gt; Hyperparameters: 
 #&gt; </div><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"t"</span>, <span class='kw'>nu</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>print</span>(<span class='no'>lrn</span>$<span class='no'>par.vals</span>)</div><div class='output co'>#&gt; $method
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>lrn</span>$<span class='no'>par.vals</span>)</div><div class='output co'>#&gt; $method
 #&gt; [1] "t"
 #&gt; 
 #&gt; $nu

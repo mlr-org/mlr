@@ -27,7 +27,7 @@ Passed to \link[BBmisc:optimizeSubInts]{BBmisc::optimizeSubInts} for 2class prob
 Default is 20.}
 
 \item{control}{(\link{list})\cr
-Control object for \link[cmaes:cma_es]{cmaes::cma_es} when used.
+Control object for \link[GenSA:GenSA]{GenSA::GenSA} when used.
 Default is empty list.}
 }
 \value{
@@ -37,8 +37,8 @@ Default is empty list.}
 \description{
 Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
-Uses \link[BBmisc:optimizeSubInts]{BBmisc::optimizeSubInts} for normal binary class problems and \link[cmaes:cma_es]{cmaes::cma_es}
-for multiclass and multilabel problems.
+Uses \link[BBmisc:optimizeSubInts]{BBmisc::optimizeSubInts} for normal binary class problems and
+\link[GenSA:GenSA]{GenSA::GenSA} for multiclass and multilabel problems.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},

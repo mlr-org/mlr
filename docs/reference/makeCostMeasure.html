@@ -314,20 +314,20 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Name of measure.
 Default is &#8220;costs&#8221;.</p></td>
     </tr>
     <tr>
       <th>minimize</th>
-      <td><p>(<code>logical(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should the measure be minimized?
 Otherwise you are effectively specifying a benefits matrix.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>costs</th>
-      <td><p>(matrix)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a>)<br />
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.</p></td>
     </tr>
@@ -337,7 +337,7 @@ Rows indicate true classes, columns predicted classes.</p></td>
 How to combine costs over all cases for a SINGLE test set?
 Note this is not the same as the <code>aggregate</code> argument in <a href='makeMeasure.html'>makeMeasure</a>
 You can set this as well via <a href='setAggregation.html'>setAggregation</a>, as for any measure.
-Default is mean.</p></td>
+Default is <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a>.</p></td>
     </tr>
     <tr>
       <th>best</th>

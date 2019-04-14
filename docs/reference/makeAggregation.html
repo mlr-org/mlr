@@ -315,17 +315,17 @@ inner workings so the result might not be compatible with everything!</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Name of the aggregation method (preferably the same name as the generated function).</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 Long name of the aggregation method. Default is <code>id</code>.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Set of aggregation properties.</p><dl class='dl-horizontal'>
 <dt>req.train</dt><dd><p>Are prediction or train sets required to calculate the aggregation?</p></dd>
 <dt>req.test</dt><dd><p>Are prediction or test sets required to calculate the aggregation?</p></dd>
@@ -337,10 +337,10 @@ Set of aggregation properties.</p><dl class='dl-horizontal'>
 Calculates the aggregated performance. In most cases you will only need the performances
 <code>perf.test</code> and optionally <code>perf.train</code> on the test and training data sets.</p><dl class='dl-horizontal'>
 <dt><code>task</code> (<a href='Task.html'>Task</a>)</dt><dd><p>The task.</p></dd>
-<dt><code>perf.test</code> (numeric)</dt><dd><p><a href='performance.html'>performance</a> results on the test data sets.</p></dd>
-<dt><code>perf.train</code> (numeric)</dt><dd><p><a href='performance.html'>performance</a> results on the training data sets.</p></dd>
+<dt><code>perf.test</code> (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the test data sets.</p></dd>
+<dt><code>perf.train</code> (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the training data sets.</p></dd>
 <dt><code>measure</code> (<a href='makeMeasure.html'>Measure</a>)</dt><dd><p>Performance measure.</p></dd>
-<dt><code>group</code> (factor)</dt><dd><p>Grouping of resampling iterations. This encodes whether specific iterations
+<dt><code>group</code> (<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)</dt><dd><p>Grouping of resampling iterations. This encodes whether specific iterations
 'belong together' (e.g. repeated CV).</p></dd>
 <dt><code>pred</code> (<a href='Prediction.html'>Prediction</a>)</dt><dd><p>Prediction object.</p></dd>
 </dl></td>
@@ -360,7 +360,7 @@ Calculates the aggregated performance. In most cases you will only need the perf
     <pre class="examples"><div class='input'><span class='co'># computes the interquartile range on all performance values</span>
 <span class='no'>test.iqr</span> <span class='kw'>=</span> <span class='fu'>makeAggregation</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"test.iqr"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Test set interquartile range"</span>,
   <span class='kw'>properties</span> <span class='kw'>=</span> <span class='st'>"req.test"</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span> (<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'>IQR</span>(<span class='no'>perf.test</span>))</div></pre>
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span> (<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/IQR'>IQR</a></span>(<span class='no'>perf.test</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

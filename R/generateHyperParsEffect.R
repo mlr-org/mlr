@@ -439,7 +439,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         }
       } else {
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
-          geom_tile()
+          geom_raster()
       }
       if ((na.flag || show.experiments) && !show.interpolated && !partial.flag){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success",

@@ -14,6 +14,7 @@ library("ParamHelpers")
 
 # show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
 ```
 
 Many machine learning algorithms have hyperparameters that need to be set.
@@ -215,9 +216,27 @@ lrn
 Then you can proceed as usual. 
 Here we refit and predict the learner on the complete iris (`datasets::iris()`) data set:
 
-```{r}
+```{r echo = FALSE, results='hide'}
+m = train(lrn, iris.task)
+test = predict(m, task = iris.task)
+```
+
+```{r eval = FALSE}
 m = train(lrn, iris.task)
 predict(m, task = iris.task)
+
+## Prediction: 150 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##   id  truth response
+## 1  1 setosa   setosa
+## 2  2 setosa   setosa
+## 3  3 setosa   setosa
+## 4  4 setosa   setosa
+## 5  5 setosa   setosa
+## 6  6 setosa   setosa
+## ... (#rows: 150, #cols: 3)
 ```
 
 But what if you wanted to inspect the other points on the search path, not just the optimal?
@@ -226,24 +245,78 @@ But what if you wanted to inspect the other points on the search path, not just 
 
 We can inspect all points evaluated during the search by using `generateHyperParsEffectData()`:
 
-```{r}
+```{r echo = FALSE, results='hide'}
 generateHyperParsEffectData(res)
+```
+
+```{r eval = FALSE}
+generateHyperParsEffectData(res)
+## HyperParsEffectData:
+## Hyperparameters: C,sigma
+## Measures: acc.test.mean,acc.test.sd
+## Optimizer: TuneControlRandom
+## Nested CV Used: FALSE
+## Snapshot of data:
+##            C      sigma acc.test.mean acc.test.sd iteration exec.time
+## 1  2.3397773 -3.5124226     0.9466667  0.01154701         1     0.027
+## 2  4.0521330 -7.6211727     0.4200000  0.19078784         2     0.029
+## 3 -0.9581277 -7.0855536     0.4200000  0.19078784         3     0.029
+## 4 -9.7456136 -0.5559055     0.4200000  0.19078784         4     0.030
+## 5 -1.1553551  1.1788559     0.3600000  0.08717798         5     0.032
+## 6  2.3742768  0.2438430     0.9533333  0.01154701         6     0.030
 ```
 
 Note that the result of `generateHyperParsEffectData()` contains the parameter values *on the original scale*.
 In order to get the *transformed* parameter values instead, use the `trafo` argument:
 
-```{r}
+```{r echo = FALSE, results='hide'}
 generateHyperParsEffectData(res, trafo = TRUE)
+```
+
+```{r eval = FALSE}
+generateHyperParsEffectData(res, trafo = TRUE)
+## HyperParsEffectData:
+## Hyperparameters: C,sigma
+## Measures: acc.test.mean,acc.test.sd
+## Optimizer: TuneControlRandom
+## Nested CV Used: FALSE
+## Snapshot of data:
+##              C        sigma acc.test.mean acc.test.sd iteration exec.time
+## 1 2.186640e+02 3.073105e-04     0.9466667  0.01154701         1     0.027
+## 2 1.127543e+04 2.392364e-08     0.4200000  0.19078784         2     0.029
+## 3 1.101216e-01 8.211953e-08     0.4200000  0.19078784         3     0.029
+## 4 1.796331e-10 2.780318e-01     0.4200000  0.19078784         4     0.030
+## 5 6.992701e-02 1.509579e+01     0.3600000  0.08717798         5     0.032
+## 6 2.367428e+02 1.753247e+00     0.9533333  0.01154701         6     0.030
 ```
 
 Note that we can also generate performance on the train data along with the validation/test data, as discussed on the [resampling](resample.html){target="_blank"} tutorial page:
 
-```{r}
+```{r echo = FALSE, results='hide'}
 rdesc2 = makeResampleDesc("Holdout", predict = "both")
 res2 = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc2, par.set = num_ps,
   control = ctrl, measures = list(acc, setAggregation(acc, train.mean)), show.info = FALSE)
 generateHyperParsEffectData(res2)
+```
+
+```{r eval = FALSE}
+rdesc2 = makeResampleDesc("Holdout", predict = "both")
+res2 = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc2, par.set = num_ps,
+  control = ctrl, measures = list(acc, setAggregation(acc, train.mean)), show.info = FALSE)
+generateHyperParsEffectData(res2)
+## HyperParsEffectData:
+## Hyperparameters: C,sigma
+## Measures: acc.test.mean,acc.train.mean
+## Optimizer: TuneControlRandom
+## Nested CV Used: FALSE
+## Snapshot of data:
+##           C     sigma acc.test.mean acc.train.mean iteration exec.time
+## 1  0.496548 -4.788487          0.64           0.68         1     0.017
+## 2  9.095208  8.350293          0.34           1.00         2     0.017
+## 3 -1.904618  3.195934          0.34           0.68         3     0.019
+## 4  6.863312  1.695167          0.54           1.00         4     0.018
+## 5 -1.270327 -6.763619          0.64           0.68         5     0.017
+## 6 -8.247310  5.305003          0.32           0.68         6     0.018
 ```
 
 We can also easily visualize the points evaluated by using `plotHyperParsEffect()`. 

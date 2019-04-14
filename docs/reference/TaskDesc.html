@@ -312,28 +312,28 @@ without having to store the complete data set.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Object members:</p><dl class='dl-horizontal'>
-<dt>id (<code>character(1)</code>)</dt><dd><p>Id string of task.</p></dd>
-<dt>type (<code>character(1)</code>)</dt><dd><p>Type of task, &#8220;classif&#8221; for classification,
+<dt>id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Id string of task.</p></dd>
+<dt>type (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Type of task, &#8220;classif&#8221; for classification,
 &#8220;regr&#8221; for regression, &#8220;surv&#8221; for survival and &#8220;cluster&#8221; for
 cluster analysis, &#8220;costsens&#8221; for cost-sensitive classification, and
 &#8220;multilabel&#8221; for multilabel classification.</p></dd>
-<dt>target (<code>character(0)</code> | <code>character(1)</code> | <code>character(2)</code> | <code>character(n.classes)</code>)</dt><dd><p>Name(s) of the target variable(s).
+<dt>target (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)</dt><dd><p>Name(s) of the target variable(s).
 For &#8220;surv&#8221; these are the names of the survival time and event columns, so it has length 2.
 For &#8220;costsens&#8221; it has length 0, as there is no target column, but a cost matrix instead.
 For &#8220;multilabel&#8221; these are the names of logical columns that indicate whether a
 class label is present and the number of target variables corresponds to the number of
 classes.</p></dd>
-<dt>size (<code>integer(1)</code>)</dt><dd><p>Number of cases in data set.</p></dd>
-<dt>n.feat (<code>integer(2)</code>)</dt><dd><p>Number of features, named vector with entries:
+<dt>size (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>Number of cases in data set.</p></dd>
+<dt>n.feat (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(2)</a></code>)</dt><dd><p>Number of features, named vector with entries:
 &#8220;numerics&#8221;, &#8220;factors&#8221;, &#8220;ordered&#8221;, &#8220;functionals&#8221;.</p></dd>
-<dt>has.missings (<code>logical(1)</code>)</dt><dd><p>Are missing values present?</p></dd>
-<dt>has.weights (<code>logical(1)</code>)</dt><dd><p>Are weights specified for each observation?</p></dd>
-<dt>has.blocking (<code>logical(1)</code>)</dt><dd><p>Is a blocking factor for cases available in the task?</p></dd>
-<dt>class.levels (character)</dt><dd><p>All possible classes.
+<dt>has.missings (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>Are missing values present?</p></dd>
+<dt>has.weights (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>Are weights specified for each observation?</p></dd>
+<dt>has.blocking (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>Is a blocking factor for cases available in the task?</p></dd>
+<dt>class.levels (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)</dt><dd><p>All possible classes.
 Only present for &#8220;classif&#8221;, &#8220;costsens&#8221;, and &#8220;multilabel&#8221;.</p></dd>
-<dt>positive (<code>character(1)</code>)</dt><dd><p>Positive class label for binary classification.
+<dt>positive (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Positive class label for binary classification.
 Only present for &#8220;classif&#8221;, NA for multiclass.</p></dd>
-<dt>negative (<code>character(1)</code>)</dt><dd><p>Negative class label for binary classification.
+<dt>negative (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Negative class label for binary classification.
 Only present for &#8220;classif&#8221;, NA for multiclass.</p></dd>
 </dl>
     

@@ -318,13 +318,13 @@ Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>predict.type</th>
-      <td><p>(<code>character(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 &#8220;response&#8221; (= labels) or &#8220;prob&#8221; (= probabilities and labels by selecting the one with maximal probability).</p></td>
     </tr>
     </table>
@@ -364,7 +364,7 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.rpart"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeClassificationViaRegressionWrapper</span>(<span class='no'>lrn</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>140</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>predictions</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>sonar.task</span>)[<span class='fl'>141</span>:<span class='fl'>208</span>, <span class='fl'>1</span>:<span class='fl'>60</span>])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]): object 'mod' not found</span></div></pre>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>140</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>predictions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>sonar.task</span>)[<span class='fl'>141</span>:<span class='fl'>208</span>, <span class='fl'>1</span>:<span class='fl'>60</span>])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]): object 'mod' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
