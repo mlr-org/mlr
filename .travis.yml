@@ -1,7 +1,7 @@
 language: r
 sudo: false
 dist: trusty
-# cache: packages
+cache: packages
 env:
   global:
     - _R_CHECK_TIMINGS_=0
