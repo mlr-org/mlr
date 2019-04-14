@@ -41,7 +41,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
   expect_false(is.null(r$pred))
 })
 
-test_that("Feature importances are returned", {
+test_that("feature importances are returned", {
   iris2 = iris[iris$Species %in% c("versicolor", "virginica"), ]
   iris2$Species = droplevels(iris2$Species)
   task = makeClassifTask(data = iris2, target = "Species")
