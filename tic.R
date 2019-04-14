@@ -54,8 +54,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("install") %>%
     add_step(step_install_cran("pander")) %>%
-    add_step(step_install_cran("irace")) %>%
-    add_step(step_install_cran("ggpubr"))
+    add_step(step_install_deps())
 
     get_stage("before_deploy") %>%
       add_step(step_setup_ssh())
