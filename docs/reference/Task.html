@@ -8,7 +8,7 @@
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
 <title>Create a classification, regression, survival, cluster, cost-sensitive classification or
-multilabel task. — makeClassifTask • mlr</title>
+multilabel task. — Task • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,23 +30,29 @@ multilabel task. — makeClassifTask • mlr</title>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 <meta property="og:title" content="Create a classification, regression, survival, cluster, cost-sensitive classification or
-multilabel task. — makeClassifTask" />
+multilabel task. — Task" />
 
 <meta property="og:description" content="The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.
-Useful operators are: getTaskFormula,
+Useful operators are:
+getTaskFormula,
 getTaskFeatureNames,
 getTaskData,
 getTaskTargets, and
 subsetTask.
-Object members:
+" />
+
+<meta property="og:description" content="Object members:
 env (environment)Environment where data for the task are stored.
 Use getTaskData in order to access it.
 weights (numeric)See argument. NULL if not present.
 blocking (factor)See argument. NULL if not present.
 task.desc (TaskDesc)Encapsulates further information about the task.
 " />
+
+<meta property="og:description" content="Functional data can be added to a task via matrix columns. For more information refer to
+makeFunctionalData." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -316,50 +322,33 @@ task.desc (TaskDesc)Encapsulates further information about the task.
     <div class="page-header">
     <h1>Create a classification, regression, survival, cluster, cost-sensitive classification or
 multilabel task.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ClassifTask.R'><code>R/ClassifTask.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/ClusterTask.R'><code>R/ClusterTask.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/CostSensTask.R'><code>R/CostSensTask.R</code></a>, and 5 more</small>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Task.R'><code>R/Task.R</code></a></small>
     </div>
 
     
     <p>The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.</p>
-<p>Useful operators are: <a href='getTaskFormula.html'>getTaskFormula</a>,
-<a href='getTaskFeatureNames.html'>getTaskFeatureNames</a>,
-<a href='getTaskData.html'>getTaskData</a>,
-<a href='getTaskTargets.html'>getTaskTargets</a>, and
-<a href='subsetTask.html'>subsetTask</a>.</p>
-<p>Object members:</p><dl class='dl-horizontal'>
+<p>Useful operators are:</p><ul>
+<li><p><a href='getTaskFormula.html'>getTaskFormula</a>,</p></li>
+<li><p><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a>,</p></li>
+<li><p><a href='getTaskData.html'>getTaskData</a>,</p></li>
+<li><p><a href='getTaskTargets.html'>getTaskTargets</a>, and</p></li>
+<li><p><a href='subsetTask.html'>subsetTask</a>.</p></li>
+</ul>
+
+    <p>Object members:</p><dl class='dl-horizontal'>
 <dt>env (<code>environment</code>)</dt><dd><p>Environment where data for the task are stored.
 Use <a href='getTaskData.html'>getTaskData</a> in order to access it.</p></dd>
 <dt>weights (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
 <dt>blocking (<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
 <dt>task.desc (<a href='TaskDesc.html'>TaskDesc</a>)</dt><dd><p>Encapsulates further information about the task.</p></dd>
 </dl>
+
+    <p>Functional data can be added to a task via matrix columns. For more information refer to
+<a href='makeFunctionalData.html'>makeFunctionalData</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>makeClassifTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>makeClusterTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
-  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>makeCostSensTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>costs</span>,
-  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
-  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>makeMultilabelTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>makeRegrTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>makeSurvTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -385,6 +374,17 @@ columns that encode whether a label is present or not and its length corresponds
 number of classes.</p></td>
     </tr>
     <tr>
+      <th>costs</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+A numeric matrix or data frame containing the costs of misclassification.
+We assume the general case of observation specific costs.
+This means we have n rows, corresponding to the observations, in the same order as <code>data</code>.
+The columns correspond to classes and their names are the class labels
+(if unnamed we use y1 to yk as labels).
+Each entry (i,j) of the matrix specifies the cost of predicting class j
+for observation i.</p></td>
+    </tr>
+    <tr>
       <th>weights</th>
       <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
 Optional, non-negative case weight vector to be used during fitting.
@@ -399,13 +399,6 @@ Observations with the same blocking level &#8220;belong together&#8221;.
 Specifically, they are either put all in the training or the test set
 during a resampling iteration.
 Default is <code>NULL</code> which means no blocking.</p></td>
-    </tr>
-    <tr>
-      <th>coordinates</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
-Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
-Coordinates have to be numeric values.
-Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
     </tr>
     <tr>
       <th>positive</th>
@@ -432,35 +425,21 @@ You should have good reasons to turn this off (one might be speed).
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
-      <th>costs</th>
+      <th>coordinates</th>
       <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
-A numeric matrix or data frame containing the costs of misclassification.
-We assume the general case of observation specific costs.
-This means we have n rows, corresponding to the observations, in the same order as <code>data</code>.
-The columns correspond to classes and their names are the class labels
-(if unnamed we use y1 to yk as labels).
-Each entry (i,j) of the matrix specifies the cost of predicting class j
-for observation i.</p></td>
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(Task).</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>For multilabel classification we assume that the presence of labels is encoded via logical
-columns in <code>data</code>. The name of the column specifies the name of the label. <code>target</code>
-is then a char vector that points to these columns.</p>
-<p>Functional data can be added to a task via matrix columns. For more information refer to
-<a href='makeFunctionalData.html'>makeFunctionalData</a>.</p>
+    <p>Task.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other costsens: <code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a></code>,
-  <code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a></code>,
-  <code><a href='makeCostSensWeightedPairsWrapper.html'>makeCostSensWeightedPairsWrapper</a></code></p></div>
+    <div class='dont-index'><p>ClassifTask CostSensTask ClusterTask MultilabelTask RegrTask SurvTask</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -469,13 +448,13 @@ is then a char vector that points to these columns.</p>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>)
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Ionosphere</span>)
 
-  <span class='fu'>makeClassifTask</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-  <span class='fu'>makeRegrTask</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
+  <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+  <span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='co'># an example of a classification task with more than those standard arguments:</span>
   <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
-  <span class='fu'>makeClassifTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"myIonosphere"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Ionosphere</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>,
+  <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"myIonosphere"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Ionosphere</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>,
     <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"good"</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='no'>blocking</span>)
-  <span class='fu'>makeClusterTask</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])
+  <span class='fu'><a href='makeClusterTask.html'>makeClusterTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])
 }</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mlbench</span></div><div class='output co'>#&gt; Unsupervised task: iris[, -5L]
 #&gt; Type: cluster
 #&gt; Observations: 150
@@ -493,8 +472,6 @@ is then a char vector that points to these columns.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

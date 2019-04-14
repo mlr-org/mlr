@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Create a stacked learner object. — makeStackedLearner • mlr</title>
+<title>Create a classification task. — makeClassifTask • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,19 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create a stacked learner object. — makeStackedLearner" />
+<meta property="og:title" content="Create a classification task. — makeClassifTask" />
 
-<meta property="og:description" content="A stacked learner uses predictions of several base learners and fits
-a super learner using these predictions as features in order to predict the outcome.
-The following stacking methods are available:
-
-  `average`Averaging of base learner predictions without weights.
-  `stack.nocv`Fits the super learner, where in-sample predictions of the base learners are used.
-  `stack.cv`Fits the super learner, where the base learner predictions are computed
-  by crossvalidated predictions (the resampling strategy can be set via the `resampling` argument).
-  `hill.climb`Select a subset of base learner predictions by hill climbing algorithm.
-  `compress`Train a neural network to compress the model from a collection of base learners.
- " />
+<meta property="og:description" content="Create a classification task." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -308,129 +298,103 @@ The following stacking methods are available:
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a stacked learner object.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/StackedLearner.R'><code>R/StackedLearner.R</code></a></small>
+    <h1>Create a classification task.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ClassifTask.R'><code>R/ClassifTask.R</code></a></small>
     </div>
 
     
-    <p>A stacked learner uses predictions of several base learners and fits
-a super learner using these predictions as features in order to predict the outcome.
-The following stacking methods are available:</p>
-<p></p><dl class='dl-horizontal'>
-  <dt>`average`</dt><dd><p>Averaging of base learner predictions without weights.</p></dd>
-  <dt>`stack.nocv`</dt><dd><p>Fits the super learner, where in-sample predictions of the base learners are used.</p></dd>
-  <dt>`stack.cv`</dt><dd><p>Fits the super learner, where the base learner predictions are computed
-  by crossvalidated predictions (the resampling strategy can be set via the `resampling` argument).</p></dd>
-  <dt>`hill.climb`</dt><dd><p>Select a subset of base learner predictions by hill climbing algorithm.</p></dd>
-  <dt>`compress`</dt><dd><p>Train a neural network to compress the model from a collection of base learners.</p></dd>
- </dl>
+    <p>Create a classification task.</p>
     
 
-    <pre class="usage"><span class='fu'>makeStackedLearner</span>(<span class='no'>base.learners</span>, <span class='kw'>super.learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"stack.nocv"</span>, <span class='kw'>use.feat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
+    <pre class="usage"><span class='fu'>makeClassifTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>base.learners</th>
-      <td><p>[(list of) [Learner])<br />
-A list of learners created with `makeLearner`.</p></td>
+      <th>id</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Id string for object.
+Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
     <tr>
-      <th>super.learner</th>
-      <td><p>[<code><a href='makeLearner.html'>Learner</a> | character(1)</code>]<br />
-The super learner that makes the final prediction based on the base learners.
-If you pass a string, the super learner will be created via `makeLearner`.
-Not used for `method = 'average'`. Default is `NULL`.</p></td>
+      <th>data</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
-      <th>predict.type</th>
-      <td><p>(`character(1)`)<br />
-Sets the type of the final prediction for `method = 'average'`.
-For other methods, the predict type should be set within `super.learner`.
-If the type of the base learner prediction, which is set up within `base.learners`, is</p><dl class='dl-horizontal'>
- <dt>`"prob"`</dt><dd><p>then `predict.type = 'prob'` will use the average of all
- bease learner predictions and `predict.type = 'response'` will use
- the class with highest probability as final prediction.</p></dd>
- <dt>`"response"`</dt><dd><p>then, for classification tasks with `predict.type = 'prob'`,
- the final prediction will be the relative frequency based on the predicted base learner classes
- and classification tasks with `predict.type = 'response'` will use majority vote of the base
- learner predictions to determine the final prediction.
- For regression tasks, the final prediction will be the average of the base learner predictions.</p></dd>
-</dl></td>
+      <th>target</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
+Name(s) of the target variable(s).
+For survival analysis these are the names of the survival time and event columns,
+so it has length 2. For multilabel classification it contains the names of the logical
+columns that encode whether a label is present or not and its length corresponds to the
+number of classes.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>(`character(1)`)<br />
-&#8220;average&#8221; for averaging the predictions of the base learners,
-&#8220;stack.nocv&#8221; for building a super learner using the predictions of the base learners,
-&#8220;stack.cv&#8221; for building a super learner using crossvalidated predictions of the base learners.
-&#8220;hill.climb&#8221; for averaging the predictions of the base learners, with the weights learned from
-hill climbing algorithm and
-&#8220;compress&#8221; for compressing the model to mimic the predictions of a collection of base learners
-while speeding up the predictions and reducing the size of the model.
-Default is &#8220;stack.nocv&#8221;,</p></td>
+      <th>weights</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+Optional, non-negative case weight vector to be used during fitting.
+Cannot be set for cost-sensitive learning.
+Default is <code>NULL</code> which means no (= equal) weights.</p></td>
     </tr>
     <tr>
-      <th>use.feat</th>
-      <td><p>(`logical(1)`)<br />
-Whether the original features should also be passed to the super learner.
-Not used for `method = 'average'`.
-Default is `FALSE`.</p></td>
+      <th>blocking</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
+An optional factor of the same length as the number of observations.
+Observations with the same blocking level &#8220;belong together&#8221;.
+Specifically, they are either put all in the training or the test set
+during a resampling iteration.
+Default is <code>NULL</code> which means no blocking.</p></td>
     </tr>
     <tr>
-      <th>resampling</th>
-      <td><p>([ResampleDesc])<br />
-Resampling strategy for `method = 'stack.cv'`.
-Currently only CV is allowed for resampling.
-The default `NULL` uses 5-fold CV.</p></td>
+      <th>coordinates</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
     </tr>
     <tr>
-      <th>parset</th>
-      <td><p>the parameters for `hill.climb` method, including</p><dl class='dl-horizontal'>
-  <dt>`replace`</dt><dd><p>Whether a base learner can be selected more than once.</p></dd>
-  <dt>`init`</dt><dd><p>Number of best models being included before the selection algorithm.</p></dd>
-  <dt>`bagprob`</dt><dd><p>The proportion of models being considered in one round of selection.</p></dd>
-  <dt>`bagtime`</dt><dd><p>The number of rounds of the bagging selection.</p></dd>
-  <dt>`metric`</dt><dd><p>The result evaluation metric function taking two parameters `pred` and `true`,
-  the smaller the score the better.</p></dd>
-</dl><p>the parameters for `compress` method, including</p><dl class='dl-horizontal'>
-   <dt>k</dt><dd><p>the size multiplier of the generated data</p></dd>
-   <dt>prob</dt><dd><p>the probability to exchange values</p></dd>
-   <dt>s</dt><dd><p>the standard deviation of each numerical feature</p></dd>
-</dl></td>
+      <th>positive</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Positive class for binary classification (otherwise ignored and set to NA).
+Default is the first factor level of the target attribute.</p></td>
+    </tr>
+    <tr>
+      <th>fixup.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Should some basic cleaning up of data be performed?
+Currently this means removing empty factor levels for the columns.
+Possible choices are:
+&#8220;no&#8221; = Don't do it.
+&#8220;warn&#8221; = Do it but warn about it.
+&#8220;quiet&#8221; = Do it but keep silent.
+Default is &#8220;warn&#8221;.</p></td>
+    </tr>
+    <tr>
+      <th>check.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Should sanity of data be checked initially at task creation?
+You should have good reasons to turn this off (one might be speed).
+Default is <code>TRUE</code>.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='co'># Classification</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
-  <span class='no'>tsk</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-  <span class='no'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"classif.rpart"</span>, <span class='st'>"classif.lda"</span>, <span class='st'>"classif.svm"</span>)
-  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
-  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>setPredictType</span>, <span class='st'>"prob"</span>)
-  <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'>makeStackedLearner</span>(<span class='kw'>base.learners</span> <span class='kw'>=</span> <span class='no'>lrns</span>,
-    <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hill.climb"</span>)
-  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div><div class='input'>
-  <span class='co'># Regression</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"mlbench"</span>)
-  <span class='no'>tsk</span> <span class='kw'>=</span> <span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
-  <span class='no'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"regr.rpart"</span>, <span class='st'>"regr.svm"</span>)
-  <span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>base</span>, <span class='no'>makeLearner</span>)
-  <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'>makeStackedLearner</span>(<span class='kw'>base.learners</span> <span class='kw'>=</span> <span class='no'>lrns</span>,
-    <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"compress"</span>)
-  <span class='no'>tmp</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>m</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>  <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>tmp</span>, <span class='no'>tsk</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(tmp, tsk): object 'tmp' not found</span></div></pre>
+    <div class='dont-index'><p><a href='Task.html'>Task</a> CostSensTask ClusterTask MultilabelTask RegrTask SurvTask</p></div>
+    
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>
