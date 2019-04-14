@@ -1,10 +1,5 @@
 if (ci_has_env("Check")) {
 
-  get_stage("install") %>%
-    add_step(step_install_cran("digest")) %>%
-    add_step(step_install_cran("pander")) %>% # for tutorial
-    add_step(step_install_cran("ggpubr"))     # for tutorial
-
     get_stage("before_script") %>%
       add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                              "-install-package", "thirdparty/XMeans1.0.4.zip")))
