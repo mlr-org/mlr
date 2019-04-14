@@ -1,5 +1,16 @@
+#' @title Create a multilabel task.
+#' @inheritParams Task
+#' @section Note:
+#' For multilabel classification we assume that the presence of labels is encoded via logical
+#' columns in `data`. The name of the column specifies the name of the label. `target`
+#' is then a char vector that points to these columns.
+#' @seealso [Task] [ClassifTask] [CostSensTask] [ClusterTask] [RegrTask] [SurvTask]
+#' @details
+#' For multilabel classification we assume that the presence of labels is encoded via logical
+#' columns in `data`. The name of the column specifies the name of the label. `target`
+#' is then a char vector that points to these columns.
+#' @rdname MultilabelTask
 #' @export
-#' @rdname Task
 makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
