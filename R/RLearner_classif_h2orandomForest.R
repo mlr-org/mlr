@@ -17,7 +17,7 @@ makeRLearner.classif.h2o.randomForest = function() {
       makeIntegerLearnerParam("max_after_balance_size", lower = 0L, default = 5L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "missings", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "missings", "prob", "featimp"),
     name = "h2o.randomForest",
     short.name = "h2o.rf",
     callees = "h2o.randomForest"
@@ -57,4 +57,17 @@ predictLearner.classif.h2o.randomForest = function(.learner, .model, .newdata, .
     p.df$predict = NULL
     return(as.matrix(p.df))
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.h2o.randomForest = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
+  extractH2OVarImp(mod, ...)
+}
+
+extractH2OVarImp = function(.learner.model, ...) {
+  imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
+  res = imp$relative_importance
+  names(res) = imp$variable
+  res
 }
