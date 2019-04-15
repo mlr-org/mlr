@@ -313,20 +313,20 @@
 <a href="#classes-constructors-and-naming-schemes" class="anchor"></a>Classes, constructors, and naming schemes</h1>
 <p>As you already know <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> generates an object of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"classif.lda"</span>))</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"regr.lm"</span>))</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"surv.coxph"</span>))</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"cluster.kmeans"</span>))</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>))</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## [4] "Learner"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## [4] "Learner"</a></code></pre></div>
 <p>The first element of each class attribute vector is the name of the learner class passed to the <code>cl</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Obviously, this adheres to the naming conventions</p>
 <ul>
 <li>

@@ -298,34 +298,34 @@
 <p>First, let’s have a look at the data.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(BostonHousing, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(BostonHousing)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">##       crim                zn             indus       chas   </span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471  </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">##  1st Qu.: 0.08204   1st Qu.:  0.00   1st Qu.: 5.19   1: 35  </span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">##  Median : 0.25651   Median :  0.00   Median : 9.69          </span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14          </span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10          </span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">##  Max.   :88.97620   Max.   :100.00   Max.   :27.74          </span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">##       nox               rm             age              dis        </span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  </span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  </span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  </span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  </span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  </span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  </span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##       rad              tax           ptratio            b         </span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  </span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  </span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  </span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  </span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  </span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  </span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">##      lstat            medv      </span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">##  Min.   : 1.73   Min.   : 5.00  </span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">##  1st Qu.: 6.95   1st Qu.:17.02  </span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">##  Median :11.36   Median :21.20  </span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">##  Mean   :12.65   Mean   :22.53  </span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">##  3rd Qu.:16.95   3rd Qu.:25.00  </span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co">##  Max.   :37.97   Max.   :50.00</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3">##       crim                zn             indus       chas   </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471  </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">##  1st Qu.: 0.08204   1st Qu.:  0.00   1st Qu.: 5.19   1: 35  </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">##  Median : 0.25651   Median :  0.00   Median : 9.69          </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14          </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10          </a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">##  Max.   :88.97620   Max.   :100.00   Max.   :27.74          </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">##       nox               rm             age              dis        </a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  </a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  </a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  </a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">##       rad              tax           ptratio            b         </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  </a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  </a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  </a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  </a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  </a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  </a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">##      lstat            medv      </a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">##  Min.   : 1.73   Min.   : 5.00  </a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">##  1st Qu.: 6.95   1st Qu.:17.02  </a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">##  Median :11.36   Median :21.20  </a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">##  Mean   :12.65   Mean   :22.53  </a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">##  3rd Qu.:16.95   3rd Qu.:25.00  </a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">##  Max.   :37.97   Max.   :50.00</a></code></pre></div>
 <p>This data set concerns housing in the suburban area of Boston. The target variable, chosen for the regression task, is <code>medv</code> - the median value of owner-occupied homes in $1000’s. Description of the others 13 attributes can be found at <code><a href="https://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>).</p>
 <div id="define-a-task" class="section level1">
 <h1 class="hasAnchor">
@@ -334,17 +334,17 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Make a task</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">regr.task =<span class="st"> </span><span class="kw"><a href="../../reference/RegrTask.html">makeRegrTask</a></span>(<span class="dt">data =</span> BostonHousing, <span class="dt">target =</span> <span class="st">"medv"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">regr.task</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Supervised task: BostonHousing</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Type: regr</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Target: medv</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Observations: 506</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">## Features:</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">##    numerics     factors     ordered functionals </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">##          12           1           0           0 </span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">## Missings: FALSE</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">## Has weights: FALSE</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">## Has blocking: FALSE</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">## Has coordinates: FALSE</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## Supervised task: BostonHousing</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## Type: regr</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## Target: medv</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## Observations: 506</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## Features:</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">##          12           1           0           0 </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## Missings: FALSE</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## Has coordinates: FALSE</a></code></pre></div>
 <p>In order to get an overview of the features type, we can print out the <code>regr.task</code>. This shows that there are 12 numeric and one factor variables in the data set.</p>
 </div>
 <div id="tuning" class="section level1">
@@ -396,18 +396,18 @@
 <a href="#performance" class="anchor"></a>Performance</h1>
 <p>Now we want to evaluate the results.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span>(bmr)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">## $BostonHousing</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## $BostonHousing$regr.lm</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## rmse.test.rmse </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##       4.901218 </span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## $BostonHousing$regr.ksvm.tuned</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## rmse.test.rmse </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">##       3.643597 </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## </span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## $BostonHousing$regr.ranger.tuned</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## rmse.test.rmse </span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">##       3.420514</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">## $BostonHousing</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## $BostonHousing$regr.lm</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">## rmse.test.rmse </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">##       4.901218 </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">## </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">## $BostonHousing$regr.ksvm.tuned</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">## rmse.test.rmse </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">##       3.643597 </a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## </a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## $BostonHousing$regr.ranger.tuned</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## rmse.test.rmse </a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">##       3.420514</a></code></pre></div>
 <p>A closer look at the boxplot reveals that RF outperforms the other learners for this specific task. Despite the tuning procedure performed before, the benchmark experiment for linear and lasso regression yields similar but poor results.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr)</a></code></pre></div>
 <p><img src="usecase_regression_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>

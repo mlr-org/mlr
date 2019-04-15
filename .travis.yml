@@ -1,79 +1,40 @@
 language: r
 sudo: false
-dist: trusty
-cache: packages
+dist: xenial
+cache:
+  - packages
+  - ccache
 latex: true
 env:
   global:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_TESTS_NLINES_=999
-    - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='roxygen2 pander mlrMBO purrr cowplot sf mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab igraph rjson rmarkdown xgboost xml2 ggpubr FSelectorRcpp praznik'
 
-jobs:
-  include:
-    - stage: warmup
-      env: RCMDCHECK=TRUE
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-           - libgdal-dev # for sf
-           - libproj-dev # for sf
-           - libgeos-dev # for sf
-           - libudunits2-dev # for sf
-      before_install:
-        - R -q -e 'if (!requireNamespace("BiocManager")) install.packages("BiocManager"); if (!requireNamespace("genefilter")) BiocManager::install("genefilter")'
-        - R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
-      install: R -q -e 'tic::install()'
-      script: true
-      after_script: R -q -e 'tic::after_script()'
-    - stage: check
-      env: RCMDCHECK=TRUE
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-           - libgdal-dev # for sf
-           - libproj-dev # for sf
-           - libgeos-dev # for sf
-           - libudunits2-dev # for sf
-      before_install: R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes"); if (!requireNamespace("curl")) install.packages("curl"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
-      warnings_are_errors: false
-      before_script: R -q -e 'tic::before_script()'
-      script: R -q -e 'tic::script()'
-      after_script: R -q -e 'tic::after_script()'
-      before_deploy: R -q -e 'tic::before_deploy()'
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           all_branches: true
+addons:
+  apt:
+    packages:
+     - ccache
+     - libglu1-mesa-dev
+     - libgmp-dev
+     - libgsl0-dev
+     - libgdal-dev # for sf
+     - libproj-dev # for sf
+     - libgeos-dev # for sf
+     - libudunits2-dev # for sf
 
-    - stage: Tutorial
-      env: TUTORIAL=HTML
-      addons:
-        apt:
-          packages:
-           - libgmp-dev
-           - libgsl0-dev
-           - libgdal-dev # for sf
-           - libproj-dev # for sf
-           - libgeos-dev # for sf
-           - libudunits2-dev # for sf
-      latex: false
-      pandoc_version: 2.3.1
-      before_install:
-        - R -q -e 'if (!requireNamespace("BiocManager")) install.packages("BiocManager"); if (!requireNamespace("genefilter")) BiocManager::install("genefilter")'
-        - R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      install: R -q -e 'tic::install()'
-      script:  R -q -e 'tic::script()'
-      after_script: R -q -e 'tic::after_script()'
-      before_deploy: R -q -e 'tic::before_deploy()'
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           all_branches: true
+before_install:
+  - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+  - R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
+  - R -q -e 'if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
+  - R -q -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
+  - R -q -e 'if (!requireNamespace("curl", quietly = TRUE)) install.packages("curl")'
+  - R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+before_script: R -q -e 'tic::before_script()'
+script: R -q -e 'tic::script()'
+after_script: R -q -e 'tic::after_script()'
+before_deploy: R -q -e 'tic::before_deploy()'
+deploy:
+   provider: script
+   script: R -q -e 'tic::deploy()'
+   on:
+     all_branches: true

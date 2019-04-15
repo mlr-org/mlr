@@ -56,6 +56,7 @@ In this case, the package name is omitted.
 
 ## learners - general
 * regr.h2o.gbm: Various parameters added, `"h2o.use.data.table" = TRUE` is now the default (@j-hartshorn, #2508)
+* h2o learners now support getting feature importance (@markusdumke, #2434)
 
 ## featSel - general
  * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
