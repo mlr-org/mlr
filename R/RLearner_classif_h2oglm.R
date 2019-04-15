@@ -21,7 +21,7 @@ makeRLearner.classif.h2o.glm = function() {
       makeUntypedLearnerParam("beta_constraints"),
       makeLogicalLearnerParam("intercept", default = TRUE)
     ),
-    properties = c("twoclass", "numerics", "factors", "prob", "weights", "missings"),
+    properties = c("twoclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
     name = "h2o.glm",
     short.name = "h2o.glm",
     note = '`family` is always set to `"binomial"` to get a binary classifier. The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
@@ -68,4 +68,18 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
     ret = as.matrix(p.df)
     return(ret)
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.h2o.glm = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
+  extractH2OGlmVarImp(mod, ...)
+}
+
+
+extractH2OGlmVarImp = function(.learner.model, ...) {
+  imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
+  res = imp$coefficients
+  names(res) = imp$names
+  res
 }

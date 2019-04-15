@@ -332,14 +332,14 @@
 <p>In the following example, the data is first stored as matrix columns using the helper function <code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> for the <a href="&amp;fuelSubset.task">fuelSubset</a> data from package <code>FDboost</code>.</p>
 <p>The data is provided in the following structure:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(fuelSubset)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## List of 7</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">##  $ heatan      : num [1:129] 26.8 27.5 23.8 18.2 17.5 ...</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">##  $ h2o         : num [1:129] 2.3 3 2 1.85 2.39 ...</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">##  $ nir.lambda  : num [1:231] 800 803 805 808 810 ...</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">##  $ NIR         : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##  $ uvvis.lambda: num [1:134] 250 256 261 267 273 ...</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##  $ UVVIS       : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">##  $ h2o.fit     : num [1:129] 2.58 3.43 1.83 2.03 3.07 ...</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2">## List of 7</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">##  $ heatan      : num [1:129] 26.8 27.5 23.8 18.2 17.5 ...</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">##  $ h2o         : num [1:129] 2.3 3 2 1.85 2.39 ...</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">##  $ nir.lambda  : num [1:231] 800 803 805 808 810 ...</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">##  $ NIR         : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">##  $ uvvis.lambda: num [1:134] 250 256 261 267 273 ...</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">##  $ UVVIS       : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">##  $ h2o.fit     : num [1:129] 2.58 3.43 1.83 2.03 3.07 ...</a></code></pre></div>
 <ul>
 <li>
 <strong>heatan</strong> is the target variable, in this case, a numeric value.</li>
@@ -354,12 +354,12 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Put all values into a data frame</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">df =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(fuelSubset[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"heatan"</span>, <span class="st">"h2o"</span>, <span class="st">"UVVIS"</span>, <span class="st">"NIR"</span>)])</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(df[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## 'data.frame':    129 obs. of  5 variables:</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##  $ heatan : num  26.8 27.5 23.8 18.2 17.5 ...</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">##  $ h2o    : num  2.3 3 2 1.85 2.39 ...</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">##  $ UVVIS.1: num  0.145 -1.584 -0.814 -1.311 -1.373 ...</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">##  $ UVVIS.2: num  -0.0111 -2.0467 -1.053 -1.2445 -1.8826 ...</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">##  $ UVVIS.3: num  0.0372 -1.5695 -0.9381 -1.0649 -1.4016 ...</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-4" data-line-number="4">## 'data.frame':    129 obs. of  5 variables:</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">##  $ heatan : num  26.8 27.5 23.8 18.2 17.5 ...</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">##  $ h2o    : num  2.3 3 2 1.85 2.39 ...</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">##  $ UVVIS.1: num  0.145 -1.584 -0.814 -1.311 -1.373 ...</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">##  $ UVVIS.2: num  -0.0111 -2.0467 -1.053 -1.2445 -1.8826 ...</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">##  $ UVVIS.3: num  0.0372 -1.5695 -0.9381 -1.0649 -1.4016 ...</a></code></pre></div>
 <p>Before constructing the <a href="task.html">task</a>, the data is again reformatted therefore it contains column matrices. This is done by providing a list <strong>fd.features</strong>, that identifies the functional covariates. All columns not mentioned in the list are kept as-is. In our case, the column indices 3:136 correspond to the columns of the UVVIS matrix. Alternatively, we could also specify the respective column names.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mlr)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># fd.features is a named list, where each name corresponds to the name of the </span></a>
@@ -368,33 +368,33 @@
 <a class="sourceLine" id="cb5-5" data-line-number="5">fdf =<span class="st"> </span><span class="kw"><a href="../../reference/makeFunctionalData.html">makeFunctionalData</a></span>(df, <span class="dt">fd.features =</span> fd.features)</a></code></pre></div>
 <p><code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> returns a <code><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame</a></code>, where the functional features are contained as matrices.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(fdf)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## 'data.frame':    129 obs. of  4 variables:</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##  $ heatan: num  26.8 27.5 23.8 18.2 17.5 ...</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">##  $ h2o   : num  2.3 3 2 1.85 2.39 ...</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">##  $ UVVIS : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">##   ..- attr(*, "dimnames")=List of 2</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">##   .. ..$ : NULL</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">##   .. ..$ : chr  "UVVIS.1" "UVVIS.2" "UVVIS.3" "UVVIS.4" ...</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">##  $ NIR   : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">##   ..- attr(*, "dimnames")=List of 2</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">##   .. ..$ : NULL</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">##   .. ..$ : chr  "NIR.1" "NIR.2" "NIR.3" "NIR.4" ...</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-2" data-line-number="2">## 'data.frame':    129 obs. of  4 variables:</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">##  $ heatan: num  26.8 27.5 23.8 18.2 17.5 ...</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">##  $ h2o   : num  2.3 3 2 1.85 2.39 ...</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">##  $ UVVIS : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">##   ..- attr(*, "dimnames")=List of 2</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">##   .. ..$ : NULL</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">##   .. ..$ : chr  "UVVIS.1" "UVVIS.2" "UVVIS.3" "UVVIS.4" ...</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">##  $ NIR   : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">##   ..- attr(*, "dimnames")=List of 2</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">##   .. ..$ : NULL</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">##   .. ..$ : chr  "NIR.1" "NIR.2" "NIR.3" "NIR.4" ...</a></code></pre></div>
 <p>Now with a data frame containing the functionals as matrices, a <a href="task.html">task</a> can be created:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Create a regression task, classification tasks behave analogously</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># In this case we use column indices</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">tsk1 =<span class="st"> </span><span class="kw"><a href="../../reference/RegrTask.html">makeRegrTask</a></span>(<span class="st">"fuelsubset"</span>, <span class="dt">data =</span> fdf, <span class="dt">target =</span> <span class="st">"heatan"</span>)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">tsk1</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## Supervised task: fuelsubset</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## Type: regr</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Target: heatan</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Observations: 129</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## Features:</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">##    numerics     factors     ordered functionals </span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">##           1           0           0           2 </span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">## Missings: FALSE</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">## Has weights: FALSE</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## Has blocking: FALSE</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## Has coordinates: FALSE</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-5" data-line-number="5">## Supervised task: fuelsubset</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">## Type: regr</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## Target: heatan</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## Observations: 129</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## Features:</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">##           1           0           0           2 </a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">## Missings: FALSE</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">## Has coordinates: FALSE</a></code></pre></div>
 </div>
 <div id="constructing-a-learner" class="section level1">
 <h1 class="hasAnchor">
@@ -404,19 +404,19 @@
 <p><strong>Either use a <a href="learner.html">learner</a> suitable for functional data:</strong></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># The following learners can be used for tsk1 (a regression task).</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(tsk1, <span class="dt">properties =</span> <span class="st">"functionals"</span>, <span class="dt">warn.missing.packages =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">##              class                                        name  short.name</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">## 1     regr.FDboost Functional linear array regression boosting     FDboost</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">## 2 regr.featureless                      Featureless regression featureless</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">##          package type installed numerics factors ordered missings weights</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">## 1 FDboost,mboost regr      TRUE     TRUE   FALSE   FALSE    FALSE   FALSE</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## 2            mlr regr      TRUE     TRUE    TRUE    TRUE     TRUE   FALSE</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">##    prob oneclass twoclass multiclass class.weights featimp oobpreds</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">## 1 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">## 2 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">##   functionals single.functional    se lcens rcens icens</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">## 1        TRUE             FALSE FALSE FALSE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">## 2        TRUE             FALSE FALSE FALSE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## ... (#elements: 24)</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3">##              class                                        name  short.name</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">## 1     regr.FDboost Functional linear array regression boosting     FDboost</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">## 2 regr.featureless                      Featureless regression featureless</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">##          package type installed numerics factors ordered missings weights</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## 1 FDboost,mboost regr      TRUE     TRUE   FALSE   FALSE    FALSE   FALSE</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## 2            mlr regr      TRUE     TRUE    TRUE    TRUE     TRUE   FALSE</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">##    prob oneclass twoclass multiclass class.weights featimp oobpreds</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## 1 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## 2 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">##   functionals single.functional    se lcens rcens icens</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">## 1        TRUE             FALSE FALSE FALSE FALSE FALSE</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">## 2        TRUE             FALSE FALSE FALSE FALSE FALSE</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">## ... (#elements: 24)</a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Create an FDboost learner for regression</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">fdalrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.FDboost"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Or alternatively, use knn for classification:</span></a>
@@ -436,19 +436,19 @@
 <a class="sourceLine" id="cb12-2" data-line-number="2">m =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="dt">learner =</span> fdalrn, <span class="dt">task =</span> tsk1)</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">p =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(m, tsk1)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(p, rmse)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">##     rmse </span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">## 2.181438</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-5" data-line-number="5">##     rmse </a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">## 2.181438</a></code></pre></div>
 <p>Alternatively, learners that do not explicitly treat functional covariates can be applied. In this case, the temporal structure is completely disregarded, and all columns are treated as independent.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Train a normal learner on the constructed task.</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># Note that we get a message, that functionals have been converted to numerics.</span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">rpart.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.rpart"</span>)</a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">m =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="dt">learner =</span> rpart.lrn, <span class="dt">task =</span> tsk1)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">## Functional features have been converted to numerics</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">## Functional features have been converted to numerics</a>
 <a class="sourceLine" id="cb13-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">m</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">## Model for learner.id=regr.rpart; learner.class=regr.rpart</span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">## Trained on: task.id = fuelsubset; obs = 129; features = 3</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">## Hyperparameters: xval=0</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-8" data-line-number="8">## Model for learner.id=regr.rpart; learner.class=regr.rpart</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">## Trained on: task.id = fuelsubset; obs = 129; features = 3</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">## Hyperparameters: xval=0</a></code></pre></div>
 </div>
 <div id="feature-extraction" class="section level1">
 <h1 class="hasAnchor">
@@ -470,23 +470,23 @@
 <a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co"># Either create a new task from an existing task</span></a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">extracted =<span class="st"> </span><span class="kw"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span>(tsk1, <span class="dt">feat.methods =</span> feat.methods)</a>
 <a class="sourceLine" id="cb14-8" data-line-number="8">extracted</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">## $task</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">## Supervised task: fuelsubset</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">## Type: regr</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">## Target: heatan</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">## Observations: 129</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">## Features:</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">##    numerics     factors     ordered functionals </span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">##         137           0           0           0 </span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">## Missings: FALSE</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">## Has weights: FALSE</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">## Has blocking: FALSE</span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">## Has coordinates: FALSE</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">## </span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">## $desc</span></a>
-<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">## Extraction of features from functional data:</span></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">## Target: heatan</span></a>
-<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">## Functional Features: 2; Extracted features: 2</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-9" data-line-number="9">## $task</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">## Supervised task: fuelsubset</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">## Type: regr</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">## Target: heatan</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">## Observations: 129</a>
+<a class="sourceLine" id="cb14-14" data-line-number="14">## Features:</a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb14-16" data-line-number="16">##         137           0           0           0 </a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">## Missings: FALSE</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb14-19" data-line-number="19">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb14-20" data-line-number="20">## Has coordinates: FALSE</a>
+<a class="sourceLine" id="cb14-21" data-line-number="21">## </a>
+<a class="sourceLine" id="cb14-22" data-line-number="22">## $desc</a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">## Extraction of features from functional data:</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">## Target: heatan</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">## Functional Features: 2; Extracted features: 2</a></code></pre></div>
 <div id="wavelets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wavelets" class="anchor"></a>Wavelets</h2>
@@ -523,10 +523,10 @@
 <a class="sourceLine" id="cb17-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co"># And run the learner</span></a>
 <a class="sourceLine" id="cb17-7" data-line-number="7"><span class="kw"><a href="../../reference/train.html">train</a></span>(wrapped.lrn, fuelsubset.task)</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">## Functional features have been converted to numerics</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">## Model for learner.id=regr.rpart.extracted; learner.class=extractFDAFeatsWrapper</span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">## Trained on: task.id = fs.fdf; obs = 129; features = 3</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">## Hyperparameters: xval=0</span></a></code></pre></div>
+<a class="sourceLine" id="cb17-8" data-line-number="8">## Functional features have been converted to numerics</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">## Model for learner.id=regr.rpart.extracted; learner.class=extractFDAFeatsWrapper</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">## Trained on: task.id = fs.fdf; obs = 129; features = 3</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11">## Hyperparameters: xval=0</a></code></pre></div>
 </div>
 </div>
   </div>
