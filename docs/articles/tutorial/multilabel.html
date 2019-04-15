@@ -314,22 +314,22 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">labels =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(yeast)[<span class="dv">1</span><span class="op">:</span><span class="dv">14</span>]</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">yeast.task =<span class="st"> </span><span class="kw"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span>(<span class="dt">id =</span> <span class="st">"multi"</span>, <span class="dt">data =</span> yeast, <span class="dt">target =</span> labels)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">yeast.task</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## Supervised task: multi</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## Type: multilabel</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## Observations: 2417</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## Features:</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">##    numerics     factors     ordered functionals </span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##         103           0           0           0 </span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">## Missings: FALSE</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">## Has weights: FALSE</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## Has blocking: FALSE</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## Has coordinates: FALSE</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">## Classes: 14</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 </span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">##     762    1038     983     862     722     597     428     480     178 </span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">## label10 label11 label12 label13 label14 </span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">##     253     289    1816    1799      34</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-5" data-line-number="5">## Supervised task: multi</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">## Type: multilabel</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## Observations: 2417</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">## Features:</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">##         103           0           0           0 </a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## Missings: FALSE</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## Has coordinates: FALSE</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## Classes: 14</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">##     762    1038     983     862     722     597     428     480     178 </a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## label10 label11 label12 label13 label14 </a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">##     253     289    1816    1799      34</a></code></pre></div>
 </div>
 <div id="constructing-a-learner" class="section level1">
 <h1 class="hasAnchor">
@@ -346,13 +346,13 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lrn.rfsrc =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"multilabel.randomForestSRC"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">lrn.rFerns =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"multilabel.rFerns"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">lrn.rFerns</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Learner multilabel.rFerns from package rFerns</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Type: multilabel</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Name: Random ferns; Short name: rFerns</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Class: multilabel.rFerns</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">## Properties: numerics,factors,ordered</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">## Predict-Type: response</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">## Hyperparameters:</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## Learner multilabel.rFerns from package rFerns</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## Type: multilabel</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## Name: Random ferns; Short name: rFerns</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## Class: multilabel.rFerns</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## Properties: numerics,factors,ordered</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">## Predict-Type: response</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## Hyperparameters:</a></code></pre></div>
 </div>
 <div id="problem-transformation-methods" class="section level2">
 <h2 class="hasAnchor">
@@ -362,23 +362,23 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">lrn.br =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">lrn.br =<span class="st"> </span><span class="kw"><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a></span>(lrn.br)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">lrn.br</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## Type: multilabel</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">## Name: ; Short name: </span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">## Class: MultilabelBinaryRelevanceWrapper</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## Predict-Type: prob</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## Hyperparameters: xval=0</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## Type: multilabel</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">## Name: ; Short name: </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">## Class: MultilabelBinaryRelevanceWrapper</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## Predict-Type: prob</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">## Hyperparameters: xval=0</a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">lrn.br2 =<span class="st"> </span><span class="kw"><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a></span>(<span class="st">"classif.rpart"</span>)</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">lrn.br2</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">## Type: multilabel</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">## Name: ; Short name: </span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">## Class: MultilabelBinaryRelevanceWrapper</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">## Predict-Type: response</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">## Hyperparameters: xval=0</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-14" data-line-number="14">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">## Type: multilabel</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">## Name: ; Short name: </a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">## Class: MultilabelBinaryRelevanceWrapper</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">## Predict-Type: response</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">## Hyperparameters: xval=0</a></code></pre></div>
 <p>The different methods are shortly described in the following.</p>
 <div id="binary-relevance" class="section level3">
 <h3 class="hasAnchor">
@@ -414,15 +414,15 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.br, yeast.task)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.br, yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1500</span>, <span class="dt">weights =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">/</span><span class="dv">1500</span>, <span class="dv">1500</span>))</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">mod</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Model for learner.id=multilabel.binaryRelevance.classif.rpart; learner.class=MultilabelBinaryRelevanceWrapper</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">## Trained on: task.id = multi; obs = 1500; features = 103</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## Hyperparameters: xval=0</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">## Model for learner.id=multilabel.binaryRelevance.classif.rpart; learner.class=MultilabelBinaryRelevanceWrapper</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">## Trained on: task.id = multi; obs = 1500; features = 103</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">## Hyperparameters: xval=0</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">mod2 =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.rfsrc, yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">mod2</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">## Model for learner.id=multilabel.randomForestSRC; learner.class=multilabel.randomForestSRC</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">## Trained on: task.id = multi; obs = 100; features = 103</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">## Hyperparameters: na.action=na.impute</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## Model for learner.id=multilabel.randomForestSRC; learner.class=multilabel.randomForestSRC</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## Trained on: task.id = multi; obs = 100; features = 103</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## Hyperparameters: na.action=na.impute</a></code></pre></div>
 </div>
 <div id="predict" class="section level1">
 <h1 class="hasAnchor">
@@ -431,33 +431,33 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> yeast.task, <span class="dt">subset =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">newdata =</span> yeast[<span class="dv">1501</span><span class="op">:</span><span class="dv">1600</span>,])</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(pred))</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">##  [1] "truth.label1"     "truth.label2"     "truth.label3"    </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##  [4] "truth.label4"     "truth.label5"     "truth.label6"    </span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">##  [7] "truth.label7"     "truth.label8"     "truth.label9"    </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## [10] "truth.label10"    "truth.label11"    "truth.label12"   </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## [13] "truth.label13"    "truth.label14"    "prob.label1"     </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## [16] "prob.label2"      "prob.label3"      "prob.label4"     </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## [19] "prob.label5"      "prob.label6"      "prob.label7"     </span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## [22] "prob.label8"      "prob.label9"      "prob.label10"    </span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## [25] "prob.label11"     "prob.label12"     "prob.label13"    </span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## [28] "prob.label14"     "response.label1"  "response.label2" </span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## [31] "response.label3"  "response.label4"  "response.label5" </span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## [34] "response.label6"  "response.label7"  "response.label8" </span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## [37] "response.label9"  "response.label10" "response.label11"</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## [40] "response.label12" "response.label13" "response.label14"</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">##  [1] "truth.label1"     "truth.label2"     "truth.label3"    </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">##  [4] "truth.label4"     "truth.label5"     "truth.label6"    </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">##  [7] "truth.label7"     "truth.label8"     "truth.label9"    </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">## [10] "truth.label10"    "truth.label11"    "truth.label12"   </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">## [13] "truth.label13"    "truth.label14"    "prob.label1"     </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">## [16] "prob.label2"      "prob.label3"      "prob.label4"     </a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## [19] "prob.label5"      "prob.label6"      "prob.label7"     </a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## [22] "prob.label8"      "prob.label9"      "prob.label10"    </a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## [25] "prob.label11"     "prob.label12"     "prob.label13"    </a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">## [28] "prob.label14"     "response.label1"  "response.label2" </a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">## [31] "response.label3"  "response.label4"  "response.label5" </a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">## [34] "response.label6"  "response.label7"  "response.label8" </a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">## [37] "response.label9"  "response.label10" "response.label11"</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">## [40] "response.label12" "response.label13" "response.label14"</a>
 <a class="sourceLine" id="cb5-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb5-19" data-line-number="19">pred2 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod2, <span class="dt">task =</span> yeast.task)</a>
 <a class="sourceLine" id="cb5-20" data-line-number="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(pred2))</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">##  [1] "id"               "truth.label1"     "truth.label2"    </span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">##  [4] "truth.label3"     "truth.label4"     "truth.label5"    </span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">##  [7] "truth.label6"     "truth.label7"     "truth.label8"    </span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">## [10] "truth.label9"     "truth.label10"    "truth.label11"   </span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## [13] "truth.label12"    "truth.label13"    "truth.label14"   </span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## [16] "response.label1"  "response.label2"  "response.label3" </span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## [19] "response.label4"  "response.label5"  "response.label6" </span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## [22] "response.label7"  "response.label8"  "response.label9" </span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## [25] "response.label10" "response.label11" "response.label12"</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">## [28] "response.label13" "response.label14"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-21" data-line-number="21">##  [1] "id"               "truth.label1"     "truth.label2"    </a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">##  [4] "truth.label3"     "truth.label4"     "truth.label5"    </a>
+<a class="sourceLine" id="cb5-23" data-line-number="23">##  [7] "truth.label6"     "truth.label7"     "truth.label8"    </a>
+<a class="sourceLine" id="cb5-24" data-line-number="24">## [10] "truth.label9"     "truth.label10"    "truth.label11"   </a>
+<a class="sourceLine" id="cb5-25" data-line-number="25">## [13] "truth.label12"    "truth.label13"    "truth.label14"   </a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">## [16] "response.label1"  "response.label2"  "response.label3" </a>
+<a class="sourceLine" id="cb5-27" data-line-number="27">## [19] "response.label4"  "response.label5"  "response.label6" </a>
+<a class="sourceLine" id="cb5-28" data-line-number="28">## [22] "response.label7"  "response.label8"  "response.label9" </a>
+<a class="sourceLine" id="cb5-29" data-line-number="29">## [25] "response.label10" "response.label11" "response.label12"</a>
+<a class="sourceLine" id="cb5-30" data-line-number="30">## [28] "response.label13" "response.label14"</a></code></pre></div>
 <p>Depending on the chosen <code>predict.type</code> of the learner you get true and predicted values and possibly probabilities for each class label. These can be extracted by the usual accessor functions <code><a href="../../reference/getPredictionResponse.html">getPredictionTruth()</a></code>, <code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code> and <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code>.</p>
 </div>
 <div id="performance" class="section level1">
@@ -469,10 +469,10 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred2, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(multilabel.subset01, multilabel.hamloss, multilabel.acc,</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">  multilabel.f1, timepredict))</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">##           0.8721556           0.2047402           0.4611732 </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">##       multilabel.f1         timepredict </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">##           0.5715320           0.9210000</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">## multilabel.subset01  multilabel.hamloss      multilabel.acc </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">##           0.8721556           0.2047402           0.4611732 </a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">##       multilabel.f1         timepredict </a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">##           0.5715320           0.9210000</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw"><a href="../../reference/listMeasures.html">listMeasures</a></span>(<span class="st">"multilabel"</span>)</a></code></pre></div>
 </div>
@@ -484,58 +484,58 @@
 <a class="sourceLine" id="cb7-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn.br, <span class="dt">task =</span> yeast.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">r</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## Task: multi</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Learner: multilabel.binaryRelevance.classif.rpart</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.2200186</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## Runtime: 6.67501</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">## Resample Result</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">## Task: multi</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## Learner: multilabel.binaryRelevance.classif.rpart</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## Aggr perf: multilabel.hamloss.test.mean=0.2200186</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## Runtime: 6.67501</a>
 <a class="sourceLine" id="cb7-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn.rFerns, <span class="dt">task =</span> yeast.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">r</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## Resample Result</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## Task: multi</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">## Learner: multilabel.rFerns</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.4762392</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">## Runtime: 0.320362</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14">## Resample Result</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">## Task: multi</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">## Learner: multilabel.rFerns</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">## Aggr perf: multilabel.hamloss.test.mean=0.4762392</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">## Runtime: 0.320362</a></code></pre></div>
 </div>
 <div id="binary-performance" class="section level1">
 <h1 class="hasAnchor">
 <a href="#binary-performance" class="anchor"></a>Binary performance</h1>
 <p>If you want to calculate a binary performance measure like, e.g., the <a href="measures.html" target="_blank">accuracy</a>, the <a href="measures.html" target="_blank">mmce</a> or the <a href="measures.html" target="_blank">auc</a> for each label, you can use function <code><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances()</a></code>. You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. For calculating the <a href="measures.html" target="_blank">auc</a> you need predicted probabilities.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce, auc))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">##         acc.test.mean mmce.test.mean auc.test.mean</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">## label1           0.75           0.25     0.6321925</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">## label2           0.64           0.36     0.6547917</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">## label3           0.68           0.32     0.7118227</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">## label4           0.69           0.31     0.6764835</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">## label5           0.73           0.27     0.6676923</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## label6           0.70           0.30     0.6417739</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">## label7           0.81           0.19     0.5968750</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">## label8           0.73           0.27     0.5164474</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">## label9           0.89           0.11     0.4688458</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">## label10          0.86           0.14     0.3996463</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">## label11          0.85           0.15     0.5000000</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">## label12          0.76           0.24     0.5330667</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## label13          0.75           0.25     0.5938610</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">## label14          1.00           0.00            NA</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">##         acc.test.mean mmce.test.mean auc.test.mean</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">## label1           0.75           0.25     0.6321925</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">## label2           0.64           0.36     0.6547917</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">## label3           0.68           0.32     0.7118227</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">## label4           0.69           0.31     0.6764835</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## label5           0.73           0.27     0.6676923</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## label6           0.70           0.30     0.6417739</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## label7           0.81           0.19     0.5968750</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## label8           0.73           0.27     0.5164474</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## label9           0.89           0.11     0.4688458</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## label10          0.86           0.14     0.3996463</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">## label11          0.85           0.15     0.5000000</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">## label12          0.76           0.24     0.5330667</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">## label13          0.75           0.25     0.5938610</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">## label14          1.00           0.00            NA</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span>(r<span class="op">$</span>pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce))</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">##         acc.test.mean mmce.test.mean</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">## label1     0.69424907      0.3057509</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">## label2     0.59122880      0.4087712</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">## label3     0.70459247      0.2954075</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">## label4     0.71576334      0.2842367</span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">## label5     0.70831609      0.2916839</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">## label6     0.59412495      0.4058751</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">## label7     0.54447662      0.4555234</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">## label8     0.52503103      0.4749690</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">## label9     0.30864708      0.6913529</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">## label10    0.45800579      0.5419942</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">## label11    0.47290029      0.5270997</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">## label12    0.52834092      0.4716591</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">## label13    0.53537443      0.4646256</span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">## label14    0.01406703      0.9859330</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-19" data-line-number="19">##         acc.test.mean mmce.test.mean</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">## label1     0.69424907      0.3057509</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">## label2     0.59122880      0.4087712</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">## label3     0.70459247      0.2954075</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">## label4     0.71576334      0.2842367</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">## label5     0.70831609      0.2916839</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">## label6     0.59412495      0.4058751</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">## label7     0.54447662      0.4555234</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">## label8     0.52503103      0.4749690</a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">## label9     0.30864708      0.6913529</a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">## label10    0.45800579      0.5419942</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">## label11    0.47290029      0.5270997</a>
+<a class="sourceLine" id="cb8-31" data-line-number="31">## label12    0.52834092      0.4716591</a>
+<a class="sourceLine" id="cb8-32" data-line-number="32">## label13    0.53537443      0.4646256</a>
+<a class="sourceLine" id="cb8-33" data-line-number="33">## label14    0.01406703      0.9859330</a></code></pre></div>
 </div>
 </div>
   </div>

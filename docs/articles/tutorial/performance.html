@@ -313,44 +313,44 @@
 <p>If you would like a list of available measures with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use the function <code><a href="../../reference/listMeasures.html">listMeasures()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Performance measures for classification with multiple classes</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../../reference/listMeasures.html">listMeasures</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"classif.multi"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">##  [1] "featperc"         "mmce"             "lsr"             </span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">##  [4] "bac"              "qsr"              "timeboth"        </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">##  [7] "multiclass.aunp"  "timetrain"        "multiclass.aunu" </span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## [10] "ber"              "timepredict"      "multiclass.brier"</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## [13] "ssr"              "acc"              "logloss"         </span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## [16] "wkappa"           "multiclass.au1p"  "multiclass.au1u" </span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## [19] "kappa"</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">##  [1] "featperc"         "mmce"             "lsr"             </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">##  [4] "bac"              "qsr"              "timeboth"        </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">##  [7] "multiclass.aunp"  "timetrain"        "multiclass.aunu" </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">## [10] "ber"              "timepredict"      "multiclass.brier"</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">## [13] "ssr"              "acc"              "logloss"         </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## [16] "wkappa"           "multiclass.au1p"  "multiclass.au1u" </a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">## [19] "kappa"</a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># Performance measure suitable for the iris classification task</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw"><a href="../../reference/listMeasures.html">listMeasures</a></span>(iris.task)</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  [1] "featperc"         "mmce"             "lsr"             </span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">##  [4] "bac"              "qsr"              "timeboth"        </span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">##  [7] "multiclass.aunp"  "timetrain"        "multiclass.aunu" </span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## [10] "ber"              "timepredict"      "multiclass.brier"</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">## [13] "ssr"              "acc"              "logloss"         </span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">## [16] "wkappa"           "multiclass.au1p"  "multiclass.au1u" </span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">## [19] "kappa"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-12" data-line-number="12">##  [1] "featperc"         "mmce"             "lsr"             </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">##  [4] "bac"              "qsr"              "timeboth"        </a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">##  [7] "multiclass.aunp"  "timetrain"        "multiclass.aunu" </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## [10] "ber"              "timepredict"      "multiclass.brier"</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## [13] "ssr"              "acc"              "logloss"         </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## [16] "wkappa"           "multiclass.au1p"  "multiclass.au1u" </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## [19] "kappa"</a></code></pre></div>
 <p>For convenience there exists a default measure for each type of learning problem, which is calculated if nothing else is specified. As defaults we chose the most commonly used measures for the respective types, e.g., the mean squared error (<a href="measures.html" target="_blank">mse</a>) for regression and the misclassification rate (<a href="measures.html" target="_blank">mmce</a>) for classification. The help page of function <code><a href="../../reference/getDefaultMeasure.html">getDefaultMeasure()</a></code> lists all defaults for all types of learning problems. The function itself returns the default measure for a given task type, <code><a href="../../reference/Task.html">Task()</a></code> or <code><a href="../../reference/makeLearner.html">Learner()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Get default measure for iris.task</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../../reference/getDefaultMeasure.html">getDefaultMeasure</a></span>(iris.task)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">## Name: Mean misclassification error</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Performance measure: mmce</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Properties: classif,classif.multi,req.pred,req.truth</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Minimize: TRUE</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Best: 0; Worst: 1</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">## Aggregated by: test.mean</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">## Arguments: list()</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">## Note: Defined as: mean(response != truth)</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">## Name: Mean misclassification error</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## Performance measure: mmce</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## Properties: classif,classif.multi,req.pred,req.truth</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## Minimize: TRUE</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## Best: 0; Worst: 1</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## Aggregated by: test.mean</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">## Arguments: list()</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## Note: Defined as: mean(response != truth)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># Get the default measure for linear regression</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw"><a href="../../reference/getDefaultMeasure.html">getDefaultMeasure</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>))</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">## Name: Mean of squared errors</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">## Performance measure: mse</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">## Properties: regr,req.pred,req.truth</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## Minimize: TRUE</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">## Best: 0; Worst: Inf</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">## Aggregated by: test.mean</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">## Arguments: list()</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">## Note: Defined as: mean((response - truth)^2)</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## Name: Mean of squared errors</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## Performance measure: mse</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">## Properties: regr,req.pred,req.truth</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">## Minimize: TRUE</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">## Best: 0; Worst: Inf</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">## Aggregated by: test.mean</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## Arguments: list()</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">## Note: Defined as: mean((response - truth)^2)</a></code></pre></div>
 </div>
 <div id="calculate-performance-measures" class="section level1">
 <h1 class="hasAnchor">
@@ -362,17 +362,17 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">2</span>, n, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##      mse </span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">## 14.38596</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-7" data-line-number="7">##      mse </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## 14.38596</a></code></pre></div>
 <p>The following code computes the median of squared errors (<a href="measures.html" target="_blank">medse</a>) instead.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> medse)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">##    medse </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## 4.209155</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">##    medse </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">## 4.209155</a></code></pre></div>
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a list of measures which can also include <a href="create_measure.html" target="_blank">your own measure</a>.</p>
 <p>Calculate the mean squared error, median squared error and mean absolute error (<a href="measures.html" target="_blank">mae</a>).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mse, medse, mae))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">##       mse     medse       mae </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## 14.385956  4.209155  2.716451</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">##       mse     medse       mae </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## 14.385956  4.209155  2.716451</a></code></pre></div>
 <p>For the other types of learning problems and measures, calculating the performance basically works in the same way.</p>
 <div id="requirements-of-performance-measures" class="section level2">
 <h2 class="hasAnchor">
@@ -380,8 +380,8 @@
 <p>Note that in order to calculate some performance measures it is required that you pass the <code><a href="../../reference/Task.html">Task()</a></code> or the fitted model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) in addition to the <code><a href="../../reference/Prediction.html">Prediction()</a></code>.</p>
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> timetrain, <span class="dt">model =</span> mod)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## timetrain </span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##     0.055</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-2" data-line-number="2">## timetrain </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">##     0.055</a></code></pre></div>
 <p>For many performance measures in cluster analysis the <code><a href="../../reference/Task.html">Task()</a></code> is required.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</a>
@@ -389,16 +389,16 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># Calculate the Dunn index</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> dunn, <span class="dt">task =</span> mtcars.task)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">##      dunn </span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## 0.1462919</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-7" data-line-number="7">##      dunn </a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## 0.1462919</a></code></pre></div>
 <p>Moreover, some measures require a certain type of prediction. For example in binary classification in order to calculate the AUC (<a href="measures.html" target="_blank">auc</a>) – the area under the ROC (receiver operating characteristic) curve – we have to make sure that posterior probabilities are predicted. For more information on ROC analysis, see the section on <a href="roc_analysis.html" target="_blank">ROC analysis</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> sonar.task)</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> auc)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">##       auc </span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">## 0.9224018</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-6" data-line-number="6">##       auc </a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## 0.9224018</a></code></pre></div>
 <p>Also bear in mind that many of the performance measures that are available for classification, e.g., the false positive rate (<a href="measures.html" target="_blank">fpr</a>), are only suitable for binary problems.</p>
 </div>
 </div>
@@ -408,23 +408,23 @@
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). If you are interested in the properties or requirements of a single measure you can access it directly. See the help page of <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) for information on the individual slots.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Mean misclassification error</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(mmce)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">## List of 10</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">##  $ id        : chr "mmce"</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">##  $ minimize  : logi TRUE</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">##  $ properties: chr [1:4] "classif" "classif.multi" "req.pred" "req.truth"</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">##  $ fun       :function (task, model, pred, feats, extra.args)  </span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">##  $ extra.args: list()</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">##  $ best      : num 0</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">##  $ worst     : num 1</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">##  $ name      : chr "Mean misclassification error"</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">##  $ note      : chr "Defined as: mean(response != truth)"</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">##  $ aggr      :List of 4</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">##   ..$ id        : chr "test.mean"</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">##   ..$ name      : chr "Test mean"</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  </span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">##   ..$ properties: chr "req.test"</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">##  - attr(*, "class")= chr "Measure"</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-3" data-line-number="3">## List of 10</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">##  $ id        : chr "mmce"</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">##  $ minimize  : logi TRUE</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">##  $ properties: chr [1:4] "classif" "classif.multi" "req.pred" "req.truth"</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">##  $ fun       :function (task, model, pred, feats, extra.args)  </a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">##  $ extra.args: list()</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">##  $ best      : num 0</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">##  $ worst     : num 1</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">##  $ name      : chr "Mean misclassification error"</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">##  $ note      : chr "Defined as: mean(response != truth)"</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">##  $ aggr      :List of 4</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">##   ..$ id        : chr "test.mean"</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">##   ..$ name      : chr "Test mean"</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  </a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">##   ..$ properties: chr "req.test"</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">##   ..- attr(*, "class")= chr "Aggregation"</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">##  - attr(*, "class")= chr "Measure"</a></code></pre></div>
 </div>
 <div id="binary-classification" class="section level1">
 <h1 class="hasAnchor">
@@ -443,8 +443,8 @@
 <a class="sourceLine" id="cb10-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co"># Performance for the default threshold 0.5</span></a>
 <a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(fpr, fnr, mmce))</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">##       fpr       fnr      mmce </span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">## 0.2500000 0.3035714 0.2788462</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">##       fpr       fnr      mmce </a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">## 0.2500000 0.3035714 0.2788462</a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co"># Plot false negative and positive rates as well as the error rate versus the threshold</span></a>
 <a class="sourceLine" id="cb10-11" data-line-number="11">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(fpr, fnr, mmce))</a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="kw"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span>(d)</a></code></pre></div>
@@ -459,27 +459,27 @@
 <p>We can generate a similiar table with the <code><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">r =<span class="st"> </span><span class="kw"><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures</a></span>(pred)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">r</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">##     predicted</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">## true M         R                            </span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">##    M 39        17        tpr: 0.7  fnr: 0.3 </span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">##    R 12        36        fpr: 0.25 tnr: 0.75</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">##      ppv: 0.76 for: 0.32 lrp: 2.79 acc: 0.72</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">##      fdr: 0.24 npv: 0.68 lrm: 0.4  dor: 6.88</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">## </span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">## </span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">## Abbreviations:</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">## tpr - True positive rate (Sensitivity, Recall)</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">## fpr - False positive rate (Fall-out)</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">## fnr - False negative rate (Miss rate)</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">## tnr - True negative rate (Specificity)</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">## ppv - Positive predictive value (Precision)</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">## for - False omission rate</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">## lrp - Positive likelihood ratio (LR+)</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">## fdr - False discovery rate</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">## npv - Negative predictive value</span></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">## acc - Accuracy</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">## lrm - Negative likelihood ratio (LR-)</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">## dor - Diagnostic odds ratio</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-3" data-line-number="3">##     predicted</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">## true M         R                            </a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">##    M 39        17        tpr: 0.7  fnr: 0.3 </a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">##    R 12        36        fpr: 0.25 tnr: 0.75</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">##      ppv: 0.76 for: 0.32 lrp: 2.79 acc: 0.72</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">##      fdr: 0.24 npv: 0.68 lrm: 0.4  dor: 6.88</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">## </a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">## </a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">## Abbreviations:</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">## tpr - True positive rate (Sensitivity, Recall)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">## fpr - False positive rate (Fall-out)</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">## fnr - False negative rate (Miss rate)</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">## tnr - True negative rate (Specificity)</a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">## ppv - Positive predictive value (Precision)</a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">## for - False omission rate</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">## lrp - Positive likelihood ratio (LR+)</a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">## fdr - False discovery rate</a>
+<a class="sourceLine" id="cb12-20" data-line-number="20">## npv - Negative predictive value</a>
+<a class="sourceLine" id="cb12-21" data-line-number="21">## acc - Accuracy</a>
+<a class="sourceLine" id="cb12-22" data-line-number="22">## lrm - Negative likelihood ratio (LR-)</a>
+<a class="sourceLine" id="cb12-23" data-line-number="23">## dor - Diagnostic odds ratio</a></code></pre></div>
 <p>The top left <span class="math inline">\(2 \times 2\)</span> matrix is the <a href="predict.html" target="_blank">confusion matrix</a>, which shows the relative frequency of correctly and incorrectly classified observations. Below and to the right a large number of performance measures that can be inferred from the confusion matrix are added. By default some additional info about the measures is printed. You can turn this off using the <code>abbreviations</code> argument of the <code>print</code> (<code><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures()</a></code>) method: <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print(r, abbreviations = FALSE)</a></code>.</p>
 </div>
 </div>
