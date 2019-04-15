@@ -58,6 +58,9 @@ In this case, the package name is omitted.
 * regr.h2o.gbm: Various parameters added, `"h2o.use.data.table" = TRUE` is now the default (@j-hartshorn, #2508)
 * h2o learners now support getting feature importance (@markusdumke, #2434)
 
+## learners - fixes
+* In some cases the optimized hyperparameters were not applied in the performance level of a nested CV (@berndbischl, #2479)
+
 ## featSel - general
  * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
  * The slot `x` now always contains the real feature names and not the bit.names
