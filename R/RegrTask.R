@@ -1,5 +1,8 @@
+#' @title Create a regression task.
+#' @inheritParams Task
+#' @seealso [Task] [ClassifTask] [CostSensTask] [ClusterTask] [MultilabelTask] [SurvTask]
+#' @rdname RegrTask
 #' @export
-#' @rdname Task
 makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

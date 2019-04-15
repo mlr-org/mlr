@@ -10,7 +10,13 @@
     <loc>https://mlr-org.github.io/mlr/reference/BenchmarkResult.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/ClassifTask.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/ConfusionMatrix.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/reference/CostSensTask.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/FailureModel.html</loc>
@@ -28,16 +34,25 @@
     <loc>https://mlr-org.github.io/mlr/reference/MeasureProperties.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/MultilabelTask.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/Prediction.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/RLearner.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/RegrTask.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/ResamplePrediction.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/ResampleResult.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/reference/SurvTask.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/Task.html</loc>
@@ -470,6 +485,9 @@
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeClassificationViaRegressionWrapper.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/reference/makeClusterTask.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeConstantClassWrapper.html</loc>

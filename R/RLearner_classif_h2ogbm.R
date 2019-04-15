@@ -14,7 +14,7 @@ makeRLearner.classif.h2o.gbm = function() {
       makeIntegerLearnerParam("max_after_balance_size", lower = 0L, default = 1L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "missings"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "missings", "featimp"),
     name = "h2o.gbm",
     short.name = "h2o.gbm",
     note = "'distribution' is set automatically to 'gaussian'.",
@@ -57,3 +57,10 @@ predictLearner.classif.h2o.gbm = function(.learner, .model, .newdata, ...) {
     return(as.matrix(p.df))
   }
 }
+
+#' @export
+getFeatureImportanceLearner.classif.h2o.gbm = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
+  extractH2OVarImp(mod, ...)
+}
+

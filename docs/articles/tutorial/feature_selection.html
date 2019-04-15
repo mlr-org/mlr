@@ -640,7 +640,7 @@
 <h1 class="hasAnchor">
 <a href="#feature-importance-from-trained-models" class="anchor"></a>Feature importance from trained models</h1>
 <p>Some algorithms internally compute a feature importance during training. By using <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code> it is possible to extract this part from the trained model.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">task =<span class="st"> </span><span class="kw"><a href="../../reference/Task.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</a>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</a>
 <a class="sourceLine" id="cb21-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, <span class="dt">importance =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"permutation"</span>))</a>
 <a class="sourceLine" id="cb21-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</a>
 <a class="sourceLine" id="cb21-4" data-line-number="4"></a>
