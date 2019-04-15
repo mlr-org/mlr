@@ -55,5 +55,5 @@ test_that("feature importances are returned", {
   feat.imp.h2o = data.frame(as.list(xtabs(relative_importance ~ variable, data = feat.imp.h2o)))[names(feat.imp)]
 
   expect_equal(feat.imp,
-               feat.imp.h2o)
+    feat.imp.h2o)
 })

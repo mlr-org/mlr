@@ -65,11 +65,13 @@ predictLearner.classif.h2o.randomForest = function(.learner, .model, .newdata, .
 
 #' @export
 getFeatureImportanceLearner.classif.h2o.randomForest = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   extractH2OVarImp(mod, ...)
 }
 
 extractH2OVarImp = function(.learner.model, ...) {
+
   imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
   res = imp$relative_importance
   names(res) = imp$variable

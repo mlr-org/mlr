@@ -273,6 +273,7 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
 
 #' @export
 getFeatureImportanceLearner.classif.h2o.deeplearning = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   extractH2OVarImp(mod, ...)
 }
