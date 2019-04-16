@@ -62,5 +62,5 @@ Default is \code{TRUE}.}
 Create a classification task.
 }
 \seealso{
-\link{Task} \link{CostSensTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask} \link{SurvTask}
+\link{Task} \link{makeCostSensTask} \link{makeClusterTask} \link{makeMultilabelTask} \link{makeRegrTask} \link{makeSurvTask}
 }

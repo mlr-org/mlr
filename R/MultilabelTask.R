@@ -4,7 +4,7 @@
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in `data`. The name of the column specifies the name of the label. `target`
 #' is then a char vector that points to these columns.
-#' @seealso [Task] [ClassifTask] [CostSensTask] [ClusterTask] [RegrTask] [SurvTask]
+#' @seealso [Task] [makeClassifTask] [makeClusterTask] [makeCostSensTask] [makeRegrTask] [makeSurvTask]
 #' @details
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in `data`. The name of the column specifies the name of the label. `target`

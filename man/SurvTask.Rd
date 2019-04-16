@@ -58,5 +58,5 @@ Default is \code{TRUE}.}
 Create a survival task.
 }
 \seealso{
-\link{Task} \link{ClassifTask} \link{CostSensTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask}
+\link{Task} \link{makeClassifTask} \link{makeClusterTask} \link{makeCostSensTask} \link{makeMultilabelTask} \link{makeRegrTask}
 }

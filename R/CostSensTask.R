@@ -1,6 +1,6 @@
 #' @title Create a cost-sensitive classification task.
 #' @inheritParams Task
-#' @seealso [Task] [ClassifTask] [ClusterTask] [MultilabelTask] [RegrTask] [SurvTask]
+#' @seealso [Task] [makeClassifTask] [makeClusterTask] [makeMultilabelTask] [makeRegrTask] [makeSurvTask]
 #' @rdname CostSensTask
 #' @family costsens
 #' @export

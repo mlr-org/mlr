@@ -70,5 +70,5 @@ is then a char vector that points to these columns.
 }
 
 \seealso{
-\link{Task} \link{ClassifTask} \link{CostSensTask} \link{ClusterTask} \link{RegrTask} \link{SurvTask}
+\link{Task} \link{makeClassifTask} \link{makeClusterTask} \link{makeCostSensTask} \link{makeRegrTask} \link{makeSurvTask}
 }

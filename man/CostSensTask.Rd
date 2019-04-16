@@ -55,7 +55,7 @@ Default is \code{TRUE}.}
 Create a cost-sensitive classification task.
 }
 \seealso{
-\link{Task} \link{ClassifTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask} \link{SurvTask}
+\link{Task} \link{makeClassifTask} \link{makeClusterTask} \link{makeMultilabelTask} \link{makeRegrTask} \link{makeSurvTask}
 
 Other costsens: \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

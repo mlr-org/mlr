@@ -58,5 +58,5 @@ Default is \code{TRUE}.}
 Create a regression task.
 }
 \seealso{
-\link{Task} \link{ClassifTask} \link{CostSensTask} \link{ClusterTask} \link{MultilabelTask} \link{SurvTask}
+\link{Task} \link{makeClassifTask} \link{makeCostSensTask} \link{makeClusterTask} \link{makeMultilabelTask} \link{makeSurvTask}
 }
