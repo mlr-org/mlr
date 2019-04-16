@@ -7,7 +7,7 @@ do_package_checks(args = "--as-cran", error_on = "error",
   repos = c(getOption("repos"), remotes::bioc_install_repos()))
 
 # pkgdown
-do_pkgdown(commit_paths = "docs/*")
+do_pkgdown(commit_paths = "docs/*", document = FALSE)
 
 # only deploy man files in in master branch
 if (ci_get_branch() == "master") {
