@@ -2,6 +2,7 @@
 % Please edit documentation in R/ClusterTask.R
 \name{makeClusterTask}
 \alias{makeClusterTask}
+\alias{ClusterTask}
 \title{Create a cluster task.}
 \usage{
 makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,

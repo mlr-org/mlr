@@ -2,6 +2,7 @@
 % Please edit documentation in R/CostSensTask.R
 \name{makeCostSensTask}
 \alias{makeCostSensTask}
+\alias{CostSensTask}
 \title{Create a cost-sensitive classification task.}
 \usage{
 makeCostSensTask(id = deparse(substitute(data)), data, costs,
@@ -55,7 +56,7 @@ Default is \code{TRUE}.}
 Create a cost-sensitive classification task.
 }
 \seealso{
-\link{Task} \link{makeClassifTask} \link{makeClusterTask} \link{makeMultilabelTask} \link{makeRegrTask} \link{makeSurvTask}
+\link{Task} \link{ClassifTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask} \link{SurvTask}
 
 Other costsens: \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

@@ -75,7 +75,7 @@
 #'   Provided [data.frame] needs to have the same number of rows as data and consist of at least two dimensions.
 #' @return [Task].
 #' @name Task
-#' @seealso [makeClassifTask] [makeClusterTask] [makeCostSensTask] [makeMultilabelTask] [makeRegrTask] [makeSurvTask]
+#' @seealso [ClassifTask] [ClusterTask] [CostSensTask] [MultilabelTask] [RegrTask] [SurvTask]
 #' @rdname Task
 #' @examples
 #' if (requireNamespace("mlbench")) {

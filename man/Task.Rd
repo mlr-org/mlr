@@ -108,5 +108,5 @@ if (requireNamespace("mlbench")) {
 }
 }
 \seealso{
-\link{makeClassifTask} \link{makeClusterTask} \link{makeCostSensTask} \link{makeMultilabelTask} \link{makeRegrTask} \link{makeSurvTask}
+\link{ClassifTask} \link{ClusterTask} \link{CostSensTask} \link{MultilabelTask} \link{RegrTask} \link{SurvTask}
 }

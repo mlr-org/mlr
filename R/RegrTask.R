@@ -1,7 +1,8 @@
 #' @title Create a regression task.
 #' @inheritParams Task
-#' @seealso [Task] [makeClassifTask] [makeCostSensTask] [makeClusterTask] [makeMultilabelTask] [makeSurvTask]
+#' @seealso [Task] [ClassifTask] [CostSensTask] [ClusterTask] [MultilabelTask] [SurvTask]
 #' @rdname RegrTask
+#' @aliases RegrTask
 #' @export
 makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)

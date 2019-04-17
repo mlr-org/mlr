@@ -2,6 +2,7 @@
 % Please edit documentation in R/ClassifTask.R
 \name{makeClassifTask}
 \alias{makeClassifTask}
+\alias{ClassifTask}
 \title{Create a classification task.}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,
@@ -62,5 +63,5 @@ Default is \code{TRUE}.}
 Create a classification task.
 }
 \seealso{
-\link{Task} \link{makeCostSensTask} \link{makeClusterTask} \link{makeMultilabelTask} \link{makeRegrTask} \link{makeSurvTask}
+\link{Task} \link{CostSensTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask} \link{SurvTask}
 }
