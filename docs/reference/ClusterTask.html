@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Estimate the residual variance. — estimateResidualVariance • mlr</title>
+<title>Create a cluster task. — makeClusterTask • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,11 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Estimate the residual variance. — estimateResidualVariance" />
+<meta property="og:title" content="Create a cluster task. — makeClusterTask" />
 
-<meta property="og:description" content="Estimate the residual variance of a regression model on a given task.
-If a regression learner is provided instead of a model, the model is
-trained (see train) first." />
+<meta property="og:description" content="Create a cluster task." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -300,45 +298,78 @@ trained (see train) first." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimate the residual variance.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/estimateResidualVariance.R'><code>R/estimateResidualVariance.R</code></a></small>
+    <h1>Create a cluster task.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ClusterTask.R'><code>R/ClusterTask.R</code></a></small>
     </div>
 
     
-    <p>Estimate the residual variance of a regression model on a given task.
-If a regression learner is provided instead of a model, the model is
-trained (see <a href='train.html'>train</a>) first.</p>
+    <p>Create a cluster task.</p>
     
 
-    <pre class="usage"><span class='fu'>estimateResidualVariance</span>(<span class='no'>x</span>, <span class='no'>task</span>, <span class='no'>data</span>, <span class='no'>target</span>)</pre>
+    <pre class="usage"><span class='fu'>makeClusterTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
+  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> or <a href='makeWrappedModel.html'>WrappedModel</a>)<br />
-Learner or wrapped model.</p></td>
-    </tr>
-    <tr>
-      <th>task</th>
-      <td><p>(<a href='RegrTask.html'>RegrTask</a>)<br />
-Regression task.
-If missing, <code>data</code> and <code>target</code> must be supplied.</p></td>
+      <th>id</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Id string for object.
+Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
       <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
-A data frame containing the features and target variable.
-If missing, <code>task</code> must be supplied.</p></td>
+A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
-      <th>target</th>
+      <th>weights</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+Optional, non-negative case weight vector to be used during fitting.
+Cannot be set for cost-sensitive learning.
+Default is <code>NULL</code> which means no (= equal) weights.</p></td>
+    </tr>
+    <tr>
+      <th>blocking</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
+An optional factor of the same length as the number of observations.
+Observations with the same blocking level &#8220;belong together&#8221;.
+Specifically, they are either put all in the training or the test set
+during a resampling iteration.
+Default is <code>NULL</code> which means no blocking.</p></td>
+    </tr>
+    <tr>
+      <th>coordinates</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
+    </tr>
+    <tr>
+      <th>fixup.data</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Name of the target variable.
-If missing, <code>task</code> must be supplied.</p></td>
+Should some basic cleaning up of data be performed?
+Currently this means removing empty factor levels for the columns.
+Possible choices are:
+&#8220;no&#8221; = Don't do it.
+&#8220;warn&#8221; = Do it but warn about it.
+&#8220;quiet&#8221; = Do it but keep silent.
+Default is &#8220;warn&#8221;.</p></td>
+    </tr>
+    <tr>
+      <th>check.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Should sanity of data be checked initially at task creation?
+You should have good reasons to turn this off (one might be speed).
+Default is <code>TRUE</code>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='ClassifTask.html'>ClassifTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p></div>
     
 
   </div>
@@ -346,7 +377,9 @@ If missing, <code>task</code> must be supplied.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

@@ -13,6 +13,9 @@
     <loc>https://mlr-org.github.io/mlr/reference/ClassifTask.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/ClusterTask.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/ConfusionMatrix.html</loc>
   </url>
   <url>
@@ -485,9 +488,6 @@
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeClassificationViaRegressionWrapper.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeClusterTask.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeConstantClassWrapper.html</loc>
