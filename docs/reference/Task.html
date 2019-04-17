@@ -439,7 +439,7 @@ Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>ClassifTask CostSensTask ClusterTask MultilabelTask RegrTask SurvTask</p></div>
+    <div class='dont-index'><p><a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -454,7 +454,7 @@ Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame
   <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
   <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"myIonosphere"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Ionosphere</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>,
     <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"good"</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='no'>blocking</span>)
-  <span class='fu'><a href='makeClusterTask.html'>makeClusterTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])
+  <span class='fu'><a href='ClusterTask.html'>makeClusterTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])
 }</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mlbench</span></div><div class='output co'>#&gt; Unsupervised task: iris[, -5L]
 #&gt; Type: cluster
 #&gt; Observations: 150

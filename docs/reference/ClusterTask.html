@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>mlr: Machine Learning in R — mlr-package • mlr</title>
+<title>Create a cluster task. — makeClusterTask • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,19 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="mlr: Machine Learning in R — mlr-package" />
+<meta property="og:title" content="Create a cluster task. — makeClusterTask" />
 
-<meta property="og:description" content="Interface to a large number of classification and
-    regression techniques, including machine-readable parameter
-    descriptions. There is also an experimental extension for survival
-    analysis, clustering and general, example-specific cost-sensitive
-    learning. Generic resampling, including cross-validation,
-    bootstrapping and subsampling. Hyperparameter tuning with modern
-    optimization techniques, for single- and multi-objective problems.
-    Filter and wrapper methods for feature selection. Extension of basic
-    learners with additional operations common in machine learning, also
-    allowing for easy nested resampling. Most operations can be
-    parallelized." />
+<meta property="og:description" content="Create a cluster task." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -308,75 +298,88 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>mlr: Machine Learning in R</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/zzz.R'><code>R/zzz.R</code></a></small>
+    <h1>Create a cluster task.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ClusterTask.R'><code>R/ClusterTask.R</code></a></small>
     </div>
 
     
-    <p>Interface to a large number of classification and
-    regression techniques, including machine-readable parameter
-    descriptions. There is also an experimental extension for survival
-    analysis, clustering and general, example-specific cost-sensitive
-    learning. Generic resampling, including cross-validation,
-    bootstrapping and subsampling. Hyperparameter tuning with modern
-    optimization techniques, for single- and multi-objective problems.
-    Filter and wrapper methods for feature selection. Extension of basic
-    learners with additional operations common in machine learning, also
-    allowing for easy nested resampling. Most operations can be
-    parallelized.</p>
+    <p>Create a cluster task.</p>
     
 
-        
+    <pre class="usage"><span class='fu'>makeClusterTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
+  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>id</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Id string for object.
+Default is the name of the R variable passed to <code>data</code>.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+A data frame containing the features and target variable(s).</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+Optional, non-negative case weight vector to be used during fitting.
+Cannot be set for cost-sensitive learning.
+Default is <code>NULL</code> which means no (= equal) weights.</p></td>
+    </tr>
+    <tr>
+      <th>blocking</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
+An optional factor of the same length as the number of observations.
+Observations with the same blocking level &#8220;belong together&#8221;.
+Specifically, they are either put all in the training or the test set
+during a resampling iteration.
+Default is <code>NULL</code> which means no blocking.</p></td>
+    </tr>
+    <tr>
+      <th>coordinates</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
+    </tr>
+    <tr>
+      <th>fixup.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Should some basic cleaning up of data be performed?
+Currently this means removing empty factor levels for the columns.
+Possible choices are:
+&#8220;no&#8221; = Don't do it.
+&#8220;warn&#8221; = Do it but warn about it.
+&#8220;quiet&#8221; = Do it but keep silent.
+Default is &#8220;warn&#8221;.</p></td>
+    </tr>
+    <tr>
+      <th>check.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Should sanity of data be checked initially at task creation?
+You should have good reasons to turn this off (one might be speed).
+Default is <code>TRUE</code>.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://github.com/mlr-org/mlr'>https://github.com/mlr-org/mlr</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/mlr-org/mlr/issues'>https://github.com/mlr-org/mlr/issues</a></p></li>
-</ul></div>
+    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='ClassifTask.html'>ClassifTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p></div>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#see-also">See also</a></li>
           </ul>
-
-    <h2>Author</h2>
-    <p><strong>Maintainer</strong>: Patrick Schratz <a href='mailto:patrick.schratz@gmail.com'>patrick.schratz@gmail.com</a> (0000-0003-0748-6624)</p>
-<p>Authors:</p><ul>
-<li><p>Bernd Bischl <a href='mailto:bernd_bischl@gmx.net'>bernd_bischl@gmx.net</a> (0000-0001-6002-6980)</p></li>
-<li><p>Michel Lang <a href='mailto:michellang@gmail.com'>michellang@gmail.com</a> (0000-0001-9754-0393)</p></li>
-<li><p>Lars Kotthoff <a href='mailto:larsko@uwyo.edu'>larsko@uwyo.edu</a></p></li>
-<li><p>Julia Schiffner <a href='mailto:schiffner@math.uni-duesseldorf.de'>schiffner@math.uni-duesseldorf.de</a></p></li>
-<li><p>Jakob Richter <a href='mailto:code@jakob-r.de'>code@jakob-r.de</a></p></li>
-<li><p>Zachary Jones <a href='mailto:zmj@zmjones.com'>zmj@zmjones.com</a></p></li>
-<li><p>Giuseppe Casalicchio <a href='mailto:giuseppe.casalicchio@stat.uni-muenchen.de'>giuseppe.casalicchio@stat.uni-muenchen.de</a> (0000-0001-5324-5966)</p></li>
-<li><p>Mason Gallo <a href='mailto:masonagallo@gmail.com'>masonagallo@gmail.com</a></p></li>
-</ul>
-
-<p>Other contributors:</p><ul>
-<li><p>Jakob Bossek <a href='mailto:jakob.bossek@tu-dortmund.de'>jakob.bossek@tu-dortmund.de</a> (0000-0002-4121-4668) [contributor]</p></li>
-<li><p>Erich Studerus <a href='mailto:erich.studerus@upkbs.ch'>erich.studerus@upkbs.ch</a> (0000-0003-4233-0182) [contributor]</p></li>
-<li><p>Leonard Judt <a href='mailto:leonard.judt@tu-dortmund.de'>leonard.judt@tu-dortmund.de</a> [contributor]</p></li>
-<li><p>Tobias Kuehn <a href='mailto:tobi.kuehn@gmx.de'>tobi.kuehn@gmx.de</a> [contributor]</p></li>
-<li><p>Pascal Kerschke <a href='mailto:kerschke@uni-muenster.de'>kerschke@uni-muenster.de</a> (0000-0003-2862-1418) [contributor]</p></li>
-<li><p>Florian Fendt <a href='mailto:flo_fendt@gmx.de'>flo_fendt@gmx.de</a> [contributor]</p></li>
-<li><p>Philipp Probst <a href='mailto:philipp_probst@gmx.de'>philipp_probst@gmx.de</a> (0000-0001-8402-6790) [contributor]</p></li>
-<li><p>Xudong Sun <a href='mailto:xudong.sun@stat.uni-muenchen.de'>xudong.sun@stat.uni-muenchen.de</a> (0000-0003-3269-2307) [contributor]</p></li>
-<li><p>Janek Thomas <a href='mailto:janek.thomas@stat.uni-muenchen.de'>janek.thomas@stat.uni-muenchen.de</a> (0000-0003-4511-6245) [contributor]</p></li>
-<li><p>Bruno Vieira <a href='mailto:bruno.hebling.vieira@usp.br'>bruno.hebling.vieira@usp.br</a> [contributor]</p></li>
-<li><p>Laura Beggel <a href='mailto:laura.beggel@web.de'>laura.beggel@web.de</a> (0000-0002-8872-8535) [contributor]</p></li>
-<li><p>Quay Au <a href='mailto:quay.au@stat.uni-muenchen.de'>quay.au@stat.uni-muenchen.de</a> (0000-0002-5252-8902) [contributor]</p></li>
-<li><p>Martin Binder <a href='mailto:ma.binder@campus.lmu.de'>ma.binder@campus.lmu.de</a> [contributor]</p></li>
-<li><p>Florian Pfisterer <a href='mailto:pfistererf@googlemail.com'>pfistererf@googlemail.com</a> [contributor]</p></li>
-<li><p>Stefan Coors <a href='mailto:stefan.coors@gmx.net'>stefan.coors@gmx.net</a> [contributor]</p></li>
-<li><p>Steve Bronder <a href='mailto:sab2287@columbia.edu'>sab2287@columbia.edu</a> [contributor]</p></li>
-<li><p>Alexander Engelhardt <a href='mailto:alexander.w.engelhardt@gmail.com'>alexander.w.engelhardt@gmail.com</a> [contributor]</p></li>
-<li><p>Christoph Molnar <a href='mailto:christoph.molnar@stat.uni-muenchen.de'>christoph.molnar@stat.uni-muenchen.de</a> [contributor]</p></li>
-</ul>
-
 
   </div>
 </div>

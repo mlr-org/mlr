@@ -2,6 +2,7 @@
 % Please edit documentation in R/CostSensTask.R
 \name{makeCostSensTask}
 \alias{makeCostSensTask}
+\alias{CostSensTask}
 \title{Create a cost-sensitive classification task.}
 \usage{
 makeCostSensTask(id = deparse(substitute(data)), data, costs,

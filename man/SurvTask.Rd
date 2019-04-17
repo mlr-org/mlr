@@ -2,6 +2,7 @@
 % Please edit documentation in R/SurvTask.R
 \name{makeSurvTask}
 \alias{makeSurvTask}
+\alias{SurvTask}
 \title{Create a survival task.}
 \usage{
 makeSurvTask(id = deparse(substitute(data)), data, target,
@@ -58,5 +59,5 @@ Default is \code{TRUE}.}
 Create a survival task.
 }
 \seealso{
-\link{Task} \link{ClassifTask} \link{CostSensTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask}
+\link{Task} \link{ClassifTask} \link{ClusterTask} \link{CostSensTask} \link{MultilabelTask} \link{RegrTask}
 }

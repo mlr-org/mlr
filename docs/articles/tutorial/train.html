@@ -322,7 +322,7 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(y <span class="op">~</span><span class="st"> </span>x, ruspini)</a></code></pre></div>
 <p><img src="train_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Generate the task</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">ruspini.task =<span class="st"> </span><span class="kw"><a href="../../reference/makeClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> ruspini)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">ruspini.task =<span class="st"> </span><span class="kw"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> ruspini)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># Generate the learner</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">4</span>)</a>
