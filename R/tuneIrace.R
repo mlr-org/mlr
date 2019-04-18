@@ -26,7 +26,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   control$extra.args$show.irace.output = NULL
   instances = lapply(seq_len(n.instances), function(i) makeResampleInstance(resampling, task = task))
   if (is.null(control$extra.args$digits)) {
-    control$extra.args$digits = .Machine$integer.max
+    control$extra.args$digits = 15
   } else {
     control$extra.args$digits = asInt(control$extra.args$digits)
   }
