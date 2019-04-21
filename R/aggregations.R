@@ -206,9 +206,11 @@ b632plus = makeAggregation(
       y1 = df2$truth
       y2 = df2$response
       grid = expand.grid(y1, y2, KEEP.OUT.ATTRS = FALSE)
-      pred2 = makePrediction(task.desc = pred$task.desc, row.names = rownames(grid),
+      pred2 = makePrediction(
+        task.desc = pred$task.desc, row.names = rownames(grid),
         id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
-        time = NA_real_)
+        time = NA_real_
+      )
       gamma = performance(pred2, measures = measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368 * R)
@@ -256,9 +258,11 @@ test.join = makeAggregation(
         y = df[, stri_startswith_fixed(colnames(df), "prob."), drop = FALSE]
         colnames(y) = stri_sub(colnames(y), 6L)
       }
-      npred = makePrediction(task.desc = pred$task.desc, row.names = rownames(df),
+      npred = makePrediction(
+        task.desc = pred$task.desc, row.names = rownames(df),
         id = NULL, truth = df$truth, predict.type = pred$predict.type, y = y,
-        time = NA_real_)
+        time = NA_real_
+      )
       performance(npred, measure)
     }))
   })
