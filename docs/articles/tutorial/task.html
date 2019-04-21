@@ -305,17 +305,17 @@
 <p>The tasks are organized in a hierarchy, with the generic <code><a href="../../reference/Task.html">Task()</a></code> at the top. The following tasks can be instantiated and all inherit from the virtual superclass <code><a href="../../reference/Task.html">Task()</a></code>:</p>
 <ul>
 <li>
-<code>RegrTask()</code> for regression problems,</li>
+<code><a href="../../reference/RegrTask.html">RegrTask()</a></code> for regression problems,</li>
 <li>
-<code>ClassifTask()</code> for binary and <a href="cost_sensitive_classif.html" target="_blank">multi-class classification problems</a> with class-dependent costs can be handled as well),</li>
+<code><a href="../../reference/ClassifTask.html">ClassifTask()</a></code> for binary and <a href="cost_sensitive_classif.html" target="_blank">multi-class classification problems</a> with class-dependent costs can be handled as well),</li>
 <li>
-<code>SurvTask()</code> for survival analysis,</li>
+<code><a href="../../reference/SurvTask.html">SurvTask()</a></code> for survival analysis,</li>
 <li>
-<code>ClusterTask()</code> for cluster analysis,</li>
+<code><a href="../../reference/ClusterTask.html">ClusterTask()</a></code> for cluster analysis,</li>
 <li>
-<code>MultilabelTask()</code> for multilabel classification problems,</li>
+<code><a href="../../reference/MultilabelTask.html">MultilabelTask()</a></code> for multilabel classification problems,</li>
 <li>
-<code>CostSensTask()</code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
+<code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
 </ul>
 <p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code>. All tasks require an identifier (argument <code>id</code>) and a <code><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame()</a></code> (argument <code>data</code>). If no ID is provided it is automatically generated using the variable name of the data. The ID will be later used to name results, for example of <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>, and to annotate plots. Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.</p>
 <div id="regression" class="section level2">
@@ -424,7 +424,7 @@
 <a href="#cluster-analysis" class="anchor"></a>Cluster analysis</h2>
 <p>As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>. Below we create a learning task from the data set <code><a href="https://www.rdocumentation.org/packages/datasets/topics/mtcars">datasets::mtcars()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(mtcars, <span class="dt">package =</span> <span class="st">"datasets"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">cluster.task =<span class="st"> </span><span class="kw"><a href="../../reference/makeClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">cluster.task =<span class="st"> </span><span class="kw"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">cluster.task</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">## Unsupervised task: mtcars</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">## Type: cluster</a>
@@ -441,9 +441,9 @@
 <h2 class="hasAnchor">
 <a href="#cost-sensitive-classification" class="anchor"></a>Cost-sensitive classification</h2>
 <p>The standard objective in classification is to obtain a high prediction accuracy, i.e., to minimize the number of errors. All types of misclassification errors are thereby deemed equally severe. However, in many applications different kinds of errors cause different costs.</p>
-<p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code>ClassifTask()</code>.</p>
-<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code>CostSensTask()</code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
-<p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code>CostSensTask()</code>.</p>
+<p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code><a href="../../reference/ClassifTask.html">ClassifTask()</a></code>.</p>
+<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
+<p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code>.</p>
 <p>In the following example we use the <code><a href="https://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code> data and an artificial cost matrix (which is generated as proposed by <a href="https://doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>):</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df =<span class="st"> </span>iris</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">cost =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">150</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2000</span>), <span class="dv">150</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">3</span>))[df<span class="op">$</span>Species,]</a>

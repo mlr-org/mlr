@@ -2,6 +2,7 @@
 % Please edit documentation in R/RegrTask.R
 \name{makeRegrTask}
 \alias{makeRegrTask}
+\alias{RegrTask}
 \title{Create a regression task.}
 \usage{
 makeRegrTask(id = deparse(substitute(data)), data, target,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/MultilabelTask.R
 \name{makeMultilabelTask}
 \alias{makeMultilabelTask}
+\alias{MultilabelTask}
 \title{Create a multilabel task.}
 \usage{
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
@@ -70,5 +71,5 @@ is then a char vector that points to these columns.
 }
 
 \seealso{
-\link{Task} \link{ClassifTask} \link{CostSensTask} \link{ClusterTask} \link{RegrTask} \link{SurvTask}
+\link{Task} \link{ClassifTask} \link{ClusterTask} \link{CostSensTask} \link{RegrTask} \link{SurvTask}
 }

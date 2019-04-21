@@ -11,7 +11,7 @@ test_that("tuneIrace", {
   ctrl = makeTuneControlIrace(maxExperiments = n, nbIterations = 1L, minNbSurvival = 1)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(getOptPathLength(tr1$opt.path) >= 10 && getOptPathLength(tr1$opt.path) <= n)
-  expect_number(tr1$y, lower = 0, upper = 0.2)
+  expect_number(tr1$y, lower = 0, upper = 0.3)
 
   # with trafo
   ps2 = makeParamSet(

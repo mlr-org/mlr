@@ -2,6 +2,7 @@
 % Please edit documentation in R/ClassifTask.R
 \name{makeClassifTask}
 \alias{makeClassifTask}
+\alias{ClassifTask}
 \title{Create a classification task.}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,

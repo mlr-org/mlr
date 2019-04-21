@@ -1,4 +1,4 @@
-# mlr 2.14:
+# mlr 2.14.0
 
 ## general
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).

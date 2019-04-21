@@ -2,6 +2,7 @@
 #' @inheritParams Task
 #' @seealso [Task] [ClassifTask] [ClusterTask] [MultilabelTask] [RegrTask] [SurvTask]
 #' @rdname CostSensTask
+#' @aliases CostSensTask
 #' @family costsens
 #' @export
 makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
