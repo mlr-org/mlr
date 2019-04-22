@@ -12,16 +12,19 @@
 #' @family eda_and_preprocess
 #' summarizeLevels(iris)
 summarizeLevels = function(obj, cols = NULL) {
+
   UseMethod("summarizeLevels")
 }
 
 #' @export
 summarizeLevels.Task = function(obj, cols = NULL) {
+
   summarizeLevels.data.frame(obj$env$data, cols = cols)
 }
 
 #' @export
 summarizeLevels.data.frame = function(obj, cols = NULL) {
+
   pred = function(x) is.factor(x) || is.logical(x) || is.character(x)
   cns = colnames(obj)[vlapply(obj, pred)]
   if (!is.null(cols)) {

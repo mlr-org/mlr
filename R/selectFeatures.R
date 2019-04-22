@@ -46,10 +46,12 @@ selectFeatures = function(learner, task, resampling, measures,
 
   learner = checkLearner(learner)
   assertClass(task, classes = "SupervisedTask")
-  if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
+  if (!inherits(resampling, "ResampleDesc") && !inherits(resampling, "ResampleInstance")) {
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
-  if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
+  }
+  if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance) {
     resampling = makeResampleInstance(resampling, task = task)
+  }
   measures = checkMeasures(measures, learner)
   if (missing(bit.names)) {
     bit.names = getTaskFeatureNames(task)
@@ -65,6 +67,7 @@ selectFeatures = function(learner, task, resampling, measures,
     assertFunction(bits.to.features, args = c("x", "task"))
     # wrap the function to prevent wrong user input and give meaningful errors
     bits.to.features2 = function(x, task) {
+
       force(bits.to.features)
       res = bits.to.features(x, task)
       if (!testCharacter(res)) {
@@ -82,7 +85,7 @@ selectFeatures = function(learner, task, resampling, measures,
 
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))
   par.set = do.call(makeParamSet, par.set)
-  #checkVarselParset(learner, par.set, bit.names, control)
+  # checkVarselParset(learner, par.set, bit.names, control)
   need.extra = control$tune.threshold || getMlrOption("on.error.dump")
   opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   control = setDefaultImputeVal(control, measures)
@@ -102,8 +105,9 @@ selectFeatures = function(learner, task, resampling, measures,
 
   or = sel.func(learner, task, resampling, measures, bit.names,
     bits.to.features2, control, opt.path, show.info)
-  if (show.info)
+  if (show.info) {
     messagef("[FeatSel] Result: %s (%i bits)",
       clipString(collapse(or$x.bit.names), 30L), length(or$x.bit.names), perfsToString(or$y))
+  }
   return(or)
 }

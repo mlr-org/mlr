@@ -42,16 +42,19 @@ makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L,
     log.fun = log.fun, final.dw.perc = final.dw.perc, budget = budget, ..., cl = "TuneControlIrace")
 
   # argcheck maxExperiments
-  if (!is.null(x$extra.args$maxExperiments))
+  if (!is.null(x$extra.args$maxExperiments)) {
     x$extra.args$maxExperiments = asCount(x$extra.args$maxExperiments)
+  }
 
   # check that budget and maxExperiments are the same if both given
-  if (!is.null(budget) && !is.null(x$extra.args$maxExperiments) && budget != x$extra.args$maxExperiments)
+  if (!is.null(budget) && !is.null(x$extra.args$maxExperiments) && budget != x$extra.args$maxExperiments) {
     stopf("The number of experiments (maxExperiments = %i) differs from the given budget (budget = %i).",
       x$extra.args$maxExperiments, budget)
+  }
   # now if budget was given, use it
-  if (!is.null(budget))
+  if (!is.null(budget)) {
     x$extra.args$maxExperiments = x$budget
+  }
 
   return(x)
 }

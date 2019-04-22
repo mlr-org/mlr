@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.h2o.glm = function() {
+
   makeRLearnerClassif(
     cl = "classif.h2o.glm",
     package = "h2o",
@@ -30,7 +31,8 @@ makeRLearner.classif.h2o.glm = function() {
 }
 
 #' @export
-trainLearner.classif.h2o.glm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.h2o.glm = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -50,6 +52,7 @@ trainLearner.classif.h2o.glm = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
@@ -58,8 +61,9 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
   # check if class names are integers. if yes, colnames of p.df need to be adapted
   int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
   pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
-  if (any(int) && any(pcol))
+  if (any(int) && any(pcol)) {
     colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
+  }
 
   if (.learner$predict.type == "response") {
     return(p.df$predict)
@@ -72,12 +76,14 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.h2o.glm = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   extractH2OGlmVarImp(mod, ...)
 }
 
 
 extractH2OGlmVarImp = function(.learner.model, ...) {
+
   imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
   res = imp$coefficients
   names(res) = imp$names

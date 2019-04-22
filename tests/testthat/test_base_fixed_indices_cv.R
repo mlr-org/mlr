@@ -16,7 +16,6 @@ test_that("fixed in single resampling", {
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
   # check if correct indices are together (one fold is enough)
   expect_equal(p$instance$test.inds[[1]], c(11, 41, 71, 101, 131))
-
 })
 
 test_that("fixed in nested resampling", {
@@ -27,8 +26,8 @@ test_that("fixed in nested resampling", {
 
   # test fixed in nested resampling
   lrn = makeLearner("classif.lda")
-  ctrl <- makeTuneControlRandom(maxit = 2)
-  ps <- makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
+  ctrl = makeTuneControlRandom(maxit = 2)
+  ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
   inner = makeResampleDesc("CV", iters = 4, fixed = TRUE)
   outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
@@ -57,5 +56,4 @@ test_that("fixed in nested resampling", {
   p = resample(tune_wrapper, ct, outer, show.info = FALSE,
     extract = getTuneResult)
   expect_length(getResamplingIndices(p, inner = TRUE)[[1]][[1]], 6)
-
 })

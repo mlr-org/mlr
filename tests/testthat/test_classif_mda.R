@@ -25,7 +25,7 @@ test_that("classif_mda", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mda::mda, pars)
     set.seed(getOption("mlr.debug.seed"))
-    p =  predict(m, newdata = multiclass.test)
+    p = predict(m, newdata = multiclass.test)
     set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = multiclass.test, type = "posterior")
     old.predicts.list[[i]] = p
@@ -44,5 +44,4 @@ test_that("classif_mda", {
     parset.list = parset.list2)
   testCV("classif.mda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
     parset = list(start.method = "lvq", subclasses = 17))
-
 })

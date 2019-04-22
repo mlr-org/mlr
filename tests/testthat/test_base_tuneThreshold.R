@@ -1,7 +1,7 @@
 context("tuneThreshold")
 
 test_that("tuneThreshold", {
-  #binary classification
+  # binary classification
   res = makeResampleDesc("Holdout")
   lrn = makeLearner("classif.rpart", predict.type = "prob")
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(mmce))

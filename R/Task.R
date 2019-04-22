@@ -82,7 +82,7 @@
 #'   library(mlbench)
 #'   data(BostonHousing)
 #'   data(Ionosphere)
-#'
+#' 
 #'   makeClassifTask(data = iris, target = "Species")
 #'   makeRegrTask(data = BostonHousing, target = "medv")
 #'   # an example of a classification task with more than those standard arguments:
@@ -113,6 +113,7 @@ NULL
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, coordinates = NULL) {
+
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -126,8 +127,9 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
           data[[i]] = droplevels(x)
         }
       }
-      if (any(dropped))
+      if (any(dropped)) {
         warningf("Empty factor levels were dropped for columns: %s", collapse(colnames(data)[dropped]))
+      }
     }
   }
 
@@ -137,12 +139,14 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       warningf("Provided data is not a pure data.frame but from class %s, hence it will be converted.", class(data)[1])
       data = as.data.frame(data)
     }
-    if (!is.null(weights))
+    if (!is.null(weights)) {
       assertNumeric(weights, len = nrow(data), any.missing = FALSE, lower = 0)
+    }
     if (!is.null(blocking)) {
       assertFactor(blocking, len = nrow(data), any.missing = FALSE)
-      if (length(blocking) && length(blocking) != nrow(data))
+      if (length(blocking) && length(blocking) != nrow(data)) {
         stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+      }
     }
     if (!is.null(coordinates)) {
       if (nrow(coordinates) != nrow(data)) {
@@ -170,15 +174,20 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
 }
 
 checkTaskData = function(data, cols = names(data)) {
+
   fun = function(cn, x) {
+
     if (is.numeric(x)) {
-      if (anyInfinite(x))
+      if (anyInfinite(x)) {
         stopf("Column '%s' contains infinite values.", cn)
-      if (anyNaN(x))
+      }
+      if (anyNaN(x)) {
         stopf("Column '%s' contains NaN values.", cn)
+      }
     } else if (is.factor(x)) {
-      if (hasEmptyLevels(x))
+      if (hasEmptyLevels(x)) {
         stopf("Column '%s' contains empty factor levels.", cn)
+      }
     } else {
       stopf("Unsupported feature type (%s) in column '%s'.", class(x)[1L], cn)
     }
@@ -190,6 +199,7 @@ checkTaskData = function(data, cols = names(data)) {
 
 #' @export
 print.Task = function(x, print.weights = TRUE, ...) {
+
   td = x$task.desc
   catf("Task: %s", td$id)
   catf("Type: %s", td$type)
@@ -197,8 +207,9 @@ print.Task = function(x, print.weights = TRUE, ...) {
   catf("Features:")
   catf(printToChar(td$n.feat, collapse = "\n"))
   catf("Missings: %s", td$has.missings)
-  if (print.weights)
+  if (print.weights) {
     catf("Has weights: %s", td$has.weights)
+  }
   catf("Has blocking: %s", td$has.blocking)
   catf("Has coordinates: %s", td$has.coordinates)
 }

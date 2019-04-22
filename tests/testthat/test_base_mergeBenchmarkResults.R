@@ -8,6 +8,7 @@ test_that("mergeBenchmarkResults", {
 
   # checks if list of unmerged BenchmarkResults is equal to the merged BenchmarkResults
   checkBenchmarkResults = function(list, merged) {
+
     expect_is(merged, "BenchmarkResult")
     rbinded = do.call("rbind", lapply(list, as.data.frame))
     res = merge(rbinded, merged, by = c("task.id", "learner.id", "iter"), all = TRUE)
@@ -55,8 +56,8 @@ test_that("mergeBenchmarkResults", {
   expect_error(mergeBenchmarkResults(list(l1t1, l2t1, l2t1)), "multiple times")
   expect_error(mergeBenchmarkResults(list(l1t1, l2t2)), "are missing")
   # FIXME: do we want to merge BMR with different measures?
-  #l1t1.acc = benchmark(learners[[1L]], tasks[[1L]], cv2, measures = acc)
-  #expect_error(mergeBenchmarkResults(l2t1, l1t1.acc), "same measures")
+  # l1t1.acc = benchmark(learners[[1L]], tasks[[1L]], cv2, measures = acc)
+  # expect_error(mergeBenchmarkResults(l2t1, l1t1.acc), "same measures")
 
   # check measure order
   bench1 = benchmark(learners[1:2], tasks[[1L]], cv2, measures = list(acc, mmce))

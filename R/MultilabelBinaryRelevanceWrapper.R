@@ -26,6 +26,7 @@
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
+
   learner = checkLearner(learner, type = "classif")
   id = stri_paste("multilabel.binaryRelevance", getLearnerId(learner), sep = ".")
   packs = getLearnerPackages(learner)
@@ -38,6 +39,7 @@ makeMultilabelBinaryRelevanceWrapper = function(learner) {
 
 #' @export
 trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
@@ -51,6 +53,7 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
 }
 
 doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights) {
+
   setSlaveOptions()
   data = getTaskData(task)
   task = makeClassifTask(id = tn, data = dropNamed(data, setdiff(getTaskTargetNames(task), tn)), target = tn)
@@ -60,11 +63,12 @@ doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights)
 
 #' @export
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
-  f = if (.learner$predict.type == "response")
+  f = if (.learner$predict.type == "response") {
     function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
-  else
+  } else {
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
+  }
   asMatrixCols(lapply(models, f))
 }
-

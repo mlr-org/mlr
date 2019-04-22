@@ -64,14 +64,15 @@ getFeatureImportance = function(object, ...) {
   lrn = checkLearner(object$learner, props = "featimp")
   imp = getFeatureImportanceLearner(lrn, object, ...)
 
-  if (!check_numeric(imp, names = "unique") && !check_subset(names(imp), object$features))
+  if (!check_numeric(imp, names = "unique") && !check_subset(names(imp), object$features)) {
     stop("getFeatureImportanceLearner did not return a named vector with names of the task features.")
+  }
 
-  #We need to add missing pars with zero and order them
+  # We need to add missing pars with zero and order them
   imp[setdiff(object$features, names(imp))] = 0
   imp = imp[object$features]
 
-  #convert named vector to data.frame with columns and set NA to 0
+  # convert named vector to data.frame with columns and set NA to 0
   imp[is.na(imp)] = 0L
   imp = as.data.frame(t(imp))
   rownames(imp) = NULL
@@ -109,10 +110,12 @@ getFeatureImportance = function(object, ...) {
 #' @export
 #' @keywords internal
 getFeatureImportanceLearner = function(.learner, .model, ...) {
+
   UseMethod("getFeatureImportanceLearner")
 }
 
 #' @export
 getFeatureImportanceLearner.BaseWrapper = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner(.learner$next.learner, .model = .model, ...)
 }

@@ -25,6 +25,6 @@ test_that("createDummyFeatures", {
   levels(df$quan) = c("<5", ">5")
   df.cdf = createDummyFeatures(df)
   colnames = names(df.cdf)
-  expect_false("<5" %in% colnames ||  ">5" %in% colnames)
-  expect_true("quan..5" %in% colnames ||  "quan..5.1" %in% colnames)
+  expect_false("<5" %in% colnames || ">5" %in% colnames)
+  expect_true("quan..5" %in% colnames || "quan..5.1" %in% colnames)
 })

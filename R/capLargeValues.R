@@ -34,6 +34,7 @@
 #' capLargeValues(iris, threshold = 5, impute = 5)
 capLargeValues = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
+
   checkTargetPreproc(obj, target, cols)
   assertNumber(threshold, lower = 0)
   assertNumber(impute, lower = 0)
@@ -44,6 +45,7 @@ capLargeValues = function(obj, target = character(0L), cols = NULL,
 #' @export
 capLargeValues.Task = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
+
   d = getTaskData(obj)
   d = capLargeValues.data.frame(d, target = character(0L), cols = cols,
     threshold = threshold, impute = impute)
@@ -53,14 +55,16 @@ capLargeValues.Task = function(obj, target = character(0L), cols = NULL,
 #' @export
 capLargeValues.data.frame = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
+
   allnumfeats = colnames(obj)[vlapply(obj, is.numeric)]
   allnumfeats = setdiff(allnumfeats, target)
 
   # check that user requested cols are only numeric cols with the target
-  if (!is.null(cols))
+  if (!is.null(cols)) {
     assertSubset(cols, allnumfeats)
-  else
+  } else {
     cols = allnumfeats
+  }
 
   fun = switch(what,
     abs = function(x) abs(x) > threshold,
@@ -71,8 +75,9 @@ capLargeValues.data.frame = function(obj, target = character(0L), cols = NULL,
   for (cn in cols) {
     x = obj[[cn]]
     ind = which(fun(x))
-    if (length(ind) > 0L)
+    if (length(ind) > 0L) {
       obj[ind, cn] = ifelse(x[ind] > threshold, impute, -impute)
+    }
   }
   return(obj)
 }

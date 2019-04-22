@@ -27,5 +27,4 @@ test_that("classif_evtree", {
     old.predicts.list, parset.list)
   testProbParsets("classif.evtree", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)
-
 })

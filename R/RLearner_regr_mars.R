@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.mars = function() {
+
   makeRLearnerRegr(
     cl = "regr.mars",
     package = "mda",
@@ -20,12 +21,14 @@ makeRLearner.regr.mars = function() {
 }
 
 #' @export
-trainLearner.regr.mars = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.mars = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   mda::mars(x = as.matrix(d$data), y = d$target, ...)
 }
 
 #' @export
 predictLearner.regr.mars = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata)[, 1L]
 }

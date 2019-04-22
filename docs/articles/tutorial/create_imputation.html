@@ -307,18 +307,19 @@
 <p>imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>) calls the unexported <code>mlr</code> function <code>simpleImpute</code> which is defined as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">simpleImpute =<span class="st"> </span><span class="cf">function</span> (data, target, col, const) </a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(const)) </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(const)) {</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">        <span class="kw">stopf</span>(<span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, </a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">            col)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    x =<span class="st"> </span>data[[col]]</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">is.logical</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">is.logical</a></span>(const)) {</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        x =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(x)</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    }</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">is.factor</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>const <span class="op">%nin%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x)) {</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(const))</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    }</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/replace">replace</a></span>(x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x), const)</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">}</a></code></pre></div>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    }</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    x =<span class="st"> </span>data[[col]]</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">is.logical</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">is.logical</a></span>(const)) {</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        x =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(x)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    }</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">is.factor</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>const <span class="op">%nin%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x)) {</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(x), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(const))</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    }</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/replace">replace</a></span>(x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x), const)</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">}</a></code></pre></div>
 <p>The <em>learn</em> function calculates the mean of the non-missing observations in column <code>col</code>. The mean is passed via argument <code>const</code> to the <em>impute</em> function that replaces all missing values in feature <code>col</code>.</p>
 </div>
 <div id="writing-your-own-imputation-method" class="section level1">

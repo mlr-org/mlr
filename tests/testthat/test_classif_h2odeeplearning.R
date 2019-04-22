@@ -11,7 +11,7 @@ test_that("classif_h2odeeplearning", {
     list(hidden = 2L, rate = 0.2),
     list(hidden = 2L, rate_decay = 0.2)
   )
-  #h20deeplearning needs seed in function call to be reproducible
+  # h20deeplearning needs seed in function call to be reproducible
   debug.seed = getOption("mlr.debug.seed")
   parset.list = lapply(parset.list, function(x) c(x, seed = debug.seed, reproducible = TRUE))
   old.probs.list = list()
@@ -22,7 +22,7 @@ test_that("classif_h2odeeplearning", {
       y = binaryclass.target,
       training_frame = h2o::as.h2o(binaryclass.train)))
     m = do.call(h2o::h2o.deeplearning, parset)
-    p  = predict(m, newdata = h2o::as.h2o(binaryclass.test))
+    p = predict(m, newdata = h2o::as.h2o(binaryclass.test))
     old.probs.list[[i]] = as.data.frame(p)[, 2L]
   }
 
@@ -35,7 +35,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
   df = cbind(classx, df)
 
   classif.task = makeClassifTask(id = "example", data = df, target = "classx")
-  gb.lrn  = makeLearner("classif.h2o.deeplearning", predict.type = "prob")
+  gb.lrn = makeLearner("classif.h2o.deeplearning", predict.type = "prob")
   rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
   rin = makeResampleInstance(rdesc, task = classif.task)
   r = resample(gb.lrn, classif.task, rin)
@@ -55,5 +55,5 @@ test_that("feature importances are returned", {
   feat.imp.h2o = data.frame(as.list(xtabs(relative_importance ~ variable, data = feat.imp.h2o)))[names(feat.imp)]
 
   expect_equal(feat.imp,
-               feat.imp.h2o)
+    feat.imp.h2o)
 })

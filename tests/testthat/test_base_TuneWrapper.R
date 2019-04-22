@@ -101,7 +101,7 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   ps = makeParamSet(
-    makeDiscreteParam("C", 2^ (-1))
+    makeDiscreteParam("C", 2^(-1))
   )
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),
@@ -149,5 +149,3 @@ test_that("TuneWrapper respects train parameters (#2472)", {
   # we expect that the optimal parameter are also applied for prediction and therefore y_hat = p1+p2+p3+p3 should be 0
   expect_true(all(pred$data$response == 0))
 })
-
-

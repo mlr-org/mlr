@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.gaterSVM = function() {
+
   makeRLearnerClassif(
     cl = "classif.gaterSVM",
     package = "SwarmSVM",
@@ -29,12 +30,14 @@ makeRLearner.classif.gaterSVM = function() {
 
 #' @export
 trainLearner.classif.gaterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   SwarmSVM::gaterSVM(x = d$data, y = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.gaterSVM = function(.learner, .model, .newdata, ...) {
+
   factor(predict(.model$learner.model, newdata = .newdata, ...),
     levels = c(-1, 1),
     labels = .model$factor.levels[[1]])

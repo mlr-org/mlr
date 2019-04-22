@@ -5,6 +5,7 @@
 #'
 #' @export
 makeRLearner.classif.fdausc.kernel = function() {
+
   makeRLearnerClassif(
     cl = "classif.fdausc.kernel",
     package = "fda.usc",
@@ -28,6 +29,7 @@ makeRLearner.classif.fdausc.kernel = function() {
 
 #' @export
 trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)

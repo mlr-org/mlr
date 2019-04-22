@@ -37,25 +37,26 @@
 #'  diagnostic info, a flag for whether nested cv was used, a flag for whether
 #'  partial dependence should be generated, and the optimization algorithm used.
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' # 3-fold cross validation
 #' ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
 #' ctrl = makeTuneControlGrid()
 #' rdesc = makeResampleDesc("CV", iters = 3L)
 #' res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
-#' par.set = ps, control = ctrl)
+#'   par.set = ps, control = ctrl)
 #' data = generateHyperParsEffectData(res)
 #' plt = plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
 #' plt + ylab("Misclassification Error")
-#'
+#' 
 #' # nested cross validation
 #' ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
 #' ctrl = makeTuneControlGrid()
 #' rdesc = makeResampleDesc("CV", iters = 3L)
 #' lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
-#'                       resampling = rdesc, par.set = ps)
+#'   resampling = rdesc, par.set = ps)
 #' res = resample(lrn, task = pid.task, resampling = cv2,
-#'                extract = getTuneResult)
+#'   extract = getTuneResult)
 #' data = generateHyperParsEffectData(res)
 #' plotHyperParsEffect(data, x = "C", y = "mmce.test.mean", plot.type = "line")
 #' }
@@ -72,14 +73,16 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
   assertFlag(partial.dep)
 
   # in case we have nested CV
-  if (getClass1(tune.result) == "ResampleResult"){
+  if (getClass1(tune.result) == "ResampleResult") {
     d = getNestedTuneResultsOptPathDf(tune.result, trafo = trafo)
     num.hypers = length(tune.result$extract[[1]]$x)
-    if ((num.hypers > 2) && !partial.dep)
+    if ((num.hypers > 2) && !partial.dep) {
       stopf("Partial dependence must be requested with partial.dep when tuning more than 2 hyperparameters")
+    }
     for (hyp in 1:num.hypers) {
-      if (!is.numeric(d[, hyp]))
+      if (!is.numeric(d[, hyp])) {
         d[, hyp] = type.convert(as.character(d[, hyp]))
+      }
     }
     # rename to be clear this denotes the nested cv
     names(d)[names(d) == "iter"] = "nested_cv_run"
@@ -90,18 +93,20 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
     optimization = getClass1(tune.result$extract[[1]]$control)
     nested = TRUE
   } else {
-    if (trafo){
+    if (trafo) {
       d = as.data.frame(trafoOptPath(tune.result$opt.path))
     } else {
       d = as.data.frame(tune.result$opt.path)
     }
     # what if we have numerics that were discretized upstream
     num.hypers = length(tune.result$x)
-    if ((num.hypers > 2) && !partial.dep)
+    if ((num.hypers > 2) && !partial.dep) {
       stopf("Partial dependence must be requested with partial.dep when tuning more than 2 hyperparameters")
+    }
     for (hyp in 1:num.hypers) {
-      if (!is.numeric(d[, hyp]))
+      if (!is.numeric(d[, hyp])) {
         d[, hyp] = type.convert(as.character(d[, hyp]))
+      }
     }
     measures = tune.result$opt.path$y.names
     hyperparams = names(tune.result$x)
@@ -110,8 +115,9 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
   }
 
   # off by default unless needed by user
-  if (include.diagnostics == FALSE)
+  if (include.diagnostics == FALSE) {
     d = within(d, rm("eol", "error.message"))
+  }
 
   # users might not know what dob means, so let's call it iteration
   names(d)[names(d) == "dob"] = "iteration"
@@ -126,13 +132,15 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
 
 #' @export
 print.HyperParsEffectData = function(x, ...) {
+
   catf("HyperParsEffectData:")
   catf("Hyperparameters: %s", collapse(x$hyperparams))
   catf("Measures: %s", collapse(x$measures))
   catf("Optimizer: %s", collapse(x$optimization))
   catf("Nested CV Used: %s", collapse(x$nested))
-  if (x$partial)
+  if (x$partial) {
     print("Partial dependence requested")
+  }
   catf("Snapshot of data:")
   print(head(x$data))
 }
@@ -246,10 +254,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertSubset(facet, choices = names(hyperpars.effect.data$data))
   assertFlag(global.only)
   assert(checkClass(interpolate, "Learner"), checkString(interpolate),
-         checkNull(interpolate))
+    checkNull(interpolate))
   # assign learner for interpolation
   if (checkClass(interpolate, "Learner") == TRUE ||
-      checkString(interpolate) == TRUE) {
+    checkString(interpolate) == TRUE) {
     lrn = checkLearner(interpolate, "regr")
   }
   assertFlag(show.experiments)
@@ -258,17 +266,20 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assert(checkClass(partial.dep.learn, "Learner"), checkString(partial.dep.learn),
     checkNull(partial.dep.learn))
   if (checkClass(partial.dep.learn, "Learner") == TRUE ||
-      checkString(partial.dep.learn) == TRUE) {
+    checkString(partial.dep.learn) == TRUE) {
     lrn = checkLearner(partial.dep.learn, "regr")
   }
-  if (!is.null(partial.dep.learn) && !is.null(interpolate))
+  if (!is.null(partial.dep.learn) && !is.null(interpolate)) {
     stopf("partial.dep.learn and interpolate can't be simultaneously requested!")
-  if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
+  }
+  if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1) {
     stopf("Greater than 1 length x, y, z or facet not yet supported")
+  }
 
   d = hyperpars.effect.data$data
-  if (hyperpars.effect.data$nested)
+  if (hyperpars.effect.data$nested) {
     d$nested_cv_run = as.factor(d$nested_cv_run)
+  }
 
   # gather names
   hypers = hyperpars.effect.data$hyperparams
@@ -281,18 +292,19 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
   partial.flag = hyperpars.effect.data$partial
 
-  if (partial.flag && is.null(partial.dep.learn))
+  if (partial.flag && is.null(partial.dep.learn)) {
     stopf("Partial dependence requested but partial.dep.learn not specified!")
+  }
 
   # deal with NAs where optimizer failed
-  if (na.flag){
+  if (na.flag) {
     d$learner_status = ifelse(is.na(d[, "exec.time"]), "Failure", "Success")
     for (col in hyperpars.effect.data$measures) {
       col.name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
-      if (heatcontour.flag){
+      if (heatcontour.flag) {
         d[, col][is.na(d[, col])] = get(col.name)$worst
       } else {
-        if (get(col.name)$minimize){
+        if (get(col.name)$minimize) {
           d[, col][is.na(d[, col])] = max(d[, col], na.rm = TRUE)
         } else {
           d[, col][is.na(d[, col])] = min(d[, col], na.rm = TRUE)
@@ -335,10 +347,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
   } else {
     # assign for global only
-    if (global.only && x == "iteration" && y %in% hyperpars.effect.data$measures){
+    if (global.only && x == "iteration" && y %in% hyperpars.effect.data$measures) {
       for (col in hyperpars.effect.data$measures) {
         col.name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
-        if (get(col.name)$minimize){
+        if (get(col.name)$minimize) {
           d[, col] = cummin(d[, col])
         } else {
           d[, col] = cummax(d[, col])
@@ -346,18 +358,18 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
     }
 
-    if ((!is.null(interpolate)) && z.flag && (heatcontour.flag)){
+    if ((!is.null(interpolate)) && z.flag && (heatcontour.flag)) {
       # create grid
       xo = seq(min(d[, x]), max(d[, x]), length.out = 100)
       yo = seq(min(d[, y]), max(d[, y]), length.out = 100)
       grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = FALSE)
       names(grid) = c(x, y)
 
-      if (hyperpars.effect.data$nested){
+      if (hyperpars.effect.data$nested) {
         d.new = d
         new.d = data.frame()
         # for loop for each nested cv run
-        for (run in unique(d$nested_cv_run)){
+        for (run in unique(d$nested_cv_run)) {
           d.run = d.new[d.new$nested_cv_run == run, ]
           regr.task = makeRegrTask(id = "interp", data = d.run[, c(x, y, z)],
             target = z)
@@ -389,13 +401,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       d = grid
     }
 
-    if (hyperpars.effect.data$nested && z.flag){
+    if (hyperpars.effect.data$nested && z.flag) {
       averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run",
         hyperpars.effect.data$hyperparams, "eol",
         "error.message", "learner_status")),
-        drop = FALSE]
+      drop = FALSE]
       # keep experiments if we need it
-      if (na.flag || (!is.null(interpolate)) || show.experiments){
+      if (na.flag || (!is.null(interpolate)) || show.experiments) {
         hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams,
           "learner_status")], "[")
       } else {
@@ -407,13 +419,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
 
   # just x, y
-  if ((length(x) == 1) && (length(y) == 1) && !(z.flag)){
+  if ((length(x) == 1) && (length(y) == 1) && !(z.flag)) {
     if (hyperpars.effect.data$nested && !partial.flag) {
       plt = ggplot(d, aes_string(x = x, y = y, color = "nested_cv_run"))
     } else {
       plt = ggplot(d, aes_string(x = x, y = y))
     }
-    if (na.flag && !partial.flag){
+    if (na.flag && !partial.flag) {
       plt = plt + geom_point(aes_string(shape = "learner_status",
         color = "learner_status")) +
         scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
@@ -421,19 +433,22 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     } else {
       plt = plt + geom_point()
     }
-    if (plot.type == "line")
+    if (plot.type == "line") {
       plt = plt + geom_line()
-    if (loess.smooth)
+    }
+    if (loess.smooth) {
       plt = plt + geom_smooth()
-    if (facet.flag)
+    }
+    if (facet.flag) {
       plt = plt + facet_wrap(facet)
-  } else if ((length(x) == 1) && (length(y) == 1) && (z.flag)){
+    }
+  } else if ((length(x) == 1) && (length(y) == 1) && (z.flag)) {
     # the data we use depends on if interpolation
-    if (heatcontour.flag){
-      if (!is.null(interpolate)){
+    if (heatcontour.flag) {
+      if (!is.null(interpolate)) {
         plt = ggplot(data = d[d$learner_status == "Interpolated Point", ],
           aes_string(x = x, y = y, fill = z, z = z)) + geom_raster()
-        if (show.interpolated && !(na.flag || show.experiments)){
+        if (show.interpolated && !(na.flag || show.experiments)) {
           plt = plt + geom_point(aes_string(shape = "learner_status")) +
             scale_shape_manual(values = c("Interpolated Point" = 6))
         }
@@ -441,11 +456,11 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
           geom_raster()
       }
-      if ((na.flag || show.experiments) && !show.interpolated && !partial.flag){
+      if ((na.flag || show.experiments) && !show.interpolated && !partial.flag) {
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success",
           "Failure"), ],
-          aes_string(shape = "learner_status"),
-          fill = "red") +
+        aes_string(shape = "learner_status"),
+        fill = "red") +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0))
       } else if ((na.flag || show.experiments) && (show.interpolated)) {
         plt = plt + geom_point(data = d, aes_string(shape = "learner_status"),
@@ -453,21 +468,23 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0,
             "Interpolated Point" = 6))
       }
-      if (plot.type == "contour")
+      if (plot.type == "contour") {
         plt = plt + geom_contour()
+      }
       plt = plt + scale_fill_gradientn(colors = c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD", "#5E4FA2")) # RColorBrewer::brewer.pal(11, "Spectral")
     } else {
       plt = ggplot(d, aes_string(x = x, y = y, color = z))
-      if (na.flag){
+      if (na.flag) {
         plt = plt + geom_point(aes_string(shape = "learner_status",
           color = "learner_status")) +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
           scale_color_manual(values = c("red", "black"))
-      } else{
+      } else {
         plt = plt + geom_point()
       }
-      if (plot.type == "line")
+      if (plot.type == "line") {
         plt = plt + geom_line()
+      }
     }
   }
   return(plt)

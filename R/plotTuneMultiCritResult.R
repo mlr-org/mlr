@@ -26,14 +26,17 @@
 #' @examples
 #' # see tuneParamsMultiCrit
 plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, pointsize = 2, pretty.names = TRUE) {
+
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
   op1 = res$opt.path
   op2 = as.data.frame(op1)
-  if (!is.null(col))
+  if (!is.null(col)) {
     assertChoice(col, choices = colnames(op2))
-  if (!is.null(shape))
+  }
+  if (!is.null(shape)) {
     assertChoice(shape, colnames(op2))
+  }
 
   names.y = colnames(res$y)[1:2]
 
@@ -49,8 +52,9 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 
   p = ggplot(data, mapping = map)
   p = p + geom_point(size = pointsize)
-  if (path)
+  if (path) {
     p = p + geom_point(data = front, size = pointsize * 1.5)
+  }
   if (pretty.names) {
     names.y = sapply(res$measures, function(x) x$id)
     p = p + labs(x = names.y[1L], y = names.y[2L])

@@ -40,6 +40,7 @@
 #' @family wrapper
 #' @export
 makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL) {
+
   learner = checkLearner(learner, "classif")
   pv = list()
   if (!missing(obw.iters)) {
@@ -59,8 +60,9 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     pv$obw.cl = obw.cl
   }
 
-  if (learner$predict.type != "response")
+  if (learner$predict.type != "response") {
     stop("Predict type of the basic learner must be response.")
+  }
   id = stri_paste(learner$id, "overbagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
@@ -70,12 +72,12 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     makeUntypedLearnerParam(id = "obw.cl", default = NULL, tunable = FALSE)
   )
   makeHomogeneousEnsemble(id, "classif", learner, packs, par.set = ps, par.vals = pv,
-     learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
+    learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
 }
 
 #' @export
 trainLearner.OverBaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-   obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
+  obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   y = getTaskTargets(.task)
@@ -91,6 +93,7 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset = NULL, .wei
 }
 
 doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learner, task, weights) {
+
   setSlaveOptions()
   bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
   train(learner$next.learner, task, subset = bag, weights = weights)
@@ -99,5 +102,6 @@ doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learne
 
 #' @export
 getLearnerProperties.OverBaggingWrapper = function(learner) {
+
   union(getLearnerProperties(learner$next.learner), "prob")
 }

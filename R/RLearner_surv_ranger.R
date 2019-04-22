@@ -1,6 +1,7 @@
 
 #' @export
 makeRLearner.surv.ranger = function() {
+
   makeRLearnerSurv(
     cl = "surv.ranger",
     package = "ranger",
@@ -38,18 +39,21 @@ makeRLearner.surv.ranger = function() {
 
 #' @export
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
-   status.variable.name = tn[2L], data = getTaskData(.task, .subset), case.weights = .weights, ...)
+    status.variable.name = tn[2L], data = getTaskData(.task, .subset), case.weights = .weights, ...)
 }
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
+
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)
 }
 
 #' @export
 getFeatureImportanceLearner.surv.ranger = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }

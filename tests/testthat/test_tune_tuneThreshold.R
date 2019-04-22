@@ -24,7 +24,7 @@ test_that("tuheThreshold works with all tuning methods", {
   ctrls = list(
     gensa = makeTuneControlGenSA(start = list(nu = 2.5), maxit = 1, tune.threshold = TRUE),
     cmaes = makeTuneControlCMAES(start = list(nu = 2.5), maxit = 1, tune.threshold = TRUE),
-    design = makeTuneControlDesign(design = generateDesign(n = 2, par.set = ps),  tune.threshold = TRUE),
+    design = makeTuneControlDesign(design = generateDesign(n = 2, par.set = ps), tune.threshold = TRUE),
     grid = makeTuneControlGrid(resolution = 2L, tune.threshold = TRUE),
     irace = makeTuneControlIrace(maxExperiments = 12, nbIterations = 1L, minNbSurvival = 1, tune.threshold = TRUE)
   )
@@ -33,5 +33,4 @@ test_that("tuheThreshold works with all tuning methods", {
     res = resample(lrn.tuned, binaryclass.task, resampling = makeResampleDesc("Holdout"), extract = getTuneResult)
     expect_number(res$extract[[1]]$threshold)
   }
-
 })

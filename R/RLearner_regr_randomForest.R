@@ -51,6 +51,7 @@ NULL
 
 #' @export
 makeRLearner.regr.randomForest = function() {
+
   makeRLearnerRegr(
     cl = "regr.randomForest",
     package = "randomForest",
@@ -58,7 +59,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
       makeDiscreteLearnerParam(id = "se.method", default = "sd",
-        values = c("bootstrap", "jackknife",  "sd"),
+        values = c("bootstrap", "jackknife", "sd"),
         requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE),
         when = "both"),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L, when = "both"),
@@ -87,6 +88,7 @@ makeRLearner.regr.randomForest = function() {
 
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "sd", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
+
   data = getTaskData(.task, .subset, target.extra = TRUE)
   m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
     keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
@@ -102,10 +104,12 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "sd", ...) {
-  if (se.method == "bootstrap")
+
+  if (se.method == "bootstrap") {
     pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
-  else
+  } else {
     pred = predict(.model$learner.model, newdata = .newdata, ...)
+  }
   if (.learner$predict.type == "se") {
     se.fun = switch(se.method,
       bootstrap = bootstrapStandardError,
@@ -121,6 +125,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
 
 #' @export
 getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
+
   getLearnerModel(.model, more.unwrap = TRUE)$predicted
 }
 
@@ -129,8 +134,9 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 # Set se.ntree << ntree for the noisy bootstrap (mc bias corrected)
 bootstrapStandardError = function(.learner, .model, .newdata,
   se.ntree = 100L, se.boot = 50L, ...) {
-  single.model = getLearnerModel(.model)$single.model #get raw RF model
-  bagged.models = getLearnerModel(getLearnerModel(.model)$bagged.models) #get list of unbagged mlr models
+
+  single.model = getLearnerModel(.model)$single.model # get raw RF model
+  bagged.models = getLearnerModel(getLearnerModel(.model)$bagged.models) # get list of unbagged mlr models
   pred.bagged = lapply(bagged.models, function(x) predict(getLearnerModel(x), newdata = .newdata, predict.all = TRUE))
   pred.boot.all = extractSubList(pred.bagged, "individual", simplify = FALSE)
   ntree = single.model$ntree
@@ -156,6 +162,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 
 # Computes the mc bias-corrected jackknife after bootstrap
 jackknifeStandardError = function(.learner, .model, .newdata, ...) {
+
   model = .model$learner.model
   model$inbag = model$inbag[rowSums(model$inbag == 0) > 0, , drop = FALSE]
   n = nrow(model$inbag)
@@ -174,11 +181,13 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
 
 # computes the standard deviation across trees
 sdStandardError = function(.learner, .model, .newdata, ...) {
+
   pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
   apply(pred$individual, 1, sd)
 }
 
 #' @export
 getFeatureImportanceLearner.regr.randomForest = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.classif.randomForest(.learner, .model, ...)
 }

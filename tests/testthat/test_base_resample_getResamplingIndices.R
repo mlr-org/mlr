@@ -1,7 +1,6 @@
 context("resample_cv")
 
 test_that("getResamplingIndices works with getTuneResult", {
-
   task = makeClassifTask(data = iris, target = "Species")
   lrn = makeLearner("classif.rpart")
   # stupid mini grid
@@ -27,7 +26,6 @@ test_that("getResamplingIndices works with getTuneResult", {
 })
 
 test_that("getResamplingIndices works with getFeatSelResult", {
-
   outer = makeResampleDesc("CV", iters = 2L)
   inner = makeResampleDesc("Holdout")
 
@@ -36,6 +34,7 @@ test_that("getResamplingIndices works with getFeatSelResult", {
   lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl)
 
   r = resample(lrn2, multiclass.task, outer, extract = function(model) {
+
     getFeatSelResult(model)
   })
 

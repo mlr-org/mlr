@@ -17,8 +17,9 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 
   lrn = setPredictType(lrn, pred.type)
 
-  if (lrn$id %in% names(hyperpars))
+  if (lrn$id %in% names(hyperpars)) {
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  }
 
   rin = makeResampleInstance("Holdout", task = task)
   m1 = train(lrn, task, subset = train.inds)
@@ -55,10 +56,12 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # predict standard errors.)
 
 testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "response") {
+
   # handling special par.vals and predict type
   info = lrn$id
-  if (lrn$id %in% names(hyperpars))
+  if (lrn$id %in% names(hyperpars)) {
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  }
 
   lrn = setPredictType(lrn, pred.type)
 
@@ -159,6 +162,7 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 # this works correctly
 
 testThatGetOOBPredsWorks = function(lrn, task) {
+
   type = lrn$type
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
@@ -181,24 +185,29 @@ testThatGetOOBPredsWorks = function(lrn, task) {
 
 testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
 
-
-  if (lrn$id %in% names(hyperpars))
+  if (lrn$id %in% names(hyperpars)) {
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  }
 
   # some learners need special param settings to compute variable importance
   # add them here if you implement a measure that requires that.
   # you may also want to change the params for the learner if training takes
   # a long time
-  if (lrn$short.name == "ranger")
+  if (lrn$short.name == "ranger") {
     lrn = setHyperPars(lrn, importance = "permutation")
-  if (lrn$short.name == "adabag")
+  }
+  if (lrn$short.name == "adabag") {
     lrn = setHyperPars(lrn, mfinal = 5L)
-  if (lrn$short.name == "cforest")
+  }
+  if (lrn$short.name == "cforest") {
     lrn = setHyperPars(lrn, ntree = 5L)
-  if (lrn$short.name == "rfsrc")
+  }
+  if (lrn$short.name == "rfsrc") {
     lrn = setHyperPars(lrn, ntree = 5L)
-  if (lrn$short.name == "xgboost")
+  }
+  if (lrn$short.name == "xgboost") {
     lrn = setHyperPars(lrn, nrounds = 10L)
+  }
 
   mod = train(lrn, task)
   feat.imp = getFeatureImportance(mod)$res
@@ -210,12 +219,14 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
 
 
 testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
+
   pars = lrn$par.set$pars
   pv = lrn$par.vals
   expect_true(isSubset(names(pv), names(pars)))
 }
 
 testThatLearnerPredictsFeasibleSEValues = function(lrn, task) {
+
   lrn = setPredictType(lrn, "se")
   res = resample(lrn, task, makeResampleDesc("LOO"))
   ses = getPredictionSE(res$pred)

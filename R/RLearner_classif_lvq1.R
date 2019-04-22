@@ -1,6 +1,7 @@
 # FIXME: parset
 #' @export
 makeRLearner.classif.lvq1 = function() {
+
   makeRLearnerClassif(
     cl = "classif.lvq1",
     package = "class",
@@ -13,7 +14,8 @@ makeRLearner.classif.lvq1 = function() {
 }
 
 #' @export
-trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   cdbk.args = insert(list(), list(...), c("size", "k", "prior"))
   cdbk.args$x = d$data
@@ -29,5 +31,6 @@ trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.classif.lvq1 = function(.learner, .model, .newdata, ...) {
+
   class::lvqtest(.model$learner.model, test = .newdata, ...)
 }

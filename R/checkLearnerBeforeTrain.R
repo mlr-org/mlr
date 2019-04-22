@@ -1,5 +1,7 @@
 checkLearnerBeforeTrain = function(task, learner, weights) {
-  getColNames =  function(task, property){
+
+  getColNames = function(task, property) {
+
     .data = getTaskData(task, functionals.as = "matrix")
     has.it = vlapply(.data, function(x) any(property(x)))
     clipString(collapse(colnames(.data)[has.it], ", "), 50L)
@@ -32,7 +34,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
 
   if (td$n.feat["functionals"] > 1 && hasLearnerProperties(learner, "single.functional") &&
-      !hasLearnerProperties(learner, "functionals")) {
+    !hasLearnerProperties(learner, "functionals")) {
     stopf("Task '%s' has more than one functional inputs,
       but learner '%s' does not support that!", td$id, learner$id)
   }
@@ -47,14 +49,17 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
 
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) {
-      if (!hasLearnerProperties(learner, "oneclass"))
+      if (!hasLearnerProperties(learner, "oneclass")) {
         stopf("Task '%s' is a one-class-problem, but learner '%s' does not support that!", td$id, learner$id)
+      }
     } else if (length(td$class.levels) == 2L) {
-      if (!hasLearnerProperties(learner, "twoclass"))
+      if (!hasLearnerProperties(learner, "twoclass")) {
         stopf("Task '%s' is a two-class-problem, but learner '%s' does not support that!", td$id, learner$id)
+      }
     } else {
-      if (!hasLearnerProperties(learner, "multiclass"))
+      if (!hasLearnerProperties(learner, "multiclass")) {
         stopf("Task '%s' is a multiclass-problem, but learner '%s' does not support that!", td$id, learner$id)
+      }
     }
   }
   invisible(NULL)

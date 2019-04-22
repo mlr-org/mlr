@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.ksvm = function() {
+
   makeRLearnerClassif(
     cl = "classif.ksvm",
     package = "kernlab",
@@ -42,26 +43,28 @@ makeRLearner.classif.ksvm = function() {
 }
 
 #' @export
-trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized,  ...) {
+trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
 
   # FIXME: custom kernel. freezes? check mailing list
   # FIXME: unify cla + regr, test all sigma stuff
 
-#     # there's a strange behaviour in r semantics here wgich forces this, see do.call and the comment about substitute
-#     if (!is.null(args$kernel) && is.function(args$kernel) && !is(args$kernel,"kernel")) {
-#       args$kernel = do.call(args$kernel, kpar)
-#     }
+  #     # there's a strange behaviour in r semantics here wgich forces this, see do.call and the comment about substitute
+  #     if (!is.null(args$kernel) && is.function(args$kernel) && !is(args$kernel,"kernel")) {
+  #       args$kernel = do.call(args$kernel, kpar)
+  #     }
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
   pm = .learner$predict.type == "prob"
-  if (base::length(kpar) > 0L)
+  if (base::length(kpar) > 0L) {
     kernlab::ksvm(f, data = getTaskData(.task, .subset), kpar = kpar, prob.model = pm, ...)
-  else
+  } else {
     kernlab::ksvm(f, data = getTaskData(.task, .subset), prob.model = pm, ...)
+  }
 }
 
 #' @export
 predictLearner.classif.ksvm = function(.learner, .model, .newdata, ...) {
+
   type = switch(.learner$predict.type, prob = "probabilities", "response")
   kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

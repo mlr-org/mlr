@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.liquidSVM = function() {
+
   makeRLearnerClassif(
     cl = "classif.liquidSVM",
     package = "liquidSVM",
@@ -7,7 +8,7 @@ makeRLearner.classif.liquidSVM = function() {
       makeIntegerLearnerParam(id = "d", lower = 0L, upper = 7L, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale", default = TRUE),
       makeIntegerLearnerParam(id = "threads", lower = -1L, default = 0),
-      makeDiscreteLearnerParam(id = "kernel", default = "gauss_rbf", values = c("gauss_rbf","poisson")),
+      makeDiscreteLearnerParam(id = "kernel", default = "gauss_rbf", values = c("gauss_rbf", "poisson")),
       makeIntegerLearnerParam(id = "partition_choice", lower = 0L, upper = 6L, default = 0),
       makeIntegerLearnerParam(id = "grid_choice", lower = -2L, upper = 2L),
       makeIntegerLearnerParam(id = "adaptivity_control", lower = 0L, upper = 2L, default = 0),
@@ -33,14 +34,16 @@ makeRLearner.classif.liquidSVM = function() {
 }
 
 #' @export
-trainLearner.classif.liquidSVM = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.liquidSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
-  liquidSVM::svm(f, getTaskData(.task, .subset),  ...)
-  #liquidSVM::svm(f, getTaskData(.task, .subset), predict.prob = .learner$predict.type == "prob",  ...)
+  liquidSVM::svm(f, getTaskData(.task, .subset), ...)
+  # liquidSVM::svm(f, getTaskData(.task, .subset), predict.prob = .learner$predict.type == "prob",  ...)
 }
 
 #' @export
 predictLearner.classif.liquidSVM = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)
   # res = as.matrix(predict(.model$learner.model, newdata = .newdata, ...))
   # res = res/rowSums(res)

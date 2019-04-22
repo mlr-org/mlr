@@ -5,6 +5,7 @@
 #' @aliases SurvTask
 #' @export
 makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
+
   assertString(id)
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE, len = 2L)
@@ -16,12 +17,14 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     time = data[[target[1L]]]
     event = data[[target[2L]]]
 
-    if (is.integer(time))
+    if (is.integer(time)) {
       data[[target[1L]]] = as.double(time)
+    }
 
     if (is.numeric(event)) {
-      if (testIntegerish(event) && all(as.integer(event) %in% c(0L, 1L)))
+      if (testIntegerish(event) && all(as.integer(event) %in% c(0L, 1L))) {
         data[[target[2L]]] = (as.integer(event) == 1L)
+      }
     } else if (is.factor(event)) {
       lvls = levels(event)
       if (length(lvls) == 2L) {
@@ -49,6 +52,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
 #' @export
 #' @rdname makeTaskDesc
 makeSurvTaskDesc = function(id, data, target, weights, blocking, coordinates) {
+
   td = makeTaskDescInternal("surv", id, data, target, weights, blocking, coordinates)
   addClasses(td, c("SurvTaskDesc", "SupervisedTaskDesc"))
 }

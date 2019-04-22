@@ -7,7 +7,7 @@ test_that("regr_gbm", {
     list(),
     list(n.trees = 600),
     list(interaction.depth = 2)
-    )
+  )
 
 
   old.predicts.list = list()

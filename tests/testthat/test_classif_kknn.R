@@ -30,9 +30,11 @@ test_that("classif_kknn", {
     old.probs.list, parset.list)
 
   tt = function(formula, data, k = 7) {
+
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {
+
     kknn::kknn(model$formula, train = model$data, test = newdata, k = model$k)$fitted
   }
 

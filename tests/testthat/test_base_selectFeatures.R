@@ -25,6 +25,7 @@ test_that("selectFeatures", {
   # check bits.to.features
   bns = c("b1", "b2")
   btf = function(x, task) {
+
     fns = getTaskFeatureNames(task)
     Reduce(c, list(fns[1:2], fns[3:4])[as.logical(x)], init = character(0))
   }
@@ -33,7 +34,7 @@ test_that("selectFeatures", {
     bits.to.features = btf, control = ctrl, show.info = FALSE)
   df = as.data.frame(fr$opt.path)
   expect_true(setequal(colnames(df), c("b1", "b2", "mmce.test.mean", "dob", "eol",
-        "exec.time", "error.message")))
+    "exec.time", "error.message")))
   expect_equal(nrow(df), 2L)
 
   expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bit.names = bns, control = ctrl, show.info = FALSE), "you also have to set bits.to.features")
@@ -63,7 +64,7 @@ test_that("show info works in selectFeatures", {
   }, "1: [01].*([0-9]+ bits)")
   expect_message({
     z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
-   }, "mmce.test.mean=0.[0-9]+")
+  }, "mmce.test.mean=0.[0-9]+")
 })
 
 # we had a bug here when an empty model was created and isFailureModel could not be called on it, cf. #284

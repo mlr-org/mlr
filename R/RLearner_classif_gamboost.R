@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.gamboost = function() {
+
   makeRLearnerClassif(
     cl = "classif.gamboost",
     package = "mboost",
@@ -13,8 +14,8 @@ makeRLearner.classif.gamboost = function() {
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeDiscreteLearnerParam(id = "Binomial.link", default = "logit",
         values = c("logit", "probit"), requires = quote(family == "Binomial")),
-      #makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5, -1), requires = quote(family == "PropOdds")),
-      #makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
+      # makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5, -1), requires = quote(family == "PropOdds")),
+      # makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
@@ -32,14 +33,15 @@ makeRLearner.classif.gamboost = function() {
 }
 
 #' @export
-trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, family, custom.family.definition,  ...) {
+trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, family, custom.family.definition, ...) {
+
   requirePackages("mboost", why = "argument 'baselearner' requires package", suppress.warnings = TRUE)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
     AdaExp = mboost::AdaExp(),
     AUC = mboost::AUC(),
-    #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
+    # PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
@@ -50,7 +52,7 @@ trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NU
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     model = mboost::gamboost(f, data = d, control = ctrl, family = family, ...)
-  } else  {
+  } else {
     model = mboost::gamboost(f, data = d, control = ctrl, weights = .weights, family = family, ...)
   }
   model
@@ -58,10 +60,11 @@ trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.classif.gamboost = function(.learner, .model, .newdata, ...) {
+
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  if (.learner$predict.type  == "prob") {
-    if (!is.matrix(p) && is.na(p)){
+  if (.learner$predict.type == "prob") {
+    if (!is.matrix(p) && is.na(p)) {
       stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc

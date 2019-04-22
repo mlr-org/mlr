@@ -20,6 +20,7 @@
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
 setHyperPars = function(learner, ..., par.vals = list()) {
+
   args = list(...)
   assertList(args, names = "unique", .var.name = "parameter settings")
   assertList(par.vals, names = "unique", .var.name = "parameter settings")
@@ -33,13 +34,16 @@ setHyperPars = function(learner, ..., par.vals = list()) {
 #'   List of named (hyper)parameter settings.
 #' @export
 setHyperPars2 = function(learner, par.vals) {
+
   UseMethod("setHyperPars2")
 }
 
 #' @export
 setHyperPars2.Learner = function(learner, par.vals) {
-  if (length(par.vals) == 0L)
+
+  if (length(par.vals) == 0L) {
     return(learner)
+  }
 
   ns = names(par.vals)
   pars = learner$par.set$pars
@@ -82,7 +86,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
       }
 
       ## if valname of discrete par was used, transform it to real value
-      #if (pd$type == "discrete" && is.character(p) && length(p) == 1 && p %in% names(pd$values))
+      # if (pd$type == "discrete" && is.character(p) && length(p) == 1 && p %in% names(pd$values))
       #  p = pd$values[[p]]
       learner$par.vals[[n]] = p
     }
