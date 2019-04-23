@@ -284,7 +284,7 @@ test_that("benchmark handles failure models correctly", {
   quiet_learner = makeFilterWrapper(quiet_learner, fw.method = "chi.squared")
 
   quiet_learner = makeTuneWrapper(quiet_learner, resampling = inner, control = ctrl,
-    measures = measures, par.set = filter_ps, show.info = TRUE)
+    par.set = filter_ps, show.info = TRUE)
 
   stop_learner = makeLearner("classif.__mlrmocklearners__3",
     config = list("on.learner.error" = "stop"))
