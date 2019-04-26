@@ -1,7 +1,7 @@
 # Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
-[![CRAN](https://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/package=mlr)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)j
 [![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
@@ -9,22 +9,29 @@
 [![Dependencies](https://tinyverse.netlify.com/badge/mlr)](https://cran.r-project.org/package=mlr)
 
 * [CRAN release site](https://CRAN.R-project.org/package=mlr)
-* [Online Tutorial](https://mlr.mlr-org.com/index.html)
-* [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf)
+* [Online tutorial](https://mlr.mlr-org.com/index.html)
+* [Cheatsheet](https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf)
 * [Changelog](https://mlr.mlr-org.com/news/index.html)
 
-### Install the development version
+**We are actively working on [mlr3](https://github.com/mlr-org/mlr3) as a successor of *mlr*. This implies that we have less time to reply to *mlr* issues.**
+
+* Stackoverflow: [`mlr`](https://stackoverflow.com/questions/tagged/mlr)
+* [Slack](https://mlr-org.slack.com/)
+* [We have a blog on mlr](https://mlr-org.com/).
+
+### Installation
+
+**Release**
+
+```r
+install.packages("mlr")
+```
+
+**Development**
 
 ```R
 remotes::install_github("mlr-org/mlr")
 ```
-
-* There is a `mlr` tag on [Stackoverflow](https://stackoverflow.com/questions/tagged/mlr).
-* [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de).
-* [We have a blog on mlr](https://mlr-org.com/).
-* We are in the top 20 of the most starred R packages on Github, as reported by [metacran](https://www.r-pkg.org/starred).
-
-**We are actively working on [mlr3](https://github.com/mlr-org/mlr3) as a successor of *mlr*. This implies that we have less time to reply to *mlr* issues.**
 
 # mlr - How to Cite and Citing Publications
 
@@ -52,38 +59,37 @@ Furthermore, the package is nicely connected to the [**OpenML**](https://github.
 
 # Features
 
-* Clear S3 interface to R classification, regression, clustering and survival analysis methods
+* Clear **S3** interface to R **classification, regression, clustering and survival** analysis methods
 * Possibility to fit, predict, evaluate and resample models
 * Easy extension mechanism through S3 inheritance
 * Abstract description of learners and tasks by properties
 * Parameter system for learners to encode data types and constraints
 * Many convenience methods and generic building blocks for your machine learning experiments
-* Resampling methods like bootstrapping, cross-validation and subsampling
+* Resampling methods like **bootstrapping, cross-validation and subsampling**
 * Extensive visualizations for e.g. ROC curves, predictions and partial predictions
 * Benchmarking of learners for multiple data sets
-* Easy hyperparameter tuning using different optimization strategies, including potent configurators like iterated F-racing (irace) or sequential model-based optimization
-* Variable selection with filters and wrappers
+* Easy hyperparameter tuning using different optimization strategies, including potent configurators like **iterated F-racing (irace) or sequential model-based optimization**
+* **Variable selection with filters and wrappers**
 * Nested resampling of models with tuning and feature selection
-* Cost-sensitive learning, threshold tuning and imbalance correction
+* **Cost-sensitive learning, threshold tuning and imbalance correction**
 * Wrapper mechanism to extend learner functionality in complex and custom ways
 * Combine different processing steps to a complex data mining chain that can be jointly optimized
-* OpenML connector for the Open Machine Learning server
-* Extension points to integrate your own stuff
-* Parallelization is built-in
+* **OpenML** connector for the Open Machine Learning server
+* **Parallelization** is built-in
 * Unit-testing
-* Detailed tutorial
+* **Detailed tutorial**
+
 
 # Get in Touch
 
-Please use the issue tracker for problems, questions and feature requests.
+Please use the issue tracker for bugs, questions and feature requests.
 
-We also do not hate beginners and it is perfectly valid to mark an issue as "Question".
-However, simple usage questions are better suited at [Stackoverflow using the 'mlr' tag](https://stackoverflow.com/questions/tagged/mlr).
+Simple usage questions are better suited at [Stackoverflow using the 'mlr' tag](https://stackoverflow.com/questions/tagged/mlr).
 
-Please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
+Please don't forget that all of us work in academia and put a lot of work into this project - simply because we like it, not because we are paid for it.
 
-We also welcome pull requests or new developers.
-Just make sure that you have a glance at our [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#mlr-coding-guidelines) before.
+New development efforts should go into [`mlr3`](https://github.com/mlr-org/mlr3).
+We have a [developer guide](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#mlr-coding-guidelines) and our own coding style which can easily applied by using the `mlr_style` from the [styler](https://github.com/r-lib/styler) package.
 
 # mlr-tutorial
 
@@ -122,6 +128,3 @@ Important: Do not commit any file in `docs/` as the rendering will be done by Tr
 
 Edit `_pkgdown.yml` and add the new section at the appropriate place.
 
-**Issues and Pull Requests**
-
-If you want to open an issue or pull request that is related to `mlr-tutorial`, label it with `tutorial` and mention [jakob-r](https://github.com/jakob-r) or [pat-s](https://github.com/pat-s) if you need help.
