@@ -17,7 +17,7 @@ getLearnerTable = function() {
       properties = list(row$properties),
       note = row$note %??% ""
     )
-  }))
+  }), use.names = TRUE)
 
   # set learner type (classif, regr, surv, ...)
   tab$type = vcapply(stri_split_fixed(tab$id, ".", n = 2L), head, 1L)
@@ -140,7 +140,7 @@ listLearners.character = function(obj = NA_character_, properties = character(0L
 
   tab$package = vcapply(tab$package, collapse)
   properties = listLearnerProperties()
-  tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
+  tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties)), use.names = TRUE))
   tab$properties = NULL
   setnames(tab, "id", "class")
   setDF(tab)
