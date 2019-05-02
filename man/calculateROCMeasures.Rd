@@ -63,7 +63,6 @@ lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, sonar.task)
 pred = predict(fit, task = sonar.task)
 calculateROCMeasures(pred)
-
 }
 \seealso{
 Other roc: \code{\link{asROCRPrediction}}
