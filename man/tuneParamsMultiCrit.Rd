@@ -53,7 +53,7 @@ by passing a corresponding control object. For a complete list of implemented al
 \examples{
 \donttest{
 # multi-criteria optimization of (tpr, fpr) with NGSA-II
-lrn =  makeLearner("classif.ksvm")
+lrn = makeLearner("classif.ksvm")
 rdesc = makeResampleDesc("Holdout")
 ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
