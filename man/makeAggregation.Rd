@@ -47,9 +47,11 @@ inner workings so the result might not be compatible with everything!
 }
 \examples{
 # computes the interquartile range on all performance values
-test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",
+test.iqr = makeAggregation(
+  id = "test.iqr", name = "Test set interquartile range",
   properties = "req.test",
-  fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
+  fun = function(task, perf.test, perf.train, measure, group, pred) IQR(perf.test)
+)
 }
 \seealso{
 \link{aggregations}, \link{setAggregation}

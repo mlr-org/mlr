@@ -13,6 +13,7 @@ do_pkgdown(commit_paths = "docs/*", document = FALSE)
 if (ci_get_branch() == "master") {
 
   get_stage("deploy") %>%
+    add_code_step(pkgbuild::compile_dll()) %>%
     add_code_step(devtools::document()) %>%
     add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
 }
