@@ -2,6 +2,8 @@ context("classif_mda")
 
 test_that("classif_mda", {
   requirePackagesOrSkip("!mda", default.method = "load")
+  on.exit(RNGversion(getRversion()))
+  suppressWarnings(RNGversion("3.5.0"))
 
   parset.list1 = list(
     list(start.method = "lvq"),
