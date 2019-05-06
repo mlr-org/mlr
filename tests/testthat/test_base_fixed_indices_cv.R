@@ -1,6 +1,10 @@
 context("fixed")
 
 test_that("fixed in single resampling", {
+
+  on.exit(RNGversion(getRversion()))
+  suppressWarnings(RNGversion("3.5.0"))
+
   set.seed(12345)
   df = multiclass.df
   fixed = as.factor(rep(1:30, 5))
