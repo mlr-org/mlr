@@ -97,7 +97,8 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
     expect_named(probdf, cls)
     expect_data_frame(info = info, probdf, nrows = getTaskSize(task), ncols = length(cls),
       types = "numeric", any.missing = FALSE)
-    expect_true(info = info, all(probdf >= 0 && probdf <= 1))
+    expect_true(info = info, all(probdf >= 0))
+    expect_true(info = info, all(probdf <= 1))
 
     expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE, tolerance = 0.01)
   }
