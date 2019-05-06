@@ -1,6 +1,9 @@
 context("benchmark")
 
 test_that("benchmark", {
+  on.exit(RNGversion(getRversion()))
+  suppressWarnings(RNGversion("3.5.0"))
+
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   learner.names = c("classif.lda", "classif.rpart")
