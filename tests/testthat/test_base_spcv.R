@@ -1,5 +1,8 @@
 
 test_that("Nested SpRepCV works without errors", {
+
+  set.seed(getOption("mlr.debug.seed"))
+
   data(spatial.task, package = "mlr", envir = environment())
 
   lrn.ksvm = makeLearner("classif.ksvm",
@@ -24,6 +27,9 @@ test_that("Nested SpRepCV works without errors", {
 })
 
 test_that("SpRepCV works without errors", {
+
+  set.seed(getOption("mlr.debug.seed"))
+
   data(spatial.task, package = "mlr", envir = environment())
 
   learner = makeLearner("classif.ksvm", predict.type = "prob", kernel = "rbfdot")
