@@ -10,6 +10,11 @@ env:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_TESTS_NLINES_=999
 
+r:
+  - devel
+  - release
+  - oldrel
+
 addons:
   apt:
     packages:
