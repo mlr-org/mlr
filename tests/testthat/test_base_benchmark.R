@@ -1,8 +1,7 @@
 context("benchmark")
 
 test_that("benchmark", {
-  on.exit(RNGversion(getRversion()))
-  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
 
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)

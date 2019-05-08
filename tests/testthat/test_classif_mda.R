@@ -2,8 +2,7 @@ context("classif_mda")
 
 test_that("classif_mda", {
   requirePackagesOrSkip("!mda", default.method = "load")
-  on.exit(RNGversion(getRversion()))
-  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
 
   parset.list1 = list(
     list(start.method = "lvq"),

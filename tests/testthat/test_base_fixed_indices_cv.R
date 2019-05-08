@@ -2,10 +2,7 @@ context("fixed")
 
 test_that("fixed in single resampling", {
 
-  on.exit(RNGversion(getRversion()))
-  suppressWarnings(RNGversion("3.5.0"))
-
-  set.seed(12345)
+  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
   df = multiclass.df
   fixed = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target = multiclass.target, data = multiclass.df,

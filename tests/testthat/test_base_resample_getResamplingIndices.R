@@ -2,7 +2,7 @@ context("resample_cv")
 
 test_that("getResamplingIndices works with getTuneResult", {
 
-  set.seed(getOption("mlr.debug.seed"))
+  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
 
   task = makeClassifTask(data = iris, target = "Species")
   lrn = makeLearner("classif.rpart")
