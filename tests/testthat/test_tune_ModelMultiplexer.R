@@ -101,8 +101,8 @@ test_that("ModelMultiplexer tuning", {
   res = tuneParams(lrn, binaryclass.task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
-  expect_true(!is.na(y))
-  expect_true(is.finite(y))
+  expect_true(all(!is.na(y)))
+  expect_true(all(is.finite(y)))
   # tune with irace
   task = subsetTask(binaryclass.task, subset = c(1:20, 150:170))
   ctrl = makeTuneControlIrace(maxExperiments = 40L, nbIterations = 2L, minNbSurvival = 1L)
