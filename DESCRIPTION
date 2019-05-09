@@ -265,7 +265,7 @@ Remotes:
     berndbischl/BBmisc,
     berndbischl/parallelMap,
     berndbischl/ParamHelpers,
-    jimhester/lintr
+    jimhester/lintr,
     r-lib/vctrs
 ByteCompile: yes
 Encoding: UTF-8
