@@ -68,7 +68,7 @@ test_that("getResamplingIndices(inner = TRUE) correctly translates the inner ind
   df = multiclass.df
   fixed = as.factor(rep(1:5, rep(30, 5)))
   ct = makeClassifTask(target = multiclass.target, data = df, blocking = fixed)
-  lrn = makeLearner("classif.lda")
+  lrn = makeLearner("classif.ranger")
   ctrl = makeTuneControlRandom(maxit = 2)
   ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
   inner = makeResampleDesc("CV", iters = 4, fixed = TRUE)
