@@ -43,6 +43,10 @@ test_that("TuneWrapper", {
 # see bug in issue 205
 test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
 
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+
   set.seed(getOption("mlr.debug.seed"))
 
   lrn = makeLearner("classif.glmnet", predict.type = "prob")

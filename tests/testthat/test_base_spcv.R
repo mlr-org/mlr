@@ -1,7 +1,10 @@
 
 test_that("Nested SpRepCV works without errors", {
 
-  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+  set.seed(getOption("mlr.debug.seed"))
 
   data(spatial.task, package = "mlr", envir = environment())
 
@@ -28,7 +31,10 @@ test_that("Nested SpRepCV works without errors", {
 
 test_that("SpRepCV works without errors", {
 
-  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+  set.seed(getOption("mlr.debug.seed"))
 
   data(spatial.task, package = "mlr", envir = environment())
 

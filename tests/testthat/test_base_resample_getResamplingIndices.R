@@ -2,7 +2,10 @@ context("resample_cv")
 
 test_that("getResamplingIndices works with getTuneResult", {
 
-  set.seed(getOption("mlr.debug.seed"), kind = "Rounding")
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+  set.seed(getOption("mlr.debug.seed"))
 
   task = makeClassifTask(data = iris, target = "Species")
   lrn = makeLearner("classif.rpart")
@@ -30,6 +33,9 @@ test_that("getResamplingIndices works with getTuneResult", {
 
 test_that("getResamplingIndices works with getFeatSelResult", {
 
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
   set.seed(getOption("mlr.debug.seed"))
 
   outer = makeResampleDesc("CV", iters = 2L)
@@ -53,6 +59,9 @@ test_that("getResamplingIndices works with getFeatSelResult", {
 
 test_that("getResamplingIndices(inner = TRUE) correctly translates the inner inds to indices of the task", {
 
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
   set.seed(getOption("mlr.debug.seed"))
 
   # this test is from "test_base_fixed_indices_cv.R"
