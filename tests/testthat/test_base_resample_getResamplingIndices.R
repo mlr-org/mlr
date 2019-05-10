@@ -69,8 +69,8 @@ test_that("getResamplingIndices(inner = TRUE) correctly translates the inner ind
   fixed = as.factor(rep(1:5, rep(30, 5)))
   ct = makeClassifTask(target = multiclass.target, data = df, blocking = fixed)
   lrn = makeLearner("classif.ranger")
-  ctrl = makeTuneControlRandom(maxit = 10)
-  ps = makeParamSet(makeIntegerParam("num.trees", lower = 50, upper = 100))
+  ctrl = makeTuneControlGrid()
+  ps = makeParamSet(makeIntegerParam("num.trees", lower = 50, upper = 70))
   inner = makeResampleDesc("CV", fixed = TRUE)
   outer = makeResampleDesc("CV", fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
