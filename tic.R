@@ -1,8 +1,8 @@
 get_stage("before_script") %>%
+  # fix the RWeka warning on Java 9+: http://weka.8497.n7.nabble.com/warnings-td42935.html
+  add_code_step(system("export _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'")) %>%
   add_code_step(RWeka::WPM("refresh-cache")) %>%
   add_code_step(RWeka::WPM('install-package', 'XMeans'))
-  # add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
-  #   "-install-package", "thirdparty/XMeans1.0.4.zip")))
 
 # R CMD Check
 do_package_checks(args = "--as-cran", error_on = "error",
