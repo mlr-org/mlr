@@ -1,6 +1,8 @@
 get_stage("before_script") %>%
-  add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
-    "-install-package", "thirdparty/XMeans1.0.4.zip")))
+  add_code_step(RWeka::WPM("refresh-cache")) %>%
+  add_code_step(RWeka::WPM('install-package', 'XMeans'))
+  # add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
+  #   "-install-package", "thirdparty/XMeans1.0.4.zip")))
 
 # R CMD Check
 do_package_checks(args = "--as-cran", error_on = "error",
