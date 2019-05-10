@@ -14,8 +14,7 @@ matrix:
   include:
   - r: devel
   - r: oldrel
-  - stage: Check and deploy
-    r: release
+  - r: release
     env:
       - FULL=true
 
