@@ -109,7 +109,7 @@ test_that("ModelMultiplexer tuning", {
   res = tuneParams(lrn, task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
-  expect_true(!is.na(y) && is.finite(y))
+  expect_true(all(!is.na(y) && is.finite(y)))
 })
 
 # we had bug here, see issue #609
