@@ -10,10 +10,14 @@ env:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_TESTS_NLINES_=999
 
-r:
-  - devel
-  - release
-  - oldrel
+jobs:
+  include:
+  - r: devel
+  - r: oldrel
+  - stage: Check and deploy
+    r: release
+    env:
+      - FULL=true
 
 addons:
   apt:
