@@ -2,11 +2,6 @@ context("resample_cv")
 
 test_that("getResamplingIndices works with getTuneResult", {
 
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
-
   task = makeClassifTask(data = iris, target = "Species")
   lrn = makeLearner("classif.rpart")
   # stupid mini grid
@@ -32,11 +27,6 @@ test_that("getResamplingIndices works with getTuneResult", {
 })
 
 test_that("getResamplingIndices works with getFeatSelResult", {
-
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
 
   outer = makeResampleDesc("CV", iters = 2L)
   inner = makeResampleDesc("Holdout")

@@ -86,11 +86,6 @@ test_that("FailureModel works", {
 
 test_that("ModelMultiplexer tuning", {
 
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
-
   lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
   rdesc = makeResampleDesc("CV", iters = 2L)
 

@@ -1,11 +1,6 @@
 
 test_that("Nested SpRepCV works without errors", {
 
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
-
   data(spatial.task, package = "mlr", envir = environment())
 
   lrn = makeLearner("classif.ranger",
@@ -29,11 +24,6 @@ test_that("Nested SpRepCV works without errors", {
 })
 
 test_that("SpRepCV works without errors", {
-
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
 
   data(spatial.task, package = "mlr", envir = environment())
 

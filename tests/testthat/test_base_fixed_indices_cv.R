@@ -2,11 +2,6 @@ context("fixed")
 
 test_that("fixed in single resampling", {
 
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
-
   df = multiclass.df
   fixed = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target = multiclass.target, data = multiclass.df,
