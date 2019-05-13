@@ -15,7 +15,7 @@ test_that("fixed in single resampling", {
   # check if all test.inds are unique
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
   # check if correct indices are together (one fold is enough)
-  expect_equal(p$instance$test.inds[[1]], c(18, 48, 78, 108, 138))
+  expect_equal(p$instance$test.inds[[1]], c(23, 53, 83, 113, 143))
 })
 
 test_that("fixed in nested resampling", {
