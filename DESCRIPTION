@@ -256,7 +256,6 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    vctrs,
     wavelets,
     xgboost (>= 0.6-2)
 VignetteBuilder:
@@ -265,8 +264,7 @@ Remotes:
     berndbischl/BBmisc,
     berndbischl/parallelMap,
     berndbischl/ParamHelpers,
-    jimhester/lintr,
-    r-lib/vctrs
+    jimhester/lintr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes

@@ -25,7 +25,7 @@ test_that("Nested SpRepCV works without errors", {
   out = resample(wrapper, spatial.task,
     resampling = outer, show.info = TRUE, measures = list(auc))
 
-  expect_vector(out$measures.test$auc, ptype = numeric(), size = 4)
+  expect_atomic_vector(out$measures.test$auc, min.len = 4, max.len = 4)
 })
 
 test_that("SpRepCV works without errors", {
@@ -44,5 +44,5 @@ test_that("SpRepCV works without errors", {
   out = resample(learner = learner, task = spatial.task,
     resampling = resampling, measures = list(auc))
 
-  expect_vector(out$measures.test$auc, ptype = numeric(), size = 4)
+  expect_atomic_vector(out$measures.test$auc, min.len = 4, max.len = 4)
 })
