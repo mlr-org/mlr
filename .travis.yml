@@ -9,11 +9,16 @@ env:
   global:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_TESTS_NLINES_=999
+    # for RWeka http://weka.8497.n7.nabble.com/warnings-td42935.htm
+    - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
 
-r:
-  - devel
-  - release
-  - oldrel
+matrix:
+  include:
+  - r: devel
+  - r: oldrel
+  - r: release
+    env:
+      - FULL=true
 
 addons:
   apt:

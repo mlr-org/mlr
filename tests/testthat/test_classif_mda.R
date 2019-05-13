@@ -2,8 +2,10 @@ context("classif_mda")
 
 test_that("classif_mda", {
   requirePackagesOrSkip("!mda", default.method = "load")
-  on.exit(RNGversion(getRversion()))
-  suppressWarnings(RNGversion("3.5.0"))
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+  set.seed(getOption("mlr.debug.seed"))
 
   parset.list1 = list(
     list(start.method = "lvq"),
