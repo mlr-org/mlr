@@ -3,6 +3,7 @@ context("measures")
 test_that("measures", {
   ct = binaryclass.task
   options(warn = 2)
+  on.exit(options(warn = 0))
   mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
     "regr", "predtype.response", "predtype.prob"),
   fun = function(task, model, pred, feats, extra.args) {
