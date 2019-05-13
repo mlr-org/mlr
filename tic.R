@@ -1,4 +1,4 @@
-get_stage("before_script") %>%
+get_stage("script") %>%
   add_code_step(RWeka::WPM("refresh-cache")) %>%
   add_code_step(RWeka::WPM('install-package', 'XMeans'))
 
