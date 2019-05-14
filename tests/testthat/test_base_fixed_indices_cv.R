@@ -1,7 +1,7 @@
 context("fixed")
 
 test_that("fixed in single resampling", {
-  set.seed(12345)
+
   df = multiclass.df
   fixed = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target = multiclass.target, data = multiclass.df,
@@ -15,7 +15,7 @@ test_that("fixed in single resampling", {
   # check if all test.inds are unique
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
   # check if correct indices are together (one fold is enough)
-  expect_equal(p$instance$test.inds[[1]], c(11, 41, 71, 101, 131))
+  expect_equal(p$instance$test.inds[[1]], c(23, 53, 83, 113, 143))
 })
 
 test_that("fixed in nested resampling", {

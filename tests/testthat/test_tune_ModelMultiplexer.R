@@ -85,6 +85,7 @@ test_that("FailureModel works", {
 })
 
 test_that("ModelMultiplexer tuning", {
+
   lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
   rdesc = makeResampleDesc("CV", iters = 2L)
 
@@ -95,14 +96,16 @@ test_that("ModelMultiplexer tuning", {
   res = tuneParams(lrn, binaryclass.task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
-  expect_true(!is.na(y) && is.finite(y))
+  expect_true(all(!is.na(y)))
+  expect_true(all(is.finite(y)))
   # tune with irace
   task = subsetTask(binaryclass.task, subset = c(1:20, 150:170))
   ctrl = makeTuneControlIrace(maxExperiments = 40L, nbIterations = 2L, minNbSurvival = 1L)
   res = tuneParams(lrn, task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
-  expect_true(!is.na(y) && is.finite(y))
+  expect_true(all(!is.na(y)))
+  expect_true(all(is.finite(y)))
 })
 
 # we had bug here, see issue #609

@@ -42,6 +42,7 @@ test_that("TuneWrapper", {
 
 # see bug in issue 205
 test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
+
   lrn = makeLearner("classif.glmnet", predict.type = "prob")
   rdesc = makeResampleDesc("Holdout", split = 0.3)
   ctrl = makeTuneControlRandom(maxit = 1L)
