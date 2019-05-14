@@ -21,7 +21,8 @@ test_that("FailureModel", {
   p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
   prob = getPredictionProbabilities(p)
-  expect_true(dim(prob) == c(150, 3) && all(is.na(prob)))
+  expect_true(all(dim(prob) == c(150, 3)))
+  expect_true(all(is.na(prob)))
 
   task = dropFeatures(regr.task, "chas")
   # regr: response

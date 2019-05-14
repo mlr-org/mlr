@@ -81,6 +81,7 @@
 impute = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+
   assertList(cols)
   checkTargetPreproc(obj, target, names(cols))
   UseMethod("impute")
@@ -98,21 +99,25 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
   # check that we dont request dummy col to be created for the target
   if (length(target) != 0L) {
     not.ok = which.first(target %in% names(dummy.cols))
-    if (length(not.ok) != 0L)
+    if (length(not.ok) != 0L) {
       stopf("Dummy creation of target column '%s' not possible", target[not.ok])
+    }
   }
   assertList(classes)
   not.ok = which.first(names(classes) %nin% allowed.classes)
-  if (length(not.ok))
+  if (length(not.ok)) {
     stopf("Column class '%s' for imputation not recognized", names(classes)[not.ok])
+  }
   not.ok = which.first(names(cols) %nin% names(data))
-  if (length(not.ok))
+  if (length(not.ok)) {
     stopf("Column for imputation not present in data: %s", names(cols)[not.ok])
+  }
   assertSubset(dummy.classes, choices = allowed.classes)
   assertCharacter(dummy.cols, any.missing = FALSE)
   not.ok = which.first(dummy.cols %nin% names(data))
-  if (length(not.ok))
+  if (length(not.ok)) {
     stopf("Column for dummy creation not present in data: %s", dummy.cols[not.ok])
+  }
   assertCharacter(dummy.classes, any.missing = FALSE)
   assertFlag(force.dummies)
   assertChoice(dummy.type, c("factor", "numeric"))
@@ -146,16 +151,19 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
 
   # handle dummies
   desc$dummies = union(names(feature.classes[feature.classes %in% dummy.classes]), dummy.cols)
-  if (!desc$force.dummies)
+  if (!desc$force.dummies) {
     desc$dummies = desc$dummies[vlapply(data[desc$dummies], anyMissing)]
+  }
 
   # cleanup
   desc$impute = Filter(Negate(is.null), desc$impute)
 
   # learn and thereby transform to list(impute(...), args(...))
   desc$impute = Map(function(xn, x) {
-    if (class(x)[1L] != "ImputeMethod")
+
+    if (class(x)[1L] != "ImputeMethod") {
       x = imputeConstant(x)
+    }
     list(
       impute = x$impute,
       args = do.call(x$learn, c(x$args, list(data = data, target = target, col = xn)))
@@ -193,6 +201,7 @@ impute.Task = function(obj, target = character(0L), classes = list(), cols = lis
 
 #' @export
 print.ImputationDesc = function(x, ...) {
+
   catf("Imputation description")
   catf("Target: %s", collapse(x$target))
   catf("Features: %i; Imputed: %i", length(x$features), length(x$impute))
@@ -221,18 +230,21 @@ print.ImputationDesc = function(x, ...) {
 #' @family impute
 #' @export
 reimpute = function(obj, desc) {
+
   UseMethod("reimpute")
 }
 
 #' @export
 reimpute.data.frame = function(obj, desc) {
+
   assertClass(desc, classes = "ImputationDesc")
   x = as.list(obj)
 
   # check for new columns
   new.cols = names(which(names(x) %nin% desc$cols))
-  if (length(new.cols))
+  if (length(new.cols)) {
     stop("New columns (%s) found in data. Unable to impute.", collapse(new.cols))
+  }
 
   # check for same storage type
   classes = vcapply(x, function(x) class(x)[1L])
@@ -249,12 +261,14 @@ reimpute.data.frame = function(obj, desc) {
   dummy.cols = lapply(x[desc$dummies], is.na)
   names(dummy.cols) = sprintf("%s.dummy", desc$dummies)
   not.ok = which.first(names(dummy.cols) %in% names(x))
-  if (length(not.ok))
+  if (length(not.ok)) {
     stopf("Dummy column '%s' already present in data", names(dummy.cols)[not.ok])
-  dummy.cols = if (desc$dummy.type == "numeric")
+  }
+  dummy.cols = if (desc$dummy.type == "numeric") {
     lapply(dummy.cols, as.numeric)
-  else
+  } else {
     lapply(dummy.cols, factor, levels = c("FALSE", "TRUE"))
+  }
 
   # check for new levels and replace with NAs
   if (desc$impute.new.levels) {
@@ -262,21 +276,23 @@ reimpute.data.frame = function(obj, desc) {
     newlvls = Map(function(x, expected) setdiff(levels(x), expected),
       x = x[cols], expected = desc$lvls)
     newlvls = Filter(length, newlvls)
-    if (length(newlvls))
+    if (length(newlvls)) {
       x[names(newlvls)] = Map(function(x, nl) droplevels(replace(x, x %in% nl, NA)),
         x = x[names(newlvls)], nl = newlvls)
+    }
   }
 
   # actually do the imputation
   cols = intersect(names(x), names(desc$impute))
   x[cols] = Map(
     function(xn, obj) do.call(obj$impute, c(list(data = x, target = desc$target, col = xn), obj$args)),
-  xn = cols, obj = desc$impute[cols])
+    xn = cols, obj = desc$impute[cols])
 
   # recode factor levels
   if (desc$recode.factor.levels) {
     cols = names(desc$lvls)
     x[cols] = Map(function(x, expected) {
+
       factor(as.character(x), levels = expected)
     }, x = x[cols], expected = desc$lvls)
   }
@@ -288,6 +304,7 @@ reimpute.data.frame = function(obj, desc) {
 
 #' @export
 reimpute.Task = function(obj, desc) {
+
   df = getTaskData(obj)
   imputed = reimpute.data.frame(df, desc)
   x = changeData(obj, data = imputed)

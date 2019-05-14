@@ -1,0 +1,114 @@
+---
+title: "Generic Bagging"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+One reason why random forests perform so well is that they are using bagging as
+a technique to gain more stability. But why do you want to limit yourself to the
+classifiers already implemented in well known random forests when it is really easy to build your own with `mlr`?
+
+Just bag an `mlr` learner already `makeBaggingWrapper()`.
+
+As in a random forest, we need a Learner which is trained on a subset of the data during each iteration of the bagging process.
+The subsets are chosen according to the parameters given to `makeBaggingWrapper()`:
+
+* `bw.iters` On how many subsets (samples) do we want to train our Learner?
+* `bw.replace` Sample with replacement (also known as *bootstrapping*)?
+* `bw.size` Percentage size of the samples. If `bw.replace = TRUE`, `bw.size = 1` is the default. This does not mean that one sample will contain all the observations as observations will occur multiple times in each sample.
+* `bw.feats` Percentage size of randomly selected features for each iteration.
+
+Of course we also need a Learner which we have to pass to `makeBaggingWrapper()`.
+
+```{r makeBaggingWrapper_setup}
+lrn = makeLearner("classif.rpart")
+bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, 
+  bw.size = 0.8, bw.feats = 3/4)
+```
+
+Now we can compare the performance with and without bagging.
+First let's try it without bagging:
+
+```{r makeBaggingWrapper_without}
+rdesc = makeResampleDesc("CV", iters = 10)
+r = resample(learner = lrn, task = sonar.task, resampling = rdesc, show.info = FALSE)
+r$aggr
+```
+
+And now with bagging:
+
+```{r makeBaggingWrapper_with}
+rdesc = makeResampleDesc("CV", iters = 10)
+result = resample(learner = bag.lrn, task = sonar.task, resampling = rdesc, show.info = FALSE)
+result$aggr
+```
+
+Training more learners takes more time, but can outperform pure learners
+on noisy data with many features.
+
+# Changing the type of prediction
+
+In case of a *classification* problem the predicted class labels are determined by majority voting over the predictions of the individual models.
+Additionally, posterior probabilities can be estimated as the relative proportions of the predicted class labels.
+For this purpose you have to change the predict type of the *bagging learner* as follows.
+
+```{r, eval = FALSE}
+bag.lrn = setPredictType(bag.lrn, predict.type = "prob")
+```
+
+Note that it is not relevant if the *base learner* itself can predict probabilities and that for this reason the predict type of the *base learner* always has to be ``"response"``.
+
+For *regression* the mean value across predictions is computed.
+Moreover, the standard deviation across predictions is estimated if the predict type of the bagging learner is changed to ``"se"``.
+Below, we give a small example for regression.
+
+```{r makeBaggingWrapper_regression}
+n = getTaskSize(bh.task)
+train.inds = seq(1, n, 3)
+test.inds  = setdiff(1:n, train.inds)
+lrn = makeLearner("regr.rpart")
+bag.lrn = makeBaggingWrapper(lrn)
+bag.lrn = setPredictType(bag.lrn, predict.type = "se")
+mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
+```
+
+With function `getLearnerModel()`, you can access the models fitted in the
+individual iterations.
+
+```{r}
+head(getLearnerModel(mod), 2)
+```
+
+Predict the response and calculate the standard deviation:
+
+```{r}
+pred = predict(mod, task = bh.task, subset = test.inds)
+head(as.data.frame(pred))
+```
+
+In the column labelled ``se`` the standard deviation for each prediction is given.
+
+Let's visualise this a bit using `ggplot2::ggplot2()`.
+Here we plot the percentage of lower status of the population (`lstat`) against the prediction.
+
+```{r makeBaggingWrapper_regressionPlot}
+library("ggplot2")
+library("reshape2")
+data = cbind(as.data.frame(pred), getTaskData(bh.task, subset = test.inds))
+g = ggplot(data, aes(x = lstat, y = response, ymin = response - se,
+  ymax = response + se, col = age))
+g + geom_point() + geom_linerange(alpha = 0.5)
+```

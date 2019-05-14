@@ -1,4 +1,4 @@
-#FIXME: where does time exactly come from? only test preds?
+# FIXME: where does time exactly come from? only test preds?
 
 #' Prediction from resampling.
 #'
@@ -16,6 +16,7 @@ NULL
 
 
 makeResamplePrediction = function(instance, preds.test, preds.train, task.desc) {
+
   tenull = sapply(preds.test, is.null)
   trnull = sapply(preds.train, is.null)
   if (any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
@@ -47,6 +48,7 @@ makeResamplePrediction = function(instance, preds.test, preds.train, task.desc) 
 
 #' @export
 print.ResamplePrediction = function(x, ...) {
+
   cat("Resampled Prediction for:\n")
   print(x$instance$desc)
   catf("predict.type: %s", x$predict.type)

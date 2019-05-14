@@ -408,7 +408,7 @@ of the prediction (or maybe only the model, think AIC).
 The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 
 All supported measures can be found by \link{listMeasures} or as a table
-in the tutorial appendix: \url{https://mlr-org.github.io/mlr/articles/measures.html}.
+in the tutorial appendix: \url{https://mlr.mlr-org.com/articles/tutorial/measures.html}.
 
 If you want a measure for a misclassification cost matrix, look at \link{makeCostMeasure}.
 If you want to implement your own measure, look at \link{makeMeasure}.
@@ -432,7 +432,7 @@ Statistics in medicine. 2011;30(10):1105-1117. \url{https://doi.org/10.1002/sim.
 
 H. Uno et al.
 \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
-Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
+Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{https://www.jstor.org/stable/27639883}.
 }
 \seealso{
 Other performance: \code{\link{ConfusionMatrix}},

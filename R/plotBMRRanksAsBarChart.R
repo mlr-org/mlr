@@ -31,6 +31,7 @@
 #' # see benchmark
 plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", aggregation = "default",
   pos = "stack", order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE) {
+
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(pos, c("tile", "stack", "dodge"))
@@ -59,7 +60,7 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
 
   if (pos == "tile") {
     p = ggplot(df, aes_string("rank", "task.id", fill = "learner.id"))
-    p = p + geom_tile()
+    p = p + geom_raster()
     p = p + ylab(NULL)
   } else {
     p = ggplot(df, aes_string("rank", fill = "learner.id"))

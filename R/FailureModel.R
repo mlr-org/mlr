@@ -34,23 +34,26 @@
 NULL
 
 predictFailureModel = function(model, newdata) {
+
   lrn = model$learner
   type = lrn$type
   ptype = lrn$predict.type
   n = nrow(newdata)
   if (type == "classif") {
     levs = model$task.desc$class.levels
-    res = if (ptype == "response")
+    res = if (ptype == "response") {
       factor(rep(NA_character_, n), levels = levs)
-    else
+    } else {
       matrix(NA_real_, nrow = n, ncol = length(levs), dimnames = list(NULL, levs))
+    }
   } else if (type == "regr") {
-    res = if (ptype == "response")
+    res = if (ptype == "response") {
       rep(NA_real_, n)
-    else
+    } else {
       matrix(NA_real_, nrow = n, ncol = 2L, dimnames = list(NULL, c("response", "se")))
+    }
   } else if (type == "surv") {
-    if (ptype == "response")
+    if (ptype == "response") {
       res = rep.int(NA_real_, n)
     else {
       preds = rep(NA_character_, n)
@@ -69,21 +72,25 @@ predictFailureModel = function(model, newdata) {
 
 #' @export
 print.FailureModel = function(x, ...) {
+
   print.WrappedModel(x)
   catf("Training failed: %s", getFailureModelMsg(x))
 }
 
 #' @export
 isFailureModel.FailureModel = function(model) {
+
   return(TRUE)
 }
 
 #' @export
 getFailureModelMsg.FailureModel = function(model) {
+
   return(as.character(model$learner.model))
 }
 
 #' @export
 getFailureModelDump.FailureModel = function(model) {
+
   return(model$dump)
 }

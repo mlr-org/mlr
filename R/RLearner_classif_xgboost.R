@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.xgboost = function() {
+
   makeRLearnerClassif(
     cl = "classif.xgboost",
     package = "xgboost",
@@ -41,11 +42,11 @@ makeRLearner.classif.xgboost = function() {
       makeNumericLearnerParam(id = "rate_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
       makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
       # TODO: uncomment the following after the next CRAN update, and set max_depth's lower = 0L
-      #makeLogicalLearnerParam(id = "one_drop", default = FALSE, requires = quote(booster == "dart")),
-      #makeDiscreteLearnerParam(id = "tree_method", default = "exact", values = c("exact", "hist"), requires = quote(booster != "gblinear")),
-      #makeDiscreteLearnerParam(id = "grow_policy", default = "depthwise", values = c("depthwise", "lossguide"), requires = quote(tree_method == "hist")),
-      #makeIntegerLearnerParam(id = "max_leaves", default = 0L, lower = 0L, requires = quote(grow_policy == "lossguide")),
-      #makeIntegerLearnerParam(id = "max_bin", default = 256L, lower = 2L, requires = quote(tree_method == "hist")),
+      # makeLogicalLearnerParam(id = "one_drop", default = FALSE, requires = quote(booster == "dart")),
+      # makeDiscreteLearnerParam(id = "tree_method", default = "exact", values = c("exact", "hist"), requires = quote(booster != "gblinear")),
+      # makeDiscreteLearnerParam(id = "grow_policy", default = "depthwise", values = c("depthwise", "lossguide"), requires = quote(tree_method == "hist")),
+      # makeIntegerLearnerParam(id = "max_leaves", default = 0L, lower = 0L, requires = quote(grow_policy == "lossguide")),
+      # makeIntegerLearnerParam(id = "max_bin", default = 256L, lower = 2L, requires = quote(tree_method == "hist")),
       makeUntypedLearnerParam(id = "callbacks", default = list(), tunable = FALSE)
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
@@ -58,49 +59,56 @@ makeRLearner.classif.xgboost = function() {
 }
 
 #' @export
-trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL, ...) {
 
   td = getTaskDesc(.task)
   parlist = list(...)
   nc = length(td$class.levels)
 
-  if (is.null(parlist$objective))
+  if (is.null(parlist$objective)) {
     parlist$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
+  }
 
-  if (.learner$predict.type == "prob" && parlist$objective == "multi:softmax")
+  if (.learner$predict.type == "prob" && parlist$objective == "multi:softmax") {
     stop("objective = 'multi:softmax' does not work with predict.type = 'prob'")
+  }
 
-  #if we use softprob or softmax as objective we have to add the number of classes 'num_class'
-  if (parlist$objective %in% c("multi:softprob", "multi:softmax"))
+  # if we use softprob or softmax as objective we have to add the number of classes 'num_class'
+  if (parlist$objective %in% c("multi:softprob", "multi:softmax")) {
     parlist$num_class = nc
+  }
 
   task.data = getTaskData(.task, .subset, target.extra = TRUE)
   label = match(as.character(task.data$target), td$class.levels) - 1
   parlist$data = xgboost::xgb.DMatrix(data = data.matrix(task.data$data), label = label)
 
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     xgboost::setinfo(parlist$data, "weight", .weights)
+  }
 
-  if (is.null(parlist$watchlist))
+  if (is.null(parlist$watchlist)) {
     parlist$watchlist = list(train = parlist$data)
+  }
 
   do.call(xgboost::xgb.train, parlist)
 }
 
 #' @export
 predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
+
   td = .model$task.desc
   m = .model$learner.model
   cls = td$class.levels
   nc = length(cls)
   obj = .learner$par.vals$objective
 
-  if (is.null(obj))
+  if (is.null(obj)) {
     .learner$par.vals$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
+  }
 
   p = predict(m, newdata = data.matrix(.newdata), ...)
 
-  if (nc == 2L) { #binaryclass
+  if (nc == 2L) { # binaryclass
     if (.learner$par.vals$objective == "multi:softprob") {
       y = matrix(p, nrow = length(p) / nc, ncol = nc, byrow = TRUE)
       colnames(y) = cls
@@ -118,9 +126,9 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
       p = factor(p, levels = colnames(y))
       return(p)
     }
-  } else { #multiclass
-    if (.learner$par.vals$objective  == "multi:softmax") {
-      p = as.factor(p) #special handling for multi:softmax which directly predicts class levels
+  } else { # multiclass
+    if (.learner$par.vals$objective == "multi:softmax") {
+      p = as.factor(p) # special handling for multi:softmax which directly predicts class levels
       levels(p) = cls
       return(p)
     } else {
@@ -139,6 +147,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   imp = xgboost::xgb.importance(feature_names = .model$features,
     model = mod, ...)

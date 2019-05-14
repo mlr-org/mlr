@@ -37,6 +37,8 @@ See below for a list of supported learners.
    {Estimation of relative influence for each feature. See
    \link[gbm:relative.influence]{relative.influence}
    for details and further parameters.}
+   \item{h2o} \cr
+   {Relative feature importances as returned by \link[h2o:h2o.varimp]{varimp}.}
    \item{randomForest} \cr
    {For `type = 2` (the default) the 'MeanDecreaseGini' is measured,
    which is based on the Gini impurity index used for the calculation of the nodes.

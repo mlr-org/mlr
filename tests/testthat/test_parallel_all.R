@@ -2,6 +2,7 @@ context("parallel_all")
 
 test_that("parallel resampling", {
   doit = function(mode, level) {
+
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     on.exit(parallelStop())
@@ -24,6 +25,7 @@ test_that("parallel resampling", {
 
 test_that("parallel tuning", {
   doit = function(mode, level) {
+
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     ps = makeParamSet(makeDiscreteParam("cp", values = c(0.01, 0.05)))
@@ -48,6 +50,7 @@ test_that("parallel tuning", {
 
 test_that("parallel featsel", {
   doit = function(mode, level) {
+
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     ctrl = makeFeatSelControlRandom(maxit = 2L)
@@ -71,6 +74,7 @@ test_that("parallel featsel", {
 
 test_that("parallel exporting of options works", {
   doit = function(mode, level) {
+
     data = iris
     data[, 1] = 1 # this is going to crash lda
     task = makeClassifTask(data = data, target = "Species")
@@ -90,6 +94,7 @@ test_that("parallel exporting of options works", {
 
 test_that("parallel partial dependence", {
   doit = function(mode) {
+
     lrn = makeLearner("regr.rpart")
     fit = train(lrn, regr.task)
     on.exit(parallelStop())
@@ -106,6 +111,7 @@ test_that("parallel partial dependence", {
 
 test_that("parallel ensembles", {
   doit = function(mode, level) {
+
     on.exit(parallelStop())
     parallelStart(mode = mode, cpus = 2L, show.info = FALSE)
 
@@ -148,7 +154,7 @@ test_that("parallel ensembles", {
     p = predict(fit, multilabel.task)
   }
 
-    ## CostSensWeightedPairsWrapper
+  ## CostSensWeightedPairsWrapper
   if (Sys.info()["sysname"] != "Windows") {
     doit("multicore", "mlr.ensemble")
     doit("mpi", "mlr.ensemble")

@@ -1,0 +1,833 @@
+---
+title: "Resampling"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+# Not strictly necessary, but otherwise we might get NAs later on
+# if 'rpart' is not installed.
+library("rpart")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+Resampling strategies are usually used to assess the performance of a learning algorithm:
+The entire data set is (repeatedly) split into training sets $D^{*b}$ and test sets $D \setminus D^{*b}$, $b = 1,\ldots,B$.
+The learner is trained on each training set, predictions are made on the corresponding test set (sometimes on the training set as well) and the performance measure $S(D^{*b}, D \setminus D^{*b})$ is calculated.
+Then the $B$ individual performance values are aggregated, most often by calculating the mean.
+There exist various different resampling strategies, for example cross-validation and bootstrap, to mention just two popular approaches.
+
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") == "latex"}
+knitr::include_graphics("img/resampling.png")
+```
+
+```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
+knitr::include_graphics("https://raw.githubusercontent.com/pat-s/mlr/master/vignettes/tutorial/devel/pdf/img/resampling.png")
+```
+
+If you want to read up on further details, the paper [Resampling Strategies for Model Assessment and Selection](http://link.springer.com/chapter/10.1007%2F978-0-387-47509-7_8) by Simon is probably not a bad choice.
+Bernd has also published a paper [Resampling methods for meta-model validation with recommendations for evolutionary computation](http://www.mitpressjournals.org/doi/pdf/10.1162/EVCO_a_00069) which contains detailed descriptions and lots of statistical background information on resampling methods.
+
+## Defining the resampling strategy
+
+In `mlr` the resampling strategy can be defined via function `makeResampleDesc()`.
+It requires a string that specifies the resampling method and, depending on the selected strategy, further information like the number of iterations.
+The supported resampling strategies are:
+
+* Cross-validation (``"CV"``),
+* Leave-one-out cross-validation (``"LOO"``),
+* Repeated cross-validation (``"RepCV"``),
+* Out-of-bag bootstrap and other variants like *b632* (``"Bootstrap"``),
+* Subsampling, also called Monte-Carlo cross-validation (``"Subsample"``),
+* Holdout (training/test) (``"Holdout"``).
+
+For example if you want to use 3-fold cross-validation type:
+
+```{r}
+# 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3)
+rdesc
+```
+
+For holdout estimation use:
+
+```{r}
+# Holdout estimation
+rdesc = makeResampleDesc("Holdout")
+rdesc
+```
+
+In order to save you some typing `mlr` contains some pre-defined resample descriptions for very common strategies like holdout (`hout` (`makeResampleDesc()`)) as well as cross-validation with different numbers of folds (e.g., `cv5` (`makeResampleDesc()`) or `cv10` (`makeResampleDesc()`)).
+
+```{r}
+hout
+
+cv3
+```
+
+## Performing the resampling
+
+Function `resample()` evaluates a Learner (`makeLearner()`) on a given machine learning `Task()` using the selected resampling strategy (`makeResampleDesc()`).
+
+As a first example, the performance of linear regression (`stats::lm()`) on the `BostonHousing` (`mlbench::BostonHousing()`) data set is calculated using *3-fold cross-validation*.
+
+Generally, for *$K$-fold cross-validation* the data set $D$ is partitioned into $K$ subsets of (approximately) equal size.
+In the $b$-th of the $K$ iterations, the $b$-th subset is used for testing, while the union of the remaining parts forms the training set.
+
+As usual, you can either pass a Learner (`makeLearner()`) object to `resample()` or, as done here, provide the class name `"regr.lm"` of the learner.
+Since no performance measure is specified the default for regression learners (mean squared error, [mse](measures.html){target="_blank"}) is calculated.
+
+```{r echo = FALSE, results='hide'}
+# Specify the resampling strategy (3-fold cross-validation)
+rdesc = makeResampleDesc("CV", iters = 3)
+
+# Calculate the performance
+r = resample("regr.lm", bh.task, rdesc)
+
+r
+```
+
+```{r eval = FALSE}
+# Specify the resampling strategy (3-fold cross-validation)
+rdesc = makeResampleDesc("CV", iters = 3)
+
+# Calculate the performance
+r = resample("regr.lm", bh.task, rdesc)
+## Resampling: cross-validation
+## Measures:             mse
+## [Resample] iter 1:    25.1371739
+## [Resample] iter 2:    23.1279497
+## [Resample] iter 3:    21.9152672
+## 
+## Aggregated Result: mse.test.mean=23.3934636
+## 
+
+r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.test.mean=23.3934636
+## Runtime: 0.0375051
+```
+
+The result `r` is an object of class `resample()` result.
+It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.
+
+```{r}
+# Peak into r
+names(r)
+
+r$aggr
+
+r$measures.test
+```
+
+`r$measures.test` gives the performance on each of the 3 test data sets.
+`r$aggr` shows the aggregated performance value.
+Its name `"mse.test.mean"` indicates the performance measure, [mse](measures.html){target="_blank"}, and the method, `test.mean` (`aggregations()`), used to aggregate the 3 individual performances. 
+`test.mean` (`aggregations()`) is the default aggregation scheme for most performance measures and, as the name implies, takes the mean over the performances on the test data sets.
+
+Resampling in `mlr` works the same way for all types of learning problems and learners.
+Below is a classification example where a classification tree (rpart) (`rpart::rpart()`) is evaluated on the `Sonar` (`mlbench::sonar()`) data set by subsampling with 5 iterations.
+
+In each subsampling iteration the data set $D$ is randomly partitioned into a training and a test set according to a given percentage, e.g., 2/3 training and 1/3 test set. 
+If there is just one iteration, the strategy is commonly called *holdout* or *test sample estimation*.
+
+You can calculate several measures at once by passing a `list` of Measures (`makeMeasure()`)s to `resample()`.
+Below, the error rate ([mmce](measures.html){target="_blank"}), false positive and false negative rates ([fpr](measures.html){target="_blank"}, [fnr](measures.html){target="_blank"}), and the time it takes to train the learner ([timetrain](measures.html){target="_blank"}) are estimated by *subsampling* with 5 iterations.
+
+```{r echo = FALSE, results='hide', message=FALSE}
+# Subsampling with 5 iterations and default split ratio 2/3
+rdesc = makeResampleDesc("Subsample", iters = 5)
+
+# Subsampling with 5 iterations and 4/5 training data
+rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
+
+# Classification tree with information splitting criterion
+lrn = makeLearner("classif.rpart", parms = list(split = "information"))
+
+# Calculate the performance measures
+r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
+```
+
+```{r eval = FALSE}
+# Subsampling with 5 iterations and default split ratio 2/3
+rdesc = makeResampleDesc("Subsample", iters = 5)
+
+# Subsampling with 5 iterations and 4/5 training data
+rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
+
+# Classification tree with information splitting criterion
+lrn = makeLearner("classif.rpart", parms = list(split = "information"))
+
+# Calculate the performance measures
+r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
+## Resampling: subsampling
+## Measures:             mmce        fpr         fnr         timetrain
+## [Resample] iter 1:    0.4047619   0.5416667   0.2222222   0.0110000
+## [Resample] iter 2:    0.1666667   0.1200000   0.2352941   0.0070000
+## [Resample] iter 3:    0.3333333   0.1333333   0.4444444   0.0100000
+## [Resample] iter 4:    0.2380952   0.3913043   0.0526316   0.0280000
+## [Resample] iter 5:    0.3095238   0.2800000   0.3529412   0.0080000
+## 
+## Aggregated Result: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000
+## 
+
+r
+## Resample Result
+## Task: Sonar-example
+## Learner: classif.rpart
+## Aggr perf: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000
+## Runtime: 0.10692
+```
+
+If you want to add further measures afterwards, use `addRRMeasure()`.
+
+```{r echo = FALSE, results='hide'}
+# Add balanced error rate (ber) and time used to predict
+addRRMeasure(r, list(ber, timepredict))
+```
+
+```{r eval = FALSE}
+# Add balanced error rate (ber) and time used to predict
+addRRMeasure(r, list(ber, timepredict))
+
+## Resample Result
+## Task: Sonar-example
+## Learner: classif.rpart
+## Aggr perf: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000,ber.test.mean=0.2773838,timepredict.test.mean=0.0032000
+## Runtime: 0.10692
+```
+
+By default, `resample()` prints progress messages and intermediate results. You can turn this off by setting `show.info = FALSE`, as done in the code chunk below. 
+(If you are interested in suppressing these messages permanently have a look at the tutorial page about [configuring mlr](configureMlr.html){target="_blank"}.)
+
+In the above example, the Learner (`makeLearner()`) was explicitly constructed. 
+For convenience you can also specify the learner as a string and pass any learner parameters via the `...` argument of `resample()`.
+
+```{r echo = FALSE, results='hide'}
+r = resample("classif.rpart", parms = list(split = "information"), sonar.task, rdesc,
+  measures = list(mmce, fpr, fnr, timetrain), show.info = FALSE)
+
+r
+```
+
+```{r eval = FALSE}
+r = resample("classif.rpart", parms = list(split = "information"), sonar.task, rdesc,
+  measures = list(mmce, fpr, fnr, timetrain), show.info = FALSE)
+
+r
+
+## Resample Result
+## Task: Sonar-example
+## Learner: classif.rpart
+## Aggr perf: mmce.test.mean=0.2428571,fpr.test.mean=0.2968173,fnr.test.mean=0.1970195,timetrain.test.mean=0.0084000
+## Runtime: 0.0791025
+```
+
+## Accessing resample results
+
+Apart from the learner performance you can extract further information from the resample results, for example predicted values or the models fitted in individual resample iterations.
+
+### Predictions
+
+Per default, the `resample()` result contains the predictions made during the resampling.
+If you do not want to keep them, e.g., in order to conserve memory, set `keep.pred = FALSE` when calling `resample()`.
+
+The predictions are stored in slot `$pred` of the resampling result, which can also be accessed by function `getRRPredictions()`.
+
+```{r echo = FALSE, results='hide'}
+r$pred
+
+pred = getRRPredictions(r)
+pred
+```
+
+```{r eval = FALSE}
+r$pred
+## Resampled Prediction for:
+## Resample description: subsampling with 5 iterations and 0.80 split rate.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##    id truth response iter  set
+## 1  18     R        M    1 test
+## 2 189     M        M    1 test
+## 3  88     R        R    1 test
+## 4 121     M        R    1 test
+## 5 165     M        R    1 test
+## 6 111     M        M    1 test
+## ... (#rows: 210, #cols: 5)
+
+pred = getRRPredictions(r)
+pred
+## Resampled Prediction for:
+## Resample description: subsampling with 5 iterations and 0.80 split rate.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##    id truth response iter  set
+## 1  18     R        M    1 test
+## 2 189     M        M    1 test
+## 3  88     R        R    1 test
+## 4 121     M        R    1 test
+## 5 165     M        R    1 test
+## 6 111     M        M    1 test
+## ... (#rows: 210, #cols: 5)
+```
+
+`pred` is an object of class `resample()` Prediction.
+Just as a `Prediction()` object (see the tutorial page on making [predictions](predict.html){target="_blank"} it has an element `$data` which is a `data.frame` that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s).
+You can use `as.data.frame` (`Prediction()` to directly access the `$data` slot. 
+Moreover, all getter functions for `Prediction()` objects like `getPredictionResponse()` or `getPredictionProbabilities()` are applicable.
+
+```{r}
+head(as.data.frame(pred))
+
+head(getPredictionTruth(pred))
+
+head(getPredictionResponse(pred))
+```
+
+The columns `iter` and `set` in the `data.frame` indicate the resampling iteration and the data set (`train` or `test`) for which the prediction was made.
+
+By default, predictions are made for the test sets only.
+If predictions for the training set are required, set `predict = "train"` (for predictions on the train set only) or `predict = "both"` (for predictions on both train and test sets) in `makeResampleDesc()`. 
+In any case, this is necessary for some bootstrap methods (*b632* and *b632+*) and some examples are shown later on.
+
+Below, we use simple Holdout, i.e., split the data once into a training and test set, as resampling strategy and make predictions on both sets.
+
+```{r echo = FALSE, results='hide'}
+# Make predictions on both training and test sets
+rdesc = makeResampleDesc("Holdout", predict = "both")
+
+r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
+r
+
+r$measures.train
+```
+
+```{r eval = FALSE}
+# Make predictions on both training and test sets
+rdesc = makeResampleDesc("Holdout", predict = "both")
+
+r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
+r
+## Resample Result
+## Task: iris-example
+## Learner: classif.lda
+## Aggr perf: mmce.test.mean=0.0200000
+## Runtime: 0.00993848
+
+r$measures.train
+##   iter mmce
+## 1    1 0.02
+```
+
+(Please note that nonetheless the misclassification rate `r$aggr` is estimated on the test data only.
+How to calculate performance measures on the training sets is shown below.)
+
+A second function to extract predictions from resample results is `getRRPredictionList()` which returns a `list` of predictions split by data set (train/test) and resampling iteration.
+
+```{r echo = FALSE, results='hide'}
+predList = getRRPredictionList(r)
+predList
+```
+
+```{r eval = FALSE}
+predList = getRRPredictionList(r)
+predList
+## $train
+## $train$`1`
+## Prediction: 100 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##      id      truth   response
+## 96   96 versicolor versicolor
+## 130 130  virginica  virginica
+## 120 120  virginica  virginica
+## 77   77 versicolor versicolor
+## 23   23     setosa     setosa
+## 59   59 versicolor versicolor
+## ... (#rows: 100, #cols: 3)
+## 
+## 
+## $test
+## $test$`1`
+## Prediction: 50 observations
+## predict.type: response
+## threshold: 
+## time: 0.00
+##      id      truth   response
+## 92   92 versicolor versicolor
+## 58   58 versicolor versicolor
+## 48   48     setosa     setosa
+## 103 103  virginica  virginica
+## 70   70 versicolor versicolor
+## 82   82 versicolor versicolor
+## ... (#rows: 50, #cols: 3)
+```
+
+### Learner models
+
+In each resampling iteration a Learner (`makeLearner()`) is fitted on the respective training set.
+By default, the resulting `WrappedModel` (`makeWrappedModel()`)s are not included in the `resample()` result and slot `$models` is empty.
+In order to keep them, set `models = TRUE` when calling `resample()`, as in the following survival analysis example.
+
+```{r}
+# 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3)
+
+r = resample("surv.coxph", lung.task, rdesc, show.info = FALSE, models = TRUE)
+r$models
+```
+
+### The extract option
+
+Keeping complete fitted models can be memory-intensive if these objects are large or
+the number of resampling iterations is high.
+Alternatively, you can use the `extract` argument of `resample()` to retain only the information you need.
+To this end you need to pass a function to `extract` which is applied to each `WrappedModel` (`makeWrappedModel()`) object fitted in each resampling iteration.
+
+Below, we cluster the `datasets::mtcars()` data using the $k$-means algorithm with $k = 3$ and keep only the cluster centers.
+
+```{r}
+# 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3)
+
+# Extract the compute cluster centers
+r = resample("cluster.kmeans", mtcars.task, rdesc, show.info = FALSE,
+  centers = 3, extract = function(x) getLearnerModel(x)$centers)
+r$extract
+```
+
+As a second example, we extract the variable importances from fitted regression trees using function `getFeatureImportance()`.
+(For more detailed information on this topic see the [feature selection](feature_selection.html){target="_blank"} page.)
+
+```{r}
+# Extract the variable importance in a regression tree
+r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE, extract = getFeatureImportance)
+r$extract
+```
+
+There is also an convenience function `getResamplingIndices()` to extract the resampling indices from the `ResampleResult` object:
+
+```{r}
+getResamplingIndices(r)
+```
+
+## Stratification, Blocking and Grouping
+
+* *Stratification* with respect to a categorical variable makes sure that all its values are present in each training and test set in approximately the same proportion as in the original data set.
+Stratification is possible with regard to categorical target variables (and thus for supervised classification and survival analysis) or categorical explanatory variables.
+
+* *Blocking* refers to the situation that subsets of observations belong together and must not be separated during resampling. 
+Hence, for one train/test set pair the entire block is either in the training set or in the test set.
+
+- *Grouping* means that the folds are composed out of a factor vector given by the user. 
+  In this setting no repetitions are possible as all folds are predefined. 
+  The approach can also be used in a nested resampling setting.
+  Note the subtle but important difference to "Blocking": 
+  In "Blocking" factor levels are respected when splitting into train and test (e.g. the test set could be composed out of two given factor levels) whereas in "Grouping" the folds will strictly follow the factor level grouping (meaning that the test set will always only consist of one factor level).
+
+### Stratification with respect to the target variable(s)
+
+For classification, it is usually desirable to have the same proportion of the classes in
+all of the partitions of the original data set.
+This is particularly useful in the case of imbalanced classes and small data sets. 
+Otherwise,
+it may happen that observations of less frequent classes are missing in some of the training
+sets which can decrease the performance of the learner, or lead to model crashes.
+In order to conduct stratified resampling, set ``stratify = TRUE`` in `makeResampleDesc()`.
+
+```{r echo = FALSE, results='hide'}
+# 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
+
+r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
+r
+```
+
+```{r eval = FALSE}
+# 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
+
+r = resample("classif.lda", iris.task, rdesc, show.info = FALSE)
+r
+## Resample Result
+## Task: iris-example
+## Learner: classif.lda
+## Aggr perf: mmce.test.mean=0.0200000
+## Runtime: 0.0176296
+```
+
+Stratification is also available for survival tasks.
+Here the stratification balances the censoring rate.
+
+### Stratification with respect to explanatory variables
+
+Sometimes it is required to also stratify on the input data, e.g., to ensure that all subgroups are represented in all training and test sets.
+To stratify on the input columns, specify `factor` columns of your task data via ``stratify.cols``.
+
+```{r echo = FALSE, results='hide'}
+rdesc = makeResampleDesc("CV", iters = 3, stratify.cols = "chas")
+
+r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE)
+r
+```
+
+```{r eval = FALSE}
+rdesc = makeResampleDesc("CV", iters = 3, stratify.cols = "chas")
+
+r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE)
+r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.rpart
+## Aggr perf: mse.test.mean=23.8843587
+## Runtime: 0.0268815
+```
+
+### Blocking: CV with flexible predefined indices
+ 
+If some observations "belong together" and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a `blocking` factor when creating the [task](task.html){target="_blank"}.
+
+```{r}
+# 5 blocks containing 30 observations each
+task = makeClassifTask(data = iris, target = "Species", blocking = factor(rep(1:5, each = 30)))
+task
+```
+
+When performing a simple "CV" resampling and inspecting the result, we see that the training indices in fold 1 correspond to the specified grouping set in `blocking` in the task.
+To initiate this method, we need to set `blocking.cv = TRUE` when creating the resample description object.
+
+```{r}
+rdesc = makeResampleDesc("CV", iters = 3, blocking.cv = TRUE)
+p = resample("classif.lda", task, rdesc)
+
+sort(p$pred$instance$train.inds[[1]])
+```
+
+However, please note the effects of this method: The created folds will not have the same size!
+Here, Fold 1 has a 120/30 split while the other two folds have a 90/60 split.
+
+```{r}
+lapply(p$pred$instance$train.inds, function(x) length(x))
+```
+
+This is caused by the fact that we supplied five groups that must belong together but only used a three fold resampling strategy here.
+
+### Grouping: CV with fixed predefined indices
+
+There is a second way of using predefined indices in resampling in `mlr`: Constructing the folds based on the supplied indices in `blocking`.
+We refer to this method here as "grouping" to distinguish it from "blocking".
+This method is more restrictive in the way that it will always use the number of levels supplied via `blocking` as the number of folds.
+To use this method, we need to set `fixed = TRUE` instead of `blocking.cv` when creating the resampling description object.
+
+We can leave out the `iters` argument, as it will be set internally to the number of supplied factor levels.
+
+```{r}
+rdesc = makeResampleDesc("CV", fixed = TRUE)
+p = resample("classif.lda", task, rdesc)
+sort(p$pred$instance$train.inds[[1]])
+```
+
+You can see that we automatically created five folds in which the test set always corresponds to one factor level.
+
+Doing it this way also means that we cannot do repeated CV because there is no way to create multiple shuffled folds of this fixed arrangement.
+
+```{r}
+lapply(p$pred$instance$train.inds, function(x) length(x))
+```
+
+However, this method can also be used in nested resampling settings (e.g. in hyperparameter tuning).
+In the inner level, the factor levels are honored and the function simply creates one fold less than in the outer level. 
+
+Please note that the `iters` argument has no effect in `makeResampleDesc()` if `fixed = TRUE`.
+The number of folds will be automatically set based on the supplied number of factor levels via `blocking`.
+In the inner level, the number of folds will simply be one less than in the outer level.
+
+```{r, warning=FALSE}
+# test fixed in nested resampling
+lrn = makeLearner("classif.lda")
+ctrl <- makeTuneControlRandom(maxit = 2)
+ps <- makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
+inner = makeResampleDesc("CV", fixed = TRUE)
+outer = makeResampleDesc("CV", fixed = TRUE)
+tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
+  control = ctrl, show.info = FALSE)
+
+p = resample(tune_wrapper, task, outer, show.info = FALSE,
+  extract = getTuneResult)
+```
+
+To check on the inner resampling indices, you can call `getResamplingIndices(inner = TRUE)`.
+You can see that for every outer fold (List of 5), four inner folds were created that respect the grouping supplied via the `blocking` argument.
+
+Of course you can also use a normal random sampling "CV" description in the inner level by just setting `fixed = FALSE`.
+
+```{r}
+str(getResamplingIndices(p, inner = TRUE))
+```
+
+## Resample descriptions and resample instances
+
+As already mentioned, you can specify a resampling strategy using function `makeResampleDesc()`.
+
+```{r}
+rdesc = makeResampleDesc("CV", iters = 3)
+rdesc
+
+str(rdesc)
+
+str(makeResampleDesc("Subsample", stratify.cols = "chas"))
+```
+
+The result `rdesc` inherits from class `ResampleDesc` (`makeResampleDesc()`) (short for resample description) and, in principle, contains all necessary information about the resampling strategy including the number of iterations, the proportion of training and test sets, stratification variables, etc.
+
+Given either the size of the data set at hand or the `Task()`, function `makeResampleInstance()` draws the training and test sets according to the `ResampleDesc` (`makeResampleDesc()`).
+
+```{r}
+# Create a resample instance based an a task
+rin = makeResampleInstance(rdesc, iris.task)
+rin
+
+str(rin)
+
+# Create a resample instance given the size of the data set
+rin = makeResampleInstance(rdesc, size = nrow(iris))
+str(rin)
+
+# Access the indices of the training observations in iteration 3
+rin$train.inds[[3]]
+```
+
+The result `rin` inherits from class `ResampleInstance` (`makeResampleInstance()`) and contains `list`s of index vectors for the train and test sets.
+
+If a `ResampleDesc` (`makeResampleDesc()`) is passed to `resample()`, it is instantiated internally.
+Naturally, it is also possible to pass a `ResampleInstance` (`makeResampleInstance()`) directly.
+
+While the separation between resample descriptions, resample instances, and the `resample()` function itself seems overly complicated, it has several advantages:
+
+* Resample instances readily allow for paired experiments, that is comparing the performance of several learners on exactly the same training and test sets.
+This is particularly useful if you want to add another method to a comparison experiment you already did. 
+Moreover, you can store the resample instance along with your data in order to be able to reproduce your results later on.
+
+```{r}
+rdesc = makeResampleDesc("CV", iters = 3)
+rin = makeResampleInstance(rdesc, task = iris.task)
+
+# Calculate the performance of two learners based on the same resample instance
+r.lda = resample("classif.lda", iris.task, rin, show.info = FALSE)
+r.rpart = resample("classif.rpart", iris.task, rin, show.info = FALSE)
+r.lda$aggr
+
+r.rpart$aggr
+```
+
+* In order to add further resampling methods you can simply derive from the `ResampleDesc` (`makeResampleDesc()`) and `ResampleInstance` (`makeResampleInstance()`) classes, but you do neither have to touch `resample()` nor any further methods that use the resampling strategy.
+
+Usually, when calling `makeResampleInstance()` the train and test index sets are drawn randomly.
+Mainly for *holdout* (*test sample*) *estimation* you might want full control about the training and tests set and specify them manually.
+This can be done using function `makeFixedHoldoutInstance()`.
+
+```{r}
+rin = makeFixedHoldoutInstance(train.inds = 1:100, test.inds = 101:150, size = 150)
+rin
+```
+
+## Aggregating performance values
+
+In each resampling iteration $b = 1,\ldots,B$ we get performance values $S(D^{*b}, D \setminus D^{*b})$ (for each measure we wish to calculate), which are then aggregated to an overall performance.
+
+For the great majority of common resampling strategies (like holdout, cross-validation, subsampling) performance values are calculated on the test data sets only and for most measures aggregated by taking the mean (`test.mean`(`aggregations()`)).
+
+Each performance `Measure` (`makeMeasure()`) in `mlr` has a corresponding default aggregation method which is stored in slot `$aggr`.
+The default aggregation for most measures is `test.mean`(`aggregations()`).
+One exception is the root mean square error ([rmse](measures.html){target="_blank"}).
+
+```{r eval = FALSE}
+# Mean misclassification error
+mmce$aggr
+## Aggregation function: test.mean
+
+mmce$aggr$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## mean(perf.test)
+## <bytecode: 0xc8eade8>
+## <environment: namespace:mlr>
+
+# Root mean square error
+rmse$aggr
+## Aggregation function: test.rmse
+
+rmse$aggr$fun
+## function (task, perf.test, perf.train, measure, group, pred) 
+## sqrt(mean(perf.test^2))
+## <bytecode: 0x23ad72d8>
+## <environment: namespace:mlr>
+```
+
+You can change the aggregation method of a `Measure` (`makeMeasure()`) via function `setAggregation()`.
+All available aggregation schemes are listed on the `aggregations()` documentation page.
+
+#### Example: One measure with different aggregations
+
+The aggregation schemes `test.median` (`aggregations()`), `test.min` (`aggregations()`), and `text.max` (`aggregations()`) compute the median, minimum, and maximum of the performance values on the test sets.
+
+```{r echo = FALSE, results='hide'}
+mseTestMedian = setAggregation(mse, test.median)
+mseTestMin = setAggregation(mse, test.min)
+mseTestMax = setAggregation(mse, test.max)
+
+mseTestMedian
+
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("regr.lm", bh.task, rdesc, measures = list(mse, mseTestMedian, mseTestMin, mseTestMax))
+```
+
+```{r eval = FALSE}
+mseTestMedian = setAggregation(mse, test.median)
+mseTestMin = setAggregation(mse, test.min)
+mseTestMax = setAggregation(mse, test.max)
+
+mseTestMedian
+## Name: Mean of squared errors
+## Performance measure: mse
+## Properties: regr,req.pred,req.truth
+## Minimize: TRUE
+## Best: 0; Worst: Inf
+## Aggregated by: test.median
+## Arguments: 
+## Note: Defined as: mean((response - truth)^2)
+
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("regr.lm", bh.task, rdesc, measures = list(mse, mseTestMedian, mseTestMin, mseTestMax))
+## Resampling: cross-validation
+## Measures:             mse       mse       mse       mse
+## [Resample] iter 1:    24.078202624.078202624.078202624.0782026
+## [Resample] iter 2:    29.498307729.498307729.498307729.4983077
+## [Resample] iter 3:    18.689471818.689471818.689471818.6894718
+## 
+## Aggregated Result: mse.test.mean=24.0886607,mse.test.median=24.0782026,mse.test.min=18.6894718,mse.test.max=29.4983077
+## 
+
+r
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.test.mean=24.0886607,mse.test.median=24.0782026,mse.test.min=18.6894718,mse.test.max=29.4983077
+## Runtime: 0.0288048
+
+r$aggr
+##   mse.test.mean mse.test.median    mse.test.min    mse.test.max 
+##        24.08866        24.07820        18.68947        29.49831
+```
+
+### Example: Calculating the training error
+
+Below we calculate the mean misclassification error ([mmce](measures.html){target="_blank"}) on the training
+and the test data sets. 
+Note that we have to set `predict = "both"` when calling `makeResampleDesc()` in order to get predictions on both training and test sets.
+
+```{r}
+mmceTrainMean = setAggregation(mmce, train.mean)
+rdesc = makeResampleDesc("CV", iters = 3, predict = "both")
+r = resample("classif.rpart", iris.task, rdesc, measures = list(mmce, mmceTrainMean))
+
+r$measures.train
+
+r$aggr
+```
+
+### Example: Bootstrap
+
+In *out-of-bag bootstrap estimation* $B$ new data sets $D^{*1}, \ldots, D^{*B}$ are drawn
+from the data set $D$ with replacement, each of the same size as $D$.
+In the $b$-th iteration, $D^{*b}$ forms the training set, while the remaining elements from
+$D$, i.e., $D \setminus D^{*b}$, form the test set.
+
+<!--(
+                     |resampling_desc_figure|
+
+                     |resampling_nested_resampling_figure|
+)-->
+
+The *b632* and *b632+* variants calculate a convex combination of the training performance and the out-of-bag bootstrap performance and thus require predictions on the training sets and an appropriate aggregation strategy.
+
+```{r}
+# Use bootstrap as resampling strategy and predict on both train and test sets
+rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = 10)
+
+# Set aggregation schemes for b632 and b632+ bootstrap
+mmceB632 = setAggregation(mmce, b632)
+mmceB632plus = setAggregation(mmce, b632plus)
+
+mmceB632
+
+r = resample("classif.rpart", iris.task, rdesc, measures = list(mmce, mmceB632, mmceB632plus),
+  show.info = FALSE)
+head(r$measures.train)
+
+# Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap
+r$aggr
+```
+
+## Convenience functions
+
+The functionality described on this page allows for much control and flexibility.
+However, when quickly trying out some learners, it can get tedious to type all the code for defining the resampling strategy, setting the aggregation scheme and so on.
+As mentioned above, `mlr` includes some pre-defined resample description objects for frequently used strategies like, e.g., 5-fold cross-validation (`cv5` (`makeResampleDesc()`)).
+Moreover, `mlr` provides special functions for the most common resampling methods, for example `holdout` (`resample()`), `crossval` (`resample()`), or `bootstrapB632` (`resample()`).
+
+```{r echo = FALSE, results='hide'}
+test1 = crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
+
+test2 = bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
+```
+
+```{r eval = FALSE}
+crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
+## Resampling: cross-validation
+## Measures:             mmce      ber
+## [Resample] iter 1:    0.0200000 0.0238095
+## [Resample] iter 2:    0.0400000 0.0370370
+## [Resample] iter 3:    0.0000000 0.0000000
+## 
+## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0202822
+## 
+## Resample Result
+## Task: iris-example
+## Learner: classif.lda
+## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0202822
+## Runtime: 0.0205457
+
+bootstrapB632plus("regr.lm", bh.task, iters = 3, measures = list(mse, mae))
+## Resampling: OOB bootstrapping
+## Measures:             mse.train   mae.train   mse.test    mae.test
+## [Resample] iter 1:    24.6425511  3.4107320   16.3415466  3.0123263
+## [Resample] iter 2:    17.0963191  2.9809210   29.6056968  3.7131236
+## [Resample] iter 3:    23.1440608  3.5079975   24.4183753  3.3467443
+## 
+## Aggregated Result: mse.b632plus=22.9359054,mae.b632plus=3.3459751
+## 
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.lm
+## Aggr perf: mse.b632plus=22.9359054,mae.b632plus=3.3459751
+## Runtime: 0.0419419
+```

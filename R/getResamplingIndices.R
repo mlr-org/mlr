@@ -18,7 +18,7 @@
 #' ps = makeParamSet(
 #'   makeDiscreteParam("cp", values = c(0.05, 0.1)),
 #'   makeDiscreteParam("minsplit", values = c(10, 20))
-#'  )
+#' )
 #' ctrl = makeTuneControlGrid()
 #' inner = makeResampleDesc("Holdout")
 #' outer = makeResampleDesc("CV", iters = 2)
@@ -28,9 +28,9 @@
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' # get tuning indices
 #' getResamplingIndices(r, inner = TRUE)
-#'
 #' @export
 getResamplingIndices = function(object, inner = FALSE) {
+
   assertClass(object, "ResampleResult")
   assertList(object$extract)
   if (inner == TRUE) {
@@ -38,7 +38,22 @@ getResamplingIndices = function(object, inner = FALSE) {
       stopf("No object of class 'TuneResult' or 'FeatuSelResult' found in slot 'extract'.
              Did you run 'resample()' with 'extract = getTuneResult' or 'extract = getFeatSelResult'?")
     }
-    lapply(object$extract, function(x) x$resampling[c("train.inds", "test.inds")])
+    inner_inds = lapply(object$extract, function(x) x$resampling[c("train.inds", "test.inds")])
+
+    outer_inds = object$pred$instance[c("train.inds", "test.inds")]
+
+    # now translate the inner inds back to the outer inds so we have the correct indices https://github.com/mlr-org/mlr/issues/2409
+
+    inner_inds_translated = lapply(seq_along(inner_inds), function(z) # map over number of outer folds
+      sapply(c("train.inds", "test.inds"), function(u) # map over train/test level
+        sapply(inner_inds[[z]][[u]], function(m) # map over number of inner folds
+          outer_inds[["train.inds"]][[z]][m], # the inner test.inds are a subset of the outer train.inds! That's why "train.inds" is hardcoded here
+        simplify = FALSE),
+      simplify = FALSE)
+    )
+
+    return(inner_inds_translated)
+
   } else {
     object$pred$instance[c("train.inds", "test.inds")]
   }

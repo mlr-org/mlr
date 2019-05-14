@@ -67,57 +67,57 @@
 #' \donttest{
 #' rdesc = makeResampleDesc("SpRepCV", folds = 5, reps = 4)
 #' r = resample(makeLearner("classif.qda"), spatial.task, rdesc)
-#'
-#' ##-------------------------------------------------------------
+#' 
+#' ## -------------------------------------------------------------
 #' ## single unnamed resample input with 5 folds and 2 repetitions
-#' ##-------------------------------------------------------------
-#'
+#' ## -------------------------------------------------------------
+#' 
 #' plots = createSpatialResamplingPlots(spatial.task, r, crs = 32717,
 #'   repetitions = 2, x.axis.breaks = c(-79.065, -79.085),
 #'   y.axis.breaks = c(-3.970, -4))
 #' cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
 #'   labels = plots[["Labels"]])
-#'
-#' ##--------------------------------------------------------------------------
+#' 
+#' ## --------------------------------------------------------------------------
 #' ## single named resample input with 5 folds and 1 repetition and 32717 datum
-#' ##--------------------------------------------------------------------------
-#'
+#' ## --------------------------------------------------------------------------
+#' 
 #' plots = createSpatialResamplingPlots(spatial.task, list("Resamp" = r),
 #'   crs = 32717, datum = 32717, repetitions = 1)
 #' cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 1,
 #'   labels = plots[["Labels"]])
-#'
-#' ##-------------------------------------------------------------
+#' 
+#' ## -------------------------------------------------------------
 #' ## multiple named resample inputs with 5 folds and 1 repetition
-#' ##-------------------------------------------------------------
-#'
+#' ## -------------------------------------------------------------
+#' 
 #' rdesc1 = makeResampleDesc("SpRepCV", folds = 5, reps = 4)
 #' r1 = resample(makeLearner("classif.qda"), spatial.task, rdesc1)
 #' rdesc2 = makeResampleDesc("RepCV", folds = 5, reps = 4)
 #' r2 = resample(makeLearner("classif.qda"), spatial.task, rdesc2)
-#'
+#' 
 #' plots = createSpatialResamplingPlots(spatial.task,
 #'   list("SpRepCV" = r1, "RepCV" = r2), crs = 32717, repetitions = 1,
 #'   x.axis.breaks = c(-79.055, -79.085), y.axis.breaks = c(-3.975, -4))
 #' cowplot::plot_grid(plotlist = plots[["Plots"]], ncol = 5, nrow = 2,
 #'   labels = plots[["Labels"]])
-#'
-#' ##-------------------------------------------------------------------------------------
+#' 
+#' ## -------------------------------------------------------------------------------------
 #' ## Complex arrangements of multiple named resample inputs with 5 folds and 1 repetition
-#' ##-------------------------------------------------------------------------------------
-#'
-#' p1 <- plot_grid(plist[["Plots"]][[1]], plist[["Plots"]][[2]],
+#' ## -------------------------------------------------------------------------------------
+#' 
+#' p1 = plot_grid(plist[["Plots"]][[1]], plist[["Plots"]][[2]],
 #'   plist[["Plots"]][[3]], ncol = 3, nrow = 1, labels = plist[["Labels"]][1:3],
 #'   label_size = 18)
-#' p12 <- plot_grid(plist[["Plots"]][[4]], plist[["Plots"]][[5]], ncol = 2,
-#'    nrow = 1, labels = plist[["Labels"]][4:5], label_size = 18)
-#'
-#' p2 <- plot_grid(plist[["Plots"]][[6]], plist[["Plots"]][[7]],
+#' p12 = plot_grid(plist[["Plots"]][[4]], plist[["Plots"]][[5]], ncol = 2,
+#'   nrow = 1, labels = plist[["Labels"]][4:5], label_size = 18)
+#' 
+#' p2 = plot_grid(plist[["Plots"]][[6]], plist[["Plots"]][[7]],
 #'   plist[["Plots"]][[8]], ncol = 3, nrow = 1, labels = plist[["Labels"]][6:8],
 #'   label_size = 18)
-#' p22 <- plot_grid(plist[["Plots"]][[9]], plist[["Plots"]][[10]], ncol = 2,
+#' p22 = plot_grid(plist[["Plots"]][[9]], plist[["Plots"]][[10]], ncol = 2,
 #'   nrow = 1, labels = plist[["Labels"]][9:10], label_size = 18)
-#'
+#' 
 #' cowplot::plot_grid(p1, p12, p2, p22, ncol = 1)
 #' }
 #' @export
@@ -130,11 +130,13 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   requireNamespace("sf", quietly = TRUE)
 
   # some checks
-  if (is.null(crs))
+  if (is.null(crs)) {
     stopf("Please specify a crs that matches the coordinates of the task.")
-  if(task$task.desc$has.coordinates == FALSE)
+  }
+  if (task$task.desc$has.coordinates == FALSE) {
     stopf("The supplied task needs to have coordinates.")
-  if(!identical(as.integer(rownames(task$env$data)), 1:length(task$env$data[, 1]))) {
+  }
+  if (!identical(as.integer(rownames(task$env$data)), 1:length(task$env$data[, 1]))) {
     rownames(task$env$data) = seq(1:length(task$env$data[, 1]))
   }
 
@@ -148,13 +150,13 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
 
   if (n.resamp > 1 && is.null(names(resample))) {
     length.n.resamp = length(resample)
-    names(resample) = seq(1:length.n.resamp)
+    names(resample) = seq_len(length.n.resamp)
   }
 
   # create plot list with length = folds
-  nfolds = purrr::map_int(resample, ~ .x$pred$instance$desc$folds)[1]
+  nfolds = resample[[1]]$pred$instance$desc$folds
 
-  plot.list.out.all = purrr::map(resample, function(.r) {
+  plot.list.out.all = lapply(resample, function(r) {
 
     # bind coordinates to data
     data = cbind(task$env$data, task$coordinates)
@@ -163,39 +165,41 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     data = sf::st_as_sf(data, coords = names(task$coordinates), crs = crs)
 
     # create plot list with length = folds
-    plot.list = purrr::map(1:(nfolds * repetitions), ~ data)
+    plot.list = rep(list(data), nfolds * repetitions)
 
-    plot.list.out = purrr::imap(plot.list, ~ ggplot(.x) +
-      geom_sf(data = subset(.x, as.integer(rownames(.x)) %in%
-                       .r$pred$instance[["train.inds"]][[.y]]),
+    plot.list.out = imap(plot.list, function(.x, .y) {
+
+      ggplot(.x) +
+        geom_sf(data = subset(.x, as.integer(rownames(.x)) %in%
+          r$pred$instance[["train.inds"]][[.y]]),
         color = color.train, size = point.size, ) +
-      geom_sf(data = subset(.x,as.integer(rownames(.x)) %in%
-                       .r$pred$instance[["test.inds"]][[.y]]),
+        geom_sf(data = subset(.x, as.integer(rownames(.x)) %in%
+          r$pred$instance[["test.inds"]][[.y]]),
         color = color.test, size = point.size) +
-      scale_x_continuous(breaks = x.axis.breaks) +
-      scale_y_continuous(breaks = y.axis.breaks) +
-      coord_sf(datum = sf::st_crs(datum)) +
-      hrbrthemes::theme_ipsum_rc() +
-      theme(axis.text.x = element_text(size = axis.text.size),
-        axis.text.y = element_text(size = axis.text.size),
-        plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm"))
-    )
+        scale_x_continuous(breaks = x.axis.breaks) +
+        scale_y_continuous(breaks = y.axis.breaks) +
+        coord_sf(datum = sf::st_crs(datum)) +
+        hrbrthemes::theme_ipsum_rc() +
+        theme(axis.text.x = element_text(size = axis.text.size),
+          axis.text.y = element_text(size = axis.text.size),
+          plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm"))
+    })
     return(plot.list.out)
   })
 
-  plot.list = purrr::flatten(plot.list.out.all)
+  plot.list = unlist(plot.list.out.all, recursive = FALSE)
 
   # more than 1 repetition?
   if (repetitions > 1) {
     labels = c(length = nfolds * repetitions)
-    nfolds_reps = rep(seq_along(1:nfolds), repetitions)
+    nfolds_reps = rep(seq_len(nfolds), repetitions)
     reps_nfolds = c()
     names.resample = c()
-    for (i in seq_along(1:repetitions)) {
+    for (i in seq_len(repetitions)) {
       reps_nfolds = c(reps_nfolds, rep(i, nfolds))
       if (!is.null(names(resample))) {
         names.resample = c(names.resample, rep(names(resample)[i],
-                                             nfolds * repetitions))
+          nfolds * repetitions))
       }
     }
     # account for multiple resamp objects
@@ -206,7 +210,7 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
       if (!is.null(names(resample))) {
         labels = sprintf("[%s] Fold %s (Rep %s)",
           rep(names(resample), nfolds * repetitions),
-          seq_along(1:nfolds), reps_nfolds)
+          seq_len(nfolds), reps_nfolds)
       } else {
         labels = rep(sprintf("Fold %s (Rep %s)", nfolds_reps, reps_nfolds))
       }
@@ -215,17 +219,17 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     # account for multiple resamp objects
     if (n.resamp > 1) {
       names.resample = c()
-      for (i in seq_along(1:length(names(resample)))) {
+      for (i in seq_len(length(names(resample)))) {
         names.resample = c(names.resample, rep(names(resample)[i], nfolds))
       }
-      labels = sprintf("[%s] Fold %s", names.resample, seq_along(1:nfolds))
+      labels = sprintf("[%s] Fold %s", names.resample, seq_len(nfolds))
       labels = rep(labels, n.resamp)
     } else {
       if (!is.null(names(resample))) {
         labels = sprintf("[%s] Fold %s", rep(names(resample), nfolds),
-          seq_along(1:nfolds))
+          seq_len(nfolds))
       } else {
-        labels = sprintf("Fold %s", seq_along(1:nfolds))
+        labels = sprintf("Fold %s", seq_len(nfolds))
       }
     }
   }

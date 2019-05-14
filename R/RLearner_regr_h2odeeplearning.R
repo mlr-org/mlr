@@ -151,8 +151,9 @@
 
 # Details: https://leanpub.com/deeplearning/read
 
-#'@export
+#' @export
 makeRLearner.regr.h2o.deeplearning = function() {
+
   makeRLearnerRegr(
     cl = "regr.h2o.deeplearning",
     package = "h2o",
@@ -161,7 +162,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
         "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"),
-        default = "Rectifier"),
+      default = "Rectifier"),
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
         len = NA_integer_, lower = 1L),
@@ -203,7 +204,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
       makeDiscreteLearnerParam("stopping_metric", values = c("AUTO", "deviance", "logloss",
         "MSE", "AUC", "r2", "misclassification"), default = "AUTO",
-        requires = quote(stopping_rounds > 0L)),
+      requires = quote(stopping_rounds > 0L)),
       makeNumericLearnerParam("stopping_tolerance", default = 0, lower = 0),
       makeNumericLearnerParam("max_runtime_secs", default = 0, lower = 0),
       makeLogicalLearnerParam("quiet_mode", tunable = FALSE),
@@ -223,7 +224,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeLogicalLearnerParam("sparse", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("col_major", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("average_activation", tunable = FALSE),
-      #makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
+      # makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
@@ -237,6 +238,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
 
 #' @export
 trainLearner.regr.h2o.deeplearning = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -256,10 +258,10 @@ trainLearner.regr.h2o.deeplearning = function(.learner, .task, .subset, .weights
 
 #' @export
 predictLearner.regr.h2o.deeplearning = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
   return(p.df$predict)
 }
-

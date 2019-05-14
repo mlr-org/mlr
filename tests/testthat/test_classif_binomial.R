@@ -1,7 +1,6 @@
 context("classif_binomial")
 
 test_that("classif_binomial", {
-
   parset.list1 = list(
     list(family = binomial),
     list(family = binomial(link = "logit")),
@@ -22,7 +21,7 @@ test_that("classif_binomial", {
     parset = parset.list1[[i]]
     set.seed(getOption("mlr.debug.seed"))
     m = glm(formula = binaryclass.formula, data = binaryclass.train[, -nof], family = parset$family)
-    p  = predict(m, newdata = binaryclass.test[, -nof], type = "response")
+    p = predict(m, newdata = binaryclass.test[, -nof], type = "response")
     p = 1 - p
     p.class = as.factor(binaryclass.class.levs[ifelse(p > 0.5, 1, 2)])
     old.predicts.list[[i]] = p.class

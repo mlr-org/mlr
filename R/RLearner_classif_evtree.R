@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.evtree = function() {
+
   makeRLearnerClassif(
     cl = "classif.evtree",
     package = "evtree",
@@ -30,6 +31,7 @@ makeRLearner.classif.evtree = function() {
 trainLearner.classif.evtree = function(.learner, .task, .subset,
   .weights = NULL, pmutatemajor, pmutateminor, pcrossover, psplit,
   pprune, seed, ...) {
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
@@ -46,6 +48,7 @@ trainLearner.classif.evtree = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.classif.evtree = function(.learner, .model, .newdata, ...) {
+
   colnames(.newdata) = attr(.model$learner.model$terms, "term.labels")
   if (.learner$predict.type == "prob") {
     p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)

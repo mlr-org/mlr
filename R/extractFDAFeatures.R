@@ -52,6 +52,7 @@
 # reextractFDAFeatures(task, extracted$desc)
 
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
+
   assertList(feat.methods)
   UseMethod("extractFDAFeatures")
 }
@@ -62,7 +63,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   fdf = getFunctionalFeatures(obj)
   assertDataFrame(fdf, min.cols = 1L)
-  assertSubset(unique(names(feat.methods)), choices = c(names(fdf),  "all"))
+  assertSubset(unique(names(feat.methods)), choices = c(names(fdf), "all"))
   assertCharacter(target)
 
   # If the same transform should be applied to all features, rep method and name accordingly
@@ -89,16 +90,20 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
   extracts = Map(function(x, fd.col) {
+
     list(
       # feats are the extracted features
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col))),
       args = x$args, # Args passed to x$reextract
-      reextract = x$reextract  # pass on reextraction learner for extraction in prediction
+      reextract = x$reextract # pass on reextraction learner for extraction in prediction
     )
   }, x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
   # Append Info relevant for reextraction to desc
-  desc$extractFDAFeat = lapply(extracts, function(x) {c(x["args"], x["reextract"])})
+  desc$extractFDAFeat = lapply(extracts, function(x) {
+
+    c(x["args"], x["reextract"])
+  })
 
   # Extract feats for every functional feature and cbind to data.frame
   vals = extractSubList(extracts, "feats", simplify = FALSE)
@@ -136,6 +141,7 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 
 #' @export
 print.extractFDAFeatDesc = function(x, ...) {
+
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
   # FIXME: This could be missunderstood
@@ -159,22 +165,26 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @family extractFDAFeatures
 #' @export
 reextractFDAFeatures = function(obj, desc) {
+
   UseMethod("reextractFDAFeatures")
 }
 
 #' @export
 reextractFDAFeatures.data.frame = function(obj, desc) {
+
   assertClass(desc, classes = "extractFDAFeatDesc")
 
   # check for new columns
   new.cols = names(which(names(obj) %nin% desc$coln))
-  if (length(new.cols))
+  if (length(new.cols)) {
     stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
+  }
 
 
   # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.col) {
+
       do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col), x$args))
     },
     xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.col = desc$fd.cols)
@@ -191,6 +201,7 @@ reextractFDAFeatures.data.frame = function(obj, desc) {
 
 #' @export
 reextractFDAFeatures.Task = function(obj, desc) {
+
   # get data and pass to extractor
   df = getTaskData(obj, functionals.as = "matrix")
   extracted = reextractFDAFeatures.data.frame(df, desc)

@@ -5,7 +5,7 @@
 \alias{FilterValues}
 \title{Calculates feature filter values.}
 \usage{
-generateFilterValuesData(task, method = "randomForestSRC.rfsrc",
+generateFilterValuesData(task, method = "randomForestSRC_importance",
   nselect = getTaskNFeats(task), ..., more.args = list())
 }
 \arguments{
@@ -14,7 +14,7 @@ The task.}
 
 \item{method}{(\link{character})\cr
 Filter method(s), see above.
-Default is \dQuote{randomForestSRC.rfsrc}.}
+Default is \dQuote{randomForestSRC_importance}.}
 
 \item{nselect}{(\code{integer(1)})\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
@@ -53,11 +53,9 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
 Other filter: \code{\link{filterFeatures}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},

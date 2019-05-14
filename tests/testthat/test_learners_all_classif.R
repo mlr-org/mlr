@@ -66,9 +66,10 @@ test_that("learners work: classif", {
 })
 
 
-test_that("weightedClassWrapper on all binary learners",  {
+test_that("weightedClassWrapper on all binary learners", {
   pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
+
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
@@ -78,6 +79,7 @@ test_that("weightedClassWrapper on all binary learners",  {
 
   learners = listLearners(binaryclass.task, "class.weights")
   x = lapply(learners$class, function(lrn) {
+
     cm1 = f(lrn, 0.001)
     cm2 = f(lrn, 1)
     cm3 = f(lrn, 1000)
@@ -87,9 +89,10 @@ test_that("weightedClassWrapper on all binary learners",  {
 })
 
 
-test_that("WeightedClassWrapper on all multiclass learners",  {
+test_that("WeightedClassWrapper on all multiclass learners", {
   levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
+
     lrn1 = makeLearner(lrn)
     param = lrn1$class.weights.param
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
@@ -100,6 +103,7 @@ test_that("WeightedClassWrapper on all multiclass learners",  {
 
   learners = listLearners(multiclass.task, "class.weights")
   x = lapply(learners$class, function(lrn) {
+
     classes = getTaskFactorLevels(multiclass.task)[[multiclass.target]]
     n = length(classes)
     cm1 = f(lrn, setNames(object = c(10000, 1, 1), classes))
