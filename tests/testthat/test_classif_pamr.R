@@ -21,7 +21,9 @@ test_that("classif_pamr", {
     } else {
       threshold.predict = 1
     }
-    capture.output({m = do.call(pamr::pamr.train, parset)})
+    capture.output({
+      m = do.call(pamr::pamr.train, parset)
+    })
     newdata = t(binaryclass.test[, -binaryclass.class.col])
     old.predicts.list[[i]] = pamr::pamr.predict(m, newdata, threshold = threshold.predict)
     old.probs.list[[i]] = pamr::pamr.predict(m, newdata, type = "posterior", threshold = threshold.predict)[, 1L]
@@ -30,5 +32,5 @@ test_that("classif_pamr", {
   testSimpleParsets("classif.pamr", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
   testProbParsets("classif.pamr", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-                   old.probs.list, parset.list)
+    old.probs.list, parset.list)
 })

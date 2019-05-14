@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.randomForestSRC = function() {
+
   makeRLearnerClassif(
     cl = "classif.randomForestSRC",
     package = "randomForestSRC",
@@ -34,7 +35,7 @@ makeRLearner.classif.randomForestSRC = function() {
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
       makeDiscreteLearnerParam(id = "split.depth", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
-      makeIntegerLearnerParam(id = "seed", upper = 0L, tunable = FALSE),
+      makeIntegerLearnerParam(id = "seed", lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE, when = "both"), # is currently ignored
       makeLogicalLearnerParam(id = "membership", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
@@ -51,12 +52,14 @@ makeRLearner.classif.randomForestSRC = function() {
 
 #' @export
 trainLearner.classif.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), case.wt = .weights, ...)
 }
 
 #' @export
 predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ...) {
+
   p = predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)
   if (.learner$predict.type == "prob") {
     return(p$predicted)
@@ -67,6 +70,7 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
 
 #' @export
 getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
+
   preds = getLearnerModel(.model, more.unwrap = TRUE)$predicted.oob
   if (.learner$predict.type == "response") {
     factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
@@ -77,6 +81,7 @@ getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
 
 #' @export
 getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   randomForestSRC::vimp(mod, ...)$importance[, "all"]
 }

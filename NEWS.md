@@ -1,3 +1,100 @@
+# mlr 2.14.0.9000
+
+- Same as previous version.
+
+
+# mlr 2.14.0
+
+## general
+* add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
+* `Task` help pages are now split into separate ones, e.g. `RegrTask`, `ClassifTask` (@pat-s, #2564)
+
+## functions - new
+* `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
+* `getCacheDir()`: Return the default mlr cache directory (@pat-s, #2463)
+
+## functions - general
+* `getResamplingIndices(inner = TRUE)` now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (@pat-s, #2413).
+
+## filter - general
+* Caching is now used when generating filter values.
+  This means that filter values are only computed once for a specific setting and the stored cache is used in subsequent iterations.
+  This change inherits a significant speed-up when tuning `fw.perc`, `fw.abs` or `fw.threshold`.
+  It can be triggered with the new `cache` argument in `makeFilterWrapper()` or `filterFeatures()` (@pat-s, #2463).
+
+## filter - new
+* praznik_JMI
+* praznik_DISR
+* praznik_JMIM
+* praznik_MIM
+* praznik_NJMIM
+* praznik_MRMR
+* praznik_CMIM
+* FSelectorRcpp_gain.ratio
+* FSelectorRcpp_information.gain
+* FSelectorRcpp_symuncert
+
+Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>.
+Exeptions are filters included in base R packages.
+In this case, the package name is omitted.
+
+## filter - general
+* Added filters `FSelectorRcpp_gain.ratio`, `FSelectorRcpp_information.gain` and `FSelectorRcpp_symmetrical.uncertainty` from package `FSelectorRcpp`.
+  These filters are ~ 100 times faster than the implementation of the `FSelector` pkg.
+  Please note that both implementations do things slightly different internally and the `FSelectorRcpp` methods should not be seen as direct replacement for the `FSelector` pkg.
+* filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (@pat-s, #2533)
+  - `information.gain` -> `FSelector_information.gain`
+  - `gain.ratio` -> `FSelector_gain.ratio`
+  - `symmetrical.uncertainty` -> `FSelector_symmetrical.uncertainty`
+  - `chi.squared` -> `FSelector_chi.squared`
+  - `relief` -> `FSelector_relief`
+  - `oneR` -> `FSelector_oneR`
+  - `randomForestSRC.rfsrc` -> `randomForestSRC_importance`
+  - `randomForestSRC.var.select` -> `randomForestSRC_var.select`
+  - `randomForest.importance` -> `randomForest_importance`
+
+* fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
+
+## learners - new
+* classif.liquidSVM (@PhilippPro, #2428)
+* regr.liquidSVM (@PhilippPro, #2428)
+
+## learners - general
+* regr.h2o.gbm: Various parameters added, `"h2o.use.data.table" = TRUE` is now the default (@j-hartshorn, #2508)
+* h2o learners now support getting feature importance (@markusdumke, #2434)
+
+## learners - fixes
+* In some cases the optimized hyperparameters were not applied in the performance level of a nested CV (@berndbischl, #2479)
+
+## featSel - general
+ * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
+ * The slot `x` now always contains the real feature names and not the bit.names
+ * This fixes a bug and makes `makeFeatSelWrapper` usable with custom `bit.names`.
+ * Fixed a bug due to which `sffs` crashed in some cases (@bmihaljevic, #2486)
+
+# mlr 2.13:
+
+## general
+* Disabled unit tests for CRAN, we test on travis only now
+* Suppress messages with show.learner.output = FALSE
+
+## functions - general
+* plotHyperParsEffect: add colors
+
+## functions - new
+* getResamplingIndices
+* createSpatialResamplingPlots
+
+## learners - general
+*  regr.nnet: Removed unneeded params linout, entropy, softmax and censored
+*  regr.ranger: Add weight handling
+
+## learners - removed
+* {classif,regr}.blackboost: broke API with new release
+* regr.elmNN : package was removed from CRAN
+* classif.lqa : package was removed from CRAN
+
+
 # mlr 2.12:
 
 ## general
@@ -7,12 +104,35 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
+* Added support for spatial data by providing spatial partitioning methods "SpCV" and "SpRepCV".
+* Added new spatial.task classification task.
+* Added new spam.task classification task.
+* Classification tasks now store the class distribution in the
+  class.distribution member.
+* mlr now predicts NA for data that contains NA and learners that do not support
+  missing values.
+* Tasks are now subsetted in the "train" function and the factor levels (for
+  classification tasks) based on this subset. This means that the factor level
+  distribution is not necessarily the same as for the entire task, and that the
+  task descriptions of models in resampling reflect the respective subset, while
+  the task description of resample predictions reflect the entire task and not
+  necessarily the task of any individual model.
+* Added support for growing and fixed window cross-validation for forecasting
+  through new resample methods "GrowingWindowCV" and "FixedWindowCV".
 
 ## functions - general
-* generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies
+* generatePartialDependenceData: depends now on the "mmpf" package,
+  removed parameter: "center", "resample", "fmin", "fmax" and "gridsize"
+  added parameter: "uniform" and "n" to configure the grid for the partial dependence plot
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
+* plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
+  control interactivity
+* calculateConfusionMatrix: new parameter "set" to specify whether confusion
+  matrix should be computed for "train", "test", or "both" (default)
+* PlotBMRSummary: Add parameter "shape"
+* plotROCCurves: Add faceting argument
+* PreprocWrapperCaret: Add param "ppc.corr", "ppc.zv", "ppc.nzv", "ppc.n.comp", "ppc.cutoff", "ppc.freqCut", "ppc.uniqueCut"
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -26,9 +146,15 @@
 * extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
+* getTuneResultOptPath
+* makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
+
+## functions - removed
+* Removed plotViperCharts
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
+* measure "measureMultiLabelF1" was renamed to "measureMultilabelF1" for consistency
 
 ## measures - new
 * measureBER, measureRMSLE, measureF1
@@ -38,13 +164,20 @@
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
+* classif.lda learner: add 'prior' hyperparameter
+* ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
+* h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
+* h20*: Add support for "missings"
 
 ## learners - new
+* classif.adaboostm1
 * classif.fdaknn
 * classif.fdakernel
 * classif.fdanp
 * classif.fdaglm
+* classif.mxff
 * regr.fdaFDboost
+* regr.mxff
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
@@ -56,8 +189,8 @@
 * testgroup.sd
 
 ## filter - new
-
 * auc
+* ranger.permutation, ranger.impurity
 
 # mlr 2.11:
 
@@ -373,7 +506,7 @@
   this is the new API:
   plotBMRSummary, plotBMRBoxplots, plotBMRRanksAsBarChart
 
-# mlr_2.6:
+# mlr 2.6:
 * cluster.kmeans: added support for fuzzy clustering (property "prob")
 * regr.lm: removed some erroneous param settings
 * regr.glmnet: added 'family' param and allowed 'gaussian', but also 'poisson'
@@ -848,9 +981,6 @@
 * makeSurvTask
 * impute, reimpute, makeImputeWrapper, lots of impute<Method>, makeImputeMethod
 
-# mlr 1.1:
+# mlr 1.1-18:
 * Initial release to CRAN
-
-
-
 

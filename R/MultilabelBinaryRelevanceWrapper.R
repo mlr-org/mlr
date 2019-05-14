@@ -6,30 +6,32 @@
 #' The multilabel classification problem is converted into simple binary classifications
 #' for each label/target on which the binary learner is applied.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
-#' Note that it does not make sense to set a threshold in the used base \code{learner}
+#' Note that it does not make sense to set a threshold in the used base `learner`
 #' when you predict probabilities.
-#' On the other hand, it can make a lot of sense, to call \code{\link{setThreshold}}
-#' on the \code{MultilabelBinaryRelevanceWrapper} for each label indvidually;
-#' Or to tune these thresholds with \code{\link{tuneThreshold}}; especially when you face very
+#' On the other hand, it can make a lot of sense, to call [setThreshold]
+#' on the `MultilabelBinaryRelevanceWrapper` for each label indvidually;
+#' Or to tune these thresholds with [tuneThreshold]; especially when you face very
 #' unabalanced class distributions for each binary label.
 #'
 #' @template arg_learner
 #' @template ret_learner
 #' @references
 #' Tsoumakas, G., & Katakis, I. (2006)
-#' \emph{Multi-label classification: An overview.}
+#' *Multi-label classification: An overview.*
 #' Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 #' @family wrapper
 #' @family multilabel
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
+
   learner = checkLearner(learner, type = "classif")
-  id = stri_paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.binaryRelevance", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
     learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
   x$type = "multilabel"
   return(x)
@@ -37,6 +39,7 @@ makeMultilabelBinaryRelevanceWrapper = function(learner) {
 
 #' @export
 trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
@@ -50,6 +53,7 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
 }
 
 doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights) {
+
   setSlaveOptions()
   data = getTaskData(task)
   task = makeClassifTask(id = tn, data = dropNamed(data, setdiff(getTaskTargetNames(task), tn)), target = tn)
@@ -59,11 +63,12 @@ doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights)
 
 #' @export
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
-  f = if (.learner$predict.type == "response")
+  f = if (.learner$predict.type == "response") {
     function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
-  else
+  } else {
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
+  }
   asMatrixCols(lapply(models, f))
 }
-

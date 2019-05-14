@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.bst = function() {
+
   makeRLearnerClassif(
     cl = "classif.bst",
     package = c("bst", "rpart"),
@@ -41,14 +42,16 @@ makeRLearner.classif.bst = function() {
 trainLearner.classif.bst = function(.learner, .task, .subset, .weights = NULL, mstop, nu, twinboost,
   f.init, xselect.init, center, trace, numsample, df, minsplit, minbucket, cp, maxsurrogate,
   usesurrogate, surrogatestyle, maxdepth, xval, Learner, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "-1+1")
   ctrl = learnerArgsToControl(bst::bst_control, mstop, nu, twinboost, f.init, xselect.init, center, trace, numsample, df)
-  control.tree = learnerArgsToControl(list,  minsplit, minbucket, cp, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval)
+  control.tree = learnerArgsToControl(list, minsplit, minbucket, cp, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval)
   bst::bst(x = d$data, y = d$target, ctrl = ctrl, control.tree = control.tree, learner = Learner, ...)
 }
 
 #' @export
 predictLearner.classif.bst = function(.learner, .model, .newdata, ...) {
+
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
   p = predict(.model$learner.model, .newdata, ...)
   as.factor(ifelse(p > 0, levs[2L], levs[1L]))

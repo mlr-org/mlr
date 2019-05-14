@@ -11,7 +11,7 @@
 #' observation. In the case of ties, one randomly sampled, constant class is predicted
 #' for all observations in the test set.
 #' This method is used as the default. It is very similar to the ZeroR classifier
-#' from WEKA (see \url{https://weka.wikispaces.com/ZeroR}). The only difference is
+#' from WEKA (see <https://weka.wikispaces.com/ZeroR>). The only difference is
 #' that ZeroR always predicts the first class of the tied class values instead
 #' of sampling them randomly.
 #'
@@ -26,6 +26,7 @@ NULL
 
 #' @export
 makeRLearner.classif.featureless = function() {
+
   makeRLearnerClassif(
     cl = "classif.featureless",
     package = "mlr",
@@ -41,7 +42,11 @@ makeRLearner.classif.featureless = function() {
 #' @export
 trainLearner.classif.featureless = function(.learner, .task, .subset, .weights = NULL,
   method = "majority", ...) {
-  y = getTaskTargets(.task)[.subset]
+
+  y = getTaskTargets(.task)
+  if (!is.null(.subset)) {
+    y = y[.subset]
+  }
   lvls = getTaskClassLevels(.task)
   # probs is always complete, if a class is empty is has 0 frequency in probs
   probs = prop.table(table(y))
@@ -50,6 +55,7 @@ trainLearner.classif.featureless = function(.learner, .task, .subset, .weights =
 
 #' @export
 predictLearner.classif.featureless = function(.learner, .model, .newdata, ...) {
+
   # extract some shortcuts
   n = nrow(.newdata)
   ptype = .learner$predict.type

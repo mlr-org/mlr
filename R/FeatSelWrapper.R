@@ -3,20 +3,21 @@
 #' @description
 #' Fuses a base learner with a search strategy to select variables.
 #' Creates a learner object, which can be used like any other learner object,
-#' but which internally uses \code{\link{selectFeatures}}.
+#' but which internally uses [selectFeatures].
 #' If the train function is called on it,
 #' the search strategy and resampling are invoked to select an optimal set of variables.
 #' Finally, a model is fitted on the complete training data with these variables and returned.
-#' See \code{\link{selectFeatures}} for more details.
+#' See [selectFeatures] for more details.
 #'
 #' After training, the optimal features (and other related information) can be retrieved with
-#' \code{\link{getFeatSelResult}}.
+#' [getFeatSelResult].
 #'
 #' @template arg_learner
 #' @inheritParams selectFeatures
 #' @template ret_learner
 #' @family featsel
 #' @family wrapper
+#' @noMd
 #' @export
 #' @examples
 #' # nested resampling with feature selection (with a pretty stupid algorithm for selection)
@@ -52,18 +53,20 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
 }
 
 #' @export
-trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL,  ...) {
+trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL, ...) {
+
   task = subsetTask(.task, .subset)
-  if (length(.learner$bit.names) == 0)
-    #FIXME: really look at bitnames / bits.to.features stuff and test it.
+  if (length(.learner$bit.names) == 0) {
+    # FIXME: really look at bitnames / bits.to.features stuff and test it.
     # do we need the extra case here?
     or = selectFeatures(.learner$next.learner, task, .learner$resampling,
       measures = .learner$measures, control = .learner$control, show.info = .learner$show.info)
-  else
+  } else {
     or = selectFeatures(.learner$next.learner, task, .learner$resampling,
       measures = .learner$measures,
       bit.names = .learner$bit.names, bits.to.features = .learner$bits.to.features,
       control = .learner$control, show.info = .learner$show.info)
+  }
   task = subsetTask(task, features = or$x)
   m = train(.learner$next.learner, task)
   x = makeChainModel(next.model = m, cl = "FeatSelModel")
@@ -73,7 +76,7 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL,  ...) {
 
 #' @export
 predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
+
   .newdata = .newdata[, .model$learner.model$opt.result$x, drop = FALSE]
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }
-

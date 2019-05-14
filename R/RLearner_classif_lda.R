@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.lda = function() {
+
   makeRLearnerClassif(
     cl = "classif.lda",
     package = "MASS",
@@ -9,7 +10,8 @@ makeRLearner.classif.lda = function() {
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0),
       makeDiscreteLearnerParam(id = "predict.method", values = c("plug-in", "predictive", "debiased"),
         default = "plug-in", when = "predict"),
-      makeLogicalLearnerParam(id = "CV", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "CV", default = FALSE, tunable = FALSE),
+      makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1, tunable = TRUE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Linear Discriminant Analysis",
@@ -20,17 +22,19 @@ makeRLearner.classif.lda = function() {
 }
 
 #' @export
-trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   MASS::lda(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.classif.lda = function(.learner, .model, .newdata, predict.method = "plug-in", ...) {
-  p = predict(.model$learner.model, newdata = .newdata, method = predict.method, ...)
-  if (.learner$predict.type == "response")
-    return(p$class)
-  else
-    return(p$posterior)
-}
 
+  p = predict(.model$learner.model, newdata = .newdata, method = predict.method, ...)
+  if (.learner$predict.type == "response") {
+    return(p$class)
+  } else {
+    return(p$posterior)
+  }
+}

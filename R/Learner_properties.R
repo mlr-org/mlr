@@ -1,7 +1,7 @@
 #' @title Query properties of learners.
 #'
 #' @description
-#' Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
+#' Properties can be accessed with `getLearnerProperties(learner)`, which returns a
 #' character vector.
 #'
 #' The learner properties are defined as follows:
@@ -21,10 +21,10 @@
 #' }
 #'
 #' @template arg_learner
-#' @param props [\code{character}]\cr
+#' @param props ([character])\cr
 #'   Vector of properties to query.
-#' @return \code{getLearnerProperties} returns a character vector with learner properties.
-#'  \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
+#' @return `getLearnerProperties` returns a character vector with learner properties.
+#'  `hasLearnerProperties` returns a logical vector of the same length as `props`.
 #' @name LearnerProperties
 #' @rdname LearnerProperties
 #' @aliases getLearnerProperties hasLearnerProperties
@@ -34,21 +34,25 @@ NULL
 #' @rdname LearnerProperties
 #' @export
 getLearnerProperties = function(learner) {
+
   UseMethod("getLearnerProperties")
 }
 
 #' @export
 getLearnerProperties.Learner = function(learner) {
+
   learner$properties
 }
 
 #' @export
 getLearnerProperties.character = function(learner) {
+
   getLearnerProperties(checkLearner(learner))
 }
 
 #' @export
 getLearnerProperties.ModelMultiplexer = function(learner) {
+
   selected = learner$par.vals$selected.learner
   # NB: this is not set during construction
   if (is.null(selected)) learner$properties else getLearnerProperties(learner$base.learners[[selected]])
@@ -57,16 +61,18 @@ getLearnerProperties.ModelMultiplexer = function(learner) {
 #' @rdname LearnerProperties
 #' @export
 hasLearnerProperties = function(learner, props) {
+
   learner = checkLearner(learner)
   assertSubset(props, listLearnerProperties())
   props %in% getLearnerProperties(learner)
 }
 
-#' Deprecated, use \code{hasLearnerProperties} instead.
+#' Deprecated, use `hasLearnerProperties` instead.
 #' @param learner Deprecated.
 #' @param props Deprecated.
 #' @export
 hasProperties = function(learner, props) {
+
   .Deprecated("hasLearnerProperties")
   hasLearnerProperties(learner, props)
 }
@@ -76,13 +82,14 @@ hasProperties = function(learner, props) {
 #' @description
 #'   This is useful for determining which learner properties are available.
 #'
-#' @param type [\code{character(1)}]\cr
+#' @param type (`character(1)`)\cr
 #'   Only return properties for a specified task type. Default is \dQuote{any}.
 #'
-#' @return [\code{character}].
+#' @return ([character]).
 #'
 #' @export
 listLearnerProperties = function(type = "any") {
+
   all.props = c(listTaskTypes(), "any")
   assertSubset(type, all.props)
   mlr$learner.properties[[type]]

@@ -12,7 +12,7 @@ The dataset is contained in the package fda.usc.
 }
 \references{
 F. Ferraty and P. Vieu (2003) "Curve discrimination: a nonparametric functional approach", Computational Statistics and Data Analysis, 44(1-2), 161-173.
-  F. Ferraty and P. Vieu (2006) Nonparametric functional data analysis, New York: Springer.
-  T. Hastie and R. Tibshirani and J. Friedman (2009) The elements of statistical learning: Data mining, inference and prediction, 2nd edn, New York: Springer.
+F. Ferraty and P. Vieu (2006) Nonparametric functional data analysis, New York: Springer.
+T. Hastie and R. Tibshirani and J. Friedman (2009) The elements of statistical learning: Data mining, inference and prediction, 2nd edn, New York: Springer.
 }
 \keyword{data}

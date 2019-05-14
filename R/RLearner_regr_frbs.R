@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.frbs = function() {
+
   makeRLearnerRegr(
     cl = "regr.frbs",
     package = "frbs",
@@ -64,6 +65,7 @@ makeRLearner.regr.frbs = function() {
 
 #' @export
 trainLearner.regr.frbs = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = list(...)
   method.arg = names(args) == "method"
@@ -78,5 +80,6 @@ trainLearner.regr.frbs = function(.learner, .task, .subset, .weights = NULL, ...
 
 #' @export
 predictLearner.regr.frbs = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

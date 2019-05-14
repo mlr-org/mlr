@@ -6,10 +6,6 @@ test_that("learners work: classif", {
   hyperpars = list(
     classif.boosting = list(mfinal = 2L),
     classif.cforest = list(mtry = 1L),
-    classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-      # without this (and despite use_missing_data being TRUE), the test with missing data fails with a null point exception, which manifests itself as a completely different rJava error in the test
-      replace_missing_data_with_x_j_bar = TRUE,
-      num_iterations_after_burn_in = 10L),
     classif.bdk = list(ydim = 2L),
     classif.earth = list(degree = 3L, nprune = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
@@ -63,12 +59,17 @@ test_that("learners work: classif", {
   # classif with variable importance
   lrns = mylist(task, properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
+
+  # classif with only one feature
+  # min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
+  # lapply(lrns, testBasicLearnerProperties, task = min.task)
 })
 
 
-test_that("weightedClassWrapper on all binary learners",  {
+test_that("weightedClassWrapper on all binary learners", {
   pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
+
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
@@ -78,6 +79,7 @@ test_that("weightedClassWrapper on all binary learners",  {
 
   learners = listLearners(binaryclass.task, "class.weights")
   x = lapply(learners$class, function(lrn) {
+
     cm1 = f(lrn, 0.001)
     cm2 = f(lrn, 1)
     cm3 = f(lrn, 1000)
@@ -87,9 +89,10 @@ test_that("weightedClassWrapper on all binary learners",  {
 })
 
 
-test_that("WeightedClassWrapper on all multiclass learners",  {
+test_that("WeightedClassWrapper on all multiclass learners", {
   levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
+
     lrn1 = makeLearner(lrn)
     param = lrn1$class.weights.param
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
@@ -100,6 +103,7 @@ test_that("WeightedClassWrapper on all multiclass learners",  {
 
   learners = listLearners(multiclass.task, "class.weights")
   x = lapply(learners$class, function(lrn) {
+
     classes = getTaskFactorLevels(multiclass.task)[[multiclass.target]]
     n = length(classes)
     cm1 = f(lrn, setNames(object = c(10000, 1, 1), classes))

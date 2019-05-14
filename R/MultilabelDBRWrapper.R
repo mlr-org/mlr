@@ -8,23 +8,25 @@
 #' For each target, actual information of all binary labels (except the target variable) is used as additional features.
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelDBRWrapper = function(learner) {
+
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.DBR", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
     learner.subclass = "MultilabelDBRWrapper",
     model.subclass = "MultilabelDBRModel")
   x$type = "multilabel"
@@ -33,6 +35,7 @@ makeMultilabelDBRWrapper = function(learner) {
 
 #' @export
 trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
@@ -53,6 +56,7 @@ trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset = NULL, .w
 
 #' @export
 predictLearner.MultilabelDBRWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
   models.lvl1 = models[seq_along(.model$task.desc$target)]

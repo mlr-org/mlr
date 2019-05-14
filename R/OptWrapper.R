@@ -16,6 +16,7 @@ makeOptWrapper = function(id, learner, resampling, measures, par.set, bit.names,
 
 #' @export
 print.OptModel = function(x, ...) {
+
   print.WrappedModel(x)
   cat("\nOptimization result:\n")
   print(x$learner.model$opt.result)

@@ -4,18 +4,19 @@
 \alias{makeClassificationViaRegressionWrapper}
 \title{Classification via regression wrapper.}
 \usage{
-makeClassificationViaRegressionWrapper(learner, predict.type = "response")
+makeClassificationViaRegressionWrapper(learner,
+  predict.type = "response")
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{predict.type}{[\code{character(1)}]\cr
+\item{predict.type}{(\code{character(1)})\cr
 \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the one with maximal probability).}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Builds regression models that predict for the positive class whether a particular example belongs to it (1) or not (-1).
@@ -56,3 +57,4 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{wrapper}

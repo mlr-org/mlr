@@ -1,0 +1,412 @@
+---
+title: "Data Preprocessing"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+library("lattice")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+Data preprocessing refers to any transformation of the data done before applying a learning
+algorithm.
+This comprises for example finding and resolving inconsistencies, imputation of missing values, identifying, removing or replacing outliers, discretizing numerical data or generating numerical dummy variables for categorical data, any kind of transformation like standardization of predictors or Box-Cox, dimensionality reduction and feature extraction and/or selection.
+
+`mlr` offers several options for data preprocessing.
+Some of the following simple methods to change a `Task()` (or `data.frame`) were already mentioned on the page about [learning tasks](task.html){target="_blank"}:
+
+* `capLargeValues()`: Convert large/infinite numeric values.
+* `createDummyFeatures()`: Generate dummy variables for factor features.
+* `dropFeatures()`: Remove selected features.
+* `joinClassLevels()`: Only for classification: Merge existing classes to new, larger classes.
+* `mergeSmallFactorLevels()`: Merge infrequent levels of factor features.
+* `normalizeFeatures()`: Normalize features by different methods, e.g., standardization or scaling to a certain range.
+* `removeConstantFeatures()`: Remove constant features.
+* `subsetTask()`: Remove observations and/or features from a `Task()`.
+
+Moreover, there are tutorial pages devoted to
+
+* [Feature selection](feature_selection.html){target="_blank"} and
+* [Imputation of missing values](impute.html){target="_blank"}.
+
+# Fusing learners with preprocessing
+
+`mlr`'s wrapper functionality permits to combine learners with preprocessing steps.
+This means that the preprocessing "belongs" to the learner and is done any time the learner is trained or predictions are made.
+
+This is, on the one hand, very practical.
+You don't need to change any data or learning `Task()`s and it's quite easy to combine different learners with different preprocessing steps.
+
+On the other hand this helps to avoid a common mistake in evaluating the performance of a
+learner with preprocessing:
+Preprocessing is often seen as completely independent of the later applied learning algorithms.
+When estimating the performance of a learner, e.g., by cross-validation all preprocessing is done beforehand on the full data set and only training/predicting the learner is done on the train/test sets.
+Depending on what exactly is done as preprocessing this can lead to overoptimistic results.
+For example if imputation by the mean is done on the whole data set before evaluating the learner
+performance you are using information from the test data during training, which can cause
+overoptimistic performance results.
+
+To clarify things one should distinguish between *data-dependent* and *data-independent* preprocessing steps:
+Data-dependent steps in some way learn from the data and give different results when applied to
+different data sets. 
+Data-independent steps always lead to the same results.
+Clearly, correcting errors in the data or removing data columns like Ids that should not be used for learning, is data-independent.
+Imputation of missing values by the mean, as mentioned above, is data-dependent.
+Imputation by a fixed constant, however, is not.
+
+To get a honest estimate of learner performance combined with preprocessing, all data-dependent preprocessing steps must be included in the resampling.
+This is automatically done when fusing a learner with preprocessing.
+
+To this end `mlr` provides two [wrappers](wrapper.html){target="_blank"}:
+
+* `makePreprocWrapperCaret()` is an interface to all preprocessing options offered by `caret`'s `caret::preProcess()` function.
+* `makePreprocWrapper()` permits to write your own custom preprocessing methods by defining the actions to be taken before training and before prediction.
+
+As mentioned above the specified preprocessing steps then "belong" to the wrapped Learner (`makeLearner()`).
+In contrast to the preprocessing options listed above like `normalizeFeatures()`
+
+* the `Task()` itself remains unchanged,
+* the preprocessing is not done globally, i.e., for the whole data set, but for every pair of training/test data sets in, e.g., resampling,
+* any parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed can be [tuned](tune.html){target="_blank"} together with the base learner parameters.
+
+We start with some examples for `makePreprocWrapperCaret()`.
+
+# Preprocessing with makePreprocWrapperCaret
+
+`makePreprocWrapperCaret()` is an interface to `caret`'s `caret::preProcess()` function that provides many different options like imputation of missing values, data transformations as scaling the features to a certain range or Box-Cox and dimensionality reduction via Independent or Principal Component Analysis.
+For all possible options see the help page of function `caret::preProcess()`.
+
+Note that the usage of `makePreprocWrapperCaret()` is slightly different than that of `caret::preProcess()`.
+
+* `makePreprocWrapperCaret()` takes (almost) the same formal arguments as `caret::preProcess()`, but their names are prefixed by `ppc.`.
+* The only exception: `makePreprocWrapperCaret()` does not have a `method` argument. 
+Instead all preprocessing options that would be passed to `caret::preProcess()`'s `method` argument are given as individual logical parameters to `makePreprocWrapperCaret()`.
+
+For example the following call to `caret::preProcess()`
+
+```{r eval=FALSE}
+preProcess(x, method = c("knnImpute", "pca"), pcaComp = 10)
+```
+
+with `x` being a `matrix` or `data.frame` would thus translate into
+
+```{r eval=FALSE}
+makePreprocWrapperCaret(learner, ppc.knnImpute = TRUE, ppc.pca = TRUE, ppc.pcaComp = 10)
+```
+
+where `learner` is a `mlr` Learner (`makeLearner()`) or the name of a learner class like `"classif.lda"`.
+
+If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function `caret::preProcess()`.
+
+In the following we show an example where principal components analysis (PCA) is used for
+dimensionality reduction.
+This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.
+
+We consider the `sonar.task()`, which poses a binary classification problem with 208 observations
+and 60 features.
+
+```{r}
+sonar.task
+```
+
+Below we fuse quadratic discriminant analysis (`MASS::qda()`) from package `MASS` with a principal
+components preprocessing step.
+The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept.
+The data are automatically standardized prior to PCA.
+
+```{r}
+lrn = makePreprocWrapperCaret("classif.qda", ppc.pca = TRUE, ppc.thresh = 0.9)
+lrn
+```
+
+The wrapped learner is trained on the `sonar.task()`.
+By inspecting the underlying `MASS::qda()` model, we see that the first 22 principal components have been used for training.
+
+```{r}
+mod = train(lrn, sonar.task)
+mod
+
+getLearnerModel(mod)
+
+getLearnerModel(mod, more.unwrap = TRUE)
+```
+
+Below the performances of `MASS::qda()` with and without PCA preprocessing are compared in a [benchmark experiment](benchmark_experiments.html){target="_blank"}.
+Note that we use stratified resampling to prevent errors in `MASS::qda()` due to a too small number of observations from either class.
+
+```{r}
+rin = makeResampleInstance("CV", iters = 3, stratify = TRUE, task = sonar.task)
+res = benchmark(list("classif.qda", lrn), sonar.task, rin, show.info = FALSE)
+res
+```
+
+PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.
+
+## Joint tuning of preprocessing options and learner parameters
+
+Let's see if we can optimize this a bit.
+The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components.
+But maybe a lower or higher number of principal components should be used.
+Moreover, `qda` (`MASS::qda()`) has several options that control how the class covariance matrices or class probabilities are estimated.
+
+Those preprocessing and learner parameters can be [tuned](tune.html){target="_blank"} jointly.
+Before doing this let's first get an overview of all the parameters of the wrapped learner using function `getParamSet()`.
+
+```{r}
+getParamSet(lrn)
+```
+
+The parameters prefixed by `ppc.` belong to preprocessing. `method`, `nu` and `predict.method` are `MASS::qda()` parameters.
+
+Instead of tuning the PCA threshold (`ppc.thresh`) we tune the number of principal components (`ppc.pcaComp`) directly.
+Moreover, for `MASS::qda()` we try two different ways to estimate the posterior probabilities (parameter `predict.method`): the usual plug-in estimates and unbiased estimates.
+
+We perform a grid search and set the resolution to 10.
+This is for demonstration. You might want to use a finer resolution.
+
+```{r}
+ps = makeParamSet(
+  makeIntegerParam("ppc.pcaComp", lower = 1, upper = getTaskNFeats(sonar.task)),
+  makeDiscreteParam("predict.method", values = c("plug-in", "debiased"))
+)
+ctrl = makeTuneControlGrid(resolution = 10)
+res = tuneParams(lrn, sonar.task, rin, par.set = ps, control = ctrl, show.info = FALSE)
+res
+
+as.data.frame(res$opt.path)[1:3]
+```
+
+There seems to be a preference for a lower number of principal components (<27) for both `"plug-in"` and `"debiased"` with `"plug-in"` achieving slightly lower error rates.
+
+# Writing a custom preprocessing wrapper
+
+If the options offered by `makePreprocWrapperCaret()` are not enough, you can write your own preprocessing wrapper using function `makePreprocWrapper()`.
+
+As described in the tutorial section about [wrapped learners](wrapper.html){target="_blank"} wrappers are implemented using a *train* and a *predict* method.
+In case of preprocessing wrappers these methods specify how to transform the data before training and before prediction and are *completely user-defined*.
+
+Below we show how to create a preprocessing wrapper that centers and scales the data before training/predicting.
+Some learning methods as, e.g., k nearest neighbors, support vector machines or neural networks usually require scaled features.
+Many, but not all, have a built-in scaling option where the training data set is scaled before model fitting and the test data set is scaled accordingly, that is by using the scaling parameters from the training stage, before making predictions.
+In the following we show how to add a scaling option to a Learner (`makeLearner()`) by coupling it with function `base::scale()`.
+
+Note that we chose this simple example for demonstration.
+Centering/scaling the data is also possible with `makePreprocWrapperCaret()`.
+
+## Specifying the train function
+
+The *train* function has to be a function with the following arguments:
+
+* ``data`` is a `data.frame` with columns for all features and the target variable.
+* ``target`` is a string and denotes the name of the target variable in ``data``.
+* ``args`` is a `list` of further arguments and parameters that influence the preprocessing.
+
+It must return a `list` with elements ``$data`` and ``$control``, where ``$data`` is the preprocessed data set and ``$control`` stores all information required to preprocess the data before prediction.
+
+The *train* function for the scaling example is given below. It calls `base::scale()` on the numerical features and returns the scaled training data and the corresponding scaling parameters.
+
+``args`` contains the ``center`` and ``scale`` arguments of function `base::scale()` and slot ``$control`` stores the scaling parameters to be used in the prediction stage.
+
+Regarding the latter note that the `center` and `scale` arguments of `base::scale()` can be either a logical value or a numeric vector of length equal to the number of the numeric columns in `data`, respectively.
+If a logical value was passed to `args` we store the column means and standard deviations/root mean squares in the `$center` and `$scale` slots of the returned `$control` object.
+
+```{r}
+trainfun = function(data, target, args = list(center, scale)) {
+  # Identify numerical features
+  cns = colnames(data)
+  nums = setdiff(cns[sapply(data, is.numeric)], target)
+  # Extract numerical features from the data set and call scale
+  x = as.matrix(data[, nums, drop = FALSE])
+  x = scale(x, center = args$center, scale = args$scale)
+  # Store the scaling parameters in control
+  # These are needed to preprocess the data before prediction
+  control = args
+  if (is.logical(control$center) && control$center)
+    control$center = attr(x, "scaled:center")
+  if (is.logical(control$scale) && control$scale)
+    control$scale = attr(x, "scaled:scale")
+  # Recombine the data
+  data = data[, setdiff(cns, nums), drop = FALSE]
+  data = cbind(data, as.data.frame(x))
+  return(list(data = data, control = control))
+}
+```
+
+## Specifying the predict function
+
+The *predict* function has the following arguments:
+
+* ``data`` is a `data.frame` containing *only* feature values (as for prediction the target values naturally are not known).
+* ``target`` is a string indicating the name of the target variable.
+* ``args`` are the ``args`` that were passed to the *train* function.
+* ``control`` is the object returned by the *train* function.
+
+It returns the preprocessed data.
+
+In our scaling example the *predict* function scales the numerical features using the parameters from the training stage stored in ``control``.
+
+```{r}
+predictfun = function(data, target, args, control) {
+  # Identify numerical features
+  cns = colnames(data)
+  nums = cns[sapply(data, is.numeric)]
+  # Extract numerical features from the data set and call scale
+  x = as.matrix(data[, nums, drop = FALSE])
+  x = scale(x, center = control$center, scale = control$scale)
+  # Recombine the data
+  data = data[, setdiff(cns, nums), drop = FALSE]
+  data = cbind(data, as.data.frame(x))
+  return(data)
+}
+```
+
+## Creating the preprocessing wrapper
+
+Below we create a preprocessing wrapper with a regression neural network (`nnet::nnet()`) (which itself does not have a scaling option) as base learner.
+
+The *train* and *predict* functions defined above are passed to `makePreprocWrapper()` via the ``train`` and ``predict`` arguments.
+``par.vals`` is a `list` of parameter values that is relayed to the ``args`` argument of the *train* function.
+
+```{r}
+lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
+lrn = makePreprocWrapper(lrn, train = trainfun, predict = predictfun,
+  par.vals = list(center = TRUE, scale = TRUE))
+lrn
+```
+
+Let's compare the cross-validated mean squared error ([mse](measures.html){target="_blank"}) on the Boston Housing data set (`mlbench::BostonHousing()`) with and without scaling.
+
+```{r echo = FALSE, results='hide'}
+rdesc = makeResampleDesc("CV", iters = 3)
+
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r
+
+lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r
+```
+
+```{r eval = FALSE}
+rdesc = makeResampleDesc("CV", iters = 3)
+
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.nnet.preproc
+## Aggr perf: mse.test.mean=26.6997095
+## Runtime: 0.083282
+
+lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r
+
+## Resample Result
+## Task: BostonHousing-example
+## Learner: regr.nnet
+## Aggr perf: mse.test.mean=56.8645496
+## Runtime: 0.0463462
+```
+
+## Joint tuning of preprocessing and learner parameters
+
+Often it's not clear which preprocessing options work best with a certain learning algorithm.
+As already shown for the number of principal components in `makePreprocWrapperCaret()` we can [tune](tune.html){target="_blank"} them easily together with other hyperparameters of the learner.
+
+In our scaling example we can try if `nnet::nnet()` works best with both centering and scaling the data or if it's better to omit one of the two operations or do no preprocessing at all.
+In order to tune `center` and `scale` we have to add appropriate `LearnerParam` (`ParamHelpers::LearnerParam()`)s to the parameter set (`ParamHelpers::ParamSet()`) of the wrapped learner.
+
+As mentioned above `base::scale()` allows for numeric and logical `center` and `scale` arguments.
+As we want to use the latter option we declare `center` and `scale` as logical learner parameters.
+
+```{r}
+lrn = makeLearner("regr.nnet", trace = FALSE)
+lrn = makePreprocWrapper(lrn, train = trainfun, predict = predictfun,
+  par.set = makeParamSet(
+    makeLogicalLearnerParam("center"),
+    makeLogicalLearnerParam("scale")
+  ),
+  par.vals = list(center = TRUE, scale = TRUE))
+
+lrn
+
+getParamSet(lrn)
+```
+
+Now we do a simple grid search for the `decay` parameter of `nnet::nnet()` and the
+`center` and `scale` parameters.
+
+```{r}
+rdesc = makeResampleDesc("Holdout")
+ps = makeParamSet(
+  makeDiscreteParam("decay", c(0, 0.05, 0.1)),
+  makeLogicalParam("center"),
+  makeLogicalParam("scale")
+)
+ctrl = makeTuneControlGrid()
+res = tuneParams(lrn, bh.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE)
+
+res
+
+df = as.data.frame(res$opt.path)
+df[, -ncol(df)]
+```
+
+## Preprocessing wrapper functions
+
+If you have written a preprocessing wrapper that you might want to use from time to time it's a good idea to encapsulate it in an own function as shown below.
+If you think your preprocessing method is something others might want to use as well and should be integrated into `mlr` just [contact us](https://github.com/mlr-org/mlr/issues).
+
+```{r}
+makePreprocWrapperScale = function(learner, center = TRUE, scale = TRUE) {
+  trainfun = function(data, target, args = list(center, scale)) {
+    cns = colnames(data)
+    nums = setdiff(cns[sapply(data, is.numeric)], target)
+    x = as.matrix(data[, nums, drop = FALSE])
+    x = scale(x, center = args$center, scale = args$scale)
+    control = args
+    if (is.logical(control$center) && control$center)
+      control$center = attr(x, "scaled:center")
+    if (is.logical(control$scale) && control$scale)
+      control$scale = attr(x, "scaled:scale")
+    data = data[, setdiff(cns, nums), drop = FALSE]
+    data = cbind(data, as.data.frame(x))
+    return(list(data = data, control = control))
+  }
+  predictfun = function(data, target, args, control) {
+    cns = colnames(data)
+    nums = cns[sapply(data, is.numeric)]
+    x = as.matrix(data[, nums, drop = FALSE])
+    x = scale(x, center = control$center, scale = control$scale)
+    data = data[, setdiff(cns, nums), drop = FALSE]
+    data = cbind(data, as.data.frame(x))
+    return(data)
+  }
+  makePreprocWrapper(
+    learner,
+    train = trainfun,
+    predict = predictfun,
+    par.set = makeParamSet(
+      makeLogicalLearnerParam("center"),
+      makeLogicalLearnerParam("scale")
+    ),
+    par.vals = list(center = center, scale = scale)
+  )
+}
+
+lrn = makePreprocWrapperScale("classif.lda")
+train(lrn, iris.task)
+```

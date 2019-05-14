@@ -1,6 +1,7 @@
 
 #' @export
 makeRLearner.surv.ranger = function() {
+
   makeRLearnerSurv(
     cl = "surv.ranger",
     package = "ranger",
@@ -13,7 +14,7 @@ makeRLearner.surv.ranger = function() {
       makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
-      makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
+      makeDiscreteLearnerParam("respect.unordered.factors", values = c("ignore", "order", "partition"), default = "ignore"),
       makeDiscreteLearnerParam(id = "importance", values = c("none", "permutation"), default = "none", tunable = FALSE),
       makeLogicalLearnerParam(id = "write.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
@@ -21,34 +22,38 @@ makeRLearner.surv.ranger = function() {
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
-      makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C", "maxstat"), default = "logrank"),
+      makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "extratrees", "C", "maxstat"), default = "logrank"),
+      makeIntegerLearnerParam(id = "num.random.splits", lower = 1L, default = 1L, requires = quote(splitrule == "extratrees")),
       makeNumericLearnerParam(id = "alpha", lower = 0L, upper = 1L, default = 0.5, requires = quote(splitrule == "maxstat")),
-      makeNumericLearnerParam(id = "minprop", lower = 0L, upper = 1L, default = 0.1, requires = quote(splitrule == "maxstat")),
+      makeNumericLearnerParam(id = "minprop", lower = 0, upper = 0.5, default = 0.1, requires = quote(splitrule == "maxstat")),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
-    properties = c("numerics", "factors", "ordered", "featimp"),
+    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
+    properties = c("numerics", "factors", "ordered", "featimp", "weights"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable.",
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable.",
     callees = "ranger"
   )
 }
 
 #' @export
-trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.surv.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
-    status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
+    status.variable.name = tn[2L], data = getTaskData(.task, .subset), case.weights = .weights, ...)
 }
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
+
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)
 }
 
 #' @export
 getFeatureImportanceLearner.surv.ranger = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }

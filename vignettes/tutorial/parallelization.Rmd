@@ -1,0 +1,76 @@
+---
+title: "Parallelization"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+**R** by default does not make use of parallelization.
+With the integration of `parallelMap()` into `mlr`, it becomes easy to activate the parallel computing capabilities already supported by `mlr`.
+`parallelMap()` works with all major parallelization backends: local multicore execution using `parallel()`, socket and MPI clusters using `snow()`, makeshift SSH-clusters using `BatchJobs()` and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using `BatchJobs()`.
+
+All you have to do is select a backend by calling one of the
+`parallelStart*` (`parallelMap::parallelStart()`) functions.
+The first loop `mlr` encounters which is marked as parallel executable will be automatically parallelized.
+It is good practice to call `parallelStop` (`parallelMap::parallelStop()`) at the end of your script.
+
+```{r}
+library("parallelMap")
+parallelStartSocket(2)
+
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("classif.lda", iris.task, rdesc)
+
+parallelStop()
+```
+
+On Linux or Mac OS X, you may want to use
+`parallelStartMulticore` (`parallelMap::parallelStart()`) instead.
+
+# Parallelization levels
+
+We offer different parallelization levels for fine grained control over the parallelization.
+E.g., if you do not want to parallelize the `benchmark()` function because it has only very few iterations but want to parallelize the resampling (`resample()`) of each learner instead, you can specifically pass the `level` `"mlr.resample"` to the `parallelStart*` (`parallelMap::parallelStart()`)
+function.
+Currently the following levels are supported:
+
+```{r}
+parallelGetRegisteredLevels()
+```
+
+For further details please see the `parallelization()` documentation page.
+
+# Custom learners and parallelization
+
+If you have implemented a [custom learner yourself](create_learner.html){target="_blank"}, locally, you currently need to export this to the slave.
+So if you see an error after calling, e.g., a parallelized version of `resample()` like this:
+
+```
+no applicable method for 'trainLearner' applied to an object of class <my_new_learner>
+```
+
+simply add the following line somewhere after calling `parallelMap::parallelStart()`.
+
+```
+parallelExport("trainLearner.<my_new_learner>", "predictLearner.<my_new_learner>")
+```
+
+# The end
+
+For further details, consult the
+[parallelMap tutorial](https://github.com/berndbischl/parallelMap#parallelmap) and help (`?parallelMap()`).
+

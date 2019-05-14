@@ -26,10 +26,9 @@ test_that("surv_gamboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::gamboost, pars)
-    p  = predict(m, newdata = surv.test, type = "link")
+    p = predict(m, newdata = surv.test, type = "link")
     old.predicts.list[[i]] = drop(p)
   }
 
   testSimpleParsets("surv.gamboost", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list2)
 })
-

@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.penalized = function() {
+
   makeRLearnerClassif(
     cl = "classif.penalized",
     package = "!penalized",
@@ -28,19 +29,21 @@ makeRLearner.classif.penalized = function() {
 }
 
 #' @export
-trainLearner.classif.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.penalized = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   penalized::penalized(f, data = getTaskData(.task, .subset), model = "logistic", ...)
 }
 
 #' @export
 predictLearner.classif.penalized = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   levs = .model$task.desc$class.levels
   # FIXME: should be removed, reported in issue 840
   m@formula$unpenalized[[2L]] = as.symbol(.model$task.desc$target)
   .newdata[, .model$task.desc$target] = 0
-  pred = penalized::predict(m, data = .newdata,  ...)
+  pred = penalized::predict(m, data = .newdata, ...)
   if (.learner$predict.type == "prob") {
     propVectorToMatrix(pred, levs)
   } else {

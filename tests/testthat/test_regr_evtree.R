@@ -22,5 +22,4 @@ test_that("regr_evtree", {
   }
 
   testSimpleParsets("regr.evtree", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
-
 })
