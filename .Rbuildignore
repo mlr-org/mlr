@@ -30,3 +30,5 @@ tutorial/*
 ^vignettes/pdf/*
 appveyor.yml
 ^addon/*
+cran-comments.md
+revdep/*

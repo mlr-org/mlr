@@ -35,4 +35,3 @@ test_that("classif_mlp", {
   testSimple("classif.mlp", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
     parset = list(size = 7, maxit = 100))
 })
-

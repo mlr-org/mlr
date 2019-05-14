@@ -27,10 +27,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Bernd Bischl \email{bernd_bischl@gmx.net} (0000-0001-6002-6980)
+\strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (0000-0003-0748-6624)
 
 Authors:
 \itemize{
+  \item Bernd Bischl \email{bernd_bischl@gmx.net} (0000-0001-6002-6980)
   \item Michel Lang \email{michellang@gmail.com} (0000-0001-9754-0393)
   \item Lars Kotthoff \email{larsko@uwyo.edu}
   \item Julia Schiffner \email{schiffner@math.uni-duesseldorf.de}
@@ -38,7 +39,6 @@ Authors:
   \item Zachary Jones \email{zmj@zmjones.com}
   \item Giuseppe Casalicchio \email{giuseppe.casalicchio@stat.uni-muenchen.de} (0000-0001-5324-5966)
   \item Mason Gallo \email{masonagallo@gmail.com}
-  \item Patrick Schratz \email{patrick.schratz@gmail.com} (0000-0003-0748-6624)
 }
 
 Other contributors:

@@ -1,6 +1,7 @@
 
 #' @export
 makeRLearner.classif.ranger = function() {
+
   makeRLearnerClassif(
     cl = "classif.ranger",
     package = "ranger",
@@ -35,6 +36,7 @@ makeRLearner.classif.ranger = function() {
 
 #' @export
 trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
     probability = (.learner$predict.type == "prob"), case.weights = .weights, ...)
@@ -42,17 +44,20 @@ trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
+
   p = predict(object = .model$learner.model, data = .newdata, ...)
   return(p$predictions)
 }
 
 #' @export
 getOOBPredsLearner.classif.ranger = function(.learner, .model) {
+
   getLearnerModel(.model, more.unwrap = TRUE)$predictions
 }
 
 #' @export
 getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
+
   has.fiv = .learner$par.vals$importance
   if (is.null(has.fiv) || has.fiv == "none") {
     stop("You must set the learners parameter value for importance to

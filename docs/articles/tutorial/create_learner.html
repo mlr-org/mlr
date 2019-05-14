@@ -313,20 +313,20 @@
 <a href="#classes-constructors-and-naming-schemes" class="anchor"></a>Classes, constructors, and naming schemes</h1>
 <p>As you already know <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> generates an object of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"classif.lda"</span>))</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"regr.lm"</span>))</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"surv.coxph"</span>))</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"cluster.kmeans"</span>))</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>))</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## [4] "Learner"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## [4] "Learner"</a></code></pre></div>
 <p>The first element of each class attribute vector is the name of the learner class passed to the <code>cl</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Obviously, this adheres to the naming conventions</p>
 <ul>
 <li>
@@ -411,10 +411,13 @@
 <a class="sourceLine" id="cb7-3" data-line-number="3">{</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">    p =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">method =</span> predict.method, </a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">        ...)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) </a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(p<span class="op">$</span>class)</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="cf">else</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(p<span class="op">$</span>posterior)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">}</a></code></pre></div>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    }</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(p<span class="op">$</span>posterior)</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">    }</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">}</a></code></pre></div>
 </div>
 </div>
 <div id="regression" class="section level1">
@@ -696,7 +699,7 @@
 <p>All tested parameter configurations are collected in the <code>parset.list</code>. In order to make sure that the default parameter configuration is tested the first element of the <code>parset.list</code> is an empty <code>list</code> (<code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code>). Then we simply loop over all parameter settings and store the resulting predictions in <code>old.predicts.list</code>. Again the helper function <code>testSimpleParsets</code> does the same using the <code>mlr</code> interface and compares the outcomes.</p>
 <p>Additional to tests for individual learners we also have general tests that loop through all integrated learners and make for example sure that learners have the correct properties (e.g. a learner with property <code>"factors"</code> can cope with <code>factor</code> (<code><a href="https://www.rdocumentation.org/packages/base/topics/factor">base::factor()</a></code>) features, a learner with property <code>"weights"</code> takes observation weights into account properly etc.). For example <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R" class="uri">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R</a> runs through all classification learners. Similar tests exist for all types of learning methods like regression, cluster and survival analysis as well as multilabel classification.</p>
 <p>In order to run all tests for, e.g., classification learners on your machine you can invoke the tests from within <strong>R</strong> by</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">test</span>(<span class="st">"mlr"</span>, <span class="dt">filter =</span> <span class="st">"classif"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/test">test</a></span>(<span class="st">"mlr"</span>, <span class="dt">filter =</span> <span class="st">"classif"</span>)</a></code></pre></div>
 <p>or from the command line using <a href="https://github.com/rdatsci/rt">Michel’s rt tool</a></p>
 <pre><code>rtest --filter=classif</code></pre>
 </div>

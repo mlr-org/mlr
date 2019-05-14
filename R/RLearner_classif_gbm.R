@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.gbm = function() {
+
   makeRLearnerClassif(
     cl = "classif.gbm",
     package = "gbm",
@@ -26,16 +27,18 @@ makeRLearner.classif.gbm = function() {
 }
 
 #' @export
-trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   td = getTaskDesc(.task)
-  if (length(td$class.levels) == 2L)
+  if (length(td$class.levels) == 2L) {
     d = getTaskData(.task, .subset, recode.target = "01")
-  else
+  } else {
     d = getTaskData(.task, .subset)
+  }
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     gbm::gbm(f, data = d, ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     gbm::gbm(f, data = d, weights = .weights, ...)
   }
@@ -43,6 +46,7 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
+
   td = .model$task.desc
   m = .model$learner.model
   p = gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
@@ -73,6 +77,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.gbm = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   gbm::relative.influence(mod, mod$n.trees, ...)
 }

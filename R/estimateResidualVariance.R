@@ -17,18 +17,22 @@
 #'   If missing, `task` must be supplied.
 #' @export
 estimateResidualVariance = function(x, task, data, target) {
+
   UseMethod("estimateResidualVariance")
 }
 
 #' @export
 estimateResidualVariance.Learner = function(x, task, data, target) {
-  if (missing(task))
+
+  if (missing(task)) {
     task = makeRegrTask(data = data, target = target)
+  }
   estimateResidualVariance.WrappedModel(train(x, task), task)
 }
 
 #' @export
 estimateResidualVariance.WrappedModel = function(x, task, data, target) {
+
   if (missing(task)) {
     task = makeRegrTask(data = data, target = target)
   } else {

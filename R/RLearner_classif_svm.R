@@ -1,11 +1,12 @@
 #' @export
 makeRLearner.classif.svm = function() {
+
   makeRLearnerClassif(
     cl = "classif.svm",
     package = "e1071",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "type", default = "C-classification", values = c("C-classification", "nu-classification")),
-      makeNumericLearnerParam(id = "cost",  default = 1, lower = 0, requires = quote(type == "C-classification")),
+      makeNumericLearnerParam(id = "cost", default = 1, lower = 0, requires = quote(type == "C-classification")),
       makeNumericLearnerParam(id = "nu", default = 0.5, requires = quote(type == "nu-classification")),
       makeNumericVectorLearnerParam("class.weights", len = NA_integer_, lower = 0),
       makeDiscreteLearnerParam(id = "kernel", default = "radial", values = c("linear", "polynomial", "radial", "sigmoid")),
@@ -28,13 +29,15 @@ makeRLearner.classif.svm = function() {
 }
 
 #' @export
-trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   e1071::svm(f, data = getTaskData(.task, .subset), probability = .learner$predict.type == "prob", ...)
 }
 
 #' @export
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
+
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, ...)
   } else {

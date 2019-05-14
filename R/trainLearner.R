@@ -21,6 +21,6 @@
 #' @return (any). Model of the underlying learner.
 #' @export
 trainLearner = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   UseMethod("trainLearner")
 }
-

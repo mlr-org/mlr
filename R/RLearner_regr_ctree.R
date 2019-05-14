@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.ctree = function() {
+
   makeRLearnerRegr(
     cl = "regr.ctree",
     package = "party",
@@ -37,5 +38,6 @@ trainLearner.regr.ctree = function(.learner, .task, .subset, .weights = NULL, te
 
 #' @export
 predictLearner.regr.ctree = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

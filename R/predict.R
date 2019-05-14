@@ -31,7 +31,7 @@
 #' p = predict(model, newdata = iris, subset = test.set)
 #' print(p)
 #' predict(model, task = iris.task, subset = test.set)
-#'
+#' 
 #' # predict now probabiliies instead of class labels
 #' lrn = makeLearner("classif.lda", predict.type = "prob")
 #' model = train(lrn, iris.task, subset = train.set)
@@ -39,8 +39,10 @@
 #' print(p)
 #' getPredictionProbabilities(p)
 predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
-  if (!xor(missing(task), missing(newdata)))
+
+  if (!xor(missing(task), missing(newdata))) {
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
+  }
   assertClass(object, classes = "WrappedModel")
   model = object
   learner = model$learner
@@ -53,7 +55,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   } else {
     assertDataFrame(newdata, min.rows = 1L)
     if (class(newdata)[1] != "data.frame") {
-      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
+      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.", class(newdata)[1])
       newdata = as.data.frame(newdata)
     }
     size = nrow(newdata)
@@ -78,11 +80,13 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
 
   # get truth and drop target col, if target in newdata
   if (!all(is.na(t.col))) {
-    if (length(t.col) > 1L && anyMissing(t.col))
+    if (length(t.col) > 1L && anyMissing(t.col)) {
       stop("Some but not all target columns found in data")
+    }
     truth = newdata[, t.col, drop = TRUE]
-    if (is.list(truth))
+    if (is.list(truth)) {
       truth = data.frame(truth)
+    }
     newdata = newdata[, -t.col, drop = FALSE]
   } else {
     truth = NULL
@@ -97,7 +101,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     time.predict = NA_real_
     dump = getFailureModelDump(model)
   } else {
-    #FIXME: this copies newdata
+    # FIXME: this copies newdata
     pars = list(
       .learner = learner,
       .model = model,
@@ -105,26 +109,35 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     )
     pars = c(pars, getHyperPars(learner, c("predict", "both")))
     debug.seed = getMlrOption("debug.seed", NULL)
-    if (!is.null(debug.seed))
+    if (!is.null(debug.seed)) {
       set.seed(debug.seed)
+    }
     opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
     fun1 = if (opts$show.learner.output) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
-    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
+    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) {
+      identity
+    } else {
+      function(x) {
+
         withCallingHandlers(x, error = function(c) utils::dump.frames())
       }
+    }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
 
-    time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
+    time.predict = measureTime(fun1({
+      p = fun2(fun3(do.call(predictLearner2, pars)))
+    }))
 
     # was there an error during prediction?
     if (is.error(p)) {
-      if (opts$on.learner.error == "warn")
+      if (opts$on.learner.error == "warn") {
         warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
+      }
       error = as.character(p)
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_
@@ -133,10 +146,11 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       }
     }
   }
-  if (missing(task))
+  if (missing(task)) {
     ids = NULL
-  else
+  } else {
     ids = subset
+  }
   makePrediction(task.desc = td, row.names = rownames(newdata), id = ids, truth = truth,
     predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error, dump = dump)
 }

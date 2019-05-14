@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.h2o.randomForest = function() {
+
   makeRLearnerRegr(
     cl = "regr.h2o.randomForest",
     package = "h2o",
@@ -9,7 +10,7 @@ makeRLearner.regr.h2o.randomForest = function() {
       makeLogicalLearnerParam("build_tree_one_node", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam("ntrees", lower = 1L, default = 50L),
       makeIntegerLearnerParam("max_depth", lower = 1L, default = 20L),
-      makeIntegerLearnerParam("min_rows", lower = 1L,  default = 1L),
+      makeIntegerLearnerParam("min_rows", lower = 1L, default = 1L),
       makeIntegerLearnerParam("nbins", lower = 1L, default = 20L),
       makeIntegerLearnerParam("nbins_cats", lower = 1L, default = 1024L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
@@ -22,7 +23,8 @@ makeRLearner.regr.h2o.randomForest = function() {
 }
 
 #' @export
-trainLearner.regr.h2o.randomForest = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.h2o.randomForest = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -37,6 +39,7 @@ trainLearner.regr.h2o.randomForest = function(.learner, .task, .subset, .weights
 
 #' @export
 predictLearner.regr.h2o.randomForest = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)

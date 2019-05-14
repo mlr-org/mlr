@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.nnet = function() {
+
   makeRLearnerClassif(
     cl = "classif.nnet",
     package = "nnet",
@@ -8,10 +9,10 @@ makeRLearner.classif.nnet = function() {
       # FIXME size seems to have no default in nnet(). If it has, par.vals is redundant
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       # nnet seems to set these manually and hard for classification.....
-#     makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy == FALSE && softmax == FALSE && censored == FALSE)),
-#     makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout == FALSE && softmax == FALSE && censored == FALSE)),
-#     makeLogicalLearnerParam(id = "softmax", default = FALSE, requires = quote(entropy == FALSE && linout == FALSE && censored == FALSE)),
-#     makeLogicalLearnerParam(id = "censored", default = FALSE, requires = quote(linout == FALSE && softmax == FALSE && entropy == FALSE)),
+      #     makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy == FALSE && softmax == FALSE && censored == FALSE)),
+      #     makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout == FALSE && softmax == FALSE && censored == FALSE)),
+      #     makeLogicalLearnerParam(id = "softmax", default = FALSE, requires = quote(entropy == FALSE && linout == FALSE && censored == FALSE)),
+      #     makeLogicalLearnerParam(id = "censored", default = FALSE, requires = quote(linout == FALSE && softmax == FALSE && entropy == FALSE)),
       makeLogicalLearnerParam(id = "skip", default = FALSE),
       makeNumericLearnerParam(id = "rang", default = 0.7),
       makeNumericLearnerParam(id = "decay", default = 0),
@@ -31,11 +32,12 @@ makeRLearner.classif.nnet = function() {
 }
 
 #' @export
-trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
@@ -43,16 +45,18 @@ trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.classif.nnet = function(.learner, .model, .newdata, ...) {
+
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  if (type == "class")
+  if (type == "class") {
     return(as.factor(p))
-  else {
+  } else {
     if (length(.model$task.desc$class.levels) == 2L) {
       y = cbind(1 - p, p)
       colnames(y) = .model$learner.model$lev
       return(y)
-    } else
+    } else {
       return(p)
+    }
   }
 }

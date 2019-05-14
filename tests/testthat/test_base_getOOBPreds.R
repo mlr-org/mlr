@@ -19,6 +19,4 @@ test_that("getOOBPreds", {
     expect_equal(names(oob$data), names(pred$data))
     expect_equal(names(oob), names(pred))
   }
-
 })
-

@@ -18,7 +18,7 @@ test_that("regr_ctree", {
     ctrl = do.call(party::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = party::ctree(formula = regr.formula, data = regr.train, control = ctrl)
-    p  = predict(m, newdata = regr.test, type = "response")[, 1L]
+    p = predict(m, newdata = regr.test, type = "response")[, 1L]
     old.predicts.list[[i]] = p
   }
 

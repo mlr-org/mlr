@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.surv.cvglmnet = function() {
+
   makeRLearnerSurv(
     cl = "surv.cvglmnet",
     package = "glmnet",
@@ -41,13 +42,15 @@ makeRLearner.surv.cvglmnet = function() {
 }
 
 #' @export
-trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
   info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "cox", parallel = FALSE), list(...))
   rm(d)
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     args$weights = .weights
+  }
 
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
@@ -62,6 +65,7 @@ trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
+
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...))

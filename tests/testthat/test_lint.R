@@ -11,4 +11,3 @@ if (isLintrVersionOk(identical(Sys.getenv("TRAVIS"), "true"))) {
     "To run lintr test, please install the github version of lintr by running",
     "> devtools::install_github(\"jimhester/lintr\")", sep = "\n"))
 }
-

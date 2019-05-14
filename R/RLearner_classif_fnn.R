@@ -1,6 +1,7 @@
-#FIXME: probs can only be predicted for two class problems (winning class)
+# FIXME: probs can only be predicted for two class problems (winning class)
 #' @export
 makeRLearner.classif.fnn = function() {
+
   makeRLearnerClassif(
     cl = "classif.fnn",
     package = "FNN",
@@ -18,13 +19,15 @@ makeRLearner.classif.fnn = function() {
 }
 
 #' @export
-trainLearner.classif.fnn = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.fnn = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   list(train = d, parset = list(...))
 }
 
 #' @export
 predictLearner.classif.fnn = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   pars = list(train = m$train$data, test = .newdata, cl = m$train$target)
   pars = c(pars, m$parset, list(...))

@@ -15,6 +15,7 @@
 #' @family featsel
 #' @export
 analyzeFeatSelResult = function(res, reduce = TRUE) {
+
   assertClass(res$control, "FeatSelControlSequential")
   assertFlag(reduce)
 
@@ -46,8 +47,9 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   df$opt = is.na(df$eol)
   # number of features in set are sum of bits which are 1
   df$n.feats = rowSums(df[, features, drop = FALSE])
-  if (reduce)
+  if (reduce) {
     df = df[df$sel, , drop = FALSE]
+  }
 
   ### Initialize some variables
   old.feats = features[df[1L, features, drop = TRUE] == 1]
@@ -57,23 +59,26 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   for (thedob in unique(df$dob)) {
     df.dob = subset(df, df$dob == thedob)
     df.sel = subset(df.dob, df.dob$sel == TRUE)
-    if (!reduce)
-    catf(strrepeat("-", 80))
+    if (!reduce) {
+      catf(strrepeat("-", 80))
+    }
     for (j in seq_row(df.dob)) {
       row = df.dob[j, ]
       cur.feats = features[row[features] == 1]
       cur.sel = ifelse(row$sel, "*", " ")
       cur.perf = row[, measure]
-      change.txt = if (thedob == 1L)
+      change.txt = if (thedob == 1L) {
         "Init  "
-      else if (length(cur.feats) < length(old.feats))
+      } else if (length(cur.feats) < length(old.feats)) {
         "Remove"
-      else
+      } else {
         "Add   "
-      if (thedob == 1L)
+      }
+      if (thedob == 1L) {
         change.feat = ""
-      else
+      } else {
         change.feat = symdiff(cur.feats, old.feats)
+      }
       catf("- Features: %4i  %s : %-20s  Perf = %s  Diff: %s  %s",
         length(cur.feats), change.txt, clipString(change.feat, width.feat),
         numToString(cur.perf),
@@ -94,5 +99,3 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   }
   invisible(NULL)
 }
-
-

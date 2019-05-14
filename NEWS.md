@@ -1,7 +1,13 @@
-# mlr 2.14:
+# mlr 2.14.0.9000
+
+- Same as previous version.
+
+
+# mlr 2.14.0
 
 ## general
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
+* `Task` help pages are now split into separate ones, e.g. `RegrTask`, `ClassifTask` (@pat-s, #2564)
 
 ## functions - new
 * `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
@@ -28,8 +34,8 @@
 * FSelectorRcpp_information.gain
 * FSelectorRcpp_symuncert
 
-Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. 
-Exeptions are filters included in base R packages. 
+Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>.
+Exeptions are filters included in base R packages.
 In this case, the package name is omitted.
 
 ## filter - general
@@ -46,15 +52,19 @@ In this case, the package name is omitted.
   - `randomForestSRC.rfsrc` -> `randomForestSRC_importance`
   - `randomForestSRC.var.select` -> `randomForestSRC_var.select`
   - `randomForest.importance` -> `randomForest_importance`
-  
+
 * fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
-  
+
 ## learners - new
 * classif.liquidSVM (@PhilippPro, #2428)
 * regr.liquidSVM (@PhilippPro, #2428)
 
 ## learners - general
 * regr.h2o.gbm: Various parameters added, `"h2o.use.data.table" = TRUE` is now the default (@j-hartshorn, #2508)
+* h2o learners now support getting feature importance (@markusdumke, #2434)
+
+## learners - fixes
+* In some cases the optimized hyperparameters were not applied in the performance level of a nested CV (@berndbischl, #2479)
 
 ## featSel - general
  * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits

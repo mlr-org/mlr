@@ -1,6 +1,6 @@
 context("overundersample")
 
-test_that("over and undersample works",  {
+test_that("over and undersample works", {
   y = binaryclass.df[, binaryclass.target]
   tab1 = table(y)
   task = oversample(binaryclass.task, rate = 2)
@@ -15,7 +15,7 @@ test_that("over and undersample works",  {
   expect_equal(tab2["R"], tab1["R"])
 })
 
-test_that("over and undersample wrapper",  {
+test_that("over and undersample wrapper", {
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeUndersampleWrapper(lrn1, usw.rate = 0.5)
@@ -48,7 +48,7 @@ test_that("oversampling keeps all min / max obs", {
 
 test_that("control which class gets over or under sampled", {
   set.seed(getOption("mlr.debug.seed"))
-  #check function oversample(), undersample()
+  # check function oversample(), undersample()
   y = binaryclass.df[, binaryclass.target]
   tab1 = table(y)
   z = getMinMaxClass(y)
@@ -63,7 +63,7 @@ test_that("control which class gets over or under sampled", {
   expect_equal(tab2["R"], round(tab1["R"] / 2))
   expect_equal(tab2["M"], tab1["M"])
 
-  #check over- and undersample-wrapper
+  # check over- and undersample-wrapper
   z = getMinMaxClass(binaryclass.df[, binaryclass.target])
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
@@ -80,9 +80,9 @@ test_that("training performance works as expected (#1357)", {
     properties = c("classif", "classif.multi", "req.pred", "req.truth"),
     name = "Number",
     fun = function(task, model, pred, feats, extra.args) {
+
       length(pred$data$response)
-    }
-  )
+    })
 
   y = binaryclass.df[, binaryclass.target]
   z = getMinMaxClass(y)
@@ -138,5 +138,4 @@ test_that("Wrapper works with weights, we had issue #2047", {
   u = getLearnerModel(m, more.unwrap = TRUE)$weights
   expect_equal(length(u), 7)
   expect_subset(u, 1:10)
-
 })

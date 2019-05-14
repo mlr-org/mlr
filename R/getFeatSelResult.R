@@ -6,8 +6,7 @@
 #' @export
 #' @family featsel
 getFeatSelResult = function(object) {
+
   assertClass(object, "FeatSelModel")
   object$learner.model$opt.result
 }
-
-
