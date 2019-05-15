@@ -37,7 +37,7 @@ Plots calibration data from \link{generateCalibrationData}.
 \examples{
 \dontrun{
 lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
-            makeLearner("classif.nnet", predict.type = "prob"))
+  makeLearner("classif.nnet", predict.type = "prob"))
 fit = lapply(lrns, train, task = iris.task)
 pred = lapply(fit, predict, task = iris.task)
 names(pred) = c("rpart", "nnet")
@@ -52,7 +52,8 @@ plotCalibration(out)
 }
 }
 \seealso{
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
@@ -63,3 +64,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
 
 Other calibration: \code{\link{generateCalibrationData}}
 }
+\concept{calibration}
+\concept{plot}

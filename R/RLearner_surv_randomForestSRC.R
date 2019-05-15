@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.surv.randomForestSRC = function() {
+
   makeRLearnerSurv(
     cl = "surv.randomForestSRC",
     package = c("survival", "randomForestSRC"),
@@ -52,21 +53,25 @@ makeRLearner.surv.randomForestSRC = function() {
 
 #' @export
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   randomForestSRC::rfsrc(f, data = getTaskData(.task, subset = .subset), case.wt = .weights, ...)
 }
 
 #' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
 }
 
 #' @export
 getOOBPredsLearner.surv.randomForestSRC = function(.learner, .model) {
+
   .model$learner.model$predicted.oob
 }
 
 #' @export
 getFeatureImportanceLearner.surv.randomForestSRC = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.regr.randomForestSRC(.learner, .model, ...)
 }

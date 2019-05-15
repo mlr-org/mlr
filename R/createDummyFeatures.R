@@ -19,15 +19,18 @@
 #' @export
 #' @family eda_and_preprocess
 createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+
   assertChoice(method, choices = c("1-of-n", "reference"))
-  if (!is.factor(obj) && !is.character(obj))
+  if (!is.factor(obj) && !is.character(obj)) {
     checkTargetPreproc(obj, target, cols)
+  }
   UseMethod("createDummyFeatures")
 }
 
 #' @export
 createDummyFeatures.data.frame = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
-    # get all factor feature names present in data
+
+  # get all factor feature names present in data
   work.cols = colnames(obj)[vlapply(obj, is.factor)]
   work.cols = setdiff(work.cols, target)
 
@@ -49,7 +52,9 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
 
   if (method == "reference" && length(work.cols) == length(dummies)) {
     colnames(dummies) = Map(function(col, pre) {
-      stri_paste(pre, tail(levels(col), -1), sep = ".")}, obj[work.cols], prefix)
+
+      stri_paste(pre, tail(levels(col), -1), sep = ".")
+    }, obj[work.cols], prefix)
   }
 
   if (length(dummies) != 0) {
@@ -64,6 +69,7 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
 
 #' @export
 createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+
   target = getTaskTargetNames(obj)
   d = createDummyFeatures(obj = getTaskData(obj), target = target, method = method, cols = cols)
   changeData(obj, d)
@@ -72,6 +78,7 @@ createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-
 
 #' @export
 createDummyFeatures.factor = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+
   dcol = as.data.frame(obj)
   colname = colnames(dcol)
   if (method == "1-of-n") {
@@ -88,5 +95,6 @@ createDummyFeatures.factor = function(obj, target = character(0L), method = "1-o
 
 #' @export
 createDummyFeatures.character = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+
   createDummyFeatures(as.factor(obj), method = method)
 }

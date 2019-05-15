@@ -4,8 +4,9 @@
 \alias{plotBMRSummary}
 \title{Plot a benchmark summary.}
 \usage{
-plotBMRSummary(bmr, measure = NULL, trafo = "none", order.tsks = NULL,
-  pointsize = 4L, jitter = 0.05, pretty.names = TRUE)
+plotBMRSummary(bmr, measure = NULL, trafo = "none",
+  order.tsks = NULL, pointsize = 4L, jitter = 0.05,
+  pretty.names = TRUE)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -72,7 +73,8 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
@@ -81,3 +83,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{benchmark}
+\concept{plot}

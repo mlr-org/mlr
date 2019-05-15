@@ -3,6 +3,7 @@
 #   control [TuneControl]
 #   res [result from evalOptimizationState]
 getTuneThresholdExtra = function(control, res) {
+
   if (control$tune.threshold) {
     # add class names to threshold, if longer than 1
     extra = as.list(res$threshold)
@@ -11,4 +12,3 @@ getTuneThresholdExtra = function(control, res) {
     NULL
   }
 }
-

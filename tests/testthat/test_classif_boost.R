@@ -43,16 +43,19 @@ test_that("classif_boosting", {
   )
 
   tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
+
     args = list(...)
-    if (!is.null(args$cp))
+    if (!is.null(args$cp)) {
       ctrl = rpart::rpart.control(cp = args$cp, xval = 0)
-    else
+    } else {
       ctrl = rpart::rpart.control(xval = 0)
+    }
     set.seed(getOption("mlr.debug.seed"))
     adabag::boosting(formula, data[subset, ], mfinal = args$mfinal, control = ctrl)
   }
 
   tp = function(model, newdata) {
+
     set.seed(getOption("mlr.debug.seed"))
     as.factor(predict(model, newdata)$class)
   }

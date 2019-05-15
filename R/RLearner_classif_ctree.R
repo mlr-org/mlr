@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.ctree = function() {
+
   makeRLearnerClassif(
     cl = "classif.ctree",
     package = "party",
@@ -37,6 +38,7 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.classif.ctree = function(.learner, .model, .newdata, ...) {
+
   if (.learner$predict.type == "prob") {
     m = .model$learner.model
     p = party::treeresponse(m, newdata = .newdata, ...)

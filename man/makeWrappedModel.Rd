@@ -16,7 +16,7 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 \item{learner.model}{(any)\cr
 Underlying model.}
 
-\item{task.desc}{[TaskDesc]\cr
+\item{task.desc}{\link{TaskDesc}\cr
 Task description object.}
 
 \item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr

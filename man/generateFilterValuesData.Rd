@@ -5,7 +5,7 @@
 \alias{FilterValues}
 \title{Calculates feature filter values.}
 \usage{
-generateFilterValuesData(task, method = "randomForestSRC.rfsrc",
+generateFilterValuesData(task, method = "randomForestSRC_importance",
   nselect = getTaskNFeats(task), ..., more.args = list())
 }
 \arguments{
@@ -14,7 +14,7 @@ The task.}
 
 \item{method}{(\link{character})\cr
 Filter method(s), see above.
-Default is \dQuote{randomForestSRC.rfsrc}.}
+Default is \dQuote{randomForestSRC_importance}.}
 
 \item{nselect}{(\code{integer(1)})\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
@@ -30,23 +30,17 @@ Default is empty list.}
 }
 \value{
 (\link{FilterValues}). A \code{list} containing:
-\item{task.desc}{[[TaskDesc])\cr
+\item{task.desc}{[\link{TaskDesc})\cr
 Task description.}
-\item{data}{([data.frame]) with columns:
+\item{data}{(\link{data.frame}) with columns:
 \itemize{
-\item \code{name}([character])\cr
+\item \code{name}(\link{character})\cr
 Name of feature.
-\item \code{type}([character])\cr
+\item \code{type}(\link{character})\cr
 Feature column type.
-\item \code{method}([numeric])\cr
+\item \code{method}(\link{numeric})\cr
 One column for each method with the feature importance values.
 }}
-
-[[TaskDesc]: R:[TaskDesc
-[data.frame]: R:data.frame
-[character]: R:character
-[character]: R:character
-[numeric]: R:numeric
 }
 \description{
 Calculates numerical filter values for features.
@@ -59,13 +53,13 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
 Other filter: \code{\link{filterFeatures}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
+\concept{filter}
+\concept{generate_plot_data}

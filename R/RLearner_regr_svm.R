@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.svm = function() {
+
   makeRLearnerRegr(
     cl = "regr.svm",
     package = "e1071",
@@ -9,7 +10,7 @@ makeRLearner.regr.svm = function() {
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L, requires = quote(kernel == "polynomial")),
       makeNumericLearnerParam(id = "gamma", lower = 0, requires = quote(kernel != "linear")),
       makeNumericLearnerParam(id = "coef0", default = 0, requires = quote(kernel == "polynomial" || kernel == "sigmoid")),
-      makeNumericLearnerParam(id = "cost",  default = 1, lower = 0, requires = quote(type == "C-regrication")),
+      makeNumericLearnerParam(id = "cost", default = 1, lower = 0, requires = quote(type == "C-regrication")),
       makeNumericLearnerParam(id = "nu", default = 0.5, requires = quote(type == "nu-regression")),
       makeNumericLearnerParam(id = "cachesize", default = 40L),
       makeNumericLearnerParam(id = "tolerance", default = 0.001, lower = 0),
@@ -27,12 +28,14 @@ makeRLearner.regr.svm = function() {
 }
 
 #' @export
-trainLearner.regr.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.svm = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   e1071::svm(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.regr.svm = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)
 }

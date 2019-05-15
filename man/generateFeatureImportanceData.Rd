@@ -7,8 +7,8 @@
 \usage{
 generateFeatureImportanceData(task, method = "permutation.importance",
   learner, features = getTaskFeatureNames(task), interaction = FALSE,
-  measure, contrast = function(x, y) x - y, aggregation = mean, nmc = 50L,
-  replace = TRUE, local = FALSE)
+  measure, contrast = function(x, y) x - y, aggregation = mean,
+  nmc = 50L, replace = TRUE, local = FALSE)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -102,7 +102,6 @@ lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 imp = generateFeatureImportanceData(iris.task, "permutation.importance",
   lrn, "Petal.Width", nmc = 10L, local = TRUE)
-
 }
 \references{
 Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.
@@ -114,6 +113,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
+\concept{generate_plot_data}

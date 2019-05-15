@@ -2,6 +2,7 @@ context("regr_GPfit")
 
 test_that("regr_GPfit", {
   testFun = function(x) {
+
     return(4 * x[, 1]^2 - 2 * x[, 2])
   }
   set.seed(getOption("mlr.debug.seed"))

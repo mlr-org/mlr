@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.geoDA = function() {
+
   makeRLearnerClassif(
     cl = "classif.geoDA",
     package = "DiscriMiner",
@@ -16,15 +17,17 @@ makeRLearner.classif.geoDA = function() {
 }
 
 #' @export
-trainLearner.classif.geoDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.geoDA = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "drop.levels")
   DiscriMiner::geoDA(variables = d$data, group = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.geoDA = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   p = DiscriMiner::classify(m, newdata = .newdata)
-  #p$scores #we loose this information
+  # p$scores #we loose this information
   p$pred_class
 }

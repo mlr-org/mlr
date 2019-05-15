@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.rFerns = function() {
+
   makeRLearnerClassif(
     cl = "classif.rFerns",
     package = "rFerns",
@@ -20,16 +21,19 @@ makeRLearner.classif.rFerns = function() {
 
 #' @export
 trainLearner.classif.rFerns = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   rFerns::rFerns(x = d$data, y = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.rFerns = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, .newdata, ...)
 }
 
 #' @export
 getOOBPredsLearner.classif.rFerns = function(.learner, .model) {
+
   getLearnerModel(.model, more.unwrap = TRUE)$oobPreds
 }

@@ -27,6 +27,7 @@
 #' @export
 #' @seealso [predict.WrappedModel]
 getConfMatrix = function(pred, relative = FALSE) {
+
   .Deprecated("calculateConfusionMatrix")
   calculateConfusionMatrix(pred, relative = relative)
 }

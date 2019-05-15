@@ -13,13 +13,15 @@
 #' @return ([list]). A named list of values.
 #' @family learner
 #' @export
-getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
+getHyperPars = function(learner, for.fun = c("train", "predict", "both")) {
+
   assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }
 
 #' @export
 getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")) {
+
   assertClass(learner, classes = "Learner")
   pars = learner$par.set$pars
   pv = learner$par.vals
@@ -28,10 +30,10 @@ getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")
 }
 
 getHyperParsString = function(learner, show.missing.values = TRUE) {
+
   hps = getHyperPars(learner)
   ns = names(hps)
   pars = getParamSet(learner)$pars[ns]
   s = mapply(paramValueToString, pars, hps, MoreArgs = list(show.missing.values = show.missing.values))
   stri_paste(ns, s, sep = "=", collapse = ",")
 }
-

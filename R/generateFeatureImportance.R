@@ -73,12 +73,11 @@
 #' }
 #'
 #' @examples
-#'
+#' 
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
 #' imp = generateFeatureImportanceData(iris.task, "permutation.importance",
 #'   lrn, "Petal.Width", nmc = 10L, local = TRUE)
-#'
 #' @references Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.
 #' @export
 generateFeatureImportanceData = function(task, method = "permutation.importance",
@@ -88,26 +87,32 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
 
   learner = checkLearner(learner)
   measure = checkMeasures(measure, learner)
-  if (length(measure) > 1L)
+  if (length(measure) > 1L) {
     stop("only one measure is allowed.")
-  if (getTaskType(task) != learner$type)
+  }
+  if (getTaskType(task) != learner$type) {
     stopf("Expected task of type '%s', not '%s'", getTaskType(task), learner$type)
+  }
   assertCount(nmc)
   test.contrast = contrast(1, 1)
-  if (!(is.numeric(test.contrast)))
+  if (!(is.numeric(test.contrast))) {
     stop("the contrast function must return a numeric vector.")
-  if (!length(test.contrast) == 1L)
+  }
+  if (!length(test.contrast) == 1L) {
     stop("the contrast function must return a numeric vector the same length as the input.")
+  }
   test.aggregation = aggregation(1:2)
-  if (!is.numeric(test.aggregation))
+  if (!is.numeric(test.aggregation)) {
     stop("aggregation argument doesn't return a numeric vector.")
-  if (!(length(test.aggregation) == 1L))
+  }
+  if (!(length(test.aggregation) == 1L)) {
     stop("aggregation function must either return 1 number or a numeric vector of the same length as the number of rows in the task data.frame.")
+  }
 
   out = switch(method,
     "permutation.importance" = doPermutationImportance(
       task, learner, features, interaction, measure, contrast, aggregation, nmc, replace, local)
-    )
+  )
 
   makeS3Obj(
     "FeatureImportance",
@@ -135,6 +140,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
   if (local) {
     # subset the prediction data element to compute the per-observation performance
     perf = vnapply(1:getTaskSize(task), function(i) {
+
       pred$data = pred$data[i, ]
       performance(pred, measure)
     })
@@ -149,13 +155,14 @@ doPermutationImportance = function(task, learner, features, interaction, measure
   if (nmc == -1L) {
     ## from http://stackoverflow.com/questions/11095992/generating-all-distinct-permutations-of-a-list-in-r
     permutations = function(n) {
-      if (n == 1L){
+
+      if (n == 1L) {
         return(matrix(1L))
       } else {
         sp = permutations(n - 1L)
         p = nrow(sp)
         A = matrix(nrow = n, ncol = n * p)
-        for (i in 1:n){
+        for (i in 1:n) {
           A[, (i - 1) * p + 1:p] = rbind(i, sp + (sp >= i))
         }
         return(A)
@@ -167,7 +174,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
   }
 
   args = list(measure = measure, contrast = contrast, data = data,
-              perf = perf, fit = fit, indices = indices)
+    perf = perf, fit = fit, indices = indices)
 
   doPermutationImportanceIteration = function(perf, fit, data, measure,
     contrast, indices, i, x) {
@@ -176,6 +183,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
 
     if (local) {
       perf.permuted = lapply(seq_len(getTaskSize(task)), function(i, pred) {
+
         pred$data = pred$data[i, ]
         performance(pred, measure)
       }, pred = predict(fit, newdata = data))
@@ -195,6 +203,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
     colnames(out) = stri_paste(features, collapse = ":")
   } else {
     out = lapply(features, function(x) {
+
       parallelMap(doPermutationImportanceIteration, i = seq_len(nmc), more.args = c(args, x = x))
     })
     out = lapply(out, function(x) apply(do.call("rbind", x), 2, aggregation))
@@ -207,6 +216,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
 
 #' @export
 print.FeatureImportance = function(x, ...) {
+
   catf("FeatureImportance:")
   catf("Task: %s", x$task.desc$id)
   catf("Interaction: %s", x$interaction)

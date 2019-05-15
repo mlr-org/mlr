@@ -17,7 +17,7 @@ test_that("filterFeatures", {
   feat.imp.new = suppressWarnings(generateFilterValuesData(binaryclass.task))
   expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC.rfsrc"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC_importance"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
@@ -38,7 +38,7 @@ test_that("filterFeatures", {
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
-      head(sortByCol(feat.imp.new$data, "variance", asc = FALSE), 5L)$name))
+    head(sortByCol(feat.imp.new$data, "variance", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
@@ -74,7 +74,7 @@ test_that("plotFilterValues", {
   plotFilterValues(fv)
 
   path = file.path(tempdir(), "test.svg")
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC.rfsrc"))
+  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC_importance"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
@@ -98,7 +98,8 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
     nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "regr.lm")))
 
   # create stupid dummy data and check that we can change the na.rm arg of filter "variance" in multiple ways
-  d = iris; d[1L, 1L] = NA_real_
+  d = iris
+  d[1L, 1L] = NA_real_
   task = makeClassifTask(data = d, target = "Species")
 
   f1 = generateFilterValuesData(task, method = "variance", na.rm = FALSE)
@@ -123,16 +124,17 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
   mock.filter = makeFilter(
     "mock.filter",
     desc = "Mock Filter",
-    pkg = "",
+    pkg = character(0),
     supported.tasks = c("classif", "regr", "surv"),
     supported.features = c("numerics", "factors"),
     fun = function(task, nselect) {
+
       ns = getTaskFeatureNames(task)
       d = seq_along(ns)
       names(d) = ns
       d = c(d[-1], d[1])
       d
-  })
+    })
   fv = generateFilterValuesData(regr.task, method = "mock.filter")
   expect_equal(fv$data$name, ns)
   expect_equal(fv$data$mock.filter, seq_along(ns))

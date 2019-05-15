@@ -18,7 +18,7 @@ test_that("regr_btgp", {
   df = cbind(df.num, df.factor)
   inds = 1:10
   train = df[inds, ]
-  test  = df[-inds, ]
+  test = df[-inds, ]
   y = regr.df[inds, regr.target]
 
   old.predicts.list = list()

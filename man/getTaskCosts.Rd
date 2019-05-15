@@ -7,7 +7,7 @@
 getTaskCosts(task, subset = NULL)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{(\link{CostSensTask})\cr
 The task.}
 
 \item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
@@ -30,3 +30,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
+\concept{task}

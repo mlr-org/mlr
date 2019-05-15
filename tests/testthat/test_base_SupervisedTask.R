@@ -52,8 +52,10 @@ test_that("SupervisedTask dropping of levels works", {
   task = makeRegrTask(data = d, target = colnames(iris)[1], fixup.data = "quiet")
   e = getTaskData(task)
   expect_true(setequal(levels(e$Species), levs1))
-  expect_warning({task = makeRegrTask(data = d, target = colnames(iris)[1], fixup.data = "warn")},
-    "Empty factor levels")
+  expect_warning({
+    task = makeRegrTask(data = d, target = colnames(iris)[1], fixup.data = "warn")
+  },
+  "Empty factor levels")
   e = getTaskData(task)
   expect_true(setequal(levels(e$Species), levs1))
 
@@ -61,12 +63,13 @@ test_that("SupervisedTask dropping of levels works", {
     "Empty factor levels")
 
   expect_warning(makeMultilabelTask("multilabel", multilabel.df[1:10, ], target = c("y1", "y2"), fixup.data = "quiet"), NA)
-
 })
 
 test_that("SupervisedTask does not drop positive class", {
   data = iris[1:100, ]
-  expect_warning({task = makeClassifTask(data = data, target = "Species")}, "empty factor levels")
+  expect_warning({
+    task = makeClassifTask(data = data, target = "Species")
+  }, "empty factor levels")
   td = getTaskDesc(task)
   expect_true(setequal(c(td$positive, td$negative), unique(data$Species)))
 })

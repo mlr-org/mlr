@@ -1,0 +1,330 @@
+---
+title: "Imbalanced Classification Problems"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+In case of *binary classification* strongly imbalanced classes often lead to unsatisfactory results regarding the prediction of new observations, especially for the small class.
+In this context *imbalanced classes* simply means that the number of observations of one class (usu. positive or majority class) by far exceeds
+the number of observations of the other class (usu. negative or minority class).
+This setting can be observed fairly often in practice and in various disciplines like credit scoring, fraud detection, medical diagnostics or churn management.
+
+Most classification methods work best when the number of observations per class are roughly equal. 
+The problem with *imbalanced classes* is that because of the dominance of the majority class classifiers tend to ignore cases of the minority class as noise and therefore predict the majority class far more often. 
+In order to lay more weight on the cases of the minority class, there are numerous correction methods which tackle the *imbalanced classification problem*.
+These methods can generally be divided into *cost- and sampling-based approaches*.
+Below all methods supported by `mlr` are introduced.
+
+## Sampling-based approaches
+
+The basic idea of *sampling methods* is to simply adjust the proportion of the classes in order to increase the weight of the minority class observations within the model.
+
+The *sampling-based approaches* can be divided further into three different categories:
+
+1. **Undersampling methods**:
+   Elimination of randomly chosen cases of the majority class to decrease their effect on the classifier. 
+   All cases of the minority class are kept.
+
+2. **Oversampling methods**:
+   Generation of additional cases (copies, artificial observations) of the minority class to increase their effect on the classifier. All cases of the majority class are kept.
+  
+3. **Hybrid methods**:
+   Mixture of under- and oversampling strategies.
+
+All these methods directly access the underlying data and "rearrange" it.
+In this way the sampling is done as part of the *preprocesssing* and can therefore be combined with every appropriate classifier.
+
+`mlr` currently supports the first two approaches.
+
+### (Simple) over- and undersampling
+
+As mentioned above *undersampling* always refers to the majority class, while *oversampling* affects the minority class. 
+By the use of *undersampling*, randomly chosen observations of the majority class are eliminated. 
+Through (simple) *oversampling* all observations of the minority class are considered at least once when fitting the model. 
+In addition, exact copies of minority class cases are created by random sampling with repetitions.
+
+First, let's take a look at the effect for a classification [task](task.html){target="_blank"}.
+Based on a simulated `ClassifTask` (`Task()`) with imbalanced classes two new tasks (`task.over`, `task.under`) are created via `mlr` functions
+`oversample()` and `undersample()`, respectively.
+
+```{r over-/undersampling_classif}
+data.imbal.train = rbind(
+  data.frame(x = rnorm(100, mean = 1), class = "A"),
+  data.frame(x = rnorm(5000, mean = 2), class = "B")
+)
+task = makeClassifTask(data = data.imbal.train, target = "class")
+task.over = oversample(task, rate = 8)
+task.under = undersample(task, rate = 1/8)
+
+table(getTaskTargets(task))
+
+table(getTaskTargets(task.over))
+
+table(getTaskTargets(task.under))
+```
+
+Please note that the *undersampling rate* has to be between 0 and 1, where 1 means no undersampling and 0.5 implies a reduction of the majority class size to 50 percent.
+Correspondingly, the *oversampling rate* must be greater or equal to 1, where 1 means no oversampling and 2 would result in doubling the minority  class size.
+
+As a result the [performance](performance.html){target="_blank"} should improve if the model is applied to new data.
+
+```{r over-/undersampling_performance}
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+mod = train(lrn, task)
+mod.over = train(lrn, task.over)
+mod.under = train(lrn, task.under)
+data.imbal.test = rbind(
+  data.frame(x = rnorm(10, mean = 1), class = "A"),
+  data.frame(x = rnorm(500, mean = 2), class = "B")
+)
+
+performance(predict(mod, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+
+performance(predict(mod.over, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+
+performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+```
+
+In this case the *performance measure* has to be considered very carefully.
+As the *misclassification rate* ([mmce](measures.html){target="_blank"}) evaluates the overall accuracy of the predictions, the *balanced error rate* ([ber](measures.html){target="_blank"}) and *area under the ROC Curve* ([auc](measures.html){target="_blank"}) might be more suitable here, as the misclassifications within each class are separately taken into account.
+
+### Over- and undersampling wrappers
+
+Alternatively, `mlr` also offers the integration of over- and undersampling via a [wrapper approach](wrapper.html){target="_blank"}. 
+This way over- and undersampling can be applied to already [existing learners](learner.html){target="_blank"} to extend their functionality.
+
+The example given above is repeated once again, but this time with extended learners instead of modified tasks (see `makeOversampleWrapper()` and `makeUndersampleWrapper()`).
+Just like before the *undersampling rate* has to be between 0 and 1, while the *oversampling rate* has a lower boundary of 1.
+
+```{r over-/undersampling_wrapper}
+lrn.over = makeOversampleWrapper(lrn, osw.rate = 8)
+lrn.under = makeUndersampleWrapper(lrn, usw.rate = 1/8)
+mod = train(lrn, task)
+mod.over = train(lrn.over, task)
+mod.under = train(lrn.under, task)
+
+performance(predict(mod, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+
+performance(predict(mod.over, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+
+performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+```
+
+### Extensions to oversampling
+
+Two extensions to (simple) oversampling are available in `mlr`.
+
+#### 1. SMOTE (Synthetic Minority Oversampling Technique)
+
+As the duplicating of the minority class observations can lead to overfitting, within *SMOTE* the "new cases" are constructed in a different way. 
+For each new observation, one randomly chosen minority class observation as well as one of its *randomly chosen next neighbours* are interpolated, so that finally a new *artificial observation* of the minority class is created.
+The `smote()` function in `mlr` handles numeric as well as factor features, as the gower distance is used for nearest neighbour calculation. 
+The factor level of the new artificial case is sampled from the given levels of the two input observations.
+
+Analogous to oversampling, *SMOTE preprocessing* is possible via modification of the task.
+
+```{r smote_task}
+task.smote = smote(task, rate = 8, nn = 5)
+table(getTaskTargets(task))
+
+table(getTaskTargets(task.smote))
+```
+
+Alternatively, a new wrapped learner can be created via `makeSMOTEWrapper()`.
+
+```{r smote_wrapper}
+lrn.smote = makeSMOTEWrapper(lrn, sw.rate = 8, sw.nn = 5)
+mod.smote = train(lrn.smote, task)
+performance(predict(mod.smote, newdata = data.imbal.test), measures = list(mmce, ber, auc))
+```
+
+By default the number of nearest neighbours considered within the algorithm is set to 5.
+
+#### 2. Overbagging
+
+Another extension of oversampling consists in the combination of sampling with
+the [bagging approach](bagging.html){target="_blank"}. 
+For each iteration of the bagging process, minority class observations are oversampled with a given rate in `obw.rate`.
+The majority class cases can either all be taken into account for each iteration (`obw.maxcl = "all"`) or bootstrapped with replacement to increase
+variability between training data sets during iterations (`obw.maxcl = "boot"`).
+
+The construction of the **Overbagging Wrapper** works similar to `makeBaggingWrapper()`.
+First an existing `mlr` learner has to be passed to `makeOverBaggingWrapper()`.
+The number of iterations or fitted models can be set via `obw.iters`.
+
+```{r makeOverBaggingWrapper_setup}
+lrn = makeLearner("classif.rpart", predict.type = "response")
+obw.lrn = makeOverBaggingWrapper(lrn, obw.rate = 8, obw.iters = 3)
+```
+
+For *binary classification* the prediction is based on majority voting to create a discrete label. 
+Corresponding probabilities are predicted by considering the proportions of all the predicted labels.
+Please note that the benefit of the sampling process is _highly dependent_ on the specific learner as shown in the following example.
+
+First, let's take a look at the tree learner with and without overbagging:
+
+```{r makeOverBaggingWrapper_tree}
+lrn = setPredictType(lrn, "prob")
+rdesc = makeResampleDesc("CV", iters = 5)
+r1 = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE,
+  measures = list(mmce, ber, auc))
+r1$aggr
+
+obw.lrn = setPredictType(obw.lrn, "prob")
+r2 = resample(learner = obw.lrn, task = task, resampling = rdesc, show.info = FALSE,
+  measures = list(mmce, ber, auc))
+r2$aggr
+```
+
+Now let's consider a *random forest* as initial learner:
+
+```{r makeOverBaggingWrapper_rf}
+lrn = makeLearner("classif.ranger")
+obw.lrn = makeOverBaggingWrapper(lrn, obw.rate = 8, obw.iters = 3)
+
+lrn = setPredictType(lrn, "prob")
+r1 = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE,
+  measures = list(mmce, ber, auc))
+r1$aggr
+
+obw.lrn = setPredictType(obw.lrn, "prob")
+r2 = resample(learner = obw.lrn, task = task, resampling = rdesc, show.info = FALSE,
+  measures = list(mmce, ber, auc))
+r2$aggr
+```
+
+While *overbagging* slighty improves the performance of the *decision tree*, the AUC decreases in the second example when additional overbagging is applied.
+As RF itself is already a strong learner (and a bagged one as well), a further bagging step isn't very helpful here and usually won't improve the model.
+
+## Tuning the probability threshold
+
+In binary classification, the default probability value at which a prediction is either classified as "1" or "0" is 0.50. 
+This means with an estimate of >= 0.50 the observation is put into class "1" while lower values get assigned class "0".
+To reach a better performance in binary classification, it can be helpful to also optimize the the probability threshold at which this split is made.
+This can be especially helpful if the response is unbalanced.
+To enable this, argument `tune.threshold` needs to be set to `TRUE` in the chosen `makeTuneControl*` function.
+
+```{r echo = FALSE, results='hide'}
+lrn = makeLearner("classif.gbm", predict.type = "prob", distribution = "bernoulli")
+ps = makeParamSet(
+  makeIntegerParam("interaction.depth", lower = 1, upper = 5)
+)
+ctrl = makeTuneControlRandom(maxit = 2, tune.threshold = TRUE)
+lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2, show.info = FALSE)
+r = resample(lrn, spam.task, cv3, extract = getTuneResult)
+```
+
+```{r eval = FALSE}
+lrn = makeLearner("classif.gbm", predict.type = "prob", distribution = "bernoulli")
+ps = makeParamSet(
+  makeIntegerParam("interaction.depth", lower = 1, upper = 5)
+)
+ctrl = makeTuneControlRandom(maxit = 2, tune.threshold = TRUE)
+lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2)
+r = resample(lrn, spam.task, cv3, extract = getTuneResult)
+## Resampling: cross-validation
+## Measures:             mmce
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=5
+## [Tune-y] 1: mmce.test.mean=0.0599739; time: 0.1 min
+## [Tune-x] 2: interaction.depth=3
+## [Tune-y] 2: mmce.test.mean=0.0625815; time: 0.0 min
+## [Tune] Result: interaction.depth=5 : mmce.test.mean=0.0599739
+## [Resample] iter 1:    0.0482714
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=1
+## [Tune-y] 1: mmce.test.mean=0.0652075; time: 0.0 min
+## [Tune-x] 2: interaction.depth=3
+## [Tune-y] 2: mmce.test.mean=0.0586882; time: 0.0 min
+## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0586882
+## [Resample] iter 2:    0.0560626
+## [Tune] Started tuning learner classif.gbm for parameter set:
+##                      Type len Def Constr Req Tunable Trafo
+## interaction.depth integer   -   - 1 to 5   -    TRUE     -
+## With control class: TuneControlRandom
+## Imputation value: 1
+## [Tune-x] 1: interaction.depth=3
+## [Tune-y] 1: mmce.test.mean=0.0577155; time: 0.0 min
+## [Tune-x] 2: interaction.depth=2
+## [Tune-y] 2: mmce.test.mean=0.0606496; time: 0.0 min
+## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0577155
+## [Resample] iter 3:    0.0625815
+## 
+## Aggregated Result: mmce.test.mean=0.0556385
+## 
+print(r$extract)
+## [[1]]
+## Tune result:
+## Op. pars: interaction.depth=5
+## Threshold: 0.48
+## mmce.test.mean=0.0599739
+## 
+## [[2]]
+## Tune result:
+## Op. pars: interaction.depth=3
+## Threshold: 0.48
+## mmce.test.mean=0.0586882
+## 
+## [[3]]
+## Tune result:
+## Op. pars: interaction.depth=3
+## Threshold: 0.52
+## mmce.test.mean=0.0577155
+```
+
+In the above script the tuning is (of course) nested. 
+What happens is:
+The tuner evaluates a certain learner configuration via (inner) two-fold CV. 
+On these predictions then the optimal threshold is selected, for this learner config (by calling `tuneThreshold()` on the `ResamplePrediction` object, which was generated in the configuration evaluation). 
+For the optimal learner config, at the end of tuning, we also know its selected threshold. 
+The model is then trained on the complete outer training data set with the threshold set from the tuning and the prediction is made on the outer test set. 
+
+## Cost-based approaches
+
+In contrast to sampling, *cost-based approaches* usually require particular learners, which can deal with different *class-dependent costs* [Cost-Sensitive Classification](cost_sensitive_classif.html){target="_blank"}.
+
+### Weighted classes wrapper
+
+Another approach independent of the underlying classifier is to assign the costs as *class weights*, so that each observation receives a weight, depending on the class it belongs to. 
+Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.
+
+In this way every learner which supports weights can be extended through the [wrapper approach](wrapper.html){target="_blank"}.
+If the learner does not have a direct parameter for class weights, but supports observation weights, the weights depending on the class are internally set in the wrapper.
+
+```{r makeWeightedClassesWrapper_setup1}
+lrn = makeLearner("classif.logreg")
+wcw.lrn = makeWeightedClassesWrapper(lrn, wcw.weight = 0.01)
+```
+
+For binary classification, the single number passed to the classifier corresponds to the weight of the positive / majority class, while the negative / minority  class receives a weight of 1. 
+So actually, no real costs are used within this approach, but the cost ratio is taken into account.
+
+If the underlying learner already has a parameter for class weighting (e.g.,
+`class.weights` in `"classif.ksvm"`), the `wcw.weight` is basically passed to the specific class weighting parameter.
+
+```{r makeWeightedClassesWrapper_setup2}
+lrn = makeLearner("classif.ksvm")
+wcw.lrn = makeWeightedClassesWrapper(lrn, wcw.weight = 0.01)
+```
+

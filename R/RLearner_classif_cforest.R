@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.cforest = function() {
+
   makeRLearnerClassif(
     cl = "classif.cforest",
     package = "party",
@@ -37,7 +38,7 @@ trainLearner.classif.cforest = function(.learner, .task, .subset,
   .weights = NULL, ntree, mtry, replace, fraction, trace, teststat,
   testtype, mincriterion, minsplit, minbucket, stump,
   nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
-  browser()
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   ctrl = learnerArgsToControl(party::cforest_control, ntree, mtry, replace,
@@ -49,6 +50,7 @@ trainLearner.classif.cforest = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
+
   if (.learner$predict.type == "prob") {
     p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)
     # FIXME: this will break for nrow(.newdata) == 1? do not use sapply!
@@ -62,6 +64,7 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   if (auc) {
     party::varimpAUC(mod, ...)

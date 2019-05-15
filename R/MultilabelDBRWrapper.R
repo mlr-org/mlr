@@ -21,6 +21,7 @@
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelDBRWrapper = function(learner) {
+
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = stri_paste("multilabel.DBR", getLearnerId(learner), sep = ".")
   packs = getLearnerPackages(learner)
@@ -34,6 +35,7 @@ makeMultilabelDBRWrapper = function(learner) {
 
 #' @export
 trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
@@ -54,6 +56,7 @@ trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset = NULL, .w
 
 #' @export
 predictLearner.MultilabelDBRWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
   models.lvl1 = models[seq_along(.model$task.desc$target)]

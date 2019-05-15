@@ -37,6 +37,7 @@
 #'  }
 #' @export
 predictLearner = function(.learner, .model, .newdata, ...) {
+
   lmod = getLearnerModel(.model)
   if (inherits(lmod, "NoFeaturesModel")) {
     predictNofeatures(.model, .newdata)
@@ -47,6 +48,7 @@ predictLearner = function(.learner, .model, .newdata, ...) {
 }
 
 predictLearner2 = function(.learner, .model, .newdata, ...) {
+
   # if we have that option enabled, set factor levels to complete levels from task
   if (.learner$fix.factors.prediction) {
     fls = .model$factor.levels
@@ -54,9 +56,10 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
     # only take objects in .newdata
     ns = intersect(colnames(.newdata), ns)
     fls = fls[ns]
-    if (length(ns) > 0L)
+    if (length(ns) > 0L) {
       .newdata[ns] = mapply(factor, x = .newdata[ns],
-         levels = fls, SIMPLIFY = FALSE)
+        levels = fls, SIMPLIFY = FALSE)
+    }
   }
   p = predictLearner(.learner, .model, .newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
@@ -81,58 +84,73 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
 #' @keywords internal
 #' @export
 checkPredictLearnerOutput = function(learner, model, p) {
+
   cl = class(p)[1L]
   if (learner$type == "classif") {
     levs = model$task.desc$class.levels
     if (learner$predict.type == "response") {
       # the levels of the predicted classes might not be complete....
       # be sure to add the levels at the end, otherwise data gets changed!!!
-      if (!is.factor(p))
+      if (!is.factor(p)) {
         stopf("predictLearner for %s has returned a class %s instead of a factor!", learner$id, cl)
+      }
       levs2 = levels(p)
-      if (length(levs2) != length(levs) || any(levs != levs2))
+      if (length(levs2) != length(levs) || any(levs != levs2)) {
         p = factor(p, levels = levs)
+      }
     } else if (learner$predict.type == "prob") {
-      if (!is.matrix(p))
+      if (!is.matrix(p)) {
         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+      }
       cns = colnames(p)
-      if (is.null(cns) || length(cns) == 0L)
+      if (is.null(cns) || length(cns) == 0L) {
         stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
           learner$id)
-      if (!setequal(cns, levs))
+      }
+      if (!setequal(cns, levs)) {
         stopf("predictLearner for %s has returned not the class levels as column names: %s",
           learner$id, collapse(colnames(p)))
+      }
     }
   } else if (learner$type == "regr") {
     if (learner$predict.type == "response") {
-      if (cl != "numeric")
+      if (cl != "numeric") {
         stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
-     } else if (learner$predict.type == "se") {
-      if (!is.matrix(p))
+      }
+    } else if (learner$predict.type == "se") {
+      if (!is.matrix(p)) {
         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
-      if (ncol(p) != 2L)
+      }
+      if (ncol(p) != 2L) {
         stopf("predictLearner for %s has not returned a numeric matrix with 2 columns!", learner$id)
+      }
     }
   } else if (learner$type == "surv") {
-    if (learner$predict.type == "prob")
+    if (learner$predict.type == "prob") {
       stop("Survival does not support prediction of probabilites yet.")
-    if (!is.numeric(p))
-      stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
-  } else if (learner$type == "cluster")  {
-    if (learner$predict.type == "response") {
-      if (cl != "integer")
-        stopf("predictLearner for %s has returned a class %s instead of an integer!", learner$id, cl)
-    } else if (learner$predict.type == "prob") {
-      if (!is.matrix(p))
-        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
     }
-  } else if (learner$type == "multilabel")  {
+    if (!is.numeric(p)) {
+      stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
+    }
+  } else if (learner$type == "cluster") {
     if (learner$predict.type == "response") {
-      if (!(is.matrix(p) && typeof(p) == "logical"))
+      if (cl != "integer") {
+        stopf("predictLearner for %s has returned a class %s instead of an integer!", learner$id, cl)
+      }
+    } else if (learner$predict.type == "prob") {
+      if (!is.matrix(p)) {
+        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+      }
+    }
+  } else if (learner$type == "multilabel") {
+    if (learner$predict.type == "response") {
+      if (!(is.matrix(p) && typeof(p) == "logical")) {
         stopf("predictLearner for %s has returned a class %s instead of a logical matrix!", learner$id, cl)
-     } else if (learner$predict.type == "prob") {
-      if (!(is.matrix(p) && typeof(p) == "double"))
+      }
+    } else if (learner$predict.type == "prob") {
+      if (!(is.matrix(p) && typeof(p) == "double")) {
         stopf("predictLearner for %s has returned a class %s instead of a numerical matrix!", learner$id, cl)
+      }
     }
   }
   return(p)

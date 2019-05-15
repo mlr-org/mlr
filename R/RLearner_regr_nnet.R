@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.nnet = function() {
+
   makeRLearnerRegr(
     cl = "regr.nnet",
     package = "nnet",
@@ -27,11 +28,12 @@ makeRLearner.regr.nnet = function() {
 }
 
 #' @export
-trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), linout = TRUE, ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), linout = TRUE, weights = .weights, ...)
   }
@@ -39,5 +41,6 @@ trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL,  ..
 
 #' @export
 predictLearner.regr.nnet = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

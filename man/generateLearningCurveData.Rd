@@ -56,9 +56,9 @@ Observe how the performance changes with an increasing number of observations.
 }
 \examples{
 r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
-task = sonar.task, percs = seq(0.2, 1, by = 0.2),
-measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
-show.info = FALSE)
+  task = sonar.task, percs = seq(0.2, 1, by = 0.2),
+  measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
+  show.info = FALSE)
 plotLearningCurve(r)
 }
 \seealso{
@@ -68,8 +68,9 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
 Other learning_curve: \code{\link{plotLearningCurve}}
 }
+\concept{generate_plot_data}
+\concept{learning_curve}

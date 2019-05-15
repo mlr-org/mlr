@@ -75,3 +75,4 @@ Other tune: \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

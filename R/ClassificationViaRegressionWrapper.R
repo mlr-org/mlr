@@ -19,6 +19,7 @@
 #' mod = train(lrn, sonar.task, subset = 1:140)
 #' predictions = predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60])
 makeClassificationViaRegressionWrapper = function(learner, predict.type = "response") {
+
   learner = checkLearner(learner, "regr")
   lrn = makeBaseWrapper(
     id = stri_paste(learner$id, "classify", sep = "."),
@@ -36,6 +37,7 @@ makeClassificationViaRegressionWrapper = function(learner, predict.type = "respo
 
 #' @export
 trainLearner.ClassificationViaRegressionWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   pos = getTaskDesc(.task)$positive
   td = getTaskData(.task, target.extra = TRUE, subset = .subset)
   target.name = stri_paste(pos, "prob", sep = ".")
@@ -53,6 +55,7 @@ trainLearner.ClassificationViaRegressionWrapper = function(.learner, .task, .sub
 
 #' @export
 predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   model = getLearnerModel(.model, more.unwrap = FALSE)
   p = predict(model, newdata = .newdata, subset = .subset, ...)$data$response
 
@@ -67,6 +70,7 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
 
 #' @export
 getLearnerProperties.ClassificationViaRegressionWrapper = function(learner) {
+
   props = getLearnerProperties(learner$next.learner)
   props = union(props, c("twoclass", "prob"))
   intersect(props, mlr$learner.properties$classif)
@@ -74,11 +78,13 @@ getLearnerProperties.ClassificationViaRegressionWrapper = function(learner) {
 
 #' @export
 setPredictType.ClassificationViaRegressionWrapper = function(learner, predict.type) {
+
   assertChoice(predict.type, c("response", "prob"))
   learner$predict.type = predict.type
 }
 
 #' @export
 isFailureModel.ClassificationViaRegressionModel = function(model) {
+
   isFailureModel(getLearnerModel(model, more.unwrap = FALSE))
 }

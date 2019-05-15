@@ -55,7 +55,8 @@ the x-axis. Areas are always colored according to the \code{learner.id}.
 # see benchmark
 }
 \seealso{
-Other plot: \code{\link{plotBMRBoxplots}},
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
@@ -88,3 +89,5 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}
+\concept{plot}

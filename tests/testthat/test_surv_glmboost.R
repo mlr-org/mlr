@@ -26,7 +26,7 @@ test_that("surv_glmboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
-    p  = predict(m, newdata = surv.test, type = "link")
+    p = predict(m, newdata = surv.test, type = "link")
     old.predicts.list[[i]] = drop(p)
   }
 
