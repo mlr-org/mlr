@@ -25,7 +25,7 @@ makeRLearner.cluster.dbscan = function() {
 trainLearner.cluster.dbscan = function(.learner, .task, .subset, .weights = NULL, ...) {
 
   data = getTaskData(.task, .subset)
-  model = fpc::dbscan(data, ...)
+  #model = fpc::dbscan(data, ...)
   # dbscan needs this in the prediction phase
   model$data = data
   return(model)
