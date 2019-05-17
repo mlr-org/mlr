@@ -49,3 +49,4 @@ deploy:
    script: R -q -e 'tic::deploy()'
    on:
      all_branches: true
+after_success: R -q -e 'tic::after_success()
