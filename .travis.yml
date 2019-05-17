@@ -50,3 +50,6 @@ deploy:
    on:
      all_branches: true
 after_success: R -q -e 'tic::after_success()
+
+allow_failures:
+  - r: oldrel
