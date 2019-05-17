@@ -1,7 +1,6 @@
 context("cluster_dbscan")
 
 test_that("cluster_dbscan", {
-  requirePackagesOrSkip("fpc", default.method = "load")
 
   parset.list = list(
     list()
@@ -11,7 +10,6 @@ test_that("cluster_dbscan", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
-    #m = fpc::dbscan(noclass.train, eps = 1)
     p = as.integer(predict(m, noclass.train, newdata = noclass.test))
     p[p == 0] = NA
     old.predicts.list[[i]] = p
