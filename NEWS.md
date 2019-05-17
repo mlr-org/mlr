@@ -3,7 +3,6 @@
 ## learners - general
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
-- `cluster.dbscan` has been removed because `fpc` is orphaned and can only be installed on R > 3.6.0
 
 # mlr 2.14.0
 
