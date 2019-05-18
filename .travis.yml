@@ -13,6 +13,8 @@ env:
     - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
 
 matrix:
+  allow_failures:
+  - r: oldrel
   include:
   - r: devel
   - r: oldrel
@@ -50,6 +52,3 @@ deploy:
    on:
      all_branches: true
 after_success: R -q -e 'tic::after_success()
-
-allow_failures:
-  - r: oldrel
