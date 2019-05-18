@@ -260,8 +260,6 @@ Suggests:
     xgboost (>= 0.6-2)
 VignetteBuilder:
     knitr
-Remotes:
-    jimhester/lintr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes

@@ -1,7 +1,8 @@
 # mlr 2.14.0.9000
 
-- Same as previous version.
+## learners - general
 
+- `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
 
 # mlr 2.14.0
 
