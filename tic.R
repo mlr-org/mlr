@@ -4,7 +4,8 @@ get_stage("script") %>%
 
 # R CMD Check
 do_package_checks(args = "--as-cran", error_on = "error",
-  repos = c(getOption("repos"), remotes::bioc_install_repos()))
+  repos = c(getOption("repos"), remotes::bioc_install_repos()),
+  codecov = FALSE)
 
 # pkgdown
 if (ci_is_env("FULL", "true")) {
