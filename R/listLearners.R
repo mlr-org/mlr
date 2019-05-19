@@ -1,10 +1,12 @@
 getLearnerTable = function() {
+
   ids = as.character(methods("makeRLearner"))
   ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
   ids = stri_replace_first_fixed(ids, "makeRLearner.", "")
   slots = c("cl", "name", "short.name", "package", "properties", "note")
   ee = asNamespace("mlr")
   tab = rbindlist(lapply(ids, function(id) {
+
     fun = getS3method("makeRLearner", id)
     row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
     data.table(
@@ -29,13 +31,16 @@ getLearnerTable = function() {
 }
 
 filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), properties = character(0L), check.packages = FALSE) {
+
   contains = function(lhs, rhs) all(lhs %in% rhs)
 
-  if (check.packages)
+  if (check.packages) {
     tab = tab[tab$installed]
+  }
 
-  if (length(types) > 0L && !isScalarNA(types))
+  if (length(types) > 0L && !isScalarNA(types)) {
     tab = tab[tab$type %in% types]
+  }
 
   if (length(properties) > 0L) {
     i = vlapply(tab$properties, contains, lhs = properties)
@@ -94,7 +99,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' listLearners(task)
 #' }
 #' @export
-listLearners  = function(obj = NA_character_, properties = character(0L),
+listLearners = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
   assertSubset(properties, listLearnerProperties())
@@ -108,7 +113,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.default  = function(obj = NA_character_, properties = character(0L),
+listLearners.default = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
   listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
@@ -116,18 +121,22 @@ listLearners.default  = function(obj = NA_character_, properties = character(0L)
 
 #' @export
 #' @rdname listLearners
-listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
-  if (!isScalarNA(obj))
+listLearners.character = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
+
+  if (!isScalarNA(obj)) {
     assertSubset(obj, listTaskTypes())
+  }
   tab = getLearnerTable()
 
-  if (warn.missing.packages && !all(tab$installed))
+  if (warn.missing.packages && !all(tab$installed)) {
     warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(tab[!tab$installed]$id))
+  }
 
   tab = filterLearnerTable(tab, types = obj, properties = properties, check.packages = check.packages && !create)
 
-  if (create)
+  if (create) {
     return(lapply(tab$id[tab$installed], makeLearner))
+  }
 
   tab$package = vcapply(tab$package, collapse)
   properties = listLearnerProperties()
@@ -162,5 +171,6 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 print.ListLearners = function(x, ...) {
+
   printHead(as.data.frame(dropNamed(x, drop = "note")), ...)
 }

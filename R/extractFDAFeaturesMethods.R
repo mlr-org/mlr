@@ -11,7 +11,7 @@
 #'   \itemize{
 #'   \item data [data.frame]\cr
 #'     Data.frame containing matricies with one row per observation of a single functional
-#'     or time series and one column per measurement time point.
+#'     or time series and one column per meahttps://github.com/mlr-org/mlr/pull/2005/conflict?name=R%252FextractFDAFeatures.R&ancestor_oid=bdc5d882cc86adac456842bebf1a2cf9bb0eb648&base_oid=55d472e23f5c3eb8099607bd9f539034d93e82a4&head_oid=4076800589c60b20acc926e5a545df9f73193b65surement time point.
 #'     All entries need to be numeric.
 #'   \item target (`character(1)`)\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
@@ -54,6 +54,9 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
 #' @export
 #' @family fda_featextractor
 extractFDAFourier = function(trafo.coeff = "phase") {
+
+  # create a function that calls extractFDAFeatFourier
+  assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
 
   lrn = function(data, target = NULL, col, trafo.coeff) {
     assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
@@ -434,6 +437,7 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
       # the start of the seg is clsum - seg.lens + 1, the end of the seg is cumsum(seg.lens)
       # ex: seg.lens = c(2, 3, 4), clsum = c(2, 5, 9), clsum - seg.lens +1 = 1, 3, 6
       subfeats = Map(function(seqstart, seqend) {
+
         getCurveFeatures(x[seqstart:seqend], res.level = res.level, shift = shift)
       }, clsum - seg.lens + 1, cumsum(seg.lens))
       # And return as vector
@@ -460,18 +464,20 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
         # messagef("start, end: %i, %i", sstart, send)
         f = getSegmentFeatures(x[sstart:send])
         # print(f)
-        feats = c(feats, f)  # append the feats from the last resolution hierachy
+        feats = c(feats, f) # append the feats from the last resolution hierachy
         sstart = sstart + soffset
         send = send + soffset
       }
-      ssize = ceiling(ssize / 2)  # decrease the segment size
-      if (ssize < 1L)  # if the the divide by 2 is too much
+      ssize = ceiling(ssize / 2) # decrease the segment size
+      if (ssize < 1L) { # if the the divide by 2 is too much
         break
+      }
     }
     return(feats)
   }
 
   getSegmentFeatures = function(x) {
+
     mean(x)
   }
 

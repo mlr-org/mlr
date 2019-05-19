@@ -404,7 +404,7 @@ or a list of created learner objects (named by ids of listed learners).</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'>listLearners</span>(<span class='st'>"classif"</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"multiclass"</span>, <span class='st'>"prob"</span>))
 <span class='no'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='fu'>listLearners</span>(<span class='no'>task</span>)
 <span class='co'># }</span></pre>
   </div>

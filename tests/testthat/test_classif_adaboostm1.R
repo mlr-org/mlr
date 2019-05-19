@@ -30,10 +30,10 @@ test_that("classif_adaboostm1", {
 
 
   testSimpleParsets("classif.adaboostm1", binaryclass.df, binaryclass.target,
-                    binaryclass.train.inds, old.predicts.list, parset.list)
+    binaryclass.train.inds, old.predicts.list, parset.list)
 
   testProbParsets("classif.adaboostm1", binaryclass.df, binaryclass.target,
-                  binaryclass.train.inds, old.probs.list, parset.list)
+    binaryclass.train.inds, old.probs.list, parset.list)
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
@@ -50,12 +50,13 @@ test_that("classif_adaboostm1", {
   }
 
   testSimpleParsets("classif.adaboostm1", multiclass.df, multiclass.target,
-                    multiclass.train.inds, old.predicts.list, parset.list)
+    multiclass.train.inds, old.predicts.list, parset.list)
 
   testProbParsets("classif.adaboostm1", multiclass.df, multiclass.target,
-                  multiclass.train.inds, old.probs.list, parset.list)
+    multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
+
     RWeka::AdaBoostM1(formula, data = data[subset, ], control = RWeka::Weka_control(...))
   }
 
@@ -63,4 +64,3 @@ test_that("classif_adaboostm1", {
 
   testCVParsets("classif.adaboostm1", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })
-

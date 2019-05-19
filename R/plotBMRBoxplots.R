@@ -47,14 +47,16 @@ plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL
   p = ggplot(df, aes_string("learner.id", measure$id))
   p = p + theme(axis.title.x = element_blank(), axis.text.x = element_text(angle = -45, hjust = 0))
 
-  p = p + facet_wrap(~ task.id, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  p = p + facet_wrap(~task.id, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
 
-  if (pretty.names)
+  if (pretty.names) {
     p = p + ylab(measure$name)
+  }
 
-  if (style == "box")
+  if (style == "box") {
     p = p + geom_boxplot()
-  else
+  } else {
     p = p + geom_violin() + stat_summary(fun.ymin = median, fun.ymax = median, fun.y = median, geom = "crossbar")
+  }
   return(p)
 }

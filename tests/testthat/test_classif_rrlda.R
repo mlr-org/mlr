@@ -7,5 +7,4 @@ test_that("classif_rrlda", {
   p = predict(m, x = multiclass.test[, -multiclass.class.col])$class
 
   testSimple("classif.rrlda", multiclass.df, multiclass.target, multiclass.train.inds, p)
-
 })

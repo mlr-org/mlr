@@ -9,21 +9,25 @@
 #' @examples
 #' joinClassLevels(iris.task, new.levels = list(foo = c("setosa", "virginica")))
 joinClassLevels = function(task, new.levels) {
+
   UseMethod("joinClassLevels")
 }
 
 #' @export
 joinClassLevels.ClassifTask = function(task, new.levels) {
+
   assertList(new.levels, types = "character", names = "unique")
   target = getTaskTargetNames(task)
   y = as.character(getTaskTargets(task))
   nls1 = unlist(new.levels)
   nls2 = unique(nls1)
   d = setdiff(nls2, unique(y))
-  if (length(d) > 0L)
+  if (length(d) > 0L) {
     stopf("You can only recode already existing class levels, but you also used: %s", collapse(d))
-  if (length(nls2) != length(nls1))
+  }
+  if (length(nls2) != length(nls1)) {
     stopf("Every existing class level in 'new.levels' can be used at most once!")
+  }
   new.names = names(new.levels)
   for (nn in new.names) {
     levs = new.levels[[nn]]

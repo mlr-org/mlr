@@ -43,8 +43,8 @@ test_that("regr_mob", {
   testSimpleParsets("regr.mob", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
 
   # FIXME: Does not work with the extenden formula for mob!
-  #tt = "mob"
-  #tp = function(model, newdata) predict(model, newdata)
+  # tt = "mob"
+  # tp = function(model, newdata) predict(model, newdata)
   #
   # testCVParsets("regr.rpart", regr.df, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })

@@ -5,6 +5,7 @@
 #'
 #' @export
 makeRLearner.classif.fdausc.kernel = function() {
+
   makeRLearnerClassif(
     cl = "classif.fdausc.kernel",
     package = "fda.usc",

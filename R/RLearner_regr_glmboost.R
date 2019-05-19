@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.glmboost = function() {
+
   makeRLearnerRegr(
     cl = "regr.glmboost",
     package = "mboost",
@@ -17,7 +18,7 @@ makeRLearner.regr.glmboost = function() {
       # 'risk' and 'stopintern' will be kept for completeness sake
       makeLogicalLearnerParam(id = "center", default = TRUE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
-      ),
+    ),
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
@@ -29,6 +30,7 @@ makeRLearner.regr.glmboost = function() {
 
 #' @export
 trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
+
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   data = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
@@ -41,7 +43,7 @@ trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL,
     NBinomial = mboost::NBinomial(nuirange = nuirange),
     Hurdle = mboost::Hurdle(nuirange = nuirange),
     custom.family = custom.family.definition
-    )
+  )
   if (is.null(.weights)) {
     model = mboost::glmboost(f, data = data, control = ctrl, family = family, ...)
   } else {
@@ -52,6 +54,7 @@ trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.regr.glmboost = function(.learner, .model, .newdata, ...) {
+
   p = predict(.model$learner.model, newdata = .newdata, ...)
   return(as.vector(p))
 }

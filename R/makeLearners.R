@@ -19,6 +19,7 @@
 #' @examples
 #' makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
 makeLearners = function(cls, ids = NULL, type = NULL, ...) {
+
   if (!is.null(type)) {
     assertChoice(type, listTaskTypes())
     cls = stri_paste(type, cls, sep = ".")
@@ -30,5 +31,3 @@ makeLearners = function(cls, ids = NULL, type = NULL, ...) {
   lrns = mapply(makeLearner, cl = cls, id = ids, MoreArgs = list(...), SIMPLIFY = FALSE)
   setNames(lrns, ids)
 }
-
-

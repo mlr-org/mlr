@@ -22,9 +22,11 @@ NULL
 
 #' @export
 print.FeatSelResult = function(x, ...) {
+
   catf("FeatSel result:")
 
   shortenX = function(x) {
+
     clipString(collapse(x, ", "), 50L)
   }
 
@@ -32,8 +34,9 @@ print.FeatSelResult = function(x, ...) {
     catf("Bits (%i): %s", length(x$x.bit.names), shortenX(x$x.bit.names))
   }
   catf("Features (%i): %s", length(x$x), shortenX(x$x))
-  if (!is.null(x$threshold))
+  if (!is.null(x$threshold)) {
     catf("Threshold: %s", collapse(sprintf("%2.2f", x$threshold)))
+  }
   catf("%s", perfsToString(x$y))
 }
 
@@ -48,5 +51,3 @@ makeFeatSelResultFromOptPath = function(learner, measures, resampling, control, 
   x = bits.to.features(x.bits, task)
   makeOptResult(learner, control, x, e$y, resampling, threshold, opt.path, "FeatSelResult", x.bit.names = x.bit.names)
 }
-
-

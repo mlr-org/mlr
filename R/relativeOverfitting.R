@@ -28,12 +28,14 @@
 #' @name estimateRelativeOverfitting
 #' @rdname estimateRelativeOverfitting
 estimateRelativeOverfitting = function(predish, measures, task, learner = NULL, pred.train = NULL, iter = 1) {
+
   assertClass(task, classes = "Task")
   UseMethod("estimateRelativeOverfitting")
 }
 
 #' @export
 estimateRelativeOverfitting.ResampleDesc = function(predish, measures, task, learner, ...) {
+
   assertClass(learner, classes = "Learner")
   measures = checkMeasures(measures, task)
 
@@ -45,11 +47,13 @@ estimateRelativeOverfitting.ResampleDesc = function(predish, measures, task, lea
 
 #' @export
 estimateRelativeOverfitting.ResamplePrediction = function(predish, measures, task, ...) {
+
   measures = checkMeasures(measures, task)
   mids = vcapply(measures, function(m) m$id)
 
   iterations = unique(predish$data$iter)
   rbindlist(lapply(iterations, function(i) {
+
     data = predish$data[predish$data$iter == i & predish$data$set == "test", ]
     pred.test = makePrediction(task$task.desc, row.names(data), data$id, data$truth, predish$predict.type, predish$predict.threshold, data$response, predish$time[i])
 
@@ -62,6 +66,7 @@ estimateRelativeOverfitting.ResamplePrediction = function(predish, measures, tas
 
 #' @export
 estimateRelativeOverfitting.Prediction = function(predish, measures, task, learner, pred.train, iter = 1) {
+
   assertClass(pred.train, classes = "Prediction")
   measures = checkMeasures(measures, task)
   mids = vcapply(measures, function(m) m$id)

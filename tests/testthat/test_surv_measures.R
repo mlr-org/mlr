@@ -19,8 +19,9 @@ test_that("survival measures do not do stupid things", {
       r = range(measure$worst, measure$best)
       x = aggr[[sprintf("%s.test.mean", measure$id)]]
       expect_number(x, lower = r[1], upper = r[2], label = sprintf("%s/%s", lrn$id, measure$id))
-      if (!anyInfinite(r))
+      if (!anyInfinite(r)) {
         expect_true(abs(x - measure$worst) >= abs(x - measure$best), label = sprintf("%s/%s", lrn$id, measure$id))
+      }
     }
   }
 })

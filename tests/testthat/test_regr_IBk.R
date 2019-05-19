@@ -16,7 +16,7 @@ test_that("regr_IBk", {
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m =  RWeka::IBk(regr.formula, regr.train, control = ctrl)
+    m = RWeka::IBk(regr.formula, regr.train, control = ctrl)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p

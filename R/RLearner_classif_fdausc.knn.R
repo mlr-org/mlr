@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.fdausc.knn = function() {
+
   makeRLearnerClassif(
     cl = "classif.fdausc.knn",
     package = "fda.usc",

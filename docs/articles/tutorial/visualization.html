@@ -314,25 +314,25 @@
 <a class="sourceLine" id="cb1-5" data-line-number="5">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(fpr, fnr, mmce))</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(d)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## [1] "ThreshVsPerfData"</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## [1] "ThreshVsPerfData"</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(d<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##         fpr       fnr      mmce  threshold</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">## 1 1.0000000 0.0000000 0.4615385 0.00000000</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">## 2 0.3541667 0.1964286 0.2692308 0.01010101</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## 3 0.3333333 0.2321429 0.2788462 0.02020202</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## 4 0.3333333 0.2321429 0.2788462 0.03030303</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">## 5 0.3333333 0.2321429 0.2788462 0.04040404</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">## 6 0.3125000 0.2321429 0.2692308 0.05050505</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-11" data-line-number="11">##         fpr       fnr      mmce  threshold</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## 1 1.0000000 0.0000000 0.4615385 0.00000000</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">## 2 0.3541667 0.1964286 0.2692308 0.01010101</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## 3 0.3333333 0.2321429 0.2788462 0.02020202</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## 4 0.3333333 0.2321429 0.2788462 0.03030303</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 5 0.3333333 0.2321429 0.2788462 0.04040404</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 6 0.3125000 0.2321429 0.2692308 0.05050505</a></code></pre></div>
 <p>For plotting we can use the built-in <code>mlr</code> function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span>(d)</a></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>Note that by default the <code>Measure</code> <code>name</code>s are used to annotate the panels.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fpr<span class="op">$</span>name</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## [1] "False positive rate"</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">## [1] "False positive rate"</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">fpr<span class="op">$</span>id</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## [1] "fpr"</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## [1] "fpr"</a></code></pre></div>
 <p>This does not only apply to <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, but to other plot functions that show performance measures as well, for example <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code>. You can use the <code>id</code>s instead of the names by setting <code>pretty.names = FALSE</code>.</p>
 </div>
 <div id="customizing-plots" class="section level2">
@@ -346,16 +346,16 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># Reshaped version of the underlying data d</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(plt<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##    threshold measure performance</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## 1 0.00000000     fpr   1.0000000</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## 2 0.01010101     fpr   0.3541667</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## 3 0.02020202     fpr   0.3333333</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## 4 0.03030303     fpr   0.3333333</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">## 5 0.04040404     fpr   0.3333333</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">## 6 0.05050505     fpr   0.3125000</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">##    threshold measure performance</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">## 1 0.00000000     fpr   1.0000000</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">## 2 0.01010101     fpr   0.3541667</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">## 3 0.02020202     fpr   0.3333333</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">## 4 0.03030303     fpr   0.3333333</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## 5 0.04040404     fpr   0.3333333</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## 6 0.05050505     fpr   0.3125000</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb4-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(plt<span class="op">$</span>data<span class="op">$</span>measure)</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">## [1] "fpr"  "fnr"  "mmce"</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">## [1] "fpr"  "fnr"  "mmce"</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co"># Rename and reorder factor levels</span></a>
 <a class="sourceLine" id="cb4-17" data-line-number="17">plt<span class="op">$</span>data<span class="op">$</span>measure =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(plt<span class="op">$</span>data<span class="op">$</span>measure, <span class="dt">levels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"mmce"</span>, <span class="st">"fpr"</span>, <span class="st">"fnr"</span>),</a>
@@ -389,16 +389,16 @@
 <p>Let’s conclude with a brief look on a second example. Here we use <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> but extract the data from the <code><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot2::ggplot()</a></code> object <code>plt</code> and use it to create a traditional <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">graphics::plot()</a></code>, additional to the <code><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot2::ggplot()</a></code> plot.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">sonar =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(sonar.task)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">pd =<span class="st"> </span><span class="kw"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(mod, sonar, <span class="st">"V11"</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">## Loading required package: mmpf</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">## Loading required package: mmpf</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span>(pd)</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(plt<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">##           M Feature     Value</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">## 1 0.2737158     V11 0.0289000</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## 2 0.3689970     V11 0.1072667</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">## 3 0.4765742     V11 0.1856333</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">## 4 0.5741233     V11 0.2640000</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">## 5 0.6557857     V11 0.3423667</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">## 6 0.7387962     V11 0.4207333</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">##           M Feature     Value</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## 1 0.2737158     V11 0.0289000</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## 2 0.3689970     V11 0.1072667</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## 3 0.4765742     V11 0.1856333</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## 4 0.5741233     V11 0.2640000</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## 5 0.6557857     V11 0.3423667</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## 6 0.7387962     V11 0.4207333</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">plt</a></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>

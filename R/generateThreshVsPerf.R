@@ -27,25 +27,29 @@ generateThreshVsPerfData = function(obj, measures, gridsize = 100L, aggregate = 
   UseMethod("generateThreshVsPerfData")
 #' @export
 generateThreshVsPerfData.Prediction = function(obj, measures, gridsize = 100L, aggregate = TRUE,
-                                               task.id = NULL) {
+  task.id = NULL) {
+
   checkPrediction(obj, task.type = "classif", binary = TRUE, predict.type = "prob")
   generateThreshVsPerfData.list(namedList("prediction", obj), measures, gridsize, aggregate, task.id)
 }
 #' @export
 generateThreshVsPerfData.ResampleResult = function(obj, measures, gridsize = 100L, aggregate = TRUE,
-                                                   task.id = NULL) {
+  task.id = NULL) {
+
   obj = getRRPredictions(obj)
   checkPrediction(obj, task.type = "classif", binary = TRUE, predict.type = "prob")
   generateThreshVsPerfData.Prediction(obj, measures, gridsize, aggregate)
 }
 #' @export
 generateThreshVsPerfData.BenchmarkResult = function(obj, measures, gridsize = 100L, aggregate = TRUE,
-                                                    task.id = NULL) {
+  task.id = NULL) {
+
   tids = getBMRTaskIds(obj)
-  if (is.null(task.id))
+  if (is.null(task.id)) {
     task.id = tids[1L]
-  else
+  } else {
     assertChoice(task.id, tids)
+  }
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
 
   for (x in obj)
@@ -54,11 +58,13 @@ generateThreshVsPerfData.BenchmarkResult = function(obj, measures, gridsize = 10
 }
 #' @export
 generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggregate = TRUE, task.id = NULL) {
+
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   ## unwrap ResampleResult to Prediction and set default names
   if (inherits(obj[[1L]], "ResampleResult")) {
-    if (is.null(names(obj)))
+    if (is.null(names(obj))) {
       names(obj) = extractSubList(obj, "learner.id")
+    }
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
 
@@ -70,11 +76,14 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
   grid = data.frame(threshold = seq(0, 1, length.out = gridsize))
   resamp = all(vlapply(obj, function(x) inherits(x, "ResamplePrediction")))
   out = lapply(obj, function(x) {
+
     do.call("rbind", lapply(grid$threshold, function(th) {
+
       pp = setThreshold(x, threshold = th)
       if (!aggregate && resamp) {
         iter = seq_len(pp$instance$desc$iters)
         asMatrixRows(lapply(iter, function(i) {
+
           pp$data = pp$data[pp$data$iter == i, ]
           c(setNames(performance(pp, measures = measures), mids), "iter" = i, "threshold" = th)
         }))
@@ -93,9 +102,9 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
   }
 
   makeS3Obj("ThreshVsPerfData",
-            measures = measures,
-            data = as.data.frame(out),
-            aggregate = aggregate)
+    measures = measures,
+    data = as.data.frame(out),
+    aggregate = aggregate)
 }
 
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggplot2.
@@ -160,17 +169,20 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
   }
 
   data = setDF(melt(as.data.table(obj$data), measure.vars = mnames, variable.name = "measure", value.name = "performance", id.vars = id.vars))
-  if (!is.null(data$learner))
+  if (!is.null(data$learner)) {
     nlearn = length(unique(data$learner))
-  else
+  } else {
     nlearn = 1L
+  }
   nmeas = length(unique(data$measure))
 
-  if ((color == "learner" && nlearn == 1L) || (color == "measure" && nmeas == 1L))
+  if ((color == "learner" && nlearn == 1L) || (color == "measure" && nmeas == 1L)) {
     color = NULL
+  }
 
-  if ((facet == "learner" && nlearn == 1L) || (facet == "measure" && nmeas == 1L))
+  if ((facet == "learner" && nlearn == 1L) || (facet == "measure" && nmeas == 1L)) {
     facet = NULL
+  }
 
   if (resamp && !obj$aggregate && is.null(color)) {
     group = "iter"
@@ -184,17 +196,19 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
   plt = ggplot(data, aes_string(x = "threshold", y = "performance"))
   plt = plt + geom_line(aes_string(group = group, color = color))
 
-  if (!is.na(mark.th))
+  if (!is.na(mark.th)) {
     plt = plt + geom_vline(xintercept = mark.th)
+  }
 
   if (!is.null(facet)) {
     plt = plt + facet_wrap(facet, scales = "free_y", nrow = facet.wrap.nrow,
       ncol = facet.wrap.ncol)
   }
-  else if (length(obj$measures) == 1L)
+  else if (length(obj$measures) == 1L) {
     plt = plt + ylab(obj$measures[[1]]$name)
-  else
+  } else {
     plt = plt + ylab("performance")
+  }
 
   return(plt)
 }
@@ -228,38 +242,43 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' pred = predict(fit, task = sonar.task)
 #' roc = generateThreshVsPerfData(pred, list(fpr, tpr))
 #' plotROCCurves(roc)
-#'
+#' 
 #' r = bootstrapB632plus(lrn, sonar.task, iters = 3)
 #' roc_r = generateThreshVsPerfData(r, list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_r)
-#'
+#' 
 #' r2 = crossval(lrn, sonar.task, iters = 3)
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
 #' }
 plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, facet.learner = FALSE) {
+
   assertClass(obj, "ThreshVsPerfData")
 
-  if (missing(measures))
+  if (missing(measures)) {
     measures = obj$measures[1:2]
+  }
 
   assertList(measures, "Measure", len = 2)
   assertFlag(diagonal)
   assertFlag(pretty.names)
   assertFlag(facet.learner)
 
-  if (is.null(names(measures)))
+  if (is.null(names(measures))) {
     names(measures) = extractSubList(measures, "id")
+  }
 
-  if (pretty.names)
+  if (pretty.names) {
     mnames = replaceDupeMeasureNames(measures, "name")
-  else
+  } else {
     mnames = names(measures)
+  }
 
-  if (!is.null(obj$data$learner))
+  if (!is.null(obj$data$learner)) {
     mlearn = length(unique(obj$data$learner)) > 1L
-  else
+  } else {
     mlearn = FALSE
+  }
   resamp = "iter" %in% colnames(obj$data)
 
 
@@ -276,15 +295,18 @@ plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, fa
     obj$data = obj$data[order(obj$data$threshold), ]
   }
 
-  if (mlearn && !facet.learner)
+  if (mlearn && !facet.learner) {
     aes$color = "learner"
+  }
 
   p = ggplot(obj$data, do.call(aes_string, aes)) + geom_path() + labs(x = mnames[1], y = mnames[2])
 
-  if (mlearn && facet.learner)
-    p = p + facet_wrap(~ learner)
+  if (mlearn && facet.learner) {
+    p = p + facet_wrap(~learner)
+  }
 
-  if (diagonal && all(vlapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE) <= 1)))
+  if (diagonal && all(vlapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE) <= 1))) {
     p = p + geom_abline(aes(intercept = 0, slope = 1), linetype = "dashed", alpha = .5)
+  }
   p
 }

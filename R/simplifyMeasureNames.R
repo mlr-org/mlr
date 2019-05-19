@@ -10,6 +10,7 @@
 #' @return ([character]).
 #' @export
 simplifyMeasureNames = function(xs) {
+
   assertCharacter(xs, any.missing = FALSE)
   # get all measure names
   all.measure.names = listMeasures()

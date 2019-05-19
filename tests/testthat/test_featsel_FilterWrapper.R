@@ -34,4 +34,3 @@ test_that("Filterwrapper permutation.importance (issue #814)", {
   expect_true(!any(is.na(r$aggr)))
   expect_subset(r$extract[[1]][[1]], getTaskFeatureNames(binaryclass.task))
 })
-

@@ -2,7 +2,7 @@ selectFeaturesRandom = function(learner, task, resampling, measures, bit.names, 
   control, opt.path, show.info) {
 
   states = lapply(seq_len(control$maxit), function(i) createStates(n = length(bit.names),
-    max.features = control$max.features, prob = control$extra.args$prob))
+      max.features = control$max.features, prob = control$extra.args$prob))
   evalOptimizationStatesFeatSel(learner, task, resampling, measures, bits.to.features,
     control, opt.path, show.info, states, 1L, NA_integer_)
   makeFeatSelResultFromOptPath(learner, measures, resampling, control, opt.path, task = task, bits.to.features = bits.to.features)
@@ -10,14 +10,17 @@ selectFeaturesRandom = function(learner, task, resampling, measures, bit.names, 
 
 # help function in order to respect max.features
 
-createStates = function(n, max.features, prob){
-  if (is.na(max.features))
+createStates = function(n, max.features, prob) {
+
+  if (is.na(max.features)) {
     return(rbinom(n, 1, prob))
+  }
   run.loop = TRUE
   while (run.loop) {
     x = rbinom(n, 1, prob)
-    if (sum(x) <= max.features)
+    if (sum(x) <= max.features) {
       run.loop = FALSE
+    }
   }
   return(x)
 }

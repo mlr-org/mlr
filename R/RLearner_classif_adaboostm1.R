@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.adaboostm1 = function() {
+
   makeRLearnerClassif(
     cl = "classif.adaboostm1",
     package = "RWeka",
@@ -21,7 +22,8 @@ makeRLearner.classif.adaboostm1 = function() {
 }
 
 #' @export
-trainLearner.classif.adaboostm1 = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.adaboostm1 = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   ctrl = RWeka::Weka_control(...)
   RWeka::AdaBoostM1(f, data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
@@ -29,6 +31,7 @@ trainLearner.classif.adaboostm1 = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.classif.adaboostm1 = function(.learner, .model, .newdata, ...) {
+
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

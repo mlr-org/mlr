@@ -18,6 +18,7 @@
 #' @examples
 #' # see benchmark
 convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average", aggregation = "default") {
+
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(aggregation, c("mean", "default"))
@@ -34,9 +35,10 @@ convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average", 
   }
 
   # calculate ranks, rank according to minimize option of the measure
-  if (!measure$minimize)
+  if (!measure$minimize) {
     df$x = -df$x
-  df[, "alg.rank" := rank(.SD$x, ties.method = ties.method), by = "task.id"]  # nolint FIXME: find out what `:=` looks like in the AST and adjust the linter
+  }
+  df[, "alg.rank" := rank(.SD$x, ties.method = ties.method), by = "task.id"] # nolint FIXME: find out what `:=` looks like in the AST and adjust the linter
 
   # convert into matrix, rows = leaner, cols = tasks
   df = melt(setDF(df), c("task.id", "learner.id"), "alg.rank")

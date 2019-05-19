@@ -63,7 +63,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   fdf = getFunctionalFeatures(obj)
   assertDataFrame(fdf, min.cols = 1L)
-  assertSubset(unique(names(feat.methods)), choices = c(names(fdf),  "all"))
+  assertSubset(unique(names(feat.methods)), choices = c(names(fdf), "all"))
   assertCharacter(target)
 
   # If the same transform should be applied to all features, rep method and name accordingly
@@ -138,6 +138,7 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 
 #' @export
 print.extractFDAFeatDesc = function(x, ...) {
+
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
   catf("Remaining functional Features: %i after extraction on %i functional features",
@@ -172,8 +173,9 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
 
   # check for new columns
   new.cols = names(which(names(obj) %nin% desc$coln))
-  if (length(new.cols))
+  if (length(new.cols)) {
     stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
+  }
 
   # reextract features using reextractDescription and return
   reextract = Map(

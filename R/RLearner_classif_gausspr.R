@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.gausspr = function() {
+
   makeRLearnerClassif(
     cl = "classif.gausspr",
     package = "kernlab",
@@ -34,18 +35,21 @@ makeRLearner.classif.gausspr = function() {
 
 #' @export
 trainLearner.classif.gausspr = function(.learner, .task, .subset, .weights = NULL,
-  degree, offset, scale, sigma, order, length, lambda, normalized,  ...) {
+  degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
+
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
   pm = .learner$predict.type == "prob"
-  if (base::length(kpar) > 0L)
+  if (base::length(kpar) > 0L) {
     kernlab::gausspr(f, data = getTaskData(.task, .subset), kpar = kpar, prob.model = pm, ...)
-  else
+  } else {
     kernlab::gausspr(f, data = getTaskData(.task, .subset), prob.model = pm, ...)
+  }
 }
 
 #' @export
 predictLearner.classif.gausspr = function(.learner, .model, .newdata, ...) {
+
   type = switch(.learner$predict.type, prob = "probabilities", "response")
   kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

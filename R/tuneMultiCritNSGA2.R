@@ -16,4 +16,3 @@ tuneMultiCritNSGA2 = function(learner, task, resampling, measures, par.set, cont
 
   makeTuneMultiCritResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }
-

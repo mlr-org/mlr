@@ -1,5 +1,6 @@
 #' @export
-makeRLearner.regr.GPfit = function(){
+makeRLearner.regr.GPfit = function() {
+
   makeRLearnerRegr(
     cl = "regr.GPfit",
     package = "GPfit",
@@ -14,7 +15,7 @@ makeRLearner.regr.GPfit = function(){
       makeIntegerLearnerParam(id = "matern_nu_k", default = 0L, lower = 0L, requires = quote(type == "matern")),
       makeNumericLearnerParam(id = "power", default = 1.95, lower = 1.0, upper = 2.0, requires = quote(type == "exponential"))
     ),
-    par.vals = list(scale = TRUE, type = "exponential",  matern_nu_k = 0L, power = 1.95),
+    par.vals = list(scale = TRUE, type = "exponential", matern_nu_k = 0L, power = 1.95),
     properties = c("numerics", "se"),
     name = "Gaussian Process",
     short.name = "GPfit",
@@ -29,6 +30,7 @@ makeRLearner.regr.GPfit = function(){
 }
 #' @export
 trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, scale, type, matern_nu_k, power, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   low = apply(d$data, 2, min)
   high = apply(d$data, 2, max)
@@ -45,17 +47,18 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
 }
 #' @export
 predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
+
   tr.info = getTrainingInfo(.model)
   if (tr.info$scaled) {
-      for (col.name in tr.info$not.const) {
-        .newdata[, col.name] =  (.newdata[, col.name] - tr.info$low[col.name]) / (tr.info$high[col.name] - tr.info$low[col.name])
+    for (col.name in tr.info$not.const) {
+      .newdata[, col.name] = (.newdata[, col.name] - tr.info$low[col.name]) / (tr.info$high[col.name] - tr.info$low[col.name])
     }
   }
   rst = predict(.model$learner.model, xnew = .newdata[, tr.info$not.const])
   se = (.learner$predict.type != "response")
-  if (!se)
+  if (!se) {
     return(rst$Y_hat)
-  else
+  } else {
     cbind(rst$Y_hat, sqrt(rst$MSE))
+  }
 }
-
