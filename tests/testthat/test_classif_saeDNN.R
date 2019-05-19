@@ -49,5 +49,5 @@ test_that("classif_saeDNN", {
 
   set.seed(getOption("mlr.debug.seed"))
   testSimple("classif.saeDNN", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
-             parset = list(hidden = 7))
+    parset = list(hidden = 7))
 })

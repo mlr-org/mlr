@@ -62,7 +62,7 @@
 # Unifrom: -value ... value, Normal: stddev
 
 # loss
-# Loss function: Automatic, CrossEntropy (for classification only), MeanSquare, Absolute (experimental) or Huber (experimental)
+# Loss function: Automatic, CrossEntropy (for classification only), Quadratic, Absolute (experimental) or Huber (experimental)
 
 # score_interval
 # Shortest time interval (in secs) between model scoring
@@ -151,8 +151,9 @@
 
 # Details: https://leanpub.com/deeplearning/read
 
-#'@export
+#' @export
 makeRLearner.classif.h2o.deeplearning = function() {
+
   makeRLearnerClassif(
     cl = "classif.h2o.deeplearning",
     package = "h2o",
@@ -161,7 +162,7 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
         "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"),
-        default = "Rectifier"),
+      default = "Rectifier"),
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
         len = NA_integer_, lower = 1L),
@@ -183,12 +184,12 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeNumericLearnerParam("l1", default = 0),
       makeNumericLearnerParam("l2", default = 0),
       makeNumericLearnerParam("max_w2", default = Inf, allow.inf = TRUE),
-      #makeNumericLearnerParam("max_w2", default = 1e+06),
+      # makeNumericLearnerParam("max_w2", default = 1e+06),
       makeDiscreteLearnerParam("initial_weight_distribution",
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
       makeDiscreteLearnerParam("loss", values = c("Automatic", "CrossEntropy",
-        "MeanSquare", "Absolute", "Huber")),
+        "Quadratic", "Absolute", "Huber")),
       makeNumericLearnerParam("score_interval", default = 5),
       makeIntegerLearnerParam("score_training_samples", default = 10000),
       makeIntegerLearnerParam("score_validation_samples", default = 0),
@@ -215,19 +216,21 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeLogicalLearnerParam("sparse", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("col_major", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("average_activation", tunable = FALSE),
-      #makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
+      # makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
     name = "h2o.deeplearning",
     short.name = "h2o.dl",
+    note = 'The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
     callees = "h2o.deeplearning"
   )
 }
 
 #' @export
-trainLearner.classif.h2o.deeplearning = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.h2o.deeplearning = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -247,6 +250,7 @@ trainLearner.classif.h2o.deeplearning = function(.learner, .task, .subset, .weig
 
 #' @export
 predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
@@ -255,8 +259,9 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
   # check if class names are integers. if yes, colnames of p.df need to be adapted
   int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
   pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
-  if (any(int) && any(pcol))
+  if (any(int) && any(pcol)) {
     colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
+  }
 
   if (.learner$predict.type == "response") {
     return(p.df$predict)
@@ -264,4 +269,11 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
     p.df$predict = NULL
     return(as.matrix(p.df))
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.h2o.deeplearning = function(.learner, .model, ...) {
+
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
+  extractH2OVarImp(mod, ...)
 }

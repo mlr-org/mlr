@@ -7,7 +7,7 @@ test_that("regr_gamboost", {
     list(family = mboost::Gaussian(), baselearner = "bols", dfbase = 4,
       control = mboost::boost_control(nu = 0.03, mstop = 200)),
     list(family = mboost::GammaReg(nuirange = c(0, 50)), baselearner = "btree",
-       control = mboost::boost_control(mstop = 100)),
+      control = mboost::boost_control(mstop = 100)),
     list(family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
@@ -16,7 +16,7 @@ test_that("regr_gamboost", {
     list(),
     list(family = "Gaussian", baselearner = "bols", dfbase = 4, nu = 0.03, mstop = 200),
     list(family = "GammaReg", baselearner = "btree", nuirange = c(0, 50), mstop = 100),
-    list(family = "custom.family", custom.family.definition =  mboost::Family(ngradient = function(y, f, w = 1) y - f,
+    list(family = "custom.family", custom.family.definition = mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
   )

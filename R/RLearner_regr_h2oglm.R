@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.h2o.glm = function() {
+
   makeRLearnerRegr(
     cl = "regr.h2o.glm",
     package = "h2o",
@@ -19,16 +20,17 @@ makeRLearner.regr.h2o.glm = function() {
       makeUntypedLearnerParam("beta_constraints"),
       makeLogicalLearnerParam("intercept", default = TRUE)
     ),
-    properties = c("numerics", "factors", "weights"),
+    properties = c("numerics", "factors", "weights", "missings"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'gaussian'.",
+    note = '`family` is always set to `"gaussian"`. The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
     callees = "h2o.glm"
   )
 }
 
 #' @export
-trainLearner.regr.h2o.glm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.h2o.glm = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -48,6 +50,7 @@ trainLearner.regr.h2o.glm = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.regr.h2o.glm = function(.learner, .model, .newdata, ...) {
+
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)

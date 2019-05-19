@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.evtree = function() {
+
   makeRLearnerRegr(
     cl = "regr.evtree",
     package = "evtree",
@@ -30,6 +31,7 @@ makeRLearner.regr.evtree = function() {
 trainLearner.regr.evtree = function(.learner, .task, .subset,
   .weights = NULL, pmutatemajor, pmutateminor, pcrossover, psplit,
   pprune, seed, ...) {
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
@@ -46,6 +48,7 @@ trainLearner.regr.evtree = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.regr.evtree = function(.learner, .model, .newdata, ...) {
+
   colnames(.newdata) = attr(.model$learner.model$terms, "term.labels")
   p = predict(.model$learner.model, newdata = .newdata, ...)
 }

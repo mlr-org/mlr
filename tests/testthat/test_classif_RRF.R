@@ -5,7 +5,7 @@ test_that("classif_RRF", {
 
   parset.list = list(
     list(),
-    list(ntree = 50,  mtry = 2),
+    list(ntree = 50, mtry = 2),
     list(ntree = 50, mtry = 4)
   )
 
@@ -27,11 +27,11 @@ test_that("classif_RRF", {
   }
 
   testSimpleParsets("classif.RRF", multiclass.df, multiclass.target,
-                    multiclass.train.inds, old.predicts.list, parset.list)
+    multiclass.train.inds, old.predicts.list, parset.list)
   testProbParsets("classif.RRF", multiclass.df, multiclass.target,
-                  multiclass.train.inds, old.probs.list, parset.list)
+    multiclass.train.inds, old.probs.list, parset.list)
 
   tt = RRF::RRF
   testCVParsets("classif.RRF", multiclass.df, multiclass.target, tune.train = tt,
-                parset.list = parset.list)
+    parset.list = parset.list)
 })

@@ -13,38 +13,38 @@
 #' @aliases CalibrationData
 #'
 #' @template arg_plotroc_obj
-#' @param breaks [\code{character(1)} | \code{numeric}]\cr
-#'   If \code{character(1)}, the algorithm to use in generating probability bins.
-#'   See \code{\link{hist}} for details.
-#'   If \code{numeric}, the cut points for the bins.
+#' @param breaks (`character(1)` | [numeric])\cr
+#'   If `character(1)`, the algorithm to use in generating probability bins.
+#'   See [hist] for details.
+#'   If [numeric], the cut points for the bins.
 #'   Default is \dQuote{Sturges}.
-#' @param groups [\code{integer(1)}]\cr
+#' @param groups (`integer(1)`)\cr
 #'   The number of bins to construct.
-#'   If specified, \code{breaks} is ignored.
-#'   Default is \code{NULL}.
-#' @param task.id [\code{character(1)}]\cr
-#'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+#'   If specified, `breaks` is ignored.
+#'   Default is `NULL`.
+#' @param task.id (`character(1)`)\cr
+#'   Selected task in [BenchmarkResult] to do plots for, ignored otherwise.
 #'   Default is first task.
 #'
-#' @return [CalibrationData]. A \code{list} containing:
-#'   \item{proportion}{[\code{data.frame}] with columns:
+#' @return [CalibrationData]. A [list] containing:
+#'   \item{proportion}{[data.frame] with columns:
 #'     \itemize{
-#'       \item \code{Learner} Name of learner.
-#'       \item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
-#'       \item \code{Class} Class labels (for binary classification only the positive class).
-#'       \item \code{Proportion} Proportion of observations from class \code{Class} among all
-#'         observations with posterior probabilities of class \code{Class} within the
-#'         interval given in \code{bin}.
+#'       \item `Learner` Name of learner.
+#'       \item `bin` Bins calculated according to the `breaks` or `groups` argument.
+#'       \item `Class` Class labels (for binary classification only the positive class).
+#'       \item `Proportion` Proportion of observations from class `Class` among all
+#'         observations with posterior probabilities of class `Class` within the
+#'         interval given in `bin`.
 #'     }}
-#'   \item{data}{[\code{data.frame}] with columns:
+#'   \item{data}{[data.frame] with columns:
 #'     \itemize{
-#'       \item \code{Learner} Name of learner.
-#'       \item \code{truth} True class label.
-#'       \item \code{Class} Class labels (for binary classification only the positive class).
-#'       \item \code{Probability} Predicted posterior probability of \code{Class}.
-#'       \item \code{bin} Bin corresponding to \code{Probability}.
+#'       \item `Learner` Name of learner.
+#'       \item `truth` True class label.
+#'       \item `Class` Class labels (for binary classification only the positive class).
+#'       \item `Probability` Predicted posterior probability of `Class`.
+#'       \item `bin` Bin corresponding to `Probability`.
 #'     }}
-#'   \item{task}{[\code{\link{TaskDesc}}]\cr
+#'   \item{task}{([TaskDesc])\cr
 #'     Task description.}
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
@@ -53,22 +53,26 @@ generateCalibrationData = function(obj, breaks = "Sturges", groups = NULL, task.
   UseMethod("generateCalibrationData")
 #' @export
 generateCalibrationData.Prediction = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
+
   checkPrediction(obj, task.type = "classif", predict.type = "prob")
   generateCalibrationData.list(namedList("prediction", obj), breaks, groups, task.id)
 }
 #' @export
 generateCalibrationData.ResampleResult = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
+
   obj = getRRPredictions(obj)
   checkPrediction(obj, task.type = "classif", predict.type = "prob")
   generateCalibrationData.Prediction(obj, breaks, groups, task.id)
 }
 #' @export
 generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
+
   tids = getBMRTaskIds(obj)
-  if (is.null(task.id))
+  if (is.null(task.id)) {
     task.id = tids[1L]
-  else
+  } else {
     assertChoice(task.id, tids)
+  }
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
 
   for (x in obj)
@@ -77,19 +81,22 @@ generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", grou
 }
 #' @export
 generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
+
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   ## unwrap ResampleResult to Prediction and set default names
   if (inherits(obj[[1L]], "ResampleResult")) {
-    if (is.null(names(obj)))
+    if (is.null(names(obj))) {
       names(obj) = extractSubList(obj, "learner.id")
+    }
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
   assertList(obj, names = "unique")
   td = obj[[1L]]$task.desc
 
   out = lapply(obj, function(pred) {
+
     df = data.table("truth" = getPredictionTruth(pred),
-                    getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
+      getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
     df = melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
 
     if (is.null(groups)) {
@@ -101,6 +108,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
       df$bin = Hmisc::cut2(df$Probability, g = groups, digits = 3)
     }
     fun = function(x) {
+
       tab = table(x$Class, x$truth)
       s = rowSums(tab)
       as.list(ifelse(s == 0, 0, diag(tab) / s))
@@ -114,7 +122,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     data = data[data$Class != td$negative, ]
   }
   max.bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
-                   function(x) as.numeric(x[length(x)]))
+    function(x) as.numeric(x[length(x)]))
   proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max.bin)])
   proportion = melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
   data$bin = ordered(data$bin, levels = levels(data$bin)[order(max.bin)])
@@ -122,43 +130,43 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   setDF(proportion)
 
   makeS3Obj("CalibrationData",
-            proportion = proportion,
-            data = data,
-            task = td)
+    proportion = proportion,
+    data = data,
+    task = td)
 }
 #' @title Plot calibration data using ggplot2.
 #'
 #' @description
-#' Plots calibration data from \code{\link{generateCalibrationData}}.
+#' Plots calibration data from [generateCalibrationData].
 #'
 #' @family plot
 #' @family calibration
 #'
-#' @param obj [\code{CalibrationData}]\cr
-#'   Result of \code{\link{generateCalibrationData}}.
-#' @param smooth [\code{logical(1)}]\cr
+#' @param obj ([CalibrationData])\cr
+#'   Result of [generateCalibrationData].
+#' @param smooth (`logical(1)`)\cr
 #'   Whether to use a loess smoother.
-#'   Default is \code{FALSE}.
-#' @param reference [\code{logical(1)}]\cr
+#'   Default is `FALSE`.
+#' @param reference (`logical(1)`)\cr
 #'   Whether to plot a reference line showing perfect calibration.
-#'   Default is \code{TRUE}.
-#' @param rag [\code{logical(1)}]\cr
+#'   Default is `TRUE`.
+#' @param rag (`logical(1)`)\cr
 #'   Whether to include a rag plot which shows a rug plot on the top which pertains to
 #'   positive cases and on the bottom which pertains to negative cases.
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
 #' \dontrun{
 #' lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
-#'             makeLearner("classif.nnet", predict.type = "prob"))
+#'   makeLearner("classif.nnet", predict.type = "prob"))
 #' fit = lapply(lrns, train, task = iris.task)
 #' pred = lapply(fit, predict, task = iris.task)
 #' names(pred) = c("rpart", "nnet")
 #' out = generateCalibrationData(pred, groups = 3)
 #' plotCalibration(out)
-#'
+#' 
 #' fit = lapply(lrns, train, task = sonar.task)
 #' pred = lapply(fit, predict, task = sonar.task)
 #' names(pred) = c("rpart", "lda")
@@ -166,6 +174,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' plotCalibration(out)
 #' }
 plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
+
   assertClass(obj, "CalibrationData")
   assertFlag(smooth)
   assertFlag(reference)
@@ -176,17 +185,19 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, fa
   p = ggplot(obj$proportion, aes_string("bin", "Proportion", color = "Class", group = "Class"))
   p = p + scale_x_discrete(drop = FALSE)
 
-  if (smooth)
+  if (smooth) {
     p = p + stat_smooth(se = FALSE, span = 2, method = "loess")
-  else
+  } else {
     p = p + geom_point() + geom_line()
-
-  if (length(unique(obj$proportion$Learner)) > 1L) {
-    p = p + facet_wrap(~ Learner, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
   }
 
-  if (reference)
+  if (length(unique(obj$proportion$Learner)) > 1L) {
+    p = p + facet_wrap(~Learner, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
+
+  if (reference) {
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")
+  }
 
   if (rag) {
     top.data = obj$data[obj$data$truth == obj$data$Class, ]

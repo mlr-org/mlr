@@ -20,7 +20,7 @@ test_that("getTaskData", {
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
     sum(binaryclass.df[, binaryclass.target] == td$positive))
-  expect_equal(sum(df[, binaryclass.target] == - 1),
+  expect_equal(sum(df[, binaryclass.target] == -1),
     sum(binaryclass.df[, binaryclass.target] == td$negative))
   df = getTaskData(multilabel.task, recode.target = "multilabel.factor")
   expect_true(all(sapply(df[, multilabel.target], is.factor)))

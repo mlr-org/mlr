@@ -68,19 +68,24 @@ test_that("FailureModel works", {
   expect_false(isFailureModel(mod))
 
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 0)
-  expect_warning({mod = train(lrn, task = iris.task)}, "foo")
+  expect_warning({
+    mod = train(lrn, task = iris.task)
+  }, "foo")
   expect_true(isFailureModel(mod))
 
   tmp = getMlrOptions()$on.learner.error
   configureMlr(on.learner.error = "warn")
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
   lrn = removeHyperPars(lrn, "selected.learner")
-  expect_warning({mod = train(lrn, task = iris.task)})
+  expect_warning({
+    mod = train(lrn, task = iris.task)
+  })
   expect_true(isFailureModel(mod))
   configureMlr(on.learner.error = tmp)
 })
 
 test_that("ModelMultiplexer tuning", {
+
   lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
   rdesc = makeResampleDesc("CV", iters = 2L)
 
@@ -91,14 +96,16 @@ test_that("ModelMultiplexer tuning", {
   res = tuneParams(lrn, binaryclass.task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
-  expect_true(!is.na(y) && is.finite(y))
+  expect_true(all(!is.na(y)))
+  expect_true(all(is.finite(y)))
   # tune with irace
   task = subsetTask(binaryclass.task, subset = c(1:20, 150:170))
   ctrl = makeTuneControlIrace(maxExperiments = 40L, nbIterations = 2L, minNbSurvival = 1L)
   res = tuneParams(lrn, task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
-  expect_true(!is.na(y) && is.finite(y))
+  expect_true(all(!is.na(y)))
+  expect_true(all(is.finite(y)))
 })
 
 # we had bug here, see issue #609
@@ -152,23 +159,25 @@ test_that("ModelMultiplexer handles tasks with no features", {
 # issue #760
 test_that("ModelMultiplexer passes on hyper pars in predict with both", {
   test.ps = makeRLearnerClassif("test.ps", character(0),
-      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when = "train"),
-                   makeIntegerLearnerParam("tpPREDICT", when = "predict"),
-                   makeIntegerLearnerParam("tpBOTH", when = "both")),
-      properties = c("numerics", "twoclass"))
+    makeParamSet(makeIntegerLearnerParam("tpTRAIN", when = "train"),
+      makeIntegerLearnerParam("tpPREDICT", when = "predict"),
+      makeIntegerLearnerParam("tpBOTH", when = "both")),
+    properties = c("numerics", "twoclass"))
   test.ps$fix.factors.prediction = TRUE
 
   opts = NULL
   trainLearner.test.ps = function(.learner, .task, .subset, .weights = NULL, ...) {
-    opts <<- list(...)  # nolint
+
+    opts <<- list(...) # nolint
     # the following to make the type checking happy
     list(dummy = getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
   }
   registerS3method("trainLearner", "test.ps", trainLearner.test.ps)
 
   predictLearner.test.ps = function(.learner, .model, .newdata, ...) {
-    opts <<- list(...)  # nolint
-    rep(.model$learner.model$dummy, nrow(.newdata))  # just do something
+
+    opts <<- list(...) # nolint
+    rep(.model$learner.model$dummy, nrow(.newdata)) # just do something
   }
   registerS3method("predictLearner", "test.ps", predictLearner.test.ps)
 

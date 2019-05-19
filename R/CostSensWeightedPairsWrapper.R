@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Creates a wrapper, which can be used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' For each pair of labels, we fit a binary classifier.
 #' For each observation we define the label to be the element of the pair with minimal costs.
@@ -15,7 +15,7 @@
 #' multiple binary ones and aggregates by voting.
 #'
 #' @template arg_learner_classif
-#' @return [\code{\link{Learner}}].
+#' @return ([Learner]).
 #' @export
 #' @references
 #' Lin, HT.:
@@ -23,10 +23,11 @@
 #' One-versus-one Binary Classification.
 #' In: Proceedings of the Sixth Asian Conference on Machine Learning.
 #' JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
-#' \url{http://www.jmlr.org/proceedings/papers/v39/lin14.pdf}
+#' <http://www.jmlr.org/proceedings/papers/v39/lin14.pdf>
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
+
   learner = checkLearner(learner, "classif", props = "weights")
   learner = setPredictType(learner, "response")
   id = stri_paste("costsens", learner$id, sep = ".")
@@ -36,6 +37,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
 
 #' @export
 trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = NULL, ...) {
+
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)
@@ -70,6 +72,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = 
 
 #' @export
 predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdata, ...) {
+
   classes = .model$task.desc$class.levels
   preds = predictHomogeneousEnsemble(.learner, .model, .newdata, ...)
   factor(apply(preds, 1L, computeMode), levels = classes)
@@ -77,5 +80,6 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 
 #' @export
 getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
+
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

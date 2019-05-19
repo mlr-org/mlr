@@ -1,0 +1,107 @@
+---
+title: "Iterated F-Racing for mixed spaces and dependencies"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+The package supports a larger number of tuning algorithms, which can all be looked up and
+selected via `TuneControl()`. 
+One of the cooler algorithms is iterated F-racing from the `irace::irace()` package (technical description [here](http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf)). 
+This not only works for arbitrary parameter types (numeric, integer, discrete, logical), but also for so-called dependent / hierarchical parameters:
+
+```{r}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeDiscreteParam("kernel", values = c("vanilladot", "polydot", "rbfdot")),
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x,
+    requires = quote(kernel == "rbfdot")),
+  makeIntegerParam("degree", lower = 2L, upper = 5L,
+    requires = quote(kernel == "polydot"))
+)
+ctrl = makeTuneControlIrace(maxExperiments = 200L)
+rdesc = makeResampleDesc("Holdout")
+res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl,
+  show.info = FALSE)
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
+```
+
+See how we made the kernel parameters like `sigma` and `degree` dependent on the `kernel` selection parameters? 
+This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.
+
+# Tuning across whole model spaces with ModelMultiplexer
+
+We can now take the following example even one step further. If we use the
+`makeModelMultiplexer()` we can tune over different model classes at once,
+just as we did with the SVM kernels above.
+
+```{r}
+base.learners = list(
+  makeLearner("classif.ksvm"),
+  makeLearner("classif.randomForest")
+)
+lrn = makeModelMultiplexer(base.learners)
+```
+
+Function `makeModelMultiplexerParamSet()` offers a simple way to construct a parameter set for tuning:
+The parameter names are prefixed automatically and the `requires` element is set, too, to make all parameters subordinate to `selected.learner`.
+
+```{r}
+ps = makeModelMultiplexerParamSet(lrn,
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeIntegerParam("ntree", lower = 1L, upper = 500L)
+)
+print(ps)
+
+rdesc = makeResampleDesc("CV", iters = 2L)
+ctrl = makeTuneControlIrace(maxExperiments = 200L)
+res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl,
+  show.info = FALSE)
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
+```
+
+# Multi-criteria evaluation and optimization
+
+During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.
+
+In the following example we aim to minimize both, the false positive and the false negative rates (`fpr` and `fnr`).
+We again tune the hyperparameters of an SVM (function `kernlab::ksvm()`) with a radial basis kernel and use `sonar.task()` for illustration.
+As search strategy we choose a random search.
+
+For all available multi-criteria tuning algorithms see `TuneMultiCritControl()`.
+
+```{r}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+ctrl = makeTuneMultiCritControlRandom(maxit = 30L)
+rdesc = makeResampleDesc("Holdout")
+res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task, 
+  resampling = rdesc, par.set = ps,
+  measures = list(fpr, fnr), control = ctrl, show.info = FALSE)
+res
+
+print(head(df[, -ncol(df)]))
+```
+
+The results can be visualized with function `plotTuneMultiCritResult()`.
+The plot shows the false positive and false negative rates for all parameter settings evaluated during tuning. Points on the Pareto front are slightly increased.
+
+```{r}
+plotTuneMultiCritResult(res)
+```

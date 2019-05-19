@@ -1,6 +1,11 @@
-#' @rdname Task
+#' @title Create a survival task.
+#' @inheritParams Task
+#' @seealso [Task] [ClassifTask] [ClusterTask] [CostSensTask] [MultilabelTask] [RegrTask]
+#' @rdname SurvTask
+#' @aliases SurvTask
 #' @export
-makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
+
   assertString(id)
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE, len = 2L)
@@ -12,12 +17,14 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     time = data[[target[1L]]]
     event = data[[target[2L]]]
 
-    if (is.integer(time))
+    if (is.integer(time)) {
       data[[target[1L]]] = as.double(time)
+    }
 
     if (is.numeric(event)) {
-      if (testIntegerish(event) && all(as.integer(event) %in% c(0L, 1L)))
+      if (testIntegerish(event) && all(as.integer(event) %in% c(0L, 1L))) {
         data[[target[2L]]] = (as.integer(event) == 1L)
+      }
     } else if (is.factor(event)) {
       lvls = levels(event)
       if (length(lvls) == 2L) {
@@ -30,7 +37,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     }
   }
 
-  task = makeSupervisedTask("regr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("surv", data, target, weights, blocking, coordinates, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     time = data[[target[1L]]]
@@ -38,12 +45,14 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     assertNumeric(time, lower = 0, finite = TRUE, any.missing = FALSE, .var.name = "target column time")
     assertLogical(event, any.missing = FALSE, .var.name = "target column event")
   }
-
-  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking)
+  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking, coordinates)
   addClasses(task, "SurvTask")
 }
 
-makeSurvTaskDesc = function(id, data, target, weights, blocking) {
-  td = makeTaskDescInternal("surv", id, data, target, weights, blocking)
+#' @export
+#' @rdname makeTaskDesc
+makeSurvTaskDesc = function(id, data, target, weights, blocking, coordinates) {
+
+  td = makeTaskDescInternal("surv", id, data, target, weights, blocking, coordinates)
   addClasses(td, c("SurvTaskDesc", "SupervisedTaskDesc"))
 }

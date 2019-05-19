@@ -2,10 +2,11 @@
 #'
 #' @description Get the type of the learner.
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerType = function(learner) {
+
   learner = checkLearner(learner)
   return(learner$type)
 }
@@ -14,10 +15,11 @@ getLearnerType = function(learner) {
 #'
 #' @description Get the ID of the learner.
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerId = function(learner) {
+
   learner = checkLearner(learner)
   return(learner$id)
 }
@@ -26,10 +28,11 @@ getLearnerId = function(learner) {
 #'
 #' @description Get the predict type of the learner.
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerPredictType = function(learner) {
+
   learner = checkLearner(learner)
   return(learner$predict.type)
 }
@@ -38,10 +41,11 @@ getLearnerPredictType = function(learner) {
 #'
 #' @description Get the R packages the learner requires.
 #' @template arg_learner
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 #' @family learner
 getLearnerPackages = function(learner) {
+
   learner = checkLearner(learner)
   return(learner$package)
 }
@@ -50,13 +54,14 @@ getLearnerPackages = function(learner) {
 #' @title Get the parameter set of the learner.
 #'
 #' @description
-#' Alias for \code{\link{getParamSet}}.
+#' Alias for [getParamSet].
 #'
 #' @template arg_learner
 #' @template ret_ps
 #' @export
 #' @family learner
 getLearnerParamSet = function(learner) {
+
   getParamSet(learner)
 }
 
@@ -64,14 +69,15 @@ getLearnerParamSet = function(learner) {
 #' @title Get the parameter values of the learner.
 #'
 #' @description
-#' Alias for \code{\link{getHyperPars}}.
+#' Alias for [getHyperPars].
 #'
 #' @template arg_learner
 #' @inheritParams getHyperPars
-#' @return [\code{list}]. A named list of values.
+#' @return ([list]). A named list of values.
 #' @export
 #' @family learner
 getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
+
   learner = checkLearner(learner)
   getHyperPars(learner, for.fun)
 }
@@ -80,12 +86,13 @@ getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
 #'
 #' @description Set the ID of the learner.
 #' @template arg_learner
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'    New ID for learner.
 #' @template ret_learner
 #' @export
 #' @family learner
 setLearnerId = function(learner, id) {
+
   learner = checkLearner(learner)
   assertString(id)
   learner$id = id
@@ -98,10 +105,11 @@ setLearnerId = function(learner, id) {
 #'   For wrapped learners, the wrapper id is successively attached to the short
 #'   name of the base learner. E.g: \dQuote{rf.bagged.imputed}
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerShortName = function(learner) {
+
   learner = checkLearner(learner)
   learner.short.name = learner$short.name
 
@@ -118,4 +126,3 @@ getLearnerShortName = function(learner) {
 
   return(learner.short.name)
 }
-

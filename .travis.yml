@@ -1,77 +1,54 @@
 language: r
 sudo: false
-cache: packages
-r:
-  - release
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.9
-      - g++-4.9
-      - gfortran-4.9
-      - libgmp-dev
-      - libgsl0-dev
+dist: xenial
+cache:
+  - packages
+  - ccache
+latex: true
 env:
   global:
     - _R_CHECK_TIMINGS_=0
-    - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
-    - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
+    - _R_CHECK_TESTS_NLINES_=999
+    # for RWeka http://weka.8497.n7.nabble.com/warnings-td42935.htm
+    - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
 
-warnings_are_errors: true
-r_check_args: "--as-cran --run-donttest"
+matrix:
+  allow_failures:
+  - r: oldrel
+  include:
+  - r: devel
+  - r: oldrel
+  - r: release
+    env:
+      - FULL=true
+
+addons:
+  apt:
+    packages:
+     - ccache
+     - libglu1-mesa-dev
+     - libgmp-dev
+     - libgsl0-dev
+     - libgdal-dev # for sf
+     - libproj-dev # for sf
+     - libgeos-dev # for sf
+     - libudunits2-dev # for sf
 
 before_install:
-  # we want to see libpaths and installed packages from cache
-  - Rscript -e 'message("LIBPATHS:"); .libPaths()'
-  - Rscript -e 'message("INSTALLED PACKS:"); installed.packages()[,1:3]'  # we need a very fresh version of survival for Hmisc, needs be done early in the script
-  # we need a very fresh version of survival for Hmisc, needs be done early in the script
-  - Rscript -e 'install.packages("survival")'
-  - mkdir $HOME/bin
-  - ln -s $(which gcc-4.9) $HOME/bin/gcc
-  - ln -s $(which g++-4.9) $HOME/bin/g++
-  - ln -s $(which gfortran-4.9) $HOME/bin/gfortran
-  - export PATH=$HOME/bin:$PATH
-  - echo $LD_LIBRARY_PATH
-  - echo $LIBRARY_PATH
-
-before_script:
-  - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-  - R --no-save <<< 'library("devtools"); document()'
-
-script:
-  - |
-    R CMD build .
-    travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-  - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-
-after_success:
-  - git checkout master
-  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-  - R --no-save <<< 'library("devtools"); document()'
-  - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-  - git config user.name $GN
-  - git config user.email $GM
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://$GT:@github.com" >> .git/credentials
-  - git config push.default matching
-  - git add --force man/*
-  - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
-  - git push
-  - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-
-after_failure:
-  - ./travis-tool.sh dump_logs
-
-notifications:
-  email:
-    recipients:
-      - bernd_bischl@gmx.net
-      - schiffner@math.uni-duesseldorf.de
-      - erich.studerus@gmail.com
-  slack: mlr-org:DYNA3KIwcG9F4sQoeyTnPBhF#buildnotifications
-on_success: change
-on_failure: always
-
+  - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+  #- R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
+  #- R -q -e 'if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
+  - R -q -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
+  - R -q -e 'if (!requireNamespace("curl", quietly = TRUE)) install.packages("curl")'
+  - R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+install: R -q -e 'tic::install()'
+before_script: R -q -e 'tic::before_script()'
+script: R -q -e 'tic::script()'
+after_script: R -q -e 'tic::after_script()'
+before_deploy: R -q -e 'tic::before_deploy()'
+deploy:
+   provider: script
+   script: R -q -e 'tic::deploy()'
+   on:
+     all_branches: true
+after_success: R -q -e 'tic::after_success()

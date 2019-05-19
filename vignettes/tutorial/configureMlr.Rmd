@@ -1,0 +1,140 @@
+---
+title: "Configuring mlr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+library("lattice")
+
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+`mlr` is designed to make usage errors due to typos or invalid parameter values
+as unlikely as possible.
+Occasionally, you might want to break those barriers and get full access, for example to reduce the amount of output on the console or to turn off checks.
+For all available options simply refer to the documentation of `configureMlr()`.
+In the following we show some common use cases.
+
+Generally, function `configureMlr()` permits to set options globally for your current **R** session.
+
+It is also possible to set options locally.
+
+* All options referring to the behavior of learners (these are all options except `show.info`) can be set for an individual learner via the `config` argument of `makeLearner()`.
+  The local precedes the global configuration.
+* Some functions like `resample()`, `benchmark()`, `selectFeatures()`, `tuneParams()`,
+  and `tuneParamsMultiCrit()` have a `show.info` flag that controls if progress messages are shown. 
+  The default value of `show.info` can be set by `configureMlr()`.
+
+# Example: Reducing the output on the console
+
+You are bothered by all the output on the console like in this example?
+
+```{r}
+rdesc = makeResampleDesc("Holdout")
+r = resample("classif.multinom", iris.task, rdesc)
+```
+
+You can suppress the output for this Learner `makeLearner()` and this `resample()` call as follows:
+
+```{r}
+lrn = makeLearner("classif.multinom", config = list(show.learner.output = FALSE))
+r = resample(lrn, iris.task, rdesc, show.info = FALSE)
+```
+
+(Note that `nnet::multinom()` has a `trace` switch that can alternatively be used to turn off the progress messages.)
+
+To globally suppress the output for all subsequent learners and calls to `resample()`, `benchmark()` etc. do the following:
+
+```{r}
+configureMlr(show.learner.output = FALSE, show.info = FALSE)
+r = resample("classif.multinom", iris.task, rdesc)
+```
+
+# Accessing and resetting the configuration
+
+Function `getMlrOptions()` returns a `base::list()` with the current configuration.
+
+```{r}
+getMlrOptions()
+```
+
+To restore the default configuration call `configureMlr()` with an empty argument list.
+
+```{r}
+configureMlr()
+```
+
+```{r}
+getMlrOptions()
+```
+
+# Example: Turning off parameter checking
+
+It might happen that you want to set a parameter of a Learner (`makeLearner()`, but the parameter is not registered in the learner's parameter set (`ParamHelpers::makeParamSet()`) yet.
+In this case you might want to [contact us](https://github.com/mlr-org/mlr#get-in-touch) or [open an issue](https://github.com/mlr-org/mlr/issues/new) as well!
+But until the problem is fixed you can turn off `mlr`'s parameter checking.
+The parameter setting will then be passed to the underlying function without further ado.
+
+```{r error=TRUE}
+# Support Vector Machine with linear kernel and new parameter 'newParam'
+lrn = makeLearner("classif.ksvm", kernel = "vanilladot", newParam = 3)
+
+# Turn off parameter checking completely
+configureMlr(on.par.without.desc = "quiet")
+lrn = makeLearner("classif.ksvm", kernel = "vanilladot", newParam = 3)
+train(lrn, iris.task)
+
+# Option "quiet" also masks typos
+lrn = makeLearner("classif.ksvm", kernl = "vanilladot")
+train(lrn, iris.task)
+
+# Alternatively turn off parameter checking, but still see warnings
+configureMlr(on.par.without.desc = "warn")
+lrn = makeLearner("classif.ksvm", kernl = "vanilladot", newParam = 3)
+
+train(lrn, iris.task)
+```
+
+# Example: Handling errors in a learning method
+
+If a learning method throws an error the default behavior of `mlr` is to
+generate an exception as well.
+However, in some situations, for example if you conduct a larger [bechmark experiment](benchmark_experiments.html){target="_blank"} with multiple data sets and learners, you usually don't want the whole experiment stopped due to one error.
+You can prevent this using the `on.learner.error` option of `configureMlr()`.
+
+```{r error=TRUE}
+# This call gives an error caused by the low number of observations in class "virginica"
+train("classif.qda", task = iris.task, subset = 1:104)
+
+# Get a warning instead of an error
+configureMlr(on.learner.error = "warn")
+mod = train("classif.qda", task = iris.task, subset = 1:104)
+
+mod
+
+# mod is an object of class FailureModel
+isFailureModel(mod)
+
+# Retrieve the error message
+getFailureModelMsg(mod)
+
+# predict and performance return NA's
+pred = predict(mod, iris.task)
+pred
+
+performance(pred)
+```
+
+If `on.learner.error = "warn"` a warning is issued instead of an exception and an object of class `FailureModel()` is created.
+You can extract the error message using function `getFailureModelMsg()`.
+All further steps like prediction and performance calculation work and return `NA's`.

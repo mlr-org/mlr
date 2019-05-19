@@ -33,5 +33,4 @@ test_that("learners work: multilabel", {
     task = multilabel.task, train.inds = multilabel.train.inds, multilabel.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(multilabel.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
-
 })

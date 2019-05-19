@@ -1,15 +1,15 @@
 #' @title Query properties of measures.
 #'
 #' @description
-#' Properties can be accessed with \code{getMeasureProperties(measure)}, which returns a
+#' Properties can be accessed with `getMeasureProperties(measure)`, which returns a
 #' character vector.
 #'
-#' The measure properties are defined in \code{\link{Measure}}.
+#' The measure properties are defined in [Measure].
 #' @template arg_measure
-#' @param props [\code{character}]\cr
+#' @param props ([character])\cr
 #'   Vector of properties to query.
-#' @return \code{getMeasureProperties} returns a character vector with measure properties.
-#'  \code{hasMeasureProperties} returns a logical vector of the same length as \code{props}.
+#' @return `getMeasureProperties` returns a character vector with measure properties.
+#'  `hasMeasureProperties` returns a logical vector of the same length as `props`.
 #' @name MeasureProperties
 #' @rdname MeasureProperties
 #' @aliases getMeasureProperties hasMeasureProperties
@@ -18,6 +18,7 @@ NULL
 #' @rdname MeasureProperties
 #' @export
 getMeasureProperties = function(measure) {
+
   assertClass(measure, classes = "Measure")
   measure$properties
 }
@@ -25,6 +26,7 @@ getMeasureProperties = function(measure) {
 #' @rdname MeasureProperties
 #' @export
 hasMeasureProperties = function(measure, props) {
+
   assertClass(measure, classes = "Measure")
   assertSubset(props, listMeasureProperties())
   props %in% getMeasureProperties(measure)
@@ -35,9 +37,10 @@ hasMeasureProperties = function(measure, props) {
 #' @description
 #' This is useful for determining which measure properties are available.
 #'
-#' @return [\code{character}].
+#' @return ([character]).
 #'
 #' @export
 listMeasureProperties = function() {
+
   mlr$measure.properties
 }

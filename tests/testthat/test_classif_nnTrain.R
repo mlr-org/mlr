@@ -25,7 +25,7 @@ test_that("classif_nnTrain", {
 
   set.seed(getOption("mlr.debug.seed"))
   testSimple("classif.nnTrain", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
-             parset = list())
+    parset = list())
 
 
   # test with params passed

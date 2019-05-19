@@ -1,0 +1,42 @@
+---
+title: "Example Tasks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+urlMlrFunctions = "https://mlr-org.github.io/mlr/reference/"
+ext = ".html"
+library("pander")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+For your convenience `mlr` provides pre-defined `Task()`s for each type of learning problem.
+These are used throughout this tutorial in order to get shorter and more readable code.
+
+```{r echo=FALSE, results="asis"}
+# urlMlrFunctions, ext are defined in build
+linkTask = function(x) {
+  collapse(sprintf("[%1$s](%2$s%1$s%3$s)", x, urlMlrFunctions, ext), sep = "<br />")
+}
+d = data(package = "mlr")
+d = d$results
+types = sapply(d[,"Item"], function(x) getTaskDesc(eval(parse(text = x)))$type)
+names(types) = NULL
+ord = order(types)
+d = d[ord,]
+types = types[ord]
+types[duplicated(types)] = ""
+df = data.frame(Type = types, Task = d[,"Item"], Description = d[,"Title"])
+df$Task = sapply(df$Task, linkTask)
+pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
+  justify = rep("left", 3))
+```

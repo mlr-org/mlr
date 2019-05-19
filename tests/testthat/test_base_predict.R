@@ -143,4 +143,3 @@ test_that("predict works with data.table as newdata", {
   mod = train(lrn, iris.task)
   expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
 })
-

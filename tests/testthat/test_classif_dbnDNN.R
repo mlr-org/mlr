@@ -20,25 +20,25 @@ test_that("classif_dbnDNN", {
 
 
     set.seed(getOption("mlr.debug.seed"))
-   capture.output({
-    # neuralnet is not dealing with formula with `.` well
-    x = data.matrix(binaryclass.train[, -ncol(binaryclass.train)])
-    y = binaryclass.train[, ncol(binaryclass.train)]
+    capture.output({
+      # neuralnet is not dealing with formula with `.` well
+      x = data.matrix(binaryclass.train[, -ncol(binaryclass.train)])
+      y = binaryclass.train[, ncol(binaryclass.train)]
 
-    dict = sort(unique(y))
-    onehot = matrix(0, length(y), length(dict))
-    for (j in seq_along(dict)) {
-      ind = which(y == dict[j])
-      onehot[ind, j] = 1
-    }
-    pars = list(x = x, y = onehot)
-    pars = c(pars, parset)
-    m = do.call(deepnet::dbn.dnn.train, pars)
-    p = deepnet::nn.predict(m, data.matrix(binaryclass.test[, -ncol(binaryclass.test)]))
-    colnames(p) = binaryclass.class.levs
-    old.predicts.list[[i]] = as.factor(colnames(p)[max.col(p)])
-  })
-}
+      dict = sort(unique(y))
+      onehot = matrix(0, length(y), length(dict))
+      for (j in seq_along(dict)) {
+        ind = which(y == dict[j])
+        onehot[ind, j] = 1
+      }
+      pars = list(x = x, y = onehot)
+      pars = c(pars, parset)
+      m = do.call(deepnet::dbn.dnn.train, pars)
+      p = deepnet::nn.predict(m, data.matrix(binaryclass.test[, -ncol(binaryclass.test)]))
+      colnames(p) = binaryclass.class.levs
+      old.predicts.list[[i]] = as.factor(colnames(p)[max.col(p)])
+    })
+  }
 
   testSimpleParsets("classif.dbnDNN", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list2)

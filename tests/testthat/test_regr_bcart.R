@@ -21,7 +21,7 @@ test_that("regr_bcart", {
   df.factor = createDummyFeatures(df.factor, method = "reference")
   df = cbind(df.num, df.factor)
   train = df[regr.train.inds, ]
-  test  = df[regr.test.inds, ]
+  test = df[regr.test.inds, ]
 
   old.predicts.list = list()
   for (i in seq_along(parset.list)) {

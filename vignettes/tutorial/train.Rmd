@@ -1,0 +1,141 @@
+---
+title: "Training a Learner"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+Training a learner means fitting a model to a given data set.
+In `mlr` this can be done by calling function `train()` on a Learner (`makeLearner()`) and a suitable `Task()`.
+
+We start with a classification example and perform a linear discriminant analysis (`MASS::lda()`) on the iris (`datasets::iris()`) data set.
+
+```{r}
+# Generate the task
+task = makeClassifTask(data = iris, target = "Species")
+
+# Generate the learner
+lrn = makeLearner("classif.lda")
+
+# Train the learner
+mod = train(lrn, task)
+mod
+```
+
+In the above example creating the Learner (`makeLearner()`) explicitly is not absolutely necessary.
+As a general rule, you have to generate the Learner (`makeLearner()`) yourself if you want to change any defaults, e.g., setting hyperparameter values or altering the predict type.
+Otherwise, `train()` and many other functions also accept the class name of the learner and call `makeLearner()` internally with default settings.
+
+```{r}
+mod = train("classif.lda", task)
+mod
+```
+
+Training a learner works the same way for every type of learning problem.
+Below is a survival analysis example where a Cox proportional hazards model (`survival::coxph()`) is fitted to the `survival::lung()` data set.
+Note that we use the corresponding `lung.task()` provided by `mlr`.
+All available `Task()`s are listed in the [Appendix](example_tasks.html){target="_blank"}.
+
+```{r}
+mod = train("surv.coxph", lung.task)
+mod
+```
+
+# Accessing learner models
+
+Function `train()` returns an object of class `WrappedModel` (`makeWrappedModel()`), which encapsulates
+the fitted model, i.e., the output of the underlying **R** learning method. 
+Additionally, it contains some information about the Learner (`makeLearner()`), the `Task()`, the features and observations used for training, and the training time.
+A `WrappedModel` (`makeWrappedModel()`) can subsequently be used to make a prediction (`predict.WrappedModel()`) for new observations.
+
+The fitted model in slot `$learner.model` of the `WrappedModel` (`makeWrappedModel()`) object can be accessed using function `getLearnerModel`.
+
+In the following example we cluster the `Ruspini` (`cluster::ruspini()`) data set (which has four groups and two features) by $K$-means with $K = 4$ and extract the output of the underlying `stats::kmeans()` function.
+
+```{r}
+data(ruspini, package = "cluster")
+plot(y ~ x, ruspini)
+```
+
+```{r}
+# Generate the task
+ruspini.task = makeClusterTask(data = ruspini)
+
+# Generate the learner
+lrn = makeLearner("cluster.kmeans", centers = 4)
+
+# Train the learner
+mod = train(lrn, ruspini.task)
+mod
+
+# Peak into mod
+names(mod)
+
+mod$learner
+
+mod$features
+
+# Extract the fitted model
+getLearnerModel(mod)
+```
+
+# Further options and comments
+
+By default, the whole data set in the `Task()` is used for training.
+The `subset` argument of `train()` takes a logical or integer vector that indicates which observations to use, for example if you want to split your data into a training and a test set or if you want to fit separate models to different subgroups in the data.
+
+Below we fit a linear regression model (`stats::lm()`) to the `BostonHousing` (`mlbench::BostonHousing()`) data set (`bh.task()`) and randomly select 1/3 of the data set for training.
+
+```{r}
+# Get the number of observations
+n = getTaskSize(bh.task)
+
+# Use 1/3 of the observations for training
+train.set = sample(n, size = n/3)
+
+# Train the learner
+mod = train("regr.lm", bh.task, subset = train.set)
+mod
+```
+
+Note, for later, that all standard [resampling strategies](resample.html){target="_blank"} are supported.
+Therefore you usually do not have to subset the data yourself.
+
+Moreover, if the learner supports this, you can specify observation ``weights`` that reflect the relevance of observations in the training process.
+Weights can be useful in many regards, for example to express the reliability of the training observations, reduce the influence of outliers or, if the data were collected over a longer time period, increase the influence of recent data.
+In supervised classification weights can be used to incorporate misclassification costs or account for class imbalance.
+
+For example in the `mlbench::BreastCancer()` data set class `benign` is almost twice as frequent as class `malignant`.
+In order to grant both classes equal importance in training the classifier we can weight the examples according to the inverse class frequencies in the data set as shown in the following **R** code.
+
+```{r}
+# Calculate the observation weights
+target = getTaskTargets(bc.task)
+tab = as.numeric(table(target))
+w = 1/tab[target]
+
+train("classif.rpart", task = bc.task, weights = w)
+```
+
+Note, for later, that `mlr` offers much more functionality to deal with [imbalanced classification problems](over_and_undersampling.html){target="_blank"}.
+
+As another side remark for more advanced readers:
+By varying the weights in the calls to `train()`, you could also implement your own variant of a general boosting type algorithm on arbitrary `mlr` base learners.
+
+As you may recall, it is also possible to set observation weights when creating the `Task()`. 
+As a general rule, you should specify them in `make*Task` (`Task()`) if the weights really "belong" to the task and always should be used.
+Otherwise, pass them to `train()`.
+The weights in `train()` take precedence over the weights in `Task()`.
+

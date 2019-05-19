@@ -7,11 +7,11 @@
 getRRTaskDescription(res)
 }
 \arguments{
-\item{res}{[\code{ResampleResult}]\cr
-The result of \code{\link{resample}}.}
+\item{res}{(\link{ResampleResult})\cr
+The result of \link{resample}.}
 }
 \value{
-[\code{TaskDesc}].
+(\link{TaskDesc}).
 }
 \description{
 Get a summarizing task description.
@@ -26,3 +26,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
+\concept{resample}

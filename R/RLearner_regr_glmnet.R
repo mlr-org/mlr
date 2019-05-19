@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.glmnet = function() {
+
   makeRLearnerRegr(
     cl = "regr.glmnet",
     package = "glmnet",
@@ -50,12 +51,14 @@ makeRLearner.regr.glmnet = function() {
 
 #' @export
 trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target), list(...))
   rm(d)
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     args$weights = .weights
+  }
 
   glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()
@@ -71,6 +74,7 @@ trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, .
 
 #' @export
 predictLearner.regr.glmnet = function(.learner, .model, .newdata, ...) {
+
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   drop(predict(.model$learner.model, newx = .newdata, ...))
