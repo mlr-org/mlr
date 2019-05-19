@@ -13,6 +13,8 @@ env:
     - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
 
 matrix:
+  allow_failures:
+  - r: oldrel
   include:
   - r: devel
   - r: oldrel
@@ -34,11 +36,12 @@ addons:
 
 before_install:
   - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
-  - R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
-  - R -q -e 'if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
+  #- R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
+  #- R -q -e 'if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
   - R -q -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
   - R -q -e 'if (!requireNamespace("curl", quietly = TRUE)) install.packages("curl")'
   - R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+install: R -q -e 'tic::install()'
 before_script: R -q -e 'tic::before_script()'
 script: R -q -e 'tic::script()'
 after_script: R -q -e 'tic::after_script()'
@@ -48,3 +51,4 @@ deploy:
    script: R -q -e 'tic::deploy()'
    on:
      all_branches: true
+after_success: R -q -e 'tic::after_success()
