@@ -3,6 +3,7 @@
 ## learners - general
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
+- fixed a bug in which `options(on.learner.error)` was not respected in `benchmark()`. This caused `benchmark()` to stop even if it should have continued including `FailureModels` in the result (@dagola, #1984)
 
 # mlr 2.14.0
 
