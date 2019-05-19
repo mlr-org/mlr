@@ -48,7 +48,7 @@
 #' data = generateHyperParsEffectData(res)
 #' plt = plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
 #' plt + ylab("Misclassification Error")
-#' 
+#'
 #' # nested cross validation
 #' ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
 #' ctrl = makeTuneControlGrid()
@@ -383,10 +383,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           # combine the experiment data with interpolated data
           if (facet.nested) {
             grid$nested_cv_run = run
-            combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration",
+            combined = rbind(d.run[,c(x,y,z,"learner_status", "iteration",
               "nested_cv_run")], grid)
           } else {
-            combined = rbind(d_run[,c(x,y,z,"learner_status",
+            combined = rbind(d.run[,c(x,y,z,"learner_status",
               "iteration")], grid)
           }
           # combine each loop
