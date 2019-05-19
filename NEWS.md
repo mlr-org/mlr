@@ -4,6 +4,9 @@
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
 
+## learners - new
+- add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)
+
 # mlr 2.14.0
 
 ## general
