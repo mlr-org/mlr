@@ -86,7 +86,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
     if (lrn$id %in% c("regr.gausspr")) {
       range = 2 * range
     }
-    expect_numeric(info = info, s, lowegitr = 0, upper = range, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
+    expect_numeric(info = info, s, lower = 0, upper = range, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
 
   # check that probs works, and are in [0,1] and sum to 1
