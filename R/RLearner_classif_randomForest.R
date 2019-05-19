@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.randomForest = function() {
+
   makeRLearnerClassif(
     cl = "classif.randomForest",
     package = "randomForest",
@@ -33,27 +34,33 @@ makeRLearner.classif.randomForest = function() {
 
 #' @export
 trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights = NULL, classwt = NULL, cutoff, ...) {
+
   f = getTaskFormula(.task)
   data = getTaskData(.task, .subset, recode.target = "drop.levels")
   levs = levels(data[, getTaskTargetNames(.task)])
   n = length(levs)
-  if (missing(cutoff))
+  if (missing(cutoff)) {
     cutoff = rep(1 / n, n)
-  if (!missing(classwt) && is.numeric(classwt) && length(classwt) == n && is.null(names(classwt)))
+  }
+  if (!missing(classwt) && is.numeric(classwt) && length(classwt) == n && is.null(names(classwt))) {
     names(classwt) = levs
-  if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff)))
+  }
+  if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff))) {
     names(cutoff) = levs
+  }
   randomForest::randomForest(f, data = data, classwt = classwt, cutoff = cutoff, ...)
 }
 
 #' @export
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
+
   type = ifelse(.learner$predict.type == "response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
 
 #' @export
 getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
+
   if (.learner$predict.type == "response") {
     m = getLearnerModel(.model, more.unwrap = TRUE)
     unname(m$predicted)
@@ -64,6 +71,7 @@ getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
 
 #' @export
 getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   ctrl = list(...)
   if (is.null(ctrl$type)) {
@@ -71,8 +79,9 @@ getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ..
   } else {
     if (ctrl$type == 1L) {
       has.fiv = .learner$par.vals$importance
-      if (is.null(has.fiv) || has.fiv != TRUE)
+      if (is.null(has.fiv) || has.fiv != TRUE) {
         stop("You need to train the learner with parameter 'importance' set to TRUE")
+      }
     }
   }
 

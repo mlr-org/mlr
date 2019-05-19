@@ -12,12 +12,14 @@ NULL
 #' @rdname cache_helpers
 #' @export
 getCacheDir = function() {
+
   rappdirs::user_cache_dir("mlr", "mlr-org")
 }
 
 #' @rdname cache_helpers
 #' @export
 deleteCacheDir = function() {
+
   unlink(rappdirs::user_cache_dir("mlr", "mlr-org"), recursive = TRUE)
   catf("Successfully cleared directory '%s'.", rappdirs::user_cache_dir("mlr", "mlr-org"))
 }

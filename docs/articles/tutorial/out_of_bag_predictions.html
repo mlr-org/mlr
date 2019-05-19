@@ -281,35 +281,35 @@
 <p>Some learners like random forest use bagging. Bagging means that the learner consists of an ensemble of several base learners and each base learner is trained with a different random subsample or bootstrap sample from all observations. A prediction made for an observation in the original data set using only base learners not trained on this particular observation is called out-of-bag (OOB) prediction. These predictions are not prone to overfitting, as each prediction is only made by learners that did not use the observation for training.</p>
 <p>To get a list of learners that provide OOB predictions, you can call <code><a href="../../reference/listLearners.html">listLearners(obj = NA, properties = "oobpreds")</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="dt">obj =</span> <span class="ot">NA</span>, <span class="dt">properties =</span> <span class="st">"oobpreds"</span>)[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">##                     class         package</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## 1    classif.randomForest    randomForest</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## 2 classif.randomForestSRC randomForestSRC</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## 3          classif.ranger          ranger</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## 4          classif.rFerns          rFerns</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 5       regr.randomForest    randomForest</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 6    regr.randomForestSRC randomForestSRC</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## ... (#rows: 8, #cols: 2)</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">##                     class         package</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">## 1    classif.randomForest    randomForest</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">## 2 classif.randomForestSRC randomForestSRC</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">## 3          classif.ranger          ranger</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">## 4          classif.rFerns          rFerns</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">## 5       regr.randomForest    randomForest</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## 6    regr.randomForestSRC randomForestSRC</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">## ... (#rows: 8, #cols: 2)</a></code></pre></div>
 <p>In <code>mlr</code> function <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code> can be used to extract these observations from the trained models. These predictions can be used to evaluate the performance of a given learner like in the following example.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">predict.threshold =</span> <span class="fl">0.6</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, sonar.task)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">oob =<span class="st"> </span><span class="kw"><a href="../../reference/getOOBPreds.html">getOOBPreds</a></span>(mod, sonar.task)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">oob</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Prediction: 208 observations</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## predict.type: prob</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## threshold: M=0.60,R=0.40</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">## time: NA</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">##   id truth    prob.M    prob.R response</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">## 1  1     R 0.5331047 0.4668953        R</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">## 2  2     R 0.6056414 0.3943586        M</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">## 3  3     R 0.5798999 0.4201001        R</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">## 4  4     R 0.4472660 0.5527340        R</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">## 5  5     R 0.6056473 0.3943527        M</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">## 6  6     R 0.4417684 0.5582316        R</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">## ... (#rows: 208, #cols: 5)</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## Prediction: 208 observations</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## predict.type: prob</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## threshold: M=0.60,R=0.40</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## time: NA</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">##   id truth    prob.M    prob.R response</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## 1  1     R 0.5331047 0.4668953        R</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## 2  2     R 0.6056414 0.3943586        M</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 3  3     R 0.5798999 0.4201001        R</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## 4  4     R 0.4472660 0.5527340        R</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## 5  5     R 0.6056473 0.3943527        M</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## 6  6     R 0.4417684 0.5582316        R</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">## ... (#rows: 208, #cols: 5)</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(oob, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(auc, mmce))</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">##       auc      mmce </span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">## 0.9238414 0.2067308</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-19" data-line-number="19">##       auc      mmce </a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.9238414 0.2067308</a></code></pre></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>
 </div>
   </div>

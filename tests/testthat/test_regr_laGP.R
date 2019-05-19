@@ -15,7 +15,7 @@ test_that("regr_laGP", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(X = des1[, -regr.num.class.col], Z = y, XX = des2[, -regr.num.class.col], verb = 0,
-                Xi.ret = FALSE)
+      Xi.ret = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = do.call(laGP::aGP, pars)$mean

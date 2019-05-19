@@ -39,6 +39,7 @@
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
+
   learners = ensureBenchmarkLearners(learners)
   tasks = ensureBenchmarkTasks(tasks)
   resamplings = ensureBenchmarkResamplings(resamplings, tasks)
@@ -101,9 +102,11 @@ NULL
 
 
 benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info) {
+
   setSlaveOptions()
-  if (show.info)
+  if (show.info) {
     messagef("Task: %s, Learner: %s", task, learner)
+  }
   lrn = learners[[learner]]
   extract.this = getExtractor(lrn)
   r = resample(lrn, tasks[[task]], resamplings[[task]],
@@ -115,10 +118,12 @@ benchmarkParallel = function(task, learner, learners, tasks, resamplings, measur
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
+
   print(getBMRAggrPerformances(x, as.df = TRUE))
 }
 
 #' @export
 as.data.frame.BenchmarkResult = function(x, ...) {
+
   getBMRPerformances(x, as.df = TRUE)
 }

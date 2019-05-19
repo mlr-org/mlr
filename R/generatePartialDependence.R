@@ -97,7 +97,7 @@
 #' fit = train(lrn, bh.task)
 #' pd = generatePartialDependenceData(fit, bh.task, "lstat")
 #' plotPartialDependence(pd, data = getTaskData(bh.task))
-#'
+#' 
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
 #' pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
@@ -110,12 +110,15 @@ generatePartialDependenceData = function(obj, input, features = NULL,
 
   requirePackages("mmpf")
   assertClass(obj, "WrappedModel")
-  if (obj$learner$predict.type == "se" & individual)
+  if (obj$learner$predict.type == "se" & individual) {
     stop("individual = TRUE not compatabile with predict.type = 'se'!")
-  if (obj$learner$predict.type == "se" & derivative)
+  }
+  if (obj$learner$predict.type == "se" & derivative) {
     stop("derivative = TRUE is not compatible with predict.type = 'se'!")
-  if (!inherits(input, c("Task", "data.frame")))
+  }
+  if (!inherits(input, c("Task", "data.frame"))) {
     stop("input must be a Task or a data.frame!")
+  }
   if (inherits(input, "Task")) {
     data = getTaskData(input)
     td = input$task.desc
@@ -126,8 +129,9 @@ generatePartialDependenceData = function(obj, input, features = NULL,
     assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
   }
 
-  if (is.na(n[2]))
+  if (is.na(n[2])) {
     n[2] = nrow(data)
+  }
 
   if (is.null(features)) {
     features = colnames(data)[!colnames(data) %in% td$target]
@@ -137,11 +141,13 @@ generatePartialDependenceData = function(obj, input, features = NULL,
 
   assertFlag(interaction)
   assertFlag(derivative)
-  if (derivative & interaction)
+  if (derivative & interaction) {
     stop("interaction cannot be TRUE if derivative is TRUE.")
+  }
   if (derivative) {
-    if (any(sapply(data[, features, drop = FALSE], class) %in% c("factor", "ordered", "character")))
+    if (any(sapply(data[, features, drop = FALSE], class) %in% c("factor", "ordered", "character"))) {
       stop("All features must be numeric to estimate set derivative = TRUE!")
+    }
   }
 
   se = Function = Class = patterns = NULL # nolint
@@ -157,8 +163,9 @@ generatePartialDependenceData = function(obj, input, features = NULL,
     multi.fun = FALSE
   } else {
     multi.fun = TRUE
-    if (is.null(names(test.fun)) & !individual)
+    if (is.null(names(test.fun)) & !individual) {
       stop("If fun returns a vector it must be named.")
+    }
   }
 
   assertNumeric(bounds, len = 2L)
@@ -171,9 +178,9 @@ generatePartialDependenceData = function(obj, input, features = NULL,
     stop("The number of points taken from the training data cannot exceed the number of training data points.")
   }
 
-  if (td$type == "regr")
+  if (td$type == "regr") {
     target = td$target
-  else if (td$type == "classif") {
+  } else if (td$type == "classif") {
     if (length(td$class.levels) > 2L) {
       target = td$class.levels
     } else {
@@ -189,17 +196,18 @@ generatePartialDependenceData = function(obj, input, features = NULL,
       vars = if (interaction) list(features) else as.list(features), more.args = args)
     if (length(target) == 1L) {
       out = lapply(out, function(x) {
+
         feature = features[features %in% names(x)]
-          names(x) = stri_replace_all(names(x), target, regex = "^preds")
-          x = data.table(x)
-          if (individual) {
-            x = melt(x, id.vars = feature, variable.name = "n", value.name = target)
-            x[, n := stri_replace(n, "", regex = target)]
-            setnames(x, c(feature, if (individual) "n" else "Function", target), names(x))
-          } else {
-            x
-          }
-        })
+        names(x) = stri_replace_all(names(x), target, regex = "^preds")
+        x = data.table(x)
+        if (individual) {
+          x = melt(x, id.vars = feature, variable.name = "n", value.name = target)
+          x[, n := stri_replace(n, "", regex = target)]
+          setnames(x, c(feature, if (individual) "n" else "Function", target), names(x))
+        } else {
+          x
+        }
+      })
     }
   } else {
     points = lapply(features, function(x) mmpf::uniformGrid(data[[x]], n[1]))
@@ -244,9 +252,10 @@ generatePartialDependenceData = function(obj, input, features = NULL,
           if (td$type == "classif") "Probability" else "Prediction", features))
       }
     } else if (individual) {
-      if (!derivative)
+      if (!derivative) {
         out = melt(out, measure = patterns(target), variable.name = "n",
           value.name = target)
+      }
       out = melt(out, measure.vars = target,
         variable.name = if (td$type == "classif") "Class" else "Target",
         value.name = if (td$type == "classif") "Probability" else "Prediction")
@@ -311,9 +320,10 @@ doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2
       int.points = z,
       predict.fun = getPrediction, n = n, target = target,
       individual = individual, ...),
-      points[[x]], if (individual) z)
+    points[[x]], if (individual) z)
   } else {
     out = lapply(points[[x]], function(x.value) {
+
       t(numDeriv::jacobian(numDerivWrapper, x = x.value, model = obj, data = data,
         uniform = uniform, aggregate.fun = fun, vars = x, int.points = z,
         predict.fun = getPrediction, n = n, target = target,
@@ -333,6 +343,7 @@ doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2
 # so i need to pass the points as that x, and then extract the appropriate
 # vector or matrix from marginalPrediction
 numDerivWrapper = function(points, vars, individual, target, ...) {
+
   args = list(...)
   args$points = list(points)
   names(args$points) = vars
@@ -343,6 +354,7 @@ numDerivWrapper = function(points, vars, individual, target, ...) {
 
 #' @export
 print.PartialDependenceData = function(x, ...) {
+
   catf("PartialDependenceData")
   catf("Task: %s", x$task.desc$id)
   catf("Features: %s", stri_paste(x$features, collapse = ", ", sep = " "))
@@ -396,25 +408,29 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
 
   assertClass(obj, "PartialDependenceData")
   assertChoice(geom, c("tile", "line"))
-  if (obj$interaction & length(obj$features) > 2L & geom != "tile")
+  if (obj$interaction & length(obj$features) > 2L & geom != "tile") {
     stop("Cannot plot more than 2 features together with line plots.")
+  }
   if (geom == "tile") {
-    if (!obj$interaction)
+    if (!obj$interaction) {
       stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
+    }
   }
 
   if (!is.null(data)) {
     assertDataFrame(data, col.names = "unique", min.rows = 1L,
-                    min.cols = length(obj$features) + length(obj$td$target))
+      min.cols = length(obj$features) + length(obj$td$target))
     assertSubset(obj$features, colnames(data), empty.ok = FALSE)
   }
 
   if (!is.null(facet)) {
     assertChoice(facet, obj$features)
-    if (!length(obj$features) %in% 2:3)
+    if (!length(obj$features) %in% 2:3) {
       stop("obj argument created by generatePartialDependenceData must be called with two or three features to use this argument!")
-    if (!obj$interaction)
+    }
+    if (!obj$interaction) {
       stop("obj argument created by generatePartialDependenceData must be called with interaction = TRUE to use this argument!")
+    }
 
     features = obj$features[which(obj$features != facet)]
     if (is.factor(obj$data[[facet]])) {
@@ -441,14 +457,15 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
   # detect if there was a multi-output function used in which case
   # there should be a column named function which needs to be facetted
   if ("Function" %in% colnames(obj$data)) {
-      facet = c(facet, "Function")
+    facet = c(facet, "Function")
   }
 
   # sample from individual partial dependence estimates
   if (p != 1) {
     assertNumber(p, lower = 0, upper = 1, finite = TRUE)
-    if (!obj$individual)
+    if (!obj$individual) {
       stop("obj argument created by generatePartialDependenceData must be called with individual = TRUE to use this argument!")
+    }
     rows = unique(obj$data$idx)
     id = sample(rows, size = floor(p * length(rows)))
     obj$data = obj$data[which(obj$data$idx %in% id), ]
@@ -483,16 +500,16 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
     if (!obj$individual) {
       # for regression/survival this is a simple line plot
       if (obj$task.desc$type %in% c("regr", "surv") |
-            (obj$task.desc$type == "classif" & length(obj$task.desc$class.levels) <= 2L)) {
+        (obj$task.desc$type == "classif" & length(obj$task.desc$class.levels) <= 2L)) {
         plt = ggplot(obj$data, aes_string("Value", target)) +
           geom_line(color = ifelse(is.null(data), "black", "red")) + geom_point()
-      } else {# for classification create different colored lines
+      } else { # for classification create different colored lines
         plt = ggplot(obj$data, aes_string("Value", "Probability", group = "Class", color = "Class")) +
           geom_line() + geom_point()
       }
     } else { # if individual is true make the lines semi-transparent
       if (obj$task.desc$type %in% c("regr", "surv") |
-            (obj$task.desc$type == "classif" & length(obj$task.desc$class.levels) <= 2L)) {
+        (obj$task.desc$type == "classif" & length(obj$task.desc$class.levels) <= 2L)) {
         plt = ggplot(obj$data, aes_string("Value", target, group = "n")) +
           geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red")) + geom_point()
       } else {
@@ -505,45 +522,51 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
     # so rename the x-axis using the feature name. rename target only if it was a vector
     # since in this case the target name isn't passed through
     if (length(features) == 1L) {
-      if (obj$task.desc$type %in% c("regr", "surv"))
+      if (obj$task.desc$type %in% c("regr", "surv")) {
         plt = plt + labs(x = features, y = target)
-      else
+      } else {
         plt = plt + labs(x = features)
+      }
     }
 
     # ribbon bounds from se estimation
-    if (bounds)
+    if (bounds) {
       plt = plt + geom_ribbon(aes_string(ymin = "lower", ymax = "upper"), alpha = .5)
+    }
 
     # labels added to for derivative plots
-    if (obj$derivative)
+    if (obj$derivative) {
       plt = plt + ylab(stri_paste(target, "(derivative)", sep = " "))
+    }
 
   } else { ## tiling
     if (obj$task.desc$type == "classif") {
       target = "Probability"
       facet = "Class"
-      if ("Function" %in% obj$data)
+      if ("Function" %in% obj$data) {
         facet = c(facet, "Function")
+      }
       scales = "free"
     }
     plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], fill = target))
     plt = plt + geom_raster(aes_string(fill = target))
 
     # labels for ICE plots
-    if (obj$derivative)
+    if (obj$derivative) {
       plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(derivative)", sep = " ")))
+    }
   }
 
   # facetting which is either passed in by the user, the features column when interaction = FALSE and length(features) > 1
   # and/or when fun outputs a vector (then facetting on the Function column)
   if (!is.null(facet)) {
-    if (length(facet) == 1L)
+    if (length(facet) == 1L) {
       plt = plt + facet_wrap(as.formula(stri_paste("~", facet)), scales = scales,
         nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
-    else
+    } else {
       plt = plt + facet_wrap(as.formula(stri_paste(facet[2], "~", facet[1])), scales = scales,
-        nrow = facet.wrap.nrow, ncol = facet.wrap.ncol) # facet ordering is reversed deliberately to handle len = 1 case!
+        nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+    } # facet ordering is reversed deliberately to handle len = 1 case!
   }
 
   # data overplotting
@@ -553,15 +576,17 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       feature.facet = facet[facet %in% obj$features]
       fun.facet = facet[!facet %in% feature.facet]
 
-      if (length(fun.facet) > 0L && (fun.facet == "Feature" || !feature.facet %in% obj$features))
+      if (length(fun.facet) > 0L && (fun.facet == "Feature" || !feature.facet %in% obj$features)) {
         data = melt(data, id.vars = c(obj$task.desc$target, feature.facet),
           variable = "Feature", value.name = "Value", na.rm = TRUE, variable.factor = TRUE)
+      }
 
       if (length(feature.facet) > 0) {
-        if (!is.factor(data[[feature.facet]]))
+        if (!is.factor(data[[feature.facet]])) {
           data[[feature.facet]] = stri_paste(feature.facet, "=", as.factor(signif(data[[feature.facet]], 2)), sep = " ")
-        else
+        } else {
           data[[feature.facet]] = stri_paste(feature.facet, "=", data[[feature.facet]], sep = " ")
+        }
       }
 
       if (length(fun.facet) > 0L && "Function" %in% fun.facet) {
@@ -574,19 +599,19 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
         if (obj$task.desc$type == "classif") {
           if (!is.na(obj$task.desc$positive)) {
             plt = plt + geom_rug(aes_string(plt$labels$x, color = obj$task.desc$target),
-                                 data[data[[obj$task.desc$target]] == obj$task.desc$positive, ],
-                                 alpha = .25, inherit.aes = FALSE)
+              data[data[[obj$task.desc$target]] == obj$task.desc$positive, ],
+              alpha = .25, inherit.aes = FALSE)
           } else {
             plt = plt + geom_rug(aes_string(plt$labels$x), data, alpha = .25, inherit.aes = FALSE)
           }
         } else {
           plt = plt + geom_rug(aes_string(plt$labels$x),
-                               data[data[[obj$task.desc$target[2]]], ],
-                               alpha = .25, inherit.aes = FALSE)
+            data[data[[obj$task.desc$target[2]]], ],
+            alpha = .25, inherit.aes = FALSE)
         }
       } else {
         plt = plt + geom_point(aes_string(plt$labels$x, obj$task.desc$target),
-                               data, alpha = .25, inherit.aes = FALSE)
+          data, alpha = .25, inherit.aes = FALSE)
       }
     } else {
       plt = plt + geom_point(aes_string(plt$labels$x, plt$labels$y), data, alpha = .25, inherit.aes = FALSE)

@@ -7,6 +7,7 @@
 #' @family learner
 #' @family help
 helpLearner = function(learner) {
+
   learner = checkLearner(learner)
   callees = learner$callees
   if (identical(callees, "")) {
@@ -62,6 +63,7 @@ helpLearner = function(learner) {
 #' @family learner
 #' @family help
 helpLearnerParam = function(learner, param = NULL) {
+
   learner = checkLearner(learner)
   if (!inherits(learner, "RLearner")) {
     current.learner = learner
@@ -126,6 +128,7 @@ helpLearnerParam = function(learner, param = NULL) {
 
 # remove nesting levels of XML tags
 simplifyNode = function(node) {
+
   children = XML::xmlChildren(node)
   lens = nchar(stri_trim(vcapply(children, XML::xmlValue)))
   if (length(lens) < 1) {
@@ -146,32 +149,36 @@ simplifyNode = function(node) {
 # collect all <li><code>xxx</code>yyy</li> in the document
 # and form a data.frame with two columns corresponding to xxx and yyy.
 codeListToTable = function(html) {
+
   lis = XML::getNodeSet(html, "//li")
   lislis = lapply(lis, function(li) {
-      lichi = simplifyNode(li)
-      if (length(lichi) < 2 || names(lichi)[1] != "code") {
-        return(NULL)
-      }
-      parname = XML::xmlValue(lichi[[1]])
-      pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
-      stri_trim(c(parname, pardesc), pattern = c("[a-zA-Z0-9_.]", "\\P{Wspace}"))
-    })
+
+    lichi = simplifyNode(li)
+    if (length(lichi) < 2 || names(lichi)[1] != "code") {
+      return(NULL)
+    }
+    parname = XML::xmlValue(lichi[[1]])
+    pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
+    stri_trim(c(parname, pardesc), pattern = c("[a-zA-Z0-9_.]", "\\P{Wspace}"))
+  })
   as.data.frame(do.call(rbind, lislis), stringsAsFactors = FALSE)
 }
 
 # Remove superfluous newlines.
 prepareString = function(string) {
+
   # turn 'a  \n   \n  \n b' into 'a\n\nb'
   string = stri_replace_all(string, "\n\n", regex = " *\n *(\n *)+")
   # turn 'a \n b' into 'a b'
   string = stri_replace_all(string, " ", regex = "(?<!\n) *\n *(?!\n)")
   # turn ' \n\n ' into '\n'
   # strwrap does this for us, apparently.
-  #string = stri_replace_all(string, "\n", regex = " *\n\n *")
+  # string = stri_replace_all(string, "\n", regex = " *\n\n *")
   return(string)
 }
 
 makeParamHelpList = function(funs, pkgs, par.set) {
+
   help.list = list()
   par.ids = getParamIds(par.set)
   pkgs = stri_replace_all(pkgs, "", regex = "[+!_]")
@@ -196,11 +203,12 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       next
     }
     tbl = do.call(rbind, lapply(tab, function(t) {
-        tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
-        if (identical(ncol(tbl), 2L)) {
-          tbl
-        }
-      }))
+
+      tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
+      if (identical(ncol(tbl), 2L)) {
+        tbl
+      }
+    }))
     # we also try to extract generally all lists that begin with a code string.
     # this gets appended to the front, so that the (more trustworthy) html table
     # extract will overwrite the <li>-extract if a param occurs in both.
@@ -226,7 +234,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
 
 # helper function to get learner's undocumented functions.
 listUndocumentedPars = function(learner) {
+
   learner = checkLearner(learner)
   setdiff(getParamIds(learner$par.set), names(learner$help.list))
 }
-

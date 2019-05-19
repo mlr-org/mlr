@@ -71,4 +71,3 @@ test_that("BaggingWrapper with glmnet (#958)", {
   pred = predict(mod, multiclass.task)
   expect_error(pred, NA)
 })
-

@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.blm = function() {
+
   makeRLearnerRegr(
     cl = "regr.blm",
     package = "tgp",
@@ -29,12 +30,14 @@ makeRLearner.regr.blm = function() {
 
 #' @export
 trainLearner.regr.blm = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   tgp::blm(X = d$data, Z = d$target, pred.n = FALSE, ...)
 }
 
 #' @export
 predictLearner.regr.blm = function(.learner, .model, .newdata, ...) {
+
   p = predict(.model$learner.model, XX = .newdata, pred.n = FALSE, ...)
   if (.learner$predict.type == "response") {
     return(p$ZZ.km)

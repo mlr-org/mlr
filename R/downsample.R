@@ -18,6 +18,7 @@
 #' @family downsample
 #' @export
 downsample = function(obj, perc = 1, stratify = FALSE) {
+
   assertNumber(perc, lower = 0, upper = 1)
   assertFlag(stratify)
   UseMethod("downsample")
@@ -25,15 +26,17 @@ downsample = function(obj, perc = 1, stratify = FALSE) {
 
 #' @export
 downsample.Task = function(obj, perc = 1, stratify = FALSE) {
+
   rin = makeResampleInstance("Holdout", stratify = stratify, split = perc, task = obj)
   subsetTask(task = obj, subset = rin$train.inds[[1L]])
 }
 
 #' @export
 downsample.ResampleInstance = function(obj, perc = 1, stratify = FALSE) {
-  if (stratify)
+
+  if (stratify) {
     stop("Stratifying is not supported for a ResampleInstance!")
+  }
   obj$train.inds = lapply(obj$train.inds, function(x) sample(x, size = length(x) * perc))
   return(obj)
 }
-

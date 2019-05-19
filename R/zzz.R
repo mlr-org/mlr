@@ -13,10 +13,12 @@
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
+
   backports::import(pkgname)
 }
 
 .onAttach = function(libname, pkgname) {
+
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
 }
@@ -25,14 +27,14 @@ mlr = new.env(parent = emptyenv())
 
 ### Learner properties
 mlr$learner.properties = list(
-  classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp", "oobpreds", "functionals", "single.functional"),
+  classif = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp", "oobpreds", "functionals", "single.functional"),
   multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "functionals", "single.functional"),
-  regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds",
+  regr = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds",
     "functionals", "single.functional"),
-  cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "functionals",
+  cluster = c("numerics", "factors", "ordered", "missings", "weights", "prob", "functionals",
     "single.functional"),
-  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds", "functionals", "single.functional"),
-  costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass", "functionals", "single.functional")
+  surv = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds", "functionals", "single.functional"),
+  costsens = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass", "functionals", "single.functional")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 

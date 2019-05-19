@@ -23,7 +23,7 @@ test_that("regr_cubist", {
     parset = c(list(x = X, y = y), parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(Cubist::cubist, parset)
-    p  = predict(m, newdata = regr.test)
+    p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }
 

@@ -11,10 +11,12 @@
 #' @keywords internal
 #' @export
 checkLearner = function(learner, type = NULL, props = NULL) {
-  if (is.character(learner))
+
+  if (is.character(learner)) {
     learner = makeLearner(learner)
-  else
+  } else {
     assertClass(learner, classes = "Learner")
+  }
 
   if (!is.null(type) && learner$type %nin% type) {
     stopf("Learner '%s' must be of type '%s', not: '%s'", learner$id, collapse(type), learner$type)
@@ -23,11 +25,10 @@ checkLearner = function(learner, type = NULL, props = NULL) {
   if (!is.null(props)) {
     learner.props = getLearnerProperties(learner)
     missing.props = setdiff(props, learner.props)
-    if (length(missing.props) > 0L){
+    if (length(missing.props) > 0L) {
       stopf("Learner '%s' must support properties '%s', but does not support '%s'.", learner$id, collapse(props), collapse(missing.props))
     }
   }
 
   return(learner)
 }
-

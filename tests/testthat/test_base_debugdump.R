@@ -73,4 +73,3 @@ test_that("error dump is created during tune", {
   expect_class(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]]$predict.train, "dump.frames")
   do.call(configureMlr, mlr.options)
 })
-

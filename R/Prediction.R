@@ -33,11 +33,13 @@ NULL
 #' Internal, do not use!
 #' @export
 makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   UseMethod("makePrediction")
 }
 
 #' @export
 makePrediction.RegrTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   data = namedList(c("id", "truth", "response", "se"))
   data$id = id
   data$truth = truth
@@ -61,11 +63,13 @@ makePrediction.RegrTaskDesc = function(task.desc, row.names, id, truth, predict.
 
 #' @export
 makePrediction.ClassifTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   # truth can come from a simple "newdata" df. then there might not be all factor levels present
-  if (!is.null(truth))
+  if (!is.null(truth)) {
     levels(truth) = union(levels(truth), task.desc$class.levels)
+  }
   data$truth = truth
   if (predict.type == "response") {
     data$response = y
@@ -75,8 +79,9 @@ makePrediction.ClassifTaskDesc = function(task.desc, row.names, id, truth, predi
     data = as.data.frame(filterNull(data))
     # fix columnnames for prob if strange chars are in factor levels
     indices = stri_detect_fixed(names(data), "prob.")
-    if (sum(indices) > 0)
+    if (sum(indices) > 0) {
       names(data)[indices] = stri_paste("prob.", colnames(y))
+    }
   }
 
   p = makeS3Obj(c("PredictionClassif", "Prediction"),
@@ -102,6 +107,7 @@ makePrediction.ClassifTaskDesc = function(task.desc, row.names, id, truth, predi
 
 #' @export
 makePrediction.MultilabelTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   data$truth = truth
@@ -133,6 +139,7 @@ makePrediction.MultilabelTaskDesc = function(task.desc, row.names, id, truth, pr
 
 #' @export
 makePrediction.SurvTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id
   # FIXME: recode times
@@ -153,6 +160,7 @@ makePrediction.SurvTaskDesc = function(task.desc, row.names, id, truth, predict.
 
 #' @export
 makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   data = namedList(c("id", "response", "prob"))
   data$id = id
   if (predict.type == "response") {
@@ -179,6 +187,7 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 
 #' @export
 makePrediction.CostSensTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+
   data = namedList(c("id", "response"))
   data$id = id
   data$response = y
@@ -196,6 +205,7 @@ makePrediction.CostSensTaskDesc = function(task.desc, row.names, id, truth, pred
 
 #' @export
 print.Prediction = function(x, ...) {
+
   catf("Prediction: %i observations", nrow(x$data))
   catf("predict.type: %s", x$predict.type)
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
@@ -203,4 +213,3 @@ print.Prediction = function(x, ...) {
   if (!is.na(x$error)) catf("errors: %s", x$error)
   printHead(as.data.frame(x), ...)
 }
-

@@ -29,7 +29,7 @@ test_that("surv_glmnet", {
     } else {
       m = do.call(glmnet::glmnet, pars)
     }
-    p  = predict(m, newx = as.matrix(surv.test[, -c(1, 2, 7)]), type = "link", s = 0.01)
+    p = predict(m, newx = as.matrix(surv.test[, -c(1, 2, 7)]), type = "link", s = 0.01)
     old.predicts.list[[i]] = as.numeric(p)
   }
 

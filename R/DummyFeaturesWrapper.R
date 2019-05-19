@@ -10,16 +10,19 @@
 #' @family wrapper
 #' @export
 makeDummyFeaturesWrapper = function(learner, method = "1-of-n", cols = NULL) {
+
   learner = checkLearner(learner)
   args = list(method = method, cols = cols)
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
+
     data = do.call(createDummyFeatures, c(list(obj = data, target = target), args))
     return(list(data = data, control = list()))
   }
 
   predictfun = function(data, target, args, control) {
+
     y = intersect(target, colnames(data))
     data = do.call(createDummyFeatures, c(list(obj = data, target = y), args))
     return(data)
@@ -31,5 +34,6 @@ makeDummyFeaturesWrapper = function(learner, method = "1-of-n", cols = NULL) {
 }
 
 getLearnerProperties.DummyFeaturesWrapper = function(learner) {
+
   union(getLearnerProperties(learner$next.learner), c("factors", "ordered"))
 }

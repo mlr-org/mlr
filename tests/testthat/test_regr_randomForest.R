@@ -74,7 +74,6 @@ test_that("different se.methods work", {
   # mean prediction should be unaffected from the se.method
   expect_equal(preds$bootstrap$data$response, preds$sd$data$response)
   expect_equal(preds$sd$data$response, preds$jackknife$data$response)
-
 })
 
 

@@ -4,7 +4,7 @@ test_that("classif_naiveBayes", {
   requirePackagesOrSkip("e1071", default.method = "load")
 
   m = e1071::naiveBayes(formula = multiclass.formula, data = multiclass.train)
-  p  = predict(m, newdata = multiclass.test[, -multiclass.class.col])
+  p = predict(m, newdata = multiclass.test[, -multiclass.class.col])
   p2 = predict(m, newdata = multiclass.test[, -multiclass.class.col], type = "raw")
 
   testSimple("classif.naiveBayes", multiclass.df, multiclass.target, multiclass.train.inds, p)

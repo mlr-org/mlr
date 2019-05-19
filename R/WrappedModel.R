@@ -27,11 +27,13 @@
 #' @export
 #' @aliases WrappedModel
 makeWrappedModel = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+
   UseMethod("makeWrappedModel")
 }
 
 #' @export
 makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+
   dump = NULL
   if (is.error(learner.model)) {
     learner.model = as.character(learner.model)
@@ -57,6 +59,7 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
 
 #' @export
 print.WrappedModel = function(x, ...) {
+
   cat(
     "Model for learner.id=", x$learner$id, "; learner.class=", getClass1(x$learner), "\n",
     sprintf("Trained on: task.id = %s; obs = %i; features = %i",
@@ -64,8 +67,9 @@ print.WrappedModel = function(x, ...) {
     "Hyperparameters: ", getHyperParsString(x$learner, show.missing.values = TRUE), "\n",
     sep = ""
   )
-  if (isFailureModel(x))
+  if (isFailureModel(x)) {
     catf("Training failed: %s", getFailureModelMsg(x))
+  }
 }
 
 #' Get underlying R model of learner integrated into mlr.
@@ -83,12 +87,14 @@ print.WrappedModel = function(x, ...) {
 #'   model of class [rpart::rpart] for learner \dQuote{classif.rpart}.
 #' @export
 getLearnerModel = function(model, more.unwrap = FALSE) {
+
   assertFlag(more.unwrap)
   UseMethod("getLearnerModel")
 }
 
-#'@export
+#' @export
 getLearnerModel.WrappedModel = function(model, more.unwrap) {
+
   model$learner.model
 }
 
@@ -103,12 +109,14 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' @return (`logical(1)`).
 #' @export
 isFailureModel = function(model) {
+
   UseMethod("isFailureModel")
 }
 
 #' @export
 # by default the model is never a failure. if a failure happens we have the derived class FailureModel
 isFailureModel.WrappedModel = function(model) {
+
   return(FALSE)
 }
 
@@ -124,11 +132,13 @@ isFailureModel.WrappedModel = function(model) {
 #' @return (`character(1)`).
 #' @export
 getFailureModelMsg = function(model) {
+
   UseMethod("getFailureModelMsg")
 }
 
 #' @export
 getFailureModelMsg.WrappedModel = function(model) {
+
   return(NA_character_)
 }
 
@@ -143,13 +153,12 @@ getFailureModelMsg.WrappedModel = function(model) {
 #' @return (`last.dump`).
 #' @export
 getFailureModelDump = function(model) {
+
   UseMethod("getFailureModelDump")
 }
 
 #' @export
 getFailureModelDump.WrappedModel = function(model) {
+
   return(NULL)
 }
-
-
-

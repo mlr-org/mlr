@@ -21,12 +21,14 @@
 #' @family learner
 #' @export
 setPredictType = function(learner, predict.type) {
+
   assertClass(learner, classes = "Learner")
   UseMethod("setPredictType")
 }
 
 #' @export
 setPredictType.Learner = function(learner, predict.type) {
+
   # checks should be done down here i guess, because of recursive calls in wrappers
   assertChoice(predict.type, choices = switch(learner$type,
     classif = c("response", "prob"),
@@ -36,10 +38,12 @@ setPredictType.Learner = function(learner, predict.type) {
     costsens = "response",
     cluster = c("response", "prob")
   ))
-  if (predict.type == "prob" && !hasLearnerProperties(learner, "prob"))
+  if (predict.type == "prob" && !hasLearnerProperties(learner, "prob")) {
     stopf("Trying to predict probs, but %s does not support that!", learner$id)
-  if (predict.type == "se" && !hasLearnerProperties(learner, "se"))
+  }
+  if (predict.type == "se" && !hasLearnerProperties(learner, "se")) {
     stopf("Trying to predict standard errors, but %s does not support that!", learner$id)
+  }
   learner$predict.type = predict.type
   return(learner)
 }

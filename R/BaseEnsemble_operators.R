@@ -1,5 +1,6 @@
 # find the learner for a given param name, so <learnerid>.<paramid>
 matchBaseEnsembleLearner = function(ensemble, pn) {
+
   patterns = stri_paste("^", names(ensemble$base.learners), "\\.")
   j = which(vlapply(patterns, stri_detect_regex, str = pn))
   par.id = stri_replace_first(pn, "", regex = patterns[j])
@@ -8,10 +9,13 @@ matchBaseEnsembleLearner = function(ensemble, pn) {
 
 #' @export
 getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "both")) {
+
   pvs = lapply(learner$base.learners, function(lrn) {
+
     xs = getHyperPars(lrn, for.fun = for.fun)
-    if (length(xs) > 0L)
+    if (length(xs) > 0L) {
       names(xs) = stri_paste(lrn$id, ".", names(xs))
+    }
     return(xs)
   })
   # if we dont do this, R prefixes the list names again.
@@ -24,6 +28,7 @@ getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "b
 # set hyper pars down in ensemble base learners, identify correct base learner + remove prefix
 #' @export
 setHyperPars2.BaseEnsemble = function(learner, par.vals) {
+
   ns = names(par.vals)
   parnames.bls = names(learner$par.set.bls$pars)
   for (i in seq_along(par.vals)) {
@@ -43,6 +48,7 @@ setHyperPars2.BaseEnsemble = function(learner, par.vals) {
 
 #' @export
 removeHyperPars.BaseEnsemble = function(learner, ids) {
+
   parnames.bls = names(learner$par.set.bls$pars)
   for (id in ids) {
     if (id %in% parnames.bls) {
@@ -63,6 +69,7 @@ removeHyperPars.BaseEnsemble = function(learner, ids) {
 # if one does not want this, one must override
 #' @export
 setPredictType.BaseEnsemble = function(learner, predict.type) {
+
   # this does the check for the prop
   lrn = setPredictType.Learner(learner, predict.type)
   lrn$base.learners = lapply(lrn$base.learners, setPredictType, predict.type = predict.type)
@@ -71,6 +78,7 @@ setPredictType.BaseEnsemble = function(learner, predict.type) {
 
 #' @export
 makeWrappedModel.BaseEnsemble = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+
   x = NextMethod(x)
   addClasses(x, "BaseEnsembleModel")
 }

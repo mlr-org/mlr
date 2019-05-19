@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.LiblineaRL2L1SVC = function() {
+
   makeRLearnerClassif(
     cl = "classif.LiblineaRL2L1SVC",
     package = "LiblineaR",
@@ -21,11 +22,13 @@ makeRLearner.classif.LiblineaRL2L1SVC = function() {
 
 #' @export
 trainLearner.classif.LiblineaRL2L1SVC = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR::LiblineaR(data = d$data, target = d$target, type = 3L, ...)
 }
 
 #' @export
 predictLearner.classif.LiblineaRL2L1SVC = function(.learner, .model, .newdata, ...) {
-    as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
+
+  as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
 }
