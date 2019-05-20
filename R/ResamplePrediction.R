@@ -22,10 +22,10 @@ makeResamplePrediction = function(instance, preds.test, preds.train, task.desc) 
   if (any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
   if (any(trnull)) pr.tr = preds.train[!trnull] else pr.tr = preds.train
 
-  data = setDF(rbind(
-    rbindlist(lapply(seq_along(pr.te), function(X) cbind(pr.te[[X]]$data, iter = X, set = "test"))),
-    rbindlist(lapply(seq_along(pr.tr), function(X) cbind(pr.tr[[X]]$data, iter = X, set = "train")))
-  ))
+  data = setDF(rbindlist(c(
+    lapply(seq_along(pr.te), function(X) cbind(pr.te[[X]]$data, iter = X, set = "test")),
+    lapply(seq_along(pr.tr), function(X) cbind(pr.tr[[X]]$data, iter = X, set = "train"))
+  ), use.names = TRUE))
 
   if (!any(tenull) && instance$desc$predict %in% c("test", "both")) {
     p1 = preds.test[[1L]]
