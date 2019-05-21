@@ -301,13 +301,13 @@
 <a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13">df =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(df)]))</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">##            C     kernel    sigma degree mmce.test.mean dob eol</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">## 1  -3.877823    polydot       NA      2           0.02   1  NA</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">## 2   9.665740 vanilladot       NA     NA           0.06   1  NA</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">## 3   7.951264    polydot       NA      3           0.10   1  NA</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">## 4   1.699949    polydot       NA      2           0.06   1  NA</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">## 5 -11.033144     rbfdot 8.088702     NA           0.72   1  NA</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">## 6  -6.076261 vanilladot       NA     NA           0.14   1  NA</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">##           C     kernel     sigma degree mmce.test.mean dob eol</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 1  2.345763    polydot        NA      2           0.04   1  NA</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 2 10.275488 vanilladot        NA     NA           0.02   1  NA</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## 3  2.595082    polydot        NA      4           0.10   1  NA</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## 4 -4.176448     rbfdot -7.601708     NA           0.68   1  NA</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">## 5  4.040167 vanilladot        NA     NA           0.02   1  NA</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">## 6 10.677478    polydot        NA      4           0.10   1  NA</a>
 <a class="sourceLine" id="cb1-22" data-line-number="22">##   error.message</a>
 <a class="sourceLine" id="cb1-23" data-line-number="23">## 1          &lt;NA&gt;</a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">## 2          &lt;NA&gt;</a>
@@ -351,19 +351,19 @@
 <a class="sourceLine" id="cb3-23" data-line-number="23">df =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb3-24" data-line-number="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(df)]))</a>
 <a class="sourceLine" id="cb3-25" data-line-number="25">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">## 1 classif.randomForest                 NA                        253</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">## 2 classif.randomForest                 NA                        265</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">## 3 classif.randomForest                 NA                        124</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">## 4         classif.ksvm          -5.804419                         NA</a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">## 5 classif.randomForest                 NA                        234</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">## 6         classif.ksvm          -3.147588                         NA</a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">## 1         classif.ksvm           5.459183                         NA</a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">## 2         classif.ksvm         -11.194386                         NA</a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">## 3         classif.ksvm           9.999280                         NA</a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">## 4 classif.randomForest                 NA                        383</a>
+<a class="sourceLine" id="cb3-30" data-line-number="30">## 5 classif.randomForest                 NA                        248</a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">## 6         classif.ksvm          -9.148848                         NA</a>
 <a class="sourceLine" id="cb3-32" data-line-number="32">##   mmce.test.mean dob eol error.message</a>
-<a class="sourceLine" id="cb3-33" data-line-number="33">## 1     0.06000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">## 2     0.06666667   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">## 3     0.06000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb3-36" data-line-number="36">## 4     0.14000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb3-37" data-line-number="37">## 5     0.06000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb3-38" data-line-number="38">## 6     0.06000000   1  NA          &lt;NA&gt;</a></code></pre></div>
+<a class="sourceLine" id="cb3-33" data-line-number="33">## 1     0.52000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-34" data-line-number="34">## 2     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-35" data-line-number="35">## 3     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-36" data-line-number="36">## 4     0.07333333   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-37" data-line-number="37">## 5     0.06666667   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-38" data-line-number="38">## 6     0.53333333   1  NA          &lt;NA&gt;</a></code></pre></div>
 </div>
 <div id="multi-criteria-evaluation-and-optimization" class="section level1">
 <h1 class="hasAnchor">
@@ -386,19 +386,19 @@
 <a class="sourceLine" id="cb4-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(df)]))</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">## 1 classif.randomForest                 NA                        253</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## 2 classif.randomForest                 NA                        265</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## 3 classif.randomForest                 NA                        124</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## 4         classif.ksvm          -5.804419                         NA</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## 5 classif.randomForest                 NA                        234</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## 6         classif.ksvm          -3.147588                         NA</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">## 1         classif.ksvm           5.459183                         NA</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">## 2         classif.ksvm         -11.194386                         NA</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">## 3         classif.ksvm           9.999280                         NA</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">## 4 classif.randomForest                 NA                        383</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">## 5 classif.randomForest                 NA                        248</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">## 6         classif.ksvm          -9.148848                         NA</a>
 <a class="sourceLine" id="cb4-22" data-line-number="22">##   mmce.test.mean dob eol error.message</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">## 1     0.06000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">## 2     0.06666667   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">## 3     0.06000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">## 4     0.14000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">## 5     0.06000000   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb4-28" data-line-number="28">## 6     0.06000000   1  NA          &lt;NA&gt;</a></code></pre></div>
+<a class="sourceLine" id="cb4-23" data-line-number="23">## 1     0.52000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">## 2     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">## 3     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">## 4     0.07333333   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">## 5     0.06666667   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">## 6     0.53333333   1  NA          &lt;NA&gt;</a></code></pre></div>
 <p>The results can be visualized with function <code><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult()</a></code>. The plot shows the false positive and false negative rates for all parameter settings evaluated during tuning. Points on the Pareto front are slightly increased.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</a></code></pre></div>
 <p><img src="advanced_tune_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>

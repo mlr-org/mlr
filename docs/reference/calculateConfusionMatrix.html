@@ -422,37 +422,37 @@ Currently not used.</p></td>
 <span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
 #&gt; true         setosa versicolor virginica -err.-
-#&gt;   setosa         25          0         0      0
+#&gt;   setosa         23          0         0      0
 #&gt;   versicolor      0         23         1      1
-#&gt;   virginica       0          2        24      2
-#&gt;   -err.-          0          2         1      3</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>sums</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt;            setosa versicolor virginica -err.- -n-
-#&gt; setosa         25          0         0      0  25
+#&gt;   virginica       0          0        28      0
+#&gt;   -err.-          0          0         1      1</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>sums</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt;            setosa versicolor virginica -err.- -n-
+#&gt; setosa         23          0         0      0  23
 #&gt; versicolor      0         23         1      1  24
-#&gt; virginica       0          2        24      2  26
-#&gt; -err.-          0          2         1      3  NA
-#&gt; -n-            25         25        25     NA  75</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; Relative confusion matrix (normalized by row/column):
+#&gt; virginica       0          0        28      0  28
+#&gt; -err.-          0          0         1      1  NA
+#&gt; -n-            23         23        29     NA  75</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; Relative confusion matrix (normalized by row/column):
 #&gt;             predicted
 #&gt; true         setosa    versicolor virginica -err.-   
 #&gt;   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00     
-#&gt;   versicolor 0.00/0.00 0.96/0.92  0.04/0.04 0.04     
-#&gt;   virginica  0.00/0.00 0.08/0.08  0.92/0.96 0.08     
-#&gt;   -err.-          0.00      0.08       0.04 0.04     
+#&gt;   versicolor 0.00/0.00 0.96/1.00  0.04/0.03 0.04     
+#&gt;   virginica  0.00/0.00 0.00/0.00  1.00/0.97 0.00     
+#&gt;   -err.-          0.00      0.00       0.03 0.01     
 #&gt; 
 #&gt; 
 #&gt; Absolute confusion matrix:
 #&gt;             predicted
 #&gt; true         setosa versicolor virginica -err.-
-#&gt;   setosa         25          0         0      0
+#&gt;   setosa         23          0         0      0
 #&gt;   versicolor      0         23         1      1
-#&gt;   virginica       0          2        24      2
-#&gt;   -err.-          0          2         1      3</div><div class='input'>
+#&gt;   virginica       0          0        28      0
+#&gt;   -err.-          0          0         1      1</div><div class='input'>
 <span class='co'># now after cross-validation</span>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>r</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>r</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
 #&gt; true         setosa versicolor virginica -err.-
 #&gt;   setosa         50          0         0      0
 #&gt;   versicolor      0         47         3      3
-#&gt;   virginica       0          3        47      3
-#&gt;   -err.-          0          3         3      6</div></pre>
+#&gt;   virginica       0          1        49      1
+#&gt;   -err.-          0          1         3      4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

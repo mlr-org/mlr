@@ -280,105 +280,91 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#machine-learning-in-r" class="anchor"></a>Machine Learning in R <img src="reference/figures/logo_navbar.png" align="right">
 </h1></div>
-
+<p><a href="https://travis-ci.org/mlr-org/mlr"><img src="https://travis-ci.org/mlr-org/mlr.svg?branch=master" alt="Build Status"></a> <a href="https://cran.r-project.org/package=mlr"><img src="http://www.r-pkg.org/badges/version-ago/mlr" alt="CRAN_Status_Badge"></a>j <a href="https://cran.r-project.org/web/checks/check_results_mlr.html"><img src="https://cranchecks.info/badges/worst/mlr" alt="cran checks"></a> <a href="https://cran.rstudio.com/web/packages/mlr/index.html"><img src="https://cranlogs.r-pkg.org/badges/mlr" alt="CRAN Downloads"></a> <a href="https://stackoverflow.com/questions/tagged/mlr"><img src="https://img.shields.io/badge/stackoverflow-mlr-blue.svg" alt="StackOverflow"></a> <a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=mlr"><img src="https://tinyverse.netlify.com/badge/mlr" alt="Dependencies"></a></p>
 <ul>
 <li><a href="https://CRAN.R-project.org/package=mlr">CRAN release site</a></li>
-<li><a href="https://mlr.mlr-org.com/index.html">Online Tutorial</a></li>
-<li><a href="https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf">mlr cheatsheet</a></li>
+<li><a href="https://mlr.mlr-org.com/index.html">Online tutorial</a></li>
+<li><a href="https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf">Cheatsheet</a></li>
 <li><a href="https://mlr.mlr-org.com/news/index.html">Changelog</a></li>
 </ul>
-<div id="install-the-development-version" class="section level3">
-<h3 class="hasAnchor">
-<a href="#install-the-development-version" class="anchor"></a>Install the development version</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</a></code></pre></div>
-<ul>
-<li>There is a <code>mlr</code> tag on <a href="https://stackoverflow.com/questions/tagged/mlr">Stackoverflow</a>.</li>
-<li>
-<a href="https://mlr-org.slack.com/">We are on Slack</a> (Request invitation: code{at}jakob-r.de).</li>
-<li>
-<a href="https://mlr-org.com/">We have a blog on mlr</a>.</li>
-<li>We are in the top 20 of the most starred R packages on Github, as reported by <a href="https://www.r-pkg.org/starred">metacran</a>.</li>
-</ul>
 <p><strong>We are actively working on <a href="https://github.com/mlr-org/mlr3">mlr3</a> as a successor of <em>mlr</em>. This implies that we have less time to reply to <em>mlr</em> issues.</strong></p>
+<ul>
+<li>Stackoverflow: <a href="https://stackoverflow.com/questions/tagged/mlr">mlr</a>
+</li>
+<li><a href="https://mlr-org.slack.com/">Slack</a></li>
+<li>
+<a href="https://mlr-org.com/">Blog</a>.</li>
+</ul>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p><strong>Release</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"mlr"</span>)</a></code></pre></div>
+<p><strong>Development</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</a></code></pre></div>
 </div>
 </div>
-<div id="mlr---how-to-cite-and-citing-publications" class="section level1">
+<div id="citing-mlr-in-publications" class="section level1">
 <h1 class="hasAnchor">
-<a href="#mlr---how-to-cite-and-citing-publications" class="anchor"></a>mlr - How to Cite and Citing Publications</h1>
+<a href="#citing-mlr-in-publications" class="anchor"></a>Citing <em>mlr</em> in publications</h1>
 <p>Please cite our <a href="http://jmlr.org/papers/v17/15-066.html">JMLR paper</a> [<a href="http://www.jmlr.org/papers/v17/15-066.bib">bibtex</a>].</p>
-<p>Some parts of the package were created as part of other publications. If you use these parts, please cite the relevant work appropriately. An overview of all mlr related publications can be found <a href="https://mlr.mlr-org.com/articles/tutorial/mlr_publications.html">here</a>.</p>
-<p>A list of publications that cite mlr can be found in the <a href="https://github.com/mlr-org/mlr/wiki/Misc#publications-that-use-mlr">wiki</a>.</p>
+<p>Some parts of the package were created as part of other publications. If you use these parts, please cite the relevant work appropriately. An overview of all <em>mlr</em> related publications can be found <a href="https://mlr.mlr-org.com/articles/tutorial/mlr_publications.html">here</a>.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>R does not define a standardized interface for all its machine learning algorithms. Therefore, for any non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different algorithms and unify their respective output.</p>
-<p>Additionally you need to implement infrastructure to resample your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and compare models in a statistically meaningful way. As this becomes computationally expensive, you might want to parallelize your experiments as well. This often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert programming skills.</p>
-<p><strong>mlr</strong> provides this infrastructure so that you can focus on your experiments! The framework provides supervised methods like classification, regression and survival analysis along with their corresponding evaluation and optimization methods, as well as unsupervised methods like clustering. It is written in a way that you can extend it yourself or deviate from the implemented convenience methods and construct your own complex experiments or algorithms.</p>
+<p>R does not define a standardized interface for its machine-learning algorithms. Therefore, for any non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different algorithms and unify their respective output.</p>
+<p>Additionally you need to implement infrastructure to</p>
+<ul>
+<li>resample your models</li>
+<li>optimize hyperparameters</li>
+<li>select features</li>
+<li>cope with pre- and post-processing of data and compare models in a statistically meaningful way.</li>
+</ul>
+<p>As this becomes computationally expensive, you might want to parallelize your experiments as well. This often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert programming skills.</p>
+<p><em>mlr</em> provides this infrastructure so that you can focus on your experiments! The framework provides supervised methods like classification, regression and survival analysis along with their corresponding evaluation and optimization methods, as well as unsupervised methods like clustering. It is written in a way that you can extend it yourself or deviate from the implemented convenience methods and construct your own complex experiments or algorithms.</p>
 <p>Furthermore, the package is nicely connected to the <a href="https://github.com/openml/openml-r"><strong>OpenML</strong></a> R package and its <a href="https://www.openml.org/">online platform</a>, which aims at supporting collaborative machine learning online and allows to easily share datasets as well as machine learning tasks, algorithms and experiments in order to support reproducible research.</p>
 </div>
 <div id="features" class="section level1">
 <h1 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h1>
 <ul>
-<li>Clear S3 interface to R classification, regression, clustering and survival analysis methods</li>
-<li>Possibility to fit, predict, evaluate and resample models</li>
-<li>Easy extension mechanism through S3 inheritance</li>
+<li>Clear <strong>S3</strong> interface to R <strong>classification, regression, clustering and survival</strong> analysis methods</li>
 <li>Abstract description of learners and tasks by properties</li>
-<li>Parameter system for learners to encode data types and constraints</li>
-<li>Many convenience methods and generic building blocks for your machine learning experiments</li>
-<li>Resampling methods like bootstrapping, cross-validation and subsampling</li>
-<li>Extensive visualizations for e.g. ROC curves, predictions and partial predictions</li>
-<li>Benchmarking of learners for multiple data sets</li>
-<li>Easy hyperparameter tuning using different optimization strategies, including potent configurators like iterated F-racing (irace) or sequential model-based optimization</li>
-<li>Variable selection with filters and wrappers</li>
+<li>Convenience methods and generic building blocks for your machine learning experiments</li>
+<li>Resampling methods like <strong>bootstrapping, cross-validation and subsampling</strong>
+</li>
+<li>Extensive visualizations (e.g. ROC curves, predictions and partial predictions)</li>
+<li>Simplified benchmarking across data sets and learners</li>
+<li>Easy hyperparameter tuning using different optimization strategies, including potent configurators like
+<ul>
+<li><strong>iterated F-racing (irace)</strong></li>
+<li><strong>sequential model-based optimization</strong></li>
+</ul>
+</li>
+<li><strong>Variable selection with filters and wrappers</strong></li>
 <li>Nested resampling of models with tuning and feature selection</li>
-<li>Cost-sensitive learning, threshold tuning and imbalance correction</li>
-<li>Wrapper mechanism to extend learner functionality in complex and custom ways</li>
-<li>Combine different processing steps to a complex data mining chain that can be jointly optimized</li>
-<li>OpenML connector for the Open Machine Learning server</li>
-<li>Extension points to integrate your own stuff</li>
-<li>Parallelization is built-in</li>
-<li>Unit-testing</li>
-<li>Detailed tutorial</li>
+<li><strong>Cost-sensitive learning, threshold tuning and imbalance correction</strong></li>
+<li>Wrapper mechanism to extend learner functionality in complex ways</li>
+<li>Possibility to combine different processing steps to a complex data mining chain that can be jointly optimized</li>
+<li>
+<strong>OpenML</strong> connector for the Open Machine Learning server</li>
+<li>Built-in <strong>parallelization</strong>
+</li>
+<li><strong>Detailed tutorial</strong></li>
 </ul>
 </div>
-<div id="get-in-touch" class="section level1">
+<div id="miscellaneous" class="section level1">
 <h1 class="hasAnchor">
-<a href="#get-in-touch" class="anchor"></a>Get in Touch</h1>
-<p>Please use the issue tracker for problems, questions and feature requests.</p>
-<p>We also do not hate beginners and it is perfectly valid to mark an issue as “Question”. However, simple usage questions are better suited at <a href="https://stackoverflow.com/questions/tagged/mlr">Stackoverflow using the ‘mlr’ tag</a>.</p>
-<p>Please don’t forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.</p>
-<p>We also welcome pull requests or new developers. Just make sure that you have a glance at our <a href="https://github.com/mlr-org/mlr/wiki/Developer-Instructions#mlr-coding-guidelines"><strong>mlr</strong> coding guidelines</a> before.</p>
+<a href="#miscellaneous" class="anchor"></a>Miscellaneous</h1>
+<p>Simple usage questions are better suited at Stackoverflow using the <a href="https://stackoverflow.com/questions/tagged/mlr">mlr</a> tag.</p>
+<p>Please note that all of us work in academia and put a lot of work into this project - simply because we like it, not because we are paid for it.</p>
+<p>New development efforts should go into <a href="https://github.com/mlr-org/mlr3"><em>mlr3</em></a>. We have a <a href="https://www.notion.so/mlrorg/Developer-Guide-65e60b651a2e44e89a36b72df92158ea">developer guide</a> and our own coding style which can easily applied by using the <code>mlr_style</code> from the <a href="https://github.com/r-lib/styler">styler</a> package.</p>
 </div>
 <div id="mlr-tutorial" class="section level1">
 <h1 class="hasAnchor">
 <a href="#mlr-tutorial" class="anchor"></a>mlr-tutorial</h1>
-<p>With the start of v2.13 we switched from <a href="https://github.com/mkdocs/mkdocs">mkdocs</a> to <a href="https://github.com/r-lib/pkgdown">pkgdown</a>. All source files are now located in this repo under <code>vignettes/</code>.</p>
-<p><strong>Modification of a tutorial section</strong></p>
-<p>If you want to modify/add a tutorial section, please follow these steps:</p>
-<ol>
-<li>Open the respective source file, e.g. <code>task.Rmd</code>.</li>
-<li>Follow the style guide while editing:
-<ul>
-<li>Reference <code>mlr</code> functions as &lt;function()&gt;, e.g. <code><a href="reference/makeLearner.html">makeLearner()</a></code>.</li>
-<li>Reference external functions as &lt;package::function()&gt;, e.g. <code><a href="https://www.rdocumentation.org/packages/kernlab/topics/ksvm">kernlab::ksvm()</a></code>.</li>
-<li>Reference other tutorial pages with <code>&lt;name_of_vignette&gt;.html</code>, e.g. <code>[bagging](bagging.html)</code>.</li>
-<li>Always start a new sentence with a new line.</li>
-<li>If you want to insert a paragraph, skip one line.</li>
-<li>Always insert <em>exactly one</em> empty line <em>before and after</em> a code chunk, header, figure or a table.</li>
-<li>Referencing images is a bit tricky since we need to ensure that they look good in both the HTML and PDF version. Put your image into <code>vignettes/tutorial/devel/pdf/img/</code> and see the examples in <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/resampling.Rmd">resampling.Rmd</a>, <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/nested_resampling.Rmd">nested_resampling.Rmd</a> or <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/handling_of_spatial_data.Rmd">handling_of_spatial_data.Rmd</a>.</li>
-</ul>
-</li>
-<li>Make sure that the <code>.Rmd</code> file is working on its own, i.e. compile it as a single file (preferably using <code>build_article("&lt;vignette-name&gt;")</code>) and see if everything works. Put required packages in the setup chunk at the beginning of the tutorial.</li>
-</ol>
-<p><strong>Rendering the tutorial locally</strong></p>
-<p>If you want to view the complete <code>pkgdown</code> site locally, run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site(lazy = TRUE)</a></code>. You don’t have to render the complete site every time you change one tutorial. The <code>lazy = TRUE</code> argument ensures that only pages are rebuilt that have changed. Also, if you have built the whole site once, you can just build the vignettes again by using <code>build_articles(lazy = TRUE)</code>. More specific, if you are working on one vignette, you can run <code>build_article("&lt;vignette-name&gt;")</code>. You do not need to pass the <code>.Rmd</code> extension when using <code>build_article()</code>.</p>
-<p>Important: Do not commit any file in <code>docs/</code> as the rendering will be done by Travis!</p>
-<p><strong>Adding a new section</strong></p>
-<p>Edit <code>_pkgdown.yml</code> and add the new section at the appropriate place.</p>
-<p><strong>Issues and Pull Requests</strong></p>
-<p>If you want to open an issue or pull request that is related to <code>mlr-tutorial</code>, label it with <code>tutorial</code> and mention <a href="https://github.com/jakob-r">jakob-r</a> or <a href="https://github.com/pat-s">pat-s</a> if you need help.</p>
+<p>Please read <a href="https://www.notion.so/mlrorg/mlr-Tutorial-b71444fe979c4a8cafe91e10e7f81d79">here</a> if you want to contribute to the Online Manual.</p>
 </div>
 
   </div>
@@ -427,19 +413,7 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.org/mlr-org/mlr"><img src="https://travis-ci.org/mlr-org/mlr.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://cran.r-project.org/package=mlr"><img src="https://www.r-pkg.org/badges/version/mlr" alt="CRAN"></a></li>
-<li><a href="https://cran.r-project.org/web/checks/check_results_mlr.html"><img src="https://cranchecks.info/badges/worst/mlr" alt="cran checks"></a></li>
-<li><a href="https://cran.rstudio.com/web/packages/mlr/index.html"><img src="https://cranlogs.r-pkg.org/badges/mlr" alt="CRAN Downloads"></a></li>
-<li><a href="https://stackoverflow.com/questions/tagged/mlr"><img src="https://img.shields.io/badge/stackoverflow-mlr-blue.svg" alt="StackOverflow"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="lifecycle"></a></li>
-<li><a href="https://cran.r-project.org/package=mlr"><img src="https://tinyverse.netlify.com/badge/mlr" alt="Dependencies"></a></li>
-</ul>
-</div>
-</div>
+  </div>
 </div>
 
 
