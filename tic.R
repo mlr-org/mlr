@@ -9,7 +9,7 @@ do_package_checks(args = "--as-cran", error_on = "error",
 
 # pkgdown
 if (ci_is_env("FULL", "true")) {
-  do_pkgdown(commit_paths = "docs/*", document = FALSE)
+  do_pkgdown(document = FALSE, branch = NULL, commit_paths = "docs", path = ".")
 }
 
 # only deploy man files in in master branch
