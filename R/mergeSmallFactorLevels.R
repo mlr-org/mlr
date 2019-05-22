@@ -19,6 +19,7 @@
 #' @family eda_and_preprocess
 #' @export
 mergeSmallFactorLevels = function(task, cols = NULL, min.perc = 0.01, new.level = ".merged") {
+
   assertClass(task, "Task")
   assertNumber(min.perc, lower = 0, upper = 1)
   assertString(new.level)
@@ -34,8 +35,9 @@ mergeSmallFactorLevels = function(task, cols = NULL, min.perc = 0.01, new.level 
 
   for (cn in cns) {
     x = as.factor(data[[cn]])
-    if (new.level %in% levels(x))
+    if (new.level %in% levels(x)) {
       stopf("Value of new.level = '%s' is already a level of column '%s'!", new.level, cn)
+    }
     j = which(prop.table(table(x)) < min.perc)
     if (length(j) > 0L) {
       levels(x)[levels(x) %in% names(j)] = new.level

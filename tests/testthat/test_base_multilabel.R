@@ -62,6 +62,7 @@ test_that("MultilabelBinaryRelevanceWrapper with glmnet (#958)", {
 })
 
 testMultilabelWrapper = function(fun, ...) {
+
   desc = fun("classif.rpart")$model.subclass[1]
   test_that(desc, {
     lrn1 = makeLearner("classif.rpart")
@@ -166,4 +167,3 @@ testMultilabelWrapper(makeMultilabelStackingWrapper)
 # check order
 testMultilabelWrapper(makeMultilabelClassifierChainsWrapper, order = c("y2", "y1"))
 testMultilabelWrapper(makeMultilabelNestedStackingWrapper, order = c("y2", "y1"))
-

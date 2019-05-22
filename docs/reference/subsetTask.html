@@ -318,13 +318,13 @@ The task.</p></td>
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>(integer | logical | <code>NULL</code>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a> | <code>NULL</code>)<br />
 Selected cases. Either a logical or an index vector.
 By default <code>NULL</code> if all observations are used.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(character | integer | logical)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a> | <a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
 Vector of selected inputs. You can either pass a character vector with the
 feature names, a vector of indices, or a logical vector.<br />
 In case of an index vector each element denotes the position of the feature
@@ -352,7 +352,7 @@ Default is to use all features.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='fu'>subsetTask</span>(<span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>)</div><div class='output co'>#&gt; Supervised task: iris
 #&gt; Type: classif
 #&gt; Target: Species

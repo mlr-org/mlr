@@ -14,7 +14,7 @@
 #' @template arg_learner
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods].
-#'   Default is \dQuote{randomForestSRC.rfsrc}.
+#'   Default is \dQuote{randomForestSRC_importance}.
 #' @param fw.basal.methods (`character(1)`)\cr
 #'   Simple Filter methods for ensemble filters. See [listFilterMethods].
 #'   Can only be used in combination with ensemble filters. See [listFilterEnsembleMethods].
@@ -29,8 +29,21 @@
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param cache (`character(1)` | [logical])\cr
+#'   Whether to use caching during filter value creation. See details.
 #' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
+#'
+#' @section Caching:
+#' If `cache = TRUE`, the default mlr cache directory is used to cache
+#' filter values. The directory is operating system dependent and can be
+#' checked with `getCacheDir()`.
+#' Alternatively a custom directory can be passed to store the cache.
+#' The cache can be cleared with `deleteCacheDir()`.
+#' Caching is disabled by default.
+#' Care should be taken when operating on large clusters due to possible write
+#' conflicts to disk if multiple workers try to write the same cache at the same time.
+#'
 #' @template ret_learner
 #' @export
 #' @family filter
@@ -49,6 +62,7 @@
 #' print(getFilteredFeatures(mod))
 #' # now nested resampling, where we extract the features that the filter method selected
 #' r = resample(lrn, task, outer, extract = function(model) {
+#'
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
@@ -62,9 +76,9 @@
 #'   getFilteredFeatures(model)
 #'   })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
+makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, ...) {
+  fw.mandatory.feat = NULL, cache = FALSE, ...) {
 
   learner = checkLearner(learner)
 
@@ -108,23 +122,26 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc",
       makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
     par.vals = filterNull(list(fw.method = fw.method,
-      fw.basal.methods = fw.basal.methods, fw.perc = fw.perc, fw.abs = fw.abs,
-      fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
-    learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
+      fw.basal.methods = fw.basal.methods, fw.perc = fw.perc,
+      fw.abs = fw.abs, fw.threshold = fw.threshold,
+      fw.mandatory.feat = fw.mandatory.feat)),
+    learner.subclass = "FilterWrapper", model.subclass = "FilterModel",
+    cache = cache)
   lrn$more.args = ddd
   lrn
 }
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "randomForestSRC.rfsrc", fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.method = "randomForestSRC_importance", fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL,
+  fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
-     basal.methods = fw.basal.methods,
-     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-     mandatory.feat = fw.mandatory.feat),
-     .learner$more.args))
+    basal.methods = fw.basal.methods,
+    perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
+    mandatory.feat = fw.mandatory.feat,
+    cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
@@ -132,6 +149,7 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
 
 #' @export
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
+
   features = getFilteredFeatures(.model)
   NextMethod(.newdata = .newdata[, features, drop = FALSE])
 }
@@ -144,11 +162,13 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {
+
   UseMethod("getFilteredFeatures")
 }
 
 #' @export
 getFilteredFeatures.default = function(model) {
+
   if (is.null(model$learner.model$next.model)) {
     NULL
   } else {
@@ -158,5 +178,6 @@ getFilteredFeatures.default = function(model) {
 
 #' @export
 getFilteredFeatures.FilterModel = function(model) {
+
   model$learner.model$next.model$features
 }

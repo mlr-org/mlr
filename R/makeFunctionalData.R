@@ -32,6 +32,7 @@
 #' # Create a regression task
 #' makeRegrTask(data = d2, target = "target")
 makeFunctionalData = function(data, fd.features = NULL, exclude.cols = NULL) {
+
   assertDataFrame(data)
   assertList(fd.features, null.ok = TRUE, names = "unique")
   # Assert that exclude.cols refers to valid columns and convert to index
@@ -43,22 +44,26 @@ makeFunctionalData = function(data, fd.features = NULL, exclude.cols = NULL) {
   }
 
   # If fd.features is an empty list do nothing
-  if (is.list(fd.features) && length(fd.features) == 0L)
+  if (is.list(fd.features) && length(fd.features) == 0L) {
     return(data)
+  }
 
   # Convert fd.features to column indices
   fd.features = fdFeatsToColumnIndex(data, fd.features, exclude.cols)
 
   # All fd.features must refer to numeric columns
-  if (!all(vlapply(data[, unlist(fd.features), drop = FALSE], is.numeric)))
+  if (!all(vlapply(data[, unlist(fd.features), drop = FALSE], is.numeric))) {
     stop("fd.features contains non-integer/numeric columns")
+  }
 
   # Create a list of functional feature matricies
-  ffeats = lapply(fd.features, function(x) {as.matrix(data[, x, drop = FALSE])})
+  ffeats = lapply(fd.features, function(x) {
+
+    as.matrix(data[, x, drop = FALSE])
+  })
   # Drop original numeric data
-  d = data[, - unlist(fd.features), drop = FALSE]
+  d = data[, -unlist(fd.features), drop = FALSE]
   # Add functional feature matricies
   d[, names(fd.features)] = ffeats
   return(d)
 }
-

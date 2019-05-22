@@ -1,7 +1,6 @@
 context("plotResiduals")
 
 test_that("plotResiduals with prediction object", {
-
   learner = makeLearner("regr.rpart")
   mod = train(learner, regr.task)
   preds = predict(mod, regr.task)

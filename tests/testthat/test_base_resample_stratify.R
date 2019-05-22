@@ -1,15 +1,17 @@
 context("resample_stratify")
 
 test_that("stratification instances work", {
+  mytest = function(rin, size1, size2) {
 
-  mytest = function(rin, size1, size2)  {
     for (i in 1:rin$desc$iters) {
       i1 = rin$train.inds[[i]]
       i2 = rin$test.inds[[i]]
-      if (!missing(size1))
+      if (!missing(size1)) {
         expect_true(all(as.numeric(table(getTaskTargets(multiclass.task)[i1])) == size1))
-      if (!missing(size2))
+      }
+      if (!missing(size2)) {
         expect_true(all(as.numeric(table(getTaskTargets(multiclass.task)[i2])) == size2))
+      }
       expect_equal(sort(c(unique(i1), i2)), 1:150)
     }
   }

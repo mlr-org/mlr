@@ -8,10 +8,10 @@ makeFeatSelControlGA = function(same.resampling.instance = TRUE, impute.val = NU
   maxit = asCount(maxit, positive = TRUE)
   assertFlag(comma)
   mu = asCount(mu, positive = TRUE)
-  if (missing(lambda))  {
+  if (missing(lambda)) {
     lambda = if (comma) 2L * mu else round(mu / 2L)
   } else {
-    lam.low  = if (comma) mu else 1L
+    lam.low = if (comma) mu else 1L
     lambda = asInt(lambda, lower = lam.low)
   }
   assertNumber(crossover.rate, lower = 0, upper = 1)

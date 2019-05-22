@@ -24,12 +24,14 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
+
     l = do.call(extractFDAFeatures, c(list(obj = data, target = target), args))
-    names(l) =  c("data", "control")
+    names(l) = c("data", "control")
     l
   }
 
   predictfun = function(data, target, args, control) {
+
     reextractFDAFeatures(data, control)
   }
 
@@ -40,5 +42,6 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
 #' @export
 getLearnerProperties.extractFDAFeatsWrapper = function(learner) {
+
   union(getLearnerProperties(learner$next.learner), c("functionals", "single.functional"))
 }

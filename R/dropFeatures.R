@@ -7,6 +7,7 @@
 #' @export
 #' @family eda_and_preprocess
 dropFeatures = function(task, features) {
+
   assertClass(task, classes = "Task")
   f = getTaskFeatureNames(task)
   assertSubset(features, choices = f)

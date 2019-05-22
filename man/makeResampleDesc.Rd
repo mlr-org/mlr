@@ -132,7 +132,7 @@ makeResampleDesc("Bootstrap", iters = 10)
 makeResampleDesc("Bootstrap", iters = 10, predict = "both")
 
 # Subsampling
-makeResampleDesc("Subsample", iters = 10, split = 3/4)
+makeResampleDesc("Subsample", iters = 10, split = 3 / 4)
 makeResampleDesc("Subsample", iters = 10)
 
 # Holdout a.k.a. test sample estimation

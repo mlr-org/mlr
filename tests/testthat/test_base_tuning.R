@@ -99,7 +99,7 @@ test_that("tuning works with tuneThreshold and multiple measures", {
   res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc), par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 
-# also check with infeasible stuff
+  # also check with infeasible stuff
   ps = makeParamSet(
     makeDiscreteParam("cp", values = c(0.1, -1))
   )
@@ -144,7 +144,7 @@ test_that("tuning allows usage of budget", {
 test_that("Learner defined with expression in param requires, see #369 and PH #52", {
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
-      makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
+    makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
   )
 
   rdesc = makeResampleDesc("Holdout")
@@ -155,7 +155,7 @@ test_that("Learner defined with expression in param requires, see #369 and PH #5
 
 
 test_that("tuning does not break with small discrete values, see bug in #1115", {
-  ctrl  = makeTuneControlGrid()
+  ctrl = makeTuneControlGrid()
   ps = makeParamSet(
     makeDiscreteParam("cp", values = c(1e-8, 1e-9))
   )
@@ -170,10 +170,10 @@ test_that("tuning works with large param.sets", {
   # create long list of learner params
   ps.length = 200
   long.learner.params = do.call(base::c, lapply(seq_len(ps.length), function(x) {
+
     makeParamSet(makeIntegerLearnerParam(paste0("some.parameter", x), 1, 10))
   }))
   lrn$par.set = c(lrn$par.set, long.learner.params)
   res = tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
   expect_class(res, "TuneResult")
 })
-

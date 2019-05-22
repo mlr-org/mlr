@@ -1,10 +1,10 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.13.9000
-Authors@R: 
+Version: 2.14.0.9000
+Authors@R:
     c(person(given = "Bernd",
              family = "Bischl",
-             role = c("aut", "cre"),
+             role = "aut",
              email = "bernd_bischl@gmx.net",
              comment = c(ORCID = "0000-0001-6002-6980")),
       person(given = "Michel",
@@ -39,7 +39,7 @@ Authors@R:
              email = "masonagallo@gmail.com"),
       person(given = "Patrick",
              family = "Schratz",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "patrick.schratz@gmail.com",
              comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "Jakob",
@@ -170,6 +170,7 @@ Suggests:
     class,
     clue,
     cluster,
+    ClusterR,
     clusterSim (>= 0.44-5),
     clValid,
     cmaes,
@@ -196,6 +197,7 @@ Suggests:
     FSelectorRcpp (>= 0.2.1),
     gbm,
     GenSA,
+    ggpubr,
     glmnet,
     GPfit,
     h2o (>= 3.6.0.8),
@@ -209,11 +211,11 @@ Suggests:
     laGP,
     LiblineaR,
     lintr (>= 1.0.0.9001),
-    liquidSVM,
     MASS,
     mboost,
     mco,
     mda,
+    memoise,
     mlbench,
     mldr,
     mlrMBO,
@@ -225,6 +227,7 @@ Suggests:
     nodeHarvest (>= 0.7-3),
     numDeriv,
     pamr,
+    pander,
     party,
     penalized (>= 0.9-47),
     pls,
@@ -233,6 +236,7 @@ Suggests:
     randomForest,
     randomForestSRC (>= 2.7.0),
     ranger (>= 0.8.0),
+    rappdirs,
     refund,
     rex,
     rFerns,
@@ -261,13 +265,8 @@ Suggests:
     tidyr,
     wavelets,
     xgboost (>= 0.6-2)
-VignetteBuilder: 
+VignetteBuilder:
     knitr
-Remotes: 
-    berndbischl/BBmisc,
-    berndbischl/parallelMap,
-    berndbischl/ParamHelpers,
-    jimhester/lintr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes

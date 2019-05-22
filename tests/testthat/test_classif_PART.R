@@ -20,7 +20,7 @@ test_that("classif_PART", {
     ctrl = do.call(RWeka::Weka_control, parset)
     m = RWeka::PART(formula = multiclass.formula, data = multiclass.train, control = ctrl)
     set.seed(getOption("mlr.debug.seed"))
-    p  = predict(m, newdata = multiclass.test, type = "class")
+    p = predict(m, newdata = multiclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
@@ -33,13 +33,13 @@ test_that("classif_PART", {
     old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
+
     set.seed(getOption("mlr.debug.seed"))
     RWeka::PART(formula, data = data[subset, ], control = RWeka::Weka_control(..., Q =
-        as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
+      as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
   }
 
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
   testCVParsets("classif.PART", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
-
 })

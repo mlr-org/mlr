@@ -33,7 +33,6 @@ Returns a subset-able dataframe with filter information.
 \seealso{
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}

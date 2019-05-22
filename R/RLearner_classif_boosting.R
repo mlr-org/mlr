@@ -1,6 +1,7 @@
 # FIXME: interface was changed, read page, pars, maybe rename
 #' @export
 makeRLearner.classif.boosting = function() {
+
   makeRLearnerClassif(
     cl = "classif.boosting",
     package = c("adabag", "rpart"),
@@ -31,6 +32,7 @@ makeRLearner.classif.boosting = function() {
 
 #' @export
 trainLearner.classif.boosting = function(.learner, .task, .subset, .weights = NULL, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval, ...) {
+
   f = getTaskFormula(.task)
   ctrl = learnerArgsToControl(rpart::rpart.control, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval)
   adabag::boosting(f, data = getTaskData(.task, .subset), control = ctrl, ...)
@@ -38,6 +40,7 @@ trainLearner.classif.boosting = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
+
   levs = .model$task.desc$class.levels
   # stupid adaboost
   .newdata[, .model$task.desc$target] = factor(rep(1, nrow(.newdata)), levels = levs)
@@ -51,6 +54,7 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.boosting = function(.learner, .model, ...) {
+
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$importance[.model$features]
 }

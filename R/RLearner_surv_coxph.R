@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.surv.coxph = function() {
+
   makeRLearnerSurv(
     cl = "surv.coxph",
     package = "survival",
@@ -23,17 +24,19 @@ makeRLearner.surv.coxph = function() {
 }
 
 #' @export
-trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   data = getTaskData(.task, subset = .subset)
   if (is.null(.weights)) {
     survival::coxph(formula = f, data = data, ...)
-  } else  {
+  } else {
     survival::coxph(formula = f, data = data, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
 }

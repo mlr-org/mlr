@@ -1,9 +1,9 @@
 context("filterFeatures_praznik")
 
 test_that("filterFeatures_praznik", {
-  a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1)  # numeric vector
-  b = c("one", "two", "three")  # character vector
-  c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)  # logical vector
+  a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1) # numeric vector
+  b = c("one", "two", "three") # character vector
+  c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE) # logical vector
   d = c(1L, 3L, 5L, 7L, 9L, 17L)
   f = rep(c("c1", "c2"), 9)
   df = data.frame(a = a, b = b, c = c, d = d, f = f, const1 = f, const2 = a)
@@ -31,6 +31,7 @@ test_that("FilterWrapper with praznik mutual information, resample", {
   candidates = as.character(listFilterMethods()$id)
   candidates = candidates[startsWith(candidates, "praznik_")]
   lapply(candidates, function(x) {
+
     lrn1 = makeLearner("classif.lda")
     lrn2 = makeFilterWrapper(lrn1, fw.method = x, fw.perc = 0.5)
     m = train(lrn2, binaryclass.task)
@@ -49,7 +50,7 @@ test_that("FilterWrapper with praznik mutual information, resample", {
 })
 
 test_that("FilterWrapper with praznik mutual information, resample", {
-  #wrapped learner with praznik on binaryclass.task
+  # wrapped learner with praznik on binaryclass.task
   lrn = makeFilterWrapper(makeLearner("classif.randomForest"), fw.method = "praznik_MIM", fw.abs = 2)
   mod = train(lrn, binaryclass.task)
   feat.imp = getFeatureImportance(mod)$res

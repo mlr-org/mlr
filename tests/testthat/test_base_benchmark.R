@@ -1,6 +1,13 @@
 context("benchmark")
 
 test_that("benchmark", {
+
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+
+  set.seed(getOption("mlr.debug.seed"))
+
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   learner.names = c("classif.lda", "classif.rpart")
@@ -164,6 +171,7 @@ test_that("benchmark", {
   expect_equal(unique(tffd$iter), 1:2)
 
   f = function(tmp, cl) {
+
     context(sprintf("benchmark: extracting %s", cl))
     expect_true(is.list(tmp))
     expect_true(setequal(names(tmp), task.names))
@@ -193,7 +201,7 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_list(x$models, types = "WrappedModel")
   expect_is(x$pred, "ResamplePrediction")
 
-  ##test getter function for models
+  ## test getter function for models
   models = getBMRModels(res)
   expect_true(is.list(models))
   expect_true(setequal(names(models), "binary"))
@@ -249,6 +257,7 @@ test_that("drop option works for BenchmarkResults_operators", {
 
   # check all other functions that use 'drop' briefly
   testDropOption = function(bmr, fun, new.names, ...) {
+
     extra.args = list(...)
     res = do.call(fun, c(list(bmr, drop = TRUE), extra.args))
     expect_true(all(names(res) == new.names))

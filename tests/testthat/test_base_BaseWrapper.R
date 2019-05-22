@@ -28,8 +28,8 @@ test_that("Joint model performance estimation, tuning, and model performance", {
   lrn2 = makeTuneWrapper(
     learner = lrn,
     par.set = makeParamSet(
-      makeDiscreteParam("C", values = 2 ^ (-2:2)),
-      makeDiscreteParam("sigma", values = 2 ^ (-2:2))
+      makeDiscreteParam("C", values = 2^(-2:2)),
+      makeDiscreteParam("sigma", values = 2^(-2:2))
     ),
     measures = list(auc, acc),
     control = makeTuneControlRandom(maxit = 3L),
@@ -57,8 +57,8 @@ test_that("Error when wrapping tune wrapper around another optimization wrapper"
     lrn3 = makeTuneWrapper(
       learner = lrn2,
       par.set = makeParamSet(
-        makeDiscreteParam("C", values = 2 ^ (-2:2)),
-        makeDiscreteParam("sigma", values = 2 ^ (-2:2))
+        makeDiscreteParam("C", values = 2^(-2:2)),
+        makeDiscreteParam("sigma", values = 2^(-2:2))
       ),
       measures = list(auc, acc),
       control = makeTuneControlRandom(maxit = 3L),
@@ -67,5 +67,3 @@ test_that("Error when wrapping tune wrapper around another optimization wrapper"
     bmrk = benchmark(lrn3, pid.task)
   }, "Cannot wrap a tuning wrapper around another optimization wrapper!")
 })
-
-

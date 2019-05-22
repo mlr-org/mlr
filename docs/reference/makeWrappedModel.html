@@ -324,7 +324,7 @@ data set and computation time that was spent for training.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -340,24 +340,24 @@ Task description object.</p></td>
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>(integer | logical | <code>NULL</code>)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a> | <code>NULL</code>)<br />
 Selected cases. Either a logical or an index vector.
 By default <code>NULL</code> if all observations are used.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(character)<br />
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Features used for training.</p></td>
     </tr>
     <tr>
       <th>factor.levels</th>
-      <td><p>(named list of character)<br />
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> of <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Levels of factor variables (features and potentially target) in training data.
 Named by variable name, non-factors do not occur in the list.</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>(<code>numeric(1)</code>)<br />
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
 Computation time for model fit in seconds.</p></td>
     </tr>
     </table>

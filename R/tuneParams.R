@@ -1,4 +1,4 @@
-#FIXME: check whether optimization can be paralleized if req. by user
+# FIXME: check whether optimization can be paralleized if req. by user
 
 #' @title Hyperparameter tuning.
 #'
@@ -63,7 +63,6 @@
 #' df3 = generateHyperParsEffectData(res, trafo = TRUE)
 #' print(head(df2$data[, -ncol(df2$data)]))
 #' print(head(df3$data[, -ncol(df3$data)]))
-#'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
 #' # note how we use dependent params (requires = ...) and iterated F-racing here
@@ -82,7 +81,7 @@
 #' print(res)
 #' df = as.data.frame(res$opt.path)
 #' print(head(df[, -ncol(df)]))
-#'
+#' 
 #' # include the training set performance as well
 #' rdesc = makeResampleDesc("Holdout", predict = "both")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
@@ -92,17 +91,21 @@
 #' print(head(df2[, -ncol(df2)]))
 #' }
 #' @seealso [generateHyperParsEffectData]
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
+tuneParams = function(learner, task, resampling, measures, par.set, control,
+  show.info = getMlrOption("show.info"), resample.fun = resample) {
+
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
   assertFunction(resample.fun)
-  if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
+  if (!inherits(resampling, "ResampleDesc") && !inherits(resampling, "ResampleInstance")) {
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
-  if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
+  }
+  if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance) {
     resampling = makeResampleInstance(resampling, task = task)
+  }
   assertFlag(show.info)
   checkTunerParset(learner, par.set, measures, control)
   control = setDefaultImputeVal(control, measures)
@@ -123,14 +126,16 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
-    message(printToChar(par.set))  # using message() since this can go over the char limit of messagef(), see issue #1528
+    message(printToChar(par.set)) # using message() since this can go over the char limit of messagef(), see issue #1528
     messagef("With control class: %s", cl)
     messagef("Imputation value: %g", control$impute.val)
   }
 
-  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
-  if (show.info)
+  or = sel.func(learner, task, resampling, measures, par.set, control,
+    opt.path, show.info, resample.fun)
+  if (show.info) {
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
+  }
   return(or)
 }
 
@@ -147,6 +152,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 #' @return ([ParamHelpers::OptPath]) or ([data.frame]).
 #' @export
 getTuneResultOptPath = function(tune.result, as.df = TRUE) {
+
   if (as.df == TRUE) {
     return(as.data.frame(tune.result$opt.path))
   } else {

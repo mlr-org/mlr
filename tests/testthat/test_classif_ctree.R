@@ -19,7 +19,7 @@ test_that("classif_ctree", {
     ctrl = do.call(party::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = party::ctree(formula = multiclass.formula, data = multiclass.train, control = ctrl)
-    p  = predict(m, newdata = multiclass.test, type = "response")
+    p = predict(m, newdata = multiclass.test, type = "response")
     p2 = Reduce(rbind, party::treeresponse(m, newdata = multiclass.test, type = "prob"))
     rownames(p2) = NULL
     colnames(p2) = levels(multiclass.df[, multiclass.target])
@@ -39,5 +39,4 @@ test_that("classif_ctree", {
   ct = makeClassifTask(target = "Species", data = df1)
   m = train(makeLearner("classif.ctree"), ct)
   predict(m, newdata = df2)
-
 })

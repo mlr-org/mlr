@@ -24,6 +24,7 @@ test_that("classif_nnet", {
     binaryclass.train.inds, p3, parset = list())
 
   tt = function(formula, data, subset = 1:150, ...) {
+
     nnet::nnet(formula, data = data[subset, ], size = 7, maxit = 50)
   }
   tp = function(model, newdata) as.factor(predict(model, newdata, type = "class"))
@@ -43,4 +44,3 @@ test_that("classif_nnet", {
   pred2 = predict(mod, task = task)
   expect_equal(pred1$data$response, pred2$data$response)
 })
-

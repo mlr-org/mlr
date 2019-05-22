@@ -1,5 +1,4 @@
 test_that("test createSpatialResamplingPlots() creates 10 ggplot objects", {
-
   data(spatial.task, package = "mlr", envir = environment())
 
   # take more reps to see if the restriction on two reps works
@@ -12,6 +11,4 @@ test_that("test createSpatialResamplingPlots() creates 10 ggplot objects", {
 
   expect_class(plots[[1]][[1]], "gg")
   expect_length(plots[[1]], 10)
-
 })
-

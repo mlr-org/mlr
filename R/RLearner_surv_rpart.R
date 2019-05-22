@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.surv.rpart = function() {
+
   makeRLearnerSurv(
     cl = "surv.rpart",
     package = "rpart",
@@ -27,21 +28,24 @@ makeRLearner.surv.rpart = function() {
 
 #' @export
 trainLearner.surv.rpart = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, subset = .subset)
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     rpart::rpart(f, data = d, method = "exp", ...)
-  } else  {
+  } else {
     rpart::rpart(f, data = d, weights = .weights, method = "exp", ...)
   }
 }
 
 #' @export
 predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
 }
 
 #' @export
 getFeatureImportanceLearner.surv.rpart = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.classif.rpart(.learner, .model, ...)
 }

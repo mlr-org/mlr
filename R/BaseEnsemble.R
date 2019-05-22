@@ -18,19 +18,23 @@ makeBaseEnsemble = function(id, base.learners, bls.type = NULL,
   base.learners = lapply(base.learners, checkLearner, type = bls.type)
 
   tt = unique(extractSubList(base.learners, "type"))
-  if (length(tt) > 1L)
+  if (length(tt) > 1L) {
     stopf("Base learners must all be of same type, but have: %s", collapse(tt))
-  if (is.null(ens.type))
+  }
+  if (is.null(ens.type)) {
     ens.type = tt
+  }
 
   ids = unique(extractSubList(base.learners, "id"))
-  if (length(ids) != length(base.learners))
+  if (length(ids) != length(base.learners)) {
     stop("Base learners must all have unique ids!")
+  }
 
   # check that all predict.types are the same
   pts = unique(extractSubList(base.learners, "predict.type"))
-  if (length(pts) > 1L)
+  if (length(pts) > 1L) {
     stopf("Base learners must all have same predict.type, but have: %s", collapse(pts))
+  }
 
   # join all parsets of base.learners + prefix param names with base learner id
   # (we could also do this operation on-the.fly in getParamSet.BaseEnsemble,

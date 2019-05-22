@@ -22,17 +22,19 @@ makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = NU
 
   args = list(...)
   if (is.null(budget)) {
-    if (!is.null(args$max.call))
+    if (!is.null(args$max.call)) {
       budget = args$max.call
-    else
+    } else {
       budget = args$max.call = 1e+07
+    }
   } else {
     if (is.null(args$max.call)) {
       args$max.call = budget
     } else {
-      if (args$max.call != budget)
+      if (args$max.call != budget) {
         stopf("The given budget (%i) contradicts to the maximum number of function evaluations (max.call = %i).",
           budget, args$max.call)
+      }
     }
   }
   args$max.call = asCount(args$max.call)

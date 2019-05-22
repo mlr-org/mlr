@@ -1,4 +1,4 @@
-#FIXME: use learnerparam or ordinary params?
+# FIXME: use learnerparam or ordinary params?
 
 #' Fuse learner with preprocessing.
 #'
@@ -32,13 +32,15 @@
 #' @family wrapper
 #' @export
 makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(), par.vals = list()) {
+
   learner = checkLearner(learner)
   assertFunction(train, args = c("data", "target", "args"))
   assertFunction(predict, args = c("data", "target", "args", "control"))
   assertClass(par.set, classes = "ParamSet")
   checkList(par.vals)
-  if (!isProperlyNamed(par.vals))
+  if (!isProperlyNamed(par.vals)) {
     stop("'par.vals' must be a properly named list!")
+  }
 
   id = stri_paste(learner$id, "preproc", sep = ".")
   x = makeBaseWrapper(id, type = learner$type, next.learner = learner, par.set = par.set,
@@ -50,13 +52,15 @@ makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(),
 
 #' @export
 trainLearner.PreprocWrapper = function(.learner, .task, .subset = NULL, ...) {
+
   pvs = .learner$par.vals
   pp = .learner$train(data = getTaskData(.task, .subset, functionals.as = "matrix"),
     target = getTaskTargetNames(.task), args = pvs)
   # FIXME: why is the order important?
   if (!(is.list(pp) && length(pp) == 2L && all(names(pp) == c("data", "control")) &&
-    is.data.frame(pp$data) && is.list(pp$control)))
+    is.data.frame(pp$data) && is.list(pp$control))) {
     stop("Preprocessing train must result in list wil elements data[data.frame] and control[list]!")
+  }
   .task = changeData(.task, pp$data)
   # we have already subsetted!
   m = train(.learner$next.learner, .task)
@@ -70,9 +74,11 @@ trainLearner.PreprocWrapper = function(.learner, .task, .subset = NULL, ...) {
 
 #' @export
 predictLearner.PreprocWrapper = function(.learner, .model, .newdata, ...) {
+
   .newdata = .learner$predict(.newdata, .model$task.desc$target,
     .learner$par.vals, .model$learner.model$control)
-  if (!is.data.frame(.newdata))
+  if (!is.data.frame(.newdata)) {
     stop("Preprocessing must result in a data.frame!")
+  }
   NextMethod(.newdata = .newdata)
 }

@@ -1,5 +1,6 @@
 makeHomogeneousEnsemble = function(id, type, next.learner, package, par.set = makeParamSet(),
   learner.subclass, model.subclass, ...) {
+
   makeBaseWrapper(id, type, next.learner, package, par.set,
     learner.subclass = c(learner.subclass, "HomogeneousEnsemble"),
     model.subclass = c(model.subclass, "HomogeneousEnsembleModel"),
@@ -11,12 +12,14 @@ makeHomogeneousEnsemble = function(id, type, next.learner, package, par.set = ma
 #' @export
 # if ANY model in the list is broken --> failure
 isFailureModel.HomogeneousEnsembleModel = function(model) {
+
   mods = getLearnerModel(model, more.unwrap = FALSE)
   any(vlapply(mods, isFailureModel))
 }
 
 #' @export
 getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
+
   mods = getLearnerModel(model, more.unwrap = FALSE)
   msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
@@ -25,6 +28,7 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
 
 #' @export
 getFailureModelDump.HomogeneousEnsembleModel = function(model) {
+
   mods = getLearnerModel(model, more.unwrap = FALSE)
   msgs = lapply(mods, getFailureModelDump)
   j = which.first(!is.null(msgs))
@@ -36,17 +40,20 @@ getFailureModelDump.HomogeneousEnsembleModel = function(model) {
 #' @param learner.models Deprecated.
 #' @export
 getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
+
   .Deprecated("getLearnerModel")
   getLearnerModel(model, more.unwrap = learner.models)
 }
 
 #' @export
 getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) {
+
   ms = model$learner.model$next.model
-  if (more.unwrap)
+  if (more.unwrap) {
     extractSubList(ms, "learner.model", simplify = FALSE)
-  else
+  } else {
     ms
+  }
 }
 
 ##############################               helpers                      ##############################
@@ -55,12 +62,15 @@ getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) 
 # rows = newdata points, cols = ensembles members
 # does only work for responses, not probs, se, etc
 predictHomogeneousEnsemble = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # for classif we convert factor to char, nicer to handle later on
   preds = lapply(models, function(mod) {
+
     p = predict(mod, newdata = .newdata, subset = .subset, ...)$data$response
-    if (is.factor(p))
+    if (is.factor(p)) {
       p = as.character(p)
+    }
     return(p)
   })
   do.call(cbind, preds)
@@ -69,6 +79,6 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, .subset = NULL
 # call this at end of trainLearner.CostSensRegrWrapper
 # FIXME: potentially remove this when ChainModel is removed
 makeHomChainModel = function(learner, models) {
+
   makeChainModel(next.model = models, cl = c(learner$model.subclass, "HomogeneousEnsembleModel"))
 }
-
