@@ -355,11 +355,11 @@
 <a class="sourceLine" id="cb2-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb2-15" data-line-number="15">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">## 0.02745098 0.50400000 0.63480000</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">## 0.04705882 0.41600000 0.69080000</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.04509804 0.46400000 0.57730000</a></code></pre></div>
+<a class="sourceLine" id="cb2-19" data-line-number="19">##      mmce       ber       auc </a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 0.0372549 0.5090000 0.7265000</a></code></pre></div>
 <p>In this case the <em>performance measure</em> has to be considered very carefully. As the <em>misclassification rate</em> (<a href="measures.html" target="_blank">mmce</a>) evaluates the overall accuracy of the predictions, the <em>balanced error rate</em> (<a href="measures.html" target="_blank">ber</a>) and <em>area under the ROC Curve</em> (<a href="measures.html" target="_blank">auc</a>) might be more suitable here, as the misclassifications within each class are separately taken into account.</p>
 </div>
 <div id="over--and-undersampling-wrappers" class="section level3">
@@ -379,11 +379,11 @@
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.over, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## 0.03137255 0.50600000 0.56500000</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">## 0.02941176 0.45600000 0.76880000</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.under, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">## 0.01960784 0.50000000 0.50000000</a></code></pre></div>
+<a class="sourceLine" id="cb3-17" data-line-number="17">## 0.03529412 0.31200000 0.79960000</a></code></pre></div>
 </div>
 <div id="extensions-to-oversampling" class="section level3">
 <h3 class="hasAnchor">
@@ -409,7 +409,7 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2">mod.smote =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.smote, task)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod.smote, <span class="dt">newdata =</span> data.imbal.test), <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">##       mmce        ber        auc </a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## 0.02745098 0.50400000 0.65200000</a></code></pre></div>
+<a class="sourceLine" id="cb5-5" data-line-number="5">## 0.03137255 0.50600000 0.70930000</a></code></pre></div>
 <p>By default the number of nearest neighbours considered within the algorithm is set to 5.</p>
 </div>
 <div id="overbagging" class="section level4">
@@ -434,7 +434,7 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">r2<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">##     0.02941176     0.50054893     0.52111805</a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14">##      0.0327451      0.4781435      0.5361176</a></code></pre></div>
 <p>Now let’s consider a <em>random forest</em> as initial learner:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeOverBaggingWrapper.html">makeOverBaggingWrapper</a></span>(lrn, <span class="dt">obw.rate =</span> <span class="dv">8</span>, <span class="dt">obw.iters =</span> <span class="dv">3</span>)</a>
@@ -444,14 +444,14 @@
 <a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">r1<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">##     0.03294118     0.50190765     0.54761961</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">##     0.03254902     0.49363428     0.58513759</a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">obw.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(obw.lrn, <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">r2 =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> obw.lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber, auc))</a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">r2<span class="op">$</span>aggr</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15">## mmce.test.mean  ber.test.mean  auc.test.mean </a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">##     0.04294118     0.50700127     0.50172581</a></code></pre></div>
+<a class="sourceLine" id="cb8-16" data-line-number="16">##     0.04117647     0.49834049     0.49953403</a></code></pre></div>
 <p>While <em>overbagging</em> slighty improves the performance of the <em>decision tree</em>, the AUC decreases in the second example when additional overbagging is applied. As RF itself is already a strong learner (and a bagged one as well), a further bagging step isn’t very helpful here and usually won’t improve the model.</p>
 </div>
 </div>
@@ -462,11 +462,11 @@
 <p>In binary classification, the default probability value at which a prediction is either classified as “1” or “0” is 0.50. This means with an estimate of &gt;= 0.50 the observation is put into class “1” while lower values get assigned class “0”. To reach a better performance in binary classification, it can be helpful to also optimize the the probability threshold at which this split is made. This can be especially helpful if the response is unbalanced. To enable this, argument <code>tune.threshold</code> needs to be set to <code>TRUE</code> in the chosen <code>makeTuneControl*</code> function.</p>
 <pre><code>## Resampling: cross-validation
 ## Measures:             mmce
-## [Resample] iter 1:    0.0502283
-## [Resample] iter 2:    0.0658409
-## [Resample] iter 3:    0.0521512
+## [Resample] iter 1:    0.0541069
+## [Resample] iter 2:    0.0606654
+## [Resample] iter 3:    0.0475880
 ## 
-## Aggregated Result: mmce.test.mean=0.0560735
+## Aggregated Result: mmce.test.mean=0.0541201
 ## </code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.gbm"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">distribution =</span> <span class="st">"bernoulli"</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
