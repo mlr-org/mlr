@@ -65,8 +65,9 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
   assertSubset(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
   filter = lapply(method, function(x) .FilterRegister[[x]])
-  if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
+  if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg))))) {
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+  }
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   td = getTaskDesc(task)
 
@@ -122,7 +123,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     }
 
   } else {
-
     fval = lapply(filter, function(x) {
       x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
       missing.score = setdiff(fn, names(x))
@@ -134,9 +134,9 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
     out = as_tibble(data.frame(name = row.names(fval),
-                     type = types,
-                     fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
-      tidyr::gather(method, "value", !! enquo(method))
+      type = types,
+      fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
+      tidyr::gather(method, "value", !!enquo(method))
   }
 
   makeS3Obj("FilterValues",
@@ -146,7 +146,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 #' @export
 #' @importFrom rlang .data
 print.FilterValues = function(x, ...) {
-
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
   arrange(x$data, .data$method, desc(.data$value)) %>%
@@ -195,24 +194,25 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     mp = aes_string(x = paste0("reorder(name, value)"), y = "value")
   }
 
-  if (feat.type.cols)
+  if (feat.type.cols) {
     mp = mp$fill = "type"
+  }
 
   plt = ggplot(data = data, mapping = mp)
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
-    plt = plt + facet_wrap(~ method, scales =,
-                           nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+    plt = plt + facet_wrap(~method, scales = ,
+      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
     plt = plt + labs(title = sprintf("%s (%i features)",
-                                     fvalues$task.desc$id,
-                                     sum(fvalues$task.desc$n.feat)),
-                     x = "", y = "")
+      fvalues$task.desc$id,
+      sum(fvalues$task.desc$n.feat)),
+    x = "", y = "")
   } else {
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
-                                     fvalues$task.desc$id,
-                                     sum(fvalues$task.desc$n.feat),
-                                     methods),
-                     x = "", y = "")
+      fvalues$task.desc$id,
+      sum(fvalues$task.desc$n.feat),
+      methods),
+    x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(plt)

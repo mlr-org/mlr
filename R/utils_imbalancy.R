@@ -1,7 +1,6 @@
 
 # sort classes wrt to size
 getMinMaxClass = function(y) {
-
   tab = table(y)
   j.small = getMinIndex(tab)
   ns = names(tab)
@@ -27,7 +26,6 @@ getMinMaxClass = function(y) {
 # a) class cl is either oversampled or downsampled, depending on rate
 # b) the other binary class is either copied or bootstrapped (for variance)
 sampleBinaryClass = function(y, rate, cl, resample.other.class) {
-
   inds1 = which(y == cl) # indices for class cl
   inds2 = setdiff(seq_along(y), inds1) # indices for other class
   newsize = round(length(inds1) * rate)

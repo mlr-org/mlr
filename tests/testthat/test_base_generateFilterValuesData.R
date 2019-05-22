@@ -38,7 +38,7 @@ test_that("filterFeatures", {
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
-      head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
+    head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
@@ -129,7 +129,6 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
     supported.tasks = c("classif", "regr", "surv"),
     supported.features = c("numerics", "factors"),
     fun = function(task, nselect) {
-
       ns = getTaskFeatureNames(task)
       d = seq_along(ns)
       names(d) = ns
@@ -148,6 +147,6 @@ test_that("filter method 'variance' works with missing values", {
 })
 
 test_that("ensemble methods work", {
-  fi = generateFilterValuesData(multiclass.task, method = list("E-min", c('FSelectorRcpp_gain.ratio','FSelectorRcpp_information.gain')))
+  fi = generateFilterValuesData(multiclass.task, method = list("E-min", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
   expect_true(all(!is.na(fi$data$value) == TRUE))
 })

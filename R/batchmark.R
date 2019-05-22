@@ -49,14 +49,12 @@ batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg 
 
   # generate problems
   pdes = Map(function(id, task, rin, seed) {
-
     batchtools::addProblem(id, data = list(rin = rin, task = task, measures = measures, learners = learners), fun = resample.fun, seed = seed, reg = reg)
     data.table(i = seq_len(rin$desc$iters))
   }, id = names(tasks), task = tasks, rin = resamplings, seed = reg$seed + seq_along(tasks))
 
   # generate algos
   ades = Map(function(id, learner) {
-
     apply.fun = getAlgoFun(learner, measures, models)
     batchtools::addAlgorithm(id, apply.fun, reg = reg)
     data.table()
@@ -67,17 +65,14 @@ batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg 
 }
 
 resample.fun = function(job, data, i) {
-
   list(train = data$rin$train.inds[[i]], test = data$rin$test.inds[[i]], weights = data$rin$weights[[i]], rdesc = data$rin$desc)
 }
 
 getAlgoFun = function(lrn, measures, models) {
-
   force(lrn)
   force(measures)
   force(models)
   function(job, data, instance) {
-
     extract.this = getExtractor(lrn)
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
       measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE)

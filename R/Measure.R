@@ -141,7 +141,6 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #' @return ([Measure]).
 #' @export
 getDefaultMeasure = function(x) {
-
   type = if (inherits(x, "TaskDesc")) {
     x$type
   } else if (inherits(x, "Task")) {
@@ -165,7 +164,6 @@ getDefaultMeasure = function(x) {
 
 #' @export
 print.Measure = function(x, ...) {
-
   catf("Name: %s", x$name)
   catf("Performance measure: %s", x$id)
   catf("Properties: %s", collapse(x$properties))

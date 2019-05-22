@@ -22,11 +22,9 @@ NULL
 
 #' @export
 print.FeatSelResult = function(x, ...) {
-
   catf("FeatSel result:")
 
   shortenX = function(x) {
-
     clipString(collapse(x, ", "), 50L)
   }
 
@@ -41,7 +39,6 @@ print.FeatSelResult = function(x, ...) {
 }
 
 makeFeatSelResultFromOptPath = function(learner, measures, resampling, control, opt.path, dob = opt.path$env$dob, ties = "random", task, bits.to.features) {
-
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), dob = dob, ties = ties)
   e = getOptPathEl(opt.path, i)
   # if we had threshold tuning, get th from op and set it in result object

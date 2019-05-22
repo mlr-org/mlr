@@ -14,7 +14,6 @@
 #' @family wrapper
 #' @aliases CostSensRegrWrapper CostSensRegrModel
 makeCostSensRegrWrapper = function(learner) {
-
   learner = checkLearner(learner, "regr")
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
@@ -25,7 +24,6 @@ makeCostSensRegrWrapper = function(learner) {
 
 #' @export
 trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset = NULL, ...) {
-
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   d = getTaskData(.task)
@@ -36,7 +34,6 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset = NULL, ...
 }
 
 doCostSensRegrTrainIteration = function(learner, cl, costs, d) {
-
   setSlaveOptions()
   data = cbind(d, ..y.. = costs[, cl])
   task = makeRegrTask(id = cl, data = data, target = "..y..", check.data = FALSE, fixup.data = "quiet")
@@ -45,7 +42,6 @@ doCostSensRegrTrainIteration = function(learner, cl, costs, d) {
 
 #' @export
 predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
-
   p = predictHomogeneousEnsemble(.learner, .model, .newdata, ...)
   # get class per row with minimal estimated costs
   p = apply(p, 1L, getMinIndex)
@@ -56,6 +52,5 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getLearnerProperties.CostSensRegrWrapper = function(learner) {
-
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

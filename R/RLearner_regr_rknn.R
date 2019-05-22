@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.rknn = function() {
-
   makeRLearnerRegr(
     cl = "regr.rknn",
     package = "rknn",
@@ -22,14 +21,12 @@ makeRLearner.regr.rknn = function() {
 
 #' @export
 trainLearner.regr.rknn = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   z = getTaskData(.task, .subset, target.extra = TRUE)
   c(list(data = z$data, y = z$target), list(...))
 }
 
 #' @export
 predictLearner.regr.rknn = function(.learner, .model, .newdata, ...) {
-
   args = .model$learner.model
   args$newdata = .newdata
   do.call(rknn::rknnReg, args)$pred

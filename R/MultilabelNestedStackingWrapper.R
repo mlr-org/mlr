@@ -76,7 +76,6 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
 
 #' @export
 predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
-
   models = getLearnerModel(.model, more.unwrap = FALSE)
   predmatrix = matrix(ncol = length(models), nrow = nrow(.newdata), dimnames = list(NULL, names(models)))
   if (.learner$predict.type == "response") {

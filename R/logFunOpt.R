@@ -5,7 +5,6 @@
 
 logFunDefault = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x.string, y, remove.nas, stage, prev.stage, prefixes) {
-
   if (stage == 1L) {
     start.time = Sys.time()
     messagef("[%s] %i: %s", prefixes[stage], dob, x.string)
@@ -21,7 +20,6 @@ logFunDefault = function(learner, task, resampling, measures, par.set, control, 
 
 logFunMemory = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x.string, y, remove.nas, stage, prev.stage, prefixes) {
-
   if (stage == 1L) {
     gc()
     gc()
@@ -44,7 +42,6 @@ logFunMemory = function(learner, task, resampling, measures, par.set, control, o
 
 logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x, y, remove.nas, stage, prev.stage) {
-
   x.string = paramValueToString(par.set, x, show.missing.values = !remove.nas)
   # shorten tuning logging a bit. we remove the sel.learner prefix from params
   if (inherits(learner, "ModelMultiplexer")) {
@@ -58,7 +55,6 @@ logFunTune = function(learner, task, resampling, measures, par.set, control, opt
 
 logFunTuneMemory = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x, y, remove.nas, stage, prev.stage) {
-
   x.string = paramValueToString(par.set, x, show.missing.values = !remove.nas)
   # shorten tuning logging a bit. we remove the sel.learner prefix from params
   if (inherits(learner, "ModelMultiplexer")) {
@@ -72,7 +68,6 @@ logFunTuneMemory = function(learner, task, resampling, measures, par.set, contro
 
 logFunFeatSel = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x, y, remove.nas, stage, prev.stage) {
-
   x.string = sprintf("%s (%i bits)", clipString(collapse(x, ""), 80L), sum(x))
 
   logFunDefault(learner, task, resampling, measures, par.set, control, opt.path, dob,
@@ -82,7 +77,6 @@ logFunFeatSel = function(learner, task, resampling, measures, par.set, control, 
 
 logFunFeatSelMemory = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x, y, remove.nas, stage, prev.stage) {
-
   x.string = sprintf("%s (%i bits)", clipString(collapse(x, ""), 80L), sum(x))
 
   logFunMemory(learner, task, resampling, measures, par.set, control, opt.path, dob,

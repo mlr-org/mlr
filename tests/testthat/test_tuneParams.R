@@ -78,13 +78,13 @@ test_that("tuneParams output works as documented", {
   ctrl.user = makeTuneControlRandom(maxit = 2, log.fun = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage, prev.stage) message("Hi"))
 
   expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.default, show.info = TRUE),
-                 "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
+    "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
 
   expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.memory, show.info = TRUE),
-                 "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
+    "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
 
   expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.user, show.info = TRUE),
-                 "^Hi")
+    "^Hi")
 })
 
 test_that("tuning with a fixed ensemble methods and varying basal methods works", {
@@ -99,18 +99,17 @@ test_that("tuning with a fixed ensemble methods and varying basal methods works"
     "univariate.model.score", "permutation.importance", "auc",
     "univariate", "rf.importance", "rf.min.depth"))
 
-  ps = makeParamSet(#makeDiscreteParam("fw.method"),
+  ps = makeParamSet( # makeDiscreteParam("fw.method"),
     makeDiscreteVectorParam("fw.basal.methods", len = 2, values = filter.list.classif),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeNumericParam("C", lower = -10, upper = 10,
-                     trafo = function(x) 2^x),
+      trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -10, upper = 10,
-                     trafo = function(x) 2^x)
+      trafo = function(x) 2^x)
   )
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-                   control = makeTuneControlRandom(maxit = 5), show.info = T)
-
+    control = makeTuneControlRandom(maxit = 5), show.info = T)
 })
 
 test_that("tuning with a fixed ensemble methods and varying basal methods works", {
@@ -125,41 +124,36 @@ test_that("tuning with a fixed ensemble methods and varying basal methods works"
     "univariate.model.score", "permutation.importance", "auc",
     "univariate", "rf.importance", "rf.min.depth"))
 
-  ps = makeParamSet(#makeDiscreteParam("fw.method"),
+  ps = makeParamSet( # makeDiscreteParam("fw.method"),
     makeDiscreteVectorParam("fw.basal.methods", len = 2, values = filter.list.classif),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeNumericParam("C", lower = -10, upper = 10,
-                     trafo = function(x) 2^x),
+      trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -10, upper = 10,
-                     trafo = function(x) 2^x)
+      trafo = function(x) 2^x)
   )
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-                   control = makeTuneControlRandom(maxit = 5), show.info = T)
-
+    control = makeTuneControlRandom(maxit = 5), show.info = T)
 })
 
 test_that("tuning with fixed basal methods and varying ensemble methods works", {
-
   lrn = makeFilterWrapper(learner = "classif.ksvm", fw.basal.methods = c("gain.ratio", "information.gain"))
 
   ps = makeParamSet(makeDiscreteParam("fw.method", values = c("E-min", "E-max")),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeNumericParam("C", lower = -10, upper = 10,
-                     trafo = function(x) 2^x),
+      trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -10, upper = 10,
-                     trafo = function(x) 2^x)
+      trafo = function(x) 2^x)
   )
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-                   control = makeTuneControlRandom(maxit = 5), show.info = T)
-
+    control = makeTuneControlRandom(maxit = 5), show.info = T)
 })
 
 test_that("passing more than one fw.method raises an error", {
-
   expect_error(makeFilterWrapper(learner = "classif.ksvm", fw.method = c("E-min", "E-max"),
     fw.basal.methods = c("gain.ratio", "information.gain"))
   )
-
 })

@@ -6,7 +6,6 @@
 #' @export
 #' @family learner
 getLearnerType = function(learner) {
-
   learner = checkLearner(learner)
   return(learner$type)
 }
@@ -19,7 +18,6 @@ getLearnerType = function(learner) {
 #' @export
 #' @family learner
 getLearnerId = function(learner) {
-
   learner = checkLearner(learner)
   return(learner$id)
 }
@@ -32,7 +30,6 @@ getLearnerId = function(learner) {
 #' @export
 #' @family learner
 getLearnerPredictType = function(learner) {
-
   learner = checkLearner(learner)
   return(learner$predict.type)
 }
@@ -45,7 +42,6 @@ getLearnerPredictType = function(learner) {
 #' @export
 #' @family learner
 getLearnerPackages = function(learner) {
-
   learner = checkLearner(learner)
   return(learner$package)
 }
@@ -61,7 +57,6 @@ getLearnerPackages = function(learner) {
 #' @export
 #' @family learner
 getLearnerParamSet = function(learner) {
-
   getParamSet(learner)
 }
 
@@ -77,7 +72,6 @@ getLearnerParamSet = function(learner) {
 #' @export
 #' @family learner
 getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
-
   learner = checkLearner(learner)
   getHyperPars(learner, for.fun)
 }
@@ -92,7 +86,6 @@ getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
 #' @export
 #' @family learner
 setLearnerId = function(learner, id) {
-
   learner = checkLearner(learner)
   assertString(id)
   learner$id = id
@@ -109,7 +102,6 @@ setLearnerId = function(learner, id) {
 #' @export
 #' @family learner
 getLearnerShortName = function(learner) {
-
   learner = checkLearner(learner)
   learner.short.name = learner$short.name
 

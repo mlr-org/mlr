@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.laGP = function() {
-
   makeRLearnerRegr(
     cl = "regr.laGP",
     package = "laGP",
@@ -27,14 +26,12 @@ makeRLearner.regr.laGP = function() {
 
 #' @export
 trainLearner.regr.laGP = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   return(list(data = d$data, target = d$target, parset = list(...)))
 }
 
 #' @export
 predictLearner.regr.laGP = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   pars = c(list(X = m$data, Z = m$target, XX = .newdata), Xi.ret = FALSE,
     m$parset, list(...))

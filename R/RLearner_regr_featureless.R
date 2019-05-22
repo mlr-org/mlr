@@ -19,7 +19,6 @@ NULL
 
 #' @export
 makeRLearner.regr.featureless = function() {
-
   makeRLearnerRegr(
     cl = "regr.featureless",
     package = "mlr",
@@ -34,7 +33,6 @@ makeRLearner.regr.featureless = function() {
 
 #' @export
 trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL, method = "mean", ...) {
-
   y = getTaskTargets(.task)
   if (!is.null(.subset)) {
     y = y[.subset]
@@ -50,7 +48,6 @@ trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.regr.featureless = function(.learner, .model, .newdata, ...) {
-
   # extract some shortcuts
   n = nrow(.newdata)
   mod = getLearnerModel(.model)

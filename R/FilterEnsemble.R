@@ -1,4 +1,4 @@
-.FilterEnsembleRegister = new.env()  # nolint
+.FilterEnsembleRegister = new.env() # nolint
 
 #' Create an ensemble feature filter.
 #'
@@ -28,18 +28,17 @@
 makeFilterEnsemble = function(name = "E-min",
   basal.methods = c("randomForestSRC.rfsrc", "variance"),
   desc = NULL, fun = NULL) {
-
   assertString(name)
   assertString(desc)
   assertFunction(fun, c("task", "basal.methods"))
-  obj =  makeS3Obj("FilterEnsemble",
-                   name = name,
-                   desc = desc,
-                   fun = fun
+  obj = makeS3Obj("FilterEnsemble",
+    name = name,
+    desc = desc,
+    fun = fun
   )
   .FilterEnsembleRegister[[name]] = obj
   obj
-  }
+}
 
 
 #' List ensemble filter methods.
@@ -54,6 +53,7 @@ makeFilterEnsemble = function(name = "E-min",
 #' @export
 #' @family filter
 listFilterEnsembleMethods = function(desc = TRUE) {
+
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
@@ -70,16 +70,18 @@ listFilterEnsembleMethods = function(desc = TRUE) {
 
   description = extractSubList(filters, "desc")
 
-  if (desc)
+  if (desc) {
     df$desc = description
+  }
   res = setRowNames(sortByCol(df, "id"), NULL)
   addClasses(res, "FilterMethodsList")
 }
 
 #' @export
 print.FilterEnsembleMethodsList = function(x, len = 40, ...) {
-  if (!is.null(x$desc))
+  if (!is.null(x$desc)) {
     x$desc = clipString(x$desc, len = len)
+  }
   NextMethod()
 }
 
@@ -104,7 +106,7 @@ makeFilterEnsemble(
 
     # calculate basal filters here
     fval = generateFilterValuesData(task, method = basal.methods,
-        nselect = nselect, more.args = ...)
+      nselect = nselect, more.args = ...)
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
@@ -142,7 +144,7 @@ makeFilterEnsemble(
 
     # calculate basal filters here
     fval = generateFilterValuesData(task, method = basal.methods,
-        nselect = nselect, more.args = ...)
+      nselect = nselect, more.args = ...)
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
@@ -180,7 +182,7 @@ makeFilterEnsemble(
 
     # calculate basal filters here
     fval = generateFilterValuesData(task, method = basal.methods,
-                                    nselect = nselect, more.args = ...)
+      nselect = nselect, more.args = ...)
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
@@ -218,7 +220,7 @@ makeFilterEnsemble(
 
     # calculate basal filters here
     fval = generateFilterValuesData(task, method = basal.methods,
-                                    nselect = nselect, more.args = ...)
+      nselect = nselect, more.args = ...)
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%
@@ -256,7 +258,7 @@ makeFilterEnsemble(
 
     # calculate basal filters here
     fval = generateFilterValuesData(task, method = basal.methods,
-                                    nselect = nselect, more.args = ...)
+      nselect = nselect, more.args = ...)
 
     # rank basal filters by method
     fval_all_ranked_simple = fval$data %>%

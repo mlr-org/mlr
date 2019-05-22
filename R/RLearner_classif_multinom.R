@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.multinom = function() {
-
   makeRLearnerClassif(
     cl = "classif.multinom",
     package = "nnet",
@@ -25,7 +24,6 @@ makeRLearner.classif.multinom = function() {
 
 #' @export
 trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     nnet::multinom(f, data = getTaskData(.task, .subset), ...)
@@ -37,7 +35,6 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.classif.multinom = function(.learner, .model, .newdata, ...) {
-
   type = ifelse(.learner$predict.type == "response", "class", "probs")
   levs = .model$task.desc$class.levels
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)

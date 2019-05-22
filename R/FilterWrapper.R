@@ -62,7 +62,6 @@
 #' print(getFilteredFeatures(mod))
 #' # now nested resampling, where we extract the features that the filter method selected
 #' r = resample(lrn, task, outer, extract = function(model) {
-#'
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
@@ -74,7 +73,7 @@
 #'   fw.perc = 0.5)
 #' r = resample(lrn, task, outer, extract = function(model) {
 #'   getFilteredFeatures(model)
-#'   })
+#' })
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
@@ -97,7 +96,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   if (is.null(filter)) {
     filter = .FilterEnsembleRegister[[fw.method]]
     # check if ONLY basal-methods are supplied along with an ensemble method
-    lapply(fw.basal.methods, function (x) assertChoice(x, choices = ls(.FilterRegister)))
+    lapply(fw.basal.methods, function(x) assertChoice(x, choices = ls(.FilterRegister)))
   }
 
   # if fw.basal.methods are supplied, fw.method must be an ensemble filter
@@ -135,7 +134,6 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   fw.method = "randomForestSRC_importance", fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL,
   fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
-
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
     basal.methods = fw.basal.methods,
@@ -149,7 +147,6 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
 
 #' @export
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
-
   features = getFilteredFeatures(.model)
   NextMethod(.newdata = .newdata[, features, drop = FALSE])
 }
@@ -162,13 +159,11 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {
-
   UseMethod("getFilteredFeatures")
 }
 
 #' @export
 getFilteredFeatures.default = function(model) {
-
   if (is.null(model$learner.model$next.model)) {
     NULL
   } else {
@@ -178,6 +173,5 @@ getFilteredFeatures.default = function(model) {
 
 #' @export
 getFilteredFeatures.FilterModel = function(model) {
-
   model$learner.model$next.model$features
 }

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.fnn = function() {
-
   makeRLearnerRegr(
     cl = "regr.fnn",
     package = "FNN",
@@ -19,14 +18,12 @@ makeRLearner.regr.fnn = function() {
 
 #' @export
 trainLearner.regr.fnn = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   list(train = d, parset = list(...))
 }
 
 #' @export
 predictLearner.regr.fnn = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   pars = c(list(train = m$train$data, test = .newdata, y = m$train$target), m$parset, list(...))
   do.call(FNN::knn.reg, pars)$pred

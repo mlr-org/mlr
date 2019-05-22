@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.multilabel.cforest = function() {
-
   makeRLearnerMultilabel(
     cl = "multilabel.cforest",
     package = "party",
@@ -54,7 +53,6 @@ trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.multilabel.cforest = function(.learner, .model, .newdata, ...) {
-
   p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)
   p = do.call(rbind, p)
   if (.learner$predict.type == "response") {

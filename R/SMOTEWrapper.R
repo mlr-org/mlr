@@ -65,7 +65,6 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L,
 #' @export
 trainLearner.SMOTEWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, sw.rate = 1,
   sw.nn = 5, sw.standardize = TRUE, sw.alt.logic = FALSE, ...) {
-
   .task = subsetTask(.task, .subset)
   .task = smote(.task, rate = sw.rate, nn = sw.nn, standardize = sw.standardize, alt.logic = sw.alt.logic)
   m = train(.learner$next.learner, .task, weights = .weights)

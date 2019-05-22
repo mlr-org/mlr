@@ -1,5 +1,4 @@
 requirePackagesOrSkip = function(packs, default.method = "attach") {
-
   ok = requirePackages(packs, why = "unit test", stop = FALSE, suppress.warnings = TRUE, default.method = default.method)
   if (any(!ok)) {
     skip(sprintf("Required packages not installed: %s", collapse(names(ok)[!ok])))
@@ -92,7 +91,6 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
 
 
 testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, parset.list) {
-
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -183,7 +181,6 @@ testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = l
 
 
 testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parset.list) {
-
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -198,7 +195,6 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
 
 testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list, parset.list,
   tol = 1e-04) {
-
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -218,7 +214,6 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
   formula = formula(paste(target, "~."))
 
   tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
-
     pars = list(formula = formula, data = data[subset, ])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
@@ -229,7 +224,6 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
   }
 
   tp = function(model, newdata) {
-
     set.seed(getOption("mlr.debug.seed"))
     p = tune.predict(model, newdata)
     return(p)
@@ -256,7 +250,6 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
 }
 
 testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
-
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     testCV(t.name, df, target, folds, parset, tune.train, tune.predict)
@@ -293,7 +286,6 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 
 
 mylist = function(..., create = FALSE) {
-
   lrns = listLearners(..., create = create)
   if (create) {
     ids = BBmisc::extractSubList(lrns, "id")
@@ -305,13 +297,11 @@ mylist = function(..., create = FALSE) {
 }
 
 testFacetting = function(obj, nrow = NULL, ncol = NULL) {
-
   expect_equal(obj$facet$params$nrow, nrow)
   expect_equal(obj$facet$params$ncol, ncol)
 }
 
 testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
-
   text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
     x, "')]]", sep = "")
   nodes = XML::getNodeSet(doc, text.paths, ns.svg)
@@ -323,7 +313,6 @@ testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
 }
 
 constant05Resample = function(...) {
-
   res = resample(...)
   res$aggr = rep(0.5, length(res$aggr))
   res
@@ -331,7 +320,6 @@ constant05Resample = function(...) {
 
 # evaluate expr without giving its output.
 quiet = function(expr) {
-
   capture.output({
     ret = expr
   })

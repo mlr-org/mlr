@@ -1,7 +1,6 @@
 
 #' @export
 makeRLearner.regr.ranger = function() {
-
   makeRLearnerRegr(
     cl = "regr.ranger",
     package = "ranger",
@@ -38,7 +37,6 @@ makeRLearner.regr.ranger = function() {
 
 #' @export
 trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
     case.weights = .weights, ...)
@@ -46,7 +44,6 @@ trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, .
 
 #' @export
 predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
-
   type = if (.learner$predict.type == "se") "se" else "response"
   p = predict(object = .model$learner.model, data = .newdata, type = type, ...)
   if (.learner$predict.type == "se") {
@@ -58,12 +55,10 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getOOBPredsLearner.regr.ranger = function(.learner, .model) {
-
   getLearnerModel(.model, more.unwrap = TRUE)$predictions
 }
 
 #' @export
 getFeatureImportanceLearner.regr.ranger = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }

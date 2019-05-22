@@ -12,7 +12,6 @@ test_that("tuneParamsMultiCrit", {
   ".* May only contain the following types: Measure.")
 
   mycheck = function(res, k) {
-
     expect_output(print(res), "Points on front")
     expect_true(is.integer(res$ind))
     expect_true(is.list(res$x))
@@ -114,7 +113,6 @@ test_that("tuneParamsMultiCrit with budget", {
   )
 
   mycheck = function(ctrl, expected.budget) {
-
     if ("TuneMultiCritControlGrid" %in% class(ctrl)) {
       if (!is.null(ctrl$budget)) {
         expect_equal(ctrl$budget, expected.budget)

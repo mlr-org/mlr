@@ -102,7 +102,6 @@ NULL
 
 makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
   tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default", ..., cl) {
-
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
   if (identical(log.fun, "default")) {
@@ -118,7 +117,6 @@ makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit
 
 #' @export
 print.FeatSelControl = function(x, ...) {
-
   catf("FeatSel control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))

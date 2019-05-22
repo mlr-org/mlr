@@ -46,8 +46,9 @@ makeBaseEnsemble = function(id, base.learners, bls.type = NULL,
   for (i in seq_along(base.learners)) {
     ps = getParamSet(base.learners[[i]])
     pids = sprintf("%s.%s", ids[i], names(ps$pars))
-    for (j in seq_along(ps$pars))
+    for (j in seq_along(ps$pars)) {
       ps$pars[[j]]$id = pids[[j]]
+    }
     names(ps$pars) = pids
     par.set.bls = c(par.set.bls, ps)
   }

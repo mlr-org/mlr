@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.mob = function() {
-
   makeRLearnerRegr(
     cl = "regr.mob",
     package = c("party", "modeltools"),
@@ -57,6 +56,5 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
 
 #' @export
 predictLearner.regr.mob = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, newdata = .newdata, ...)
 }

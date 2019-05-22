@@ -77,7 +77,7 @@
 #'   predict.type = "prob", method = "hill.climb")
 #' tmp = train(m, tsk)
 #' res = predict(tmp, tsk)
-#' 
+#'
 #' # Regression
 #' data(BostonHousing, package = "mlbench")
 #' tsk = makeRegrTask(data = BostonHousing, target = "medv")
@@ -174,7 +174,6 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 #'
 #' @export
 getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
-
   # get base learner and predict type
   bms = model$learner.model$base.models
   method = model$learner.model$method
@@ -197,7 +196,6 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
 
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
-
   # reduce to subset we want to train ensemble on
   .task = subsetTask(.task, subset = .subset)
   switch(.learner$method,
@@ -244,8 +242,9 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
-      for (i in seq_along(probs))
+      for (i in seq_along(probs)) {
         probs[[i]] = probs[[i]] * model.weight[i]
+      }
       prob = Reduce("+", probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
@@ -309,7 +308,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 # Sets the predict.type for the super learner of a stacked learner
 #' @export
 setPredictType.StackedLearner = function(learner, predict.type) {
-
   lrn = setPredictType.Learner(learner, predict.type)
   lrn$predict.type = predict.type
   if ("super.learner" %in% names(lrn)) lrn$super.learner$predict.type = predict.type
@@ -320,7 +318,6 @@ setPredictType.StackedLearner = function(learner, predict.type) {
 
 # super simple averaging of base-learner predictions without weights. we should beat this
 averageBaseLearners = function(learner, task) {
-
   bls = learner$base.learners
   base.models = probs = vector("list", length(bls))
   for (i in seq_along(bls)) {
@@ -445,7 +442,6 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       metric = function(pred, true) mean((pred - true)^2)
     } else {
       metric = function(pred, true) {
-
         pred = colnames(pred)[max.col(pred)]
         tb = table(pred, true)
         return(1 - sum(diag(tb)) / sum(tb))
@@ -593,7 +589,6 @@ compressBaseLearners = function(learner, task, parset = list()) {
 
 # Returns response for correct usage in stackNoCV and stackCV and for predictions
 getResponse = function(pred, full.matrix = TRUE) {
-
   # if classification with probabilities
   if (pred$predict.type == "prob") {
     if (full.matrix) {
@@ -614,7 +609,6 @@ getResponse = function(pred, full.matrix = TRUE) {
 
 # Create a super learner task
 makeSuperLearnerTask = function(learner, data, target) {
-
   if (learner$super.learner$type == "classif") {
     makeClassifTask(data = data, target = target)
   } else {
@@ -624,7 +618,6 @@ makeSuperLearnerTask = function(learner, data, target) {
 
 # Count the ratio
 rowiseRatio = function(probs, levels, model.weight = NULL) {
-
   m = length(levels)
   p = ncol(probs)
   if (is.null(model.weight)) {
@@ -633,8 +626,9 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   mat = matrix(0, nrow(probs), m)
   for (i in 1:m) {
     ids = matrix(probs == levels[i], nrow(probs), p)
-    for (j in 1:p)
+    for (j in 1:p) {
       ids[, j] = ids[, j] * model.weight[j]
+    }
     mat[, i] = rowSums(ids)
   }
   colnames(mat) = levels
@@ -672,7 +666,6 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
 
   # Func to calc dist
   hamming = function(mat) {
-
     n = nrow(mat)
     m = ncol(mat)
     res = matrix(0, n, n)
@@ -688,7 +681,6 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   }
 
   one.nn = function(mat, ind1, ind2) {
-
     n = nrow(mat)
     dist.mat.1 = matrix(0, n, n)
     dist.mat.2 = matrix(0, n, n)
@@ -739,12 +731,14 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     }
     res = rbind(res, data)
   }
-  for (i in ind1)
+  for (i in ind1) {
     res[, i] = res[, i] * (mx[i] - mn[i]) + mn[i]
+  }
   res = data.frame(res)
   names(res) = ori.names
-  for (i in ind2)
+  for (i in ind2) {
     res[[i]] = factor(res[[i]], labels = ori.labels[[i]])
+  }
   return(res)
 }
 

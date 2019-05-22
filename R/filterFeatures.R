@@ -162,11 +162,12 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     if (select != "threshold" && nselect < length(mandatory.feat)) {
       stop("The number of features to be filtered cannot be smaller than the number of mandatory features.")
     }
-    #Set the the filter values of the mandatory features to infinity to always select them
+    # Set the the filter values of the mandatory features to infinity to always select them
     fval[fval$name %in% mandatory.feat, "value"] = Inf
   }
-  if (select == "threshold")
+  if (select == "threshold") {
     nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
+  }
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
   if (length(levels(as.factor(fval$method))) >= 2) {
@@ -184,8 +185,8 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   }
   if (nselect > 0L) {
     features = arrange(fval, method, desc(.data$value)) %>%
-    slice(1:nselect) %>%
-    pull(.data$name)
+      slice(1:nselect) %>%
+      pull(.data$name)
   } else {
     features = NULL
   }
@@ -196,7 +197,6 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 }
 
 checkFilterArguments = function(perc, abs, threshold) {
-
   sum.null = sum(!is.null(perc), !is.null(abs), !is.null(threshold))
   if (sum.null == 0L) {
     stop("At least one of 'perc', 'abs' or 'threshold' must be not NULL")

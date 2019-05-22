@@ -39,7 +39,6 @@ test_that("classif_svm", {
   #  multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset = 1:150, ...) {
-
     e1071::svm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5)
   }
 

@@ -170,7 +170,6 @@ test_that("tuning works with large param.sets", {
   # create long list of learner params
   ps.length = 200
   long.learner.params = do.call(base::c, lapply(seq_len(ps.length), function(x) {
-
     makeParamSet(makeIntegerLearnerParam(paste0("some.parameter", x), 1, 10))
   }))
   lrn$par.set = c(lrn$par.set, long.learner.params)

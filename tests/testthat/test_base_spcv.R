@@ -1,6 +1,5 @@
 
 test_that("Nested SpRepCV works without errors", {
-
   data(spatial.task, package = "mlr", envir = environment())
 
   lrn = makeLearner("classif.ranger",
@@ -24,7 +23,6 @@ test_that("Nested SpRepCV works without errors", {
 })
 
 test_that("SpRepCV works without errors", {
-
   data(spatial.task, package = "mlr", envir = environment())
 
   learner = makeLearner("classif.ranger", predict.type = "prob")

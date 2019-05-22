@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.cluster.cmeans = function() {
-
   makeRLearnerCluster(
     cl = "cluster.cmeans",
     package = c("e1071", "clue"),
@@ -26,14 +25,12 @@ makeRLearner.cluster.cmeans = function() {
 
 #' @export
 trainLearner.cluster.cmeans = function(.learner, .task, .subset, .weights = NULL, reltol, ...) {
-
   ctrl = learnerArgsToControl(list, reltol)
   e1071::cmeans(getTaskData(.task, .subset), control = ctrl, ...)
 }
 
 #' @export
 predictLearner.cluster.cmeans = function(.learner, .model, .newdata, ...) {
-
   switch(.learner$predict.type,
     response = as.integer(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids", ...)),
     prob = as.matrix(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))

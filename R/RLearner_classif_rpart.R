@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.rpart = function() {
-
   makeRLearnerClassif(
     cl = "classif.rpart",
     package = "rpart",
@@ -28,7 +27,6 @@ makeRLearner.classif.rpart = function() {
 
 #' @export
 trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -41,14 +39,12 @@ trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
-
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
 
 #' @export
 getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
-
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$variable.importance
 }

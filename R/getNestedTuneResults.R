@@ -13,7 +13,6 @@
 #' # see example of makeTuneWrapper
 #' @export
 getNestedTuneResultsX = function(r) {
-
   assertClass(r, "ResampleResult")
   assertList(r$extract)
   lapply(r$extract, assertClass, classes = "TuneResult")
@@ -43,7 +42,6 @@ getNestedTuneResultsX = function(r) {
 #' # see example of makeTuneWrapper
 #' @export
 getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
-
   assertClass(r, "ResampleResult")
   assertList(r$extract)
   lapply(r$extract, assertClass, classes = "TuneResult")

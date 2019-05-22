@@ -1,6 +1,5 @@
 makeOptControl = function(same.resampling.instance, impute.val = NULL, tune.threshold = FALSE,
   tune.threshold.args = list(), log.fun = "default", final.dw.perc = NULL, ...) {
-
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val)) {
     assertNumeric(impute.val)

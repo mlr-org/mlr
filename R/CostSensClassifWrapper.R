@@ -17,7 +17,6 @@
 #' @family wrapper
 #' @aliases CostSensClassifWrapper CostSensClassifModel
 makeCostSensClassifWrapper = function(learner) {
-
   learner = checkLearner(learner, "classif")
   learner = setPredictType(learner, "response")
   id = stri_paste("costsens", learner$id, sep = ".")
@@ -56,7 +55,6 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset = NULL, 
 
 #' @export
 predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model$next.model
   mm = m$learner.model
   # handle constant prediction
@@ -68,6 +66,5 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
 
 #' @export
 getLearnerProperties.CostSensClassifWrapper = function(learner) {
-
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

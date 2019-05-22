@@ -3,7 +3,6 @@
 #' @rdname resample
 #' @export
 crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   rdesc = makeResampleDesc("CV", iters = iters, stratify = stratify)
@@ -13,7 +12,6 @@ crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, mode
 #' @rdname resample
 #' @export
 repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   rdesc = makeResampleDesc("RepCV", folds = folds, reps = reps, stratify = stratify)
@@ -23,7 +21,6 @@ repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measu
 #' @rdname resample
 #' @export
 holdout = function(learner, task, split = 2 / 3, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   rdesc = makeResampleDesc("Holdout", split = split, stratify = stratify)
@@ -33,7 +30,6 @@ holdout = function(learner, task, split = 2 / 3, stratify = FALSE, measures, mod
 #' @rdname resample
 #' @export
 subsample = function(learner, task, iters = 30, split = 2 / 3, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   rdesc = makeResampleDesc("Subsample", iters = iters, split = split, stratify = stratify)
@@ -43,7 +39,6 @@ subsample = function(learner, task, iters = 30, split = 2 / 3, stratify = FALSE,
 #' @rdname resample
 #' @export
 bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   rdesc = makeResampleDesc("Bootstrap", iters = iters, stratify = stratify)
@@ -53,7 +48,6 @@ bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, m
 #' @rdname resample
 #' @export
 bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   assertClass(task, classes = "Task")
@@ -65,7 +59,6 @@ bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, 
 #' @rdname resample
 #' @export
 bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
   assertClass(task, classes = "Task")
@@ -77,7 +70,6 @@ bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measur
 #' @rdname resample
 #' @export
 growingcv = function(learner, task, horizon = 1, initial.window = .5, skip = 0, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("GrowingCV", horizon = horizon, initial.window = initial.window, skip = skip)
   measures = checkMeasures(measures, task, aggr = b632plus)
@@ -87,7 +79,6 @@ growingcv = function(learner, task, horizon = 1, initial.window = .5, skip = 0, 
 #' @rdname resample
 #' @export
 fixedcv = function(learner, task, horizon = 1L, initial.window = .5, skip = 0, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
-
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("FixedCV", horizon = horizon, initial.window = initial.window, skip = skip)
   measures = checkMeasures(measures, task, aggr = b632plus)

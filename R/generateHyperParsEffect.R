@@ -48,7 +48,7 @@
 #' data = generateHyperParsEffectData(res)
 #' plt = plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
 #' plt + ylab("Misclassification Error")
-#' 
+#'
 #' # nested cross validation
 #' ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
 #' ctrl = makeTuneControlGrid()
@@ -132,7 +132,6 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
 
 #' @export
 print.HyperParsEffectData = function(x, ...) {
-
   catf("HyperParsEffectData:")
   catf("Hyperparameters: %s", collapse(x$hyperparams))
   catf("Measures: %s", collapse(x$measures))

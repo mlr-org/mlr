@@ -9,15 +9,15 @@ test_that("filterFeatures_fselectorrcpp", {
   df = convertDataFrameCols(df, logicals.as.factor = TRUE)
   task = makeClassifTask(data = df, target = "f")
 
-    candidates = as.character(listFilterMethods()$id)
-    candidates = candidates[startsWith(candidates, "FSelectorRcpp")]
-    for (candidate in candidates) {
-      fv = generateFilterValuesData(task, method = candidate, nselect = 2L)
-      expect_class(fv, "FilterValues")
-      expect_data_frame(fv$data, nrow = getTaskNFeats(task))
-      expect_set_equal(fv$data$name, getTaskFeatureNames(task))
-      expect_numeric(fv$data$value, any.missing = FALSE, lower = 0, finite = TRUE)
-    }
+  candidates = as.character(listFilterMethods()$id)
+  candidates = candidates[startsWith(candidates, "FSelectorRcpp")]
+  for (candidate in candidates) {
+    fv = generateFilterValuesData(task, method = candidate, nselect = 2L)
+    expect_class(fv, "FilterValues")
+    expect_data_frame(fv$data, nrow = getTaskNFeats(task))
+    expect_set_equal(fv$data$name, getTaskFeatureNames(task))
+    expect_numeric(fv$data$value, any.missing = FALSE, lower = 0, finite = TRUE)
+  }
 
   lrn = makeLearner("classif.rpart")
   lrn = makeFilterWrapper(learner = lrn, fw.method = "FSelectorRcpp_information.gain", fw.perc = 0.1)

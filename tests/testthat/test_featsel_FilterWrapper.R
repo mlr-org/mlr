@@ -44,7 +44,7 @@ test_that("FilterWrapper with ensemble function in a train call", {
 
   # no ensemble methods in basal.methods
   expect_error(makeFilterWrapper(lrn, fw.method = "E-min",
-   fw.basal.methods = c("E-min", "information.gain")))
+    fw.basal.methods = c("E-min", "information.gain")))
 
   # multiple fw.methods are not allowed when creating a filter.wrapper -> multiple inputs need to be specified in the par.set
   expect_error(makeFilterWrapper(lrn, fw.method = c("FSelector_chi.squared", "FSelectorRcpp_information.gain")))
@@ -57,5 +57,5 @@ test_that("FilterWrapper with ensemble function in a train call", {
 
   m = train(lrn2, binaryclass.task)
 
-  expect_class(m, c("FilterModel","BaseWrapperModel", "WrappedModel"))
+  expect_class(m, c("FilterModel", "BaseWrapperModel", "WrappedModel"))
 })

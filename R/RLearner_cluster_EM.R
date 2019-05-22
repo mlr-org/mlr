@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.cluster.EM = function() {
-
   makeRLearnerCluster(
     cl = "cluster.EM",
     package = "RWeka",
@@ -27,14 +26,12 @@ makeRLearner.cluster.EM = function() {
 
 #' @export
 trainLearner.cluster.EM = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   ctrl = RWeka::Weka_control(...)
   RWeka::make_Weka_clusterer("weka/clusterers/EM")(getTaskData(.task, .subset), control = ctrl)
 }
 
 #' @export
 predictLearner.cluster.EM = function(.learner, .model, .newdata, ...) {
-
   # EM returns cluster indices (i.e. starting from 0, which some tools don't like
   as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
 }

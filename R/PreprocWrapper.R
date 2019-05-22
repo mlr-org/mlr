@@ -74,7 +74,6 @@ trainLearner.PreprocWrapper = function(.learner, .task, .subset = NULL, ...) {
 
 #' @export
 predictLearner.PreprocWrapper = function(.learner, .model, .newdata, ...) {
-
   .newdata = .learner$predict(.newdata, .model$task.desc$target,
     .learner$par.vals, .model$learner.model$control)
   if (!is.data.frame(.newdata)) {

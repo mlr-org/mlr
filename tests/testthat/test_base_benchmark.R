@@ -1,7 +1,6 @@
 context("benchmark")
 
 test_that("benchmark", {
-
   if (getRversion() > "3.5.3") {
     suppressWarnings(RNGversion("3.5.0"))
   }
@@ -257,7 +256,6 @@ test_that("drop option works for BenchmarkResults_operators", {
 
   # check all other functions that use 'drop' briefly
   testDropOption = function(bmr, fun, new.names, ...) {
-
     extra.args = list(...)
     res = do.call(fun, c(list(bmr, drop = TRUE), extra.args))
     expect_true(all(names(res) == new.names))
@@ -279,19 +277,19 @@ test_that("benchmark works with ensemble filters", {
 
   par.set <- makeParamSet(
     makeNumericParam("C", lower = -15, upper = 15,
-                     trafo = function(x) 2 ^ x),
+      trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -15, upper = 15,
-                     trafo = function(x) 2 ^ x),
+      trafo = function(x) 2^x),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeDiscreteVectorParam("fw.basal.methods", len = 2,
-                            values = c("anova.test", "cforest.importance", "FSelector_chi.squared",
-                                       "FSelector_gain.ratio", "FSelector_information.gain", "FSelector_oneR",
-                                       "FSelector_relief", "FSelector_symmetrical.uncertainty", "FSelectorRcpp_gain.ratio",
-                                       "FSelectorRcpp_information.gain", "FSelectorRcpp_symmetrical.uncertainty",
-                                       "kruskal.test", "praznik_CMIM", "praznik_DISR", "praznik_JMI",
-                                       "praznik_JMIM", "praznik_MIM", "praznik_MRMR", "praznik_NJMIM",
-                                       "randomForest.importance", "randomForestSRC.rfsrc", "randomForestSRC.var.select",
-                                       "ranger.impurity", "ranger.permutation", "variance"))
+      values = c("anova.test", "cforest.importance", "FSelector_chi.squared",
+        "FSelector_gain.ratio", "FSelector_information.gain", "FSelector_oneR",
+        "FSelector_relief", "FSelector_symmetrical.uncertainty", "FSelectorRcpp_gain.ratio",
+        "FSelectorRcpp_information.gain", "FSelectorRcpp_symmetrical.uncertainty",
+        "kruskal.test", "praznik_CMIM", "praznik_DISR", "praznik_JMI",
+        "praznik_JMIM", "praznik_MIM", "praznik_MRMR", "praznik_NJMIM",
+        "randomForest.importance", "randomForestSRC.rfsrc", "randomForestSRC.var.select",
+        "ranger.impurity", "ranger.permutation", "variance"))
   )
 
   task.names = c("binary", "multiclass")
@@ -300,10 +298,10 @@ test_that("benchmark works with ensemble filters", {
   tune_ctrl = makeTuneControlRandom(maxit = 3)
 
   tune_wrapper_svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
-                                     control = tune_ctrl, show.info = FALSE,
-                                     measures = list(acc))
+    control = tune_ctrl, show.info = FALSE,
+    measures = list(acc))
 
   expect_class(benchmark(learners = tune_wrapper_svm, task = tasks,
-                 resampling = rin, measures = list(acc)), "BenchmarkResult"
-               )
+    resampling = rin, measures = list(acc)), "BenchmarkResult"
+  )
 })
