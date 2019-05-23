@@ -97,7 +97,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
     out = out[[1L]]
     colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
   } else {
-    out = setDF(rbindlist(lapply(out, as.data.table), fill = TRUE, idcol = "learner"))
+    out = setDF(rbindlist(lapply(out, as.data.table), fill = TRUE, idcol = "learner", use.names = TRUE))
     colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
   }
 
@@ -242,11 +242,11 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' pred = predict(fit, task = sonar.task)
 #' roc = generateThreshVsPerfData(pred, list(fpr, tpr))
 #' plotROCCurves(roc)
-#' 
+#'
 #' r = bootstrapB632plus(lrn, sonar.task, iters = 3)
 #' roc_r = generateThreshVsPerfData(r, list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_r)
-#' 
+#'
 #' r2 = crossval(lrn, sonar.task, iters = 3)
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
