@@ -38,8 +38,9 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
   rug = TRUE, pretty.names = TRUE) {
 
   task.type = obj$task.desc$type
-  if (task.type %nin% c("regr", "classif"))
+  if (task.type %nin% c("regr", "classif")) {
     stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
+  }
 
   df = as.data.frame(obj)
 
@@ -52,13 +53,15 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
 plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth = TRUE,
   rug = TRUE, pretty.names = TRUE) {
 
-  task.type = getBMRObjects(obj, as.df = TRUE, fun = function(X){
+  task.type = getBMRObjects(obj, as.df = TRUE, fun = function(X) {
+
     getRRTaskDesc(X)$type
   })
   task.type = unique(task.type$p)
 
-  if (task.type %nin% c("regr", "classif"))
+  if (task.type %nin% c("regr", "classif")) {
     stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
+  }
 
   df = getBMRPredictions(obj, as.df = TRUE)
 
@@ -85,10 +88,12 @@ makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
     } else {
       p = p + geom_point()
 
-      if (loess.smooth)
+      if (loess.smooth) {
         p = p + geom_smooth(se = FALSE)
-      if (rug)
+      }
+      if (rug) {
         p = p + geom_rug(color = "red")
+      }
     }
     p = p + ggtitle("True value vs. fitted value")
   } else {

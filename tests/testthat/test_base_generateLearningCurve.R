@@ -43,7 +43,6 @@ test_that("generateLearningCurve", {
   testFacetting(q, nrow = 2L)
   q = plotLearningCurve(r, facet.wrap.ncol = 2L, facet = "learner")
   testFacetting(q, ncol = 2L)
-
 })
 
 test_that("generateLearningCurve works if single learner is passed (not wrapped in list)", {

@@ -21,18 +21,19 @@
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda", predict.type = "prob")
 #' mod = train(lrn, task)
-#'
+#' 
 #' # predict probabilities and compute performance
 #' pred = predict(mod, newdata = iris)
 #' performance(pred, measures = mmce)
 #' head(as.data.frame(pred))
-#'
+#' 
 #' # adjust threshold and predict probabilities again
 #' threshold = c(setosa = 0.4, versicolor = 0.3, virginica = 0.3)
 #' pred = setThreshold(pred, threshold = threshold)
 #' performance(pred, measures = mmce)
 #' head(as.data.frame(pred))
 setThreshold = function(pred, threshold) {
+
   # dont check for NAs in response, this will get overwritten anyway.
   # and object might not be constructed in full when we call this in Prediction
   checkPrediction(pred, task.type = c("classif", "multilabel"), predict.type = "prob", no.na = FALSE)
@@ -44,8 +45,9 @@ setThreshold = function(pred, threshold) {
     threshold = c(threshold, 1 - threshold)
     names(threshold) = c(td$positive, td$negative)
   }
-  if (length(threshold) > 1L && !setequal(levs, names(threshold)))
+  if (length(threshold) > 1L && !setequal(levs, names(threshold))) {
     stop("Threshold names must correspond to classes!")
+  }
   p = getPredictionProbabilities(pred, cl = levs)
   # resort so we have same order in threshold and p
   threshold = threshold[levs]
@@ -55,7 +57,9 @@ setThreshold = function(pred, threshold) {
     # 0 / 0 can produce NaNs. For a 0 threshold we always want Inf weight for that class
     p[is.nan(p)] = Inf
     ind = getMaxIndexOfRows(p)
-    pred$data$response = factor(ind, levels = seq_along(levs), labels = levs)
+    class(ind) = "factor"
+    attr(ind, "levels") = levs
+    pred$data$response = ind
   } else if (ttype == "multilabel") {
     # substract threshold from every entry, then check if > 0, then set response level
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "-", threshold)
@@ -65,4 +69,3 @@ setThreshold = function(pred, threshold) {
   pred$threshold = threshold
   return(pred)
 }
-

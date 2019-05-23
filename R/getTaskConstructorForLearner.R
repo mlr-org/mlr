@@ -1,4 +1,5 @@
 getTaskConstructorForLearner = function(learner) {
+
   while (inherits(learner, "BaseWrapper"))
     learner = learner$next.learner
   cl = class(learner)

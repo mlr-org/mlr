@@ -21,11 +21,13 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(aggregation, c("default", "mean"))
   n.learners = length(bmr$learners)
-  if (n.learners < 2)
+  if (n.learners < 2) {
     stop("Benchmark results for at least two learners are required")
+  }
   n.tasks = length(bmr$results)
-  if (n.tasks < 2)
+  if (n.tasks < 2) {
     stop("Benchmark results for at least two tasks are required")
+  }
 
   # aggregate mean or default over iterations
   if (aggregation == "mean") {

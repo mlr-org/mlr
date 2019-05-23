@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.lssvm = function() {
+
   makeRLearnerClassif(
     cl = "classif.lssvm",
     package = "kernlab",
@@ -34,20 +35,23 @@ makeRLearner.classif.lssvm = function() {
 
 #' @export
 trainLearner.classif.lssvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
-# FIXME: custom kernel. freezes? check mailing list
-# FIXME: unify cla + regr, test all sigma stuff
+
+  # FIXME: custom kernel. freezes? check mailing list
+  # FIXME: unify cla + regr, test all sigma stuff
 
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
 
-  if (base::length(kpar))
+  if (base::length(kpar)) {
     kernlab::lssvm(f, data = getTaskData(.task, .subset), kpar = kpar, ...)
-  else
+  } else {
     kernlab::lssvm(f, data = getTaskData(.task, .subset), ...)
+  }
 }
 
 #' @export
 predictLearner.classif.lssvm = function(.learner, .model, .newdata, ...) {
+
   type = switch(.learner$predict.type, "response")
   kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

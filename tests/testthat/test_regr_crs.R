@@ -17,7 +17,9 @@ test_that("regr_crs", {
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    suppressWarnings({m = do.call(crs::crs, pars)})
+    suppressWarnings({
+      m = do.call(crs::crs, pars)
+    })
     set.seed(getOption("mlr.debug.seed"))
     pred = predict(m, newdata = regr.test)
     attr(pred, "lwr") = NULL

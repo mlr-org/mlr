@@ -27,17 +27,19 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     if (is.error(learner2)) {
       set.pars.ok = FALSE
       errmsg = as.character(learner2)
-      if (show.info)
+      if (show.info) {
         messagef("[Tune-x] Setting hyperpars failed: %s", errmsg)
+      }
     }
   } else if (inherits(control, "FeatSelControl")) {
     task = subsetTask(task, features = bits.to.features(state, task))
   }
 
   # if no problems: resample + measure time
-  if (show.info)
+  if (show.info) {
     prev.stage = log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob,
       state, NA_real_, remove.nas, stage = 1L)
+  }
   if (set.pars.ok) {
     exec.time = measureTime({
       r = resample.fun(learner2, task, resampling, measures = measures, show.info = FALSE)
@@ -60,21 +62,24 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     # sort msgs by iters, so iter1, iter2, ...
     errmsgs = as.character(t(r$err.msgs[, -1L]))
     notna = !is.na(errmsgs)
-    if (any(notna))
+    if (any(notna)) {
       errmsg = errmsgs[notna][1L]
+    }
     err.dumps = r$err.dumps
   } else {
     # we still need to define a non-NULL threshold, if tuning it was requested
-    if (control$tune.threshold)
+    if (control$tune.threshold) {
       threshold = NA_real_
+    }
   }
   # if eval was not ok, everything should have been initailized to NAs
 
-  if (show.info)
+  if (show.info) {
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y,
       remove.nas, stage = 2L, prev.stage = prev.stage)
+  }
   list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold,
-      err.dumps = err.dumps)
+    err.dumps = err.dumps)
 }
 
 # evaluates a list of states by calling evalOptimizationState
@@ -87,10 +92,12 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   opt.path, show.info, states, dobs, eols, remove.nas, resample.fun, level) {
 
   n = length(states)
-  if (length(dobs) == 1L)
+  if (length(dobs) == 1L) {
     dobs = rep(dobs, n)
-  if (length(eols) == 1L)
+  }
+  if (length(eols) == 1L) {
     eols = rep(eols, n)
+  }
   parallelLibrary("mlr", master = FALSE, level = level, show.info = FALSE)
   exportMlrOptions(level = level)
   res.list = parallelMap(evalOptimizationState, dobs, states, level = level,

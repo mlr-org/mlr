@@ -22,7 +22,7 @@ test_that("getHyperPars", {
   lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
   expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
 
-  #Missing values should not be omitted and printed
+  # Missing values should not be omitted and printed
   lrn = makeLearner("classif.xgboost", missing = NA)
   expect_output(print(lrn), "missing=NA")
   lrn = makeLearner("regr.xgboost", missing = NA)

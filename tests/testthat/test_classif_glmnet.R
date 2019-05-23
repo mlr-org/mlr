@@ -15,8 +15,9 @@ test_that("classif_glmnet", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
-    if (is.null(s))
+    if (is.null(s)) {
       s = 0.01
+    }
     parset[["s"]] = NULL
     x = binaryclass.train
     y = x[, binaryclass.class.col]
@@ -45,5 +46,4 @@ test_that("classif_glmnet", {
     binaryclass.train.inds, old.predicts.list, parset.list)
   testProbParsets("classif.glmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
-
 })

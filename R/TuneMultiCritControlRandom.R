@@ -6,12 +6,13 @@
 makeTuneMultiCritControlRandom = function(same.resampling.instance = TRUE,
   maxit = 100L, log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
-  if (is.null(budget))
+  if (is.null(budget)) {
     budget = maxit
-  else if (is.null(maxit))
+  } else if (is.null(maxit)) {
     maxit = budget
-  else if (budget != maxit)
+  } else if (budget != maxit) {
     stopf("The parameters budget (%i) and maxit (%i) differ.", budget, maxit)
+  }
   maxit = asCount(maxit)
   budget = asCount(budget)
 
@@ -19,4 +20,3 @@ makeTuneMultiCritControlRandom = function(same.resampling.instance = TRUE,
     maxit = maxit, log.fun = log.fun, final.dw.perc = final.dw.perc,
     budget = budget, cl = "TuneMultiCritControlRandom")
 }
-

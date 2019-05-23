@@ -36,6 +36,7 @@ test_that("getResamplingIndices works with getFeatSelResult", {
   lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl)
 
   r = resample(lrn2, multiclass.task, outer, extract = function(model) {
+
     getFeatSelResult(model)
   })
 
@@ -52,11 +53,11 @@ test_that("getResamplingIndices(inner = TRUE) correctly translates the inner ind
   df = multiclass.df
   fixed = as.factor(rep(1:5, rep(30, 5)))
   ct = makeClassifTask(target = multiclass.target, data = df, blocking = fixed)
-  lrn = makeLearner("classif.lda")
-  ctrl = makeTuneControlRandom(maxit = 2)
-  ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
-  inner = makeResampleDesc("CV", iters = 4, fixed = TRUE)
-  outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
+  lrn = makeLearner("classif.ranger")
+  ctrl = makeTuneControlGrid()
+  ps = makeParamSet(makeIntegerParam("num.trees", lower = 50, upper = 70))
+  inner = makeResampleDesc("CV", fixed = TRUE)
+  outer = makeResampleDesc("CV", fixed = TRUE)
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE)
   p = resample(tune_wrapper, ct, outer, show.info = FALSE,

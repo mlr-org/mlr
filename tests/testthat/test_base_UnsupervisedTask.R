@@ -31,5 +31,4 @@ test_that("UnsupervisedTask", {
   expect_warning(makeClusterTask("cluster", iris[1:10, ], fixup.data = "warn"), "Empty factor levels")
 
   expect_warning(makeClusterTask("cluster", iris[1:10, ], fixup.data = "quiet"), NA)
-
 })

@@ -26,6 +26,7 @@ NULL
 
 #' @export
 makeRLearner.classif.featureless = function() {
+
   makeRLearnerClassif(
     cl = "classif.featureless",
     package = "mlr",
@@ -41,6 +42,7 @@ makeRLearner.classif.featureless = function() {
 #' @export
 trainLearner.classif.featureless = function(.learner, .task, .subset, .weights = NULL,
   method = "majority", ...) {
+
   y = getTaskTargets(.task)
   if (!is.null(.subset)) {
     y = y[.subset]
@@ -53,6 +55,7 @@ trainLearner.classif.featureless = function(.learner, .task, .subset, .weights =
 
 #' @export
 predictLearner.classif.featureless = function(.learner, .model, .newdata, ...) {
+
   # extract some shortcuts
   n = nrow(.newdata)
   ptype = .learner$predict.type

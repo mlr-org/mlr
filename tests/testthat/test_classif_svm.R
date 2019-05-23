@@ -1,12 +1,12 @@
 context("classif_svm")
 
 # we cannot do a prob test, as set.seed sems not to work on e1071 svm for the prob parameters!
-#requirePackagesOrSkip("e1071", default.method = "load")
-#set.seed(1)
-#m1=svm(Species~., data=iris, probability=T)
-#set.seed(1)
-#m2=svm(Species~., data=iris, probability=T)
-#all.equal(m1, m2)
+# requirePackagesOrSkip("e1071", default.method = "load")
+# set.seed(1)
+# m1=svm(Species~., data=iris, probability=T)
+# set.seed(1)
+# m2=svm(Species~., data=iris, probability=T)
+# all.equal(m1, m2)
 
 test_that("classif_svm", {
   requirePackagesOrSkip("e1071", default.method = "load")
@@ -34,11 +34,12 @@ test_that("classif_svm", {
   }
 
   testSimpleParsets("classif.svm", multiclass.df, multiclass.target,
-    multiclass.train.inds, old.predicts.list,  parset.list)
-  #testProbParsets("classif.svm", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list, parset.list)
+  # testProbParsets("classif.svm", multiclass.df, multiclass.target,
   #  multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset = 1:150, ...) {
+
     e1071::svm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5)
   }
 
