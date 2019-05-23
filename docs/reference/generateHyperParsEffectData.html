@@ -372,7 +372,7 @@ partial dependence should be generated, and the optimization algorithm used.</p>
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>pid.task</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>rdesc</span>,
-<span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
+  <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
 <span class='no'>data</span> <span class='kw'>=</span> <span class='fu'>generateHyperParsEffectData</span>(<span class='no'>res</span>)
 <span class='no'>plt</span> <span class='kw'>=</span> <span class='fu'><a href='plotHyperParsEffect.html'>plotHyperParsEffect</a></span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"mmce.test.mean"</span>)
 <span class='no'>plt</span> + <span class='fu'>ylab</span>(<span class='st'>"Misclassification Error"</span>)
@@ -382,9 +382,9 @@ partial dependence should be generated, and the optimization algorithm used.</p>
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneWrapper.html'>makeTuneWrapper</a></span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>,
-                      <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>)
+  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>pid.task</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>cv2</span>,
-               <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getTuneResult</span>)
+  <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getTuneResult</span>)
 <span class='no'>data</span> <span class='kw'>=</span> <span class='fu'>generateHyperParsEffectData</span>(<span class='no'>res</span>)
 <span class='fu'><a href='plotHyperParsEffect.html'>plotHyperParsEffect</a></span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"mmce.test.mean"</span>, <span class='kw'>plot.type</span> <span class='kw'>=</span> <span class='st'>"line"</span>)
 <span class='co'># }</span></pre>

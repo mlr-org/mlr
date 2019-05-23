@@ -97,7 +97,7 @@
 #' fit = train(lrn, bh.task)
 #' pd = generatePartialDependenceData(fit, bh.task, "lstat")
 #' plotPartialDependence(pd, data = getTaskData(bh.task))
-#' 
+#'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
 #' pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
@@ -222,7 +222,7 @@ generatePartialDependenceData = function(obj, input, features = NULL,
       out = parallelMap(doDerivativeMarginalPrediction, x = features, more.args = args)
     }
   }
-  out = rbindlist(out, fill = TRUE)
+  out = rbindlist(out, fill = TRUE, use.names = TRUE)
 
   if (length(target) == 1L) {
     if (!multi.fun) {

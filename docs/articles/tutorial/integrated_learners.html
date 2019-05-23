@@ -274,10 +274,10 @@
       <h3 class="hasAnchor">
 <a href="#toc" class="anchor"></a>Table of Contents</h3>
       <ul>
-<li><a href="#classification-83">Classification (83)</a></li>
-      <li><a href="#regression-60">Regression (60)</a></li>
+<li><a href="#classification-82">Classification (82)</a></li>
+      <li><a href="#regression-59">Regression (59)</a></li>
       <li><a href="#survival-analysis-12">Survival analysis (12)</a></li>
-      <li><a href="#cluster-analysis-9">Cluster analysis (9)</a></li>
+      <li><a href="#cluster-analysis-10">Cluster analysis (10)</a></li>
       <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
       <li><a href="#multilabel-classification-3">Multilabel classification (3)</a></li>
       </ul>
@@ -293,9 +293,9 @@
 <p>This page lists the learning methods already integrated in <code>mlr</code>.</p>
 <p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>Ord.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods specific to the type of learning task. See also <code><a href="../../reference/RLearner.html">RLearner()</a></code> for details.</p>
-<div id="classification-83" class="section level1">
+<div id="classification-82" class="section level1">
 <h1 class="hasAnchor">
-<a href="#classification-83" class="anchor"></a>Classification (83)</h1>
+<a href="#classification-82" class="anchor"></a>Classification (82)</h1>
 <p>For classification the following additional learner properties are relevant and shown in column <strong>Props</strong>:</p>
 <ul>
 <li>
@@ -920,18 +920,6 @@
 </tr>
 <tr class="even">
 <td align="left">
-<strong>classif.liquidSVM</strong> <br><em>liquidSVM</em> <br><br>Support Vector Machines (liquidSVM)</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/liquidSVM/">liquidSVM</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">twoclass<br>multiclass</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">
 <strong>classif.logreg</strong> <br><em>logreg</em> <br><br>Logistic Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
 <td align="center">X</td>
@@ -942,7 +930,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left">Delegates to <code>glm</code> with <code>family = binomial(link = 'logit')</code>. We set ‘model’ to FALSE by default to save memory.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.lssvm</strong> <br><em>lssvm</em> <br><br>Least Squares Support Vector Machine</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
@@ -955,7 +943,7 @@
 <td align="left">
 <code>fitted</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.lvq1</strong> <br><em>lvq1</em> <br><br>Learning Vector Quantization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/class/">class</a></td>
@@ -967,7 +955,7 @@
 <td align="left">twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.mda</strong> <br><em>mda</em> <br><br>Mixture Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mda/">mda</a></td>
@@ -980,7 +968,7 @@
 <td align="left">
 <code>keep.fitted</code> has been set to <code>FALSE</code> by default for speed and we use <code>start.method = "lvq"</code> for more robust behavior / less technical crashes.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.mlp</strong> <br><em>mlp</em> <br><br>Multi-Layer Perceptron</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RSNNS/">RSNNS</a></td>
@@ -992,7 +980,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.multinom</strong> <br><em>multinom</em> <br><br>Multinomial Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nnet/">nnet</a></td>
@@ -1004,7 +992,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.naiveBayes</strong> <br><em>nbayes</em> <br><br>Naive Bayes</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
@@ -1016,7 +1004,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.neuralnet</strong> <br><em>neuralnet</em> <br><br>Neural Network from neuralnet</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/neuralnet/">neuralnet</a></td>
@@ -1029,7 +1017,7 @@
 <td align="left">
 <code>err.fct</code> has been set to <code>ce</code> and <code>linear.output</code> to FALSE to do classification.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.nnet</strong> <br><em>nnet</em> <br><br>Neural Network</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nnet/">nnet</a></td>
@@ -1042,7 +1030,7 @@
 <td align="left">
 <code>linout=TRUE</code> is hardcoded for regression. <code>size</code> has been set to <code>3</code> by default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.nnTrain</strong> <br><em>nn.train</em> <br><br>Training Neural Network by Backpropagation</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/">deepnet</a></td>
@@ -1055,7 +1043,7 @@
 <td align="left">
 <code>output</code> set to <code>softmax</code> by default. <code>max.number.of.layers</code> can be set to control and tune the maximal number of layers specified via <code>hidden</code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.nodeHarvest</strong> <br><em>nodeHarvest</em> <br><br>Node Harvest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/">nodeHarvest</a></td>
@@ -1067,7 +1055,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.OneR</strong> <br><em>oner</em> <br><br>1-R Classifier</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
@@ -1079,7 +1067,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.pamr</strong> <br><em>pamr</em> <br><br>Nearest shrunken centroid</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/pamr/">pamr</a></td>
@@ -1091,7 +1079,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left">Threshold for prediction (<code>threshold.predict</code>) has been set to <code>1</code> by default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.PART</strong> <br><em>part</em> <br><br>PART Decision Lists</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
@@ -1103,7 +1091,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.penalized</strong> <br><em>penalized</em> <br><br>Penalized Logistic Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
@@ -1115,7 +1103,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left">trace=FALSE was set by default to disable logging output.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.plr</strong> <br><em>plr</em> <br><br>Logistic Regression with a L2 Penalty</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stepPlr/">stepPlr</a></td>
@@ -1127,7 +1115,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left">AIC and BIC penalty types can be selected via the new parameter <code>cp.type</code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.plsdaCaret</strong> <br><em>plsdacaret</em> <br><br>Partial Least Squares (PLS) Discriminant Analysis</td>
 <td align="left">
@@ -1141,7 +1129,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.probit</strong> <br><em>probit</em> <br><br>Probit Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
@@ -1153,7 +1141,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left">Delegates to <code>glm</code> with <code>family = binomial(link = 'probit')</code>. We set ‘model’ to FALSE by default to save memory.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.qda</strong> <br><em>qda</em> <br><br>Quadratic Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/MASS/">MASS</a></td>
@@ -1165,7 +1153,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">Learner parameter <code>predict.method</code> maps to <code>method</code> in <code>predict.qda</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.quaDA</strong> <br><em>quada</em> <br><br>Quadratic Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/">DiscriMiner</a></td>
@@ -1177,7 +1165,7 @@
 <td align="left">twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.randomForest</strong> <br><em>rf</em> <br><br>Random Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/randomForest/">randomForest</a></td>
@@ -1189,7 +1177,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>class.weights<br>featimp<br>oobpreds</td>
 <td align="left">Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.randomForestSRC</strong> <br><em>rfsrc</em> <br><br>Random Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
@@ -1202,7 +1190,7 @@
 <td align="left">
 <code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.ranger</strong> <br><em>ranger</em> <br><br>Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/ranger/">ranger</a></td>
@@ -1214,7 +1202,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>featimp<br>oobpreds</td>
 <td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>order</code> for all splitrules. If predict.type=‘prob’ we set ‘probability=TRUE’ in ranger.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.rda</strong> <br><em>rda</em> <br><br>Regularized Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/klaR/">klaR</a></td>
@@ -1227,7 +1215,7 @@
 <td align="left">
 <code>estimate.error</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.rFerns</strong> <br><em>rFerns</em> <br><br>Random ferns</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rFerns/">rFerns</a></td>
@@ -1239,7 +1227,7 @@
 <td align="left">twoclass<br>multiclass<br>oobpreds</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.rknn</strong> <br><em>rknn</em> <br><br>Random k-Nearest-Neighbors</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rknn/">rknn</a></td>
@@ -1251,7 +1239,7 @@
 <td align="left">twoclass<br>multiclass</td>
 <td align="left">k restricted to &lt; 99 as the code allocates arrays of static size</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.rotationForest</strong> <br><em>rotationForest</em> <br><br>Rotation Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rotationForest/">rotationForest</a></td>
@@ -1263,7 +1251,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.rpart</strong> <br><em>rpart</em> <br><br>Decision Tree</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
@@ -1276,7 +1264,7 @@
 <td align="left">
 <code>xval</code> has been set to <code>0</code> by default for speed.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.RRF</strong> <br><em>RRF</em> <br><br>Regularized Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RRF/">RRF</a></td>
@@ -1288,7 +1276,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>featimp</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.rrlda</strong> <br><em>rrlda</em> <br><br>Robust Regularized Linear Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rrlda/">rrlda</a></td>
@@ -1300,7 +1288,7 @@
 <td align="left">twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.saeDNN</strong> <br><em>sae.dnn</em> <br><br>Deep neural network with weights initialized by Stacked AutoEncoder</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/">deepnet</a></td>
@@ -1313,7 +1301,7 @@
 <td align="left">
 <code>output</code> set to <code>"softmax"</code> by default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.sda</strong> <br><em>sda</em> <br><br>Shrinkage Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/sda/">sda</a></td>
@@ -1325,7 +1313,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.sparseLDA</strong> <br><em>sparseLDA</em> <br><br>Sparse Discriminant Analysis</td>
 <td align="left">
@@ -1339,7 +1327,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">Arguments <code>Q</code> and <code>stop</code> are not yet provided as they depend on the task.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.svm</strong> <br><em>svm</em> <br><br>Support Vector Machines (libsvm)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
@@ -1351,7 +1339,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>class.weights</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.xgboost</strong> <br><em>xgboost</em> <br><br>eXtreme Gradient Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
@@ -1366,9 +1354,9 @@
 </tbody>
 </table>
 </div>
-<div id="regression-60" class="section level1">
+<div id="regression-59" class="section level1">
 <h1 class="hasAnchor">
-<a href="#regression-60" class="anchor"></a>Regression (60)</h1>
+<a href="#regression-59" class="anchor"></a>Regression (59)</h1>
 <p>Additional learner properties:</p>
 <ul>
 <li>
@@ -1889,18 +1877,6 @@
 </tr>
 <tr class="odd">
 <td align="left">
-<strong>regr.liquidSVM</strong> <br><em>liquidSVM</em> <br><br>Support Vector Machines (liquidSVM)</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/liquidSVM/">liquidSVM</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong>regr.lm</strong> <br><em>lm</em> <br><br>Simple Linear Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
 <td align="center">X</td>
@@ -1911,7 +1887,7 @@
 <td align="left">se</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.mars</strong> <br><em>mars</em> <br><br>Multivariate Adaptive Regression Splines</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mda/">mda</a></td>
@@ -1923,7 +1899,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.mob</strong> <br><em>mob</em> <br><br>Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left">
@@ -1937,7 +1913,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.nnet</strong> <br><em>nnet</em> <br><br>Neural Network</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nnet/">nnet</a></td>
@@ -1950,7 +1926,7 @@
 <td align="left">
 <code>size</code> has been set to <code>3</code> by default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.nodeHarvest</strong> <br><em>nodeHarvest</em> <br><br>Node Harvest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/">nodeHarvest</a></td>
@@ -1962,7 +1938,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.pcr</strong> <br><em>pcr</em> <br><br>Principal Component Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/pls/">pls</a></td>
@@ -1974,7 +1950,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.penalized</strong> <br><em>penalized</em> <br><br>Penalized Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
@@ -1986,7 +1962,7 @@
 <td align="left"></td>
 <td align="left">trace=FALSE was set by default to disable logging output.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.plsr</strong> <br><em>plsr</em> <br><br>Partial Least Squares Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/pls/">pls</a></td>
@@ -1998,7 +1974,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.randomForest</strong> <br><em>rf</em> <br><br>Random Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/randomForest/">randomForest</a></td>
@@ -2010,7 +1986,7 @@
 <td align="left">featimp<br>oobpreds<br>se</td>
 <td align="left">See <code><a href="../../reference/regr.randomForest.html">?regr.randomForest</a></code> for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = ‘se’ and se.method = ‘jackknife’ (the default) then it is automatically set to TRUE.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.randomForestSRC</strong> <br><em>rfsrc</em> <br><br>Random Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
@@ -2023,7 +1999,7 @@
 <td align="left">
 <code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.ranger</strong> <br><em>ranger</em> <br><br>Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/ranger/">ranger</a></td>
@@ -2035,7 +2011,7 @@
 <td align="left">featimp<br>oobpreds<br>se</td>
 <td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>order</code> for all splitrules.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.rknn</strong> <br><em>rknn</em> <br><br>Random k-Nearest-Neighbors</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rknn/">rknn</a></td>
@@ -2047,7 +2023,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.rpart</strong> <br><em>rpart</em> <br><br>Decision Tree</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
@@ -2060,7 +2036,7 @@
 <td align="left">
 <code>xval</code> has been set to <code>0</code> by default for speed.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.RRF</strong> <br><em>RRF</em> <br><br>Regularized Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RRF/">RRF</a></td>
@@ -2072,7 +2048,7 @@
 <td align="left">featimp</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.rsm</strong> <br><em>rsm</em> <br><br>Response Surface Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rsm/">rsm</a></td>
@@ -2084,7 +2060,7 @@
 <td align="left"></td>
 <td align="left">You select the order of the regression by using <code>modelfun = "FO"</code> (first order), <code>"TWI"</code> (two-way interactions, this is with 1st oder terms!) and <code>"SO"</code> (full second order).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.rvm</strong> <br><em>rvm</em> <br><br>Relevance Vector Machine</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
@@ -2096,7 +2072,7 @@
 <td align="left"></td>
 <td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>rvm</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.slim</strong> <br><em>slim</em> <br><br>Sparse Linear Regression using Nonsmooth Loss Functions and L1 Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/flare/">flare</a></td>
@@ -2109,7 +2085,7 @@
 <td align="left">
 <code>lambda.idx</code> has been set to <code>3</code> by default.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.svm</strong> <br><em>svm</em> <br><br>Support Vector Machines (libsvm)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
@@ -2121,7 +2097,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.xgboost</strong> <br><em>xgboost</em> <br><br>eXtreme Gradient Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
@@ -2330,9 +2306,9 @@
 </tbody>
 </table>
 </div>
-<div id="cluster-analysis-9" class="section level1">
+<div id="cluster-analysis-10" class="section level1">
 <h1 class="hasAnchor">
-<a href="#cluster-analysis-9" class="anchor"></a>Cluster analysis (9)</h1>
+<a href="#cluster-analysis-10" class="anchor"></a>Cluster analysis (10)</h1>
 <p>Additional learner properties:</p>
 <ul>
 <li>
@@ -2454,6 +2430,18 @@
 </tr>
 <tr class="even">
 <td align="left">
+<strong>cluster.MiniBatchKmeans</strong> <br><em>MBatchKmeans</em> <br><br>MiniBatchKmeans</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/ClusterR/">ClusterR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob</td>
+<td align="left">Calls MiniBatchKmeans of package ClusterR. Argument <code>clusters</code> has default value of 2 if not provided by user.</td>
+</tr>
+<tr class="odd">
+<td align="left">
 <strong>cluster.SimpleKMeans</strong> <br><em>simplekmeans</em> <br><br>K-Means Clustering</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
@@ -2464,7 +2452,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>cluster.XMeans</strong> <br><em>xmeans</em> <br><br>XMeans (k-means with automatic determination of k)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
@@ -2561,10 +2549,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#classification-83">Classification (83)</a></li>
-      <li><a href="#regression-60">Regression (60)</a></li>
+<li><a href="#classification-82">Classification (82)</a></li>
+      <li><a href="#regression-59">Regression (59)</a></li>
       <li><a href="#survival-analysis-12">Survival analysis (12)</a></li>
-      <li><a href="#cluster-analysis-9">Cluster analysis (9)</a></li>
+      <li><a href="#cluster-analysis-10">Cluster analysis (10)</a></li>
       <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
       <li><a href="#multilabel-classification-3">Multilabel classification (3)</a></li>
       </ul>
