@@ -124,7 +124,7 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
   mock.filter = makeFilter(
     "mock.filter",
     desc = "Mock Filter",
-    pkg = "",
+    pkg = character(0),
 
     supported.tasks = c("classif", "regr", "surv"),
     supported.features = c("numerics", "factors"),
