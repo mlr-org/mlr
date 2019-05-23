@@ -312,6 +312,8 @@
 <li>
 <code>classif.liquidSVM</code> and <code>regr.liquidSVM</code> have been removed because <code>liquidSVM</code> has been removed from CRAN.</li>
 <li>fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of <code>data.table</code>s default in <code>rbindlist()</code>. See <a href='https://github.com/mlr-org/mlr/issues/2578'>#2578</a> for more information. (<a href='https://github.com/mllg'>@mllg</a>, <a href='https://github.com/mlr-org/mlr/issues/2579'>#2579</a>)</li>
+<li>
+<code>*.gbm()</code>: Prediction can now be done on only a subset of trees (<a href='https://github.com/smilesun'>@smilesun</a>, <a href='https://github.com/mlr-org/mlr/issues/1114'>#1114</a>)</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
