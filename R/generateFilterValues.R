@@ -6,7 +6,6 @@
 #' @template arg_task
 #' @importFrom tibble as_tibble
 #' @importFrom magrittr %>%
-#' @importFrom purrr flatten
 #' @importFrom rlang .data
 #' @importFrom dplyr enquo
 #' @param method ([character])\cr
