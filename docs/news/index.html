@@ -321,6 +321,14 @@
 <li>add learner <code>cluster.MiniBatchKmeans</code> from package <em>ClusterR</em> (<a href='https://github.com/Prasiddhi'>@Prasiddhi</a>, <a href='https://github.com/mlr-org/mlr/issues/2554'>#2554</a>)</li>
 </ul>
 </div>
+<div id="function---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#function---general" class="anchor"></a>function - general</h2>
+<ul>
+<li>fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of <code>data.table</code>s default in <code>rbindlist()</code>. See <a href='https://github.com/mlr-org/mlr/issues/2578'>#2578</a> for more information. (<a href='https://github.com/mllg'>@mllg</a>, <a href='https://github.com/mlr-org/mlr/issues/2579'>#2579</a>)</li>
+<li>fixed a bug in which <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options(on.learner.error)</a></code> was not respected in <code><a href="../reference/benchmark.html">benchmark()</a></code>. This caused <code><a href="../reference/benchmark.html">benchmark()</a></code> to stop even if it should have continued including <code>FailureModels</code> in the result (<a href='https://github.com/dagola'>@dagola</a>, <a href='https://github.com/mlr-org/mlr/issues/1984'>#1984</a>)</li>
+</ul>
+</div>
 </div>
     <div id="mlr-2-14-0" class="section level1">
 <h1 class="page-header">
