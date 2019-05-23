@@ -4,10 +4,6 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #' @template arg_task
-#' @importFrom tibble as_tibble
-#' @importFrom magrittr %>%
-#' @importFrom rlang .data
-#' @importFrom dplyr enquo
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC_importance}.
@@ -23,7 +19,7 @@
 #' @return ([FilterValues]). A `list` containing:
 #'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
-#'   \item{data}{([tbl]) with columns:
+#'   \item{data}{(`tibble`) with columns:
 #'     \itemize{
 #'       \item `name`([character])\cr
 #'         Name of feature.
@@ -132,10 +128,13 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     colnames(fval) = method
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
-    out = as_tibble(data.frame(name = row.names(fval),
-      type = types,
-      fval, row.names = NULL, stringsAsFactors = FALSE)) %>%
-      tidyr::gather(method, "value", !!enquo(method))
+    # directly using `tibble()` does not work here
+    out = tibble::as_tibble(data.frame(name = row.names(fval),
+      type = types, fval, row.names = NULL, stringsAsFactors = FALSE))
+
+    # eval(substitute() does not work here
+    out = tidyr::gather(out, method, "value", !!dplyr::enquo(method))
+
   }
 
   makeS3Obj("FilterValues",
@@ -147,8 +146,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  arrange(x$data, .data$method, desc(.data$value)) %>%
-    print(...)
+  print(x$data[with(x$data, order(method, -value)),])
 }
 #' Plot filter values using ggplot2.
 #'

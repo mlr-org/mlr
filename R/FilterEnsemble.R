@@ -7,7 +7,6 @@
 #' documentation for the `fun` parameter specific to each filter can
 #' be found in the description.
 #'
-#' @importFrom dplyr ungroup group_by arrange mutate summarise select bind_rows
 #' @importFrom rlang .data
 #' @param name (`character(1)`)\cr
 #'  Identifier for the filter.
@@ -26,7 +25,7 @@
 #' @export
 #' @family filter
 makeFilterEnsemble = function(name = "E-min",
-  basal.methods = c("randomForestSRC.rfsrc", "variance"),
+  basal.methods = c("randomForestSRC.importance", "variance"),
   desc = NULL, fun = NULL) {
   assertString(name)
   assertString(desc)
@@ -45,7 +44,6 @@ makeFilterEnsemble = function(name = "E-min",
 #'
 #' Returns a subset-able dataframe with filter information.
 #'
-#' @importFrom tibble tibble
 #' @param desc (`logical(1)`)\cr
 #'  Provide more detailed information about filters.
 #'  Default is `TRUE`.
@@ -75,6 +73,7 @@ listFilterEnsembleMethods = function(desc = TRUE) {
   }
   res = setRowNames(sortByCol(df, "id"), NULL)
   addClasses(res, "FilterMethodsList")
+  return(tibble::as_tibble(res))
 }
 
 #' @export
@@ -91,10 +90,8 @@ print.FilterEnsemble = function(x, ...) {
 }
 
 # E-min ----------------
-#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
-#' mutual information between the target and each individual feature minus the
-#' average mutual information of previously selected features and this feature
-#' using the \pkg{mRMRe} package.
+#' Minimum ensemble filter. Takes the best minimum value across all basal filter
+#' methods for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
@@ -109,30 +106,33 @@ makeFilterEnsemble(
       nselect = nselect, more.args = ...)
 
     # rank basal filters by method
-    fval_all_ranked_simple = fval$data %>%
-      group_by(.data$method) %>%
-      arrange(.data$value) %>%
-      mutate(rank = 1:length(.data$value)) %>%
-      ungroup()
+    fval_all_ranked_simple = transform(fval$data,
+      rank = ave(1:nrow(fval$data), method,
+        FUN = function(x) order(fval$data$value[x])))
 
-    # calculate ensemble filter
-    fval_ens = fval_all_ranked_simple %>%
-      group_by(.data$name) %>%
-      summarise(value = min(rank)) %>%
-      mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
-      mutate(method = "E-min")
+    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
+      order(value, rank)), ]
 
-    # merge ensemble and basal filters into one tbl
-    bind_rows(fval_all_ranked_simple, fval_ens) %>%
-      select(-rank)
+    ### calculate ensemble filter
+
+    # group by "name" and summarize the minimum of "rank"
+    fval_ens = aggregate(fval_all_ranked_simple$rank,
+      by = list(fval_all_ranked_simple$name), FUN = min)
+    colnames(fval_ens) = c("name", "value")
+
+    # add columns "type" and "method"
+    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$method = "E-mean"
+
+    # merge ensemble and basal filters
+    fval_all_ranked_simple$rank = NULL
+    return(rbind(fval_all_ranked_simple, fval_ens))
+
   }
 )
 
 # E-mean ----------------
-#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
-#' mutual information between the target and each individual feature minus the
-#' average mutual information of previously selected features and this feature
-#' using the \pkg{mRMRe} package.
+#' Mean ensemble filter. Takes the mean across all basal filter methods for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
@@ -147,30 +147,34 @@ makeFilterEnsemble(
       nselect = nselect, more.args = ...)
 
     # rank basal filters by method
-    fval_all_ranked_simple = fval$data %>%
-      group_by(.data$method) %>%
-      arrange(.data$value) %>%
-      mutate(rank = 1:length(.data$value)) %>%
-      ungroup()
+    fval_all_ranked_simple = transform(fval$data,
+      rank = ave(1:nrow(fval$data), method,
+        FUN = function(x) order(fval$data$value[x])))
 
-    # calculate ensemble filter
-    fval_ens = fval_all_ranked_simple %>%
-      group_by(.data$name) %>%
-      summarise(value = min(rank)) %>%
-      mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
-      mutate(method = "E-mean")
+    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
+      order(value, rank)), ]
 
-    # merge ensemble and basal filters into one tbl
-    bind_rows(fval_all_ranked_simple, fval_ens) %>%
-      select(-rank)
+    ### calculate ensemble filter
+
+    # group by "name" and summarize the minimum of "rank"
+    fval_ens = aggregate(fval_all_ranked_simple$rank,
+      by = list(fval_all_ranked_simple$name), FUN = mean)
+    colnames(fval_ens) = c("name", "value")
+
+    # add columns "type" and "method"
+    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$method = "E-mean"
+
+    # merge ensemble and basal filters
+    fval_all_ranked_simple$rank = NULL
+    return(rbind(fval_all_ranked_simple, fval_ens))
+
   }
 )
 
 # E-max ----------------
-#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
-#' mutual information between the target and each individual feature minus the
-#' average mutual information of previously selected features and this feature
-#' using the \pkg{mRMRe} package.
+#' Maximum ensemble filter. Takes the best maximum value across all basal filter
+#' methods for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
@@ -185,30 +189,33 @@ makeFilterEnsemble(
       nselect = nselect, more.args = ...)
 
     # rank basal filters by method
-    fval_all_ranked_simple = fval$data %>%
-      group_by(.data$method) %>%
-      arrange(.data$value) %>%
-      mutate(rank = 1:length(.data$value)) %>%
-      ungroup()
+    fval_all_ranked_simple = transform(fval$data,
+      rank = ave(1:nrow(fval$data), method,
+        FUN = function(x) order(fval$data$value[x])))
 
-    # calculate ensemble filter
-    fval_ens = fval_all_ranked_simple %>%
-      group_by(.data$name) %>%
-      summarise(value = max(rank)) %>%
-      mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
-      mutate(method = "E-max")
+    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
+      order(value, rank)), ]
 
-    # merge ensemble and basal filters into one tbl
-    bind_rows(fval_all_ranked_simple, fval_ens) %>%
-      select(-rank)
+    ### calculate ensemble filter
+
+    # group by "name" and summarize the minimum of "rank"
+    fval_ens = aggregate(fval_all_ranked_simple$rank,
+      by = list(fval_all_ranked_simple$name), FUN = max)
+    colnames(fval_ens) = c("name", "value")
+
+    # add columns "type" and "method"
+    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$method = "E-max"
+
+    # merge ensemble and basal filters
+    fval_all_ranked_simple$rank = NULL
+    return(rbind(fval_all_ranked_simple, fval_ens))
   }
 )
 
 # E-median ----------------
-#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
-#' mutual information between the target and each individual feature minus the
-#' average mutual information of previously selected features and this feature
-#' using the \pkg{mRMRe} package.
+#' Median ensemble filter. Takes the median across all basal filter methods for
+#' each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
@@ -223,30 +230,33 @@ makeFilterEnsemble(
       nselect = nselect, more.args = ...)
 
     # rank basal filters by method
-    fval_all_ranked_simple = fval$data %>%
-      group_by(.data$method) %>%
-      arrange(.data$value) %>%
-      mutate(rank = 1:length(.data$value)) %>%
-      ungroup()
+    fval_all_ranked_simple = transform(fval$data,
+      rank = ave(1:nrow(fval$data), method,
+        FUN = function(x) order(fval$data$value[x])))
 
-    # calculate ensemble filter
-    fval_ens = fval_all_ranked_simple %>%
-      group_by(.data$name) %>%
-      summarise(value = median(rank)) %>%
-      mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
-      mutate(method = "E-median")
+    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
+      order(value, rank)), ]
 
-    # merge ensemble and basal filters into one tbl
-    bind_rows(fval_all_ranked_simple, fval_ens) %>%
-      select(-rank)
+    ### calculate ensemble filter
+
+    # group by "name" and summarize the minimum of "rank"
+    fval_ens = aggregate(fval_all_ranked_simple$rank,
+      by = list(fval_all_ranked_simple$name), FUN = median)
+    colnames(fval_ens) = c("name", "value")
+
+    # add columns "type" and "method"
+    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$method = "E-median"
+
+    # merge ensemble and basal filters
+    fval_all_ranked_simple$rank = NULL
+    return(rbind(fval_all_ranked_simple, fval_ens))
   }
 )
 
 # E-Borda ----------------
-#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
-#' mutual information between the target and each individual feature minus the
-#' average mutual information of previously selected features and this feature
-#' using the \pkg{mRMRe} package.
+#' Borda ensemble filter. Takes the sum across all basal filter methods for each
+#' feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
@@ -261,21 +271,26 @@ makeFilterEnsemble(
       nselect = nselect, more.args = ...)
 
     # rank basal filters by method
-    fval_all_ranked_simple = fval$data %>%
-      group_by(.data$method) %>%
-      arrange(.data$value) %>%
-      mutate(rank = 1:length(.data$value)) %>%
-      ungroup()
+    fval_all_ranked_simple = transform(fval$data,
+      rank = ave(1:nrow(fval$data), method,
+        FUN = function(x) order(fval$data$value[x])))
 
-    # calculate ensemble filter
-    fval_ens = fval_all_ranked_simple %>%
-      group_by(.data$name) %>%
-      summarise(value = sum(rank)) %>%
-      mutate(type = fval$data$type[1:length(unique(fval$data$name))]) %>%
-      mutate(method = "E-Borda")
+    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
+      order(value, rank)), ]
 
-    # merge ensemble and basal filters into one tbl
-    bind_rows(fval_all_ranked_simple, fval_ens) %>%
-      select(-rank)
+    ### calculate ensemble filter
+
+    # group by "name" and summarize the minimum of "rank"
+    fval_ens = aggregate(fval_all_ranked_simple$rank,
+      by = list(fval_all_ranked_simple$name), FUN = sum)
+    colnames(fval_ens) = c("name", "value")
+
+    # add columns "type" and "method"
+    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$method = "E-max"
+
+    # merge ensemble and basal filters
+    fval_all_ranked_simple$rank = NULL
+    return(rbind(fval_all_ranked_simple, fval_ens))
   }
 )

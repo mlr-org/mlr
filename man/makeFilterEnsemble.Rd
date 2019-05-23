@@ -5,8 +5,8 @@
 \title{Create an ensemble feature filter.}
 \usage{
 makeFilterEnsemble(name = "E-min",
-  basal.methods = c("randomForestSRC.rfsrc", "variance"), desc = NULL,
-  fun = NULL)
+  basal.methods = c("randomForestSRC.importance", "variance"),
+  desc = NULL, fun = NULL)
 }
 \arguments{
 \item{name}{(\code{character(1)})\cr

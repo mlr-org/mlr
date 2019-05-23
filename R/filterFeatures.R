@@ -5,8 +5,6 @@
 #' Features are then selected via `select` and `val`.
 #'
 #' @importFrom rlang .data
-#' @importFrom dplyr arrange pull slice desc
-#' @importFrom magrittr %>% %<>%
 #' @template arg_task
 #' @param method (`character(1)`)\cr
 #'   See [listFilterMethods].
@@ -177,16 +175,19 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
       stopf("You supplied multiple filters. Please choose which should be used for the final subsetting of the features.")
     }
     if (is.null(select.method)) {
-      fval %<>% dplyr::filter(method == method)
+      fval = fval[fval$method == fval$method, ]
     } else {
       assertSubset(select.method, choices = unique(fval$method))
-      fval %<>% dplyr::filter(method == select.method)
+      fval = fval[fval$method == select.method, ]
     }
   }
   if (nselect > 0L) {
-    features = arrange(fval, method, desc(.data$value)) %>%
-      slice(1:nselect) %>%
-      pull(.data$name)
+
+    # order by method and (desc(value))
+    features = fval[with(fval, order(method, -value)), ]
+    # select names of top n
+    features = features[1:nselect, ]$name
+
   } else {
     features = NULL
   }

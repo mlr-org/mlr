@@ -32,7 +32,7 @@ Default is empty list.}
 (\link{FilterValues}). A \code{list} containing:
 \item{task.desc}{[\link{TaskDesc})\cr
 Task description.}
-\item{data}{(\link{tbl}) with columns:
+\item{data}{(\code{tibble}) with columns:
 \itemize{
 \item \code{name}(\link{character})\cr
 Name of feature.
