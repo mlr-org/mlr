@@ -4,6 +4,9 @@
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
 
+## function - general
+- `plotHyperParsEffect()` now supports facet visualization of hyperparam effects for nested cv (@MasonGallo, #1653)
+
 # mlr 2.14.0
 
 ## general
