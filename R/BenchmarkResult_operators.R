@@ -118,14 +118,14 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
       return(p)
     })
     if (as.df) {
-      xs = setDF(rbindlist(xs, fill = TRUE))
+      xs = setDF(rbindlist(xs, fill = TRUE, use.names = TRUE))
     } else {
       xs = setNames(xs, learner.ids)
     }
     return(xs)
   })
   if (as.df) {
-    res = setDF(rbindlist(res, fill = TRUE))
+    res = setDF(rbindlist(res, fill = TRUE, use.names = TRUE))
   } else {
     res = setNames(res, task.ids)
     if (drop) {
@@ -242,7 +242,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 
       if (inherits(x$learner, wrapper.class)) {
         xs = lapply(x$extract, fun)
-        xs = setDF(rbindlist(lapply(seq_along(xs), function(i) cbind(iter = i, xs[[i]])), fill = TRUE))
+        xs = setDF(rbindlist(lapply(seq_along(xs), function(i) cbind(iter = i, xs[[i]])), fill = TRUE, use.names = TRUE))
       } else {
         NULL
       }
