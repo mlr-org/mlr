@@ -54,16 +54,9 @@ test_that("1 numeric hyperparam", {
   expect_equal(plt$labels$y, "acc.test.mean")
 
   # test facet 1D with non-nested shouldn't produce
-  plt = plotHyperParsEffect(new, x = "iteration", y = "acc.test.mean",
+  expect_error(plotHyperParsEffect(new, x = "iteration", y = "acc.test.mean",
     plot.type = "line", facet = "nested_cv_run")
-  print(plt)
-  dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
-  ggsave(path)
-  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
-    c("GeomPoint", "GeomLine"))
-  expect_equal(plt$labels$x, "iteration")
-  expect_equal(plt$labels$y, "acc.test.mean")
+  )
 })
 
 test_that("1 discrete hyperparam", {
