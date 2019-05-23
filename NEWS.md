@@ -4,6 +4,7 @@
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
 - fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of `data.table`s default in `rbindlist()`. See #2578 for more information. (@mllg, #2579)
+- `*.gbm()`: Prediction can now be done on only a subset of trees (@smilesun, #1114)
 
 ## learners - new
 - add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)
