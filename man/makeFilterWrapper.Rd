@@ -5,8 +5,8 @@
 \title{Fuse learner with a feature filter method.}
 \usage{
 makeFilterWrapper(learner, fw.method = "randomForestSRC_importance",
-  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, cache = FALSE, ...)
+  fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL,
+  fw.threshold = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -16,6 +16,10 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 \item{fw.method}{(\code{character(1)})\cr
 Filter method. See \link{listFilterMethods}.
 Default is \dQuote{randomForestSRC_importance}.}
+
+\item{fw.basal.methods}{(\code{character(1)})\cr
+Simple Filter methods for ensemble filters. See \link{listFilterMethods}.
+Can only be used in combination with ensemble filters. See \link{listFilterEnsembleMethods}.}
 
 \item{fw.perc}{(\code{numeric(1)})\cr
 If set, select \code{fw.perc}*100 top scoring features.
@@ -74,7 +78,16 @@ mod = train(lrn, task)
 print(getFilteredFeatures(mod))
 # now nested resampling, where we extract the features that the filter method selected
 r = resample(lrn, task, outer, extract = function(model) {
+  getFilteredFeatures(model)
+})
+print(r$extract)
 
+# usage of an ensemble filter
+lrn = makeLearner("classif.lda")
+lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
+  fw.basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
+  fw.perc = 0.5)
+r = resample(lrn, task, outer, extract = function(model) {
   getFilteredFeatures(model)
 })
 print(r$extract)
@@ -83,33 +96,13 @@ print(r$extract)
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
   \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
-
-Other wrapper: \code{\link{makeBaggingWrapper}},
-  \code{\link{makeClassificationViaRegressionWrapper}},
-  \code{\link{makeConstantClassWrapper}},
-  \code{\link{makeCostSensClassifWrapper}},
-  \code{\link{makeCostSensRegrWrapper}},
-  \code{\link{makeDownsampleWrapper}},
-  \code{\link{makeDummyFeaturesWrapper}},
-  \code{\link{makeExtractFDAFeatsWrapper}},
-  \code{\link{makeFeatSelWrapper}},
-  \code{\link{makeImputeWrapper}},
-  \code{\link{makeMulticlassWrapper}},
-  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}},
-  \code{\link{makeMultilabelStackingWrapper}},
-  \code{\link{makeOverBaggingWrapper}},
-  \code{\link{makePreprocWrapperCaret}},
-  \code{\link{makePreprocWrapper}},
-  \code{\link{makeRemoveConstantFeaturesWrapper}},
-  \code{\link{makeSMOTEWrapper}},
-  \code{\link{makeTuneWrapper}},
-  \code{\link{makeUndersampleWrapper}},
-  \code{\link{makeWeightedClassesWrapper}}
 }
 \concept{filter}
-\concept{wrapper}
+\concept{wrapper
+
+If `ensemble = TRUE`, ensemble feature selection using all methods specified
+in `fw.method` is performed. At least two methods need to be selected.}

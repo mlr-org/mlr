@@ -44,7 +44,9 @@ plotFilterValues(fv)
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
   \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
   \code{\link{makeFilterWrapper}}, \code{\link{makeFilter}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
