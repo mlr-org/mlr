@@ -306,7 +306,7 @@
     <p>Gets the class weight parameter of a learner.</p>
     
 
-    <pre class="usage"><span class='fu'>getClassWeightParam</span>(<span class='no'>learner</span>)</pre>
+    <pre class="usage"><span class='fu'>getClassWeightParam</span>(<span class='no'>learner</span>, <span class='kw'>lrn.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,6 +316,13 @@
       <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
+    </tr>
+    <tr>
+      <th>lrn.id</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+Only used for <code>BaseEnsembles</code>. It is possible that multiple learners in a base
+ensemble have a class weight param. Specify the learner from which the class weight should
+be extracted.</p></td>
     </tr>
     </table>
     
