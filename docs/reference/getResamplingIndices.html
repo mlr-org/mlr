@@ -357,7 +357,7 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
   <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
   <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
- )
+)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
@@ -366,40 +366,39 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class='co'># we also extract tuned hyper pars in each iteration and by that the resampling indices</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getTuneResult</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0000000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0800000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0600000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='co'># get tuning indices</span>
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0000000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0600000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='co'># get tuning indices</span>
 <span class='fu'>getResamplingIndices</span>(<span class='no'>r</span>, <span class='kw'>inner</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$train.inds
 #&gt; [[1]]$train.inds[[1]]
-#&gt;  [1] 113 116  56 118  66  84  38  50 141  30  12 135  15  99 127 119   2  19 125
-#&gt; [20] 149  69 130  90  23 132  68  31 139  25   9  98 100 147  81 107 144 148 128
-#&gt; [39]  16   1  27  78  21  36 123  47   6  42 103 133
+#&gt;  [1]  32  24 129 141  29   4 133 119 134  16  62  31  10 125  50  87 135  37  75
+#&gt; [20] 107 147 115 100 124   5  54 111 143  36 120  67 112  69  65   6  52 148  13
+#&gt; [39] 103  70 146 117  27  46  59  99 121  48  58 102
 #&gt; 
 #&gt; 
 #&gt; [[1]]$test.inds
 #&gt; [[1]]$test.inds[[1]]
-#&gt;  [1] 109  79  73 121 105  22 137  40 102  49  48  45  65  35  91  83  58 129  13
-#&gt; [20]  51  39  86 140  75 106
+#&gt;  [1] 101  26  78  34  95  90  11  53 140   2  39  77  71 126 108  88 144  47  41
+#&gt; [20] 122  25  40  93  42   3
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; [[2]]
 #&gt; [[2]]$train.inds
 #&gt; [[2]]$train.inds[[1]]
-#&gt;  [1]  54  85  93   3  17  28  95  32  37 138  80  71 143  89  70 131  44  76  52
-#&gt; [20] 145  29  82 146 115 124 122 111 126  97  24 112  74  61  60 104  33  57  59
-#&gt; [39]  10 150  94 108  96 142  62   8 117  64   4  87
+#&gt;  [1]  60  63 109  85  49 131  17  73  35  15   1  33  61 136 145 149  44 113  21
+#&gt; [20]  80  98  30  57 128  14  79 137 116 150  74  84  91 105 130 118  76   9  56
+#&gt; [39]  86  82  97 142   7 138  89  51  22  19 114  68
 #&gt; 
 #&gt; 
 #&gt; [[2]]$test.inds
 #&gt; [[2]]$test.inds[[1]]
-#&gt;  [1]  72  34  11 136  67  77  14  88 114  20  63  53  18  92 110  55  26   7 101
-#&gt; [20] 120  41  43   5  46 134
+#&gt;  [1]  81  92  12  20  38  96  64 139 127 106  72  28  94  45 104  83  55 132 123
+#&gt; [20]  18  66   8  43 110  23
 #&gt; 
 #&gt; 
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
