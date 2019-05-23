@@ -455,19 +455,19 @@
 <a class="sourceLine" id="cb7-17" data-line-number="17">perf.data =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</a>
 <a class="sourceLine" id="cb7-19" data-line-number="19">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## 1            0           0            0           0     0.70000000</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## 2            1           0            0           0     0.36666667</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## 3            0           1            0           0     0.50666667</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## 4            0           0            1           0     0.06000000</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">## 1            0           0            0           0     0.68000000</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">## 2            1           0            0           0     0.34000000</a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">## 3            0           1            0           0     0.48666667</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">## 4            0           0            1           0     0.06666667</a>
 <a class="sourceLine" id="cb7-24" data-line-number="24">## 5            0           0            0           1     0.04666667</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## 6            1           1            0           0     0.37333333</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">## 6            1           1            0           0     0.36000000</a>
 <a class="sourceLine" id="cb7-26" data-line-number="26">##   mmce.test.range mmce.test.min mmce.test.max</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## 1            0.04          0.68          0.72</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## 2            0.10          0.32          0.42</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## 3            0.12          0.44          0.56</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## 4            0.08          0.02          0.10</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">## 5            0.02          0.04          0.06</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## 6            0.08          0.34          0.42</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">## 1            0.20          0.56          0.76</a>
+<a class="sourceLine" id="cb7-28" data-line-number="28">## 2            0.32          0.18          0.50</a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">## 3            0.18          0.42          0.60</a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">## 4            0.06          0.04          0.10</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">## 5            0.06          0.02          0.08</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">## 6            0.22          0.28          0.50</a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb7-34" data-line-number="34">pd =<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.005</span>, <span class="dt">height =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb7-35" data-line-number="35">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mmce.test.range, <span class="dt">y =</span> mmce.test.mean, <span class="dt">ymax =</span> mmce.test.max, <span class="dt">ymin =</span> mmce.test.min,</a>

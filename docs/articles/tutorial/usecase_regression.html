@@ -399,15 +399,15 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2">## $BostonHousing</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">## $BostonHousing$regr.lm</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">## rmse.test.rmse </a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">##       4.901218 </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">##       4.841535 </a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">## $BostonHousing$regr.ksvm.tuned</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">## rmse.test.rmse </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">##       3.643597 </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">##       3.775318 </a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">## </a>
 <a class="sourceLine" id="cb5-11" data-line-number="11">## $BostonHousing$regr.ranger.tuned</a>
 <a class="sourceLine" id="cb5-12" data-line-number="12">## rmse.test.rmse </a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">##       3.420514</a></code></pre></div>
+<a class="sourceLine" id="cb5-13" data-line-number="13">##       3.478283</a></code></pre></div>
 <p>A closer look at the boxplot reveals that RF outperforms the other learners for this specific task. Despite the tuning procedure performed before, the benchmark experiment for linear and lasso regression yields similar but poor results.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr)</a></code></pre></div>
 <p><img src="usecase_regression_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
