@@ -38,7 +38,8 @@ test_that("classif_gbm", {
   y = factor(apply(p[, , 1], 1, function(r) colnames(p)[which.max(r)]))
   testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,
     parset = list(n.trees = 300, interaction.depth = 2, distribution = "multinomial"))
-  ##
+
+  # predict on a subset of trees only
   m = gbm::gbm(multiclass.formula, data = multiclass.train, n.trees = 300, interaction.depth = 2, distribution = "multinomial")
   p = gbm::predict.gbm(m, newdata = multiclass.test, n.trees = 10)
   y = factor(apply(p[,,1],1, function(r) colnames(p)[which.max(r)]))
@@ -50,5 +51,3 @@ test_that("classif_gbm keep.data is passed correctly", {
   train(makeLearner("classif.gbm", keep.data = FALSE), binaryclass.task)
   train(makeLearner("classif.gbm", keep.data = TRUE), binaryclass.task)
 })
-
-
