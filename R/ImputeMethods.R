@@ -23,6 +23,7 @@
 #' @family impute
 #' @export
 makeImputeMethod = function(learn, impute, args = list()) {
+
   assertFunction(learn, args = c("data", "target", "col"))
   assertFunction(impute, args = c("data", "target", "col"))
   assertList(args, names = "named")
@@ -31,8 +32,10 @@ makeImputeMethod = function(learn, impute, args = list()) {
 
 # helper function to impute missings of a col to const val
 simpleImpute = function(data, target, col, const) {
-  if (is.na(const))
+
+  if (is.na(const)) {
     stopf("Error imputing column '%s'. Maybe all input data was missing?", col)
+  }
   x = data[[col]]
 
   # cast logicals to factor if required (#1522)
@@ -75,6 +78,7 @@ NULL
 #'  Constant valued use for imputation.
 #' @rdname imputations
 imputeConstant = function(const) {
+
   assertVector(const, len = 1L, any.missing = FALSE)
   makeImputeMethod(
     learn = function(data, target, col, const) const,
@@ -86,6 +90,7 @@ imputeConstant = function(const) {
 #' @export
 #' @rdname imputations
 imputeMedian = function() {
+
   makeImputeMethod(
     learn = function(data, target, col) median(data[[col]], na.rm = TRUE),
     impute = simpleImpute
@@ -95,6 +100,7 @@ imputeMedian = function() {
 #' @export
 #' @rdname imputations
 imputeMean = function() {
+
   makeImputeMethod(
     learn = function(data, target, col) mean(data[[col]], na.rm = TRUE),
     impute = simpleImpute
@@ -104,6 +110,7 @@ imputeMean = function() {
 #' @export
 #' @rdname imputations
 imputeMode = function() {
+
   makeImputeMethod(
     learn = function(data, target, col) computeMode(data[[col]], na.rm = TRUE),
     impute = simpleImpute
@@ -115,9 +122,11 @@ imputeMode = function() {
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
 imputeMin = function(multiplier = 1) {
+
   assertNumber(multiplier)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) {
+
       r = range(data[[col]], na.rm = TRUE)
       r[1L] - multiplier * diff(r)
     },
@@ -129,9 +138,11 @@ imputeMin = function(multiplier = 1) {
 #' @export
 #' @rdname imputations
 imputeMax = function(multiplier = 1) {
+
   assertNumber(multiplier)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) {
+
       r = range(data[[col]], na.rm = TRUE)
       r[2L] + multiplier * diff(r)
     },
@@ -149,23 +160,28 @@ imputeMax = function(multiplier = 1) {
 #'   If NA (default), it will be estimated from the data.
 #' @rdname imputations
 imputeUniform = function(min = NA_real_, max = NA_real_) {
+
   assertNumber(min, na.ok = TRUE)
   assertNumber(max, na.ok = TRUE)
   makeImputeMethod(
-    learn = function(data, target, col, min, max)  {
+    learn = function(data, target, col, min, max) {
+
       if (is.na(min)) {
         min = min(data[[col]], na.rm = TRUE)
-        if (is.na(min))
+        if (is.na(min)) {
           stop("All values are missing. Unable to calculate minimum.")
+        }
       }
       if (is.na(max)) {
         max = max(data[[col]], na.rm = TRUE)
-        if (is.na(max))
+        if (is.na(max)) {
           stop("All values are missing. Unable to calculate maximum.")
+        }
       }
       list(min = min, max = max)
     },
     impute = function(data, target, col, min, max) {
+
       x = data[[col]]
       ind = is.na(x)
       replace(x, ind, runif(sum(ind), min = min, max = max))
@@ -181,24 +197,29 @@ imputeUniform = function(min = NA_real_, max = NA_real_) {
 #'   Standard deviation of normal distribution. If missing it will be estimated from the data.
 #' @rdname imputations
 imputeNormal = function(mu = NA_real_, sd = NA_real_) {
+
   assertNumber(mu, na.ok = TRUE)
   assertNumber(sd, na.ok = TRUE)
 
   makeImputeMethod(
-    learn = function(data, target, col, mu, sd)  {
+    learn = function(data, target, col, mu, sd) {
+
       if (is.na(mu)) {
         mu = mean(data[[col]], na.rm = TRUE)
-        if (is.na(mu))
+        if (is.na(mu)) {
           stop("All values missing. Unable to calculate mean.")
+        }
       }
       if (is.na(sd)) {
         sd = sd(data[[col]], na.rm = TRUE)
-        if (is.na(sd))
+        if (is.na(sd)) {
           stop("All values missing. Unable to calculate sd.")
+        }
       }
       list(mu = mu, sd = sd)
     },
     impute = function(data, target, col, mu, sd) {
+
       x = data[[col]]
       ind = is.na(x)
       replace(x, ind, rnorm(sum(ind), mean = mu, sd = sd))
@@ -216,6 +237,7 @@ imputeNormal = function(mu = NA_real_, sd = NA_real_) {
 #'  or instead draw uniformly distributed samples within bin range.
 #' @rdname imputations
 imputeHist = function(breaks, use.mids = TRUE) {
+
   if (missing(breaks)) {
     breaks = "Sturges"
   }
@@ -227,25 +249,30 @@ imputeHist = function(breaks, use.mids = TRUE) {
   makeImputeMethod(
 
     learn = function(data, target, col, breaks, use.mids) {
+
       x = data[[col]]
-      if (all(is.na(x)))
+      if (all(is.na(x))) {
         stop("All values missing. Unable to impute with Hist.")
+      }
       if (is.numeric(x)) {
         tmp = hist(x, breaks = breaks, plot = FALSE)
-        if (use.mids)
+        if (use.mids) {
           return(list(counts = tmp$counts, values = tmp$mids))
-        else
+        } else {
           return(list(counts = tmp$counts, breaks = tmp$breaks))
+        }
       } else { # factor or logical feature
         tmp = table(x, useNA = "no")
         values = names(tmp)
-        if (is.logical(x))
+        if (is.logical(x)) {
           values = as.logical(x)
+        }
         return(list(counts = as.integer(tmp), values = values))
       }
     },
 
     impute = function(data, target, col, counts, values, breaks) {
+
       x = data[[col]]
       ind = which(is.na(x))
       if (missing(values)) {
@@ -271,24 +298,30 @@ imputeHist = function(breaks, use.mids = TRUE) {
 #' @rdname imputations
 #' @export
 imputeLearner = function(learner, features = NULL) {
+
   learner = checkLearner(learner)
-  if (!is.null(features))
+  if (!is.null(features)) {
     assertCharacter(features, any.missing = FALSE)
+  }
 
   makeImputeMethod(
     learn = function(data, target, col, learner, features) {
+
       constructor = getTaskConstructorForLearner(learner)
       if (is.null(features)) {
         features = setdiff(names(data), target)
       } else {
         not.ok = which(features %nin% names(data))
-        if (length(not.ok))
+        if (length(not.ok)) {
           stopf("Features for imputation not found in data: '%s'", collapse(features[not.ok]))
+        }
         not.ok = which.first(target %in% features)
-        if (length(not.ok))
+        if (length(not.ok)) {
           stopf("Target column used as feature for imputation: '%s'", target[not.ok])
-        if (col %nin% features)
+        }
+        if (col %nin% features) {
           features = c(col, features)
+        }
       }
       # features used for imputation might have NAs, but the learner might not support that
       # we need an extra check, otherwise this might not get noticed by checkLearnerBeforeTrain because
@@ -307,6 +340,7 @@ imputeLearner = function(learner, features = NULL) {
     },
 
     impute = function(data, target, col, model, features) {
+
       x = data[[col]]
       ind = is.na(x)
       # if no NAs are present in data, we always return it unchanged

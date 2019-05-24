@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Calculates feature filter values. — getFilterValues • mlr</title>
+<title>Create a survival task. — makeSurvTask • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Calculates feature filter values. — getFilterValues" />
+<meta property="og:title" content="Create a survival task. — makeSurvTask" />
 
-<meta property="og:description" content="Calculates numerical filter values for features.
-For a list of features, use listFilterMethods." />
+<meta property="og:description" content="Create a survival task." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -299,74 +298,87 @@ For a list of features, use listFilterMethods." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculates feature filter values.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateFilterValues.R'><code>R/generateFilterValues.R</code></a></small>
+    <h1>Create a survival task.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/SurvTask.R'><code>R/SurvTask.R</code></a></small>
     </div>
 
     
-    <p>Calculates numerical filter values for features.
-For a list of features, use <a href='listFilterMethods.html'>listFilterMethods</a>.</p>
+    <p>Create a survival task.</p>
     
 
-    <pre class="usage"><span class='fu'>getFilterValues</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"rfsrc_importance"</span>,
-  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>makeSurvTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>task</th>
-      <td><p>(<a href='Task.html'>Task</a>)<br />
-The task.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
+      <th>id</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Filter method, see above.
-Default is &#8220;rfsrc_importance&#8221;.</p></td>
+Id string for object.
+Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
     <tr>
-      <th>nselect</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
-Number of scores to request. Scores are getting calculated for all features per default.</p></td>
+      <th>data</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>(any)<br />
-Passed down to selected method.</p></td>
+      <th>target</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
+Name(s) of the target variable(s).
+For survival analysis these are the names of the survival time and event columns,
+so it has length 2. For multilabel classification it contains the names of the logical
+columns that encode whether a label is present or not and its length corresponds to the
+number of classes.</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+Optional, non-negative case weight vector to be used during fitting.
+Cannot be set for cost-sensitive learning.
+Default is <code>NULL</code> which means no (= equal) weights.</p></td>
+    </tr>
+    <tr>
+      <th>blocking</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
+An optional factor of the same length as the number of observations.
+Observations with the same blocking level &#8220;belong together&#8221;.
+Specifically, they are either put all in the training or the test set
+during a resampling iteration.
+Default is <code>NULL</code> which means no blocking.</p></td>
+    </tr>
+    <tr>
+      <th>coordinates</th>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
+    </tr>
+    <tr>
+      <th>fixup.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Should some basic cleaning up of data be performed?
+Currently this means removing empty factor levels for the columns.
+Possible choices are:
+&#8220;no&#8221; = Don't do it.
+&#8220;warn&#8221; = Do it but warn about it.
+&#8220;quiet&#8221; = Do it but keep silent.
+Default is &#8220;warn&#8221;.</p></td>
+    </tr>
+    <tr>
+      <th>check.data</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Should sanity of data be checked initially at task creation?
+You should have good reasons to turn this off (one might be speed).
+Default is <code>TRUE</code>.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>(<a href='generateFilterValuesData.html'>FilterValues</a>).</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p><code>getFilterValues</code> is deprecated in favor of <a href='generateFilterValuesData.html'>generateFilterValuesData</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
-  <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
-  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
-<p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
-  <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
-  <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
-  <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
-<p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
-  <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
-  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
+    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a></p></div>
     
 
   </div>
@@ -375,10 +387,6 @@ Passed down to selected method.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-
       <li><a href="#see-also">See also</a></li>
           </ul>
 

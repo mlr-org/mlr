@@ -1,6 +1,7 @@
 
 #' @export
 makeRLearner.regr.ranger = function() {
+
   makeRLearnerRegr(
     cl = "regr.ranger",
     package = "ranger",
@@ -38,6 +39,7 @@ makeRLearner.regr.ranger = function() {
 
 #' @export
 trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   tn = getTaskTargetNames(.task)
   if (is.null(keep.inbag)) keep.inbag = (se.method == "jackknife" && .learner$predict.type == "se")
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),

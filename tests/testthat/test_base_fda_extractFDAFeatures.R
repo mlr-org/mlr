@@ -20,7 +20,7 @@ test_that("extractFeatures multiple times", {
   expect_true(nrow(df) == 129L)
   # expect_true(ncol(df) == 6L)
   # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-    # "h20", "NIR.mean"))
+  # "h20", "NIR.mean"))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -30,7 +30,7 @@ test_that("extractFeatures multiple times", {
   expect_true(nrow(df) == 129L)
   # expect_true(ncol(df) == 8L)
   # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-    # "h20", "NIR.mean", "NIR.min", "NIR.max"))
+  # "h20", "NIR.mean", "NIR.min", "NIR.max"))
 })
 
 
@@ -47,7 +47,11 @@ test_that("Wrong methods yield errors", {
   t = subsetTask(fuelsubset.task, subset = 1:2)
 
   wrng1 = function() {
-    lrn = function(data, target, col, vals = NULL) {1}
+
+    lrn = function(data, target, col, vals = NULL) {
+
+      1
+    }
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
@@ -55,14 +59,22 @@ test_that("Wrong methods yield errors", {
 
 
   wrng2 = function() {
-    lrn = function(data) {data[, 1]}
+
+    lrn = function(data) {
+
+      data[, 1]
+    }
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),
     "Must have formal arguments")
 
   wrng3 = function() {
-    lrn = function(data, target, col, vals = NULL) {data.frame(1)}
+
+    lrn = function(data, target, col, vals = NULL) {
+
+      data.frame(1)
+    }
     makeExtractFDAFeatMethod(z = lrn, rz = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng3())),
@@ -141,6 +153,7 @@ test_that("Wavelet method are equal to package", {
   df = BBmisc::convertRowsToList(gp$data[, "fd", drop = FALSE])
   set.seed(getOption("mlr.debug.seed"))
   wtdata = t(BBmisc::dapply(df, fun = function(x) {
+
     wt = wavelets::dwt(as.numeric(x), filter = "haar", boundary = "reflection")
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
@@ -168,7 +181,7 @@ test_that("extract and reextract Wavelets", {
 
 test_that("getUniFDAMultiResFeatures works on data.frame", {
   i = 100 # number of instances
-  tl  = 200 # length of each time serie instance
+  tl = 200 # length of each time serie instance
   ts = replicate(i, rnorm(tl))
   gp = t(as.data.frame(ts))
   ngp = extractFDAMultiResFeatures()$learn(data = gp, res.level = 3, shift = 0.5, curve.lens = NULL)
@@ -260,7 +273,7 @@ test_that("Fourier equal to package", {
   fourier.gp = lrn(data = gp1, trafo.coeff = "phase")
   expect_equal(nrow(fourier.gp), nrow(gp1))
   # Phase (arctan(...) in range(-pi/2, pi/2) )
-  expect_true(all(fourier.gp < pi / 2 & fourier.gp > - pi / 2))
+  expect_true(all(fourier.gp < pi / 2 & fourier.gp > -pi / 2))
 
   fourier.a.gp = lrn(data = gp1, trafo.coeff = "amplitude")
   expect_equal(nrow(fourier.a.gp), nrow(gp1))
@@ -286,6 +299,6 @@ test_that("Fourier equal to package", {
   expect_equal(df, fourier.a.gp)
 
   # Can not have factors
-  gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
+  gp2 = data.frame(v1 = t(1:4), X1 = as.factor(1))
   expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
 })

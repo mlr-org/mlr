@@ -3,6 +3,7 @@ context("classif_featureless")
 test_that("classif_featureless", {
   # check content of learner model
   checkLearnerModel = function(mod, probs) {
+
     lmod = getLearnerModel(mod)
     expect_named(lmod, c("method", "probs"))
     expect_equal(lmod$method, m)

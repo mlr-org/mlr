@@ -55,6 +55,7 @@
 #' print(getFilteredFeatures(mod))
 #' # now nested resampling, where we extract the features that the filter method selected
 #' r = resample(lrn, task, outer, extract = function(model) {
+#' 
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
@@ -96,9 +97,9 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
 
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
-     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-     mandatory.feat = fw.mandatory.feat,
-     cache = .learner$cache), .learner$more.args))
+    perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
+    mandatory.feat = fw.mandatory.feat,
+    cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
@@ -106,6 +107,7 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
 
 #' @export
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
+
   features = getFilteredFeatures(.model)
   NextMethod(.newdata = .newdata[, features, drop = FALSE])
 }
@@ -118,11 +120,13 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {
+
   UseMethod("getFilteredFeatures")
 }
 
 #' @export
 getFilteredFeatures.default = function(model) {
+
   if (is.null(model$learner.model$next.model)) {
     NULL
   } else {
@@ -132,5 +136,6 @@ getFilteredFeatures.default = function(model) {
 
 #' @export
 getFilteredFeatures.FilterModel = function(model) {
+
   model$learner.model$next.model$features
 }

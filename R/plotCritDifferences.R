@@ -57,7 +57,8 @@
 #' @md
 #' @export
 generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
-                                       baseline = NULL, test = "bd") {
+  baseline = NULL, test = "bd") {
+
   assertClass(bmr, "BenchmarkResult")
   assertChoice(test, c("nemenyi", "bd"))
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
@@ -105,7 +106,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
       FUN = function(x) ifelse(x > 0 && x < cd.info$cd, x, 0))
     # Get start and end point of all possible bars
     xstart = round(apply(mat + sub, 1, min), 3)
-    xend   = round(apply(mat + sub, 1, max), 3)
+    xend = round(apply(mat + sub, 1, max), 3)
     nem.df = data.table(xstart, xend, "diff" = xend - xstart)
     # For each unique endpoint of a bar keep only the longest bar
     nem.df = nem.df[, .SD[which.max(.SD$diff)], by = "xend"]
@@ -152,6 +153,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #' @examples
 #' # see benchmark
 plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
+
   assertClass(obj, "CritDifferencesData")
 
   # Plot descritptive lines and learner names
@@ -160,31 +162,31 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
   p = p + geom_point(aes_string("mean.rank", 0, colour = "learner.id"), size = 3)
   # Horizontal descriptive bar
   p = p + geom_segment(aes_string("mean.rank", 0, xend = "mean.rank", yend = "yend",
-                                  color = "learner.id"), size = 1)
+    color = "learner.id"), size = 1)
   # Vertical descriptive bar
   p = p + geom_segment(aes_string("mean.rank", "yend", xend = "xend",
-                                  yend = "yend", color = "learner.id"), size = 1)
+    yend = "yend", color = "learner.id"), size = 1)
   # Plot Learner name
   if (pretty.names) {
     p = p + geom_text(aes_string("xend", "yend", label = "short.name", color = "learner.id",
-                                 hjust = "right"), vjust = -1)
+      hjust = "right"), vjust = -1)
   } else {
     p = p + geom_text(aes_string("xend", "yend", label = "learner.id", color = "learner.id",
-                                 hjust = "right"), vjust = -1)
+      hjust = "right"), vjust = -1)
   }
   p = p + xlab("Average Rank")
   # Change appearance
   p = p + scale_x_continuous(breaks = c(0:max(obj$data$xend)))
   p = p + theme(axis.text.y = element_blank(),
-                axis.ticks.y = element_blank(),
-                axis.title.y = element_blank(),
-                legend.position = "none",
-                panel.background = element_blank(),
-                panel.border = element_blank(),
-                axis.line = element_line(size = 1),
-                axis.line.y = element_blank(),
-                panel.grid.major = element_blank(),
-                plot.background = element_blank())
+    axis.ticks.y = element_blank(),
+    axis.title.y = element_blank(),
+    legend.position = "none",
+    panel.background = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line(size = 1),
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    plot.background = element_blank())
 
   # Write some values into shorter names as they are used numerous times.
   cd.x = obj$cd.info$x
@@ -199,34 +201,34 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
     }
     # Add horizontal bar arround baseline
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x - cd, y = cd.y, yend = cd.y,
-                     alpha = 0.5, color = "darkgrey", size = 2)
+      alpha = 0.5, color = "darkgrey", size = 2)
     # Add intervall limiting bar's
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x + cd, y = cd.y - 0.05,
-                     yend = cd.y + 0.05, color = "darkgrey", size = 1)
+      yend = cd.y + 0.05, color = "darkgrey", size = 1)
     p = p + annotate("segment", x = cd.x - cd, xend = cd.x - cd, y = cd.y - 0.05,
-                     yend = cd.y + 0.05, color = "darkgrey", size = 1)
+      yend = cd.y + 0.05, color = "darkgrey", size = 1)
     # Add point at learner
     p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5)
     # Add critical difference text
     p = p + annotate("text", label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
-                     x = cd.x, y = cd.y + 0.05)
+      x = cd.x, y = cd.y + 0.05)
   } else {
     nemenyi.data = obj$cd.info$nemenyi.data
     if (!(nrow(nemenyi.data) == 0L)) {
       # Add connecting bars
       p = p + geom_segment(aes_string("xstart", "y", xend = "xend", yend = "y"),
-                           data = nemenyi.data, size = 2, color = "dimgrey", alpha = 0.9)
+        data = nemenyi.data, size = 2, color = "dimgrey", alpha = 0.9)
       # Add text (descriptive)
       p = p + annotate("text",
-                       label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
-                       y = max(obj$data$yend) + .1, x = mean(obj$data$mean.rank))
+        label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
+        y = max(obj$data$yend) + .1, x = mean(obj$data$mean.rank))
       # Add bar (descriptive)
       p = p + annotate("segment",
-                       x =  mean(obj$data$mean.rank) - 0.5 * cd,
-                       xend = mean(obj$data$mean.rank) + 0.5 * cd,
-                       y = max(obj$data$yend) + .2,
-                       yend = max(obj$data$yend) + .2,
-                       size = 2L)
+        x = mean(obj$data$mean.rank) - 0.5 * cd,
+        xend = mean(obj$data$mean.rank) + 0.5 * cd,
+        y = max(obj$data$yend) + .2,
+        yend = max(obj$data$yend) + .2,
+        size = 2L)
     } else {
       message("No connecting bars to plot!")
     }

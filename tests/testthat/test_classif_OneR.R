@@ -6,7 +6,7 @@ test_that("classif_OneR", {
   parset.list = list(
     list(),
     list(B = 3)
-    )
+  )
 
   old.predicts.list = list()
   old.probs.list = list()
@@ -16,7 +16,7 @@ test_that("classif_OneR", {
     ctrl = do.call(RWeka::Weka_control, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = RWeka::OneR(formula = multiclass.formula, data = multiclass.train, control = ctrl)
-    p  = predict(m, newdata = multiclass.test, type = "class")
+    p = predict(m, newdata = multiclass.test, type = "class")
     p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
@@ -26,6 +26,7 @@ test_that("classif_OneR", {
   testProbParsets("classif.OneR", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
+
     RWeka::OneR(formula, data = data[subset, ], control = RWeka::Weka_control(...))
   }
 

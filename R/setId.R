@@ -10,12 +10,10 @@
 #' @export
 #' @family learner
 setId = function(learner, id) {
+
   .Deprecated("setLearnerId")
   learner = checkLearner(learner)
   assertString(id)
   learner$id = id
   return(learner)
 }
-
-
-

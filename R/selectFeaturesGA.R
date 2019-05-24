@@ -1,4 +1,5 @@
 selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits.to.features, control, opt.path, show.info) {
+
   # generate mu feature sets (of correct size)
   states = list()
   mu = control$extra.args$mu
@@ -8,8 +9,9 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
   for (i in seq_len(mu)) {
     while (TRUE) {
       states[[i]] = rbinom(length(bit.names), 1, 0.5)
-      if (is.na(control$max.features) || sum(states[[i]] <= control$max.features))
+      if (is.na(control$max.features) || sum(states[[i]] <= control$max.features)) {
         break
+      }
     }
   }
   evalOptimizationStatesFeatSel(learner, task, resampling, measures,
@@ -49,12 +51,14 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
 # sample 2 random parents, CX, mutate --> 1 kid
 # (repeat in a loop if max.features not satisfied)
 generateKid = function(featmat, control) {
+
   parents = sample(seq_row(featmat), 2L, replace = TRUE)
   while (TRUE) {
     kid = crossover(featmat[parents[1L], ], featmat[parents[2L], ], control$extra.args$crossover.rate)
     kid = mutateBits(kid, control$extra.args$mutation.rate)
-    if (is.na(control$max.features) || sum(kid) <= control$max.features)
+    if (is.na(control$max.features) || sum(kid) <= control$max.features) {
       break
+    }
   }
   return(kid)
 }

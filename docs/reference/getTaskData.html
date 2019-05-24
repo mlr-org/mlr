@@ -388,7 +388,7 @@ Default is &#8220;dfcols&#8221;.</p></td>
 
 <span class='no'>df</span> <span class='kw'>=</span> <span class='no'>BreastCancer</span>
 <span class='no'>df</span>$<span class='no'>Id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"BreastCancer"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>, <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"malignant"</span>)
+<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"BreastCancer"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>, <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"malignant"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>getTaskData</span>)</div><div class='output co'>#&gt;                                                                  
 #&gt; 1 function (task, subset = NULL, features, target.extra = FALSE, 
 #&gt; 2     recode.target = "no", functionals.as = "dfcols")           

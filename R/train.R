@@ -16,31 +16,35 @@
 #' @seealso [predict.WrappedModel]
 #' @examples
 #' training.set = sample(seq_len(nrow(iris)), nrow(iris) / 2)
-#'
+#' 
 #' ## use linear discriminant analysis to classify iris data
 #' task = makeClassifTask(data = iris, target = "Species")
 #' learner = makeLearner("classif.lda", method = "mle")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-#'
+#' 
 #' ## use random forest to classify iris data
 #' task = makeClassifTask(data = iris, target = "Species")
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
 train = function(learner, task, subset = NULL, weights = NULL) {
+
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (is.logical(subset))
-    subset = which(subset)  # I believe this is a bug, see #2098
+  if (is.logical(subset)) {
+    subset = which(subset)
+  } # I believe this is a bug, see #2098
   task = subsetTask(task, subset)
   if (is.null(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
-    if (is.logical(subset))
-      subset = which(subset)  # I believe this is a bug, see #2098
-    else
+    if (is.logical(subset)) {
+      subset = which(subset)
+    } # I believe this is a bug, see #2098
+    else {
       subset = asInteger(subset)
+    }
   }
   if (learner$fix.factors.prediction) {
     tdat = getTaskData(task)
@@ -79,24 +83,33 @@ train = function(learner, task, subset = NULL, weights = NULL) {
     opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
     # set the seed
     debug.seed = getMlrOption("debug.seed", NULL)
-    if (!is.null(debug.seed))
+    if (!is.null(debug.seed)) {
       set.seed(debug.seed)
+    }
     # for optwrappers we want to see the tuning / varsel logging
     # FIXME: is case really ok for optwrapper? can we supppress then too?
     fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else function(x) capture.output(suppressMessages(x))
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
-    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
+    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) {
+      identity
+    } else {
+      function(x) {
+
         withCallingHandlers(x, error = function(c) utils::dump.frames())
       }
+    }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    time.train = measureTime(fun1({learner.model = fun2(fun3(do.call(trainLearner, pars)))}))
+    time.train = measureTime(fun1({
+      learner.model = fun2(fun3(do.call(trainLearner, pars)))
+    }))
     # was there an error during training? maybe warn then
-    if (is.error(learner.model) && opts$on.learner.error == "warn")
+    if (is.error(learner.model) && opts$on.learner.error == "warn") {
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
+    }
   }
   factor.levels = getTaskFactorLevels(task)
   makeWrappedModel(learner, learner.model, getTaskDesc(task), subset, vars, factor.levels, time.train)

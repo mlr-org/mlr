@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.nodeHarvest = function() {
+
   makeRLearnerClassif(
     cl = "classif.nodeHarvest",
     package = "nodeHarvest",
@@ -23,12 +24,14 @@ makeRLearner.classif.nodeHarvest = function() {
 
 #' @export
 trainLearner.classif.nodeHarvest = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "01")
   nodeHarvest::nodeHarvest(X = d$data, Y = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.nodeHarvest = function(.learner, .model, .newdata, ...) {
+
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
   p = predict(.model$learner.model, .newdata, ...)
   if (.learner$predict.type == "prob") {

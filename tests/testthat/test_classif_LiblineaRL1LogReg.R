@@ -29,5 +29,4 @@ test_that("classif_LiblineaRL1LogReg", {
     binaryclass.train.inds, old.predicts.list, parset.list)
   testProbParsets("classif.LiblineaRL1LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
-
 })

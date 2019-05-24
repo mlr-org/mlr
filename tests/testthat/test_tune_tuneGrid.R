@@ -45,7 +45,6 @@ test_that("tuneGrid", {
   op2.2 = as.data.frame(trafoOptPath(tr2.2$opt.path))
   op1.2$exec.time = op2.2$exec.time = NULL
   expect_equal(sortByCol(op1.2, c("C", "sigma")), sortByCol(op2.2, c("C", "sigma")))
-
 })
 
 test_that("tuneGrid works with dependent params", {

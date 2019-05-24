@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.binomial = function() {
+
   makeRLearnerClassif(
     cl = "classif.binomial",
     package = "stats",
@@ -21,12 +22,14 @@ makeRLearner.classif.binomial = function() {
 
 #' @export
 trainLearner.classif.binomial = function(.learner, .task, .subset, .weights = NULL, link = "logit", ...) {
+
   f = getTaskFormula(.task)
   stats::glm(f, data = getTaskData(.task, .subset), family = stats::binomial(link = link), weights = .weights, ...)
 }
 
 #' @export
 predictLearner.classif.binomial = function(.learner, .model, .newdata, ...) {
+
   x = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {
@@ -37,5 +40,3 @@ predictLearner.classif.binomial = function(.learner, .model, .newdata, ...) {
     unname(p)
   }
 }
-
-

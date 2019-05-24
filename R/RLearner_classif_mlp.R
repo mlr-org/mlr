@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.classif.mlp = function() {
+
   makeRLearnerClassif(
     cl = "classif.mlp",
     package = "RSNNS",
@@ -28,7 +29,8 @@ makeRLearner.classif.mlp = function() {
 }
 
 #' @export
-trainLearner.classif.mlp = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.mlp = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   onehot = RSNNS::decodeClassLabels(d$target)
   RSNNS::mlp(x = d$data, y = onehot, ...)
@@ -36,6 +38,7 @@ trainLearner.classif.mlp = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.mlp = function(.learner, .model, .newdata, ...) {
+
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   pred = predict(.model$learner.model, .newdata)
   colnames(pred) = .model$factor.levels[[1]]

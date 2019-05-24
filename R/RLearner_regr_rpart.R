@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.regr.rpart = function() {
+
   makeRLearnerRegr(
     cl = "regr.rpart",
     package = "rpart",
@@ -25,12 +26,13 @@ makeRLearner.regr.rpart = function() {
 }
 
 #' @export
-trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     rpart::rpart(f, data = d, ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     rpart::rpart(f, data = d, weights = .weights, ...)
   }
@@ -38,11 +40,12 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
 
 #' @export
 predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
+
   predict(.model$learner.model, newdata = .newdata, ...)
 }
 
 #' @export
 getFeatureImportanceLearner.regr.rpart = function(.learner, .model, ...) {
+
   getFeatureImportanceLearner.classif.rpart(.learner, .model, ...)
 }
-

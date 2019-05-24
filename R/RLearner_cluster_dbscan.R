@@ -1,5 +1,6 @@
 #' @export
 makeRLearner.cluster.dbscan = function() {
+
   makeRLearnerCluster(
     cl = "cluster.dbscan",
     package = "fpc",
@@ -22,6 +23,7 @@ makeRLearner.cluster.dbscan = function() {
 
 #' @export
 trainLearner.cluster.dbscan = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   data = getTaskData(.task, .subset)
   model = fpc::dbscan(data, ...)
   # dbscan needs this in the prediction phase
@@ -31,8 +33,8 @@ trainLearner.cluster.dbscan = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.cluster.dbscan = function(.learner, .model, .newdata, ...) {
+
   indices = as.integer(predict(.model$learner.model, .model$learner.model$data, newdata = .newdata, ...))
   indices[indices == 0L] = NA_integer_
   return(indices)
 }
-

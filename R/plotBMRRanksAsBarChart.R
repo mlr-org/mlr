@@ -31,6 +31,7 @@
 #' # see benchmark
 plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", aggregation = "default",
   pos = "stack", order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE) {
+
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(pos, c("tile", "stack", "dodge"))

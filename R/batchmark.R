@@ -36,6 +36,7 @@
 #' @export
 #' @family benchmark
 batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
+
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   learners = ensureBenchmarkLearners(learners)
   tasks = ensureBenchmarkTasks(tasks)
@@ -48,12 +49,14 @@ batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg 
 
   # generate problems
   pdes = Map(function(id, task, rin, seed) {
+
     batchtools::addProblem(id, data = list(rin = rin, task = task, measures = measures, learners = learners), fun = resample.fun, seed = seed, reg = reg)
     data.table(i = seq_len(rin$desc$iters))
   }, id = names(tasks), task = tasks, rin = resamplings, seed = reg$seed + seq_along(tasks))
 
   # generate algos
   ades = Map(function(id, learner) {
+
     apply.fun = getAlgoFun(learner, measures, models)
     batchtools::addAlgorithm(id, apply.fun, reg = reg)
     data.table()
@@ -64,14 +67,17 @@ batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg 
 }
 
 resample.fun = function(job, data, i) {
+
   list(train = data$rin$train.inds[[i]], test = data$rin$test.inds[[i]], weights = data$rin$weights[[i]], rdesc = data$rin$desc)
 }
 
 getAlgoFun = function(lrn, measures, models) {
+
   force(lrn)
   force(measures)
   force(models)
   function(job, data, instance) {
+
     extract.this = getExtractor(lrn)
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
       measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE)
@@ -98,15 +104,18 @@ getAlgoFun = function(lrn, measures, models) {
 #' @export
 #' @family benchmark
 reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
+
   # registry and ids are asserted later
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   assertFlag(keep.pred)
   assertClass(reg, "ExperimentRegistry")
 
-  if (is.null(ids))
+  if (is.null(ids)) {
     ids = batchtools::findDone(reg = reg)
-  if (NROW(ids) != nrow(batchtools::findExperiments(reg = reg)))
+  }
+  if (NROW(ids) != nrow(batchtools::findExperiments(reg = reg))) {
     warning("Collecting results for a subset of jobs. The resulting BenchmarkResult may be misleading.")
+  }
 
   problem = algorithm = NULL # for data.table's NSE
   tab = batchtools::getJobPars(ids, reg = reg)[, c("job.id", "problem", "algorithm")]

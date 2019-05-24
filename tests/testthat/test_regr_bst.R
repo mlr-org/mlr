@@ -30,5 +30,5 @@ test_that("classif_bst", {
     old.predicts.list[[i]] = predict(m, regr.num.test[, xind])
   }
   testSimpleParsets("regr.bst", regr.num.df, regr.num.target, regr.num.train.inds,
-                    old.predicts.list, parset.list2)
+    old.predicts.list, parset.list2)
 })
