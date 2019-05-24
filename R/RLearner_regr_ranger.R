@@ -26,7 +26,7 @@ makeRLearner.regr.ranger = function() {
       makeNumericLearnerParam(id = "alpha", lower = 0L, upper = 1L, default = 0.5, requires = quote(splitrule == "maxstat")),
       makeNumericLearnerParam(id = "minprop", lower = 0, upper = 0.5, default = 0.1, requires = quote(splitrule == "maxstat")),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE),
-      makeDiscreteLearnerParam(id = "se.method", default = "jackknife", values = c("jackknife",  "sd"), requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE), when = "both")
+      makeDiscreteLearnerParam(id = "se.method", default = "infjack", values = c("jack",  "infjack"), requires = quote(keep.inbag == TRUE), when = "predict")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
     properties = c("numerics", "factors", "ordered", "oobpreds", "featimp", "se", "weights"),
@@ -38,35 +38,26 @@ makeRLearner.regr.ranger = function() {
 }
 
 #' @export
-trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, ...) {
 
   tn = getTaskTargetNames(.task)
-  if (is.null(keep.inbag)) keep.inbag = (se.method == "jackknife" && .learner$predict.type == "se")
+  if (is.null(keep.inbag)) keep.inbag = (.learner$predict.type == "se") # needed for jacknife and infjack!
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-    case.weights = .weights, ...)
+    case.weights = .weights, keep.inbag = keep.inbag, ...)
 }
 
 #' @export
-predictLearner.regr.ranger = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
-  predict.se = .learner$predict.type == "se"
-  pred = predict(object = .model$learner.model, data = .newdata, predict.all = predict.se, ...)
+predictLearner.regr.ranger = function(.learner, .model, .newdata, se.method = "sd", ...) {
 
-  # Computes the mc bias-corrected jackknife after bootstrap
-  if (predict.se) {
+  pred = predict(object = .model$learner.model, data = .newdata, type = ifelse(.learner$predict.type == "se", "se", "response"), ...)
+  p = pred$predictions
+  if (is.matrix(p)) { #if someone set predict.all = TRUE for ranger
     p = rowMeans(pred$predictions)
-    if (se.method == "jackknife") {
-      se = jacknifeStandardError(
-        aggregated.predictions = p,
-        individual.predictions = pred$predictions,
-        bag.counts = matrix(unlist(.model$learner.model$inbag.counts), ncol = length(.model$learner.model$inbag.counts), byrow = FALSE))
-    } else if (se.method == "sd") {
-      se = sdStandardError(
-        individual.predictions = pred$predictions
-        )
-    }
-    return(cbind(p, se))
+  }
+  if (.learner$predict.type == "se") {
+    return(cbind(p, pred$se))
   } else {
-    return(pred$predictions)
+    return(p)
   }
 }
 

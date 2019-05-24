@@ -116,7 +116,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
       return(cbind(pred, se))
     } else if (se.method == "jackknife") {
       se = jacknifeStandardError(
-        aggregated.predictions =  pred$aggregate,
+        aggregated.predictions = pred$aggregate,
         individual.predictions = pred$individual,
         bag.counts = .model$learner.model$inbag)
     } else if (se.method == "sd") {
