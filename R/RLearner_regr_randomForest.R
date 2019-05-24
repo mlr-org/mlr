@@ -108,7 +108,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
   if (se.method == "bootstrap") {
     pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
   } else {
-    pred = predict(.model$learner.model, newdata = .newdata, ...)
+    pred = predict(.model$learner.model, newdata = .newdata, predict.all = (.learner$predict.type == "se"), ...)
   }
   if (.learner$predict.type == "se") {
     if (se.method == "bootstrap") {
