@@ -165,11 +165,11 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 }
 
 # Computes the mc bias-corrected jackknife after bootstrap
-# @param aggregated.predictions [\code{vector(n)}]
+# @param aggregated.predictions `vector(n)`
 #   Vector of length n of predictions, aggregated over all individual predictions
-# @param individual.predictions [\code{matrix}]
+# @param individual.predictions `matrix`
 #   The individual predictions. Each row represents one individual and each column represents the predictions of one base learner.
-# @param bag.counts [\code{matrix}]
+# @param bag.counts `matrix`
 #   These are the inbag counts of the model. Each row represents an observation of the training set and each row represents one base learner.
 #   The number indicates how often this observation exists in the bootstrap sample for the respective base learner.
 jacknifeStandardError = function(aggregated.predictions, individual.predictions, bag.counts) {
@@ -189,7 +189,7 @@ jacknifeStandardError = function(aggregated.predictions, individual.predictions,
 }
 
 # computes the standard deviation across trees
-# @param individual.predictions [\code{matrix}]
+# @param individual.predictions `matrix`
 #   The individual predictions. Each row represents one individual and each column represents the predictions of one base learner.
 sdStandardError = function(individual.predictions) {
   apply(individual.predictions, 1, sd)
