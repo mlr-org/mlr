@@ -312,6 +312,17 @@
 <li>
 <code>classif.liquidSVM</code> and <code>regr.liquidSVM</code> have been removed because <code>liquidSVM</code> has been removed from CRAN.</li>
 <li>fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of <code>data.table</code>s default in <code>rbindlist()</code>. See <a href='https://github.com/mlr-org/mlr/issues/2578'>#2578</a> for more information. (<a href='https://github.com/mllg'>@mllg</a>, <a href='https://github.com/mlr-org/mlr/issues/2579'>#2579</a>)</li>
+<li>
+<code>regr.randomForest</code> gains three new methods to estimate the standard error:
+<ul>
+<li><code>se.method = "jackknife"</code></li>
+<li><code>se.method = "bootstrap"</code></li>
+<li>
+<code>se.method = "sd"</code><br>
+See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></code> for more details.<br><code>regr.ranger</code> relies on the functions provided by the package (“jackknife” and “infjackknife” (default))<br>
+(<a href='https://github.com/jakob-r'>@jakob-r</a>, <a href='https://github.com/mlr-org/mlr/issues/1784'>#1784</a>)</li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
