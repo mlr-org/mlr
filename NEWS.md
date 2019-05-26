@@ -4,6 +4,13 @@
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
 - fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of `data.table`s default in `rbindlist()`. See #2578 for more information. (@mllg, #2579)
+- `regr.randomForest` gains three new methods to estimate the standard error:
+  - `se.method = "jackknife"`
+  - `se.method = "bootstrap"`
+  - `se.method = "sd"`  
+  See `?regr.randomForest` for more details.  
+  `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
+  (@jakob-r, #1784)
 
 ## learners - new
 - add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)
