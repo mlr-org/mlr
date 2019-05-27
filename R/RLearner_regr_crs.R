@@ -67,7 +67,8 @@ predictLearner.regr.crs = function(.learner, .model, .newdata, ...) {
     lwr = attr(pred, "lwr")
     attr(pred, "lwr") = NULL
     attr(pred, "upr") = NULL
-    se = (pred - lwr) / qnorm(0.95)
+    # FIXME: make sure that this is correct, ask Daniel
+    se = (pred - lwr) * sqrt(.model$task.desc$size) / qnorm(0.95)
     cbind(pred, se)
   } else {
     pred = predict(.model$learner.model, newdata = .newdata, ...)
