@@ -59,7 +59,10 @@ test_that("learners work: regr ", {
   min.task = makeRegrTask("oneCol", data.frame(x = 1:10, y = 1:10), target = "y")
   lrns = mylist(min.task, create = TRUE)
   # regr.gbm: Meaningfull error about too small dataset
+  # regr.cforest: Error in model@fit(data, ...) : fraction of 0.000000 is too small
+  # regr.nodeHarvest: Error in ZRULES[[1]] : subscript out of bounds
   # others: see learners_all_classif and random errors
-  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% c("regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.slim")]
+  not.working =  c("regr.cforest", "regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.nodeHarvest", "regr.slim")
+  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
   lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
 })
