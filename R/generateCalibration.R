@@ -115,8 +115,8 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     }
     list(data = df, proportion = df[, fun(.SD), by = "bin"])
   })
-  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner")
-  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner")
+  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner", use.names = TRUE)
+  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner", use.names = TRUE)
   if (length(td$class.levels) == 2L) {
     proportion = proportion[, !td$negative, with = FALSE]
     data = data[data$Class != td$negative, ]
@@ -166,7 +166,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' names(pred) = c("rpart", "nnet")
 #' out = generateCalibrationData(pred, groups = 3)
 #' plotCalibration(out)
-#' 
+#'
 #' fit = lapply(lrns, train, task = sonar.task)
 #' pred = lapply(fit, predict, task = sonar.task)
 #' names(pred) = c("rpart", "lda")

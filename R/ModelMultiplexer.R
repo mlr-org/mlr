@@ -118,8 +118,11 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
 
 #' @export
 makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
-
-  addClasses(NextMethod(), "ModelMultiplexerModel")
+  x = NextMethod()
+  if (!isFailureModel(x)) {
+    x = addClasses(x, "ModelMultiplexerModel")
+  }
+  return(x)
 }
 
 #' @export
