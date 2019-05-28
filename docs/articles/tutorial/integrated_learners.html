@@ -2009,7 +2009,7 @@
 <td align="center"></td>
 <td align="center">X</td>
 <td align="left">featimp<br>oobpreds<br>se</td>
-<td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>order</code> for all splitrules.</td>
+<td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>order</code> for all splitrules. All settings are changeable. <code>mtry.perc</code> sets <code>mtry</code> to <code>mtry.perc*getTaskNFeats(.task)</code>. Default for <code>mtry</code> is the floor of square root of number of features in task. Se estimation is mc bias-corrected jackknife after bootstrap, see ‘?regr.randomForest’ for more details.</td>
 </tr>
 <tr class="even">
 <td align="left">
