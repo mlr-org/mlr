@@ -12,6 +12,9 @@
   `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
   (@jakob-r, #1784)
 
+## functions - general
+- `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
+
 ## learners - new
 - add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)
 
