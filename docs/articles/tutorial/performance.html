@@ -338,7 +338,7 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6">## Minimize: TRUE</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">## Best: 0; Worst: 1</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">## Aggregated by: test.mean</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">## Arguments: list()</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">## Arguments: </a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">## Note: Defined as: mean(response != truth)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># Get the default measure for linear regression</span></a>
@@ -349,7 +349,7 @@
 <a class="sourceLine" id="cb2-17" data-line-number="17">## Minimize: TRUE</a>
 <a class="sourceLine" id="cb2-18" data-line-number="18">## Best: 0; Worst: Inf</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">## Aggregated by: test.mean</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## Arguments: list()</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## Arguments: </a>
 <a class="sourceLine" id="cb2-21" data-line-number="21">## Note: Defined as: mean((response - truth)^2)</a></code></pre></div>
 </div>
 <div id="calculate-performance-measures" class="section level1">
@@ -390,7 +390,7 @@
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># Calculate the Dunn index</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> dunn, <span class="dt">task =</span> mtcars.task)</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">##      dunn </a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 0.1462919</a></code></pre></div>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## 0.1178415</a></code></pre></div>
 <p>Moreover, some measures require a certain type of prediction. For example in binary classification in order to calculate the AUC (<a href="measures.html" target="_blank">auc</a>) – the area under the ROC (receiver operating characteristic) curve – we have to make sure that posterior probabilities are predicted. For more information on ROC analysis, see the section on <a href="roc_analysis.html" target="_blank">ROC analysis</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</a>

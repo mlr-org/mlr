@@ -42,7 +42,7 @@ mergeBenchmarkResults = function(bmrs) {
   existing.combos = rbindlist(lapply(bmrs, function(bmr) {
 
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
-  }))
+  }), use.names = TRUE)
   existing.combos = stri_paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
   if (!identical(sort(existing.combos), sort(all.combos))) {
     dupls = existing.combos[duplicated(existing.combos)]
