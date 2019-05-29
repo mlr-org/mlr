@@ -66,8 +66,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   td = getTaskDesc(task)
 
-
-  browser()
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (any(sapply(filter, function(x) length(x$pkg) > 0))) {
     pkgs = unlist(lapply(filter, function(x) x$pkg))
