@@ -75,4 +75,20 @@ test_that("getClassWeightParam", {
     "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
     "randomForest", "svm"), sep = ".")
   x = lapply(learners, f)
+
+
+  #some special cases
+  lrn = makeLearner("classif.ksvm")
+  ps = lrn$par.set$pars[[lrn$class.weights.param]]
+
+  #wrapped learner
+  lrnWrap = makeBaggingWrapper(lrn)
+  expect_equal(ps, getClassWeightParam(lrn))
+  
+  #model multiplexer with at least 1 learner without class.weight prop
+  modMult = makeModelMultiplexer(list(lrn, makeLearner("classif.rpart")))
+  
+  expect_error(getClassWeightParam(modMult), "please specify one of the base learners: classif.ksvm, classif.rpart")
+  expect_error(getClassWeightParam(modMult, "classif.fu"), "classif.fu is not a base learner. Available base learners are: classif.ksvm, classif.rpart")
+  expect_equal(getClassWeightParam(modMult, "classif.ksvm"), ps)
 })
