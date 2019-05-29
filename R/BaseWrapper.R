@@ -81,7 +81,10 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset = NULL, features, factor.levels, time) {
   x = NextMethod()
-  addClasses(x, c(learner$model.subclass, "BaseWrapperModel"))
+  if (!isFailureModel(x)) {
+    x = addClasses(x, c(learner$model.subclass, "BaseWrapperModel"))
+  }
+  return(x)
 }
 
 ##############################           BaseWrapperModel                 ##############################

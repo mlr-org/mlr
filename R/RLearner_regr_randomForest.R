@@ -88,8 +88,8 @@ makeRLearner.regr.randomForest = function() {
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "sd", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
   data = getTaskData(.task, .subset, target.extra = TRUE)
-  m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
-    keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
+  if (is.null(keep.inbag)) keep.inbag = (se.method == "jackknife" && .learner$predict.type == "se")
+  m = randomForest::randomForest(x = data[["data"]], y = data[["target"]], keep.inbag = keep.inbag, ...)
   if (.learner$predict.type == "se" && se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
     base.lrn = setHyperPars(base.lrn, ntree = se.ntree)
@@ -105,16 +105,21 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
   if (se.method == "bootstrap") {
     pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
   } else {
-    pred = predict(.model$learner.model, newdata = .newdata, ...)
+    pred = predict(.model$learner.model, newdata = .newdata, predict.all = (.learner$predict.type == "se"), ...)
   }
   if (.learner$predict.type == "se") {
-    se.fun = switch(se.method,
-      bootstrap = bootstrapStandardError,
-      jackknife = jackknifeStandardError,
-      sd = sdStandardError
-    )
-    se = se.fun(.learner, .model, .newdata, ...)
-    return(cbind(pred, se))
+    if (se.method == "bootstrap") {
+      se = bootstrapStandardError(.learner, .model, .newdata, ...)
+      return(cbind(pred, se))
+    } else if (se.method == "jackknife") {
+      se = jacknifeStandardError(
+        aggregated.predictions = pred$aggregate,
+        individual.predictions = pred$individual,
+        bag.counts = .model$learner.model$inbag)
+    } else if (se.method == "sd") {
+      se = sdStandardError(individual.predictions = pred$individual)
+    }
+    return(cbind(pred$aggregate, se))
   } else {
     return(pred)
   }
@@ -148,7 +153,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   #   )
   # )
   bias = rowSums(matrix(vapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2, numeric(nrow(pred.boot.all[[1]]))), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
-  bist = ((1 / se.ntree) - (1 / ntree)) / (se.boot * se.ntree * (se.ntree - 1)) * bias
+  bias = ((1 / se.ntree) - (1 / ntree)) / (se.boot * se.ntree * (se.ntree - 1)) * bias
   pred.boot.aggregated = extractSubList(pred.bagged, "aggregate")
   pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
   var.boot = apply(pred.boot.aggregated, 1, var) - bias
@@ -157,28 +162,34 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 }
 
 # Computes the mc bias-corrected jackknife after bootstrap
-jackknifeStandardError = function(.learner, .model, .newdata, ...) {
+# @param aggregated.predictions `vector(n)`
+#   Vector of length n of predictions, aggregated over all individual predictions
+# @param individual.predictions `matrix`
+#   The individual predictions. Each row represents one individual and each column represents the predictions of one base learner.
+# @param bag.counts `matrix`
+#   These are the inbag counts of the model. Each row represents an observation of the training set and each row represents one base learner.
+#   The number indicates how often this observation exists in the bootstrap sample for the respective base learner.
+jacknifeStandardError = function(aggregated.predictions, individual.predictions, bag.counts) {
 
-  model = .model$learner.model
-  model$inbag = model$inbag[rowSums(model$inbag == 0) > 0, , drop = FALSE]
-  n = nrow(model$inbag)
-  ntree = model$ntree
-  pred = predict(model, newdata = .newdata, predict.all = TRUE, ...)
-  oob = model$inbag == 0
-  jack.n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
+  nbase = ncol(individual.predictions)
+  bag.counts = bag.counts[rowSums(bag.counts == 0) > 0, , drop = FALSE]
+  n = nrow(bag.counts)
+  oob = bag.counts == 0
+  jack.n = apply(oob, 1, function(x) rowMeans(individual.predictions[, x, drop = FALSE]))
   if (is.vector(jack.n)) {
     jack.n = t(as.matrix(jack.n))
   }
-  jack = (n - 1) / n * rowSums((jack.n - pred$aggregate)^2)
-  bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
+  jack = (n - 1) / n * rowSums((jack.n - aggregated.predictions)^2)
+  bias = (exp(1) - 1) * n / nbase^2 * rowSums((individual.predictions - aggregated.predictions)^2)
   jab = pmax(jack - bias, 0)
   sqrt(jab)
 }
 
 # computes the standard deviation across trees
-sdStandardError = function(.learner, .model, .newdata, ...) {
-  pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
-  apply(pred$individual, 1, sd)
+# @param individual.predictions `matrix`
+#   The individual predictions. Each row represents one individual and each column represents the predictions of one base learner.
+sdStandardError = function(individual.predictions) {
+  apply(individual.predictions, 1, sd)
 }
 
 #' @export
