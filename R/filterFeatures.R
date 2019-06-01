@@ -169,9 +169,10 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
   if (length(levels(as.factor(fval$method))) >= 2) {
-    # if 'method' is an ensemble method, we always choose the ensemble method unless
-    # select.method is specified specifically
-    if (is.null(select.method) && !method %in% ls(.FilterEnsembleRegister)) {
+    # if 'method' is an ensemble method, we always choose the ensemble method
+    # unless select.method is specified specifically. Method[[1]] should usually
+    # be the ensemble method
+    if (is.null(select.method) && !method[[1]] %in% ls(.FilterEnsembleRegister)) {
       stopf("You supplied multiple filters. Please choose which should be used for the final subsetting of the features.")
     }
     if (is.null(select.method)) {
