@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Filter features by thresholding filter values. — filterFeatures • mlr</title>
+<title>Create an ensemble feature filter. — makeFilterEnsemble • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Filter features by thresholding filter values. — filterFeatures" />
+<meta property="og:title" content="Create an ensemble feature filter. — makeFilterEnsemble" />
 
-<meta property="og:description" content="First, calls generateFilterValuesData.
-Features are then selected via select and val." />
+<meta property="og:description" content="Creates and registers custom ensemble feature filters. Implemented ensemble filters
+can be listed with listFilterEnsembleMethods. Additional
+documentation for the fun parameter specific to each filter can
+be found in the description." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -299,153 +301,66 @@ Features are then selected via select and val." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter features by thresholding filter values.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/filterFeatures.R'><code>R/filterFeatures.R</code></a></small>
+    <h1>Create an ensemble feature filter.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FilterEnsemble.R'><code>R/FilterEnsemble.R</code></a></small>
     </div>
 
     
-    <p>First, calls <a href='generateFilterValuesData.html'>generateFilterValuesData</a>.
-Features are then selected via <code>select</code> and <code>val</code>.</p>
+    <p>Creates and registers custom ensemble feature filters. Implemented ensemble filters
+can be listed with <a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>. Additional
+documentation for the <code>fun</code> parameter specific to each filter can
+be found in the description.</p>
     
 
-    <pre class="usage"><span class='fu'>filterFeatures</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>select.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>basal.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>makeFilterEnsemble</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"E-min"</span>,
+  <span class='kw'>basal.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"randomForestSRC.importance"</span>, <span class='st'>"variance"</span>),
+  <span class='kw'>desc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>task</th>
-      <td><p>(<a href='Task.html'>Task</a>)<br />
-The task.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
+      <th>name</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-See <a href='listFilterMethods.html'>listFilterMethods</a>.
-Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
-    </tr>
-    <tr>
-      <th>fval</th>
-      <td><p>(<a href='generateFilterValuesData.html'>FilterValues</a>)<br />
-Result of <a href='generateFilterValuesData.html'>generateFilterValuesData</a>.
-If you pass this, the filter values in the object are used for feature filtering.
-<code>method</code> and <code>...</code> are ignored then.
-Default is <code>NULL</code> and not used.</p></td>
-    </tr>
-    <tr>
-      <th>perc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-If set, select <code>perc</code>*100 top scoring features.
-<code>perc = 1</code> means to select all features.<code>Mutually exclusive with arguments</code>abs<code>and</code>threshold`.</p></td>
-    </tr>
-    <tr>
-      <th>abs</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-If set, select <code>abs</code> top scoring features.
-Mutually exclusive with arguments <code>perc</code> and <code>threshold</code>.</p></td>
-    </tr>
-    <tr>
-      <th>threshold</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-If set, select features whose score exceeds <code>threshold</code>.
-Mutually exclusive with arguments <code>perc</code> and <code>abs</code>.</p></td>
-    </tr>
-    <tr>
-      <th>mandatory.feat</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
-Mandatory features which are always included regardless of their scores</p></td>
-    </tr>
-    <tr>
-      <th>select.method</th>
-      <td><p>If multiple methods are supplied in argument <code>method</code>,
-specify the method that is used for the final subsetting.</p></td>
+Identifier for the filter.</p></td>
     </tr>
     <tr>
       <th>basal.methods</th>
-      <td><p>If <code>method</code> is an ensemble filter, specify the basal
-filter methods which the ensemble method will use.</p></td>
+      <td><p>the basal filter methods which the ensemble method
+will use.</p></td>
     </tr>
     <tr>
-      <th>cache</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
-Whether to use caching during filter value creation. See details.</p></td>
+      <th>desc</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Short description of the filter.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>(any)<br />
-Passed down to selected filter method.</p></td>
+      <th>fun</th>
+      <td><p>(<code>function(task, nselect, ...</code>)<br />
+Function which takes a task and returns a named numeric vector of scores,
+one score for each feature of <code>task</code>.
+Higher scores mean higher importance of the feature.
+At least <code>nselect</code> features must be calculated, the remaining may be
+set to <code>NA</code> or omitted, and thus will not be selected.
+the original order will be restored if necessary.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='Task.html'>Task</a>.</p>
-    
-    <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
-
-    
-    <p>If <code>cache = TRUE</code>, the default mlr cache directory is used to cache
-filter values. The directory is operating system dependent and can be
-checked with <code><a href='cache_helpers.html'>getCacheDir()</a></code>.<br />
-The default cache can be cleared with <code><a href='cache_helpers.html'>deleteCacheDir()</a></code>.
-Alternatively, a custom directory can be passed to store the cache.</p>
-<p>Note that caching is not thread safe. It will work for parallel
-computation on many systems, but there is no guarantee.</p>
-    
-    <h2 class="hasAnchor" id="simple-and-ensemble-filters"><a class="anchor" href="#simple-and-ensemble-filters"></a>Simple and ensemble filters</h2>
-
-    
-    <p>Besides passing (multiple) simple filter methods you can also pass an ensemble
-filter method (in a list). The ensemble method will use the simple methods to
-calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
+    <p>Object of class &#8220;FilterEnsemble&#8221;.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other filter: <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
+    <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
+  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
   <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
   <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
   <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># simple filter</span>
-<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
-#&gt; Type: classif
-#&gt; Target: Species
-#&gt; Observations: 150
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           2           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE
-#&gt; Classes: 3
-#&gt;     setosa versicolor  virginica 
-#&gt;         50         50         50 
-#&gt; Positive class: NA</div><div class='input'><span class='co'># ensemble filter</span>
-<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"E-min"</span>,
-  <span class='kw'>basal.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>), <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
-#&gt; Type: classif
-#&gt; Target: Species
-#&gt; Observations: 150
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           2           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE
-#&gt; Classes: 3
-#&gt;     setosa versicolor  virginica 
-#&gt;         50         50         50 
-#&gt; Positive class: NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -454,14 +369,8 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#caching">Caching</a></li>
-
-      <li><a href="#simple-and-ensemble-filters">Simple and ensemble filters</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
