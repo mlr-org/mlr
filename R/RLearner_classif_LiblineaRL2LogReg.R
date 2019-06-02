@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.LiblineaRL2LogReg = function() {
-
   makeRLearnerClassif(
     cl = "classif.LiblineaRL2LogReg",
     package = "LiblineaR",
@@ -28,14 +27,12 @@ makeRLearner.classif.LiblineaRL2LogReg = function() {
 
 #' @export
 trainLearner.classif.LiblineaRL2LogReg = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR::LiblineaR(data = d$data, target = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.LiblineaRL2LogReg = function(.learner, .model, .newdata, ...) {
-
   if (.learner$predict.type == "response") {
     as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
   } else {

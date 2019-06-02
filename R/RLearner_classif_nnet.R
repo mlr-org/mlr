@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.nnet = function() {
-
   makeRLearnerClassif(
     cl = "classif.nnet",
     package = "nnet",
@@ -33,7 +32,6 @@ makeRLearner.classif.nnet = function() {
 
 #' @export
 trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), ...)
@@ -45,7 +43,6 @@ trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.classif.nnet = function(.learner, .model, .newdata, ...) {
-
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (type == "class") {

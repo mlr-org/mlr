@@ -2,7 +2,6 @@
 # useful for plotting in ggplot2
 # if order.tsks is NULL, just return the df
 orderBMRTasks = function(bmr, df = NULL, order.tsks) {
-
   if (is.null(df)) {
     df = as.data.frame(bmr)
   }
@@ -18,7 +17,6 @@ orderBMRTasks = function(bmr, df = NULL, order.tsks) {
 # useful for plotting in ggplot2
 # if order.tsks is NULL, just return the df
 orderBMRLrns = function(bmr, df = NULL, order.lrns) {
-
   if (is.null(df)) {
     df = as.data.frame(bmr)
   }

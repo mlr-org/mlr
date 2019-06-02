@@ -54,7 +54,6 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
 
 #' @export
 trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL, ...) {
-
   task = subsetTask(.task, .subset)
   if (length(.learner$bit.names) == 0) {
     # FIXME: really look at bitnames / bits.to.features stuff and test it.
@@ -76,7 +75,6 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL, ...) {
 
 #' @export
 predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
-
   .newdata = .newdata[, .model$learner.model$opt.result$x, drop = FALSE]
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }

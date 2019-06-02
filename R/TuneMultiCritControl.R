@@ -39,7 +39,6 @@ NULL
 
 makeTuneMultiCritControl = function(measures, same.resampling.instance,
   impute.val = NULL, log.fun = "default", final.dw.perc = NULL, budget = NULL, ..., cl) {
-
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val)) {
     assertNumeric(impute.val, any.missing = FALSE)
@@ -60,7 +59,6 @@ makeTuneMultiCritControl = function(measures, same.resampling.instance,
 
 #' @export
 print.TuneMultiCritControl = function(x, ...) {
-
   catf("Tune multicrit control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", collapse(sprintf("%g", x$impute.val))))

@@ -5,18 +5,15 @@
 #' @family roc
 #' @family predict
 asROCRPrediction = function(pred) {
-
   UseMethod("asROCRPrediction")
 }
 
 asROCRPredictionIntern = function(probabilites, truth, negative, positive) {
-
   ROCR::prediction(probabilites, truth, label.ordering = c(negative, positive))
 }
 
 #' @export
 asROCRPrediction.Prediction = function(pred) {
-
   if (length(pred$task.desc$class.levels) != 2L) {
     stop("More than 2 classes!")
   }
@@ -25,7 +22,6 @@ asROCRPrediction.Prediction = function(pred) {
 
 #' @export
 asROCRPrediction.ResamplePrediction = function(pred) {
-
   if (length(pred$task.desc$class.levels) != 2L) {
     stop("More than 2 classes!")
   }

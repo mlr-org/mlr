@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.glmnet = function() {
-
   makeRLearnerRegr(
     cl = "regr.glmnet",
     package = "glmnet",
@@ -74,7 +73,6 @@ trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, .
 
 #' @export
 predictLearner.regr.glmnet = function(.learner, .model, .newdata, ...) {
-
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   drop(predict(.model$learner.model, newx = .newdata, ...))

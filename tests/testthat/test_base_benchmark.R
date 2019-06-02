@@ -1,7 +1,6 @@
 context("benchmark")
 
 test_that("benchmark", {
-
   if (getRversion() > "3.5.3") {
     suppressWarnings(RNGversion("3.5.0"))
   }
@@ -257,7 +256,6 @@ test_that("drop option works for BenchmarkResults_operators", {
 
   # check all other functions that use 'drop' briefly
   testDropOption = function(bmr, fun, new.names, ...) {
-
     extra.args = list(...)
     res = do.call(fun, c(list(bmr, drop = TRUE), extra.args))
     expect_true(all(names(res) == new.names))
@@ -318,15 +316,16 @@ test_that("benchmark handles failure models correctly", {
 
   # Expect benchmark warning
   expect_warning(benchmark(learners = warn_learner, tasks = task, resamplings = outer,
-   keep.pred = FALSE, models = FALSE, show.info = TRUE))
+    keep.pred = FALSE, models = FALSE, show.info = TRUE))
 
   # Expect benchmark messages
-  expect_message({bmr = benchmark(learners = quiet_learner, tasks = task,
-    resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)})
+  expect_message({
+    bmr = benchmark(learners = quiet_learner, tasks = task,
+      resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)
+  })
   aggr_perf = getBMRAggrPerformances(bmr = bmr)
 
   # Check result
   expect_class(x = bmr, classes = "BenchmarkResult")
   expect_true(object = is.na(aggr_perf[[1]][[1]]))
-
 })

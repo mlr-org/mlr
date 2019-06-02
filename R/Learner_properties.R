@@ -34,25 +34,21 @@ NULL
 #' @rdname LearnerProperties
 #' @export
 getLearnerProperties = function(learner) {
-
   UseMethod("getLearnerProperties")
 }
 
 #' @export
 getLearnerProperties.Learner = function(learner) {
-
   learner$properties
 }
 
 #' @export
 getLearnerProperties.character = function(learner) {
-
   getLearnerProperties(checkLearner(learner))
 }
 
 #' @export
 getLearnerProperties.ModelMultiplexer = function(learner) {
-
   selected = learner$par.vals$selected.learner
   # NB: this is not set during construction
   if (is.null(selected)) learner$properties else getLearnerProperties(learner$base.learners[[selected]])
@@ -61,7 +57,6 @@ getLearnerProperties.ModelMultiplexer = function(learner) {
 #' @rdname LearnerProperties
 #' @export
 hasLearnerProperties = function(learner, props) {
-
   learner = checkLearner(learner)
   assertSubset(props, listLearnerProperties())
   props %in% getLearnerProperties(learner)
@@ -72,7 +67,6 @@ hasLearnerProperties = function(learner, props) {
 #' @param props Deprecated.
 #' @export
 hasProperties = function(learner, props) {
-
   .Deprecated("hasLearnerProperties")
   hasLearnerProperties(learner, props)
 }
@@ -89,7 +83,6 @@ hasProperties = function(learner, props) {
 #'
 #' @export
 listLearnerProperties = function(type = "any") {
-
   all.props = c(listTaskTypes(), "any")
   assertSubset(type, all.props)
   mlr$learner.properties[[type]]

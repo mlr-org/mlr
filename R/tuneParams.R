@@ -81,7 +81,7 @@
 #' print(res)
 #' df = as.data.frame(res$opt.path)
 #' print(head(df[, -ncol(df)]))
-#' 
+#'
 #' # include the training set performance as well
 #' rdesc = makeResampleDesc("Holdout", predict = "both")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
@@ -152,7 +152,6 @@ tuneParams = function(learner, task, resampling, measures, par.set, control,
 #' @return ([ParamHelpers::OptPath]) or ([data.frame]).
 #' @export
 getTuneResultOptPath = function(tune.result, as.df = TRUE) {
-
   if (as.df == TRUE) {
     return(as.data.frame(tune.result$opt.path))
   } else {

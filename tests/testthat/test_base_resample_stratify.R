@@ -2,7 +2,6 @@ context("resample_stratify")
 
 test_that("stratification instances work", {
   mytest = function(rin, size1, size2) {
-
     for (i in 1:rin$desc$iters) {
       i1 = rin$train.inds[[i]]
       i2 = rin$test.inds[[i]]

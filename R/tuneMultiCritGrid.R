@@ -1,6 +1,5 @@
 # tunes with grid search, all params are supported as we use generateGridDesign
 tuneMultiCritGrid = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
-
   des = generateGridDesign(par.set, resolution = control$extra.args$resolution, trafo = FALSE)
   if (!is.null(control$budget) && (nrow(des) != control$budget)) {
     stopf("The given budget (%i) does not fit to the size of the grid (%i).", control$budget, nrow(des))

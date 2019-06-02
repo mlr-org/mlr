@@ -40,7 +40,6 @@ fixDataForLearner = function(data, info) {
   if (info$factors.to.dummies) {
     cols = names(info$factors)
     new.cols = Map(function(x, lvls) {
-
       as.data.frame(setNames(lapply(lvls, "==", x), lvls))
     }, x = data[cols], lvls = info$factors)
     data = cbind(dropNamed(data, cols), do.call(cbind, new.cols))

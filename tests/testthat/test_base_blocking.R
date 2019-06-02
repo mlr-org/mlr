@@ -17,7 +17,6 @@ test_that("blocking", {
   # test blocking in resample
   lrn = makeLearner("classif.lda")
   mycheck = function(rdesc, p, b) {
-
     for (j in 1:rdesc$iters) {
       test.j = p$data[p$data$iter == j, "id"]
       tab = table(b[test.j])

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.svm = function() {
-
   makeRLearnerClassif(
     cl = "classif.svm",
     package = "e1071",
@@ -30,14 +29,12 @@ makeRLearner.classif.svm = function() {
 
 #' @export
 trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   e1071::svm(f, data = getTaskData(.task, .subset), probability = .learner$predict.type == "prob", ...)
 }
 
 #' @export
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
-
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, ...)
   } else {

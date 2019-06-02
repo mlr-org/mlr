@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.nodeHarvest = function() {
-
   makeRLearnerRegr(
     cl = "regr.nodeHarvest",
     package = "nodeHarvest",
@@ -24,13 +23,11 @@ makeRLearner.regr.nodeHarvest = function() {
 
 #' @export
 trainLearner.regr.nodeHarvest = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   nodeHarvest::nodeHarvest(X = d$data, Y = d$target, ...)
 }
 
 #' @export
 predictLearner.regr.nodeHarvest = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, .newdata, ...)
 }

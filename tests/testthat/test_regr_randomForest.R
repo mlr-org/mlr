@@ -80,8 +80,9 @@ test_that("different se.methods work", {
 test_that("dplyr data.frames work", {
   data("mpg", package = "ggplot2")
   mpg$model = NULL
-  for (cname in colnames(mpg)[sapply(mpg, is.character)])
+  for (cname in colnames(mpg)[sapply(mpg, is.character)]) {
     mpg[[cname]] = as.factor(mpg[[cname]])
+  }
   expect_warning((task.mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
   lrn = makeLearner("regr.randomForest", ntree = 2)
   train(lrn, task.mpg)

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.pamr = function() {
-
   makeRLearnerClassif(
     cl = "classif.pamr",
     package = "pamr",
@@ -30,14 +29,12 @@ makeRLearner.classif.pamr = function() {
 
 #' @export
 trainLearner.classif.pamr = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   pamr::pamr.train(data = list(x = t(d$data), y = d$target), ...)
 }
 
 #' @export
 predictLearner.classif.pamr = function(.learner, .model, .newdata, threshold.predict, ...) {
-
   type = ifelse(.learner$predict.type == "prob", "posterior", "class")
   pamr::pamr.predict(.model$learner.model, t(.newdata), threshold = threshold.predict, type = type, ...)
 }

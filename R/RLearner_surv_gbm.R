@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.gbm = function() {
-
   makeRLearnerSurv(
     cl = "surv.gbm",
     package = "gbm",
@@ -27,7 +26,6 @@ makeRLearner.surv.gbm = function() {
 
 #' @export
 trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
 
@@ -40,14 +38,12 @@ trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL, ...)
 
 #' @export
 predictLearner.surv.gbm = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
 }
 
 #' @export
 getFeatureImportanceLearner.surv.gbm = function(.learner, .model, ...) {
-
   mod = getLearnerModel(.model)
   gbm::relative.influence(mod, mod$n.trees, ...)
 }

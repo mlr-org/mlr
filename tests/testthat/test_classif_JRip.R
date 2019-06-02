@@ -29,7 +29,6 @@ test_that("classif_JRip", {
   testProbParsets("classif.JRip", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-
     RWeka::JRip(formula, data = data[subset, ], control = RWeka::Weka_control(..., S = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
   }
 

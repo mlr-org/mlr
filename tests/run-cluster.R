@@ -1,8 +1,8 @@
 library(testthat)
 # no Appveyor because XMeans is not available on Windows
 if (identical(Sys.getenv("TRAVIS"), "True") ||
-    identical(Sys.getenv("R_EXPENSIVE_TEST_OK"), "true") ||
-    identical(Sys.getenv("NOT_CRAN"), "true")) {
+  identical(Sys.getenv("R_EXPENSIVE_TEST_OK"), "true") ||
+  identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   if (getRversion() > "3.5.3") {
     # set old seed

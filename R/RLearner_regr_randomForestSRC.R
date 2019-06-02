@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.randomForestSRC = function() {
-
   makeRLearnerRegr(
     cl = "regr.randomForestSRC",
     package = "randomForestSRC",
@@ -52,14 +51,12 @@ makeRLearner.regr.randomForestSRC = function() {
 
 #' @export
 trainLearner.regr.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset), case.wt = .weights, ...)
 }
 
 #' @export
 predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) {
-
   p = predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)
   # versison 2.0 of randomForestSRC returns an array here :(
   as.numeric(p$predicted)
@@ -67,13 +64,11 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
 
 #' @export
 getOOBPredsLearner.regr.randomForestSRC = function(.learner, .model) {
-
   as.numeric(getLearnerModel(.model, more.unwrap = TRUE)$predicted.oob)
 }
 
 #' @rdname getFeatureImportanceLearner
 getFeatureImportanceLearner.regr.randomForestSRC = function(.learner, .model, ...) {
-
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   randomForestSRC::vimp(mod)$importance
 }

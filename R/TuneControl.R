@@ -54,7 +54,6 @@ makeTuneControl = function(same.resampling.instance, impute.val = NULL,
 
 #' @export
 print.TuneControl = function(x, ...) {
-
   catf("Tune control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))

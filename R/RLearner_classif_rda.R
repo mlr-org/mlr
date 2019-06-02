@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.rda = function() {
-
   makeRLearnerClassif(
     cl = "classif.rda",
     package = "klaR",
@@ -32,14 +31,12 @@ makeRLearner.classif.rda = function() {
 
 #' @export
 trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   klaR::rda(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.classif.rda = function(.learner, .model, .newdata, ...) {
-
   p = predict(.model$learner.model, newdata = .newdata, ...)
   if (.learner$predict.type == "response") {
     return(p$class)

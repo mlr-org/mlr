@@ -34,7 +34,6 @@
 #' capLargeValues(iris, threshold = 5, impute = 5)
 capLargeValues = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
-
   checkTargetPreproc(obj, target, cols)
   assertNumber(threshold, lower = 0)
   assertNumber(impute, lower = 0)
@@ -45,7 +44,6 @@ capLargeValues = function(obj, target = character(0L), cols = NULL,
 #' @export
 capLargeValues.Task = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
-
   d = getTaskData(obj)
   d = capLargeValues.data.frame(d, target = character(0L), cols = cols,
     threshold = threshold, impute = impute)

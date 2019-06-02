@@ -45,7 +45,7 @@
 #' print(calculateConfusionMatrix(pred))
 #' print(calculateConfusionMatrix(pred, sums = TRUE))
 #' print(calculateConfusionMatrix(pred, relative = TRUE))
-#' 
+#'
 #' # now after cross-validation
 #' r = crossval("classif.lda", iris.task, iters = 2L)
 #' print(calculateConfusionMatrix(r$pred))
@@ -100,7 +100,6 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
   if (relative) {
 
     normConfMatrix = function(r) {
-
       if (any(r[js] > 0)) {
         r / sum(r[js])
       } else {

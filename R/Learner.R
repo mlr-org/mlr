@@ -3,7 +3,6 @@
 # in contains a minimal number of member vars, that every Learner object should have
 # derived constructors can of course add more member vars
 makeLearnerBaseConstructor = function(classes, id, type, package, properties, par.set, par.vals, predict.type, cache = FALSE) {
-
   if (length(par.vals) == 0L) {
     names(par.vals) = character(0L)
   }
@@ -24,7 +23,6 @@ makeLearnerBaseConstructor = function(classes, id, type, package, properties, pa
 
 #' @export
 print.Learner = function(x, ...) {
-
   cat(
     "Learner ", x$id, " from package ", collapse(cleanupPackageNames(x$package)), "\n",
     "Type: ", x$type, "\n",

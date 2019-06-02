@@ -48,7 +48,6 @@ makeResamplePrediction = function(instance, preds.test, preds.train, task.desc) 
 
 #' @export
 print.ResamplePrediction = function(x, ...) {
-
   cat("Resampled Prediction for:\n")
   print(x$instance$desc)
   catf("predict.type: %s", x$predict.type)

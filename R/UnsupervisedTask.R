@@ -1,5 +1,4 @@
 makeUnsupervisedTask = function(type, data, weights, blocking, fixup.data, check.data, coordinates) {
-
   task = makeTask(type, data, weights, blocking, fixup.data = fixup.data, check.data = check.data,
     coordinates = coordinates)
   if (check.data) {

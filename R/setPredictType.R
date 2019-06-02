@@ -21,14 +21,12 @@
 #' @family learner
 #' @export
 setPredictType = function(learner, predict.type) {
-
   assertClass(learner, classes = "Learner")
   UseMethod("setPredictType")
 }
 
 #' @export
 setPredictType.Learner = function(learner, predict.type) {
-
   # checks should be done down here i guess, because of recursive calls in wrappers
   assertChoice(predict.type, choices = switch(learner$type,
     classif = c("response", "prob"),

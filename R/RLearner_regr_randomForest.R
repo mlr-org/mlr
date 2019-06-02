@@ -51,7 +51,6 @@ NULL
 
 #' @export
 makeRLearner.regr.randomForest = function() {
-
   makeRLearnerRegr(
     cl = "regr.randomForest",
     package = "randomForest",
@@ -88,7 +87,6 @@ makeRLearner.regr.randomForest = function() {
 
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "sd", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
-
   data = getTaskData(.task, .subset, target.extra = TRUE)
   if (is.null(keep.inbag)) keep.inbag = (se.method == "jackknife" && .learner$predict.type == "se")
   m = randomForest::randomForest(x = data[["data"]], y = data[["target"]], keep.inbag = keep.inbag, ...)
@@ -104,7 +102,6 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "sd", ...) {
-
   if (se.method == "bootstrap") {
     pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
   } else {

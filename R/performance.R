@@ -20,13 +20,13 @@
 #' @examples
 #' training.set = seq(1, nrow(iris), by = 2)
 #' test.set = seq(2, nrow(iris), by = 2)
-#' 
+#'
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
 #' mod = train(lrn, task, subset = training.set)
 #' pred = predict(mod, newdata = iris[test.set, ])
 #' performance(pred, measures = mmce)
-#' 
+#'
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
@@ -132,7 +132,6 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       if (is.null(pred$data$iter)) pred$data$iter = 1L
       if (is.null(pred$data$set)) pred$data$set = "test"
       fun = function(ss) {
-
         is.train = ss$set == "train"
         if (any(is.train)) {
           pred$data = as.data.frame(ss[is.train, ])

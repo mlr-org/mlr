@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.glm = function() {
-
   makeRLearnerRegr(
     cl = "regr.glm",
     package = "stats",
@@ -45,7 +44,6 @@ makeRLearner.regr.glm = function() {
 #' @export
 trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsilon, maxit, trace, family,
   gaussian.link = "identity", poisson.link = "log", Gamma.link = "inverse", inverse.gaussian.link = "1/mu2", ...) {
-
   ctrl = learnerArgsToControl(stats::glm.control, epsilon, maxit, trace)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
@@ -66,7 +64,6 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
 
 #' @export
 predictLearner.regr.glm = function(.learner, .model, .newdata, ...) {
-
   se.fit = .learner$predict.type == "se"
   p = predict(.model$learner.model, newdata = .newdata, type = "response", se.fit = se.fit, ...)
   if (se.fit) {

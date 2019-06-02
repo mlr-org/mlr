@@ -3,7 +3,6 @@ context("weightedclasses")
 test_that("WeightedClassesWrapper, binary", {
   pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
-
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
@@ -15,7 +14,6 @@ test_that("WeightedClassesWrapper, binary", {
     "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
     "randomForest", "svm"), sep = ".")
   x = lapply(learners, function(lrn) {
-
     cm1 = f(lrn, 0.001)
     cm2 = f(lrn, 1)
     cm3 = f(lrn, 1000)
@@ -30,7 +28,6 @@ test_that("WeightedClassesWrapper, binary", {
 test_that("WeightedClassesWrapper, multiclass", {
   levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
-
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, multiclass.task)
@@ -65,7 +62,6 @@ context("getClassWeightParam")
 
 test_that("getClassWeightParam", {
   f = function(lrn) {
-
     lrn1 = makeLearner(lrn)
     expect_is(getClassWeightParam(lrn), "LearnerParam")
     expect_is(getClassWeightParam(lrn1), "LearnerParam")
@@ -77,17 +73,17 @@ test_that("getClassWeightParam", {
   x = lapply(learners, f)
 
 
-  #some special cases
+  # some special cases
   lrn = makeLearner("classif.ksvm")
   ps = lrn$par.set$pars[[lrn$class.weights.param]]
 
-  #wrapped learner
+  # wrapped learner
   lrnWrap = makeBaggingWrapper(lrn)
   expect_equal(ps, getClassWeightParam(lrn))
-  
-  #model multiplexer with at least 1 learner without class.weight prop
+
+  # model multiplexer with at least 1 learner without class.weight prop
   modMult = makeModelMultiplexer(list(lrn, makeLearner("classif.rpart")))
-  
+
   expect_error(getClassWeightParam(modMult), "please specify one of the base learners: classif.ksvm, classif.rpart")
   expect_error(getClassWeightParam(modMult, "classif.fu"), "classif.fu is not a base learner. Available base learners are: classif.ksvm, classif.rpart")
   expect_equal(getClassWeightParam(modMult, "classif.ksvm"), ps)

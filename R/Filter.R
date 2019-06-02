@@ -69,7 +69,6 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
 
   tag2df = function(tags, prefix = "") {
-
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
     colnames(res) = stri_paste(prefix, unique.tags)
@@ -109,7 +108,6 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, inclu
 
 #' @export
 print.FilterMethodsList = function(x, len = 40, ...) {
-
   if (!is.null(x$desc)) {
     x$desc = clipString(x$desc, len = len)
   }
@@ -118,7 +116,6 @@ print.FilterMethodsList = function(x, len = 40, ...) {
 
 #' @export
 print.Filter = function(x, ...) {
-
   catf("Filter: '%s'", x$name)
   if (!isScalarNA(x$pkg)) {
     catf("Packages: '%s'", collapse(cleanupPackageNames(x$pkg)))
@@ -185,7 +182,6 @@ makeFilter(
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-
     data = getTaskData(task, target.extra = TRUE)
     y = care::carscore(Xtrain = data$data, Ytrain = data$target, verbose = FALSE, ...)^2
     setNames(as.double(y), names(y))
@@ -214,7 +210,6 @@ rf.importance = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "permute", ...) {
-
     assertChoice(method, choices = c("permute", "random", "anti", "permute.ensemble", "random.ensemble", "anti.ensemble"))
     im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE,
       forest = FALSE, importance = method, ...)$importance
@@ -230,7 +225,6 @@ rf.importance = makeFilter(
 .FilterRegister[["rf.importance"]] = rf.importance
 .FilterRegister[["rf.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["rf.importance"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
@@ -242,7 +236,6 @@ randomForestSRC.rfsrc = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "permute", ...) {
-
     assertChoice(method, choices = c("permute", "random", "anti", "permute.ensemble", "random.ensemble", "anti.ensemble"))
     im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE,
       forest = FALSE, importance = method, ...)$importance
@@ -258,7 +251,6 @@ randomForestSRC.rfsrc = makeFilter(
 .FilterRegister[["randomForestSRC.rfsrc"]] = randomForestSRC.rfsrc
 .FilterRegister[["randomForestSRC.rfsrc"]]$desc = "(DEPRECATED)"
 .FilterRegister[["randomForestSRC.rfsrc"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'randomForestSRC.rfsrc'", new = "Filter 'randomForestSRC_importance' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
@@ -283,7 +275,6 @@ rf.min.depth = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
-
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
       method = method, verbose = FALSE, ...)$md.obj$order
     setNames(-im[, 1L], rownames(im))
@@ -291,7 +282,6 @@ rf.min.depth = makeFilter(
 .FilterRegister[["rf.min.depth"]] = rf.min.depth
 .FilterRegister[["rf.min.depth"]]$desc = "(DEPRECATED)"
 .FilterRegister[["rf.min.depth"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC_var.select'")
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
@@ -303,7 +293,6 @@ randomForestSRC.var.select = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
-
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
       method = method, verbose = FALSE, ...)$md.obj$order
     setNames(-im[, 1L], rownames(im))
@@ -311,7 +300,6 @@ randomForestSRC.var.select = makeFilter(
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
 .FilterRegister[["randomForestSRC.var.select"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'randomForestSRC.var.select'", new = "Filter 'randomForestSRC_var.select' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
@@ -386,7 +374,6 @@ cforest.importance = makeFilter(
 .FilterRegister[["cforest.importance"]] = cforest.importance
 .FilterRegister[["cforest.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["cforest.importance"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'cforest.importance'", new = "Filter 'party_cforest.importance' (package party)")
   .FilterRegister[["party_cforest.importance"]]$fun(...)
 }
@@ -412,7 +399,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, method = "oob.accuracy", ...) {
-
     assertChoice(method, choices = c("oob.accuracy", "node.impurity"))
     type = if (method == "oob.accuracy") 1L else 2L
     # no need to set importance = TRUE for node impurity (type = 2)
@@ -429,7 +415,6 @@ randomForest.importance = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, method = "oob.accuracy", ...) {
-
     assertChoice(method, choices = c("oob.accuracy", "node.impurity"))
     type = if (method == "oob.accuracy") 1L else 2L
     # no need to set importance = TRUE for node impurity (type = 2)
@@ -442,7 +427,6 @@ randomForest.importance = makeFilter(
 .FilterRegister[["randomForest.importance"]] = randomForest.importance
 .FilterRegister[["randomForest.importance"]]$desc = "(DEPRECATED)"
 .FilterRegister[["randomForest.importance"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'randomForest.importance'", new = "Filter 'randomForest_importance' (package randomForest)")
   .FilterRegister[["randomForest_importance"]]$fun(...)
 }
@@ -463,7 +447,6 @@ makeFilter(
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-
     data = getTaskData(task, target.extra = TRUE)
     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "pearson")[, 1L])
   })
@@ -484,7 +467,6 @@ makeFilter(
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-
     data = getTaskData(task, target.extra = TRUE)
     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])
   })
@@ -503,7 +485,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::information.gain(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -515,7 +496,6 @@ information.gain = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::information.gain(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -523,7 +503,6 @@ information.gain = makeFilter(
 .FilterRegister[["information.gain"]] = information.gain
 .FilterRegister[["information.gain"]]$desc = "(DEPRECATED)"
 .FilterRegister[["information.gain"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'information.gain'", new = "Filter 'FSelector_information.gain' (package FSelector)")
   .FilterRegister[["FSelector_information.gain"]]$fun(...)
 }
@@ -543,7 +522,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::gain.ratio(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -555,7 +533,6 @@ gain.ratio = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::gain.ratio(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -563,7 +540,6 @@ gain.ratio = makeFilter(
 .FilterRegister[["gain.ratio"]] = gain.ratio
 .FilterRegister[["gain.ratio"]]$desc = "(DEPRECATED)"
 .FilterRegister[["gain.ratio"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'gain.ratio'", new = "Filter 'FSelector_gain.ratio' (package FSelector)")
   .FilterRegister[["FSelector_gain.ratio"]]$fun(...)
 }
@@ -582,7 +558,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::symmetrical.uncertainty(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -594,7 +569,6 @@ symmetrical.uncertainty = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::symmetrical.uncertainty(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -602,7 +576,6 @@ symmetrical.uncertainty = makeFilter(
 .FilterRegister[["symmetrical.uncertainty"]] = symmetrical.uncertainty
 .FilterRegister[["symmetrical.uncertainty"]]$desc = "(DEPRECATED)"
 .FilterRegister[["symmetrical.uncertainty"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'symmetrical.uncertainty'", new = "Filter 'FSelector_symmetrical.uncertainty' (package FSelector)")
   .FilterRegister[["FSelector_symmetrical.uncertainty"]]$fun(...)
 }
@@ -627,7 +600,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::chi.squared(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -639,7 +611,6 @@ chi.squared = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::chi.squared(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -647,7 +618,6 @@ chi.squared = makeFilter(
 .FilterRegister[["chi.squared"]] = chi.squared
 .FilterRegister[["chi.squared"]]$desc = "(DEPRECATED)"
 .FilterRegister[["chi.squared"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'chi.squared'", new = "Filter 'FSelector_chi.squared' (package FSelector)")
   .FilterRegister[["FSelector_chi.squared"]]$fun(...)
 }
@@ -679,7 +649,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::relief(getTaskFormula(task), data = getTaskData(task), ...)
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -691,7 +660,6 @@ relief = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::relief(getTaskFormula(task), data = getTaskData(task), ...)
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -699,7 +667,6 @@ relief = makeFilter(
 .FilterRegister[["relief"]] = relief
 .FilterRegister[["relief"]]$desc = "(DEPRECATED)"
 .FilterRegister[["relief"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'relief'", new = "Filter 'FSelector_relief' (package FSelector)")
   .FilterRegister[["FSelector_relief"]]$fun(...)
 }
@@ -723,7 +690,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -735,7 +701,6 @@ oneR = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
@@ -743,7 +708,6 @@ oneR = makeFilter(
 .FilterRegister[["oneR"]] = oneR
 .FilterRegister[["oneR"]]$desc = "(DEPRECATED)"
 .FilterRegister[["oneR"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'oneR'", new = "Filter 'FSelector_oneR' (package FSelector)")
   .FilterRegister[["FSelector_oneR"]]$fun(...)
 }
@@ -807,7 +771,6 @@ univariate = makeFilter(
 .FilterRegister[["univariate"]] = univariate
 .FilterRegister[["univariate"]]$desc = "(DEPRECATED)"
 .FilterRegister[["univariate"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
   .FilterRegister[["univariate.model.score"]]$fun(...)
 }
@@ -829,10 +792,8 @@ makeFilter(
   supported.tasks = "classif",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-
     data = getTaskData(task)
     vnapply(getTaskFeatureNames(task), function(feat.name) {
-
       f = as.formula(stri_paste(feat.name, "~", getTaskTargetNames(task)))
       aov.t = aov(f, data = data)
       summary(aov.t)[[1L]][1L, "F value"]
@@ -859,10 +820,8 @@ makeFilter(
   supported.tasks = "classif",
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-
       f = as.formula(stri_paste(feat.name, "~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
@@ -886,10 +845,8 @@ makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = "numerics",
   fun = function(task, nselect, na.rm = TRUE, ...) {
-
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-
       var(data[[feat.name]], na.rm = na.rm)
     })
   })
@@ -917,7 +874,6 @@ makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
     aggregation = mean, nmc = 50L, replace = FALSE, nselect) {
-
     imp = generateFeatureImportanceData(task, "permutation.importance",
       imp.learner, interaction = FALSE, measure = measure,
       contrast = contrast, aggregation = aggregation,
@@ -946,10 +902,8 @@ makeFilter(
   supported.tasks = "classif",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-
     data = getTaskData(task, target.extra = TRUE)
     score = vnapply(data$data, function(x, y) {
-
       measureAUC(x, y, task$task.desc$negative, task$task.desc$positive)
     }, y = data$target)
     abs(0.5 - score)
@@ -966,7 +920,6 @@ makeFilter(
 NULL
 
 praznik_filter = function(fun) {
-
   force(fun)
 
   function(task, nselect, ...) {
@@ -1073,11 +1026,9 @@ makeFilter(
 NULL
 
 FSelectorRcpp.filter = function(type) {
-
   force(type)
 
   function(task, nselect, ...) {
-
     data = getTaskData(task)
     X = data[getTaskFeatureNames(task)]
     y = data[[getTaskTargetNames(task)]]
@@ -1137,7 +1088,6 @@ makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, ...) {
-
     lrn.type = paste0(getTaskType(task), ".ranger")
     lrn = makeLearner(lrn.type, importance = "permutation", ...)
     mod = train(lrn, task)
@@ -1151,7 +1101,6 @@ ranger.permutation = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, ...) {
-
     lrn.type = paste0(getTaskType(task), ".ranger")
     lrn = makeLearner(lrn.type, importance = "permutation", ...)
     mod = train(lrn, task)
@@ -1161,7 +1110,6 @@ ranger.permutation = makeFilter(
 .FilterRegister[["ranger.permutation"]] = ranger.permutation
 .FilterRegister[["ranger.permutation"]]$desc = "(DEPRECATED)"
 .FilterRegister[["ranger.permutation"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'ranger.permutation'", new = "Filter 'ranger_permutation' (package ranger)")
   .FilterRegister[["ranger_permutation"]]$fun(...)
 }
@@ -1183,7 +1131,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, ...) {
-
     lrn.type = paste0(getTaskType(task), ".ranger")
     lrn = makeLearner(lrn.type, importance = "impurity", ...)
     mod = train(lrn, task)
@@ -1197,7 +1144,6 @@ ranger.impurity = makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, ...) {
-
     lrn.type = paste0(getTaskType(task), ".ranger")
     lrn = makeLearner(lrn.type, importance = "impurity", ...)
     mod = train(lrn, task)
@@ -1208,7 +1154,6 @@ ranger.impurity = makeFilter(
 .FilterRegister[["ranger.impurity"]] = ranger.impurity
 .FilterRegister[["ranger.impurity"]]$desc = "(DEPRECATED)"
 .FilterRegister[["ranger.impurity"]]$fun = function(...) {
-
   .Deprecated(old = "Filter 'ranger.impurity'", new = "Filter 'ranger_impurity' (package ranger)")
   .FilterRegister[["ranger_impurity"]]$fun(...)
 }

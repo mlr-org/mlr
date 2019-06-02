@@ -80,7 +80,6 @@ test_that("training performance works as expected (#1357)", {
     properties = c("classif", "classif.multi", "req.pred", "req.truth"),
     name = "Number",
     fun = function(task, model, pred, feats, extra.args) {
-
       length(pred$data$response)
     })
 

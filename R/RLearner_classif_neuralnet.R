@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.neuralnet = function() {
-
   makeRLearnerClassif(
     cl = "classif.neuralnet",
     package = "neuralnet",

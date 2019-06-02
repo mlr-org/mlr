@@ -24,7 +24,6 @@ checkTunerParset = function(learner, par.set, measures, control) {
     }
 
   checkStart = function() {
-
     if (!is.null(control$start)) {
       if (length(control$start) != length(par.set$pars)) {
         stop("Length of 'start' has to match number of parameters in 'par.set'!")

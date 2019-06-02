@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.km = function() {
-
   makeRLearnerRegr(
     cl = "regr.km",
     package = "DiceKriging",
@@ -41,7 +40,6 @@ makeRLearner.regr.km = function() {
 
 #' @export
 trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = list(...)
   if (!is.null(args$optim.method) && args$optim.method == "gen") {
@@ -60,7 +58,6 @@ trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL, ...) 
 
 #' @export
 predictLearner.regr.km = function(.learner, .model, .newdata, jitter, ...) {
-
   # km with nugget estim perfectly interpolate the datas ONLY at exactly the training points
   # see JSS paper for explanation
   # so we add minimal, numerical jitter to the x points

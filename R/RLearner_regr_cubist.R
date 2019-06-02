@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.cubist = function() {
-
   makeRLearnerRegr(
     cl = "regr.cubist",
     package = "Cubist",
@@ -24,7 +23,6 @@ makeRLearner.regr.cubist = function() {
 #' @export
 trainLearner.regr.cubist = function(.learner, .task, .subset, .weights = NULL, unbiased, rules,
   extrapolation, sample, seed, label, ...) {
-
   ctrl = learnerArgsToControl(Cubist::cubistControl, unbiased, rules, extrapolation, sample, seed, label)
   d = getTaskData(.task, .subset, target.extra = TRUE)
   Cubist::cubist(x = d$data, y = d$target, control = ctrl, ...)
@@ -32,6 +30,5 @@ trainLearner.regr.cubist = function(.learner, .task, .subset, .weights = NULL, u
 
 #' @export
 predictLearner.regr.cubist = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, newdata = .newdata, ...)
 }

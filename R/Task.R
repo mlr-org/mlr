@@ -82,7 +82,7 @@
 #'   library(mlbench)
 #'   data(BostonHousing)
 #'   data(Ionosphere)
-#' 
+#'
 #'   makeClassifTask(data = iris, target = "Species")
 #'   makeRegrTask(data = BostonHousing, target = "medv")
 #'   # an example of a classification task with more than those standard arguments:
@@ -113,7 +113,6 @@ NULL
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, coordinates = NULL) {
-
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -174,9 +173,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
 }
 
 checkTaskData = function(data, cols = names(data)) {
-
   fun = function(cn, x) {
-
     if (is.numeric(x)) {
       if (anyInfinite(x)) {
         stopf("Column '%s' contains infinite values.", cn)
