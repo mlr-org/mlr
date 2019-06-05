@@ -28,7 +28,7 @@
 #'   Mandatory features which are always included regardless of their scores
 #' @param select.method If multiple methods are supplied in argument `method`,
 #'   specify the method that is used for the final subsetting.
-#' @param basal.methods If `method` is an ensemble filter, specify the basal
+#' @param base.methods If `method` is an ensemble filter, specify the base
 #'   filter methods which the ensemble method will use.
 #' @param cache (`character(1)` | [logical])\cr
 #'   Whether to use caching during filter value creation. See details.
@@ -59,18 +59,18 @@
 #' filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 #' # ensemble filter
 #' filterFeatures(iris.task, method = "E-min",
-#'   basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
+#'   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
 #' @export
 filterFeatures = function(task, method = "randomForestSRC_importance", fval = NULL,
   perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
-  select.method = NULL, basal.methods = NULL, cache = FALSE, ...) {
+  select.method = NULL, base.methods = NULL, cache = FALSE, ...) {
 
   assertClass(task, "SupervisedTask")
 
-  # basal.methods arrive here in a list when called from 'tuneParams'.
+  # base.methods arrive here in a list when called from 'tuneParams'.
   # we need them as a chr vec for further proc, so transforming
-  if (is.list(basal.methods)) {
-    basal.methods = as.character(basal.methods)
+  if (is.list(base.methods)) {
+    base.methods = as.character(base.methods)
   }
 
   # if a list is passed to arg 'method' (ensemble)
@@ -79,7 +79,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     method = method[[2]]
     assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
     if (length(method) == 1) {
-      warningf("You only passed one basal filter method to an ensemble filter. Please use at least two basal filter methods to have a voting effect.")
+      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
     }
   } else {
     assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
@@ -87,12 +87,12 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
   method %in% ls(.FilterEnsembleRegister)
 
-  # if an ensemble method is not passed as a list but via 'basal.methods' + 'method'
-  if (method %in% ls(.FilterEnsembleRegister) && !is.null(basal.methods)) {
-    if (length(basal.methods) == 1) {
-      warningf("You only passed one basal filter method to an ensemble filter. Please use at least two basal filter methods to have a voting effect.")
+  # if an ensemble method is not passed as a list but via 'base.methods' + 'method'
+  if (method %in% ls(.FilterEnsembleRegister) && !is.null(base.methods)) {
+    if (length(base.methods) == 1) {
+      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
     }
-    method = list(method, basal.methods)
+    method = list(method, base.methods)
   }
 
   select = checkFilterArguments(perc, abs, threshold)

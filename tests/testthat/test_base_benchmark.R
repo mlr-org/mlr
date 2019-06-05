@@ -281,7 +281,7 @@ test_that("benchmark works with ensemble filters", {
     makeNumericParam("sigma", lower = -15, upper = 15,
       trafo = function(x) 2^x),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
-    makeDiscreteVectorParam("fw.basal.methods", len = 2,
+    makeDiscreteVectorParam("fw.base.methods", len = 2,
       values = c("anova.test", "cforest.importance", "FSelector_chi.squared",
         "FSelector_gain.ratio", "FSelector_information.gain", "FSelector_oneR",
         "FSelector_relief", "FSelector_symmetrical.uncertainty", "FSelectorRcpp_gain.ratio",

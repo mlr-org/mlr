@@ -54,7 +54,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     method = method[[2]]
     assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
     if (length(method) == 1) {
-      warningf("You only passed one basal filter method to an ensemble filter. Please use at least two basal filter methods to have a voting effect.")
+      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
     }
   }
 
@@ -110,7 +110,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
     out = lapply(filter, function(x) {
       x = do.call(x$fun, c(list(task = task, nselect = nselect,
-        basal.methods = method, more.args = more.args)))
+        base.methods = method, more.args = more.args)))
     })
 
     if (length(out) == 1) {

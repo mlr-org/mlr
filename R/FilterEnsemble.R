@@ -10,7 +10,7 @@
 #' @importFrom rlang .data
 #' @param name (`character(1)`)\cr
 #'  Identifier for the filter.
-#' @param basal.methods the basal filter methods which the ensemble method
+#' @param base.methods the base filter methods which the ensemble method
 #'   will use.
 #' @param desc (`character(1)`)\cr
 #'  Short description of the filter.
@@ -25,11 +25,11 @@
 #' @export
 #' @family filter
 makeFilterEnsemble = function(name = "E-min",
-  basal.methods = c("randomForestSRC.importance", "variance"),
+  base.methods = c("randomForestSRC.importance", "variance"),
   desc = NULL, fun = NULL) {
   assertString(name)
   assertString(desc)
-  assertFunction(fun, c("task", "basal.methods"))
+  assertFunction(fun, c("task", "base.methods"))
   obj = makeS3Obj("FilterEnsemble",
     name = name,
     desc = desc,
@@ -90,22 +90,22 @@ print.FilterEnsemble = function(x, ...) {
 }
 
 # E-min ----------------
-#' Minimum ensemble filter. Takes the best minimum value across all basal filter
+#' Minimum ensemble filter. Takes the best minimum value across all base filter
 #' methods for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilterEnsemble(
   name = "E-min",
-  desc = "Minimum ensemble filter. Takes the best minimum value across all basal filter methods for each feature.",
-  basal.methods = NULL,
-  fun = function(task, basal.methods, nselect, more.args, ...) {
+  desc = "Minimum ensemble filter. Takes the best minimum value across all base filter methods for each feature.",
+  base.methods = NULL,
+  fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate basal filters here
-    fval = generateFilterValuesData(task, method = basal.methods,
+    # calculate base filters here
+    fval = generateFilterValuesData(task, method = base.methods,
       nselect = nselect, more.args = ...)
 
-    # rank basal filters by method
+    # rank base filters by method
     fval_all_ranked_simple = transform(fval$data,
       rank = ave(1:nrow(fval$data), method,
         FUN = function(x) order(fval$data$value[x])))
@@ -124,7 +124,7 @@ makeFilterEnsemble(
     fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
     fval_ens$method = "E-mean"
 
-    # merge ensemble and basal filters
+    # merge ensemble and base filters
     fval_all_ranked_simple$rank = NULL
     return(rbind(fval_all_ranked_simple, fval_ens))
 
@@ -132,21 +132,21 @@ makeFilterEnsemble(
 )
 
 # E-mean ----------------
-#' Mean ensemble filter. Takes the mean across all basal filter methods for each feature.
+#' Mean ensemble filter. Takes the mean across all base filter methods for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilterEnsemble(
   name = "E-mean",
-  desc = "Mean ensemble filter. Takes the mean across all basal filter methods for each feature.",
-  basal.methods = NULL,
-  fun = function(task, basal.methods, nselect, more.args, ...) {
+  desc = "Mean ensemble filter. Takes the mean across all base filter methods for each feature.",
+  base.methods = NULL,
+  fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate basal filters here
-    fval = generateFilterValuesData(task, method = basal.methods,
+    # calculate base filters here
+    fval = generateFilterValuesData(task, method = base.methods,
       nselect = nselect, more.args = ...)
 
-    # rank basal filters by method
+    # rank base filters by method
     fval_all_ranked_simple = transform(fval$data,
       rank = ave(1:nrow(fval$data), method,
         FUN = function(x) order(fval$data$value[x])))
@@ -165,7 +165,7 @@ makeFilterEnsemble(
     fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
     fval_ens$method = "E-mean"
 
-    # merge ensemble and basal filters
+    # merge ensemble and base filters
     fval_all_ranked_simple$rank = NULL
     return(rbind(fval_all_ranked_simple, fval_ens))
 
@@ -173,22 +173,22 @@ makeFilterEnsemble(
 )
 
 # E-max ----------------
-#' Maximum ensemble filter. Takes the best maximum value across all basal filter
+#' Maximum ensemble filter. Takes the best maximum value across all base filter
 #' methods for each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilterEnsemble(
   name = "E-max",
-  desc = "Maximum ensemble filter. Takes the best maximum value across all basal filter methods for each feature.",
-  basal.methods = NULL,
-  fun = function(task, basal.methods, nselect, more.args, ...) {
+  desc = "Maximum ensemble filter. Takes the best maximum value across all base filter methods for each feature.",
+  base.methods = NULL,
+  fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate basal filters here
-    fval = generateFilterValuesData(task, method = basal.methods,
+    # calculate base filters here
+    fval = generateFilterValuesData(task, method = base.methods,
       nselect = nselect, more.args = ...)
 
-    # rank basal filters by method
+    # rank base filters by method
     fval_all_ranked_simple = transform(fval$data,
       rank = ave(1:nrow(fval$data), method,
         FUN = function(x) order(fval$data$value[x])))
@@ -207,29 +207,29 @@ makeFilterEnsemble(
     fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
     fval_ens$method = "E-max"
 
-    # merge ensemble and basal filters
+    # merge ensemble and base filters
     fval_all_ranked_simple$rank = NULL
     return(rbind(fval_all_ranked_simple, fval_ens))
   }
 )
 
 # E-median ----------------
-#' Median ensemble filter. Takes the median across all basal filter methods for
+#' Median ensemble filter. Takes the median across all base filter methods for
 #' each feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilterEnsemble(
   name = "E-median",
-  desc = "Median ensemble filter. Takes the median across all basal filter methods for each feature.",
-  basal.methods = NULL,
-  fun = function(task, basal.methods, nselect, more.args, ...) {
+  desc = "Median ensemble filter. Takes the median across all base filter methods for each feature.",
+  base.methods = NULL,
+  fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate basal filters here
-    fval = generateFilterValuesData(task, method = basal.methods,
+    # calculate base filters here
+    fval = generateFilterValuesData(task, method = base.methods,
       nselect = nselect, more.args = ...)
 
-    # rank basal filters by method
+    # rank base filters by method
     fval_all_ranked_simple = transform(fval$data,
       rank = ave(1:nrow(fval$data), method,
         FUN = function(x) order(fval$data$value[x])))
@@ -248,29 +248,29 @@ makeFilterEnsemble(
     fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
     fval_ens$method = "E-median"
 
-    # merge ensemble and basal filters
+    # merge ensemble and base filters
     fval_all_ranked_simple$rank = NULL
     return(rbind(fval_all_ranked_simple, fval_ens))
   }
 )
 
 # E-Borda ----------------
-#' Borda ensemble filter. Takes the sum across all basal filter methods for each
+#' Borda ensemble filter. Takes the sum across all base filter methods for each
 #' feature.
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilterEnsemble(
   name = "E-Borda",
-  desc = "Borda ensemble filter. Takes the sum across all basal filter methods for each feature.",
-  basal.methods = NULL,
-  fun = function(task, basal.methods, nselect, more.args, ...) {
+  desc = "Borda ensemble filter. Takes the sum across all base filter methods for each feature.",
+  base.methods = NULL,
+  fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate basal filters here
-    fval = generateFilterValuesData(task, method = basal.methods,
+    # calculate base filters here
+    fval = generateFilterValuesData(task, method = base.methods,
       nselect = nselect, more.args = ...)
 
-    # rank basal filters by method
+    # rank base filters by method
     fval_all_ranked_simple = transform(fval$data,
       rank = ave(1:nrow(fval$data), method,
         FUN = function(x) order(fval$data$value[x])))
@@ -289,7 +289,7 @@ makeFilterEnsemble(
     fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
     fval_ens$method = "E-max"
 
-    # merge ensemble and basal filters
+    # merge ensemble and base filters
     fval_all_ranked_simple$rank = NULL
     return(rbind(fval_all_ranked_simple, fval_ens))
   }

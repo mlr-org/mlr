@@ -38,21 +38,21 @@ test_that("Filterwrapper permutation.importance (issue #814)", {
 test_that("FilterWrapper with ensemble function in a train call", {
   lrn = makeLearner("classif.lda")
 
-  # no basal.method as ensemble method if fw.basal.methods !is.null
+  # no base.method as ensemble method if fw.base.methods !is.null
   expect_error(makeFilterWrapper(lrn, fw.method = "FSelectorRcpp_gain.ratio",
-    fw.basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
+    fw.base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
 
-  # no ensemble methods in basal.methods
+  # no ensemble methods in base.methods
   expect_error(makeFilterWrapper(lrn, fw.method = "E-min",
-    fw.basal.methods = c("E-min", "information.gain")))
+    fw.base.methods = c("E-min", "information.gain")))
 
   # multiple fw.methods are not allowed when creating a filter.wrapper -> multiple inputs need to be specified in the par.set
   expect_error(makeFilterWrapper(lrn, fw.method = c("FSelector_chi.squared", "FSelectorRcpp_information.gain")))
 
   lrn2 = makeFilterWrapper(lrn, fw.method = "E-min",
-    fw.basal.methods = c("FSelector_chi.squared", "FSelectorRcpp_information.gain"), fw.perc = 0.43)
+    fw.base.methods = c("FSelector_chi.squared", "FSelectorRcpp_information.gain"), fw.perc = 0.43)
 
-  # this must also work -> basal.methods can be given in the par.set
+  # this must also work -> base.methods can be given in the par.set
   expect_silent(makeFilterWrapper(lrn, fw.method = "E-min", fw.perc = 0.43))
 
   m = train(lrn2, binaryclass.task)

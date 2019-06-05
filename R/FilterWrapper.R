@@ -15,7 +15,7 @@
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC_importance}.
-#' @param fw.basal.methods (`character(1)`)\cr
+#' @param fw.base.methods (`character(1)`)\cr
 #'   Simple Filter methods for ensemble filters. See [listFilterMethods].
 #'   Can only be used in combination with ensemble filters. See [listFilterEnsembleMethods].
 #' @param fw.perc (`numeric(1)`)\cr
@@ -69,14 +69,14 @@
 #' # usage of an ensemble filter
 #' lrn = makeLearner("classif.lda")
 #' lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
-#'   fw.basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
+#'   fw.base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
 #'   fw.perc = 0.5)
 #' r = resample(lrn, task, outer, extract = function(model) {
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
-  fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
+  fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.mandatory.feat = NULL, cache = FALSE, ...) {
 
   learner = checkLearner(learner)
@@ -91,16 +91,16 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   assertChoice(fw.method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
   filter = .FilterRegister[[fw.method]]
 
-  # check if basal-methods are supplied along with an ensemble method
+  # check if base-methods are supplied along with an ensemble method
   # (filter == NULL if an ensemble filter is supplied)
   if (is.null(filter)) {
     filter = .FilterEnsembleRegister[[fw.method]]
-    # check if ONLY basal-methods are supplied along with an ensemble method
-    lapply(fw.basal.methods, function(x) assertChoice(x, choices = ls(.FilterRegister)))
+    # check if ONLY base-methods are supplied along with an ensemble method
+    lapply(fw.base.methods, function(x) assertChoice(x, choices = ls(.FilterRegister)))
   }
 
-  # if fw.basal.methods are supplied, fw.method must be an ensemble filter
-  if (!is.null(fw.basal.methods)) {
+  # if fw.base.methods are supplied, fw.method must be an ensemble filter
+  if (!is.null(fw.base.methods)) {
     assertChoice(fw.method, choices = ls(.FilterEnsembleRegister))
   }
 
@@ -114,14 +114,14 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
     package = filter$pkg,
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "fw.method", values = append(ls(.FilterRegister), ls(.FilterEnsembleRegister))),
-      makeDiscreteVectorLearnerParam(id = "fw.basal.methods", values = ls(.FilterRegister)),
+      makeDiscreteVectorLearnerParam(id = "fw.base.methods", values = ls(.FilterRegister)),
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
       makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
     par.vals = filterNull(list(fw.method = fw.method,
-      fw.basal.methods = fw.basal.methods, fw.perc = fw.perc,
+      fw.base.methods = fw.base.methods, fw.perc = fw.perc,
       fw.abs = fw.abs, fw.threshold = fw.threshold,
       fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel",
@@ -132,11 +132,11 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  fw.method = "randomForestSRC_importance", fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL,
+  fw.method = "randomForestSRC_importance", fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL,
   fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
-    basal.methods = fw.basal.methods,
+    base.methods = fw.base.methods,
     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
     mandatory.feat = fw.mandatory.feat,
     cache = .learner$cache), .learner$more.args))

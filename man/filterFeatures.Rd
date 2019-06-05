@@ -6,7 +6,7 @@
 \usage{
 filterFeatures(task, method = "randomForestSRC_importance",
   fval = NULL, perc = NULL, abs = NULL, threshold = NULL,
-  mandatory.feat = NULL, select.method = NULL, basal.methods = NULL,
+  mandatory.feat = NULL, select.method = NULL, base.methods = NULL,
   cache = FALSE, ...)
 }
 \arguments{
@@ -41,7 +41,7 @@ Mandatory features which are always included regardless of their scores}
 \item{select.method}{If multiple methods are supplied in argument \code{method},
 specify the method that is used for the final subsetting.}
 
-\item{basal.methods}{If \code{method} is an ensemble filter, specify the basal
+\item{base.methods}{If \code{method} is an ensemble filter, specify the base
 filter methods which the ensemble method will use.}
 
 \item{cache}{(\code{character(1)} | \link{logical})\cr
@@ -82,7 +82,7 @@ calculate its ranking. See \code{listFilterEnsembleMethods()} for available ense
 filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 # ensemble filter
 filterFeatures(iris.task, method = "E-min",
-  basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
+  base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
 }
 \seealso{
 Other filter: \code{\link{generateFilterValuesData}},

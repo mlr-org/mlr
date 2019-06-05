@@ -5,7 +5,7 @@
 \title{Fuse learner with a feature filter method.}
 \usage{
 makeFilterWrapper(learner, fw.method = "randomForestSRC_importance",
-  fw.basal.methods = NULL, fw.perc = NULL, fw.abs = NULL,
+  fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL,
   fw.threshold = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...)
 }
 \arguments{
@@ -17,7 +17,7 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 Filter method. See \link{listFilterMethods}.
 Default is \dQuote{randomForestSRC_importance}.}
 
-\item{fw.basal.methods}{(\code{character(1)})\cr
+\item{fw.base.methods}{(\code{character(1)})\cr
 Simple Filter methods for ensemble filters. See \link{listFilterMethods}.
 Can only be used in combination with ensemble filters. See \link{listFilterEnsembleMethods}.}
 
@@ -85,7 +85,7 @@ print(r$extract)
 # usage of an ensemble filter
 lrn = makeLearner("classif.lda")
 lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
-  fw.basal.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
+  fw.base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
   fw.perc = 0.5)
 r = resample(lrn, task, outer, extract = function(model) {
   getFilteredFeatures(model)
