@@ -98,7 +98,7 @@ getAlgoFun = function(lrn, measures, models) {
 #' @return ([BenchmarkResult]).
 #' @export
 #' @family benchmark
-reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
+reduceBatchmarkResults = function(ids = NULL, keep.pred = FALSE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
 
   # registry and ids are asserted later
   requirePackages("batchtools", why = "batchmark", default.method = "load")
@@ -126,7 +126,13 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
       res = batchtools::reduceResultsList(tab[problem == prob & algorithm == algo], reg = reg)
       models = !is.null(res[[1L]]$model)
       lrn = data$learner[[algo]]
-      extract.this = getExtractor(lrn)
+      if (isTRUE(keep.extract)) {
+        extract.this = getExtractor(lrn)
+      } else {
+        extract.this = function(model) {
+          NULL
+        }
+      }
       rs = mergeResampleResult(learner.id = algo, task = data$task, iter.results = res, measures = data$measures,
         rin = data$rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
       rs$learner = lrn

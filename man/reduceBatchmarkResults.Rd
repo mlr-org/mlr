@@ -19,8 +19,7 @@ If not set, defaults to all successfully terminated jobs (return value of \link[
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to \code{FALSE}.
-Default is \code{TRUE}.}
+This is why the default is set to \code{FALSE}.}
 
 \item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
@@ -29,6 +28,14 @@ Default is set via \link{configureMlr}.}
 \item{reg}{(\link[batchtools:ExperimentRegistry]{batchtools::ExperimentRegistry})\cr
 Registry, created by \link[batchtools:makeExperimentRegistry]{batchtools::makeExperimentRegistry}. If not explicitly passed,
 uses the last created registry.}
+
+\item{keep.extract}{(\code{logical(1)})\cr
+Keep the \code{extract} slot of the result object. When creating a lot of
+benchmark results with extensive tuning, the resulting R objects can become
+very large in size. That is why the tuning results stored in the \code{extract}
+slot are removed by default (\code{keep.extract = FALSE}). Note that when
+\code{keep.extract = FALSE} you will not be able to conduct analysis in the
+tuning results.}
 }
 \value{
 (\link{BenchmarkResult}).

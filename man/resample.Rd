@@ -14,7 +14,7 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, keep.pred = TRUE, ...,
+  models = FALSE, extract, keep.pred = FALSE, ...,
   show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
@@ -89,8 +89,7 @@ Default is to extract nothing.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to \code{FALSE}.
-Default is \code{TRUE}.}
+This is why the default is set to \code{FALSE}.}
 
 \item{...}{(any)\cr
 Further hyperparameters passed to \code{learner}.}
@@ -122,6 +121,14 @@ See \link{ResampleDesc}.}
 
 \item{skip}{(\code{integer(1)})\cr
 See \link{ResampleDesc}.}
+
+\item{keep.extract}{(\code{logical(1)})\cr
+Keep the \code{extract} slot of the result object. When creating a lot of
+benchmark results with extensive tuning, the resulting R objects can become
+very large in size. That is why the tuning results stored in the \code{extract}
+slot are removed by default (\code{keep.extract = FALSE}). Note that when
+\code{keep.extract = FALSE} you will not be able to conduct analysis in the
+tuning results.}
 }
 \value{
 (\link{ResampleResult}).
