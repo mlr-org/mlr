@@ -14,6 +14,7 @@
 #' @template ret_learner
 makeImputeWrapper = function(learner, classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+
   learner = checkLearner(learner)
   args = list(classes = classes, cols = cols,
     dummy.classes = dummy.classes, dummy.cols = dummy.cols, dummy.type = dummy.type, force.dummies = force.dummies,

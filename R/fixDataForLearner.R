@@ -1,4 +1,5 @@
 getFixDataInfo = function(data, restore.levels = FALSE, factors.to.dummies = FALSE, ordered.to.int = FALSE) {
+
   assertDataFrame(data, types = c("logical", "numeric", "factor"))
   assertFlag(restore.levels)
   assertFlag(factors.to.dummies)
@@ -18,10 +19,12 @@ getFixDataInfo = function(data, restore.levels = FALSE, factors.to.dummies = FAL
 }
 
 fixDataForLearner = function(data, info) {
+
   cn = c(names(info$factors), names(info$ordered))
   not.found = which.first(cn %nin% names(data))
-  if (length(not.found) > 0L)
+  if (length(not.found) > 0L) {
     stopf("Column '%s' found in info, but not in new data", cn[not.found])
+  }
 
   if (info$restore.levels) {
     if (!info$factors.to.dummies && length(info$factors) > 0L) {

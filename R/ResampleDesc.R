@@ -98,22 +98,25 @@
 #' makeResampleDesc("Bootstrap", iters = 10, predict = "both")
 #'
 #' # Subsampling
-#' makeResampleDesc("Subsample", iters = 10, split = 3/4)
+#' makeResampleDesc("Subsample", iters = 10, split = 3 / 4)
 #' makeResampleDesc("Subsample", iters = 10)
 #'
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE,
   stratify.cols = NULL, fixed = FALSE, blocking.cv = FALSE) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
-                                   "Subsample", "Bootstrap", "SpCV", "SpRepCV",
-                                   "GrowingWindowCV", "FixedWindowCV"))
+
+  assertChoice(method, choices = c("Holdout", "CV", "LOO", "RepCV",
+    "Subsample", "Bootstrap", "SpCV", "SpRepCV",
+    "GrowingWindowCV", "FixedWindowCV"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
-  if (stratify && method == "LOO")
+  if (stratify && method == "LOO") {
     stop("Stratification cannot be done for LOO!")
-  if (stratify && ! is.null(stratify.cols))
+  }
+  if (stratify && !is.null(stratify.cols)) {
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
+  }
   d = do.call(stri_paste("makeResampleDesc", method), list(...))
   d$predict = predict
   d$stratify = stratify
@@ -192,8 +195,8 @@ makeResampleDescFixedWindowCV = function(horizon = 1L, initial.window = .5, skip
   assertNumeric(horizon, lower = 0)
   assertNumeric(initial.window, lower = 0)
   assertNumeric(skip, lower = 0)
-  makeResampleDescInternal("Fixed", iters = NA_integer_,  horizon = horizon,
-                           initial.window = initial.window, skip = skip, stratify = FALSE)
+  makeResampleDescInternal("Fixed", iters = NA_integer_, horizon = horizon,
+    initial.window = initial.window, skip = skip, stratify = FALSE)
 }
 
 makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
@@ -201,7 +204,7 @@ makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, sk
   assertNumeric(initial.window, lower = 0)
   assertNumeric(skip, lower = 0)
   makeResampleDescInternal("Growing", iters = NA_integer_, horizon = horizon,
-                           initial.window = initial.window, skip = skip, stratify = FALSE)
+    initial.window = initial.window, skip = skip, stratify = FALSE)
 }
 
 ##############################################################################################
@@ -233,7 +236,7 @@ print.RepCVDesc = function(x, ...) {
 #' @export
 print.GrowingWindowCVDesc = function(x, ...) {
   catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
-       x$id, x$initial.window, x$horizon, x$skip)
+    x$id, x$initial.window, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }
@@ -241,7 +244,7 @@ print.GrowingWindowCVDesc = function(x, ...) {
 #' @export
 print.FixedWindowCVDesc = function(x, ...) {
   catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
-       x$id, x$initial.window, x$horizon, x$skip)
+    x$id, x$initial.window, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }
@@ -300,4 +303,3 @@ cv5 = makeResampleDesc("CV", iters = 5L)
 #' @format NULL
 #' @keywords NULL
 cv10 = makeResampleDesc("CV", iters = 10L)
-

@@ -31,9 +31,9 @@ downsample.Task = function(obj, perc = 1, stratify = FALSE) {
 
 #' @export
 downsample.ResampleInstance = function(obj, perc = 1, stratify = FALSE) {
-  if (stratify)
+  if (stratify) {
     stop("Stratifying is not supported for a ResampleInstance!")
+  }
   obj$train.inds = lapply(obj$train.inds, function(x) sample(x, size = length(x) * perc))
   return(obj)
 }
-

@@ -19,7 +19,7 @@ makeRLearner.classif.knn = function() {
 }
 
 #' @export
-trainLearner.classif.knn = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.knn = function(.learner, .task, .subset, .weights = NULL, ...) {
   z = getTaskData(.task, .subset, target.extra = TRUE)
   c(list(train = z$data, cl = z$target), list(...))
 }
@@ -30,4 +30,3 @@ predictLearner.classif.knn = function(.learner, .model, .newdata, ...) {
   args$test = .newdata
   do.call(class::knn, args)
 }
-

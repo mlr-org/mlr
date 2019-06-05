@@ -88,31 +88,35 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
   assertClass(bmr, "BenchmarkResult")
   brtids = getBMRTaskIds(bmr)
   brlids = getBMRLearnerIds(bmr)
-  if (is.null(task.ids))
+  if (is.null(task.ids)) {
     task.ids = brtids
-  else
+  } else {
     assertSubset(task.ids, brtids)
-  if (is.null(learner.ids))
+  }
+  if (is.null(learner.ids)) {
     learner.ids = brlids
-  else
+  } else {
     assertSubset(learner.ids, brlids)
+  }
   res = lapply(task.ids, function(tid) {
     xs = lapply(learner.ids, function(lid) {
       p = fun(bmr$results[[tid]][[lid]])
       if (as.df) {
-        if (!is.null(p))
+        if (!is.null(p)) {
           p = as.data.frame(cbind(task.id = tid, learner.id = lid, p))
+        }
       }
       return(p)
     })
-    if (as.df)
-      xs = setDF(rbindlist(xs, fill = TRUE))
-    else
+    if (as.df) {
+      xs = setDF(rbindlist(xs, fill = TRUE, use.names = TRUE))
+    } else {
       xs = setNames(xs, learner.ids)
+    }
     return(xs)
   })
   if (as.df) {
-    res = setDF(rbindlist(res, fill = TRUE))
+    res = setDF(rbindlist(res, fill = TRUE, use.names = TRUE))
   } else {
     res = setNames(res, task.ids)
     if (drop) {
@@ -122,12 +126,15 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
       drop.learners = length(learner.ids) == 1L
       if (drop.tasks | drop.learners) {
         res = unlist(res, recursive = FALSE)
-        if (drop.tasks & drop.learners)
+        if (drop.tasks & drop.learners) {
           res = res[[1L]]
-        if (drop.tasks & !drop.learners)
+        }
+        if (drop.tasks & !drop.learners) {
           res = setNames(res, learner.ids)
-        if (!drop.tasks & drop.learners)
+        }
+        if (!drop.tasks & drop.learners) {
           res = setNames(res, task.ids)
+        }
       }
     }
   }
@@ -157,10 +164,11 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 
 getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
-  f = if (as.df)
+  f = if (as.df) {
     function(x) as.data.frame(getRRPredictions(x))
-  else
+  } else {
     function(x) getRRPredictions(x)
+  }
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
 }
 
@@ -205,32 +213,33 @@ getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = 
 #' @family benchmark
 getBMRAggrPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
-  f = if (as.df)
+  f = if (as.df) {
     function(x) as.data.frame(as.list(x$aggr))
-  else
+  } else {
     function(x) x$aggr
+  }
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
 }
 
 
 getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
   wrapper.class, fun, drop = FALSE) {
-
   f = if (as.df) {
     function(x) {
       if (inherits(x$learner, wrapper.class)) {
         xs = lapply(x$extract, fun)
-        xs = setDF(rbindlist(lapply(seq_along(xs), function(i) cbind(iter = i, xs[[i]])), fill = TRUE))
+        xs = setDF(rbindlist(lapply(seq_along(xs), function(i) cbind(iter = i, xs[[i]])), fill = TRUE, use.names = TRUE))
       } else {
         NULL
       }
     }
   } else {
     function(x) {
-      if (inherits(x$learner, wrapper.class))
+      if (inherits(x$learner, wrapper.class)) {
         x$extract
-      else
+      } else {
         NULL
+      }
     }
   }
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
@@ -330,8 +339,8 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) 
 #' @return ([list]).
 #' @export
 getBMRTaskDescriptions = function(bmr) {
- .Deprecated("getBMRTaskDesc")
- getBMRTaskDescs(bmr)
+  .Deprecated("getBMRTaskDesc")
+  getBMRTaskDescs(bmr)
 }
 
 
@@ -346,4 +355,3 @@ getBMRTaskDescriptions = function(bmr) {
 getBMRTaskDescs = function(bmr) {
   lapply(bmr$results, function(x) lapply(x, getRRTaskDesc))
 }
-

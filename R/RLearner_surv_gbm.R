@@ -25,13 +25,13 @@ makeRLearner.surv.gbm = function() {
 }
 
 #' @export
-trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
 
   if (is.null(.weights)) {
     gbm::gbm(f, data = d, distribution = "coxph", ...)
-  } else  {
+  } else {
     gbm::gbm(f, data = d, weights = .weights, distribution = "coxph", ...)
   }
 }

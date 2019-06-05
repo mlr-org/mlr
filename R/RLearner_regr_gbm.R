@@ -26,12 +26,12 @@ makeRLearner.regr.gbm = function() {
 }
 
 #' @export
-trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     gbm::gbm(f, data = getTaskData(.task, .subset), ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     gbm::gbm(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
@@ -46,4 +46,4 @@ predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
 #' @export
 getFeatureImportanceLearner.regr.gbm = function(.learner, .model, ...) {
   getFeatureImportanceLearner.classif.gbm(.learner, .model, ...)
-  }
+}

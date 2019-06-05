@@ -15,6 +15,7 @@
 #' @examples
 #' # see makeMultilabelBinaryRelevanceWrapper
 getMultilabelBinaryPerformances = function(pred, measures) {
+
   checkPrediction(pred, task.type = "multilabel")
   measures = checkMeasures(measures, "classif")
   p = matrix(, length(pred$task.desc$class.levels), length(measures))
@@ -22,8 +23,9 @@ getMultilabelBinaryPerformances = function(pred, measures) {
   rownames(p) = pred$task.desc$class.levels
   truths = getPredictionTruth(pred)
   responses = getPredictionResponse(pred)
-  if (pred$predict.type == "prob")
+  if (pred$predict.type == "prob") {
     probs = getPredictionProbabilities(pred)
+  }
   for (measure in measures) {
     predi = pred
     predi$task.desc$type = "classif"
@@ -33,8 +35,9 @@ getMultilabelBinaryPerformances = function(pred, measures) {
     measurename = measureAggrName(measure)
     for (label in pred$task.desc$class.levels) {
       predi$data = data.frame(truth = truths[, label], response = responses[, label])
-      if (pred$predict.type == "prob")
+      if (pred$predict.type == "prob") {
         predi$data$prob.TRUE = probs[, label]
+      }
       p[label, measurename] = performance(predi, measure)
     }
   }

@@ -1,7 +1,33 @@
-# mlr 2.14:
+# mlr 2.14.0.9000
+
+## learners - general
+
+- `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
+- fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of `data.table`s default in `rbindlist()`. See #2578 for more information. (@mllg, #2579)
+- `regr.randomForest` gains three new methods to estimate the standard error:
+  - `se.method = "jackknife"`
+  - `se.method = "bootstrap"`
+  - `se.method = "sd"`  
+  See `?regr.randomForest` for more details.  
+  `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
+  (@jakob-r, #1784)
+
+## functions - general
+- `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
+
+## learners - new
+- add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)
+
+## function - general
+- `plotHyperParsEffect()` now supports facet visualization of hyperparam effects for nested cv (@MasonGallo, #1653)
+- fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of `data.table`s default in `rbindlist()`. See #2578 for more information. (@mllg, #2579)
+- fixed a bug in which `options(on.learner.error)` was not respected in `benchmark()`. This caused `benchmark()` to stop even if it should have continued including `FailureModels` in the result (@dagola, #1984)
+
+# mlr 2.14.0
 
 ## general
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
+* `Task` help pages are now split into separate ones, e.g. `RegrTask`, `ClassifTask` (@pat-s, #2564)
 
 ## functions - new
 * `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
@@ -28,8 +54,8 @@
 * FSelectorRcpp_information.gain
 * FSelectorRcpp_symuncert
 
-Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>. 
-Exeptions are filters included in base R packages. 
+Additionally, filter names have been harmonized using the following scheme: <pkgname>_<filtername>.
+Exeptions are filters included in base R packages.
 In this case, the package name is omitted.
 
 ## filter - general
@@ -46,20 +72,25 @@ In this case, the package name is omitted.
   - `randomForestSRC.rfsrc` -> `randomForestSRC_importance`
   - `randomForestSRC.var.select` -> `randomForestSRC_var.select`
   - `randomForest.importance` -> `randomForest_importance`
-  
+
 * fixed a bug related to the loading of namespaces for required filter packages (@pat-s, #2483)
-  
+
 ## learners - new
 * classif.liquidSVM (@PhilippPro, #2428)
 * regr.liquidSVM (@PhilippPro, #2428)
 
 ## learners - general
 * regr.h2o.gbm: Various parameters added, `"h2o.use.data.table" = TRUE` is now the default (@j-hartshorn, #2508)
+* h2o learners now support getting feature importance (@markusdumke, #2434)
+
+## learners - fixes
+* In some cases the optimized hyperparameters were not applied in the performance level of a nested CV (@berndbischl, #2479)
 
 ## featSel - general
  * The FeatSelResult object now contains an additional slot `x.bit.names` that stores the optimal bits
  * The slot `x` now always contains the real feature names and not the bit.names
  * This fixes a bug and makes `makeFeatSelWrapper` usable with custom `bit.names`.
+ * Fixed a bug due to which `sffs` crashed in some cases (@bmihaljevic, #2486)
 
 # mlr 2.13:
 

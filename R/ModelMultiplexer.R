@@ -76,6 +76,7 @@
 #' # all three ps-objects are exactly the same internally.
 #' }
 makeModelMultiplexer = function(base.learners) {
+
   lrn = makeBaseEnsemble(
     id = "ModelMultiplexer",
     base.learners = base.learners,
@@ -115,7 +116,11 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
 
 #' @export
 makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
-  addClasses(NextMethod(), "ModelMultiplexerModel")
+  x = NextMethod()
+  if (!isFailureModel(x)) {
+    x = addClasses(x, "ModelMultiplexerModel")
+  }
+  return(x)
 }
 
 #' @export
@@ -123,14 +128,14 @@ getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
   if (inherits(model$learner.model, "NoFeaturesModel")) {
     return(model$learner.model)
   }
-  if (more.unwrap)
+  if (more.unwrap) {
     model$learner.model$next.model$learner.model
-  else
+  } else {
     model$learner.model$next.model
+  }
 }
 
 #' @export
 isFailureModel.ModelMultiplexerModel = function(model) {
   NextMethod() || (!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
-

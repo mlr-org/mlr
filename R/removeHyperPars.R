@@ -15,8 +15,9 @@ removeHyperPars = function(learner, ids = character(0L)) {
   assertClass(learner, classes = "Learner")
   assertCharacter(ids, any.missing = FALSE)
   d = setdiff(ids, names(getHyperPars(learner)))
-  if (length(d) > 0L)
+  if (length(d) > 0L) {
     stopf("Trying to remove param settings which were not set before: %s", collapse(d))
+  }
   UseMethod("removeHyperPars")
 }
 
@@ -25,5 +26,3 @@ removeHyperPars.Learner = function(learner, ids = character(0L)) {
   learner$par.vals[ids] = NULL
   return(learner)
 }
-
-

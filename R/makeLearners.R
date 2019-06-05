@@ -30,5 +30,3 @@ makeLearners = function(cls, ids = NULL, type = NULL, ...) {
   lrns = mapply(makeLearner, cl = cls, id = ids, MoreArgs = list(...), SIMPLIFY = FALSE)
   setNames(lrns, ids)
 }
-
-

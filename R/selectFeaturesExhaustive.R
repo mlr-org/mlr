@@ -4,9 +4,9 @@ selectFeaturesExhaustive = function(learner, task, resampling, measures, bit.nam
   for (i in seq_len(min(control$max.features, p, na.rm = TRUE))) {
     x = combn(seq_len(p), i)
     s = lapply(seq_col(x), function(j) {
-        b = rep(0, p)
-        b[x[, j]] = 1
-        b
+      b = rep(0, p)
+      b[x[, j]] = 1
+      b
     })
     states = c(states, s)
   }

@@ -24,4 +24,3 @@ trainLearner.multilabel.rFerns = function(.learner, .task, .subset, .weights = N
 predictLearner.multilabel.rFerns = function(.learner, .model, .newdata, ...) {
   as.matrix(predict(.model$learner.model, .newdata, ...))
 }
-

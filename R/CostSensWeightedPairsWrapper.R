@@ -36,6 +36,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
 
 #' @export
 trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = NULL, ...) {
+
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)

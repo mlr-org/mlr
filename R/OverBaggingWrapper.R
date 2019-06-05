@@ -40,6 +40,7 @@
 #' @family wrapper
 #' @export
 makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL) {
+
   learner = checkLearner(learner, "classif")
   pv = list()
   if (!missing(obw.iters)) {
@@ -59,8 +60,9 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     pv$obw.cl = obw.cl
   }
 
-  if (learner$predict.type != "response")
+  if (learner$predict.type != "response") {
     stop("Predict type of the basic learner must be response.")
+  }
   id = stri_paste(learner$id, "overbagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
@@ -70,12 +72,12 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     makeUntypedLearnerParam(id = "obw.cl", default = NULL, tunable = FALSE)
   )
   makeHomogeneousEnsemble(id, "classif", learner, packs, par.set = ps, par.vals = pv,
-     learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
+    learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
 }
 
 #' @export
 trainLearner.OverBaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-   obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
+  obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   y = getTaskTargets(.task)

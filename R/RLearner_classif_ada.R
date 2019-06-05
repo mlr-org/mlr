@@ -35,7 +35,8 @@ makeRLearner.classif.ada = function() {
 }
 
 #' @export
-trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   f = getTaskFormula(.task)
   dots = list(...)
   # get names of rpart.control args
@@ -56,7 +57,8 @@ predictLearner.classif.ada = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "vector", "probs")
   mod = getLearnerModel(.model)
   p = predict(mod, newdata = .newdata, type = type, ...)
-  if (type == "probs")
+  if (type == "probs") {
     colnames(p) = rownames(mod$confusion)
+  }
   return(p)
 }

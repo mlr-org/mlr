@@ -80,23 +80,27 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   assertClass(task, classes = "Task")
   n = getTaskSize(task)
   # instantiate resampling
-  if (inherits(resampling, "ResampleDesc"))
+  if (inherits(resampling, "ResampleDesc")) {
     resampling = makeResampleInstance(resampling, task = task)
+  }
   assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task)
   if (!is.null(weights)) {
     assertNumeric(weights, len = n, any.missing = FALSE, lower = 0)
   }
   assertFlag(models)
-  if (missing(extract))
-    extract = function(model) {}
-  else
+  if (missing(extract)) {
+    extract = function(model) {
+    }
+  } else {
     assertFunction(extract)
+  }
   assertFlag(show.info)
 
   r = resampling$size
-  if (n != r)
+  if (n != r) {
     stop(stri_paste("Size of data set:", n, "and resampling instance:", r, "differ!", sep = " "))
+  }
 
   checkLearnerBeforeTrain(task, learner, weights)
   checkAggrsBeforeResample(measures, resampling$desc)
@@ -148,7 +152,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
 }
 
 
-#Evaluate one train/test split of the resample function and get one or more performance values
+# Evaluate one train/test split of the resample function and get one or more performance values
 calculateResampleIterationResult = function(learner, task, i, train.i, test.i, measures,
   weights, rdesc, model, extract, show.info) {
 
@@ -243,9 +247,10 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
 }
 
 
-#Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
-mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime,
-  keep.extract) {
+# Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
+mergeResampleResult = function(learner.id, task, iter.results, measures, rin,
+  models, extract, keep.pred, keep.extract, show.info, runtime) {
+
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -291,8 +296,9 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
     message("\n")
   }
 
-  if (!keep.pred)
+  if (!keep.pred) {
     pred = NULL
+  }
 
   if (!keep.extract)
     extract = NULL

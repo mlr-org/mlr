@@ -26,7 +26,7 @@ makeRLearner.classif.dbnDNN = function() {
 }
 
 #' @export
-trainLearner.classif.dbnDNN = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.dbnDNN = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = as.numeric(d$target)
   dict = sort(unique(y))

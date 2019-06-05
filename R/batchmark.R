@@ -36,6 +36,7 @@
 #' @export
 #' @family benchmark
 batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
+
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   learners = ensureBenchmarkLearners(learners)
   tasks = ensureBenchmarkTasks(tasks)
@@ -98,15 +99,18 @@ getAlgoFun = function(lrn, measures, models) {
 #' @export
 #' @family benchmark
 reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
+
   # registry and ids are asserted later
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   assertFlag(keep.pred)
   assertClass(reg, "ExperimentRegistry")
 
-  if (is.null(ids))
+  if (is.null(ids)) {
     ids = batchtools::findDone(reg = reg)
-  if (NROW(ids) != nrow(batchtools::findExperiments(reg = reg)))
+  }
+  if (NROW(ids) != nrow(batchtools::findExperiments(reg = reg))) {
     warning("Collecting results for a subset of jobs. The resulting BenchmarkResult may be misleading.")
+  }
 
   problem = algorithm = NULL # for data.table's NSE
   tab = batchtools::getJobPars(ids, reg = reg)[, c("job.id", "problem", "algorithm")]

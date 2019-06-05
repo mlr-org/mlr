@@ -23,6 +23,7 @@
 #' oob
 #' performance(oob, measures = list(auc, mmce))
 getOOBPreds = function(model, task) {
+
   assertClass(model, classes = "WrappedModel")
   checkTask(task, task.type = c("classif", "regr", "surv"))
   checkModelCorrespondsTask(model, task)
@@ -65,6 +66,7 @@ getOOBPredsLearner.BaseWrapper = function(.learner, .model) {
 # the descriptions
 checkModelCorrespondsTask = function(model, task) {
   compare = c("id", "type", "target", "n.feats", "has.weights", "has.blocking", "is.spatial", "positive")
-  if (!identical(task$task.desc[compare], model$task.desc[compare]))
+  if (!identical(task$task.desc[compare], model$task.desc[compare])) {
     stopf("Description of the model does not correspond to the task")
+  }
 }

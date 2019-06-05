@@ -66,18 +66,21 @@
 #' print(res)
 #' # print(res$opt.path)
 makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1) {
+
   learner = checkLearner(learner, "classif")
   pv = list()
 
-  if (is.null(wcw.param))
+  if (is.null(wcw.param)) {
     wcw.param = learner$class.weights.param
-  else if (!is.null(learner$class.weights.param) && (learner$class.weights.param != wcw.param))
+  } else if (!is.null(learner$class.weights.param) && (learner$class.weights.param != wcw.param)) {
     stopf("wcw.param (%s) differs from the class.weights.parameter (%s) of the learner!",
       wcw.param, learner$class.weights.param)
+  }
 
   if (is.null(wcw.param)) {
-    if (!hasLearnerProperties(learner, "weights"))
+    if (!hasLearnerProperties(learner, "weights")) {
       stopf("Learner '%s' does not support observation weights. You have to set 'wcw.param' to the learner param which allows to set class weights! (which hopefully exists...)", learner$id)
+    }
   } else {
     assertSubset(wcw.param, getParamIds(learner$par.set))
   }

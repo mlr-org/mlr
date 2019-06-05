@@ -174,6 +174,7 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
+
   assertCharacter(target, any.missing = FALSE)
   assertFlag(explicit.features)
   assertEnvironment(env)
@@ -189,8 +190,9 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
     stop("There is no formula available for clustering.")
   }
   if (explicit.features) {
-    if (!inherits(x, "Task"))
+    if (!inherits(x, "Task")) {
       stopf("'explicit.features' can only be used when 'x' is of type 'Task'!")
+    }
     features = getTaskFeatureNames(x)
   } else {
     features = "."
@@ -280,6 +282,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no",
   functionals.as = "dfcols") {
+
   checkTask(task, "Task")
   checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
@@ -295,8 +298,9 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
       checkLogical(features), checkCharacter(features)
     )
 
-    if (!is.character(features))
+    if (!is.character(features)) {
       features = task.features[features]
+    }
   }
 
   tn = task$task.desc$target
@@ -316,18 +320,20 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
   }
 
   if (target.extra) {
-    if (missing(features))
+    if (missing(features)) {
       features = task.features
+    }
     res = list(
       data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, functionals.as),
       # in the next line we should not rtouch functionals anyway (just Y), so let us keep them as matrix
       target = recodeY(indexHelper(task$env$data, subset, tn, functionals.as = "matrix"), type = recode.target, task$task.desc)
     )
   } else {
-    if (missing(features) || identical(features, task.features))
+    if (missing(features) || identical(features, task.features)) {
       features = NULL
-    else
+    } else {
       features = union(features, tn)
+    }
 
     res = indexHelper(task$env$data, subset, features, drop = FALSE, functionals.as)
     if (recode.target %nin% c("no", "surv")) {
@@ -338,18 +344,24 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
 }
 
 recodeY = function(y, type, td) {
-  if (type == "no")
+  if (type == "no") {
     return(y)
-  if (type == "drop.levels")
+  }
+  if (type == "drop.levels") {
     return(factor(y))
-  if (type == "01")
+  }
+  if (type == "01") {
     return(as.numeric(y == td$positive))
-  if (type == "-1+1")
+  }
+  if (type == "-1+1") {
     return(as.numeric(2L * (y == td$positive) - 1L))
-  if (type == "surv")
+  }
+  if (type == "surv") {
     return(Surv(y[, 1L], y[, 2L], type = "right"))
-  if (type == "multilabel.factor")
+  }
+  if (type == "multilabel.factor") {
     return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
+  }
   stopf("Unknown value for 'type': %s", type)
 }
 
@@ -358,7 +370,7 @@ recodeY = function(y, type, td) {
 #' @description
 #' Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task ([Task])\cr
+#' @param task ([CostSensTask])\cr
 #'   The task.
 #' @template arg_subset
 #' @return (`matrix` | `NULL`).
@@ -398,12 +410,15 @@ subsetTask = function(task, subset = NULL, features) {
   # Keep functionals here as they are (matrix)
   task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
   if (!is.null(subset)) {
-    if (task$task.desc$has.blocking)
+    if (task$task.desc$has.blocking) {
       task$blocking = task$blocking[subset]
-    if (task$task.desc$has.weights)
+    }
+    if (task$task.desc$has.weights) {
       task$weights = task$weights[subset]
-    if (task$task.desc$has.coordinates)
+    }
+    if (task$task.desc$has.coordinates) {
       task$coordinates = task$coordinates[subset, ]
+    }
   }
   return(task)
 }
@@ -424,17 +439,22 @@ subsetTask = function(task, subset = NULL, features) {
 #' @keywords internal
 #' @export
 changeData = function(task, data, costs, weights, coordinates) {
-  if (missing(data))
+
+  if (missing(data)) {
     data = getTaskData(task)
-  if (missing(costs))
+  }
+  if (missing(costs)) {
     costs = getTaskCosts(task)
-  if (missing(weights))
+  }
+  if (missing(weights)) {
     weights = task$weights
-  if (missing(coordinates))
+  }
+  if (missing(coordinates)) {
     coordinates = task$coordinates
+  }
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  task["weights"] = list(weights)  # so also 'NULL' gets set
+  task["weights"] = list(weights) # so also 'NULL' gets set
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,

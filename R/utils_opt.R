@@ -1,13 +1,15 @@
 # set default value fro y-imputation in optimization
 setDefaultImputeVal = function(control, measures) {
   getDefVal = function(mm) {
-    if (identical(mm$aggr, test.mean) && is.finite(mm$worst))
+    if (identical(mm$aggr, test.mean) && is.finite(mm$worst)) {
       ifelse(mm$minimize, 1, -1) * mm$worst
-    else
+    } else {
       Inf
+    }
   }
-  if (is.null(control$impute.val))
+  if (is.null(control$impute.val)) {
     control$impute.val = vnapply(measures, getDefVal)
+  }
   return(control)
 }
 
@@ -27,11 +29,13 @@ getThresholdFromOptPath = function(opt.path, inds) {
 ##### tuning #####
 makeOptPathDFFromMeasures = function(par.set, measures, ...) {
   ns = vcapply(measures, measureAggrName)
-  if (anyDuplicated(ns))
+  if (anyDuplicated(ns)) {
     stop("Cannot create OptPath, measures do not have unique ids!")
+  }
   if (length(intersect(ns, names(par.set$pars))) > 0L ||
-    length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0L)
+    length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0L) {
     stop("Cannot create OptPath, measures ids and dimension names of input space overlap!")
+  }
   minimize = vlapply(measures, function(m) m$minimize)
   names(minimize) = ns
   makeOptPathDF(par.set, ns, minimize, add.transformed.x = FALSE,
@@ -66,4 +70,3 @@ binaryToFeatures = function(x, all.vars) {
 compare.diff = function(state1, state2, control, measure, threshold) {
   ifelse(measure$minimize, 1, -1) * (state1$y[1] - state2$y[1]) > threshold
 }
-

@@ -1,7 +1,6 @@
 context("regr_gausspr")
 
 test_that("regr_gausspr", {
-
   requirePackages("kernlab", default.method = "load")
 
   parset.list = list(

@@ -37,5 +37,3 @@ predictLearner.classif.binomial = function(.learner, .model, .newdata, ...) {
     unname(p)
   }
 }
-
-

@@ -52,5 +52,5 @@ getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
   op.dfs = setDF(rbindlist(lapply(seq_along(op.dfs), function(i) {
     op.dfs[[i]][, "iter"] = i
     op.dfs[[i]]
-  }), fill = TRUE))
+  }), fill = TRUE, use.names = TRUE))
 }

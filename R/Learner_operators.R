@@ -118,4 +118,3 @@ getLearnerShortName = function(learner) {
 
   return(learner.short.name)
 }
-

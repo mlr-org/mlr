@@ -11,14 +11,14 @@ makeRLearner.classif.rotationForest = function() {
     name = "Rotation Forest",
     short.name = "rotationForest",
     callees = "rotationForest"
-    )
+  )
 }
 
 #' @export
 trainLearner.classif.rotationForest = function(.learner, .task, .subset, .weights = NULL, ...) {
   df = getTaskData(.task, .subset, target.extra = TRUE)
   features = df$data
-  #rotationForest needs 0-1 coding
+  # rotationForest needs 0-1 coding
   target = as.factor(ifelse(df$target == .task$task.desc$positive, 1L, 0L))
   rotationForest::rotationForest(x = features, y = target, ...)
 }
@@ -27,10 +27,10 @@ trainLearner.classif.rotationForest = function(.learner, .task, .subset, .weight
 predictLearner.classif.rotationForest = function(.learner, .model, .newdata, ...) {
   features = .newdata[, names(.newdata) == .model$features]
   p = predict(.model$learner.model, newdata = features, all = FALSE, ...)
-  if (.learner$predict.type == "prob"){
+  if (.learner$predict.type == "prob") {
     levs = c(.model$task.desc$positive, .model$task.desc$negative)
     propVectorToMatrix(1 - p, levs)
-  }else{
+  } else {
     as.factor(ifelse(p > 0.5, .model$task.desc$positive, .model$task.desc$negative))
   }
 }

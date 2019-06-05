@@ -31,7 +31,7 @@ trainLearner.surv.rpart = function(.learner, .task, .subset, .weights = NULL, ..
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     rpart::rpart(f, data = d, method = "exp", ...)
-  } else  {
+  } else {
     rpart::rpart(f, data = d, weights = .weights, method = "exp", ...)
   }
 }

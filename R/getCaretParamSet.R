@@ -44,7 +44,8 @@
 #'   regrTask = makeRegrTask(data = BostonHousing, target = "medv")
 #'   getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 #' }
-getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
+getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE) {
+
   td = getTaskData(task, target.extra = TRUE)
   caret.grid = caret::getModelInfo(learner)[[learner]]$grid(
     x = td$data, y = td$target, len = length)
@@ -62,8 +63,9 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
         cl = "character"
       }
     }
-    if (discretize)
+    if (discretize) {
       cl = "character"
+    }
     switch(cl,
       character = makeDiscreteParam(id = i, values = par.vals),
       logical = makeLogicalParam(id = i),
@@ -84,8 +86,9 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
     par.vals = NULL
   } else {
     par.vals = lapply(caret.grid[!is.tunable], function(x) {
-      if (is.factor(x))
+      if (is.factor(x)) {
         x = as.character(x)
+      }
       return(x[1L])
     })
     # convert integerish variables into integer

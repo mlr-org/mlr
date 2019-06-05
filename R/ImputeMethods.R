@@ -31,8 +31,9 @@ makeImputeMethod = function(learn, impute, args = list()) {
 
 # helper function to impute missings of a col to const val
 simpleImpute = function(data, target, col, const) {
-  if (is.na(const))
+  if (is.na(const)) {
     stopf("Error imputing column '%s'. Maybe all input data was missing?", col)
+  }
   x = data[[col]]
 
   # cast logicals to factor if required (#1522)
@@ -152,16 +153,18 @@ imputeUniform = function(min = NA_real_, max = NA_real_) {
   assertNumber(min, na.ok = TRUE)
   assertNumber(max, na.ok = TRUE)
   makeImputeMethod(
-    learn = function(data, target, col, min, max)  {
+    learn = function(data, target, col, min, max) {
       if (is.na(min)) {
         min = min(data[[col]], na.rm = TRUE)
-        if (is.na(min))
+        if (is.na(min)) {
           stop("All values are missing. Unable to calculate minimum.")
+        }
       }
       if (is.na(max)) {
         max = max(data[[col]], na.rm = TRUE)
-        if (is.na(max))
+        if (is.na(max)) {
           stop("All values are missing. Unable to calculate maximum.")
+        }
       }
       list(min = min, max = max)
     },
@@ -185,16 +188,18 @@ imputeNormal = function(mu = NA_real_, sd = NA_real_) {
   assertNumber(sd, na.ok = TRUE)
 
   makeImputeMethod(
-    learn = function(data, target, col, mu, sd)  {
+    learn = function(data, target, col, mu, sd) {
       if (is.na(mu)) {
         mu = mean(data[[col]], na.rm = TRUE)
-        if (is.na(mu))
+        if (is.na(mu)) {
           stop("All values missing. Unable to calculate mean.")
+        }
       }
       if (is.na(sd)) {
         sd = sd(data[[col]], na.rm = TRUE)
-        if (is.na(sd))
+        if (is.na(sd)) {
           stop("All values missing. Unable to calculate sd.")
+        }
       }
       list(mu = mu, sd = sd)
     },
@@ -228,19 +233,22 @@ imputeHist = function(breaks, use.mids = TRUE) {
 
     learn = function(data, target, col, breaks, use.mids) {
       x = data[[col]]
-      if (all(is.na(x)))
+      if (all(is.na(x))) {
         stop("All values missing. Unable to impute with Hist.")
+      }
       if (is.numeric(x)) {
         tmp = hist(x, breaks = breaks, plot = FALSE)
-        if (use.mids)
+        if (use.mids) {
           return(list(counts = tmp$counts, values = tmp$mids))
-        else
+        } else {
           return(list(counts = tmp$counts, breaks = tmp$breaks))
+        }
       } else { # factor or logical feature
         tmp = table(x, useNA = "no")
         values = names(tmp)
-        if (is.logical(x))
+        if (is.logical(x)) {
           values = as.logical(x)
+        }
         return(list(counts = as.integer(tmp), values = values))
       }
     },
@@ -272,23 +280,28 @@ imputeHist = function(breaks, use.mids = TRUE) {
 #' @export
 imputeLearner = function(learner, features = NULL) {
   learner = checkLearner(learner)
-  if (!is.null(features))
+  if (!is.null(features)) {
     assertCharacter(features, any.missing = FALSE)
+  }
 
   makeImputeMethod(
     learn = function(data, target, col, learner, features) {
+
       constructor = getTaskConstructorForLearner(learner)
       if (is.null(features)) {
         features = setdiff(names(data), target)
       } else {
         not.ok = which(features %nin% names(data))
-        if (length(not.ok))
+        if (length(not.ok)) {
           stopf("Features for imputation not found in data: '%s'", collapse(features[not.ok]))
+        }
         not.ok = which.first(target %in% features)
-        if (length(not.ok))
+        if (length(not.ok)) {
           stopf("Target column used as feature for imputation: '%s'", target[not.ok])
-        if (col %nin% features)
+        }
+        if (col %nin% features) {
           features = c(col, features)
+        }
       }
       # features used for imputation might have NAs, but the learner might not support that
       # we need an extra check, otherwise this might not get noticed by checkLearnerBeforeTrain because
@@ -310,7 +323,9 @@ imputeLearner = function(learner, features = NULL) {
       x = data[[col]]
       ind = is.na(x)
       # if no NAs are present in data, we always return it unchanged
-      if (all(!ind)) return(x)
+      if (all(!ind)) {
+        return(x)
+      }
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
       p = predict(model, newdata = newdata)$data$response
       replace(x, ind, p)

@@ -102,13 +102,13 @@ NULL
 
 makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
   tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default", ..., cl) {
-
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  if (identical(log.fun, "default"))
+  if (identical(log.fun, "default")) {
     log.fun = logFunFeatSel
-  else if (identical(log.fun, "memory"))
+  } else if (identical(log.fun, "memory")) {
     log.fun = logFunTuneMemory
+  }
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$maxit = maxit
   x$max.features = max.features
@@ -120,15 +120,16 @@ print.FeatSelControl = function(x, ...) {
   catf("FeatSel control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))
-  if (is.na(x$max.features))
+  if (is.na(x$max.features)) {
     catf("Max. features: <not used>")
-  else
+  } else {
     catf("Max. features: %i", x$max.features)
+  }
   catf("Max. iterations: %i", x$maxit)
   catf("Tune threshold: %s", x$tune.threshold)
-  if (length(x$extra.args))
+  if (length(x$extra.args)) {
     catf("Further arguments: %s", convertToShortString(x$extra.args))
-  else
+  } else {
     catf("Further arguments: <not used>")
+  }
 }
-

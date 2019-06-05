@@ -3,16 +3,22 @@ context("getCaretParamSet")
 test_that("getCaretParamSet", {
   requirePackagesOrSkip(c("caret", "rpart", "earth"))
   checkCaretParams = function(lrn, k, task) {
+
     set.seed(123)
-    a = capture.output({cps1 = getCaretParamSet(lrn, length = k, task = task, discretize = TRUE)})
+    a = capture.output({
+      cps1 = getCaretParamSet(lrn, length = k, task = task, discretize = TRUE)
+    })
     set.seed(123)
-    b = capture.output({cps2 = getCaretParamSet(lrn, length = k, task = task, discretize = FALSE)})
+    b = capture.output({
+      cps2 = getCaretParamSet(lrn, length = k, task = task, discretize = FALSE)
+    })
     expect_identical(cps1$par.vals, cps2$par.vals)
     expect_identical(names(cps1$par.set$pars), names(cps2$par.set$pars))
     expect_identical(class(cps1$par.set), "ParamSet")
     expect_identical(class(cps2$par.set), "ParamSet")
-    if (!is.null(cps1$par.vals))
+    if (!is.null(cps1$par.vals)) {
       expect_identical(class(cps1$par.vals), "list")
+    }
   }
 
   caret.learners = c("gbm", "rf", "svmPoly", "svmLinear", "svmRadial",

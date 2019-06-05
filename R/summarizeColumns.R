@@ -36,6 +36,7 @@ summarizeColumns.Task = function(obj) {
 
 #' @export
 summarizeColumns.data.frame = function(obj) {
+
   iqv = function(x, ...) {
     1 - mean(x == computeMode(x))
   }

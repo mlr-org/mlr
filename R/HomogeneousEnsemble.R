@@ -43,10 +43,11 @@ getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
 #' @export
 getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) {
   ms = model$learner.model$next.model
-  if (more.unwrap)
+  if (more.unwrap) {
     extractSubList(ms, "learner.model", simplify = FALSE)
-  else
+  } else {
     ms
+  }
 }
 
 ##############################               helpers                      ##############################
@@ -59,8 +60,9 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, .subset = NULL
   # for classif we convert factor to char, nicer to handle later on
   preds = lapply(models, function(mod) {
     p = predict(mod, newdata = .newdata, subset = .subset, ...)$data$response
-    if (is.factor(p))
+    if (is.factor(p)) {
       p = as.character(p)
+    }
     return(p)
   })
   do.call(cbind, preds)
@@ -71,4 +73,3 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, .subset = NULL
 makeHomChainModel = function(learner, models) {
   makeChainModel(next.model = models, cl = c(learner$model.subclass, "HomogeneousEnsembleModel"))
 }
-

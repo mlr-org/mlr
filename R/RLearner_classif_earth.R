@@ -1,4 +1,4 @@
- #' @export
+#' @export
 makeRLearner.classif.earth = function() {
   makeRLearnerClassif(
     cl = "classif.earth",

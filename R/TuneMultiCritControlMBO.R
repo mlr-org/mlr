@@ -23,10 +23,10 @@ makeTuneMultiCritControlMBO = function(n.objectives = mbo.control$n.objectives,
   assertClass(mbo.control, "MBOControl")
   assertFlag(continue)
 
-  if (!is.null(budget) && !is.null(mbo.design) && nrow(mbo.design) > budget)
+  if (!is.null(budget) && !is.null(mbo.design) && nrow(mbo.design) > budget) {
     stopf("The size of the initial design (init.design.points = %i) exceeds the given budget (%i).",
       nrow(mbo.design), budget)
-  else if (!is.null(budget)) {
+  } else if (!is.null(budget)) {
     mbo.control = mlrMBO::setMBOControlTermination(mbo.control, max.evals = budget)
   }
 

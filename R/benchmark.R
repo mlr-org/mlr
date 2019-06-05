@@ -38,7 +38,9 @@
 #' plotBMRRanksAsBarChart(bmr, pos = "stack")
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
-benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, keep.extract = TRUE, show.info = getMlrOption("show.info")) {
+benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE,
+  keep.extract = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
+
   learners = ensureBenchmarkLearners(learners)
   tasks = ensureBenchmarkTasks(tasks)
   resamplings = ensureBenchmarkResamplings(resamplings, tasks)
@@ -100,17 +102,22 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
 #' @family benchmark
 NULL
 
-
-benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info,
-  keep.extract = TRUE) {
+benchmarkParallel = function(task, learner, learners, tasks, resamplings,
+  measures, keep.pred = TRUE, keep.extract = TRUE, models = TRUE, show.info) {
   setSlaveOptions()
-  if (show.info)
+  if (show.info) {
     messagef("Task: %s, Learner: %s", task, learner)
+  }
   lrn = learners[[learner]]
-  extract.this = getExtractor(lrn)
+  if (isTRUE(keep.extract)) {
+    extract.this = getExtractor(lrn)
+  } else {
+    extract.this = function(model) {
+      NULL
+    }
+  }
   r = resample(lrn, tasks[[task]], resamplings[[task]],
-    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info,
-    keep.extract = keep.extract)
+    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
   # store used learner in result
   r$learner = lrn
   return(r)

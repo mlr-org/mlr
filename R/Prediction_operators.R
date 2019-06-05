@@ -28,33 +28,39 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
-  if (ttype %nin% c("classif", "cluster", "multilabel"))
+  if (ttype %nin% c("classif", "cluster", "multilabel")) {
     stop("Prediction was not generated from a ClassifTask, MultilabelTask or ClusterTask!")
+  }
   if (missing(cl)) {
     if (ttype == "classif") {
-      if (length(pred$task.desc$class.levels) == 2L)
+      if (length(pred$task.desc$class.levels) == 2L) {
         cl = pred$task.desc$positive
-      else
+      } else {
         cl = pred$task.desc$class.levels
+      }
     } else if (ttype == "multilabel") {
       cl = pred$task.desc$class.levels
     }
   } else {
-    if (ttype == "cluster")
+    if (ttype == "cluster") {
       stopf("You can only ask for probs of all classes currently in clustering!")
-    else
+    } else {
       assertCharacter(cl, any.missing = FALSE)
+    }
   }
-  if (pred$predict.type != "prob")
+  if (pred$predict.type != "prob") {
     stop("Probabilities not present in Prediction object!")
+  }
   cns = colnames(pred$data)
   if (ttype %in% c("classif", "multilabel")) {
     cl2 = stri_paste("prob", cl, sep = ".")
-    if (!all(cl2 %in% cns))
+    if (!all(cl2 %in% cns)) {
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
+    }
     y = pred$data[, cl2]
-    if (length(cl) > 1L)
+    if (length(cl) > 1L) {
       colnames(y) = cl
+    }
   } else if (ttype == "cluster") {
     y = pred$data[, stri_detect_regex(cns, "prob\\.")]
     colnames(y) = seq_col(y)
@@ -84,7 +90,7 @@ getProbabilities = function(pred, cl) {
   getPredictionProbabilities(pred, cl)
 }
 
-#c.Prediction = function(...) {
+# c.Prediction = function(...) {
 #  preds = list(...)
 #  id = Reduce(c, lapply(preds, function(x) x@id))
 #  response = Reduce(c, lapply(preds, function(x) x@response))
@@ -92,7 +98,7 @@ getProbabilities = function(pred, cl) {
 #  weights = Reduce(c, lapply(preds, function(x) x@weights))
 #  prob = Reduce(rbind, lapply(preds, function(x) x@prob))
 #  return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
-#}
+# }
 
 
 #' @title Get response / truth from prediction object.

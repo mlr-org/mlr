@@ -64,8 +64,9 @@ print.WrappedModel = function(x, ...) {
     "Hyperparameters: ", getHyperParsString(x$learner, show.missing.values = TRUE), "\n",
     sep = ""
   )
-  if (isFailureModel(x))
+  if (isFailureModel(x)) {
     catf("Training failed: %s", getFailureModelMsg(x))
+  }
 }
 
 #' Get underlying R model of learner integrated into mlr.
@@ -87,7 +88,7 @@ getLearnerModel = function(model, more.unwrap = FALSE) {
   UseMethod("getLearnerModel")
 }
 
-#'@export
+#' @export
 getLearnerModel.WrappedModel = function(model, more.unwrap) {
   model$learner.model
 }
@@ -150,6 +151,3 @@ getFailureModelDump = function(model) {
 getFailureModelDump.WrappedModel = function(model) {
   return(NULL)
 }
-
-
-

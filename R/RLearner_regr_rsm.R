@@ -17,7 +17,7 @@ makeRLearner.regr.rsm = function() {
 }
 
 #' @export
-trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL, ...) {
   mf = list(...)$modelfun
   vs = stri_paste(getTaskFeatureNames(.task), collapse = ",", sep = " ")
   g = function(x) stri_paste(x, "(", vs, ")", sep = "")

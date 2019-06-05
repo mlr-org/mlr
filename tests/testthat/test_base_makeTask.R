@@ -1,6 +1,5 @@
 
 test_that("makeXXTask ignores bad columns if check.data = FALSE", {
-
   constructTask = function(data, target, type, id) {
     constructor = switch(type,
       classif = makeClassifTask,
@@ -25,6 +24,4 @@ test_that("makeXXTask ignores bad columns if check.data = FALSE", {
   for (type in names(constructors)) {
     expect_error(constructors[[type]](), "Unsupported feature type (logical) in column 'x'", fixed = TRUE)
   }
-
 })
-

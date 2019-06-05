@@ -27,7 +27,7 @@ test_that("FeatSelWrapper works with custom bits", {
 
   lrn1 = makeLearner("classif.rpart")
   ctrl = makeFeatSelControlRandom(maxit = 3)
-  lrn2 = makeFeatSelWrapper(lrn1, resampling =  makeResampleDesc("Holdout"), control = ctrl, bit.names = bns, bits.to.features = btf)
+  lrn2 = makeFeatSelWrapper(lrn1, resampling = makeResampleDesc("Holdout"), control = ctrl, bit.names = bns, bits.to.features = btf)
 
   r = resample(lrn2, multiclass.task, cv2, extract = function(model) {
     getFeatSelResult(model)
@@ -38,4 +38,3 @@ test_that("FeatSelWrapper works with custom bits", {
   bit.names = extractSubList(r$extract, "x.bit.names", simplify = FALSE)
   expect_true(is.list(bit.names) && length(bit.names) == 2L && all(sapply(feats, is.character)))
 })
-

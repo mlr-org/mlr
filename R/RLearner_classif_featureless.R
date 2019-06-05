@@ -53,6 +53,7 @@ trainLearner.classif.featureless = function(.learner, .task, .subset, .weights =
 
 #' @export
 predictLearner.classif.featureless = function(.learner, .model, .newdata, ...) {
+
   # extract some shortcuts
   n = nrow(.newdata)
   ptype = .learner$predict.type

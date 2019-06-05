@@ -41,11 +41,12 @@ makeTuneResultFromOptPath = function(learner, par.set, measures, resampling, con
 }
 
 
-#'@export
+#' @export
 print.TuneResult = function(x, ...) {
   catf("Tune result:")
   catf("Op. pars: %s", paramValueToString(x$opt.path$par.set, x$x))
-  if (!is.null(x$threshold))
+  if (!is.null(x$threshold)) {
     catf("Threshold: %s", collapse(sprintf("%2.2f", x$threshold)))
+  }
   catf("%s", perfsToString(x$y))
 }

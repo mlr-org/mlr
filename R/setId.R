@@ -16,6 +16,3 @@ setId = function(learner, id) {
   learner$id = id
   return(learner)
 }
-
-
-

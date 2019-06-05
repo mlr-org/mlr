@@ -1,6 +1,11 @@
+#' @title Create a regression task.
+#' @inheritParams Task
+#' @seealso [Task] [ClassifTask] [CostSensTask] [ClusterTask] [MultilabelTask] [SurvTask]
+#' @rdname RegrTask
+#' @aliases RegrTask
 #' @export
-#' @rdname Task
 makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
+
   assertString(id)
   assertDataFrame(data)
   assertString(target)
@@ -8,8 +13,9 @@ makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = 
   assertFlag(check.data)
 
   if (fixup.data != "no") {
-    if (is.integer(data[[target]]))
+    if (is.integer(data[[target]])) {
       data[[target]] = as.double(data[[target]])
+    }
   }
 
   task = makeSupervisedTask("regr", data, target, weights, blocking, coordinates, fixup.data = fixup.data, check.data = check.data)

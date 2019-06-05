@@ -17,7 +17,7 @@ makeRLearner.regr.fnn = function() {
 }
 
 #' @export
-trainLearner.regr.fnn = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.fnn = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   list(train = d, parset = list(...))
 }

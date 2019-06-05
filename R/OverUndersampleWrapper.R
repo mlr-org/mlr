@@ -76,7 +76,7 @@ trainLearner.UndersampleWrapper = function(.learner, .task, .subset = NULL, .wei
   if (length(.weights) == getTaskSize(.task)) {
     .task$weights = .weights
     .task = subsetTask(.task, .subset)
-  # otherwise subset first and then set weights
+    # otherwise subset first and then set weights
   } else {
     .task = subsetTask(.task, .subset)
     .task$weights = .weights
@@ -93,7 +93,7 @@ trainLearner.OversampleWrapper = function(.learner, .task, .subset = NULL, .weig
   if (length(.weights) == getTaskSize(.task)) {
     .task$weights = .weights
     .task = subsetTask(.task, .subset)
-  # otherwise subset first and then set weights
+    # otherwise subset first and then set weights
   } else {
     .task = subsetTask(.task, .subset)
     .task$weights = .weights
@@ -103,4 +103,3 @@ trainLearner.OversampleWrapper = function(.learner, .task, .subset = NULL, .weig
   m$train.task = .task
   makeChainModel(next.model = m, cl = "OversampleModel")
 }
-

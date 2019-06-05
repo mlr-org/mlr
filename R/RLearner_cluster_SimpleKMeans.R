@@ -30,7 +30,7 @@ makeRLearner.cluster.SimpleKMeans = function() {
 }
 
 #' @export
-trainLearner.cluster.SimpleKMeans = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.cluster.SimpleKMeans = function(.learner, .task, .subset, .weights = NULL, ...) {
   ctrl = RWeka::Weka_control(...)
   RWeka::SimpleKMeans(getTaskData(.task, .subset), control = ctrl)
 }
@@ -40,4 +40,3 @@ predictLearner.cluster.SimpleKMeans = function(.learner, .model, .newdata, ...) 
   # SimpleKMeans returns cluster indices (i.e. starting from 0, which some tools don't like
   as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
 }
-

@@ -41,14 +41,16 @@ removeConstantFeatures.Task = function(obj, perc = 0, dont.rm = character(0L), n
 
 #' @export
 removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
+
   assertNumber(perc, lower = 0, upper = 1)
   assertSubset(dont.rm, choices = names(obj))
   assertFlag(na.ignore)
   assertNumber(tol, lower = 0)
   assertFlag(show.info)
 
-  if (any(!dim(obj)))
+  if (any(!dim(obj))) {
     return(obj)
+  }
 
   isEqual = function(x, y) {
     res = (x == y) | (is.na(x) & is.na(y))
@@ -57,10 +59,12 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
   digits = ceiling(log10(1 / tol))
   cns = setdiff(colnames(obj), dont.rm)
   ratio = vnapply(obj[cns], function(x) {
-    if (allMissing(x))
+    if (allMissing(x)) {
       return(0)
-    if (is.double(x))
+    }
+    if (is.double(x)) {
       x = round(x, digits = digits)
+    }
     m = computeMode(x, na.rm = na.ignore, ties.method = "first")
     if (na.ignore) {
       mean(m != x, na.rm = TRUE)
@@ -70,8 +74,8 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
   }, use.names = FALSE)
 
   dropcols = cns[ratio <= perc]
-  if (show.info && length(dropcols))
+  if (show.info && length(dropcols)) {
     messagef("Removing %i columns: %s", length(dropcols), collapse(dropcols))
+  }
   dropNamed(obj, dropcols)
 }
-

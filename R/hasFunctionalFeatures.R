@@ -22,4 +22,3 @@ hasFunctionalFeatures.Task = function(obj) {
 hasFunctionalFeatures.TaskDesc = function(obj) {
   obj$n.feat["functionals"] > 0L
 }
-

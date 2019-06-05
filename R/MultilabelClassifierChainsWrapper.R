@@ -35,9 +35,10 @@ makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
 }
 
 #' @export
-trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...){
+trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   if (is.null(.learner$order)) {
-    order = sample(getTaskTargetNames(.task)) #random order
+    order = sample(getTaskTargetNames(.task)) # random order
   } else {
     order = .learner$order
   }
@@ -51,7 +52,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
     chained.targets = setdiff(chained.targets, tn)
     data2 = dropNamed(data, chained.targets)
     index = which(names(data2) %in% setdiff(targets, tn))
-    if (length(index) != 0) {  #convert augmented features into 0/1 variables, since boolean doesn't work
+    if (length(index) != 0) { # convert augmented features into 0/1 variables, since boolean doesn't work
       data2[, index] = sapply(data2[, index], as.numeric)
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
@@ -75,6 +76,5 @@ predictLearner.MultilabelClassifierChainsWrapper = function(.learner, .model, .n
       .newdata[tn] = predmatrix[, tn]
     }
   }
-  predmatrix[, .model$task.desc$class.levels] #bring labels back in original order
+  predmatrix[, .model$task.desc$class.levels] # bring labels back in original order
 }
-

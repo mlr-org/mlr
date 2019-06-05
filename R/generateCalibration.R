@@ -65,23 +65,27 @@ generateCalibrationData.ResampleResult = function(obj, breaks = "Sturges", group
 #' @export
 generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
   tids = getBMRTaskIds(obj)
-  if (is.null(task.id))
+  if (is.null(task.id)) {
     task.id = tids[1L]
-  else
+  } else {
     assertChoice(task.id, tids)
+  }
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
 
-  for (x in obj)
+  for (x in obj) {
     checkPrediction(x, task.type = "classif", predict.type = "prob")
+  }
   generateCalibrationData.list(obj, breaks, groups, task.id)
 }
 #' @export
 generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
+
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   ## unwrap ResampleResult to Prediction and set default names
   if (inherits(obj[[1L]], "ResampleResult")) {
-    if (is.null(names(obj)))
+    if (is.null(names(obj))) {
       names(obj) = extractSubList(obj, "learner.id")
+    }
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
   assertList(obj, names = "unique")
@@ -89,7 +93,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 
   out = lapply(obj, function(pred) {
     df = data.table("truth" = getPredictionTruth(pred),
-                    getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
+      getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
     df = melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
 
     if (is.null(groups)) {
@@ -107,14 +111,14 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     }
     list(data = df, proportion = df[, fun(.SD), by = "bin"])
   })
-  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner")
-  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner")
+  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner", use.names = TRUE)
+  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner", use.names = TRUE)
   if (length(td$class.levels) == 2L) {
     proportion = proportion[, !td$negative, with = FALSE]
     data = data[data$Class != td$negative, ]
   }
   max.bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
-                   function(x) as.numeric(x[length(x)]))
+    function(x) as.numeric(x[length(x)]))
   proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max.bin)])
   proportion = melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
   data$bin = ordered(data$bin, levels = levels(data$bin)[order(max.bin)])
@@ -122,9 +126,9 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   setDF(proportion)
 
   makeS3Obj("CalibrationData",
-            proportion = proportion,
-            data = data,
-            task = td)
+    proportion = proportion,
+    data = data,
+    task = td)
 }
 #' @title Plot calibration data using ggplot2.
 #'
@@ -152,7 +156,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @examples
 #' \dontrun{
 #' lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
-#'             makeLearner("classif.nnet", predict.type = "prob"))
+#'   makeLearner("classif.nnet", predict.type = "prob"))
 #' fit = lapply(lrns, train, task = iris.task)
 #' pred = lapply(fit, predict, task = iris.task)
 #' names(pred) = c("rpart", "nnet")
@@ -166,6 +170,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' plotCalibration(out)
 #' }
 plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
+
   assertClass(obj, "CalibrationData")
   assertFlag(smooth)
   assertFlag(reference)
@@ -176,17 +181,19 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, fa
   p = ggplot(obj$proportion, aes_string("bin", "Proportion", color = "Class", group = "Class"))
   p = p + scale_x_discrete(drop = FALSE)
 
-  if (smooth)
+  if (smooth) {
     p = p + stat_smooth(se = FALSE, span = 2, method = "loess")
-  else
+  } else {
     p = p + geom_point() + geom_line()
-
-  if (length(unique(obj$proportion$Learner)) > 1L) {
-    p = p + facet_wrap(~ Learner, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
   }
 
-  if (reference)
+  if (length(unique(obj$proportion$Learner)) > 1L) {
+    p = p + facet_wrap(~Learner, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
+
+  if (reference) {
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")
+  }
 
   if (rag) {
     top.data = obj$data[obj$data$truth == obj$data$Class, ]

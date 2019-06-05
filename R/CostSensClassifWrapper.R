@@ -26,6 +26,7 @@ makeCostSensClassifWrapper = function(learner) {
 
 #' @export
 trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset = NULL, ...) {
+
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   feats = getTaskData(.task)
@@ -57,8 +58,9 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
   m = .model$learner.model$next.model
   mm = m$learner.model
   # handle constant prediction
-  if (inherits(mm, "CostSensClassifModelConstant"))
+  if (inherits(mm, "CostSensClassifModelConstant")) {
     return(as.factor(rep(mm$y, nrow(.newdata))))
+  }
   NextMethod()
 }
 
@@ -66,5 +68,3 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
 getLearnerProperties.CostSensClassifWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }
-
-

@@ -1,6 +1,6 @@
 context("smote")
 
-test_that("smote works",  {
+test_that("smote works", {
   y = binaryclass.df[, binaryclass.target]
   tab1 = table(y)
   task = smote(binaryclass.task, rate = 2)
@@ -20,7 +20,7 @@ test_that("smote works",  {
   expect_error(smote(task, rate = 2, alt.logic = TRUE), "minimal class has size 3")
 })
 
-test_that("smote works with rate 1 (no new examples)",  {
+test_that("smote works with rate 1 (no new examples)", {
   y = binaryclass.df[, binaryclass.target]
   tab1 = table(y)
   task = smote(binaryclass.task, rate = 1)
@@ -36,7 +36,7 @@ test_that("smote works with rate 1 (no new examples)",  {
   expect_equal(tab2alt["R"], tab1["R"])
 })
 
-test_that("smote works with only factor features",  {
+test_that("smote works with only factor features", {
   n = 10
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
@@ -50,7 +50,7 @@ test_that("smote works with only factor features",  {
   expect_equal(getTaskSize(task3), 12)
 })
 
-test_that("smote wrapper",  {
+test_that("smote wrapper", {
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeSMOTEWrapper(lrn1, sw.rate = 2)
@@ -82,7 +82,7 @@ test_that("smote works with only integer features", {
 
 # FIXME: Reactivate test, the test is failing on an R CMD check but not test().
 #        Probably due to seeding problems.
-#test_that("smote works with constant factor features", {
+# test_that("smote works with constant factor features", {
 #  # This reproduces the bug from issue #1951
 #  d = data.frame(
 #    x1 = rpois(100, 2),
@@ -94,5 +94,4 @@ test_that("smote works with only integer features", {
 #  task2 = smote(task, rate = 9, nn = 4L)
 #
 #  expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
-#})
-
+# })

@@ -10,8 +10,9 @@ matchBaseEnsembleLearner = function(ensemble, pn) {
 getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "both")) {
   pvs = lapply(learner$base.learners, function(lrn) {
     xs = getHyperPars(lrn, for.fun = for.fun)
-    if (length(xs) > 0L)
+    if (length(xs) > 0L) {
       names(xs) = stri_paste(lrn$id, ".", names(xs))
+    }
     return(xs)
   })
   # if we dont do this, R prefixes the list names again.
@@ -73,4 +74,19 @@ setPredictType.BaseEnsemble = function(learner, predict.type) {
 makeWrappedModel.BaseEnsemble = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod(x)
   addClasses(x, "BaseEnsembleModel")
+}
+
+#' @export
+getClassWeightParam.BaseEnsemble = function(learner, lrn.id = NULL) {
+  assertClass(learner, "BaseEnsemble")
+
+  bl.ids = vcapply(learner$base.learners, getLearnerId)
+  if (is.null(lrn.id)) {
+    stopf("'lrn.id' is not set, please specify one of the base learners: %s", stri_flatten(bl.ids, ", "))
+  }
+  if (lrn.id %nin% bl.ids) {
+    stopf("%s is not a base learner. Available base learners are: %s", lrn.id, stri_flatten(bl.ids, ", "))
+  }
+
+  getClassWeightParam(learner$base.learners[[lrn.id]])
 }

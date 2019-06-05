@@ -12,9 +12,9 @@ makeRLearner.classif.RRF = function() {
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0),
       makeNumericLearnerParam(id = "coefReg", default = 0.8,
-                              requires = quote(flagReg == 1L)),
+        requires = quote(flagReg == 1L)),
       makeIntegerVectorLearnerParam(id = "feaIni", lower = 0, upper = Inf,
-                                    requires = quote(flagReg == 1L)),
+        requires = quote(flagReg == 1L)),
       makeNumericVectorLearnerParam(id = "classwt", lower = 0, upper = 1L),
       makeNumericVectorLearnerParam(id = "cutoff", lower = 0, upper = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
@@ -40,7 +40,7 @@ makeRLearner.classif.RRF = function() {
 #' @export
 trainLearner.classif.RRF = function(.learner, .task, .subset, .weights, ...) {
   RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
-           keep.forest = TRUE, ...)
+    keep.forest = TRUE, ...)
 }
 
 #' @export
@@ -58,8 +58,9 @@ getFeatureImportanceLearner.classif.RRF = function(.learner, .model, ...) {
     ctrl$type = 2L
   } else if (ctrl$type == 1L) {
     has.fiv = .learner$par.vals$importance
-    if (is.null(has.fiv) || has.fiv != TRUE)
+    if (is.null(has.fiv) || has.fiv != TRUE) {
       stop("You need to train the learner with parameter 'importance' set to TRUE")
+    }
   }
 
   RRF::importance(mod, ctrl$type)[, 1]

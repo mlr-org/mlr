@@ -36,6 +36,7 @@ trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = 
   ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion,
   minsplit, minbucket, stump, nresample, maxsurrogate,
   maxdepth, savesplitstats, ...) {
+
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
   defaults = getDefaults(getParamSet(.learner))

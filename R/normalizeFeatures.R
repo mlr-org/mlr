@@ -35,7 +35,6 @@
 #' @family eda_and_preprocess
 normalizeFeatures = function(obj, target = character(0L), method = "standardize", cols = NULL,
   range = c(0, 1), on.constant = "quiet") {
-
   checkTargetPreproc(obj, target, cols)
   assertChoice(method, choices = c("range", "standardize", "center", "scale"))
   assertNumeric(range, len = 2L, any.missing = FALSE)
@@ -67,7 +66,6 @@ normalizeFeatures.data.frame = function(obj, target = character(0L), method = "s
 #' @export
 normalizeFeatures.Task = function(obj, target = character(0L), method = "standardize",
   cols = NULL, range = c(0, 1), on.constant = "quiet") {
-
   target = getTaskTargetNames(obj)
   df = getTaskData(obj)
   normalized.df = normalizeFeatures(obj = df, target = target, method = method,

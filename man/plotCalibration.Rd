@@ -37,7 +37,7 @@ Plots calibration data from \link{generateCalibrationData}.
 \examples{
 \dontrun{
 lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
-            makeLearner("classif.nnet", predict.type = "prob"))
+  makeLearner("classif.nnet", predict.type = "prob"))
 fit = lapply(lrns, train, task = iris.task)
 pred = lapply(fit, predict, task = iris.task)
 names(pred) = c("rpart", "nnet")

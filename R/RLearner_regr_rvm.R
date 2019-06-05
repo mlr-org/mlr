@@ -40,10 +40,11 @@ makeRLearner.regr.rvm = function() {
 trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
-  if (base::length(kpar))
+  if (base::length(kpar)) {
     kernlab::rvm(f, data = getTaskData(.task, .subset), kpar = kpar, ...)
-  else
+  } else {
     kernlab::rvm(f, data = getTaskData(.task, .subset), ...)
+  }
 }
 
 #' @export

@@ -36,7 +36,7 @@ test_that("plotBMRRanksAsBarChart", {
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1], ordered = TRUE)
 
-   # check error when learner short names are not unique
+  # check error when learner short names are not unique
   lrns = list(
     rf = makeLearner("classif.randomForest", id = "rf1"),
     rf2 = makeLearner("classif.randomForest", id = "rf2")

@@ -21,7 +21,7 @@ makeRLearner.classif.lda = function() {
 }
 
 #' @export
-trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   MASS::lda(f, data = getTaskData(.task, .subset), ...)
 }
@@ -29,9 +29,9 @@ trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  
 #' @export
 predictLearner.classif.lda = function(.learner, .model, .newdata, predict.method = "plug-in", ...) {
   p = predict(.model$learner.model, newdata = .newdata, method = predict.method, ...)
-  if (.learner$predict.type == "response")
+  if (.learner$predict.type == "response") {
     return(p$class)
-  else
+  } else {
     return(p$posterior)
+  }
 }
-

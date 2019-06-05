@@ -17,14 +17,14 @@ learnerArgsToControl = function(control, ...) {
     is.missing = if (is.symbol(arg)) {
       argname = as.character(arg)
       eval(substitute(missing(symbol), list(symbol = arg)),
-           envir = parent.frame())
+        envir = parent.frame())
     } else {
       argname = names(dots)[i]
       FALSE
     }
     if (!is.missing) {
       value = tryCatch(eval(arg, envir = parent.frame()),
-                       error = function(...) NULL)
+        error = function(...) NULL)
       if (!is.null(value)) {
         args[[as.character(argname)]] = value
       }

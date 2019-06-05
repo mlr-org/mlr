@@ -11,16 +11,18 @@ makeChainModel = function(next.model, cl) {
 }
 
 
-#'@export
+#' @export
 getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
   # FIXME: this structure and special-cases really suck. FailureModel and NoFeaturesModel
   # should probably be redesigned at some point
-  if (inherits(model$learner.model, "NoFeaturesModel"))
+  if (inherits(model$learner.model, "NoFeaturesModel")) {
     return(model$learner.model)
-  if (more.unwrap)
+  }
+  if (more.unwrap) {
     getLearnerModel(model$learner.model$next.model, more.unwrap = TRUE)
-  else
+  } else {
     model$learner.model$next.model
+  }
 }
 
 #' @export

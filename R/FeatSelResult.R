@@ -32,13 +32,13 @@ print.FeatSelResult = function(x, ...) {
     catf("Bits (%i): %s", length(x$x.bit.names), shortenX(x$x.bit.names))
   }
   catf("Features (%i): %s", length(x$x), shortenX(x$x))
-  if (!is.null(x$threshold))
+  if (!is.null(x$threshold)) {
     catf("Threshold: %s", collapse(sprintf("%2.2f", x$threshold)))
+  }
   catf("%s", perfsToString(x$y))
 }
 
 makeFeatSelResultFromOptPath = function(learner, measures, resampling, control, opt.path, dob = opt.path$env$dob, ties = "random", task, bits.to.features) {
-
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), dob = dob, ties = ties)
   e = getOptPathEl(opt.path, i)
   # if we had threshold tuning, get th from op and set it in result object
@@ -48,5 +48,3 @@ makeFeatSelResultFromOptPath = function(learner, measures, resampling, control, 
   x = bits.to.features(x.bits, task)
   makeOptResult(learner, control, x, e$y, resampling, threshold, opt.path, "FeatSelResult", x.bit.names = x.bit.names)
 }
-
-

@@ -5,7 +5,7 @@ test_that("classif_rotationForest", {
 
   parset.list = list(
     list(),
-    list(L = 5L,  K = 2L),
+    list(L = 5L, K = 2L),
     list(L = 10L, K = 2L)
   )
 

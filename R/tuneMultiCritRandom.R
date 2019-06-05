@@ -5,6 +5,3 @@ tuneMultiCritRandom = function(learner, task, resampling, measures, par.set, con
     resample.fun = resample.fun)
   makeTuneMultiCritResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }
-
-
-

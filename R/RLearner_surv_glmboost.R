@@ -38,12 +38,12 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
     Lognormal = mboost::Lognormal(nuirange = nuirange),
     Gehan = mboost::Gehan(),
     custom.family = custom.family.definition
-    )
+  )
   if (use.formula) {
     f = getTaskFormula(.task)
     model = if (is.null(.weights)) {
       mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "surv"), control = ctrl, family = family, ...)
-    } else  {
+    } else {
       mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "surv"), control = ctrl, weights = .weights, family = family, ...)
     }
   } else {

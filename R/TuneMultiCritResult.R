@@ -44,9 +44,8 @@ makeTuneMultiCritResultFromOptPath = function(learner, par.set, measures, resamp
 }
 
 
-#'@export
+#' @export
 print.TuneMultiCritResult = function(x, ...) {
   catf("Tune multicrit result:")
   catf("Points on front: %i", length(x$x))
 }
-

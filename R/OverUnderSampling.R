@@ -49,4 +49,3 @@ undersample = function(task, rate, cl = NULL) {
   j = sampleBinaryClass(y, rate = rate, cl = cl, resample.other.class = FALSE)
   subsetTask(task, j)
 }
-

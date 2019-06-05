@@ -50,17 +50,18 @@ makePreprocWrapperCaret = function(learner, ...) {
   par.vals = insert(par.vals, list(...))
 
   trainfun = function(data, target, args) {
+
     all.methods = c(
-      "BoxCox",               "YeoJohnson",         "expoTrans",          "center",
-      "scale",                "range",              "knnImpute",          "bagImpute",
-      "medianImpute",         "pca",                "ica",                "spatialSign",
-      "zv",                   "nzv",                "corr"
+      "BoxCox", "YeoJohnson", "expoTrans", "center",
+      "scale", "range", "knnImpute", "bagImpute",
+      "medianImpute", "pca", "ica", "spatialSign",
+      "zv", "nzv", "corr"
     )
     logindex = c(
-      args$ppc.BoxCox,        args$ppc.YeoJohnson,  args$ppc.expoTrans,   args$ppc.center,
-      args$ppc.scale,         args$ppc.range,       args$ppc.knnImpute,   args$ppc.bagImpute,
-      args$ppc.medianImpute,  args$ppc.pca,         args$ppc.ica,         args$ppc.spatialSign,
-      args$ppc.zv,            args$ppc.nzv,         args$ppc.corr
+      args$ppc.BoxCox, args$ppc.YeoJohnson, args$ppc.expoTrans, args$ppc.center,
+      args$ppc.scale, args$ppc.range, args$ppc.knnImpute, args$ppc.bagImpute,
+      args$ppc.medianImpute, args$ppc.pca, args$ppc.ica, args$ppc.spatialSign,
+      args$ppc.zv, args$ppc.nzv, args$ppc.corr
     )
 
     cargs = list(

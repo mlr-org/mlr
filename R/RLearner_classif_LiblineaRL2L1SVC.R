@@ -27,5 +27,5 @@ trainLearner.classif.LiblineaRL2L1SVC = function(.learner, .task, .subset, .weig
 
 #' @export
 predictLearner.classif.LiblineaRL2L1SVC = function(.learner, .model, .newdata, ...) {
-    as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
+  as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
 }

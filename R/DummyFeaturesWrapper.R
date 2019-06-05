@@ -10,6 +10,7 @@
 #' @family wrapper
 #' @export
 makeDummyFeaturesWrapper = function(learner, method = "1-of-n", cols = NULL) {
+
   learner = checkLearner(learner)
   args = list(method = method, cols = cols)
   rm(list = names(args))

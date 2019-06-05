@@ -9,4 +9,3 @@ getTuneResult = function(object) {
   assertClass(object, "TuneModel")
   object$learner.model$opt.result
 }
-

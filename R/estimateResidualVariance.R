@@ -22,8 +22,9 @@ estimateResidualVariance = function(x, task, data, target) {
 
 #' @export
 estimateResidualVariance.Learner = function(x, task, data, target) {
-  if (missing(task))
+  if (missing(task)) {
     task = makeRegrTask(data = data, target = target)
+  }
   estimateResidualVariance.WrappedModel(train(x, task), task)
 }
 

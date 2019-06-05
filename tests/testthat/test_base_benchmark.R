@@ -1,6 +1,12 @@
 context("benchmark")
 
 test_that("benchmark", {
+  if (getRversion() > "3.5.3") {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+
+  set.seed(getOption("mlr.debug.seed"))
+
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   learner.names = c("classif.lda", "classif.rpart")
@@ -164,6 +170,7 @@ test_that("benchmark", {
   expect_equal(unique(tffd$iter), 1:2)
 
   f = function(tmp, cl) {
+
     context(sprintf("benchmark: extracting %s", cl))
     expect_true(is.list(tmp))
     expect_true(setequal(names(tmp), task.names))
@@ -193,7 +200,7 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_list(x$models, types = "WrappedModel")
   expect_is(x$pred, "ResamplePrediction")
 
-  ##test getter function for models
+  ## test getter function for models
   models = getBMRModels(res)
   expect_true(is.list(models))
   expect_true(setequal(names(models), "binary"))
@@ -264,15 +271,61 @@ test_that("drop option works for BenchmarkResults_operators", {
     wrapper.class = "cl")
 })
 
+test_that("benchmark handles failure models correctly", {
 
+  # Define task
+  task = binaryclass.task
 
+  # Define filter parameter set
+  filter_ps = makeParamSet(makeIntegerParam("fw.abs", lower = 1,
+    upper = getTaskNFeats(task)))
 
+  # Define tuning control
+  ctrl = makeTuneControlRandom(maxit = 10L)
 
+  # Define resampling strategies
+  inner = mlr::makeResampleDesc("CV", stratify = FALSE, iters = 2L)
+  outer = mlr::makeResampleDesc("CV", stratify = FALSE, iters = 2L)
 
+  # Define learner
+  quiet_learner = makeLearner("classif.__mlrmocklearners__3",
+    config = list("on.learner.error" = "quiet"))
+  quiet_learner = makeFilterWrapper(quiet_learner, fw.method = "chi.squared")
 
+  quiet_learner = makeTuneWrapper(quiet_learner, resampling = inner, control = ctrl,
+    par.set = filter_ps, show.info = TRUE)
 
+  stop_learner = makeLearner("classif.__mlrmocklearners__3",
+    config = list("on.learner.error" = "stop"))
+  stop_learner = makeFilterWrapper(stop_learner, fw.method = "chi.squared")
 
+  stop_learner = makeTuneWrapper(stop_learner, resampling = inner, control = ctrl,
+    par.set = filter_ps, show.info = TRUE)
 
+  warn_learner = makeLearner("classif.__mlrmocklearners__3",
+    config = list("on.learner.error" = "warn"))
+  warn_learner = makeFilterWrapper(warn_learner, fw.method = "chi.squared")
 
+  warn_learner = makeTuneWrapper(warn_learner, resampling = inner, control = ctrl,
+    par.set = filter_ps, show.info = TRUE)
 
+  # Tests
+  # Expect benchmark failing
+  expect_error(benchmark(learners = stop_learner, tasks = task, resamplings = outer,
+    keep.pred = FALSE, models = FALSE, show.info = TRUE))
 
+  # Expect benchmark warning
+  expect_warning(benchmark(learners = warn_learner, tasks = task, resamplings = outer,
+    keep.pred = FALSE, models = FALSE, show.info = TRUE))
+
+  # Expect benchmark messages
+  expect_message({
+    bmr = benchmark(learners = quiet_learner, tasks = task,
+      resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)
+  })
+  aggr_perf = getBMRAggrPerformances(bmr = bmr)
+
+  # Check result
+  expect_class(x = bmr, classes = "BenchmarkResult")
+  expect_true(object = is.na(aggr_perf[[1]][[1]]))
+})
