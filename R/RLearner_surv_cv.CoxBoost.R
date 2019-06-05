@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.cv.CoxBoost = function() {
-
   makeRLearnerSurv(
     cl = "surv.cv.CoxBoost",
     package = "!CoxBoost",
@@ -58,7 +57,6 @@ trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.surv.cv.CoxBoost = function(.learner, .model, .newdata, ...) {
-
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))

@@ -1,7 +1,6 @@
 context("fixed")
 
 test_that("fixed in single resampling", {
-
   df = multiclass.df
   fixed = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target = multiclass.target, data = multiclass.df,

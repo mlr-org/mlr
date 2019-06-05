@@ -14,11 +14,9 @@ test_that("classif_logreg", {
   testProb("classif.logreg", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.prob)
 
   tt = function(formula, data) {
-
     glm(formula, data = data, family = binomial)
   }
   tp = function(model, newdata) {
-
     p = predict(model, newdata, type = "response")
     as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }

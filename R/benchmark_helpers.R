@@ -1,5 +1,4 @@
 ensureBenchmarkLearners = function(learners) {
-
   learners = ensureVector(learners, 1L, "Learner")
   learners = lapply(learners, checkLearner)
   learner.ids = vcapply(learners, getLearnerId)
@@ -10,7 +9,6 @@ ensureBenchmarkLearners = function(learners) {
 }
 
 ensureBenchmarkTasks = function(tasks) {
-
   tasks = ensureVector(tasks, 1L, "Task")
   assertList(tasks, min.len = 1L)
   checkListElementClass(tasks, "Task")
@@ -22,7 +20,6 @@ ensureBenchmarkTasks = function(tasks) {
 }
 
 ensureBenchmarkResamplings = function(resamplings, tasks) {
-
   if (missing(resamplings)) {
     resamplings = replicate(length(tasks), makeResampleDesc("CV", iters = 10L), simplify = FALSE)
   } else if (inherits(resamplings, "ResampleInstance") || inherits(resamplings, "ResampleDesc")) {
@@ -34,7 +31,6 @@ ensureBenchmarkResamplings = function(resamplings, tasks) {
     }
   }
   resamplings = Map(function(res, tt) {
-
     if (inherits(res, "ResampleInstance")) {
       return(res)
     }
@@ -47,7 +43,6 @@ ensureBenchmarkResamplings = function(resamplings, tasks) {
 }
 
 ensureBenchmarkMeasures = function(measures, tasks) {
-
   if (missing(measures)) {
     measures = list(getDefaultMeasure(tasks[[1L]]))
   } else {
@@ -60,7 +55,6 @@ ensureBenchmarkMeasures = function(measures, tasks) {
 
 # get extractor function for different wrapped models
 getExtractor = function(lrn) {
-
   cl = class(lrn)
   if ("FeatSelWrapper" %in% cl) {
     extract.this = getFeatSelResult
@@ -70,7 +64,6 @@ getExtractor = function(lrn) {
     extract.this = getFilteredFeatures
   } else {
     extract.this = function(model) {
-
       NULL
     }
   }

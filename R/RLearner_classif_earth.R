@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.earth = function() {
-
   makeRLearnerClassif(
     cl = "classif.earth",
     package = c("!earth", "stats"),
@@ -44,14 +43,12 @@ makeRLearner.classif.earth = function() {
 
 #' @export
 trainLearner.classif.earth = function(.learner, .task, .subset, .weights = NULL, link = "logit", maxit = 25L, ...) {
-
   f = getTaskFormula(.task)
   earth::earth(f, data = getTaskData(.task, .subset), weights = .weights, glm = list(family = binomial(link = link), maxit = maxit), ...)
 }
 
 #' @export
 predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
-
   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {

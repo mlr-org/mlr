@@ -15,7 +15,6 @@ test_that("helpLearner of learner with multiple help pages", {
   environment(testfn) = new.env(parent = environment(testfn))
 
   environment(testfn)$readline = function(x) {
-
     cat(x, "\n")
     0
   }
@@ -25,7 +24,6 @@ test_that("helpLearner of learner with multiple help pages", {
   expect_null(quiet(testfn("classif.qda")))
 
   environment(testfn)$readline = function(x) {
-
     cat(x, "\n")
     1
   }
@@ -42,7 +40,6 @@ test_that("helpLearner of learner with multiple help pages", {
   }
 
   environment(testfn)$readline = function(x) {
-
     cat(x, "\n")
     2
   }

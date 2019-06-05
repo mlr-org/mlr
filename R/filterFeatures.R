@@ -127,7 +127,6 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 }
 
 checkFilterArguments = function(perc, abs, threshold) {
-
   sum.null = sum(!is.null(perc), !is.null(abs), !is.null(threshold))
   if (sum.null == 0L) {
     stop("At least one of 'perc', 'abs' or 'threshold' must be not NULL")

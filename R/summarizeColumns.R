@@ -26,13 +26,11 @@
 #' @examples
 #' summarizeColumns(iris)
 summarizeColumns = function(obj) {
-
   UseMethod("summarizeColumns")
 }
 
 #' @export
 summarizeColumns.Task = function(obj) {
-
   summarizeColumns.data.frame(obj$env$data)
 }
 
@@ -40,13 +38,11 @@ summarizeColumns.Task = function(obj) {
 summarizeColumns.data.frame = function(obj) {
 
   iqv = function(x, ...) {
-
     1 - mean(x == computeMode(x))
   }
 
   # to be read as: is obj is numeric, return x, else call y(x)
   ifn = function(obj, x, y, ...) {
-
     if (is.numeric(obj)) y = x
     if (is.function(y)) y(obj, ...) else y
   }

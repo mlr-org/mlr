@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.fdausc.knn = function() {
-
   makeRLearnerClassif(
     cl = "classif.fdausc.knn",
     package = "fda.usc",
@@ -23,7 +22,6 @@ makeRLearner.classif.fdausc.knn = function() {
 
 #' @export
 trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
-
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
@@ -37,7 +35,6 @@ trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.classif.fdausc.knn = function(.learner, .model, .newdata, ...) {
-
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)
   nd = fda.usc::fdata(mdata = as.matrix(fd))

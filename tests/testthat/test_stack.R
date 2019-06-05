@@ -9,7 +9,9 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
     super = makeLearner(super, predict.type = sm.pt)
     # sm.pt = NULL
   }
-  if (method == "hill.climb" && bms.pt == "response" && inherits(task, "ClassifTask")) return()
+  if (method == "hill.climb" && bms.pt == "response" && inherits(task, "ClassifTask")) {
+    return()
+  }
 
   slrn = makeStackedLearner(base, super, method = method, use.feat = use.feat, predict.type = sm.pt)
   tr = train(slrn, task)
@@ -75,7 +77,6 @@ test_that("Parameters for hill climb works", {
   expect_equal(sum(tmp$learner.model$weights), 1)
 
   metric = function(pred, true) {
-
     pred = colnames(pred)[max.col(pred)]
     tb = table(pred, true)
     return(1 - sum(diag(tb)) / sum(tb))

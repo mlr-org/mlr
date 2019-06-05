@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.rvm = function() {
-
   makeRLearnerRegr(
     cl = "regr.rvm",
     package = "kernlab",
@@ -39,7 +38,6 @@ makeRLearner.regr.rvm = function() {
 
 #' @export
 trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
-
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
   if (base::length(kpar)) {
@@ -51,6 +49,5 @@ trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degr
 
 #' @export
 predictLearner.regr.rvm = function(.learner, .model, .newdata, ...) {
-
   kernlab::predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

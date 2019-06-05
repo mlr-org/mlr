@@ -27,7 +27,6 @@
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
-
   learner = checkLearner(learner, "classif", props = "weights")
   learner = setPredictType(learner, "response")
   id = stri_paste("costsens", learner$id, sep = ".")
@@ -72,7 +71,6 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = 
 
 #' @export
 predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdata, ...) {
-
   classes = .model$task.desc$class.levels
   preds = predictHomogeneousEnsemble(.learner, .model, .newdata, ...)
   factor(apply(preds, 1L, computeMode), levels = classes)
@@ -80,6 +78,5 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 
 #' @export
 getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
-
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

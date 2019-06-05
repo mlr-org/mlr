@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.slim = function() {
-
   makeRLearnerRegr(
     cl = "regr.slim",
     package = "flare",
@@ -30,13 +29,11 @@ makeRLearner.regr.slim = function() {
 
 #' @export
 trainLearner.regr.slim = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   flare::slim(X = as.matrix(d$data), Y = d$target, ...)
 }
 
 #' @export
 predictLearner.regr.slim = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, newdata = as.matrix(.newdata), ...)[[1]][, 1L]
 }

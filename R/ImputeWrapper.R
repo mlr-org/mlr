@@ -22,12 +22,10 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
-
     setNames(do.call(impute, c(list(obj = data, target = target), args)), c("data", "control"))
   }
 
   predictfun = function(data, target, args, control) {
-
     reimpute(data, control)
   }
 
@@ -38,6 +36,5 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
 
 #' @export
 getLearnerProperties.ImputeWrapper = function(learner) {
-
   union(getLearnerProperties(learner$next.learner), "missings")
 }

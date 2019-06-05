@@ -33,7 +33,6 @@ test_that("classif_PART", {
     old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-
     set.seed(getOption("mlr.debug.seed"))
     RWeka::PART(formula, data = data[subset, ], control = RWeka::Weka_control(..., Q =
       as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))

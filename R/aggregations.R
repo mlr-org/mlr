@@ -185,7 +185,6 @@ b632 = makeAggregation(
   name = ".632 Bootstrap",
   properties = c("req.train", "req.test"),
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-
     mean(0.632 * perf.test + 0.368 * perf.train)
   })
 
@@ -198,7 +197,6 @@ b632plus = makeAggregation(
   name = ".632 Bootstrap plus",
   properties = c("req.train", "req.test"),
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-
     df = as.data.frame(pred)
     a = numeric(length(perf.test))
     for (i in seq_along(a)) {
@@ -226,7 +224,6 @@ testgroup.mean = makeAggregation(
   name = "Test group mean",
   properties = "req.test",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-
     mean(vnapply(split(perf.test, group), mean))
   })
 
@@ -237,7 +234,6 @@ testgroup.sd = makeAggregation(
   name = "Test group standard deviation",
   properties = "req.test",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-
     sd(BBmisc::vnapply(split(perf.test, group), mean))
   })
 
@@ -248,11 +244,9 @@ test.join = makeAggregation(
   name = "Test join",
   properties = "req.test",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-
     df = as.data.frame(pred)
     f = if (length(group)) group[df$iter] else factor(rep(1L, nrow(df)))
     mean(vnapply(split(df, f), function(df) {
-
       if (pred$predict.type == "response") y = df$response
       if (pred$predict.type == "prob") {
         y = df[, stri_startswith_fixed(colnames(df), "prob."), drop = FALSE]

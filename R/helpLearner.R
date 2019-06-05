@@ -7,7 +7,6 @@
 #' @family learner
 #' @family help
 helpLearner = function(learner) {
-
   learner = checkLearner(learner)
   callees = learner$callees
   if (identical(callees, "")) {
@@ -128,7 +127,6 @@ helpLearnerParam = function(learner, param = NULL) {
 
 # remove nesting levels of XML tags
 simplifyNode = function(node) {
-
   children = XML::xmlChildren(node)
   lens = nchar(stri_trim(vcapply(children, XML::xmlValue)))
   if (length(lens) < 1) {
@@ -149,10 +147,8 @@ simplifyNode = function(node) {
 # collect all <li><code>xxx</code>yyy</li> in the document
 # and form a data.frame with two columns corresponding to xxx and yyy.
 codeListToTable = function(html) {
-
   lis = XML::getNodeSet(html, "//li")
   lislis = lapply(lis, function(li) {
-
     lichi = simplifyNode(li)
     if (length(lichi) < 2 || names(lichi)[1] != "code") {
       return(NULL)
@@ -166,7 +162,6 @@ codeListToTable = function(html) {
 
 # Remove superfluous newlines.
 prepareString = function(string) {
-
   # turn 'a  \n   \n  \n b' into 'a\n\nb'
   string = stri_replace_all(string, "\n\n", regex = " *\n *(\n *)+")
   # turn 'a \n b' into 'a b'
@@ -178,7 +173,6 @@ prepareString = function(string) {
 }
 
 makeParamHelpList = function(funs, pkgs, par.set) {
-
   help.list = list()
   par.ids = getParamIds(par.set)
   pkgs = stri_replace_all(pkgs, "", regex = "[+!_]")
@@ -203,7 +197,6 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       next
     }
     tbl = do.call(rbind, lapply(tab, function(t) {
-
       tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
       if (identical(ncol(tbl), 2L)) {
         tbl
@@ -234,7 +227,6 @@ makeParamHelpList = function(funs, pkgs, par.set) {
 
 # helper function to get learner's undocumented functions.
 listUndocumentedPars = function(learner) {
-
   learner = checkLearner(learner)
   setdiff(getParamIds(learner$par.set), names(learner$help.list))
 }

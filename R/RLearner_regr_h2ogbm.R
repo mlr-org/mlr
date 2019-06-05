@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.h2o.gbm = function() {
-
   makeRLearnerRegr(
     cl = "regr.h2o.gbm",
     package = "h2o",
@@ -80,7 +79,6 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.regr.h2o.gbm = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)

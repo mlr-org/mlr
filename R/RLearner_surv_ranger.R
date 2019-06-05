@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.ranger = function() {
-
   makeRLearnerSurv(
     cl = "surv.ranger",
     package = "ranger",
@@ -70,6 +69,5 @@ predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.surv.ranger = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }

@@ -47,9 +47,7 @@ test_that("Wrong methods yield errors", {
   t = subsetTask(fuelsubset.task, subset = 1:2)
 
   wrng1 = function() {
-
     lrn = function(data, target, col, vals = NULL) {
-
       1
     }
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
@@ -59,9 +57,7 @@ test_that("Wrong methods yield errors", {
 
 
   wrng2 = function() {
-
     lrn = function(data) {
-
       data[, 1]
     }
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
@@ -70,9 +66,7 @@ test_that("Wrong methods yield errors", {
     "Must have formal arguments")
 
   wrng3 = function() {
-
     lrn = function(data, target, col, vals = NULL) {
-
       data.frame(1)
     }
     makeExtractFDAFeatMethod(z = lrn, rz = lrn)
@@ -153,7 +147,6 @@ test_that("Wavelet method are equal to package", {
   df = BBmisc::convertRowsToList(gp$data[, "fd", drop = FALSE])
   set.seed(getOption("mlr.debug.seed"))
   wtdata = t(BBmisc::dapply(df, fun = function(x) {
-
     wt = wavelets::dwt(as.numeric(x), filter = "haar", boundary = "reflection")
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))

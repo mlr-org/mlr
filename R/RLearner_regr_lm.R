@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.lm = function() {
-
   makeRLearnerRegr(
     cl = "regr.lm",
     package = "stats",
@@ -17,7 +16,6 @@ makeRLearner.regr.lm = function() {
 
 #' @export
 trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -30,7 +28,6 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL, ...) 
 
 #' @export
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
-
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, se.fit = FALSE, ...)
   } else {

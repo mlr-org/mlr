@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.rotationForest = function() {
-
   makeRLearnerClassif(
     cl = "classif.rotationForest",
     package = "rotationForest",
@@ -17,7 +16,6 @@ makeRLearner.classif.rotationForest = function() {
 
 #' @export
 trainLearner.classif.rotationForest = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   df = getTaskData(.task, .subset, target.extra = TRUE)
   features = df$data
   # rotationForest needs 0-1 coding
@@ -27,7 +25,6 @@ trainLearner.classif.rotationForest = function(.learner, .task, .subset, .weight
 
 #' @export
 predictLearner.classif.rotationForest = function(.learner, .model, .newdata, ...) {
-
   features = .newdata[, names(.newdata) == .model$features]
   p = predict(.model$learner.model, newdata = features, all = FALSE, ...)
   if (.learner$predict.type == "prob") {

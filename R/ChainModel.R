@@ -7,14 +7,12 @@
 #' @keywords internal
 #' @export
 makeChainModel = function(next.model, cl) {
-
   setClasses(list(next.model = next.model), c(cl, "ChainModel", "WrappedModel"))
 }
 
 
 #' @export
 getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
-
   # FIXME: this structure and special-cases really suck. FailureModel and NoFeaturesModel
   # should probably be redesigned at some point
   if (inherits(model$learner.model, "NoFeaturesModel")) {
@@ -29,6 +27,5 @@ getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
 
 #' @export
 print.ChainModel = function(x, ...) {
-
   print(x$next.model)
 }

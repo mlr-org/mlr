@@ -1,7 +1,6 @@
 # check whether rdesc$predict is set, so that the requiring properties of the measure are satisfied
 # called the beginning of resample
 checkAggrBeforeResample = function(measure, rdesc) {
-
   a = measure$aggr
   p = a$properties
   pred = rdesc$predict
@@ -21,6 +20,5 @@ checkAggrBeforeResample = function(measure, rdesc) {
 
 # map the checker over multiple measures
 checkAggrsBeforeResample = function(measures, rdesc) {
-
   lapply(measures, checkAggrBeforeResample, rdesc = rdesc)
 }

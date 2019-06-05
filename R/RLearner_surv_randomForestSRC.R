@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.randomForestSRC = function() {
-
   makeRLearnerSurv(
     cl = "surv.randomForestSRC",
     package = c("survival", "randomForestSRC"),
@@ -79,12 +78,10 @@ predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) 
 
 #' @export
 getOOBPredsLearner.surv.randomForestSRC = function(.learner, .model) {
-
   .model$learner.model$predicted.oob
 }
 
 #' @export
 getFeatureImportanceLearner.surv.randomForestSRC = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.regr.randomForestSRC(.learner, .model, ...)
 }

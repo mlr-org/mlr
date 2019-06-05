@@ -47,12 +47,12 @@
 #' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 #' res = holdout(lrn, sonar.task)
 #' print(calculateConfusionMatrix(res$pred))
-#' 
+#'
 #' # using the observation weights of logreg
 #' lrn = makeWeightedClassesWrapper("classif.logreg", wcw.weight = 0.01)
 #' res = holdout(lrn, sonar.task)
 #' print(calculateConfusionMatrix(res$pred))
-#' 
+#'
 #' # tuning the imbalancy param and the SVM param in one go
 #' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights")
 #' ps = makeParamSet(
@@ -101,7 +101,6 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
 
 #' @export
 trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset = NULL, .weights, wcw.weight = 1, ...) {
-
   .task = subsetTask(.task, .subset)
   td = getTaskDesc(.task)
   levs = td$class.levels
@@ -127,6 +126,5 @@ trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset = NULL, 
 
 #' @export
 getLearnerProperties.WeightedClassesWrapper = function(learner) {
-
   setdiff(getLearnerProperties(learner$next.learner), "weights")
 }

@@ -36,12 +36,10 @@ test_that("classif_penalized", {
   )
 
   tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
-
     penalized::penalized(formula, data = data[subset, ], ...)
   }
 
   tp = function(model, newdata, ...) {
-
     pred = penalized::predict(model, data = newdata, ...)
     ifelse(pred > 0.5, binaryclass.class.levs[2L], binaryclass.class.levs[1L])
   }

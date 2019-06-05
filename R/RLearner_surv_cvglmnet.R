@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.cvglmnet = function() {
-
   makeRLearnerSurv(
     cl = "surv.cvglmnet",
     package = "glmnet",
@@ -65,7 +64,6 @@ trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
-
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...))

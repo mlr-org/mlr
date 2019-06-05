@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.extraTrees = function() {
-
   makeRLearnerClassif(
     cl = "classif.extraTrees",
     package = "extraTrees",
@@ -27,7 +26,6 @@ makeRLearner.classif.extraTrees = function() {
 
 #' @export
 trainLearner.classif.extraTrees = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = c(list(x = as.matrix(d$data), y = d$target), list(...))
   if (!is.null(.weights)) {
@@ -38,7 +36,6 @@ trainLearner.classif.extraTrees = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.classif.extraTrees = function(.learner, .model, .newdata, ...) {
-
   is.prob = .learner$predict.type == "prob"
   predict(.model$learner.model, as.matrix(.newdata), probability = is.prob, ...)
 }

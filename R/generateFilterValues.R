@@ -79,7 +79,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   fval = do.call(filter[[1]]$fun, c(list(task = task, nselect = nselect), more.args[[filter[[1]]$name]]))
 
   fval = lapply(filter, function(x) {
-
     x = do.call(x$fun, c(list(task = task), nselect = nselect, more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
@@ -98,7 +97,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 }
 #' @export
 print.FilterValues = function(x, ...) {
-
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
   printHead(x$data, ...)

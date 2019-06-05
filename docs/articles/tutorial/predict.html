@@ -431,12 +431,12 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> mtcars.task)</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">##                            1           2</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.97960019 0.020399815</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.97964040 0.020359599</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.99265844 0.007341558</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.54295532 0.457044678</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.01870954 0.981290462</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.75749136 0.242508637</a></code></pre></div>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.97959904 0.020400964</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.97963925 0.020360747</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.99265879 0.007341207</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.54294775 0.457052250</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.01870883 0.981291168</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.75748561 0.242514386</a></code></pre></div>
 <p>For <em>classification problems</em> there are some more things worth mentioning. By default, class labels are predicted.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">### Linear discriminant analysis on the iris data set</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, <span class="dt">task =</span> iris.task)</a>

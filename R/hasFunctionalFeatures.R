@@ -8,21 +8,17 @@
 #' @return (`logical(1)`)
 #' @export
 hasFunctionalFeatures = function(obj) {
-
   UseMethod("hasFunctionalFeatures")
 }
 
 hasFunctionalFeatures.data.frame = function(obj) {
-
   any(vlapply(obj, is.matrix))
 }
 
 hasFunctionalFeatures.Task = function(obj) {
-
   hasFunctionalFeatures.TaskDesc(obj$task.desc)
 }
 
 hasFunctionalFeatures.TaskDesc = function(obj) {
-
   obj$n.feat["functionals"] > 0L
 }

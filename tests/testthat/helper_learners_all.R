@@ -113,7 +113,6 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
-
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[, f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
@@ -131,7 +130,6 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
-
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[, f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
@@ -150,7 +148,6 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
-
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[1, f] = NA
@@ -163,7 +160,6 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 # this works correctly
 
 testThatGetOOBPredsWorks = function(lrn, task) {
-
   type = lrn$type
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
@@ -220,14 +216,12 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
 
 
 testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
-
   pars = lrn$par.set$pars
   pv = lrn$par.vals
   expect_true(isSubset(names(pv), names(pars)))
 }
 
 testThatLearnerPredictsFeasibleSEValues = function(lrn, task) {
-
   lrn = setPredictType(lrn, "se")
   res = resample(lrn, task, makeResampleDesc("LOO"))
   ses = getPredictionSE(res$pred)

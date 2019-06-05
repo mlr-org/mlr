@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.pcr = function() {
-
   makeRLearnerRegr(
     cl = "regr.pcr",
     package = "pls",
@@ -23,14 +22,12 @@ makeRLearner.regr.pcr = function() {
 
 #' @export
 trainLearner.regr.pcr = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   pls::pcr(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.regr.pcr = function(.learner, .model, .newdata, ...) {
-
   p = predict(.model$learner.model, newdata = .newdata)
   p[, 1L, dim(p)[3L]]
 }

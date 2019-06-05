@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.penalized = function() {
-
   makeRLearnerClassif(
     cl = "classif.penalized",
     package = "!penalized",
@@ -30,14 +29,12 @@ makeRLearner.classif.penalized = function() {
 
 #' @export
 trainLearner.classif.penalized = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   penalized::penalized(f, data = getTaskData(.task, .subset), model = "logistic", ...)
 }
 
 #' @export
 predictLearner.classif.penalized = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   levs = .model$task.desc$class.levels
   # FIXME: should be removed, reported in issue 840

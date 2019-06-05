@@ -128,7 +128,6 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
     supported.tasks = c("classif", "regr", "surv"),
     supported.features = c("numerics", "factors"),
     fun = function(task, nselect) {
-
       ns = getTaskFeatureNames(task)
       d = seq_along(ns)
       names(d) = ns

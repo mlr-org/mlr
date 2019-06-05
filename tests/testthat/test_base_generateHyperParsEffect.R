@@ -53,7 +53,10 @@ test_that("1 numeric hyperparam", {
   expect_equal(plt$labels$x, "iteration")
   expect_equal(plt$labels$y, "acc.test.mean")
 
-  # FIXME: make sure plot looks as expected
+  # test facet 1D with non-nested shouldn't produce
+  expect_error(plotHyperParsEffect(new, x = "iteration", y = "acc.test.mean",
+    plot.type = "line", facet = "nested_cv_run")
+  )
 })
 
 test_that("1 discrete hyperparam", {
@@ -81,8 +84,6 @@ test_that("1 discrete hyperparam", {
     "GeomPoint")
   expect_equal(plt$labels$x, "kernel")
   expect_equal(plt$labels$y, "acc.test.mean")
-
-  # FIXME: make sure plot looks as expected
 })
 
 test_that("1 numeric hyperparam with optimizer failure", {
@@ -110,8 +111,6 @@ test_that("1 numeric hyperparam with optimizer failure", {
     "GeomPoint")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "acc.test.mean")
-
-  # FIXME: make sure plot looks as expected
 })
 
 test_that("1 numeric hyperparam with nested cv", {
@@ -141,8 +140,6 @@ test_that("1 numeric hyperparam with nested cv", {
     "GeomPoint")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "mmce.test.mean")
-
-  # FIXME: make sure plot looks as expected
 })
 
 test_that("2 hyperparams", {
@@ -156,7 +153,6 @@ test_that("2 hyperparams", {
   res = tuneParams(learn, task = pid.task, control = ctrl, measures = acc,
     resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res)
-
 
   # test line creation
   plt = plotHyperParsEffect(data, x = "iteration", y = "acc.test.mean",
@@ -207,8 +203,6 @@ test_that("2 hyperparams", {
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
   expect_equal(plt$labels$shape, "learner_status")
-
-  # FIXME: make sure plots looks as expected
 })
 
 test_that("2 hyperparams nested", {
@@ -236,6 +230,20 @@ test_that("2 hyperparams nested", {
   expect_warning(ggsave(path))
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster", "GeomContour"))
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "sigma")
+  expect_equal(plt$labels$fill, "acc.test.mean")
+  expect_equal(plt$labels$shape, "learner_status")
+
+  # test with nested facetting
+  plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
+    plot.type = "heatmap", interpolate = "regr.earth",
+    show.experiments = TRUE, facet = "nested_cv_run")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  expect_set_equal(class(plt$facet)[1], "FacetWrap")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
@@ -280,7 +288,6 @@ test_that("2+ hyperparams", {
     par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
 
-
   # test single hyperparam creation
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
     plot.type = "line", partial.dep.learn = "regr.rpart")
@@ -304,7 +311,6 @@ test_that("2+ hyperparams", {
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
-
 
   # simple example with nested cv
   ps = makeParamSet(
@@ -350,6 +356,4 @@ test_that("2+ hyperparams", {
     c("GeomLine", "GeomPoint"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "acc.test.mean")
-
-  # FIXME: make sure plots looks as expected
 })

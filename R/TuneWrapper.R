@@ -52,7 +52,6 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   id = stri_paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function() {
-
     }, control, show.info, "TuneWrapper", "TuneModel")
   checkTunerParset(learner, par.set, measures, control)
   return(x)
@@ -60,7 +59,6 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
 
 #' @export
 trainLearner.TuneWrapper = function(.learner, .task, .subset = NULL, ...) {
-
   .task = subsetTask(.task, .subset)
   or = tuneParams(.learner$next.learner, .task, .learner$resampling, .learner$measures,
     .learner$opt.pars, .learner$control, .learner$show.info)
@@ -94,7 +92,6 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
 
 #' @export
 makeWrappedModel.TuneWrapper = function(learner, learner.model, task.desc, subset = NULL, features, factor.levels, time) {
-
   # set threshold in learner so it is used in predict calls from here on
   if (learner$control$tune.threshold) {
     learner = setPredictThreshold(learner, learner.model$opt.result$threshold)

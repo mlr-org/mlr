@@ -26,7 +26,6 @@ test_that("classif_OneR", {
   testProbParsets("classif.OneR", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-
     RWeka::OneR(formula, data = data[subset, ], control = RWeka::Weka_control(...))
   }
 

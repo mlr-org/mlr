@@ -58,7 +58,6 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
         return(NA_real_)
       }
       cc = function(truth, pred) {
-
         costs[truth, pred]
       }
       y = mapply(cc, as.character(pred$data$truth), as.character(r))

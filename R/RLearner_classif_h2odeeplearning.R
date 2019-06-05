@@ -153,7 +153,6 @@
 
 #' @export
 makeRLearner.classif.h2o.deeplearning = function() {
-
   makeRLearnerClassif(
     cl = "classif.h2o.deeplearning",
     package = "h2o",
@@ -273,7 +272,6 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
 
 #' @export
 getFeatureImportanceLearner.classif.h2o.deeplearning = function(.learner, .model, ...) {
-
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   extractH2OVarImp(mod, ...)
 }

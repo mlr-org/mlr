@@ -1,12 +1,10 @@
 makeNoFeaturesModel = function(targets, task.desc) {
-
   setClasses(list(targets = targets, task.desc = task.desc),
     "NoFeaturesModel")
 }
 
 
 predictNofeatures = function(model, newdata) {
-
   y = getLearnerModel(model)$targets
   type = model$learner$type
   # for regression return constant mean
