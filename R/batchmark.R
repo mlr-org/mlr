@@ -91,6 +91,7 @@ getAlgoFun = function(lrn, measures, models) {
 #'   Alternatively, you may also pass a vector of integerish job ids.
 #'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone].
 #' @template arg_keep_pred
+#' @template arg_keep_extract
 #' @template arg_showinfo
 #' @param reg ([batchtools::ExperimentRegistry])\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,

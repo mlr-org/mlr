@@ -20,6 +20,7 @@
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_keep_pred
+#' @template arg_keep_extract
 #' @template arg_models
 #' @template arg_showinfo
 #' @return [BenchmarkResult].

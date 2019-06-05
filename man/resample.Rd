@@ -121,14 +121,6 @@ See \link{ResampleDesc}.}
 
 \item{skip}{(\code{integer(1)})\cr
 See \link{ResampleDesc}.}
-
-\item{keep.extract}{(\code{logical(1)})\cr
-Keep the \code{extract} slot of the result object. When creating a lot of
-benchmark results with extensive tuning, the resulting R objects can become
-very large in size. That is why the tuning results stored in the \code{extract}
-slot are removed by default (\code{keep.extract = FALSE}). Note that when
-\code{keep.extract = FALSE} you will not be able to conduct analysis in the
-tuning results.}
 }
 \value{
 (\link{ResampleResult}).
