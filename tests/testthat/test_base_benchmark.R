@@ -354,12 +354,13 @@ test_that("benchmark handles failure models correctly", {
     keep.pred = FALSE, models = FALSE, show.info = TRUE))
 
   # Expect benchmark messages
-  expect_message({bmr = benchmark(learners = quiet_learner, tasks = task,
-    resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)})
+  expect_message({
+    bmr = benchmark(learners = quiet_learner, tasks = task,
+      resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)
+  })
   aggr_perf = getBMRAggrPerformances(bmr = bmr)
 
   # Check result
   expect_class(x = bmr, classes = "BenchmarkResult")
   expect_true(object = is.na(aggr_perf[[1]][[1]]))
-
 })

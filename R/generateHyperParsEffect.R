@@ -382,10 +382,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           # combine the experiment data with interpolated data
           if (facet.nested) {
             grid$nested_cv_run = run
-            combined = rbind(d.run[,c(x,y,z,"learner_status", "iteration",
+            combined = rbind(d.run[, c(x, y, z, "learner_status", "iteration",
               "nested_cv_run")], grid)
           } else {
-            combined = rbind(d.run[,c(x,y,z,"learner_status",
+            combined = rbind(d.run[, c(x, y, z, "learner_status",
               "iteration")], grid)
           }
           # combine each loop
@@ -409,7 +409,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       d = grid
     }
 
-    if (hyperpars.effect.data$nested && z.flag && !facet.nested){
+    if (hyperpars.effect.data$nested && z.flag && !facet.nested) {
       averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run",
         hyperpars.effect.data$hyperparams, "eol",
         "error.message", "learner_status")),
@@ -495,7 +495,8 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
     }
   }
-  if (facet.nested)
+  if (facet.nested) {
     plt = plt + facet_wrap(as.formula(paste("~", "nested_cv_run")))
+  }
   return(plt)
 }

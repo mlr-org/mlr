@@ -62,7 +62,7 @@ test_that("learners work: regr ", {
   # regr.cforest: Error in model@fit(data, ...) : fraction of 0.000000 is too small
   # regr.nodeHarvest: Error in ZRULES[[1]] : subscript out of bounds
   # others: see learners_all_classif and random errors
-  not.working =  c("regr.cforest", "regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.nodeHarvest", "regr.slim")
+  not.working = c("regr.cforest", "regr.cvglmnet", "regr.evtree", "regr.frbs", "regr.gbm", "regr.glmnet", "regr.laGP", "regr.nodeHarvest", "regr.slim")
   lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
   lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
 })
