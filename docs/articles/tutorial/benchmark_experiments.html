@@ -526,39 +526,22 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRModels.html">getBMRModels</a></span>(bmr)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">## $`Sonar-example`</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">## $`Sonar-example`$classif.lda</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">## $`Sonar-example`$classif.lda[[1]]</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">## Model for learner.id=classif.lda; learner.class=classif.lda</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## Trained on: task.id = Sonar-example; obs = 138; features = 60</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## Hyperparameters: </a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">## </a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">## </a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">## $`Sonar-example`$classif.rpart</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">## $`Sonar-example`$classif.rpart[[1]]</a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">## Model for learner.id=classif.rpart; learner.class=classif.rpart</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">## Trained on: task.id = Sonar-example; obs = 138; features = 60</a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">## Hyperparameters: xval=0</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">## NULL</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">## </a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">## $`Sonar-example`$classif.rpart</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## NULL</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="../../reference/getBMRModels.html">getBMRModels</a></span>(bmr, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">## $classif.lda</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">## NULL</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">## </a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">## $classif.rpart</a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">## NULL</a>
 <a class="sourceLine" id="cb10-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="kw"><a href="../../reference/getBMRModels.html">getBMRModels</a></span>(bmr, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb10-17" data-line-number="17">## $classif.lda</a>
-<a class="sourceLine" id="cb10-18" data-line-number="18">## $classif.lda[[1]]</a>
-<a class="sourceLine" id="cb10-19" data-line-number="19">## Model for learner.id=classif.lda; learner.class=classif.lda</a>
-<a class="sourceLine" id="cb10-20" data-line-number="20">## Trained on: task.id = Sonar-example; obs = 138; features = 60</a>
-<a class="sourceLine" id="cb10-21" data-line-number="21">## Hyperparameters: </a>
-<a class="sourceLine" id="cb10-22" data-line-number="22">## </a>
-<a class="sourceLine" id="cb10-23" data-line-number="23">## </a>
-<a class="sourceLine" id="cb10-24" data-line-number="24">## $classif.rpart</a>
-<a class="sourceLine" id="cb10-25" data-line-number="25">## $classif.rpart[[1]]</a>
-<a class="sourceLine" id="cb10-26" data-line-number="26">## Model for learner.id=classif.rpart; learner.class=classif.rpart</a>
-<a class="sourceLine" id="cb10-27" data-line-number="27">## Trained on: task.id = Sonar-example; obs = 138; features = 60</a>
-<a class="sourceLine" id="cb10-28" data-line-number="28">## Hyperparameters: xval=0</a>
-<a class="sourceLine" id="cb10-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb10-30" data-line-number="30"><span class="kw"><a href="../../reference/getBMRModels.html">getBMRModels</a></span>(bmr, <span class="dt">learner.ids =</span> <span class="st">"classif.lda"</span>)</a>
-<a class="sourceLine" id="cb10-31" data-line-number="31">## $`Sonar-example`</a>
-<a class="sourceLine" id="cb10-32" data-line-number="32">## $`Sonar-example`$classif.lda</a>
-<a class="sourceLine" id="cb10-33" data-line-number="33">## $`Sonar-example`$classif.lda[[1]]</a>
-<a class="sourceLine" id="cb10-34" data-line-number="34">## Model for learner.id=classif.lda; learner.class=classif.lda</a>
-<a class="sourceLine" id="cb10-35" data-line-number="35">## Trained on: task.id = Sonar-example; obs = 138; features = 60</a>
-<a class="sourceLine" id="cb10-36" data-line-number="36">## Hyperparameters:</a></code></pre></div>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="kw"><a href="../../reference/getBMRModels.html">getBMRModels</a></span>(bmr, <span class="dt">learner.ids =</span> <span class="st">"classif.lda"</span>)</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">## $`Sonar-example`</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">## $`Sonar-example`$classif.lda</a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">## NULL</a></code></pre></div>
 </div>
 <div id="learners-and-measures" class="section level2">
 <h2 class="hasAnchor">

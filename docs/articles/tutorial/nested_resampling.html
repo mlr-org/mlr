@@ -714,13 +714,14 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb16-23" data-line-number="23"></a>
 <a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co"># Outer resampling loop</span></a>
 <a class="sourceLine" id="cb16-25" data-line-number="25">outer =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>), <span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Bootstrap"</span>, <span class="dt">iters =</span> <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb16-26" data-line-number="26">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns, tasks, outer, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, ber), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-27" data-line-number="27">res</a>
-<a class="sourceLine" id="cb16-28" data-line-number="28">##         task.id         learner.id acc.test.mean ber.test.mean</a>
-<a class="sourceLine" id="cb16-29" data-line-number="29">## 1  iris-example classif.ksvm.tuned     0.9800000    0.02222222</a>
-<a class="sourceLine" id="cb16-30" data-line-number="30">## 2  iris-example classif.kknn.tuned     0.9600000    0.04305556</a>
-<a class="sourceLine" id="cb16-31" data-line-number="31">## 3 Sonar-example classif.ksvm.tuned     0.4903819    0.50000000</a>
-<a class="sourceLine" id="cb16-32" data-line-number="32">## 4 Sonar-example classif.kknn.tuned     0.8725237    0.12827855</a></code></pre></div>
+<a class="sourceLine" id="cb16-26" data-line-number="26">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns, tasks, outer, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, ber), <span class="dt">show.info =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb16-27" data-line-number="27">  <span class="dt">keep.extract =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-28" data-line-number="28">res</a>
+<a class="sourceLine" id="cb16-29" data-line-number="29">##         task.id         learner.id acc.test.mean ber.test.mean</a>
+<a class="sourceLine" id="cb16-30" data-line-number="30">## 1  iris-example classif.ksvm.tuned     0.9800000    0.02222222</a>
+<a class="sourceLine" id="cb16-31" data-line-number="31">## 2  iris-example classif.kknn.tuned     0.9600000    0.04305556</a>
+<a class="sourceLine" id="cb16-32" data-line-number="32">## 3 Sonar-example classif.ksvm.tuned     0.4903819    0.50000000</a>
+<a class="sourceLine" id="cb16-33" data-line-number="33">## 4 Sonar-example classif.kknn.tuned     0.8725237    0.12827855</a></code></pre></div>
 <p>The <code>print</code> method for the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> shows the aggregated performances from the outer resampling loop.</p>
 <p>As you might recall, <code>mlr</code> offers several accessor function to extract information from the benchmark result. These are listed on the help page of <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> and many examples are shown on the tutorial page about <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>.</p>
 <p>The performance values in individual outer resampling runs can be obtained by <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code>. Note that, since we used different outer resampling strategies for the two tasks, the number of rows per task differ.</p>
@@ -806,12 +807,13 @@ Nested Resampling Figure
 <a class="sourceLine" id="cb21-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co"># Outer resampling loop</span></a>
 <a class="sourceLine" id="cb21-10" data-line-number="10">outer =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Subsample"</span>, <span class="dt">iters =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">tasks =</span> bh.task, <span class="dt">learners =</span> lrns, <span class="dt">resampling =</span> outer, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb21-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb21-13" data-line-number="13">res</a>
-<a class="sourceLine" id="cb21-14" data-line-number="14">##                 task.id      learner.id mse.test.mean</a>
-<a class="sourceLine" id="cb21-15" data-line-number="15">## 1 BostonHousing-example      regr.rpart      23.58119</a>
-<a class="sourceLine" id="cb21-16" data-line-number="16">## 2 BostonHousing-example regr.lm.featsel      24.75507</a></code></pre></div>
+<a class="sourceLine" id="cb21-11" data-line-number="11">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">tasks =</span> bh.task, <span class="dt">learners =</span> lrns, <span class="dt">resampling =</span> outer, </a>
+<a class="sourceLine" id="cb21-12" data-line-number="12">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">keep.extract =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb21-14" data-line-number="14">res</a>
+<a class="sourceLine" id="cb21-15" data-line-number="15">##                 task.id      learner.id mse.test.mean</a>
+<a class="sourceLine" id="cb21-16" data-line-number="16">## 1 BostonHousing-example      regr.rpart      23.58119</a>
+<a class="sourceLine" id="cb21-17" data-line-number="17">## 2 BostonHousing-example regr.lm.featsel      24.75507</a></code></pre></div>
 <p>The selected features can be extracted by function <code><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults()</a></code>. By default, a nested <code>list</code>, with the first level indicating the task and the second level indicating the learner, is returned. If only a single learner or, as in our case, a single task is considered, setting <code>drop = TRUE</code> simplifies the result to a flat <code>list</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRFeatSelResults.html">getBMRFeatSelResults</a></span>(res)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">## $`BostonHousing-example`</a>
