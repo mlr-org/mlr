@@ -4,7 +4,7 @@
 \alias{batchmark}
 \title{Run machine learning benchmarks as distributed experiments.}
 \usage{
-batchmark(learners, tasks, resamplings, measures, models = TRUE,
+batchmark(learners, tasks, resamplings, measures, models = FALSE,
   reg = batchtools::getDefaultRegistry())
 }
 \arguments{
@@ -26,7 +26,7 @@ If missing, the default measure of the first task is used.}
 
 \item{models}{(\code{logical(1)})\cr
 Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{reg}{([batchtools::Registry])\cr
 Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,

@@ -4,8 +4,8 @@
 \alias{benchmark}
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
-benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
-  keep.extract = TRUE, models = TRUE,
+benchmark(learners, tasks, resamplings, measures, keep.pred = FALSE,
+  keep.extract = FALSE, models = FALSE,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
@@ -41,7 +41,7 @@ tuning results.}
 
 \item{models}{(\code{logical(1)})\cr
 Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?

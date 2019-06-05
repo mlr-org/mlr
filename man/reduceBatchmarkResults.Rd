@@ -4,7 +4,7 @@
 \alias{reduceBatchmarkResults}
 \title{Reduce results of a batch-distributed benchmark.}
 \usage{
-reduceBatchmarkResults(ids = NULL, keep.pred = TRUE,
+reduceBatchmarkResults(ids = NULL, keep.pred = FALSE,
   show.info = getMlrOption("show.info"),
   reg = batchtools::getDefaultRegistry())
 }

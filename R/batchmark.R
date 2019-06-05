@@ -35,7 +35,7 @@
 #' @noMd
 #' @export
 #' @family benchmark
-batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
+batchmark = function(learners, tasks, resamplings, measures, models = FALSE, reg = batchtools::getDefaultRegistry()) {
 
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   learners = ensureBenchmarkLearners(learners)
