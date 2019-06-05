@@ -98,7 +98,7 @@ getAlgoFun = function(lrn, measures, models) {
 #' @return ([BenchmarkResult]).
 #' @export
 #' @family benchmark
-reduceBatchmarkResults = function(ids = NULL, keep.pred = FALSE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
+reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, keep.extract = FALSE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
 
   # registry and ids are asserted later
   requirePackages("batchtools", why = "batchmark", default.method = "load")

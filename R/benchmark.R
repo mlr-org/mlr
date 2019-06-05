@@ -38,7 +38,7 @@
 #' plotBMRRanksAsBarChart(bmr, pos = "stack")
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
-benchmark = function(learners, tasks, resamplings, measures, keep.pred = FALSE,
+benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE,
   keep.extract = FALSE, models = FALSE, show.info = getMlrOption("show.info")) {
 
   learners = ensureBenchmarkLearners(learners)
@@ -103,7 +103,7 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = FALSE,
 NULL
 
 benchmarkParallel = function(task, learner, learners, tasks, resamplings,
-  measures, keep.pred = FALSE, keep.extract = FALSE, models = FALSE, show.info) {
+  measures, keep.pred = TRUE, keep.extract = FALSE, models = FALSE, show.info) {
   setSlaveOptions()
   if (show.info) {
     messagef("Task: %s, Learner: %s", task, learner)

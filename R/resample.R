@@ -73,7 +73,7 @@
 #'   measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(r$aggr)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, keep.pred = FALSE, ..., show.info = getMlrOption("show.info")) {
+  extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
   learner = setHyperPars(learner, ...)
