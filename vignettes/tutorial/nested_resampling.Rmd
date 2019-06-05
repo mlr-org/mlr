@@ -470,7 +470,8 @@ lrns = list("regr.rpart", lrn)
 
 # Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
-res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, show.info = FALSE)
+res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, 
+  show.info = FALSE, keep.extract = TRUE)
 
 res
 ```
