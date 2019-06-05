@@ -14,7 +14,7 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, keep.pred = FALSE, ...,
+  models = FALSE, extract, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
@@ -89,7 +89,7 @@ Default is to extract nothing.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-This is why the default is set to \code{FALSE}.}
+The default is set to \code{TRUE}.}
 
 \item{...}{(any)\cr
 Further hyperparameters passed to \code{learner}.}

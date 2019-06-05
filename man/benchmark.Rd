@@ -4,7 +4,7 @@
 \alias{benchmark}
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
-benchmark(learners, tasks, resamplings, measures, keep.pred = FALSE,
+benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
   keep.extract = FALSE, models = FALSE,
   show.info = getMlrOption("show.info"))
 }
@@ -29,7 +29,7 @@ If missing, the default measure of the first task is used.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-This is why the default is set to \code{FALSE}.}
+The default is set to \code{TRUE}.}
 
 \item{keep.extract}{(\code{logical(1)})\cr
 Keep the \code{extract} slot of the result object. When creating a lot of
