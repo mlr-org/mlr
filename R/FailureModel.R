@@ -54,6 +54,7 @@ predictFailureModel = function(model, newdata) {
   } else if (type == "surv") {
     if (ptype == "response") {
       res = rep.int(NA_real_, n)
+    }
     else {
       preds = rep(NA_character_, n)
       probs = matrix(rep(NA_real_, n), nrow = n, ncol = 1)
