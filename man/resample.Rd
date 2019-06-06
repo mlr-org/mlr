@@ -92,10 +92,10 @@ object size / mem usage, if you do not really need them.
 In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
-\item{na.rm}{[\code{logical(1)}]\cr
-Should `NA` values be removed during aggregation of resample results? Default `FALSE`.}
+\item{na.rm}{\code{\link{logical(1)}}\cr
+Should \code{NA} values be removed during aggregation of results from \code{resample}? Default \code{FALSE}.
+This applies to all selected measures.}
 
-\item{...}{[any]\cr
 \item{...}{(any)\cr
 Further hyperparameters passed to \code{learner}.}
 
