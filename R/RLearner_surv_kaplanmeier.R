@@ -16,7 +16,7 @@ makeRLearner.surv.kaplanmeier = function() {
 trainLearner.surv.kaplanmeier = function(.learner, .task, .subset, .weights = NULL,  ...) {
   data = getTaskData(.task, .subset)
   target.names = getTaskTargetNames(.task)
-  mod = survfit(Surv(time, status) ~ 1, data = data[, target.names])
+  mod = survival::survfit(Surv(time, status) ~ 1, data = data[, target.names])
   mod = mlr:::attachTrainingTime(mod, .task, data)
   mod
 }
