@@ -7,7 +7,7 @@ test_that("surv_gbm", {
     list(),
     list(n.trees = 100L),
     list(interaction.depth = 2L)
-    )
+  )
 
 
   old.predicts.list = list()

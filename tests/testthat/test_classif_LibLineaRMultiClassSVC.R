@@ -28,5 +28,4 @@ test_that("classif_LiblineaRMultiClassSVC", {
 
   testSimpleParsets("classif.LiblineaRMultiClassSVC", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
-
 })

@@ -21,7 +21,7 @@ makeRLearner.regr.cvglmnet = function() {
       makeNumericVectorLearnerParam(id = "lower.limits", upper = 0),
       makeNumericVectorLearnerParam(id = "upper.limits", lower = 0),
       makeIntegerLearnerParam(id = "maxit", default = 100000L, lower = 1L),
-      #FIXME Data dependent default. If n.features < 500 'covariance', 'naive' otherwise
+      # FIXME Data dependent default. If n.features < 500 'covariance', 'naive' otherwise
       makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive")),
       makeNumericLearnerParam(id = "fdev", default = 1.0e-5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "devmax", default = 0.999, lower = 0, upper = 1),
@@ -47,12 +47,14 @@ makeRLearner.regr.cvglmnet = function() {
 
 #' @export
 trainLearner.regr.cvglmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+
   d = getTaskData(.task, .subset, target.extra = TRUE)
   info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target), list(...))
   rm(d)
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     args$weights = .weights
+  }
 
   glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()

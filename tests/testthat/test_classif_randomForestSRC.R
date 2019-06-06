@@ -4,10 +4,10 @@ test_that("classif_randomForestSRC", {
   requirePackagesOrSkip("randomForestSRC", default.method = "load")
 
   parset.list = list(
-    list(),
-    list(ntree = 100),
-    list(ntree = 250, mtry = 5L),
-    list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE)
+    list(seed = getOption("mlr.debug.seed")),
+    list(ntree = 100, seed = getOption("mlr.debug.seed")),
+    list(ntree = 250, mtry = 5L, seed = getOption("mlr.debug.seed")),
+    list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE, seed = getOption("mlr.debug.seed"))
   )
   old.predicts.list = list()
   old.probs.list = list()
@@ -17,6 +17,7 @@ test_that("classif_randomForestSRC", {
     parset = c(parset, list(data = binaryclass.train, formula = binaryclass.formula, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForestSRC::rfsrc, parset)
+    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = binaryclass.test, membership = FALSE, na.action = "na.impute")
     old.predicts.list[[i]] = p$class
     old.probs.list[[i]] = p$predicted[, 1]

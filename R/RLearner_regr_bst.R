@@ -43,7 +43,7 @@ trainLearner.regr.bst = function(.learner, .task, .subset, .weights = NULL, msto
   d = getTaskData(.task, .subset, target.extra = TRUE)
   ctrl = learnerArgsToControl(bst::bst_control, mstop, nu, twinboost, f.init,
     xselect.init, center, trace, numsample, df)
-  control.tree = learnerArgsToControl(list,  minsplit, minbucket, cp, maxsurrogate,
+  control.tree = learnerArgsToControl(list, minsplit, minbucket, cp, maxsurrogate,
     usesurrogate, surrogatestyle, maxdepth, xval)
   bst::bst(x = d$data, y = d$target, family = "gaussian", ctrl = ctrl,
     control.tree = control.tree, learner = Learner, ...)

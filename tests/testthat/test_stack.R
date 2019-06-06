@@ -1,6 +1,7 @@
 context("stack")
 
 checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
+
   base = lapply(base, makeLearner, predict.type = bms.pt)
   if (method %in% c("average", "hill.climb")) {
     super = NULL
@@ -8,7 +9,9 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
     super = makeLearner(super, predict.type = sm.pt)
     # sm.pt = NULL
   }
-  if (method == "hill.climb" && bms.pt == "response" && inherits(task, "ClassifTask")) return()
+  if (method == "hill.climb" && bms.pt == "response" && inherits(task, "ClassifTask")) {
+    return()
+  }
 
   slrn = makeStackedLearner(base, super, method = method, use.feat = use.feat, predict.type = sm.pt)
   tr = train(slrn, task)
@@ -85,7 +88,6 @@ test_that("Parameters for hill climb works", {
   res = predict(tmp, tsk)
 
   expect_equal(sum(tmp$learner.model$weights), 1)
-
 })
 
 test_that("Parameters for compress model", {
@@ -94,7 +96,7 @@ test_that("Parameters for compress model", {
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "compress",
-                         parset = list(k = 5, prob = 0.3))
+    parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 
@@ -104,7 +106,7 @@ test_that("Parameters for compress model", {
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "response")
   m = makeStackedLearner(base.learners = lrns, predict.type = "response", method = "compress",
-                         parset = list(k = 5, prob = 0.3))
+    parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 })

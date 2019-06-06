@@ -28,7 +28,6 @@ makeRLearner.regr.ctree = function() {
 trainLearner.regr.ctree = function(.learner, .task, .subset, .weights = NULL, teststat, testtype,
   mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry,
   savesplitstats, maxdepth, ...) {
-
   ctrl = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion, minsplit,
     minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth)
   f = getTaskFormula(.task)

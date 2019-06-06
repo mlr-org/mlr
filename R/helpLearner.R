@@ -55,13 +55,14 @@ helpLearner = function(learner) {
 #'   is automatically extracted from the help pages of the learner, so it may be incomplete.
 #'
 #' @template arg_learner
-#' @param param [\code{character} | NULL]\cr
+#' @param param (`character` | NULL)\cr
 #'   Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
 #'   status of all parameters.
 #' @export
 #' @family learner
 #' @family help
 helpLearnerParam = function(learner, param = NULL) {
+
   learner = checkLearner(learner)
   if (!inherits(learner, "RLearner")) {
     current.learner = learner
@@ -148,14 +149,14 @@ simplifyNode = function(node) {
 codeListToTable = function(html) {
   lis = XML::getNodeSet(html, "//li")
   lislis = lapply(lis, function(li) {
-      lichi = simplifyNode(li)
-      if (length(lichi) < 2 || names(lichi)[1] != "code") {
-        return(NULL)
-      }
-      parname = XML::xmlValue(lichi[[1]])
-      pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
-      stri_trim(c(parname, pardesc), pattern = c("[a-zA-Z0-9_.]", "\\P{Wspace}"))
-    })
+    lichi = simplifyNode(li)
+    if (length(lichi) < 2 || names(lichi)[1] != "code") {
+      return(NULL)
+    }
+    parname = XML::xmlValue(lichi[[1]])
+    pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
+    stri_trim(c(parname, pardesc), pattern = c("[a-zA-Z0-9_.]", "\\P{Wspace}"))
+  })
   as.data.frame(do.call(rbind, lislis), stringsAsFactors = FALSE)
 }
 
@@ -167,7 +168,7 @@ prepareString = function(string) {
   string = stri_replace_all(string, " ", regex = "(?<!\n) *\n *(?!\n)")
   # turn ' \n\n ' into '\n'
   # strwrap does this for us, apparently.
-  #string = stri_replace_all(string, "\n", regex = " *\n\n *")
+  # string = stri_replace_all(string, "\n", regex = " *\n\n *")
   return(string)
 }
 
@@ -196,11 +197,11 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       next
     }
     tbl = do.call(rbind, lapply(tab, function(t) {
-        tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
-        if (identical(ncol(tbl), 2L)) {
-          tbl
-        }
-      }))
+      tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
+      if (identical(ncol(tbl), 2L)) {
+        tbl
+      }
+    }))
     # we also try to extract generally all lists that begin with a code string.
     # this gets appended to the front, so that the (more trustworthy) html table
     # extract will overwrite the <li>-extract if a param occurs in both.
@@ -229,4 +230,3 @@ listUndocumentedPars = function(learner) {
   learner = checkLearner(learner)
   setdiff(getParamIds(learner$par.set), names(learner$help.list))
 }
-

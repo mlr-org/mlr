@@ -21,7 +21,7 @@ makeRLearner.classif.IBk = function() {
 }
 
 #' @export
-trainLearner.classif.IBk = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.IBk = function(.learner, .task, .subset, .weights = NULL, ...) {
   ctrl = RWeka::Weka_control(...)
   RWeka::IBk(getTaskFormula(.task), data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }

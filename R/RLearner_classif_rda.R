@@ -30,7 +30,7 @@ makeRLearner.classif.rda = function() {
 }
 
 #' @export
-trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   klaR::rda(f, data = getTaskData(.task, .subset), ...)
 }
@@ -38,7 +38,8 @@ trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL,  
 #' @export
 predictLearner.classif.rda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, ...)
-  if (.learner$predict.type == "response")
+  if (.learner$predict.type == "response") {
     return(p$class)
+  }
   return(p$posterior)
 }

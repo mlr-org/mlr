@@ -4,51 +4,66 @@
 \alias{makeFilterWrapper}
 \title{Fuse learner with a feature filter method.}
 \usage{
-makeFilterWrapper(learner, fw.method = "randomForestSRC.rfsrc",
+makeFilterWrapper(learner, fw.method = "randomForestSRC_importance",
   fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, ...)
+  fw.mandatory.feat = NULL, cache = FALSE, ...)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{fw.method}{[\code{character(1)}]\cr
-Filter method. See \code{\link{listFilterMethods}}.
-Default is \dQuote{randomForestSRC.rfsrc}.}
+\item{fw.method}{(\code{character(1)})\cr
+Filter method. See \link{listFilterMethods}.
+Default is \dQuote{randomForestSRC_importance}.}
 
-\item{fw.perc}{[\code{numeric(1)}]\cr
+\item{fw.perc}{(\code{numeric(1)})\cr
 If set, select \code{fw.perc}*100 top scoring features.
 Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
 
-\item{fw.abs}{[\code{numeric(1)}]\cr
+\item{fw.abs}{(\code{numeric(1)})\cr
 If set, select \code{fw.abs} top scoring features.
 Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
 
-\item{fw.threshold}{[\code{numeric(1)}]\cr
+\item{fw.threshold}{(\code{numeric(1)})\cr
 If set, select features whose score exceeds \code{fw.threshold}.
 Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.}
 
-\item{fw.mandatory.feat}{[\code{character}]\cr
+\item{fw.mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
 
-\item{...}{[any]\cr
+\item{cache}{(\code{character(1)} | \link{logical})\cr
+Whether to use caching during filter value creation. See details.}
+
+\item{...}{(any)\cr
 Additional parameters passed down to the filter.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a filter method. Creates a learner object, which can be
 used like any other learner object.
-Internally uses \code{\link{filterFeatures}} before every model fit.
+Internally uses \link{filterFeatures} before every model fit.
 
 After training, the selected features can be retrieved with
-\code{\link{getFilteredFeatures}}.
+\link{getFilteredFeatures}.
 
 Note that observation weights do not influence the filtering and are simply passed
 down to the next learner.
 }
+\section{Caching}{
+
+If \code{cache = TRUE}, the default mlr cache directory is used to cache
+filter values. The directory is operating system dependent and can be
+checked with \code{getCacheDir()}.
+Alternatively a custom directory can be passed to store the cache.
+The cache can be cleared with \code{deleteCacheDir()}.
+Caching is disabled by default.
+Care should be taken when operating on large clusters due to possible write
+conflicts to disk if multiple workers try to write the same cache at the same time.
+}
+
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
@@ -66,10 +81,9 @@ print(r$extract)
 \seealso{
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
@@ -96,3 +110,5 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
+\concept{filter}
+\concept{wrapper}

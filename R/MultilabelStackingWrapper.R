@@ -7,14 +7,14 @@
 #' as additional features (by cross validation).
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_cvfolds
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel
@@ -22,9 +22,10 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs, learner.subclass = "MultilabelStackingWrapper", model.subclass = "MultilabelStackingModel")
+  id = stri_paste("multilabel.stacking", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs, learner.subclass = "MultilabelStackingWrapper", model.subclass = "MultilabelStackingModel")
   x$type = "multilabel"
   x$cv.folds = cv.folds
   return(x)
@@ -32,6 +33,7 @@ makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
 
 #' @export
 trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
@@ -43,7 +45,7 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NUL
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
     rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
     r = resample(.learner$next.learner, ctask, rdesc, weights = .weights, show.info = FALSE)
-    as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
+    as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) # did not use getPredictionResponse, because of ordering
   }
   pred.labels = sapply(targets, f)
   # train meta level learners
@@ -58,6 +60,7 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NUL
 
 #' @export
 predictLearner.MultilabelStackingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
   models.lvl1 = models[seq_along(.model$task.desc$target)]

@@ -1,7 +1,7 @@
 #' @title Visualizes a learning algorithm on a 1D or 2D data set.
 #'
 #' @description
-#' Trains the model for 1 or 2 selected features, then displays it via \code{\link[ggplot2]{ggplot}}.
+#' Trains the model for 1 or 2 selected features, then displays it via [ggplot2::ggplot].
 #' Good for teaching or exploring models.
 #'
 #' For classification and clustering, only 2D plots are supported. The data points, the classification and
@@ -16,51 +16,51 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param features [\code{character}]\cr
+#' @param features ([character])\cr
 #'   Selected features for model.
 #'   By default the first 2 features are used.
 #' @template arg_measures
-#' @param cv [\code{integer(1)}]\cr
+#' @param cv (`integer(1)`)\cr
 #'   Do cross-validation and display in plot title?
 #'   Number of folds. 0 means no CV.
 #'   Default is 10.
-#' @param ... [any]\cr
-#'   Parameters for \code{learner}.
-#' @param gridsize [\code{integer(1)}]\cr
+#' @param ... (any)\cr
+#'   Parameters for `learner`.
+#' @param gridsize (`integer(1)`)\cr
 #'   Grid resolution per axis for background predictions.
 #'   Default is 500 for 1D and 100 for 2D.
-#' @param pointsize [\code{numeric(1)}]\cr
-#'   Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+#' @param pointsize (`numeric(1)`)\cr
+#'   Pointsize for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 2.
-#' @param prob.alpha [\code{logical(1)}]\cr
+#' @param prob.alpha (`logical(1)`)\cr
 #'   For classification: Set alpha value of background to probability for
 #'   predicted class? Allows visualization of \dQuote{confidence} for prediction.
 #'   If not, only a constant color is displayed in the background for the predicted label.
-#'   Default is \code{TRUE}.
-#' @param se.band [\code{logical(1)}]\cr
+#'   Default is `TRUE`.
+#' @param se.band (`logical(1)`)\cr
 #'   For regression in 1D: Show band for standard error estimation?
-#'   Default is \code{TRUE}.
-#' @param err.mark [\code{character(1)}]:
+#'   Default is `TRUE`.
+#' @param err.mark (`character(1)`):
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
-#' @param bg.cols [\code{character(3)}]\cr
+#' @param bg.cols (`character(3)`)\cr
 #'   Background colors for classification and regression.
 #'   Sorted from low, medium to high.
-#'   Default is \code{TRUE}.
-#' @param err.col [\code{character(1)}]\cr
+#'   Default is `TRUE`.
+#' @param err.col (`character(1)`)\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{white}
-#' @param err.size [\code{integer(1)}]\cr
+#' @param err.size (`integer(1)`)\cr
 #'   For classification: Size of misclassified data points.
-#'   Default is \code{pointsize}.
-#' @param greyscale [\code{logical(1)}]\cr
+#'   Default is `pointsize`.
+#' @param greyscale (`logical(1)`)\cr
 #'   Should the plot be greyscale completely?
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
-plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
+plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L, ...,
   gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
@@ -86,10 +86,12 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type %in% c("classif", "cluster") && taskdim != 2L)
+  if (td$type %in% c("classif", "cluster") && taskdim != 2L) {
     stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
-  if (td$type == "regr" && taskdim %nin% 1:2)
+  }
+  if (td$type == "regr" && taskdim %nin% 1:2) {
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
+  }
 
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -107,8 +109,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   assertNumber(err.size, lower = 0)
   assertLogical(greyscale)
 
-  if (td$type == "classif" && err.mark == "cv" && cv == 0L)
+  if (td$type == "classif" && err.mark == "cv" && cv == 0L) {
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
+  }
 
   # subset to features, set hyperpars
   task = subsetTask(task, features = features)
@@ -117,17 +120,20 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   # some shortcut names
   target = td$target
   data = getTaskData(task)
-  if (td$type != "cluster")
+  if (td$type != "cluster") {
     y = getTaskTargets(task)
+  }
   x1n = features[1L]
   x1 = data[, x1n]
 
   # predictions
   # if learner supports prob or se, enable it
-  if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se"))
+  if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se")) {
     learner = setPredictType(learner, "se")
-  if (td$type == "classif" && hasLearnerProperties(learner, "prob"))
+  }
+  if (td$type == "classif" && hasLearnerProperties(learner, "prob")) {
     learner = setPredictType(learner, "prob")
+  }
   mod = train(learner, task)
   pred.train = predict(mod, task)
   yhat = pred.train$data$response
@@ -161,23 +167,24 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   grid[, target] = pred.grid$data$response
 
   if (td$type == "classif") {
-    data$.err = if (err.mark == "train")
+    data$.err = if (err.mark == "train") {
       y != yhat
-    else if (err.mark == "cv")
+    } else if (err.mark == "cv") {
       y != pred.cv$data[order(pred.cv$data$id), "response"]
-    else
+    } else {
       TRUE
+    }
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (hasLearnerProperties(learner, "prob") && prob.alpha) {
         # max of rows is prob for selected class
         prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
-        p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
-          show.legend = TRUE)
+        p = p + geom_raster(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
+          show.legend = TRUE) + scale_fill_discrete(drop = FALSE)
         p = p + scale_alpha(limits = range(grid$.prob.pred.class))
       } else {
-        p = p + geom_tile(mapping = aes_string(fill = target))
+        p = p + geom_raster(mapping = aes_string(fill = target))
       }
       # print normal points
       p = p + geom_point(data = subset(data, !data$.err),
@@ -194,7 +201,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       # print error points
       p = p + geom_point(data = subset(data, data$.err),
         mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
-      p  = p + guides(alpha = FALSE)
+      p = p + guides(alpha = FALSE)
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {
@@ -216,10 +223,10 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         p = p + geom_ribbon(data = grid, mapping = aes_string(ymin = ".ymin", ymax = ".ymax"), alpha = 0.2)
       }
     } else if (taskdim == 2L) {
-      #FIXME: color are not scaled correctly? can be improved?
+      # FIXME: color are not scaled correctly? can be improved?
       # plot background from model / grid
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
-      p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
+      p = p + geom_raster(data = grid, mapping = aes_string(fill = target))
       p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       # plot point, with circle and interior color for y
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),
@@ -228,7 +235,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         size = pointsize, colour = "black", shape = 1)
       # plot point, with circle and interior color for y
       p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
-      p  = p + guides(colour = FALSE)
+      p = p + guides(colour = FALSE)
     }
   }
 

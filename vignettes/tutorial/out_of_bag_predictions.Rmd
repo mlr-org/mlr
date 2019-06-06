@@ -1,0 +1,43 @@
+---
+title: "Out-of-Bag Predictions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
+set.seed(123)
+```
+
+Some learners like random forest use bagging. Bagging means that the learner consists of an ensemble of several base learners and each base learner is trained with a different random subsample or bootstrap sample from all observations. 
+A prediction made for an observation in the original data set using only base learners not trained on this particular observation is called out-of-bag (OOB) prediction. These predictions are not prone to overfitting, as each prediction is only made by learners that did not use the observation for training.
+
+To get a list of learners that provide OOB predictions, you can call
+`listLearners(obj = NA, properties = "oobpreds")`.
+
+```{r}
+listLearners(obj = NA, properties = "oobpreds")[c("class", "package")]
+```
+
+In `mlr` function `getOOBPreds()` can be used to extract these observations from the trained models.
+These predictions can be used to evaluate the performance of a given learner like in the following example.
+
+```{r}
+lrn = makeLearner("classif.ranger", predict.type = "prob", predict.threshold = 0.6)
+mod = train(lrn, sonar.task)
+oob = getOOBPreds(mod, sonar.task)
+oob
+
+performance(oob, measures = list(auc, mmce))
+```
+
+As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.
+

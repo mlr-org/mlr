@@ -7,7 +7,7 @@
 getMlrOptions()
 }
 \value{
-[\code{list}].
+(\link{list}).
 }
 \description{
 Gets the options for mlr.
@@ -15,3 +15,4 @@ Gets the options for mlr.
 \seealso{
 Other configure: \code{\link{configureMlr}}
 }
+\concept{configure}

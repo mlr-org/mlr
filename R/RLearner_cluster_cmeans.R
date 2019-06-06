@@ -36,4 +36,3 @@ predictLearner.cluster.cmeans = function(.learner, .model, .newdata, ...) {
     prob = as.matrix(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))
   )
 }
-

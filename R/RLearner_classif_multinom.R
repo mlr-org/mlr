@@ -23,11 +23,11 @@ makeRLearner.classif.multinom = function() {
 }
 
 #' @export
-trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NULL, ...) {
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     nnet::multinom(f, data = getTaskData(.task, .subset), ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     nnet::multinom(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }

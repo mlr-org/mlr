@@ -3,14 +3,14 @@
 #' @description
 #' Sets hyperparameters of measures.
 #'
-#' @param measure [\code{\link{Measure}}]\cr
+#' @param measure ([Measure])\cr
 #'   Performance measure.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Named (hyper)parameters with new settings. Alternatively these can be passed
-#'   using the \code{par.vals} argument.
-#' @param par.vals [\code{list}]\cr
+#'   using the `par.vals` argument.
+#' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
-#'   \code{...} take precedence over values in this list.
+#'   `...` take precedence over values in this list.
 #' @template ret_measure
 #' @family performance
 #' @export
@@ -27,12 +27,12 @@ setMeasurePars = function(measure, ..., par.vals = list()) {
 #'
 #' @description
 #' Set how this measure will be aggregated after resampling.
-#' To see possible aggregation functions: \code{\link{aggregations}}.
+#' To see possible aggregation functions: [aggregations].
 #'
-#' @param measure [\code{\link{Measure}}]\cr
+#' @param measure ([Measure])\cr
 #'   Performance measure.
 #' @template arg_aggr
-#' @return [\code{\link{Measure}}] with changed aggregation behaviour.
+#' @return ([Measure]) with changed aggregation behaviour.
 #' @family performance
 #' @export
 setAggregation = function(measure, aggr) {

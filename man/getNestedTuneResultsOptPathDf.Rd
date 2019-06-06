@@ -7,10 +7,10 @@
 getNestedTuneResultsOptPathDf(r, trafo = FALSE)
 }
 \arguments{
-\item{r}{[\code{\link{ResampleResult}}] \cr
+\item{r}{(\link{ResampleResult}) \cr
 The result of resampling of a tuning wrapper.}
 
-\item{trafo}{[\code{logical(1)}]\cr
+\item{trafo}{(\code{logical(1)})\cr
 Should the units of the hyperparameter path be converted to the
 transformed scale? This is only necessary when trafo was used to create
 the \code{opt.path}s. Note that \code{opt.path}s are always stored on the
@@ -18,10 +18,10 @@ untransformed scale.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame}]. See above.
+(\link{data.frame}). See above.
 }
 \description{
-After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
+After you resampled a tuning wrapper (see \link{makeTuneWrapper})
 with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
 with all \code{opt.path}s combined by \code{rbind}.
 An additional column \code{iter} indicates to what resampling iteration the row belongs.
@@ -32,6 +32,7 @@ An additional column \code{iter} indicates to what resampling iteration the row 
 \seealso{
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
@@ -45,3 +46,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{tune}

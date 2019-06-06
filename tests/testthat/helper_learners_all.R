@@ -17,8 +17,9 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 
   lrn = setPredictType(lrn, pred.type)
 
-  if (lrn$id %in% names(hyperpars))
+  if (lrn$id %in% names(hyperpars)) {
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  }
 
   rin = makeResampleInstance("Holdout", task = task)
   m1 = train(lrn, task, subset = train.inds)
@@ -55,10 +56,12 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # predict standard errors.)
 
 testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "response") {
+
   # handling special par.vals and predict type
   info = lrn$id
-  if (lrn$id %in% names(hyperpars))
+  if (lrn$id %in% names(hyperpars)) {
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  }
 
   lrn = setPredictType(lrn, pred.type)
 
@@ -76,7 +79,8 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
 
   # check that se works and is > 0
   if (pred.type == "se") {
-    s = p$data$se
+    s = getPredictionSE(p)
+    y = getPredictionResponse(p)
     expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
 
@@ -93,7 +97,8 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
     expect_named(probdf, cls)
     expect_data_frame(info = info, probdf, nrows = getTaskSize(task), ncols = length(cls),
       types = "numeric", any.missing = FALSE)
-    expect_true(info = info, all(probdf >= 0 && probdf <= 1))
+    expect_true(info = info, all(probdf >= 0))
+    expect_true(info = info, all(probdf <= 1))
 
     expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE, tolerance = 0.01)
   }
@@ -108,7 +113,6 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
-
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[, f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
@@ -126,7 +130,6 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
-
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[, f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
@@ -145,7 +148,6 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
-
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[1, f] = NA
@@ -180,24 +182,29 @@ testThatGetOOBPredsWorks = function(lrn, task) {
 
 testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
 
-
-  if (lrn$id %in% names(hyperpars))
+  if (lrn$id %in% names(hyperpars)) {
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  }
 
   # some learners need special param settings to compute variable importance
   # add them here if you implement a measure that requires that.
   # you may also want to change the params for the learner if training takes
   # a long time
-  if (lrn$short.name == "ranger")
+  if (lrn$short.name == "ranger") {
     lrn = setHyperPars(lrn, importance = "permutation")
-  if (lrn$short.name == "adabag")
+  }
+  if (lrn$short.name == "adabag") {
     lrn = setHyperPars(lrn, mfinal = 5L)
-  if (lrn$short.name == "cforest")
+  }
+  if (lrn$short.name == "cforest") {
     lrn = setHyperPars(lrn, ntree = 5L)
-  if (lrn$short.name == "rfsrc")
+  }
+  if (lrn$short.name == "rfsrc") {
     lrn = setHyperPars(lrn, ntree = 5L)
-  if (lrn$short.name == "xgboost")
+  }
+  if (lrn$short.name == "xgboost") {
     lrn = setHyperPars(lrn, nrounds = 10L)
+  }
 
   mod = train(lrn, task)
   feat.imp = getFeatureImportance(mod)$res
@@ -212,4 +219,10 @@ testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
   pars = lrn$par.set$pars
   pv = lrn$par.vals
   expect_true(isSubset(names(pv), names(pars)))
+}
+
+testThatLearnerPredictsFeasibleSEValues = function(lrn, task) {
+  lrn = setPredictType(lrn, "se")
+  res = resample(lrn, task, makeResampleDesc("LOO"))
+  ses = getPredictionSE(res$pred)
 }

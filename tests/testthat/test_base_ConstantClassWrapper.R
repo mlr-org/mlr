@@ -18,7 +18,9 @@ test_that("ConstantClassWrapper predicts with response", {
   # one class present
   train.inds = 1:20
   try({
-    suppressAll({train(lrn1, multiclass.task, subset = train.inds)})
+    suppressAll({
+      train(lrn1, multiclass.task, subset = train.inds)
+    })
     fail("Data has more than one class.")
   }, silent = TRUE)
   m2 = train(lrn2, multiclass.task, subset = train.inds)
@@ -65,7 +67,9 @@ test_that("ConstantClassWrapper predicts with probs", {
   # one class present
   train.inds = 1:20
   try({
-    suppressAll({train(lrn1, multiclass.task, subset = train.inds)})
+    suppressAll({
+      train(lrn1, multiclass.task, subset = train.inds)
+    })
     fail("Data has more than one class.")
   }, silent = TRUE)
   m2 = train(lrn2, multiclass.task, subset = train.inds)

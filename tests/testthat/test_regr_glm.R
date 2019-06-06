@@ -33,5 +33,3 @@ test_that("regr_glm", {
   testSimpleParsets("regr.glm", regr.df, regr.target,
     regr.train.inds, old.predicts.list, parset.list)
 })
-
-

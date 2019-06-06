@@ -8,7 +8,7 @@ test_that("classif_j48", {
     list(M = 10),
     list(M = 5, C = 0.4),
     list(M = 5, R = TRUE)
-    )
+  )
 
   old.predicts.list = list()
   old.probs.list = list()
@@ -19,7 +19,7 @@ test_that("classif_j48", {
     parset$Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))
     ctrl = do.call(RWeka::Weka_control, parset)
     m = RWeka::J48(formula = multiclass.formula, data = multiclass.train, control = ctrl)
-    p  = predict(m, newdata = multiclass.test, type = "class")
+    p = predict(m, newdata = multiclass.test, type = "class")
     p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
@@ -35,5 +35,4 @@ test_that("classif_j48", {
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
   testCVParsets("classif.J48", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
-
 })

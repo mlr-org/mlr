@@ -18,7 +18,7 @@ makeRLearner.classif.probit = function() {
 }
 
 #' @export
-trainLearner.classif.probit = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.probit = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   stats::glm(f, data = getTaskData(.task, .subset),
     family = binomial(link = "probit"), weights = .weights, ...)
@@ -36,4 +36,3 @@ predictLearner.classif.probit = function(.learner, .model, .newdata, ...) {
     unname(p)
   }
 }
-

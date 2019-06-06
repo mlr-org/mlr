@@ -1,17 +1,17 @@
 #' @title Create box or violin plots for a BenchmarkResult.
 #'
 #' @description
-#' Plots box or violin plots for a selected \code{measure} across all iterations
-#' of the resampling strategy, faceted by the \code{task.id}.
+#' Plots box or violin plots for a selected `measure` across all iterations
+#' of the resampling strategy, faceted by the `task.id`.
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param style [\code{character(1)}]\cr
+#' @param style (`character(1)`)\cr
 #'   Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 #'   Default is \dQuote{box}.
-#' @param pretty.names [\code{logical(1)}]\cr
-#'   Whether to use the \code{\link{Measure}} name and the \code{\link{Learner}}
-#'   short name instead of the id. Default is \code{TRUE}.
+#' @param pretty.names (`logical(1)`)\cr
+#'   Whether to use the [Measure] name and the [Learner]
+#'   short name instead of the id. Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
 #' @template arg_order_lrns
 #' @template arg_order_tsks
@@ -47,14 +47,16 @@ plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL
   p = ggplot(df, aes_string("learner.id", measure$id))
   p = p + theme(axis.title.x = element_blank(), axis.text.x = element_text(angle = -45, hjust = 0))
 
-  p = p + facet_wrap(~ task.id, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  p = p + facet_wrap(~task.id, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
 
-  if (pretty.names)
+  if (pretty.names) {
     p = p + ylab(measure$name)
+  }
 
-  if (style == "box")
+  if (style == "box") {
     p = p + geom_boxplot()
-  else
+  } else {
     p = p + geom_violin() + stat_summary(fun.ymin = median, fun.ymax = median, fun.y = median, geom = "crossbar")
+  }
   return(p)
 }

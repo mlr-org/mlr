@@ -1,11 +1,10 @@
 tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
+
   requirePackages("cmaes", why = "tune_cmaes", default.method = "load")
 
   low = getLower(par.set)
   upp = getUpper(par.set)
-  start = control$start
-  if (is.null(start))
-    start = sampleValue(par.set, start, trafo = FALSE)
+  start = control$start %??% sampleValue(par.set, trafo = FALSE)
   start = convertStartToNumeric(start, par.set)
   # set sigma to 1/4 per dim, defaults in cmaes are crap for this, last time I looked
   # and vectorized evals for speed and parallel, then insert user controls
@@ -21,21 +20,25 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   budget = control$budget
 
   # either use user choice or lambda default, now lambda is set
-  if (is.null(ctrl.cmaes$lambda))
+  if (is.null(ctrl.cmaes$lambda)) {
     ctrl.cmaes$lambda = 4 + floor(3 * log(N))
+  }
 
   # if we have budget, calc maxit, otherwise use CMAES default, now maxit is set
-  maxit = if (is.null(budget))
+  maxit = if (is.null(budget)) {
     ifelse(is.null(ctrl.cmaes$maxit), 100 * N^2, ctrl.cmaes$maxit)
-  else
+  } else {
     floor(budget / ctrl.cmaes$lambda)
+  }
 
-  if (!is.null(budget) && budget < ctrl.cmaes$lambda)
+  if (!is.null(budget) && budget < ctrl.cmaes$lambda) {
     stopf("Budget = %$i cannot be less than lambda = %i!", budget, ctrl.cmaes$lambda)
+  }
 
-  if (!is.null(ctrl.cmaes$maxit) && ctrl.cmaes$maxit != maxit)
+  if (!is.null(ctrl.cmaes$maxit) && ctrl.cmaes$maxit != maxit) {
     stopf("Provided setting of maxit = %i does not work with provided budget = %s, lambda = %i",
       ctrl.cmaes$maxit, ifelse(is.null(budget), "NULL", budget), ctrl.cmaes$lambda)
+  }
   ctrl.cmaes$maxit = maxit
 
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
@@ -43,5 +46,5 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
     convertx = convertXVectorizedMatrixCols, remove.nas = FALSE, resample.fun = resample.fun)
 
-  makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
+  makeTuneResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }

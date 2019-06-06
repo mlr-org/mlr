@@ -4,8 +4,8 @@
 #' Combines multiple base learners by dispatching
 #' on the hyperparameter \dQuote{selected.learner} to a specific model class.
 #' This allows to tune not only the model class (SVM, random forest, etc) but also
-#' their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
-#' \code{\link{makeTuneControlIrace}} for a very powerful approach, see example below.
+#' their hyperparameters in one go. Combine this with [tuneParams] and
+#' [makeTuneControlIrace] for a very powerful approach, see example below.
 #'
 #' The parameter set is the union of all (unique) base learners.
 #' In order to avoid name clashes all parameter names are prefixed
@@ -14,19 +14,21 @@
 #' The predict.type of the Multiplexer is inherited from the predict.type of the
 #' base learners.
 #'
-#' The getter \code{\link{getLearnerProperties}} returns the properties of the
+#' The getter [getLearnerProperties] returns the properties of the
 #' selected base learner.
 #'
-#' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
+#' @param base.learners ([list` of [Learner])\cr
 #'  List of Learners with unique IDs.
-#' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
+#' @return ([ModelMultiplexer]). A [Learner] specialized as `ModelMultiplexer`.
 #' @aliases ModelMultiplexer
 #' @family multiplexer
 #' @family tune
+#' @noMd
 #' @export
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
+#' set.seed(123)
 #' \donttest{
 #' library(BBmisc)
 #' bls = list(
@@ -48,7 +50,9 @@
 #' ctrl = makeTuneControlRandom(maxit = 10L)
 #' res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(head(as.data.frame(res$opt.path)))
+#'
+#' df = as.data.frame(res$opt.path)
+#' print(head(df[, -ncol(df)]))
 #'
 #' # more unique and reliable way to construct the param set
 #' ps = makeModelMultiplexerParamSet(lrn,
@@ -72,6 +76,7 @@
 #' # all three ps-objects are exactly the same internally.
 #' }
 makeModelMultiplexer = function(base.learners) {
+
   lrn = makeBaseEnsemble(
     id = "ModelMultiplexer",
     base.learners = base.learners,
@@ -111,7 +116,11 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
 
 #' @export
 makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
-  addClasses(NextMethod(), "ModelMultiplexerModel")
+  x = NextMethod()
+  if (!isFailureModel(x)) {
+    x = addClasses(x, "ModelMultiplexerModel")
+  }
+  return(x)
 }
 
 #' @export
@@ -119,14 +128,14 @@ getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
   if (inherits(model$learner.model, "NoFeaturesModel")) {
     return(model$learner.model)
   }
-  if (more.unwrap)
+  if (more.unwrap) {
     model$learner.model$next.model$learner.model
-  else
+  } else {
     model$learner.model$next.model
+  }
 }
 
 #' @export
 isFailureModel.ModelMultiplexerModel = function(model) {
   NextMethod() || (!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
-

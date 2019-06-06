@@ -27,5 +27,5 @@ test_that("classif_nodeHarvest", {
   testSimpleParsets("classif.nodeHarvest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
   testProbParsets("classif.nodeHarvest", binaryclass.df, binaryclass.target,
-                   binaryclass.train.inds, old.probs.list, parset.list)
+    binaryclass.train.inds, old.probs.list, parset.list)
 })

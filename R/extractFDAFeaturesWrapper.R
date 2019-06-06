@@ -3,8 +3,8 @@
 #' @description
 #' Fuses a base learner with an extractFDAFeatures method. Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses \code{\link{extractFDAFeatures}} before training the learner and
-#' \code{\link{reextractFDAFeatures}} before predicting.
+#' Internally uses [extractFDAFeatures] before training the learner and
+#' [reextractFDAFeatures] before predicting.
 #'
 #' @template arg_learner
 #' @inheritParams extractFDAFeatures
@@ -25,7 +25,7 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
   trainfun = function(data, target, args) {
     l = do.call(extractFDAFeatures, c(list(obj = data, target = target), args))
-    names(l) =  c("data", "control")
+    names(l) = c("data", "control")
     l
   }
 

@@ -47,4 +47,3 @@ test_that("PreprocWrapper with glmnet (#958)", {
   pred = predict(mod, multiclass.task)
   expect_error(pred, NA)
 })
-

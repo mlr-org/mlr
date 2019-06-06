@@ -71,6 +71,7 @@ test_that("parallel featsel", {
 
 test_that("parallel exporting of options works", {
   doit = function(mode, level) {
+
     data = iris
     data[, 1] = 1 # this is going to crash lda
     task = makeClassifTask(data = data, target = "Species")
@@ -106,6 +107,7 @@ test_that("parallel partial dependence", {
 
 test_that("parallel ensembles", {
   doit = function(mode, level) {
+
     on.exit(parallelStop())
     parallelStart(mode = mode, cpus = 2L, show.info = FALSE)
 
@@ -148,7 +150,7 @@ test_that("parallel ensembles", {
     p = predict(fit, multilabel.task)
   }
 
-    ## CostSensWeightedPairsWrapper
+  ## CostSensWeightedPairsWrapper
   if (Sys.info()["sysname"] != "Windows") {
     doit("multicore", "mlr.ensemble")
     doit("mpi", "mlr.ensemble")

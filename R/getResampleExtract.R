@@ -1,4 +1,4 @@
-#In the following we have the functions
+# In the following we have the functions
 # - getReampleExtract2: Returns a feasible function we can use as extract in resample() for each specific learner class.
 #   All is handled recursively because we have wrapped learners.
 #   getResampleExtract2 returns a list of all applicable functions
@@ -33,7 +33,7 @@ getResampleExtract2.FilterWrapper = function(learner) {
   c(list(FilteredFeatures = getFilteredFeatures), getResampleExtract2(learner$next.learner))
 }
 
-getResampleExtract = function(learner){
+getResampleExtract = function(learner) {
   functions = getResampleExtract2(learner)
   function(x) {
     if (length(functions) == 1L) {

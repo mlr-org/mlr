@@ -2,10 +2,10 @@
 #'
 #' @description
 #' Fuses a learner with the bagging method
-#' (i.e., similar to what a \code{randomForest} does).
+#' (i.e., similar to what a `randomForest` does).
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
@@ -18,23 +18,23 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #' For regression the mean value and the standard deviations across predictions is computed.
 #'
-#' Note that the passed base learner must always have \code{predict.type = 'response'},
+#' Note that the passed base learner must always have `predict.type = 'response'`,
 #' while the BaggingWrapper can estimate probabilities and standard errors, so it can
-#' be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
-#' \code{\link{setPredictType}}, the type is only set for the BaggingWrapper, not passed
+#' be set, e.g., to `predict.type = 'prob'`. For this reason, when you call
+#' [setPredictType], the type is only set for the BaggingWrapper, not passed
 #' down to the inner learner.
 #'
 #' @template arg_learner
-#' @param bw.iters [\code{integer(1)}]\cr
+#' @param bw.iters (`integer(1)`)\cr
 #'   Iterations = number of fitted models in bagging.
 #'   Default is 10.
-#' @param bw.replace [\code{logical(1)}]\cr
+#' @param bw.replace (`logical(1)`)\cr
 #'   Sample bags with replacement (bootstrapping)?
 #'   Default is TRUE.
-#' @param bw.size [\code{numeric(1)}]\cr
+#' @param bw.size (`numeric(1)`)\cr
 #'   Percentage size of sampled bags.
 #'   Default is 1 for bootstrapping and 0.632 for subsampling.
-#' @param bw.feats [\code{numeric(1)}]\cr
+#' @param bw.feats (`numeric(1)`)\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #'   At least one feature will always be selected.
@@ -42,6 +42,7 @@
 #' @family wrapper
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
+
   learner = checkLearner(learner, type = c("classif", "regr"))
   pv = list()
   if (!missing(bw.iters)) {
@@ -60,8 +61,9 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     assertNumber(bw.feats, lower = 0, upper = 1)
     pv$bw.feats = bw.feats
   }
-  if (learner$predict.type != "response")
+  if (learner$predict.type != "response") {
     stop("Predict type of the basic learner must be 'response'.")
+  }
   id = stri_paste(learner$id, "bagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
@@ -86,8 +88,9 @@ print.BaggingModel = function(x, ...) {
 trainLearner.BaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   bw.iters = 10, bw.replace = TRUE, bw.size, bw.feats = 1, ...) {
 
-  if (missing(bw.size))
+  if (missing(bw.size)) {
     bw.size = if (bw.replace) 1 else 0.632
+  }
   .task = subsetTask(.task, subset = .subset)
   n = getTaskSize(.task)
   # number of observations to sample
@@ -119,10 +122,11 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, .subset = N
     g(predict(m, newdata = nd, subset = .subset, ...)$data$response)
   }))
   if (.learner$predict.type == "response") {
-    if (.learner$type == "classif")
+    if (.learner$type == "classif") {
       as.factor(apply(p, 1L, computeMode))
-    else
+    } else {
       rowMeans(p)
+    }
   } else {
     if (.learner$type == "classif") {
       levs = .model$task.desc$class.levels
@@ -146,7 +150,7 @@ setPredictType.BaggingWrapper = function(learner, predict.type) {
 
 #' @export
 getLearnerProperties.BaggingWrapper = function(learner) {
-    switch(learner$type,
+  switch(learner$type,
     "classif" = union(getLearnerProperties(learner$next.learner), "prob"),
     "regr" = union(getLearnerProperties(learner$next.learner), "se")
   )

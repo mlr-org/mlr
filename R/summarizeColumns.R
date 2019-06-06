@@ -1,7 +1,7 @@
 #' @title Summarize columns of data.frame or task.
 #'
 #' @description
-#' Summarizes a data.frame, somewhat differently than the normal \code{\link{summary}} function of R.
+#' Summarizes a data.frame, somewhat differently than the normal [summary] function of R.
 #' The function is mainly useful as a basic EDA tool on data.frames before they are converted to tasks,
 #' but can be used on tasks as well.
 #'
@@ -9,11 +9,11 @@
 #' Characters and logicals will be treated as factors.
 #'
 #' @template arg_taskdf
-#' @return [\code{data.frame}]. With columns:
+#' @return ([data.frame]). With columns:
 #'   \item{name}{Name of column.}
 #'   \item{type}{Data type of column.}
 #'   \item{na}{Number of NAs in column.}
-#'   \item{disp}{Measure of dispersion, for numerics and integers \code{\link{sd}} is used, for
+#'   \item{disp}{Measure of dispersion, for numerics and integers [sd] is used, for
 #'     categorical columns the qualitative variation.}
 #'   \item{mean}{Mean value of column, NA for categorical columns.}
 #'   \item{median}{Median value of column, NA for categorical columns.}
@@ -36,6 +36,7 @@ summarizeColumns.Task = function(obj) {
 
 #' @export
 summarizeColumns.data.frame = function(obj) {
+
   iqv = function(x, ...) {
     1 - mean(x == computeMode(x))
   }

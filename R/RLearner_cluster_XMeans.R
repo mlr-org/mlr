@@ -30,7 +30,7 @@ makeRLearner.cluster.XMeans = function() {
 }
 
 #' @export
-trainLearner.cluster.XMeans = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.cluster.XMeans = function(.learner, .task, .subset, .weights = NULL, ...) {
   ctrl = RWeka::Weka_control(...)
   RWeka::XMeans(getTaskData(.task, .subset), control = ctrl)
 }
@@ -40,4 +40,3 @@ predictLearner.cluster.XMeans = function(.learner, .model, .newdata, ...) {
   # XMeans returns cluster indices (i.e. starting from 0, which some tools don't like
   as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
 }
-

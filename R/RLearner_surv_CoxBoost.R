@@ -28,8 +28,9 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
   info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   data$data = as.matrix(fixDataForLearner(data$data, info))
 
-  if (is.null(penalty))
+  if (is.null(penalty)) {
     penalty = 9 * sum(data$target[, 2L])
+  }
 
   attachTrainingInfo(CoxBoost::CoxBoost(
     time = data$target[, 1L],

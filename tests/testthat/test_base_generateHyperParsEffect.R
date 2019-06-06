@@ -22,14 +22,14 @@ test_that("generate data", {
     par.set = ps, control = ctrl, measures = acc)
   orig = as.data.frame(trafoOptPath(res$opt.path))
   orig = dropNamed(orig, c("eol", "error.message"))
-  orig = plyr::rename(orig, c(dob = "iteration"))
+  names(orig)[names(orig) == "dob"] = "iteration"
   new = generateHyperParsEffectData(res, trafo = TRUE)
   expect_equivalent(new$data, orig)
 })
 
 test_that("1 numeric hyperparam", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = 2^ (-2:2)))
+  ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
@@ -44,7 +44,7 @@ test_that("1 numeric hyperparam", {
     plot.type = "line")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -53,7 +53,10 @@ test_that("1 numeric hyperparam", {
   expect_equal(plt$labels$x, "iteration")
   expect_equal(plt$labels$y, "acc.test.mean")
 
-  # FIXME: make sure plot looks as expected
+  # test facet 1D with non-nested shouldn't produce
+  expect_error(plotHyperParsEffect(new, x = "iteration", y = "acc.test.mean",
+    plot.type = "line", facet = "nested_cv_run")
+  )
 })
 
 test_that("1 discrete hyperparam", {
@@ -73,7 +76,7 @@ test_that("1 discrete hyperparam", {
   plt = plotHyperParsEffect(new, x = "kernel", y = "acc.test.mean")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -81,8 +84,6 @@ test_that("1 discrete hyperparam", {
     "GeomPoint")
   expect_equal(plt$labels$x, "kernel")
   expect_equal(plt$labels$y, "acc.test.mean")
-
-  # FIXME: make sure plot looks as expected
 })
 
 test_that("1 numeric hyperparam with optimizer failure", {
@@ -102,7 +103,7 @@ test_that("1 numeric hyperparam with optimizer failure", {
   plt = plotHyperParsEffect(new, x = "C", y = "acc.test.mean")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -110,8 +111,6 @@ test_that("1 numeric hyperparam with optimizer failure", {
     "GeomPoint")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "acc.test.mean")
-
-  # FIXME: make sure plot looks as expected
 })
 
 test_that("1 numeric hyperparam with nested cv", {
@@ -133,7 +132,7 @@ test_that("1 numeric hyperparam with nested cv", {
   plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -141,8 +140,6 @@ test_that("1 numeric hyperparam with nested cv", {
     "GeomPoint")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "mmce.test.mean")
-
-  # FIXME: make sure plot looks as expected
 })
 
 test_that("2 hyperparams", {
@@ -157,13 +154,12 @@ test_that("2 hyperparams", {
     resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res)
 
-
   # test line creation
   plt = plotHyperParsEffect(data, x = "iteration", y = "acc.test.mean",
     plot.type = "line")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
@@ -176,7 +172,7 @@ test_that("2 hyperparams", {
     show.experiments = TRUE)
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster"))
@@ -199,7 +195,7 @@ test_that("2 hyperparams", {
     plot.type = "heatmap", interpolate = "regr.earth")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster"))
@@ -207,8 +203,6 @@ test_that("2 hyperparams", {
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
   expect_equal(plt$labels$shape, "learner_status")
-
-  # FIXME: make sure plots looks as expected
 })
 
 test_that("2 hyperparams nested", {
@@ -230,12 +224,26 @@ test_that("2 hyperparams nested", {
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
     plot.type = "contour", interpolate = "regr.earth",
     show.interpolated = TRUE)
+  expect_warning(print(plt))
+  dir = tempdir()
+  path = file.path(dir, "test.svg")
+  expect_warning(ggsave(path))
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
+    c("GeomPoint", "GeomRaster", "GeomContour"))
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "sigma")
+  expect_equal(plt$labels$fill, "acc.test.mean")
+  expect_equal(plt$labels$shape, "learner_status")
+
+  # test with nested facetting
+  plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
+    plot.type = "heatmap", interpolate = "regr.earth",
+    show.experiments = TRUE, facet = "nested_cv_run")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
   ggsave(path)
-  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
-    c("GeomPoint", "GeomRaster", "GeomContour"))
+  expect_set_equal(class(plt$facet)[1], "FacetWrap")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
@@ -256,7 +264,7 @@ test_that("2 hyperparams nested", {
     show.experiments = TRUE)
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster"))
@@ -280,13 +288,12 @@ test_that("2+ hyperparams", {
     par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
 
-
   # test single hyperparam creation
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.learn = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
@@ -295,16 +302,15 @@ test_that("2+ hyperparams", {
 
   # test bivariate
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
-    plot.type = "heatmap", partial.dep.learn = "regr.randomForest")
+    plot.type = "heatmap", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
-  expect_equal(class(plt$layers[[1]]$geom)[1], "GeomTile")
+  expect_equal(class(plt$layers[[1]]$geom)[1], "GeomRaster")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
-
 
   # simple example with nested cv
   ps = makeParamSet(
@@ -320,10 +326,10 @@ test_that("2+ hyperparams", {
   res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.learn = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
@@ -341,15 +347,13 @@ test_that("2+ hyperparams", {
     resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.learn = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = stri_paste(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "acc.test.mean")
-
-  # FIXME: make sure plots looks as expected
 })

@@ -15,12 +15,12 @@ makeRLearner.regr.lm = function() {
 }
 
 #' @export
-trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     stats::lm(f, data = d, ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     stats::lm(f, data = d, weights = .weights, ...)
   }

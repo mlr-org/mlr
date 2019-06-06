@@ -17,7 +17,7 @@ test_that("classif_fdausc.np behaves like original api", {
   a1 = fda.usc::classif.np(glearn, mlearn)
   # restructure internal function call (language-object)
   a1$C[[1]] = quote(classif.np)
-  #newdat = list("x"=mtest)
+  # newdat = list("x"=mtest)
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
 
@@ -40,5 +40,4 @@ test_that("classif_fdausc.np behaves like original api", {
   # check if the output from the original API matches the mlr learner's output
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
-
 })

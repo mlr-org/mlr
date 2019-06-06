@@ -32,14 +32,15 @@ sampleBinaryClass = function(y, rate, cl, resample.other.class) {
   # undersampling (rate < 1): reduce class1 by selecting newsize elements from it
   if (rate < 1) {
     newinds1 = sample(inds1, newsize, replace = FALSE)
-  # oversampling (rate > 1): take existing inds and sample add. inds with repl.
+    # oversampling (rate > 1): take existing inds and sample add. inds with repl.
   } else {
     newinds1 = c(inds1, sample(inds1, newsize - length(inds1), replace = TRUE))
   }
   # now either copy or bootstrap other class
-  if (resample.other.class)
+  if (resample.other.class) {
     newinds2 = sample(inds2, length(inds2), replace = TRUE)
-  else
+  } else {
     newinds2 = inds2
+  }
   c(newinds1, newinds2)
 }

@@ -166,4 +166,3 @@ testMultilabelWrapper(makeMultilabelStackingWrapper)
 # check order
 testMultilabelWrapper(makeMultilabelClassifierChainsWrapper, order = c("y2", "y1"))
 testMultilabelWrapper(makeMultilabelNestedStackingWrapper, order = c("y2", "y1"))
-

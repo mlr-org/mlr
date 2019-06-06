@@ -5,7 +5,7 @@ test_that("regr_km", {
 
   parset.list = list(
     list(),
-    #list(covtype="gauss"),
+    # list(covtype="gauss"),
     list(covtype = "matern5_2")
   )
   dd = regr.num.df[1:50, ]

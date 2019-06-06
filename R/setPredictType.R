@@ -10,7 +10,7 @@
 #' encapsulated learner in a recursive fashion.
 #'
 #' @template arg_learner
-#' @param predict.type [\code{character(1)}]\cr
+#' @param predict.type (`character(1)`)\cr
 #'   Classification: \dQuote{response} or \dQuote{prob}.
 #'   Regression: \dQuote{response} or \dQuote{se}.
 #'   Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
@@ -36,10 +36,12 @@ setPredictType.Learner = function(learner, predict.type) {
     costsens = "response",
     cluster = c("response", "prob")
   ))
-  if (predict.type == "prob" && !hasLearnerProperties(learner, "prob"))
+  if (predict.type == "prob" && !hasLearnerProperties(learner, "prob")) {
     stopf("Trying to predict probs, but %s does not support that!", learner$id)
-  if (predict.type == "se" && !hasLearnerProperties(learner, "se"))
+  }
+  if (predict.type == "se" && !hasLearnerProperties(learner, "se")) {
     stopf("Trying to predict standard errors, but %s does not support that!", learner$id)
+  }
   learner$predict.type = predict.type
   return(learner)
 }

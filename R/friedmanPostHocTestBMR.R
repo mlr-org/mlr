@@ -1,51 +1,55 @@
 #' @title Perform a posthoc Friedman-Nemenyi test.
 #'
 #' @description
-#' Performs a \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for a
-#' \code{\link{BenchmarkResult}} and a selected measure.
-#' This means \emph{all pairwise comparisons} of \code{learners} are performed.
+#' Performs a [PMCMR::posthoc.friedman.nemenyi.test] for a
+#' [BenchmarkResult] and a selected measure.
+#' This means *all pairwise comparisons* of `learners` are performed.
 #' The null hypothesis of the post hoc test is that each pair of learners is equal.
-#' If the null hypothesis of the included ad hoc \code{\link[stats]{friedman.test}}
-#' can be rejected an object of class \code{pairwise.htest} is returned. If not, the function returns the
+#' If the null hypothesis of the included ad hoc [stats::friedman.test]
+#' can be rejected an object of class `pairwise.htest` is returned. If not, the function returns the
 #' corresponding \link[stats]{friedman.test}.
 #' Note that benchmark results for at least two learners on at least two tasks
 #' are required.
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value [\code{numeric(1)}]\cr
+#' @param p.value (`numeric(1)`)\cr
 #'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
-#' @return [\code{pairwise.htest}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
+#' @return ([pairwise.htest]): See [PMCMR::posthoc.friedman.nemenyi.test] for details.
 #' Additionally two components are added to the list:
 #' \describe{
-#'   \item{f.rejnull [\code{logical(1)}]}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
-#'   \item{crit.difference [\code{list(2)}]}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
+#'   \item{f.rejnull (`logical(1)`)}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
+#'   \item{crit.difference (`list(2)`)}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
 #' }
 #'
 #' @family benchmark
+#' @noMd
 #' @export
 #' @examples
 #' # see benchmark
 friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregation = "default") {
+
   requirePackages("PMCMR")
   assertClass(bmr, "BenchmarkResult")
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
   assertChoice(aggregation, c("default", "mean"))
   measure = checkBMRMeasure(measure, bmr)
   n.learners = length(bmr$learners)
-  if (n.learners < 2)
+  if (n.learners < 2) {
     stop("Benchmark results for at least two learners are required")
+  }
   n.tasks = length(bmr$results)
-  if (n.tasks < 2)
+  if (n.tasks < 2) {
     stop("Benchmark results for at least two tasks are required")
+  }
 
   # aggregate over iterations
   if (aggregation == "mean") {
     df = as.data.frame(bmr)
     df = aggregate(df[[measure$id]],
-                   by = list(task.id = df$task.id, learner.id = df$learner.id),
-                   FUN = mean)
+      by = list(task.id = df$task.id, learner.id = df$learner.id),
+      FUN = mean)
     aggr.meas = "x"
   } else if (aggregation == "default") {
     aggr.meas = measureAggrName(measure)
@@ -55,9 +59,10 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
   f.test = friedmanTestBMR(bmr, measure)
   if (!is.na(f.test$p.value)) {
     f.rejnull = f.test$p.value < p.value
-    if (!f.rejnull)
+    if (!f.rejnull) {
       warning("Cannot reject null hypothesis of overall Friedman test,
              returning overall Friedman test.")
+    }
   } else {
     f.rejnull = FALSE
     warning("P-value not computable. Learner performances might be exactly equal.")

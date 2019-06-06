@@ -30,6 +30,7 @@ makeRLearner.classif.evtree = function() {
 trainLearner.classif.evtree = function(.learner, .task, .subset,
   .weights = NULL, pmutatemajor, pmutateminor, pcrossover, psplit,
   pprune, seed, ...) {
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))

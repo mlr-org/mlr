@@ -31,7 +31,7 @@ trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     rpart::rpart(f, data = d, ...)
-  } else  {
+  } else {
     f = getTaskFormula(.task)
     rpart::rpart(f, data = d, weights = .weights, ...)
   }
@@ -45,6 +45,6 @@ predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$variable.importance
 }

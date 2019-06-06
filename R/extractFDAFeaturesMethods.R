@@ -3,29 +3,29 @@
 #' @description
 #' This can be used to implement custom feature FDA extraction.
 #'
-#' @param learn [\code{function(data, target, col, ...)}]\cr
-#'   Function to learn and extract information on functional column \code{col}.
+#' @param learn (`function(data, target, col, ...)`)\cr
+#'   Function to learn and extract information on functional column `col`.
 #'   Arguments are:
 #'   \itemize{
-#'   \item data [\code{data.frame}]\cr
+#'   \item data [data.frame]\cr
 #'     Data.frame with one row per observation of a single functional feature
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item data [\code{data.frame}]\cr
+#'   \item data [data.frame]\cr
 #'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point. All entries need to be numeric.
-#'   \item target [\code{character}]\cr
+#'   \item target [character]\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
-#'   \item col [\code{character} | \code{numeric}]\cr
+#'   \item col ([character] | [numeric])\cr
 #'     column names or indices, the extraction should be performed on.
 #'     The function has to return a named list of values.
 #'   }
-#' @param reextract [\code{function(data, target, col, ...)}]\cr
+#' @param reextract (`function(data, target, col, ...)`)\cr
 #'   Function used for reextracting data in predict phase.
-#'   Can be equal to \code{learn}.
-#' @param args [\code{list}]\cr
-#'   Named list of arguments to pass to \code{learn} via \code{...}.
+#'   Can be equal to `learn`.
+#' @param args ([list])\cr
+#'   Named list of arguments to pass to `learn` via `...`.
 #' @export
 #' @family fda
 makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
@@ -39,14 +39,14 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'
 #' @description
 #' The function extracts features from functional data based on the fast fourier
-#' transform. For more details refer to \code{\link[stats]{fft}}.
+#' transform. For more details refer to [stats::fft].
 #'
-#' @param trafo.coeff [\code{character}]\cr
+#' @param trafo.coeff ([character])\cr
 #'   Specifies which transformation of the complex frequency domain
 #'   representation should be calculated as a feature representation.
 #'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
 #'   Default is \dQuote{phase}.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAFourier = function(trafo.coeff = "phase") {
@@ -92,17 +92,17 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @description
 #' The function extracts discrete wavelet transform coefficients from the raw
 #' functional data.
-#' See \code{\link[wavelets]{dwt}} for more information.
+#' See [wavelets::dwt] for more information.
 #'
-#' @param filter [\code{character}]\cr
+#' @param filter ([character])\cr
 #'   Specifies which filter should be used.
 #'   Default is \dQuote{la8}.
-#' @param boundary [\code{character}]\cr
+#' @param boundary ([character])\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
@@ -110,6 +110,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertChoice(boundary, c("periodic", "reflection"))
 
   lrn = function(data, target = NULL, col, filter, boundary) {
+
     requirePackages("wavelets", default.method = "load")
 
     assertClass(data, "data.frame")
@@ -134,13 +135,13 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' The function extracts the functional principal components from a data.frame
 #' containing functional features.
 #'
-#' @param pve [\code{numeric}]\cr
+#' @param pve ([numeric])\cr
 #'   Fraction of variance explained for the functional principal components.
 #'   Default is 0.99.
-#' @param npc [\code{integer}]\cr
-#'   Number of principal components to extract. Overrides \code{pve} param.
-#'   Default is \code{NULL}
-#' @return [\code{data.frame}].
+#' @param npc ([integer])\cr
+#'   Number of principal components to extract. Overrides `pve` param.
+#'   Default is `NULL`
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAFPCA = function(pve = 0.99, npc = NULL) {
@@ -148,6 +149,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
   assertCount(npc, null.ok = TRUE)
 
   lrn = function(data, target, col, vals, pve, npc) {
+
     requirePackages("mboost", default.method = "load")
     requirePackages("refund", default.method = "load")
     assert(
@@ -158,14 +160,15 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
     data = data[, col, drop = FALSE]
 
     # transform dataframe into matrix
-    if (inherits(data, "data.frame"))
+    if (inherits(data, "data.frame")) {
       data = as.matrix(data)
+    }
 
     # extract fpca features
     # FIXME: Add other fpca. options, maybe via function args ?
     rst = refund::fpca.sc(Y = data, pve = pve, npc = npc)
     # Order the columns by score
-    features.fpca = rst$scores[, order(rst$evalues,  decreasing = TRUE)]
+    features.fpca = rst$scores[, order(rst$evalues, decreasing = TRUE)]
     df.fpca = as.data.frame(features.fpca)
     names(df.fpca) = paste0("Fpca", seq_len(ncol(df.fpca)))
     return(df.fpca)
@@ -181,13 +184,13 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' as features. The segments length are set in a hierachy way so the features
 #' cover different resolution levels.
 #'
-#' @param res.level [\code{integer(1)}]\cr
+#' @param res.level (`integer(1)`)\cr
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift [\code{numeric(1)}]\cr
+#' @param shift (`numeric(1)`)\cr
 #'   The overlapping proportion when slide the window for one step.
-#' @param curve.lens [\code{integer}]\cr
+#' @param curve.lens ([integer])\cr
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
@@ -220,23 +223,24 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     m = length(x)
     start = 1L
     feats = numeric(0L)
-    ssize = m  # initialize segment size to be the length of the curve
-    for (rl in 1:res.level) {  # ssize is divided by 2 at the end of the loop
-      soffset = ceiling(shift * ssize)  # overlap distance
+    ssize = m # initialize segment size to be the length of the curve
+    for (rl in 1:res.level) { # ssize is divided by 2 at the end of the loop
+      soffset = ceiling(shift * ssize) # overlap distance
       # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
       sstart = 1L
-      send = sstart + ssize - 1L  # end position
-      while (send <= m) {  # until the segment reach the end
+      send = sstart + ssize - 1L # end position
+      while (send <= m) { # until the segment reach the end
         # messagef("start, end: %i, %i", sstart, send)
         f = getSegmentFeatures(x[sstart:send])
         # print(f)
-        feats = c(feats, f)  # append the feats from the last resolution hierachy
+        feats = c(feats, f) # append the feats from the last resolution hierachy
         sstart = sstart + soffset
         send = send + soffset
       }
-      ssize = ceiling(ssize / 2)  # decrease the segment size
-      if (ssize < 1L)  # if the the divide by 2 is too much
+      ssize = ceiling(ssize / 2) # decrease the segment size
+      if (ssize < 1L) { # if the the divide by 2 is too much
         break
+      }
     }
     return(feats)
   }
@@ -246,10 +250,10 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
   }
 
   lrn = function(data, target, col, res.level, shift, curve.lens) {
-
     data = data[, col, drop = FALSE]
-    if (is.data.frame(data))
+    if (is.data.frame(data)) {
       data = as.matrix(data)
+    }
     assertMatrix(data, mode = "numeric")
 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into

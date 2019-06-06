@@ -33,8 +33,9 @@ trainLearner.classif.LiblineaRL2LogReg = function(.learner, .task, .subset, .wei
 
 #' @export
 predictLearner.classif.LiblineaRL2LogReg = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response")
+  if (.learner$predict.type == "response") {
     as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
-  else
+  } else {
     predict(.model$learner.model, newx = .newdata, proba = TRUE, ...)$probabilities
+  }
 }

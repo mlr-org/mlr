@@ -88,7 +88,7 @@ test_that("Impute data frame", {
   imputed = reimpute(data.frame(f = factor("newlvl"), x = NA_real_), x$desc)
   expect_equal(as.character(imputed$f), "xxx")
   expect_equal(imputed$x, 1)
-  #FIXME: y was never in input data? therefore next test fails?
+  # FIXME: y was never in input data? therefore next test fails?
   # expect_equal(imputed$y, 8)
 
   x = impute(data, target = target, cols = list(f = "xxx"), impute.new.levels = FALSE)
@@ -109,9 +109,9 @@ test_that("Impute data frame", {
   x = impute(data, target = target, dummy.classes = "numeric", dummy.cols = "z")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy", "z.dummy")))
 
-  x = impute(data, target = target, classes = list(factor = imputeMode(), numeric = imputeMedian(),
-      integer = imputeMedian(), logical = imputeConstant(1)))
-  expect_true(all(!is.na(x)))
+  x = impute(data, target = character(0), classes = list(factor = imputeMode(), numeric = imputeMedian(),
+    integer = imputeMedian(), logical = imputeConstant(1)))
+  expect_true(all(!is.na(x$data)))
 
   data2 = data[1:5, ]
   x = impute(data2, target = target, dummy.classes = c("numeric", "logical", "factor"), force.dummies = TRUE)
@@ -125,11 +125,11 @@ test_that("Impute and reimpute task", {
   data[6L, ] = NA
   classif.tar = factor(c(rep(c("a", "b"), 3L)))
   regr.tar = rep(c(.1, .2), 3L)
-  #additional data-frame to check reimpute
+  # additional data-frame to check reimpute
   data2 = data.frame(f = letters[c(2, 1, 1, 1, 1)], x = rep(2., 5), y = c(2, 4, 2, 3, 3))
   data2[6L, ] = NA
   data2$z = classif.tar
-  #test classif task
+  # test classif task
   data$z = classif.tar
   data2$z = classif.tar
   classif.tsk = makeClassifTask(data = data, target = "z")

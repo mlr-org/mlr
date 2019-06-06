@@ -1,9 +1,9 @@
 makeOptControl = function(same.resampling.instance, impute.val = NULL, tune.threshold = FALSE,
   tune.threshold.args = list(), log.fun = "default", final.dw.perc = NULL, ...) {
-
   assertFlag(same.resampling.instance)
-  if (!is.null(impute.val))
+  if (!is.null(impute.val)) {
     assertNumeric(impute.val)
+  }
   assertFunction(log.fun,
     args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage", "prev.stage"))
   assertFlag(tune.threshold)

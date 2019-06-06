@@ -37,6 +37,7 @@ trainLearner.classif.cforest = function(.learner, .task, .subset,
   .weights = NULL, ntree, mtry, replace, fraction, trace, teststat,
   testtype, mincriterion, minsplit, minbucket, stump,
   nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
@@ -67,7 +68,7 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   if (auc) {
     party::varimpAUC(mod, ...)
   } else {

@@ -27,7 +27,7 @@ test_that("classif_lssvm", {
   }
 
   testSimpleParsets("classif.lssvm", multiclass.df, multiclass.target,
-    multiclass.train.inds, old.predicts.list,  parset.list2)
+    multiclass.train.inds, old.predicts.list, parset.list2)
 
 
   # Bug in kernel = "polydot"

@@ -1,7 +1,7 @@
 #' @title Query properties of learners.
 #'
 #' @description
-#' Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
+#' Properties can be accessed with `getLearnerProperties(learner)`, which returns a
 #' character vector.
 #'
 #' The learner properties are defined as follows:
@@ -21,10 +21,10 @@
 #' }
 #'
 #' @template arg_learner
-#' @param props [\code{character}]\cr
+#' @param props ([character])\cr
 #'   Vector of properties to query.
-#' @return \code{getLearnerProperties} returns a character vector with learner properties.
-#'  \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
+#' @return `getLearnerProperties` returns a character vector with learner properties.
+#'  `hasLearnerProperties` returns a logical vector of the same length as `props`.
 #' @name LearnerProperties
 #' @rdname LearnerProperties
 #' @aliases getLearnerProperties hasLearnerProperties
@@ -62,7 +62,7 @@ hasLearnerProperties = function(learner, props) {
   props %in% getLearnerProperties(learner)
 }
 
-#' Deprecated, use \code{hasLearnerProperties} instead.
+#' Deprecated, use `hasLearnerProperties` instead.
 #' @param learner Deprecated.
 #' @param props Deprecated.
 #' @export
@@ -76,10 +76,10 @@ hasProperties = function(learner, props) {
 #' @description
 #'   This is useful for determining which learner properties are available.
 #'
-#' @param type [\code{character(1)}]\cr
+#' @param type (`character(1)`)\cr
 #'   Only return properties for a specified task type. Default is \dQuote{any}.
 #'
-#' @return [\code{character}].
+#' @return ([character]).
 #'
 #' @export
 listLearnerProperties = function(type = "any") {

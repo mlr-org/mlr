@@ -13,13 +13,12 @@ checkAggrBeforeResample = function(measure, rdesc) {
   } else {
     c("train", "test", "both")
   }
-  if (pred %nin% p.allowed)
+  if (pred %nin% p.allowed) {
     stopf("Aggregation '%s' not compatible with resampling! You have to set arg 'predict' to %s in your resample object, instead it is '%s'!", a$id, stri_paste("'", p.allowed, "'", collapse = " or "), pred)
+  }
 }
 
 # map the checker over multiple measures
 checkAggrsBeforeResample = function(measures, rdesc) {
   lapply(measures, checkAggrBeforeResample, rdesc = rdesc)
 }
-
-

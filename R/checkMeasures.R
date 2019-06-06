@@ -1,12 +1,12 @@
 #' @title Checks for correct strucutre of selected measures
 #'
-#' @param measures [\code{list}]\cr
+#' @param measures [`list`]\cr
 #'   list of measures
-#' @param obj [\code{data.frame}]\cr
+#' @param obj [`data.frame`]\cr
 #'   task
-#' @param aggr [\code{function]\cr
+#' @param aggr [`function`]\cr
 #'   aggregation function
-#' @param na.rm [\code{logical(1)}]\cr
+#' @param na.rm [`logical(1)`]\cr
 #'   Should `NA` values be removed? Default `FALSE`.
 #'   This applies to all selected measures.
 #' @keywords internal
@@ -22,7 +22,8 @@ checkMeasures = function(measures, obj, aggr = NULL, na.rm = FALSE) {
     }
     assertList(measures, types = "Measure", min.len = 1L)
   }
-  if (!is.null(aggr))
+  if (!is.null(aggr)) {
     measures = lapply(measures, setAggregation, aggr = aggr)
+  }
   return(measures)
 }

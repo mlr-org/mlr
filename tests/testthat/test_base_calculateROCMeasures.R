@@ -24,4 +24,3 @@ test_that("calculateROCMeasures", {
   expect_equal(r$measures$fomr, 1 - measureNPV(truth, response, negative))
   expect_equal(r$measures$acc, measureACC(truth, response))
 })
-
