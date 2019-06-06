@@ -2,7 +2,7 @@
 #' @description
 #' An aggregation method reduces the performance values of the test
 #' (and possibly the training sets) to a single value.
-#' To see all possible implemented aggregations look at \code{\link{aggregations}}.
+#' To see all possible implemented aggregations look at [aggregations].
 #'
 #' The aggregation can access all relevant information of the result after resampling
 #' and combine them into a single value. Though usually something very simple
@@ -10,13 +10,13 @@
 #'
 #' Object members:
 #' \describe{
-#' \item{id [\code{character(1)}]}{Name of the aggregation method.}
-#' \item{name [\code{character(1)}]}{Long name of the aggregation method.}
-#' \item{properties [\code{character}]}{Properties of the aggregation.}
-#' \item{fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]}{Aggregation function.}
+#' \item{id (`character(1)`)}{Name of the aggregation method.}
+#' \item{name (`character(1)`)}{Long name of the aggregation method.}
+#' \item{properties ([character])}{Properties of the aggregation.}
+#' \item{fun (`function(task, perf.test, perf.train, measure, group, pred)])}{Aggregation function.}
 #' }
 #' @name Aggregation
-#' @seealso \code{\link{makeAggregation}}
+#' @seealso [makeAggregation]
 #' @rdname Aggregation
 NULL
 
@@ -27,40 +27,42 @@ NULL
 #' This is an advanced feature of mlr. It gives access to some
 #' inner workings so the result might not be compatible with everything!
 #'
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of the aggregation method (preferably the same name as the generated function).
-#' @param name [\code{character(1)}]\cr
-#'   Long name of the aggregation method. Default is \code{id}.
-#' @param properties [\code{character}]\cr
+#' @param name (`character(1)`)\cr
+#'   Long name of the aggregation method. Default is `id`.
+#' @param properties ([character])\cr
 #'   Set of aggregation properties.
 #'   \describe{
 #'     \item{req.train}{Are prediction or train sets required to calculate the aggregation?}
 #'     \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 #'   }
-#' @param fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]\cr
+#' @param fun (`function(task, perf.test, perf.train, measure, group, pred)`)\cr
 #'   Calculates the aggregated performance. In most cases you will only need the performances
-#'   \code{perf.test} and optionally \code{perf.train} on the test and training data sets.
+#'   `perf.test` and optionally `perf.train` on the test and training data sets.
 #'   \describe{
-#'     \item{\code{task} [\code{\link{Task}}]}{The task.}
-#'     \item{\code{perf.test} [\code{numeric}]}{
-#'       \code{\link{performance}} results on the test data sets.}
-#'     \item{\code{perf.train} [\code{numeric}]}{
-#'       \code{\link{performance}} results on the training data sets.}
-#'     \item{\code{measure} [\code{\link{Measure}}]}{
+#'     \item{`task` ([Task])}{The task.}
+#'     \item{`perf.test` ([numeric])}{
+#'       [performance] results on the test data sets.}
+#'     \item{`perf.train` ([numeric])}{
+#'       [performance] results on the training data sets.}
+#'     \item{`measure` ([Measure])}{
 #'       Performance measure.}
-#'     \item{\code{group} [\code{factor}]}{
+#'     \item{`group` ([factor])}{
 #'       Grouping of resampling iterations. This encodes whether specific iterations
 #'       'belong together' (e.g. repeated CV).}
-#'     \item{\code{pred} [\code{\link{Prediction}}]}{
+#'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
 #'   }
-#' @seealso \code{\link{aggregations}}, \code{\link{setAggregation}}
-#' @return [\code{\link{Aggregation}}].
+#' @seealso [aggregations], [setAggregation]
+#' @return ([Aggregation]).
 #' @examples
 #' # computes the interquartile range on all performance values
-#' test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",
+#' test.iqr = makeAggregation(
+#'   id = "test.iqr", name = "Test set interquartile range",
 #'   properties = "req.test",
-#'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
+#'   fun = function(task, perf.test, perf.train, measure, group, pred) IQR(perf.test)
+#' )
 #' @export
 makeAggregation = function(id, name = id, properties, fun) {
   assertString(id)

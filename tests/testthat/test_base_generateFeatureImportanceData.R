@@ -1,5 +1,4 @@
 test_that("generateFeatureImportanceData", {
-
   regr.imp = generateFeatureImportanceData(regr.task, "permutation.importance",
     "regr.rpart", c("lstat", "crim"), FALSE, mse,
     function(x, y) abs(x - y), median, 1L, TRUE, FALSE)

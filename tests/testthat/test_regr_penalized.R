@@ -15,9 +15,9 @@ test_that("regr_penalized", {
 
   # to make test of empty list feasable (in terms of time), number of obs need to be reduced
   regr.train.inds = sample(seq(1, 506), size = 150)
-  regr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
+  regr.test.inds = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
   regr.train = regr.df[regr.train.inds, ]
-  regr.test  = regr.df[regr.test.inds, ]
+  regr.test = regr.df[regr.test.inds, ]
 
   old.predicts.list = list()
   old.probs.list = list()

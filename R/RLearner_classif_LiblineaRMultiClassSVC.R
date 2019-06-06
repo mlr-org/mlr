@@ -27,5 +27,5 @@ trainLearner.classif.LiblineaRMultiClassSVC = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.classif.LiblineaRMultiClassSVC = function(.learner, .model, .newdata, ...) {
-    as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
+  as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
 }

@@ -1,23 +1,107 @@
-bibentry(
-  bibtype = "Article",
-  key = "mlr",
-  title = "{mlr}: Machine Learning in R",
-  author = c(
-    person("Bernd", "Bischl"),
-    person("Michel", "Lang"),
-    person("Lars", "Kotthoff"),
-    person("Julia", "Schiffner"),
-    person("Jakob", "Richter"),
-    person("Erich", "Studerus"),
-    person("Giuseppe", "Casalicchio"),
-    person("Zachary M.", "Jones")
+bref = c(
+  bibentry(
+    bibtype = "Article",
+    key = "mlr",
+    title = "{mlr}: Machine Learning in R",
+    author = c(
+      person("Bernd", "Bischl"),
+      person("Michel", "Lang"),
+      person("Lars", "Kotthoff"),
+      person("Julia", "Schiffner"),
+      person("Jakob", "Richter"),
+      person("Erich", "Studerus"),
+      person("Giuseppe", "Casalicchio"),
+      person("Zachary M.", "Jones")
+    ),
+    journal = "Journal of Machine Learning Research",
+    year = 2016L,
+    volume = 17L,
+    number = 170L,
+    pages = "1-5",
+    url = "http://jmlr.org/papers/v17/15-066.html"
   ),
-  journal = "Journal of Machine Learning Research",
-  year = 2016L,
-  volume = 17L,
-  number = 170L,
-  pages = "1-5",
-  url = "http://jmlr.org/papers/v17/15-066.html"
+  bibentry(
+    bibtype = "Article",
+    key = "automatic",
+    title = "Automatic model selection for high-dimensional survival analysis",
+    author = c(
+      person("Michel", "Lang"),
+      person("Helena", "Kotthaus"),
+      person("Peter", "Marwedel"),
+      person("Claus", "Weihs"),
+      person("Joerg", "Rahnenfuehrer"),
+      person("Bernd", "Bischl")
+    ),
+    journal = "Journal of Statistical Computation and Simulation",
+    year = 2014L,
+    volume = 85L,
+    number = 1L,
+    pages = "62-76",
+    publisher= "Taylor & Francis"
+  ),
+  bibentry(
+    bibtype = "incollection",
+    title = "On Class Imbalance Correction for Classification Algorithms in Credit Scoring",
+    key = 'bischl2016class',
+    author = c(
+      person("Bernd", "Bischl"),
+      person("Tobias", "Kuehn"),
+      person("Gero", "Szepannek")
+    ),
+    booktitle = "Operations Research Proceedings 2014",
+    pages = "37-43",
+    year = 2016L,
+    publisher = "Springer"
+  ),
+  bibentry(
+    bibtype = "Article",
+    title = "mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions",
+    key = "mlrmbo",
+    author = c(
+      person("Bernd", "Bischl"),
+      person("Jakob", "Richter"),
+      person("Jakob", "Bossek"),
+      person("Daniel", "Horn"),
+      person("Janek", "Thomas"),
+      person("Michel", "Lang")
+    ),
+    journal = "arXiv preprint arXiv:1703.03373",
+    year = 2017L
+  ),
+  bibentry(
+    bibtype = "Article",
+    title = "Multilabel Classification with R Package mlr",
+    key = "multilabel",
+    author = c(
+      person("Philipp", "Probst"),
+      person("Quay", "Au"),
+      person("Giuseppe", "Casalicchio"),
+      person("Clemens", "Stachl"),
+      person("Bernd", "Bischl")
+    ),
+    journal = "arXiv preprint arXiv:1703.08991",
+    year = 2017L
+  ),
+  bibentry(
+    bibtype = "Article",
+    title = "OpenML: An R package to connect to the machine learning platform OpenML",
+    key = "openml",
+    author = c(
+      person("Giuseppe", "Casalicchio"),
+      person("Jakob", "Bossek"),
+      person("Michel", "Lang"),
+      person("Dominik", "Kirchhoff"),
+      person("Pascal", "Kerschke"),
+      person("Benjamin", "Hofner"),
+      person("Heidi", "Seibold"),
+      person("Joaquin", "Vanschoren"),
+      person("Bernd", "Bischl")
+    ),
+    journal = "Computational Statistics",
+    pages = "1-15",
+    year = 2017L,
+    publisher = "Springer"
+  )
 )
 
 # vim: ft=r

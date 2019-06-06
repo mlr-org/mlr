@@ -12,9 +12,9 @@ makeRLearner.regr.RRF = function() {
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0),
       makeNumericLearnerParam(id = "coefReg", default = 0.8,
-                              requires = quote(flagReg == 1L)),
+        requires = quote(flagReg == 1L)),
       makeIntegerVectorLearnerParam(id = "feaIni", lower = 0, upper = Inf,
-                                    requires = quote(flagReg == 1L)),
+        requires = quote(flagReg == 1L)),
       makeLogicalLearnerParam(id = "corr.bias", default = FALSE),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
@@ -38,7 +38,7 @@ makeRLearner.regr.RRF = function() {
 #' @export
 trainLearner.regr.RRF = function(.learner, .task, .subset, .weights, ...) {
   RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
-           keep.forest = TRUE, ...)
+    keep.forest = TRUE, ...)
 }
 
 #' @export

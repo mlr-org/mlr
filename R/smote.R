@@ -6,49 +6,51 @@
 #' for the minority class.
 #'
 #' The method handles factor features, too. The gower distance is used for nearest neighbor
-#' calculation, see \code{\link[cluster]{daisy}}.
+#' calculation, see [cluster::daisy].
 #' For interpolation, the new factor level for x3
 #' is sampled from the two given levels of x1 and x2 per feature.
 #'
 #' @template arg_task
-#' @param rate [\code{numeric(1)}]\cr
+#' @param rate (`numeric(1)`)\cr
 #'   Factor to upsample the smaller class.
-#'   Must be between 1 and \code{Inf},
+#'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
-#' @param nn [\code{integer(1)}]\cr
+#' @param nn (`integer(1)`)\cr
 #'   Number of nearest neighbors to consider.
 #'   Default is 5.
-#' @param standardize [\code{integer(1)}]\cr
+#' @param standardize (`integer(1)`)\cr
 #'   Standardize input variables before calculating the nearest neighbors
 #'   for data sets with numeric input variables only. For mixed variables
 #'   (numeric and factor) the gower distance is used and variables are
 #'   standardized anyway.
-#'   Default is \code{TRUE}.
-#' @param alt.logic [\code{integer(1)}]\cr
+#'   Default is `TRUE`.
+#' @param alt.logic (`integer(1)`)\cr
 #'   Use an alternative logic for selection of minority class observations.
 #'   Instead of sampling a minority class element AND one of its nearest
 #'   neighbors, each minority class element is taken multiple times (depending
 #'   on rate) for the interpolation and only the corresponding nearest neighbor
 #'   is sampled.
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @template ret_task
 #' @references
 #' Chawla, N., Bowyer, K., Hall, L., & Kegelmeyer, P. (2000)
-#' \emph{SMOTE: Synthetic Minority Over-sampling TEchnique.}
+#' *SMOTE: Synthetic Minority Over-sampling TEchnique.*
 #' In International Conference of Knowledge Based Computer Systems, pp. 46-57.
 #' National Center for Software Technology, Mumbai, India, Allied Press.
 #' @family imbalancy
 #' @export
 #' @useDynLib mlr c_smote
 smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
+
   checkTask(task, binary = TRUE)
   assertNumber(rate, lower = 1)
   nn = asInt(nn, lower = 1L)
 
   requirePackages("cluster", why = "smote", default.method = "load")
   # check for changeData later
-  if (!is.null(getTaskWeights(task)))
+  if (!is.null(getTaskWeights(task))) {
     stopf("SMOTE cannot be used with weights in task!")
+  }
 
   # shortcuts
   data = getTaskData(task)
@@ -56,13 +58,15 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   y = data[, target]
   x = dropNamed(data, target)
   z = getMinMaxClass(y)
-  if (z$min.size < nn)
+  if (z$min.size < nn) {
     stopf("You cannot set nn = %i, when the minimal class has size %i!", nn, z$min.size)
+  }
   x.min = x[z$min.inds, , drop = FALSE]
   n.min = nrow(x.min) # number of NEW cases
   n.new = ifelse(alt.logic, as.integer(rate - 1) * n.min, round((rate - 1) * n.min))
-  if (n.new <= 0L)
+  if (n.new <= 0L) {
     return(task)
+  }
   res = matrix(0, n.new, ncol(x))
 
   is.num = vlapply(x, is.numeric)
@@ -71,8 +75,9 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   x.min.matrix = x.min
   if (any(!is.num)) {
     for (i in seq_col(x.min.matrix)) {
-      if (!is.num[i])
+      if (!is.num[i]) {
         x.min.matrix[, i] = as.numeric(as.integer(x.min.matrix[, i]))
+      }
     }
   }
   x.min.matrix = as.matrix(x.min.matrix)
@@ -91,8 +96,9 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
       x.scaled = scale(x.min.matrix, x.min.matrix[i, ], ranges)
       if (any(!is.num)) {
         for (j in seq_col(x.scaled)) {
-          if (!is.num[j])
+          if (!is.num[j]) {
             x.scaled[, j] = (x.scaled[, j] != 0)
+          }
         }
       }
       dist = drop(x.scaled^2 %*% rep(1, ncol(x.scaled)))
@@ -110,9 +116,10 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
         res[(i - 1) * n.new.obs + n, ] = x.min.matrix[i, ] + runif(1) * diffs
         if (any(!is.num)) {
           for (j in seq_col(x.min.matrix)) {
-            if (!is.num[j])
+            if (!is.num[j]) {
               res[(i - 1) * n.new.obs + n, j] = c(x.min.matrix[knns[neigh], j],
                 x.min.matrix[i, j])[1 + round(runif(1), 0)]
+            }
           }
         }
       }
@@ -133,9 +140,10 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   # convert ints back to factors
   if (any(!is.num)) {
     for (i in seq_len(ncol(res))) {
-      if (!is.num[i])
-        res[, i] = as.factor(as.integer(res[, i]))
-      levels(res[, i]) = levels(x[, i])
+      if (!is.num[i]) {
+        res[, i] = factor(levels(x[, i])[as.integer(res[, i])],
+          levels = levels(x[, i]))
+      }
     }
   }
 

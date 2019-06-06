@@ -1,6 +1,6 @@
 context("weightedclasses")
 
-test_that("WeightedClassesWrapper, binary",  {
+test_that("WeightedClassesWrapper, binary", {
   pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
@@ -11,8 +11,8 @@ test_that("WeightedClassesWrapper, binary",  {
   }
 
   learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
-   "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
-   "randomForest", "svm"), sep = ".")
+    "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
+    "randomForest", "svm"), sep = ".")
   x = lapply(learners, function(lrn) {
     cm1 = f(lrn, 0.001)
     cm2 = f(lrn, 1)
@@ -25,7 +25,7 @@ test_that("WeightedClassesWrapper, binary",  {
   expect_error(f("classif.lda", 0.01))
 })
 
-test_that("WeightedClassesWrapper, multiclass",  {
+test_that("WeightedClassesWrapper, multiclass", {
   levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
@@ -36,9 +36,10 @@ test_that("WeightedClassesWrapper, multiclass",  {
   }
 
   learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
-   "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
-   "randomForest", "svm"), sep = ".")
+    "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
+    "randomForest", "svm"), sep = ".")
   x = lapply(learners, function(lrn) {
+
     classes = getTaskFactorLevels(multiclass.task)[[multiclass.target]]
     n = length(classes)
     cm1 = f(lrn, setNames(object = c(10000, 1, 1), classes))
@@ -59,7 +60,7 @@ test_that("WeightedClassesWrapper, multiclass",  {
 
 context("getClassWeightParam")
 
-test_that("getClassWeightParam",  {
+test_that("getClassWeightParam", {
   f = function(lrn) {
     lrn1 = makeLearner(lrn)
     expect_is(getClassWeightParam(lrn), "LearnerParam")
@@ -67,7 +68,23 @@ test_that("getClassWeightParam",  {
   }
 
   learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
-   "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
-   "randomForest", "svm"), sep = ".")
+    "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
+    "randomForest", "svm"), sep = ".")
   x = lapply(learners, f)
+
+
+  # some special cases
+  lrn = makeLearner("classif.ksvm")
+  ps = lrn$par.set$pars[[lrn$class.weights.param]]
+
+  # wrapped learner
+  lrnWrap = makeBaggingWrapper(lrn)
+  expect_equal(ps, getClassWeightParam(lrn))
+
+  # model multiplexer with at least 1 learner without class.weight prop
+  modMult = makeModelMultiplexer(list(lrn, makeLearner("classif.rpart")))
+
+  expect_error(getClassWeightParam(modMult), "please specify one of the base learners: classif.ksvm, classif.rpart")
+  expect_error(getClassWeightParam(modMult, "classif.fu"), "classif.fu is not a base learner. Available base learners are: classif.ksvm, classif.rpart")
+  expect_equal(getClassWeightParam(modMult, "classif.ksvm"), ps)
 })

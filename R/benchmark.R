@@ -5,24 +5,24 @@
 #' w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 #' training / test sets are used for the different learners.
 #' Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
-#' learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
+#' learner can be automatically tuned using [makeTuneWrapper].
 #'
-#' @param learners [(list of) \code{\link{Learner}} | \code{character}]\cr
+#' @param learners (list of [Learner] | [character])\cr
 #'   Learning algorithms which should be compared, can also be a single learner.
-#'   If you pass strings the learners will be created via \code{\link{makeLearner}}.
-#' @param tasks [(list of) \code{\link{Task}}]\cr
+#'   If you pass strings the learners will be created via [makeLearner].
+#' @param tasks {list of [Task]}\cr
 #'   Tasks that learners should be run on.
-#' @param resamplings [(list of) \code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
+#' @param resamplings (list of [ResampleDesc] | [ResampleInstance])\cr
 #'   Resampling strategy for each tasks.
 #'   If only one is provided, it will be replicated to match the number of tasks.
 #'   If missing, a 10-fold cross validation is used.
-#' @param measures [(list of) \code{\link{Measure}}]\cr
+#' @param measures (list of [Measure])\cr
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_keep_pred
 #' @template arg_models
 #' @template arg_showinfo
-#' @return [\code{\link{BenchmarkResult}}].
+#' @return [BenchmarkResult].
 #' @family benchmark
 #' @export
 #' @examples
@@ -40,35 +40,14 @@
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
 
-
   learners = ensureBenchmarkLearners(learners)
-  learner.ids = extractSubList(learners, "id")
-  if (anyDuplicated(learner.ids))
-    stop("Learners need unique ids!")
-  names(learners) = learner.ids
-
   tasks = ensureBenchmarkTasks(tasks)
-  task.ids = extractSubList(tasks, c("task.desc", "id"))
-  if (anyDuplicated(task.ids))
-    stop("Tasks need unique ids!")
-  names(tasks) = task.ids
-
   resamplings = ensureBenchmarkResamplings(resamplings, tasks)
-  resamplings = Map(function(res, tt) {
-    if (inherits(res, "ResampleInstance"))
-      return(res)
-    if (inherits(res, "ResampleDesc"))
-      return(makeResampleInstance(res, task = tt))
-    stop("All objects in 'resamplings' must be of class 'ResampleDesc' or 'ResampleInstance'")
-  }, resamplings, tasks)
-  names(resamplings) = task.ids
-
   measures = ensureBenchmarkMeasures(measures, tasks)
-
-  assertFlag(models)
   assertFlag(keep.pred)
+  assertFlag(models)
 
-  grid = expand.grid(task = task.ids, learner = learner.ids, stringsAsFactors = FALSE)
+  grid = expand.grid(task = names(tasks), learner = names(learners), stringsAsFactors = FALSE)
   plevel = "mlr.benchmark"
   parallelLibrary("mlr", master = FALSE, level = plevel, show.info = FALSE)
   exportMlrOptions(level = "mlr.benchmark")
@@ -96,17 +75,17 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
 #' @name BenchmarkResult
 #' @rdname BenchmarkResult
 #' @description
-#' Result of a benchmark experiment conducted by \code{\link{benchmark}}
+#' Result of a benchmark experiment conducted by [benchmark]
 #' with the following members:
 #' \describe{
-#' \item{results [list of \code{\link{ResampleResult}}]:}{
-#'   A nested \code{list} of resample results,
+#' \item{results (list of [ResampleResult]):}{
+#'   A nested [list] of resample results,
 #'   first ordered by task id, then by learner id.
 #' }
-#' \item{measures [list of \code{\link{Measure}}]:}{
+#' \item{measures (list of [Measure]):}{
 #'   The performance measures used in the benchmark experiment.
 #' }
-#' \item{learners [list of \code{\link{Learner}}]:}{
+#' \item{learners (list of [Learner]):}{
 #'   The learning algorithms compared in the benchmark experiment.
 #' }
 #' }
@@ -115,8 +94,8 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
 #' for all tasks and learners.
 #'
 #' It is recommended to
-#' retrieve required information via the \code{getBMR*} getter functions.
-#' You can also convert the object using \code{\link[base]{as.data.frame}}.
+#' retrieve required information via the `getBMR*` getter functions.
+#' You can also convert the object using [as.data.frame].
 #'
 #' @family benchmark
 NULL
@@ -124,8 +103,9 @@ NULL
 
 benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info) {
   setSlaveOptions()
-  if (show.info)
+  if (show.info) {
     messagef("Task: %s, Learner: %s", task, learner)
+  }
   lrn = learners[[learner]]
   extract.this = getExtractor(lrn)
   r = resample(lrn, tasks[[task]], resamplings[[task]],

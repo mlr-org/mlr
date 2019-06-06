@@ -36,6 +36,7 @@ makeRLearner.regr.cforest = function() {
 trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
   ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion, minsplit,
   minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
+
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))

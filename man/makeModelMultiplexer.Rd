@@ -8,18 +8,18 @@
 makeModelMultiplexer(base.learners)
 }
 \arguments{
-\item{base.learners}{[\code{list} of \code{\link{Learner}}]\cr
+\item{base.learners}{([list` of [Learner])\cr
 List of Learners with unique IDs.}
 }
 \value{
-[\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
+([ModelMultiplexer]). A [Learner] specialized as `ModelMultiplexer`.
 }
 \description{
 Combines multiple base learners by dispatching
 on the hyperparameter \dQuote{selected.learner} to a specific model class.
 This allows to tune not only the model class (SVM, random forest, etc) but also
-their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
-\code{\link{makeTuneControlIrace}} for a very powerful approach, see example below.
+their hyperparameters in one go. Combine this with [tuneParams] and
+[makeTuneControlIrace] for a very powerful approach, see example below.
 
 The parameter set is the union of all (unique) base learners.
 In order to avoid name clashes all parameter names are prefixed
@@ -28,7 +28,7 @@ with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
 The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.
 
-The getter \code{\link{getLearnerProperties}} returns the properties of the
+The getter [getLearnerProperties] returns the properties of the
 selected base learner.
 }
 \note{
@@ -36,6 +36,7 @@ Note that logging output during tuning is somewhat shortened to make it more rea
   I.e., the artificial prefix before parameter names is suppressed.
 }
 \examples{
+set.seed(123)
 \donttest{
 library(BBmisc)
 bls = list(
@@ -57,7 +58,9 @@ rdesc = makeResampleDesc("CV", iters = 2L)
 ctrl = makeTuneControlRandom(maxit = 10L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
-print(head(as.data.frame(res$opt.path)))
+
+df = as.data.frame(res$opt.path)
+print(head(df[, -ncol(df)]))
 
 # more unique and reliable way to construct the param set
 ps = makeModelMultiplexerParamSet(lrn,
@@ -87,6 +90,7 @@ Other multiplexer: \code{\link{makeModelMultiplexerParamSet}}
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeTuneControlCMAES}},
@@ -99,3 +103,5 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
+\concept{multiplexer}
+\concept{tune}

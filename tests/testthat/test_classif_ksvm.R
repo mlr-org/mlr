@@ -28,12 +28,12 @@ test_that("classif_ksvm", {
 
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kernlab::ksvm, pars)
-    old.predicts.list[[i]] =  kernlab::predict(m, newdata = multiclass.test)
+    old.predicts.list[[i]] = kernlab::predict(m, newdata = multiclass.test)
     old.probs.list[[i]] = kernlab::predict(m, newdata = multiclass.test, type = "prob")
   }
 
   testSimpleParsets("classif.ksvm", multiclass.df, multiclass.target,
-    multiclass.train.inds, old.predicts.list,  parset.list2)
+    multiclass.train.inds, old.predicts.list, parset.list2)
   testProbParsets("classif.ksvm", multiclass.df, multiclass.target,
     multiclass.train.inds, old.probs.list, parset.list2)
 
@@ -47,5 +47,4 @@ test_that("classif_ksvm", {
 
   testCV("classif.ksvm", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
     parset = list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5))
-
 })

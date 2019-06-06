@@ -1,20 +1,20 @@
 #' @title Downsample (subsample) a task or a data.frame.
 #'
 #' @description
-#' Decrease the observations in a \code{task} or a \code{ResampleInstance}
+#' Decrease the observations in a `task` or a `ResampleInstance`
 #' to a given percentage of observations.
 #'
-#' @param obj [\code{\link{Task}} | \code{\link{ResampleInstance}}]\cr
-#'   Input data or a \code{ResampleInstance}.
-#' @param perc [\code{numeric(1)}]\cr
-#'   Percentage from [0, 1].
+#' @param obj ([Task] | [ResampleInstance])\cr
+#'   Input data or a `ResampleInstance`.
+#' @param perc (`numeric(1)`)\cr
+#'   Percentage from (0, 1).
 #'   Default is 1.
-#' @param stratify [\code{logical(1)}]\cr
+#' @param stratify (`logical(1)`)\cr
 #'   Only for classification:
 #'   Should the downsampled data be stratified according to the target classes?
-#'   Default is \code{FALSE}.
-#' @seealso \code{\link{makeResampleInstance}}
-#' @return [\code{data.frame} | \code{\link{Task}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
+#'   Default is `FALSE`.
+#' @seealso [makeResampleInstance]
+#' @return ([data.frame` | [Task] | [ResampleInstance]). Same type as `obj`.
 #' @family downsample
 #' @export
 downsample = function(obj, perc = 1, stratify = FALSE) {
@@ -31,9 +31,9 @@ downsample.Task = function(obj, perc = 1, stratify = FALSE) {
 
 #' @export
 downsample.ResampleInstance = function(obj, perc = 1, stratify = FALSE) {
-  if (stratify)
+  if (stratify) {
     stop("Stratifying is not supported for a ResampleInstance!")
+  }
   obj$train.inds = lapply(obj$train.inds, function(x) sample(x, size = length(x) * perc))
   return(obj)
 }
-

@@ -44,7 +44,6 @@ makeRLearner.regr.glm = function() {
 #' @export
 trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsilon, maxit, trace, family,
   gaussian.link = "identity", poisson.link = "log", Gamma.link = "inverse", inverse.gaussian.link = "1/mu2", ...) {
-
   ctrl = learnerArgsToControl(stats::glm.control, epsilon, maxit, trace)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
@@ -55,10 +54,11 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
     Gamma = stats::Gamma(link = make.link(Gamma.link)),
     inverse.gaussian = stats::inverse.gaussian(link = make.link(inverse.gaussian.link))
   )
-  if (is.null(.weights))
-    m = stats::glm(f, data = d, control = ctrl, family = family, ... )
-  else
-    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ... )
+  if (is.null(.weights)) {
+    m = stats::glm(f, data = d, control = ctrl, family = family, ...)
+  } else {
+    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ...)
+  }
   return(m)
 }
 
@@ -66,7 +66,8 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
 predictLearner.regr.glm = function(.learner, .model, .newdata, ...) {
   se.fit = .learner$predict.type == "se"
   p = predict(.model$learner.model, newdata = .newdata, type = "response", se.fit = se.fit, ...)
-  if (se.fit)
+  if (se.fit) {
     p = cbind(p$fit, p$se.fit)
+  }
   return(p)
 }

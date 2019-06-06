@@ -18,7 +18,7 @@ makeRLearner.classif.logreg = function() {
 }
 
 #' @export
-trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   stats::glm(f, data = getTaskData(.task, .subset), family = "binomial", weights = .weights, ...)
 }

@@ -20,7 +20,7 @@ makeRLearner.surv.gamboost = function() {
     par.vals = list(
       family = "CoxPH"
     ),
-    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights"),
     name = "Gradient boosting with smooth components",
     short.name = "gamboost",
     note = "`family` has been set to `CoxPH()` by default.",
@@ -41,19 +41,16 @@ trainLearner.surv.gamboost = function(.learner, .task, .subset, .weights = NULL,
     custom.family = custom.family.definition
   )
 
-    f = getTaskFormula(.task)
-    data = getTaskData(.task, subset = .subset, recode.target = "rcens")
-    if (is.null(.weights)) {
-      model = mboost::gamboost(f, data = data, control = ctrl, family = family, ...)
-    } else  {
-      model = mboost::gamboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
-    }
+  f = getTaskFormula(.task)
+  data = getTaskData(.task, subset = .subset, recode.target = "surv")
+  if (is.null(.weights)) {
+    model = mboost::gamboost(f, data = data, control = ctrl, family = family, ...)
+  } else {
+    model = mboost::gamboost(f, data = getTaskData(.task, subset = .subset, recode.target = "surv"), control = ctrl, weights = .weights, family = family, ...)
+  }
 }
 
 #' @export
 predictLearner.surv.gamboost = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response")
-    predict(.model$learner.model, newdata = .newdata, type = "link")
-  else
-    stop("Unknown predict type")
+  predict(.model$learner.model, newdata = .newdata, type = "link")
 }

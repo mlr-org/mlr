@@ -15,7 +15,7 @@ makeRLearner.regr.LiblineaRL2L2SVR = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    #provide default to get rid of warning message during training
+    # provide default to get rid of warning message during training
     par.vals = list(svr_eps = 0.1, type = 11L),
     properties = "numerics",
     name = "L2-Regularized L2-Loss Support Vector Regression",
@@ -33,5 +33,5 @@ trainLearner.regr.LiblineaRL2L2SVR = function(.learner, .task, .subset, .weights
 
 #' @export
 predictLearner.regr.LiblineaRL2L2SVR = function(.learner, .model, .newdata, ...) {
-    predict(.model$learner.model, newx = .newdata, ...)$predictions
+  predict(.model$learner.model, newx = .newdata, ...)$predictions
 }

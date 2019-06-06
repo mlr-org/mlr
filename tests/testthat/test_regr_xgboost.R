@@ -19,21 +19,19 @@ test_that("regr_xgboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
-    #model = xgboost::xgboost(data = data.matrix(regr.num.train[,-regr.num.class.col]), verbose = 0L,
-    #label = as.numeric(regr.num.train[,regr.num.class.col]),
-    #nrounds = 20, objective = "reg:linear", missing = NULL)
+    # model = xgboost::xgboost(data = data.matrix(regr.num.train[,-regr.num.class.col]), verbose = 0L,
+    # label = as.numeric(regr.num.train[,regr.num.class.col]),
+    # nrounds = 20, objective = "reg:linear", missing = NULL)
     old.predicts.list[[i]] = predict(model, data.matrix(regr.num.test[, -regr.num.class.col]))
   }
 
-  #set.seed(getOption("mlr.debug.seed"))
+  # set.seed(getOption("mlr.debug.seed"))
   testSimpleParsets("regr.xgboost", regr.num.df, regr.num.target, regr.num.train.inds,
     old.predicts.list, parset.list)
 })
 
 test_that("xgboost works with different 'missing' arg vals", {
-  lrn = makeLearner("classif.xgboost", missing = NA_real_)
-  lrn = makeLearner("classif.xgboost", missing = NA)
-  lrn = makeLearner("classif.xgboost", missing = NULL)
+  lrn = makeLearner("regr.xgboost", missing = NA_real_)
+  lrn = makeLearner("regr.xgboost", missing = NA)
+  lrn = makeLearner("regr.xgboost", missing = NULL)
 })
-
-

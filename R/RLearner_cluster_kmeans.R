@@ -32,4 +32,3 @@ predictLearner.cluster.kmeans = function(.learner, .model, .newdata, ...) {
     prob = as.matrix(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))
   )
 }
-

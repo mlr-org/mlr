@@ -14,7 +14,7 @@ makeRLearner.classif.pamr = function() {
       makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "remove.zeros", default = TRUE),
       makeDiscreteLearnerParam(id = "sign.contrast", default = "both", values = c("both", "negative", "positive")),
-      #we cannot the use the orginal argument name 'threshold', because it's already used
+      # we cannot the use the orginal argument name 'threshold', because it's already used
       makeNumericLearnerParam(id = "threshold.predict", default = 1, when = "predict")
       # FIXME threshold in pamr.predict() seems to have no default. If it has 1 as default, par.vals is redundant
     ),

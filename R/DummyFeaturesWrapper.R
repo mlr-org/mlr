@@ -1,7 +1,7 @@
 #' @title Fuse learner with dummy feature creator.
 #'
 #' @description
-#' Fuses a base learner with the dummy feature creator (see \code{\link{createDummyFeatures}}).
+#' Fuses a base learner with the dummy feature creator (see [createDummyFeatures]).
 #' Returns a learner which can be used like any other learner.
 #'
 #' @template arg_learner
@@ -10,6 +10,7 @@
 #' @family wrapper
 #' @export
 makeDummyFeaturesWrapper = function(learner, method = "1-of-n", cols = NULL) {
+
   learner = checkLearner(learner)
   args = list(method = method, cols = cols)
   rm(list = names(args))

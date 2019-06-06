@@ -5,21 +5,26 @@
 # https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf
 
 colAUC = function(samples, truth, maximum = TRUE) {
+
   y = as.factor(truth)
   X = as.matrix(samples)
-  if (nrow(X) == 1)
+  if (nrow(X) == 1) {
     X = t(X)
+  }
   nr = nrow(X)
   nc = ncol(X)
   ny = table(y)
   ul = as.factor(rownames(ny))
   nl = length(ny)
-  if (nl <= 1)
+  if (nl <= 1) {
     stop("colAUC: List of labels 'y' have to contain at least 2 class labels.")
-  if (!is.numeric(X))
+  }
+  if (!is.numeric(X)) {
     stop("colAUC: 'X' must be numeric")
-  if (nr != length(y))
+  }
+  if (nr != length(y)) {
     stop("colAUC: length(y) and nrow(X) must be the same")
+  }
   per = t(utils::combn(1:nl, 2))
   np = nrow(per)
   auc = matrix(0.5, np, nc)

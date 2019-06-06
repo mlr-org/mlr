@@ -64,11 +64,11 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
 
 #' @export
 getOOBPredsLearner.regr.randomForestSRC = function(.learner, .model) {
-  as.numeric(.model$learner.model$predicted.oob)
+  as.numeric(getLearnerModel(.model, more.unwrap = TRUE)$predicted.oob)
 }
 
 #' @rdname getFeatureImportanceLearner
 getFeatureImportanceLearner.regr.randomForestSRC = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   randomForestSRC::vimp(mod)$importance
 }

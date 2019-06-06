@@ -8,14 +8,14 @@
 #' labels in the chain. During the prediction phase, when true labels are not available, they are
 #' replaced by predicted labels.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_order
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel
@@ -23,9 +23,10 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.classifierChains", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
     learner.subclass = "MultilabelClassifierChainsWrapper",
     model.subclass = "MultilabelClassifierChainsModel")
   x$type = "multilabel"
@@ -34,9 +35,10 @@ makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
 }
 
 #' @export
-trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset, .weights = NULL, ...){
+trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   if (is.null(.learner$order)) {
-    order = sample(getTaskTargetNames(.task)) #random order
+    order = sample(getTaskTargetNames(.task)) # random order
   } else {
     order = .learner$order
   }
@@ -50,7 +52,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
     chained.targets = setdiff(chained.targets, tn)
     data2 = dropNamed(data, chained.targets)
     index = which(names(data2) %in% setdiff(targets, tn))
-    if (length(index) != 0) {  #convert augmented features into 0/1 variables, since boolean doesn't work
+    if (length(index) != 0) { # convert augmented features into 0/1 variables, since boolean doesn't work
       data2[, index] = sapply(data2[, index], as.numeric)
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
@@ -60,20 +62,19 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
 }
 
 #' @export
-predictLearner.MultilabelClassifierChainsWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelClassifierChainsWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   predmatrix = matrix(ncol = length(models), nrow = nrow(.newdata), dimnames = list(NULL, names(models)))
   if (.learner$predict.type == "response") {
     for (tn in names(models)) {
-      predmatrix[, tn] = as.logical(getPredictionResponse(predict(models[[tn]], newdata = .newdata, ...)))
+      predmatrix[, tn] = as.logical(getPredictionResponse(predict(models[[tn]], newdata = .newdata, subset = .subset, ...)))
       .newdata[tn] = as.numeric(predmatrix[, tn])
     }
   } else {
     for (tn in names(models)) {
-      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = .newdata, ...), cl = "TRUE")
+      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = .newdata, subset = .subset, ...), cl = "TRUE")
       .newdata[tn] = predmatrix[, tn]
     }
   }
-  predmatrix[, .model$task.desc$class.levels] #bring labels back in original order
+  predmatrix[, .model$task.desc$class.levels] # bring labels back in original order
 }
-

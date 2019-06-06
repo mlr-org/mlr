@@ -20,7 +20,7 @@ test_that("getTaskData", {
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
     sum(binaryclass.df[, binaryclass.target] == td$positive))
-  expect_equal(sum(df[, binaryclass.target] == - 1),
+  expect_equal(sum(df[, binaryclass.target] == -1),
     sum(binaryclass.df[, binaryclass.target] == td$negative))
   df = getTaskData(multilabel.task, recode.target = "multilabel.factor")
   expect_true(all(sapply(df[, multilabel.target], is.factor)))
@@ -61,7 +61,7 @@ test_that("getTaskData survival", {
   expect_equal(names(x$target), surv.target)
   expect_true(setequal(names(x$data), setdiff(names(surv.df), surv.target)))
 
-  x = getTaskData(surv.task, target.extra = TRUE, recode.target = "rcens")
+  x = getTaskData(surv.task, target.extra = TRUE, recode.target = "surv")
   expect_true(survival::is.Surv(x$target))
   expect_equal(dim(x$target), c(nrow(surv.df), 2L))
 })

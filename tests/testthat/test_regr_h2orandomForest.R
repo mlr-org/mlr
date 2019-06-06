@@ -10,7 +10,7 @@ test_that("regr_h2orandomForest", {
     list(ntrees = 4),
     list(ntrees = 4, mtries = 2)
   )
-  #h2o.randomForest needs seed in function call to be reproducible
+  # h2o.randomForest needs seed in function call to be reproducible
   debug.seed = getOption("mlr.debug.seed")
   parset.list = lapply(parset.list, function(x) c(x, seed = debug.seed))
   old.predicts.list = list()
@@ -21,7 +21,7 @@ test_that("regr_h2orandomForest", {
       y = regr.target,
       training_frame = h2o::as.h2o(regr.train)))
     m = do.call(h2o::h2o.randomForest, parset)
-    p  = predict(m, newdata = h2o::as.h2o(regr.test))
+    p = predict(m, newdata = h2o::as.h2o(regr.test))
     old.predicts.list[[i]] = as.data.frame(p)[, 1L]
   }
   testSimpleParsets("regr.h2o.randomForest", regr.df, regr.target, regr.train.inds,

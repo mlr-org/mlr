@@ -11,7 +11,7 @@ test_that("regr_h2odeeplearning", {
     list(distribution = "quantile", quantile_alpha = 0.2),
     list(distribution = "tweedie", tweedie_power = 1.2)
   )
-  #h20deeplearning needs seed in function call to be reproducible
+  # h20deeplearning needs seed in function call to be reproducible
   debug.seed = getOption("mlr.debug.seed")
   parset.list = lapply(parset.list, function(x) c(x, seed = debug.seed, reproducible = TRUE))
   old.predicts.list = list()
@@ -23,7 +23,7 @@ test_that("regr_h2odeeplearning", {
       training_frame = h2o::as.h2o(regr.train)))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(h2o::h2o.deeplearning, parset)
-    p  = predict(m, newdata = h2o::as.h2o(regr.test))
+    p = predict(m, newdata = h2o::as.h2o(regr.test))
     old.predicts.list[[i]] = as.data.frame(p)[, 1L]
   }
 

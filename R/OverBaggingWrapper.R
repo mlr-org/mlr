@@ -5,7 +5,7 @@
 #' for imbalancy correction when we have strongly unequal class sizes.
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' OverBagging is implemented as follows:
 #' For each iteration a random data subset is sampled. Class examples
@@ -19,27 +19,28 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #'
 #' @template arg_learner
-#' @param obw.iters [\code{integer(1)}]\cr
+#' @param obw.iters (`integer(1)`)\cr
 #'   Number of fitted models in bagging.
 #'   Default is 10.
-#' @param obw.rate [\code{numeric(1)}]\cr
+#' @param obw.rate (`numeric(1)`)\cr
 #'   Factor to upsample a class in each bag.
-#'   Must be between 1 and \code{Inf},
+#'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param obw.maxcl [\code{character(1)}]\cr
+#' @param obw.maxcl (`character(1)`)\cr
 #'   How should other class (usually larger class) be handled?
 #'   \dQuote{all} means every instance of the class gets in each bag,
 #'   \dQuote{boot} means the class instances are bootstrapped in each iteration.
 #'   Default is \dQuote{boot}.
-#' @param obw.cl [\code{character(1)}]\cr
-#'   Which class should be over- or undersampled. If \code{NULL}, \code{makeOverBaggingWrapper}
+#' @param obw.cl (`character(1)`)\cr
+#'   Which class should be over- or undersampled. If `NULL`, `makeOverBaggingWrapper`
 #'   will take the smaller class.
 #' @template ret_learner
 #' @family imbalancy
 #' @family wrapper
 #' @export
 makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL) {
+
   learner = checkLearner(learner, "classif")
   pv = list()
   if (!missing(obw.iters)) {
@@ -59,8 +60,9 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     pv$obw.cl = obw.cl
   }
 
-  if (learner$predict.type != "response")
+  if (learner$predict.type != "response") {
     stop("Predict type of the basic learner must be response.")
+  }
   id = stri_paste(learner$id, "overbagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
@@ -70,12 +72,12 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     makeUntypedLearnerParam(id = "obw.cl", default = NULL, tunable = FALSE)
   )
   makeHomogeneousEnsemble(id, "classif", learner, packs, par.set = ps, par.vals = pv,
-     learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
+    learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
 }
 
 #' @export
-trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
-   obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
+trainLearner.OverBaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
+  obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", obw.cl = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   y = getTaskTargets(.task)

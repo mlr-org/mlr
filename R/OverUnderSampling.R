@@ -9,16 +9,16 @@
 #' reduced (downsampled) by randomly sampling without replacement from this class.
 #'
 #' @template arg_task
-#' @param rate [\code{numeric(1)}]\cr
+#' @param rate (`numeric(1)`)\cr
 #'   Factor to upsample or downsample a class.
 #'   For undersampling: Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent
 #'   and 0 would imply reduction to 0 observations.
-#'   For oversampling: Must be between 1 and \code{Inf},
+#'   For oversampling: Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
-#' @param cl [\code{character(1)}]\cr
-#'   Which class should be over- or undersampled. If \code{NULL}, \code{oversample}
-#'   will select the smaller and \code{undersample} the larger class.
+#' @param cl (`character(1)`)\cr
+#'   Which class should be over- or undersampled. If `NULL`, `oversample`
+#'   will select the smaller and `undersample` the larger class.
 #' @template ret_task
 #' @family imbalancy
 #' @export
@@ -49,4 +49,3 @@ undersample = function(task, rate, cl = NULL) {
   j = sampleBinaryClass(y, rate = rate, cl = cl, resample.other.class = FALSE)
   subsetTask(task, j)
 }
-

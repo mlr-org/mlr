@@ -7,20 +7,20 @@
 setHyperPars(learner, ..., par.vals = list())
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Named (hyper)parameters with new setting. Alternatively these can be passed
 using the \code{par.vals} argument.}
 
-\item{par.vals}{[\code{list}]\cr
+\item{par.vals}{(\link{list})\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Set the hyperparameters of a learner object.
@@ -46,11 +46,11 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerPredictType}},
   \code{\link{getLearnerShortName}},
   \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{learnerHelp}},
-  \code{\link{learnerParamHelp}},
-  \code{\link{makeLearners}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
+  \code{\link{setId}}, \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
+\concept{learner}

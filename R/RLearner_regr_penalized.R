@@ -32,7 +32,7 @@ makeRLearner.regr.penalized = function() {
 }
 
 #' @export
-trainLearner.regr.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.penalized = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   penalized::penalized(f, data = getTaskData(.task, .subset), ...)
 }
@@ -43,5 +43,5 @@ predictLearner.regr.penalized = function(.learner, .model, .newdata, ...) {
   # FIXME: should be removed, reported in issue 840
   m@formula$unpenalized[[2L]] = as.symbol(.model$task.desc$target)
   .newdata[, .model$task.desc$target] = 0
-  penalized::predict(m, data = .newdata,  ...)[, "mu"]
+  penalized::predict(m, data = .newdata, ...)[, "mu"]
 }

@@ -1,32 +1,36 @@
 #' @title Merge different BenchmarkResult objects.
-#' @description The function automatically combines a list of \code{\link{BenchmarkResult}}
-#'   objects into a single \code{\link{BenchmarkResult}} object as long as the full
+#' @description The function automatically combines a list of [BenchmarkResult]
+#'   objects into a single [BenchmarkResult] object as long as the full
 #'   crossproduct of all task-learner combinations are available.
-#' @param bmrs [list of \code{\link{BenchmarkResult}}]\cr
-#'   \code{BenchmarkResult} objects that should be merged.
-#' @return \code{\link{BenchmarkResult}}
-#' @details Note that if you want to merge several \code{\link{BenchmarkResult}}
+#' @param bmrs [list of [BenchmarkResult])\cr
+#'   `BenchmarkResult` objects that should be merged.
+#' @return [BenchmarkResult]
+#' @details Note that if you want to merge several [BenchmarkResult]
 #'   objects, you must ensure that all possible learner and task combinations will be
 #'   contained in the returned object. Otherwise, the user will be notified which
 #'   task-learner combinations are missing or duplicated.
-#'   When merging \code{\link{BenchmarkResult}} objects with different measures,
+#'   When merging [BenchmarkResult] objects with different measures,
 #'   all missing measures will automatically be recomputed.
+#' @noMd
 #' @export
 mergeBenchmarkResults = function(bmrs) {
+
   # check all objects have the class BenchmarkResult
   assertList(bmrs, types = "BenchmarkResult")
 
   # check if all task types are equal
   unique.tt = unique(unlist(lapply(bmrs, function(x) getBMRObjects(x, fun = getTaskType))))
-  if (length(unique.tt) != 1)
+  if (length(unique.tt) != 1) {
     stopf("Different task types found: %s", collapse(unique.tt))
+  }
 
   # check if resample descriptions are equal for each task
   task.rin = peelList(lapply(bmrs, function(bmr) getBMRObjects(bmr, fun = function(x) getRRPredictions(x)$instance$desc)))
   task.rin = groupNamedListByNames(task.rin)
   unique.rin = vlapply(task.rin, function(x) length(unique(x)) == 1)
-  if (any(!unique.rin))
+  if (any(!unique.rin)) {
     stopf("Different resample description found for tasks: %s", collapse(names(unique.rin)[!unique.rin]))
+  }
 
   # get unique learner ids and task ids
   learner.ids = unique(unlist(lapply(bmrs, getBMRLearnerIds)))
@@ -37,7 +41,7 @@ mergeBenchmarkResults = function(bmrs) {
   all.combos = stri_paste(all.combos$task.id, all.combos$learner.id, sep = " - ")
   existing.combos = rbindlist(lapply(bmrs, function(bmr) {
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
-  }))
+  }), use.names = TRUE)
   existing.combos = stri_paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
   if (!identical(sort(existing.combos), sort(all.combos))) {
     dupls = existing.combos[duplicated(existing.combos)]
@@ -49,7 +53,7 @@ mergeBenchmarkResults = function(bmrs) {
 
   # get all learners from bmrs and merge
   lrns.merged = peelList(lapply(bmrs, getBMRLearners))
-  lrns.merged = unique(lrns.merged) #lrns.merged[!duplicated(lrns.merged)]
+  lrns.merged = unique(lrns.merged) # lrns.merged[!duplicated(lrns.merged)]
 
   # get ResampleResults from bmrs and merge them by setting the correct structure
   res.merged = peelList(extractSubList(bmrs, "results", simplify = FALSE))

@@ -42,7 +42,7 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered", "rcens", "weights", "oobpreds", "featimp"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',

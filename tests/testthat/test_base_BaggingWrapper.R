@@ -63,3 +63,11 @@ test_that("BaggingWrapper works with 1 obs in newdata", {
   p = predict(mod, newdata = nd)
   expect_true(!is.na(performance(p)))
 })
+
+test_that("BaggingWrapper with glmnet (#958)", {
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeBaggingWrapper(lrn)
+  mod = train(lrn2, multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_error(pred, NA)
+})

@@ -7,7 +7,7 @@ test_that("regr_earth", {
     list(),
     list(degree = 2),
     list(penalty = 4)
-    )
+  )
 
   old.predicts.list = list()
 

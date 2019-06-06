@@ -5,12 +5,12 @@
 #' It will only be trained on a subset of the original data to save computational time.
 #'
 #' @template arg_learner
-#' @param dw.perc [\code{numeric(1)}]\cr
-#'   See \code{\link{downsample}}.
+#' @param dw.perc (`numeric(1)`)\cr
+#'   See [downsample].
 #'   Default is 1.
-#' @param dw.stratify [\code{logical(1)}]\cr
-#'   See \code{\link{downsample}}.
-#'   Default is \code{FALSE}.
+#' @param dw.stratify (`logical(1)`)\cr
+#'   See [downsample].
+#'   Default is `FALSE`.
 #' @template ret_learner
 #' @family downsample
 #' @family wrapper
@@ -20,7 +20,7 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
   pv = list()
   if (!missing(dw.perc)) {
     assertNumber(dw.perc, na.ok = FALSE, lower = 0, upper = 1)
-    if (dw.perc == 0){
+    if (dw.perc == 0) {
       stopf("You can't downsample %s to 0", learner$id)
     }
     pv$dw.perc = dw.perc
@@ -39,10 +39,17 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
 }
 
 #' @export
-trainLearner.DownsampleWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.DownsampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   dw.perc = 1, dw.stratify = FALSE, ...) {
-  .task$weights = .weights
-  .task = subsetTask(.task, .subset)
+  # If weights vector length fits to task size, set weights before subsetting (Issue #838)
+  if (length(.weights) == getTaskSize(.task)) {
+    .task$weights = .weights
+    .task = subsetTask(.task, .subset)
+    # otherwise subset first and then set weights
+  } else {
+    .task = subsetTask(.task, .subset)
+    .task$weights = .weights
+  }
   .task = downsample(.task, perc = dw.perc, stratify = dw.stratify)
   m = train(.learner$next.learner, .task, weights = .task$weights)
   m$train.task = .task

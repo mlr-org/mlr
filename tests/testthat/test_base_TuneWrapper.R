@@ -48,7 +48,8 @@ test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
   tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
   # this resulted in an error as "s" was not passed to predict
-  resample(tw, binaryclass.task, rdesc)
+  res = resample(tw, binaryclass.task, rdesc)
+  expect_class(res, "ResampleResult")
 })
 
 test_that("TuneWrapper uses tune.threshold", {
@@ -100,11 +101,51 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   ps = makeParamSet(
-    makeDiscreteParam("C", 2^ (-1))
+    makeDiscreteParam("C", 2^(-1))
   )
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),
     par.set = ps, control = ctrl, show.info = FALSE)
   r = resample(lrn2, iris.task, rdesc, measures = mmce)
   expect_identical(sort(names(r$pred$threshold)), c("setosa", "versicolor", "virginica"))
+})
+
+test_that("TuneWrapper with glmnet (#958)", {
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
+    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),
+    control = makeTuneControlRandom())
+  mod = train(lrn2, multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_error(pred, NA)
+})
+
+test_that("TuneWrapper respects train parameters (#2472)", {
+
+  # make task with only 0 as y
+  tsk = makeRegrTask("dummy", data = data.frame(y = rep(0L, 100), x = rep(1L, 100)), target = "y")
+
+  ps = makeParamSet(
+    makeNumericLearnerParam("p1", when = "train", lower = 0, upper = 10),
+    makeNumericLearnerParam("p2", when = "predict", lower = 0, upper = 10),
+    makeNumericLearnerParam("p3", when = "both", lower = 0, upper = 10)
+  )
+
+  lrn = makeLearner("regr.__mlrmocklearners__4", predict.type = "response", p1 = 10, p2 = 10, p3 = 10)
+  # prediction of this learner is always
+  # train_part = p1 + p3
+  # y = train_part + p2 + p3
+  # therefore p1 = p2 = p3 = 0 is the optimal setting
+  # we set params to bad values p1 = p2 = p3 = 10, meaning |y_hat-y| would be 40
+
+  lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
+    par.set = ps,
+    control = makeTuneControlGrid(resolution = 2L))
+  mod = train(lrn2, tsk)
+  # we expect that the optimal parameters are found by the grid search.
+  expect_equal(mod$learner.model$opt.result$x, list(p1 = 0, p2 = 0, p3 = 0))
+  expect_true(mod$learner.model$opt.result$y == 0)
+  pred = predict(mod, tsk)
+  # we expect that the optimal parameter are also applied for prediction and therefore y_hat = p1+p2+p3+p3 should be 0
+  expect_true(all(pred$data$response == 0))
 })

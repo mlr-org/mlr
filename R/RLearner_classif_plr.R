@@ -17,19 +17,21 @@ makeRLearner.classif.plr = function() {
 }
 
 #' @export
-trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, cp.type, cp,  ...) {
+trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, cp.type, cp, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "01")
   # cp.type has preference
-  if (!missing(cp.type))
+  if (!missing(cp.type)) {
     cp2 = cp.type
-  else if (!missing(cp))
+  } else if (!missing(cp)) {
     cp2 = cp
-  else
+  } else {
     cp2 = NULL
+  }
   args = list(x = d$data, y = d$target)
   args$cp = cp2
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     args$weights = .weights
+  }
   args = c(args, list(...))
   do.call(stepPlr::plr, args)
 }
@@ -38,7 +40,7 @@ trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, c
 predictLearner.classif.plr = function(.learner, .model, .newdata, ...) {
   p = stepPlr::predict.plr(.model$learner.model, newx = .newdata, type = "response", ...)
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
-  if (.learner$predict.type == "prob"){
+  if (.learner$predict.type == "prob") {
     y = propVectorToMatrix(p, levs)
     return(y)
   } else {

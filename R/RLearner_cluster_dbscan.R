@@ -35,4 +35,3 @@ predictLearner.cluster.dbscan = function(.learner, .model, .newdata, ...) {
   indices[indices == 0L] = NA_integer_
   return(indices)
 }
-

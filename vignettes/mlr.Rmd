@@ -1,109 +1,24 @@
 ---
 title: "mlr: Machine Learning in R"
-author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-date: "`r Sys.Date()`"
+# author: "Bernd Bischl
+# date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-# mlr: Machine Learning in R
 
-This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
-A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
 
-- [Project Page](https://github.com/mlr-org/mlr/)
-- Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
-- Download the online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip) as zip for offline usage
-
-## Purpose
-
-The main goal of `mlr` is to provide a unified interface for *machine learning tasks* as *classification*, *regression*, *cluster analysis* and *survival analysis* in R.
-In lack of a common interface it becomes a hassle to carry out standard methods like cross-validation and hyperparameter tuning for different learners.
-Hence, `mlr` offers the following features:
-
-- Possibility to fit, predict, evaluate and resample models
-- Easy extension mechanism through S3 inheritance
-- Abstract description of learners and tasks by properties
-- Parameter system for learners to encode data types and constraints
-- Many convenience methods and generic building blocks for your machine learning experiments
-- Resampling like bootstrapping, cross-validation and subsampling
-- Different visualizations for e.g. ROC curves and predictions
-- Benchmarking of learners for multiple data sets
-- Easy hyperparameter tuning using different optimization strategies
-- Variable selection with filters and wrappers
-- Nested resampling of models with tuning and feature selection
-- Cost-sensitive learning, threshold tuning and imbalance correction
-- Wrapper mechanism to extend learner functionality and complex and custom ways
-- Combine different processing steps to a complex data mining chain that can be jointly optimized
-- Extension points to integrate your own stuff
-- Parallelization is built-in
-
-## Quick Start
-
-To highlight the main principles of `mlr` we give a quick introduction to the package.
-We demonstrate how to simply perform a classification analysis using a stratified cross validation, which illustrates some of the major building blocks of the `mlr` workflow, namely tasks and learners.
-
-```{r}
-library(mlr)
-data(iris)
-
-## Define the task:
-task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
-print(task)
-
-## Define the learner:
-lrn = makeLearner("classif.lda")
-print(lrn)
-
-## Define the resampling strategy:
-rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
-
-## Do the resampling:
-r = resample(learner = lrn, task = task, resampling = rdesc)
-print(r)
-
-## Get the mean misclassification error:
-r$aggr
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = TRUE)
 ```
-
-## Detailed Tutorial
-
-The previous example just demonstrated a tiny fraction of the capabilities of `mlr`.
-More features are covered in the tutorial which can be found online on the `mlr` project page.
-It covers among others: *benchmarking*, *preprocessing*, *imputation*, *feature selection*, *ROC analysis*, how to implement your own learner and the list of all supported learners.
-Reading is highly recommended!
+Information on mlr is available here:
 
 * [Project Page](https://github.com/mlr-org/mlr/)
-* Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
-* Offline Tutorial: online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip)
-  as zip for offline usage
+* [Tutorial](https://mlr.mlr-org.com/index.html)
 * [Wiki](https://github.com/mlr-org/mlr/wiki) with additional information for developers
-
-
-## Thanks
-
-We would like to thank the authors of all packages which `mlr` uses under the hood:
-
-```{r,echo=FALSE,results="asis"}
-parsePkgs = function(x) {
-  x = strsplit(x, "\n|,")[[1L]]
-  # remove version requirement in (...)
-  x = sub("\\(.*\\)", "", x)
-  # trim whitespace (cannot be inside name)
-  x = gsub(" ", "", x)
-  # empty string become char(0)
-  x[nzchar(x)]
-}
-
-desc = packageDescription("mlr")
-pkgs = c(parsePkgs(desc$Depends), parsePkgs(desc$Imports), parsePkgs(desc$Suggests))
-pkgs = sort(setdiff(pkgs, c("R", "stats", "methods", "utils")))
-cat(sprintf("* [%1$s](https://cran.r-project.org/package=%1$s)", pkgs), sep = "\n")
-```

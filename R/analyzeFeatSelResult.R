@@ -1,20 +1,21 @@
 #' @title Show and visualize the steps of feature selection.
 #'
 #' @description
-#' This function prints the steps \code{\link{selectFeatures}} took to find its optimal set
+#' This function prints the steps [selectFeatures] took to find its optimal set
 #' of features and the reason why it stopped.
 #' It can also print information about all calculations done in each intermediate step.
 #'
 #' Currently only implemented for sequential feature selection.
 #'
 #' @template arg_fsres
-#' @param reduce [\code{logical(1)}]\cr
+#' @param reduce (`logical(1)`)\cr
 #'   Per iteration: Print only the selected feature (or all features that were evaluated)?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template ret_inv_null
 #' @family featsel
 #' @export
 analyzeFeatSelResult = function(res, reduce = TRUE) {
+
   assertClass(res$control, "FeatSelControlSequential")
   assertFlag(reduce)
 
@@ -46,8 +47,9 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   df$opt = is.na(df$eol)
   # number of features in set are sum of bits which are 1
   df$n.feats = rowSums(df[, features, drop = FALSE])
-  if (reduce)
+  if (reduce) {
     df = df[df$sel, , drop = FALSE]
+  }
 
   ### Initialize some variables
   old.feats = features[df[1L, features, drop = TRUE] == 1]
@@ -57,23 +59,26 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   for (thedob in unique(df$dob)) {
     df.dob = subset(df, df$dob == thedob)
     df.sel = subset(df.dob, df.dob$sel == TRUE)
-    if (!reduce)
-    catf(strrepeat("-", 80))
+    if (!reduce) {
+      catf(strrepeat("-", 80))
+    }
     for (j in seq_row(df.dob)) {
       row = df.dob[j, ]
       cur.feats = features[row[features] == 1]
       cur.sel = ifelse(row$sel, "*", " ")
       cur.perf = row[, measure]
-      change.txt = if (thedob == 1L)
+      change.txt = if (thedob == 1L) {
         "Init  "
-      else if (length(cur.feats) < length(old.feats))
+      } else if (length(cur.feats) < length(old.feats)) {
         "Remove"
-      else
+      } else {
         "Add   "
-      if (thedob == 1L)
+      }
+      if (thedob == 1L) {
         change.feat = ""
-      else
+      } else {
         change.feat = symdiff(cur.feats, old.feats)
+      }
       catf("- Features: %4i  %s : %-20s  Perf = %s  Diff: %s  %s",
         length(cur.feats), change.txt, clipString(change.feat, width.feat),
         numToString(cur.perf),
@@ -94,5 +99,3 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   }
   invisible(NULL)
 }
-
-

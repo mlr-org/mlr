@@ -6,7 +6,7 @@
 #' Probabilities can be predicted and will be 1 or 0 depending on whether the label matches the majority class or not.
 #'
 #' @template arg_learner
-#' @param frac [numeric(1)]\cr
+#' @param frac `numeric(1)`\cr
 #' The fraction of labels in [0, 1) that can be different from the majority label. Default is 0, which means that constant labels are only predicted if there is exactly one label in the data.
 #' @template ret_learner
 #' @family wrapper
@@ -30,15 +30,15 @@ makeConstantClassWrapper = function(learner, frac = 0) {
 }
 
 #' @export
-trainLearner.ConstantClassWrapper = function(.learner, .task, .subset, .weights = NULL, frac = 0, ...) {
+trainLearner.ConstantClassWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, frac = 0, ...) {
   labels.distribution = sort(prop.table(table(getTaskTargets(subsetTask(.task, .subset)))), decreasing = TRUE)
   most.frequent = labels.distribution[1L]
   if (most.frequent >= (1 - frac)) {
     mod = makeS3Obj("ConstantClassModelConstant",
-        label = factor(names(most.frequent)),
-        levels = .task$task.desc$class.levels)
+      label = factor(names(most.frequent)),
+      levels = .task$task.desc$class.levels)
     m = makeWrappedModel.Learner(.learner, mod, getTaskDesc(.task), .subset,
-        getTaskFeatureNames(.task), getTaskFactorLevels(.task), 0)
+      getTaskFeatureNames(.task), getTaskFactorLevels(.task), 0)
   } else {
     m = train(.learner$next.learner, .task, .subset, weights = .weights)
   }
@@ -53,8 +53,8 @@ predictLearner.ConstantClassWrapper = function(.learner, .model, .newdata, ...) 
     switch(.learner$predict.type,
       response = rep.int(mod$label, nrow(.newdata)),
       prob = matrix(as.numeric(mod$levels == mod$label),
-          ncol = length(mod$levels), nrow = nrow(.newdata),
-          byrow = TRUE, dimnames = list(NULL, mod$levels))
+        ncol = length(mod$levels), nrow = nrow(.newdata),
+        byrow = TRUE, dimnames = list(NULL, mod$levels))
     )
   } else {
     NextMethod()

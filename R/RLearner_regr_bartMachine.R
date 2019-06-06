@@ -48,4 +48,3 @@ trainLearner.regr.bartMachine = function(.learner, .task, .subset, .weights = NU
 predictLearner.regr.bartMachine = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, new_data = .newdata, ...)
 }
-

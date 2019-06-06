@@ -8,7 +8,7 @@
 #' Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.dev/weka/classifiers/meta/ClassificationViaRegression.html).
 #'
 #' @template arg_learner
-#' @param predict.type [\code{character(1)}]\cr
+#' @param predict.type (`character(1)`)\cr
 #'   \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the one with maximal probability).
 #' @template ret_learner
 #' @export
@@ -35,7 +35,7 @@ makeClassificationViaRegressionWrapper = function(learner, predict.type = "respo
 }
 
 #' @export
-trainLearner.ClassificationViaRegressionWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.ClassificationViaRegressionWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
   pos = getTaskDesc(.task)$positive
   td = getTaskData(.task, target.extra = TRUE, subset = .subset)
   target.name = stri_paste(pos, "prob", sep = ".")
@@ -52,9 +52,9 @@ trainLearner.ClassificationViaRegressionWrapper = function(.learner, .task, .sub
 }
 
 #' @export
-predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   model = getLearnerModel(.model, more.unwrap = FALSE)
-  p = predict(model, newdata = .newdata, ...)$data$response
+  p = predict(model, newdata = .newdata, subset = .subset, ...)$data$response
 
   if (.learner$predict.type == "response") {
     factor(ifelse(p > 0, getTaskDesc(.model)$positive, getTaskDesc(.model)$negative))

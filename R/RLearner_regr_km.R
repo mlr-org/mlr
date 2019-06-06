@@ -39,11 +39,12 @@ makeRLearner.regr.km = function() {
 }
 
 #' @export
-trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = list(...)
-  if (!is.null(args$optim.method) && args$optim.method == "gen")
+  if (!is.null(args$optim.method) && args$optim.method == "gen") {
     requirePackages(packs = "rgenoud", why = "fitting 'regr.km' with 'rgenoud' optimization")
+  }
   if (!is.null(args$nugget.stability)) {
     if (args$nugget.stability == 0) {
       args$nugget = 0
@@ -66,8 +67,9 @@ predictLearner.regr.km = function(.learner, .model, .newdata, jitter, ...) {
   }
   se = (.learner$predict.type != "response")
   p = DiceKriging::predict.km(.model$learner.model, newdata = .newdata, type = "SK", se.compute = se)
-  if (!se)
+  if (!se) {
     return(p$mean)
-  else
+  } else {
     cbind(p$mean, p$sd)
+  }
 }

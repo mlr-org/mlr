@@ -31,7 +31,7 @@ getFailureModelDump.HomogeneousEnsembleModel = function(model) {
   ifelse(j == 0L, NULL, msgs[[j]])
 }
 
-#' Deprecated, use \code{getLearnerModel} instead.
+#' Deprecated, use `getLearnerModel` instead.
 #' @param model Deprecated.
 #' @param learner.models Deprecated.
 #' @export
@@ -43,10 +43,11 @@ getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
 #' @export
 getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) {
   ms = model$learner.model$next.model
-  if (more.unwrap)
+  if (more.unwrap) {
     extractSubList(ms, "learner.model", simplify = FALSE)
-  else
+  } else {
     ms
+  }
 }
 
 ##############################               helpers                      ##############################
@@ -54,13 +55,14 @@ getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) 
 # internal mini helper: return a matrix of predictions, either numeric for regr or character for classif
 # rows = newdata points, cols = ensembles members
 # does only work for responses, not probs, se, etc
-predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
+predictHomogeneousEnsemble = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # for classif we convert factor to char, nicer to handle later on
   preds = lapply(models, function(mod) {
-    p = predict(mod, newdata = .newdata, ...)$data$response
-    if (is.factor(p))
+    p = predict(mod, newdata = .newdata, subset = .subset, ...)$data$response
+    if (is.factor(p)) {
       p = as.character(p)
+    }
     return(p)
   })
   do.call(cbind, preds)
@@ -71,4 +73,3 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
 makeHomChainModel = function(learner, models) {
   makeChainModel(next.model = models, cl = c(learner$model.subclass, "HomogeneousEnsembleModel"))
 }
-

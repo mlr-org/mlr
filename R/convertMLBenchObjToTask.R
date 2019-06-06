@@ -4,19 +4,20 @@
 #' We auto-set the target column, drop any column which is called \dQuote{Id} and
 #' convert logicals to factors.
 #'
-#' @param x [\code{character(1)}]\cr
+#' @param x (`character(1)`)\cr
 #'   Name of an mlbench function or dataset.
-#' @param n [\code{integer(1)}]\cr
+#' @param n (`integer(1)`)\cr
 #'   Number of observations for data simul functions.
 #'   Note that for a few mlbench function this setting is not exactly respected by mlbench.
 #'   Default is 100.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Passed on to data simul functions.
 #' @export
 #' @examples
 #' print(convertMLBenchObjToTask("Ionosphere"))
 #' print(convertMLBenchObjToTask("mlbench.spirals", n = 100, sd = 0.1))
 convertMLBenchObjToTask = function(x, n = 100L, ...) {
+
   assertString(x)
   requirePackages("mlbench")
   id = x
@@ -62,9 +63,10 @@ convertMLBenchObjToTask = function(x, n = 100L, ...) {
     d = as.data.frame(z)
     target = if (!is.null(z$classes)) "classes" else "y"
   }
-  task = if (is.factor(d[, target]))
+  task = if (is.factor(d[, target])) {
     makeClassifTask(id = id, data = d, target = target)
-  else
+  } else {
     makeRegrTask(id = id, data = d, target = target)
+  }
   return(task)
 }

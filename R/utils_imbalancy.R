@@ -24,7 +24,7 @@ getMinMaxClass = function(y) {
 #
 # generates a new resampled y:
 # a) class cl is either oversampled or downsampled, depending on rate
-# b) the other binary class is either copied or boostrapped (for variance)
+# b) the other binary class is either copied or bootstrapped (for variance)
 sampleBinaryClass = function(y, rate, cl, resample.other.class) {
   inds1 = which(y == cl) # indices for class cl
   inds2 = setdiff(seq_along(y), inds1) # indices for other class
@@ -32,14 +32,15 @@ sampleBinaryClass = function(y, rate, cl, resample.other.class) {
   # undersampling (rate < 1): reduce class1 by selecting newsize elements from it
   if (rate < 1) {
     newinds1 = sample(inds1, newsize, replace = FALSE)
-  # oversampling (rate > 1): take existing inds and sample add. inds with repl.
+    # oversampling (rate > 1): take existing inds and sample add. inds with repl.
   } else {
     newinds1 = c(inds1, sample(inds1, newsize - length(inds1), replace = TRUE))
   }
   # now either copy or bootstrap other class
-  if (resample.other.class)
+  if (resample.other.class) {
     newinds2 = sample(inds2, length(inds2), replace = TRUE)
-  else
+  } else {
     newinds2 = inds2
+  }
   c(newinds1, newinds2)
 }

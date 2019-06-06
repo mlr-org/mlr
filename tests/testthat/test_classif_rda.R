@@ -17,7 +17,7 @@ test_that("classif_rda", {
     list(gamma = 0.1, lambda = 0.1),
     list(gamma = 0.5, lambda = 1),
     list(gamma = 1, lambda = 0)
-    )
+  )
 
   old.predicts.list = list()
   old.probs.list = list()

@@ -30,7 +30,7 @@ makeRLearner.surv.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
-    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with Regularization",
     short.name = "glmnet",
@@ -46,13 +46,15 @@ makeRLearner.surv.glmnet = function() {
 }
 
 #' @export
-trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
   info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "cox"), list(...))
   rm(d)
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     args$weights = .weights
+  }
 
   glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()

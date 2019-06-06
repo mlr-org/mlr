@@ -29,3 +29,7 @@ test_that("getTaskFormula", {
   expect_equal(as.formula(my.regr.num.formula),
     getTaskFormula(regr.num.task, explicit.features = TRUE))
 })
+
+test_that("issue #1467", {
+  expect_error(getTaskFormula(unclass(iris.task)), "no applicable method")
+})

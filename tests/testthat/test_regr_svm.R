@@ -19,7 +19,7 @@ test_that("regr_svm", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(e1071::svm, pars)
-    p  = predict(m, newdata = regr.test)
+    p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }
 

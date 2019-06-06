@@ -8,13 +8,13 @@
 #' For each target, actual information of all binary labels (except the target variable) is used as additional features.
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel
@@ -22,9 +22,10 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelDBRWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.DBR", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
     learner.subclass = "MultilabelDBRWrapper",
     model.subclass = "MultilabelDBRModel")
   x$type = "multilabel"
@@ -32,7 +33,8 @@ makeMultilabelDBRWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
@@ -52,23 +54,24 @@ trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset, .weights 
 }
 
 #' @export
-predictLearner.MultilabelDBRWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelDBRWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
   models.lvl1 = models[seq_along(.model$task.desc$target)]
   f = if (.learner$predict.type == "response") {
-    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
   } else {
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
   }
   pred.lvl1 = sapply(data.frame(asMatrixCols(lapply(models.lvl1, f))), as.numeric)
   # Meta level prediction
   models.meta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
   newdata.meta = data.frame(.newdata, pred.lvl1)
   f = if (.learner$predict.type == "response") {
-    function(m, tn) as.logical(getPredictionResponse(predict(m, newdata = newdata.meta[, which(colnames(newdata.meta) != tn)], ...)))
+    function(m, tn) as.logical(getPredictionResponse(predict(m, newdata = newdata.meta[, which(colnames(newdata.meta) != tn)], subset = .subset, ...)))
   } else {
-    function(m, tn) getPredictionProbabilities(predict(m, newdata = newdata.meta[, which(colnames(newdata.meta) != tn)], ...), cl = "TRUE")
+    function(m, tn) getPredictionProbabilities(predict(m, newdata = newdata.meta[, which(colnames(newdata.meta) != tn)], subset = .subset, ...), cl = "TRUE")
   }
   mapply(f, models.meta, .model$task.desc$target)
 }
