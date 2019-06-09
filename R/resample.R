@@ -50,7 +50,7 @@
 #'   during resampling.
 #'   Default is to extract nothing.
 #' @template arg_keep_pred
-#' @param na.rm [`logical(1)`]\cr
+#' @param na.rm (`logical(1)`)\cr
 #'   Should `NA` values be removed during aggregation of results from `resample`? Default `FALSE`.
 #'   This applies to all selected measures.
 #' @param ... (any)\cr

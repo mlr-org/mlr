@@ -38,7 +38,7 @@ Grouping of resampling iterations. This encodes whether specific iterations
 Prediction object.}
 }}
 
-\item{na.rm}{\code{\link{logical(1)}}\cr}
+\item{na.rm}{(\code{logical(1)})\cr}
 }
 \value{
 (\link{Aggregation}).

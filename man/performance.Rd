@@ -5,7 +5,7 @@
 \title{Measure performance of prediction.}
 \usage{
 performance(pred, measures, task = NULL, model = NULL, feats = NULL,
-  na.rm = FALSE)
+  simpleaggr = FALSE, na.rm = FALSE)
 }
 \arguments{
 \item{pred}{(\link{Prediction})\cr
@@ -26,12 +26,12 @@ Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a \code{task}, you can also pass this instead and the features
 are extracted from it.}
 
-\item{na.rm}{\code{\link{logical(1)}}\cr
-Should \code{NA} values be removed? Default \code{FALSE}.
-This applies to all selected measures.}
-
 \item{simpleaggr}{(\link{logical})\cr
 If TRUE, aggregation of \code{ResamplePrediction} objects is skipped. This is used internally for threshold tuning. Default is \code{FALSE}.}
+
+\item{na.rm}{(\code{logical(1)})\cr
+Should \code{NA} values be removed? Default \code{FALSE}.
+This applies to all selected measures.}
 }
 \value{
 (named \link{numeric}). Performance value(s), named by measure(s).

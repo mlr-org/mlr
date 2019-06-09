@@ -6,7 +6,7 @@
 #'   task
 #' @param aggr [`function`]\cr
 #'   aggregation function
-#' @param na.rm [`logical(1)`]\cr
+#' @param na.rm (`logical(1)`)\cr
 #'   Should `NA` values be removed? Default `FALSE`.
 #'   This applies to all selected measures.
 #' @keywords internal

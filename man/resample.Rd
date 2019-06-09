@@ -92,7 +92,7 @@ object size / mem usage, if you do not really need them.
 In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
-\item{na.rm}{\code{\link{logical(1)}}\cr
+\item{na.rm}{(\code{logical(1)})\cr
 Should \code{NA} values be removed during aggregation of results from \code{resample}? Default \code{FALSE}.
 This applies to all selected measures.}
 

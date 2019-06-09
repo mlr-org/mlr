@@ -12,7 +12,7 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a `task`, you can also pass this instead and the features
 #'   are extracted from it.
-#' @param na.rm [`logical(1)`]\cr
+#' @param na.rm (`logical(1)`)\cr
 #'   Should `NA` values be removed? Default `FALSE`.
 #'   This applies to all selected measures.
 #' @param simpleaggr ([logical])\cr
@@ -33,8 +33,8 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, na.rm = FALSE) {
-  
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, simpleaggr = FALSE, na.rm = FALSE) {
+
   if (!is.null(pred)) {
     assertClass(pred, classes = "Prediction")
   }

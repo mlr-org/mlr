@@ -16,7 +16,7 @@ task}
 \item{aggr}{\code{\link{function}}\cr
 aggregation function}
 
-\item{na.rm}{\code{\link{logical(1)}}\cr
+\item{na.rm}{(\code{logical(1)})\cr
 Should \code{NA} values be removed? Default \code{FALSE}.
 This applies to all selected measures.}
 }

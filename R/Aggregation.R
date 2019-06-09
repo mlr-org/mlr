@@ -54,7 +54,7 @@ NULL
 #'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
 #'   }
-#' @param na.rm [`logical(1)`]\cr
+#' @param na.rm (`logical(1)`)\cr
 #' @seealso [aggregations], [setAggregation]
 #' @return ([Aggregation]).
 #' @examples
