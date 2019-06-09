@@ -46,6 +46,17 @@ getLearnerPackages = function(learner) {
   return(learner$package)
 }
 
+#' @title Get the note for the learner.
+#'
+#' @description Get the note for the learner.
+#' @template arg_learner
+#' @return [\code{character}].
+#' @export
+#' @family learner
+getLearnerNote = function(learner) {
+  learner = checkLearner(learner)
+  return(learner$note)
+}
 
 #' @title Get the parameter set of the learner.
 #'

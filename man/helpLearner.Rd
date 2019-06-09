@@ -19,6 +19,7 @@ help pages associated with various functions involved in the given learner.
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
   \code{\link{getLearnerPackages}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},
