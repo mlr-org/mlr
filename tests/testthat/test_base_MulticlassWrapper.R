@@ -3,9 +3,7 @@ context("MulticlassWrapper")
 test_that("MulticlassWrapper", {
   # cmatrix function
   ownCmatrix = function(task) {
-
     cm.onevsrest = function(task) {
-
       n = length(getTaskClassLevels(task))
       cm = matrix(-1, n, n)
       diag(cm) = 1

@@ -12,7 +12,6 @@
 #' @family wrapper
 #' @export
 makeConstantClassWrapper = function(learner, frac = 0) {
-
   learner = checkLearner(learner, "classif")
 
   lrn = makeBaseWrapper(
@@ -32,7 +31,6 @@ makeConstantClassWrapper = function(learner, frac = 0) {
 
 #' @export
 trainLearner.ConstantClassWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, frac = 0, ...) {
-
   labels.distribution = sort(prop.table(table(getTaskTargets(subsetTask(.task, .subset)))), decreasing = TRUE)
   most.frequent = labels.distribution[1L]
   if (most.frequent >= (1 - frac)) {
@@ -50,7 +48,6 @@ trainLearner.ConstantClassWrapper = function(.learner, .task, .subset = NULL, .w
 
 #' @export
 predictLearner.ConstantClassWrapper = function(.learner, .model, .newdata, ...) {
-
   mod = .model$learner.model$next.model$learner.model
   if (inherits(mod, "ConstantClassModelConstant")) {
     switch(.learner$predict.type,

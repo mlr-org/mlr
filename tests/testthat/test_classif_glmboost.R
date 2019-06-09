@@ -37,7 +37,6 @@ test_that("classif_glmboost", {
 test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaExp'", {
   families = list("AUC", "AdaExp")
   lapply(families, FUN = function(x) {
-
     lrn = makeLearner("classif.glmboost", par.vals = list(family = x), predict.type = "prob")
     mod = train(lrn, binaryclass.task)
     expect_error(predict(mod, binaryclass.task), "support probabilities")

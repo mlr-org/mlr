@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.plsr = function() {
-
   makeRLearnerRegr(cl = "regr.plsr",
     package = "pls",
     par.set = makeParamSet(
@@ -21,7 +20,6 @@ makeRLearner.regr.plsr = function() {
 
 #' @export
 trainLearner.regr.plsr = function(.learner, .task, .subset, .weights, ...) {
-
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   pls::plsr(f, data = d, ...)
@@ -29,6 +27,5 @@ trainLearner.regr.plsr = function(.learner, .task, .subset, .weights, ...) {
 
 #' @export
 predictLearner.regr.plsr = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, newdata = .newdata, comps = seq_len(.model$learner.model$ncomp), ...)[, 1L]
 }

@@ -138,7 +138,6 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 
 #' @export
 print.extractFDAFeatDesc = function(x, ...) {
-
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
   catf("Remaining functional Features: %i after extraction on %i functional features",

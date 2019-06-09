@@ -127,14 +127,12 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
 
 evalOptimizationStatesTune = function(learner, task, resampling, measures, par.set, control,
   opt.path, show.info, states, dobs, eols, remove.nas, resample.fun) {
-
   evalOptimizationStates(learner, task, resampling, measures, par.set, NULL, control,
     opt.path, show.info, states, dobs, eols, remove.nas, resample.fun, "mlr.tuneParams")
 }
 
 evalOptimizationStatesFeatSel = function(learner, task, resampling, measures, bits.to.features, control,
   opt.path, show.info, states, dobs, eols) {
-
   evalOptimizationStates(learner, task, resampling, measures, NULL, bits.to.features, control,
     opt.path, show.info, states, dobs, eols, FALSE, resample, "mlr.selectFeatures")
 }

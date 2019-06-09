@@ -53,20 +53,17 @@ generateCalibrationData = function(obj, breaks = "Sturges", groups = NULL, task.
   UseMethod("generateCalibrationData")
 #' @export
 generateCalibrationData.Prediction = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
-
   checkPrediction(obj, task.type = "classif", predict.type = "prob")
   generateCalibrationData.list(namedList("prediction", obj), breaks, groups, task.id)
 }
 #' @export
 generateCalibrationData.ResampleResult = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
-
   obj = getRRPredictions(obj)
   checkPrediction(obj, task.type = "classif", predict.type = "prob")
   generateCalibrationData.Prediction(obj, breaks, groups, task.id)
 }
 #' @export
 generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
-
   tids = getBMRTaskIds(obj)
   if (is.null(task.id)) {
     task.id = tids[1L]
@@ -75,8 +72,9 @@ generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", grou
   }
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
 
-  for (x in obj)
+  for (x in obj) {
     checkPrediction(x, task.type = "classif", predict.type = "prob")
+  }
   generateCalibrationData.list(obj, breaks, groups, task.id)
 }
 #' @export
@@ -94,7 +92,6 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   td = obj[[1L]]$task.desc
 
   out = lapply(obj, function(pred) {
-
     df = data.table("truth" = getPredictionTruth(pred),
       getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
     df = melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
@@ -108,15 +105,14 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
       df$bin = Hmisc::cut2(df$Probability, g = groups, digits = 3)
     }
     fun = function(x) {
-
       tab = table(x$Class, x$truth)
       s = rowSums(tab)
       as.list(ifelse(s == 0, 0, diag(tab) / s))
     }
     list(data = df, proportion = df[, fun(.SD), by = "bin"])
   })
-  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner")
-  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner")
+  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner", use.names = TRUE)
+  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner", use.names = TRUE)
   if (length(td$class.levels) == 2L) {
     proportion = proportion[, !td$negative, with = FALSE]
     data = data[data$Class != td$negative, ]
@@ -166,7 +162,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' names(pred) = c("rpart", "nnet")
 #' out = generateCalibrationData(pred, groups = 3)
 #' plotCalibration(out)
-#' 
+#'
 #' fit = lapply(lrns, train, task = sonar.task)
 #' pred = lapply(fit, predict, task = sonar.task)
 #' names(pred) = c("rpart", "lda")

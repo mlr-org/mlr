@@ -40,6 +40,7 @@ print(cl2)
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
   \code{\link{getLearnerPackages}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},

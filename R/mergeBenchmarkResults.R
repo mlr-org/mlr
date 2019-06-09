@@ -40,9 +40,8 @@ mergeBenchmarkResults = function(bmrs) {
   all.combos = expand.grid(task.id = task.ids, learner.id = learner.ids)
   all.combos = stri_paste(all.combos$task.id, all.combos$learner.id, sep = " - ")
   existing.combos = rbindlist(lapply(bmrs, function(bmr) {
-
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
-  }))
+  }), use.names = TRUE)
   existing.combos = stri_paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
   if (!identical(sort(existing.combos), sort(all.combos))) {
     dupls = existing.combos[duplicated(existing.combos)]
@@ -77,17 +76,14 @@ mergeBenchmarkResults = function(bmrs) {
 
 # simple wrapper for unlist() with recursive set to FALSE
 peelList = function(x) {
-
   unlist(x, recursive = FALSE)
 }
 
 groupNamedListByNames = function(xs, name = sort(unique(names(xs)))) {
-
   assertList(xs, names = "named")
   assertCharacter(name)
 
   res = lapply(name, function(x) {
-
     ret = xs[names(xs) == x]
     names(ret) = NULL
     peelList(ret)

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.brnn = function() {
-
   makeRLearnerRegr(
     cl = "regr.brnn",
     package = "brnn",
@@ -30,13 +29,11 @@ makeRLearner.regr.brnn = function() {
 
 #' @export
 trainLearner.regr.brnn = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   brnn::brnn(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.regr.brnn = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, newdata = .newdata, ...)
 }

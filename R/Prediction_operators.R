@@ -1,6 +1,5 @@
 #' @export
 as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
-
   x$data
 }
 
@@ -20,14 +19,13 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 #' mod = train(lrn, task)
 #' # predict probabilities
 #' pred = predict(mod, newdata = iris)
-#' 
+#'
 #' # Get probabilities for all classes
 #' head(getPredictionProbabilities(pred))
-#' 
+#'
 #' # Get probabilities for a subset of classes
 #' head(getPredictionProbabilities(pred, c("setosa", "virginica")))
 getPredictionProbabilities = function(pred, cl) {
-
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
   if (ttype %nin% c("classif", "cluster", "multilabel")) {
@@ -79,7 +77,6 @@ getPredictionProbabilities = function(pred, cl) {
 #' @export
 #' @family predict
 getPredictionTaskDesc = function(pred) {
-
   assertClass(pred, "Prediction")
   pred$task.desc
 }
@@ -89,7 +86,6 @@ getPredictionTaskDesc = function(pred) {
 #' @param cl Deprecated.
 #' @export
 getProbabilities = function(pred, cl) {
-
   .Deprecated("getPredictionProbabilities")
   getPredictionProbabilities(pred, cl)
 }
@@ -123,20 +119,17 @@ getProbabilities = function(pred, cl) {
 #' @export
 #' @family predict
 getPredictionResponse = function(pred) {
-
   UseMethod("getPredictionResponse")
 }
 
 #' @export
 getPredictionResponse.default = function(pred) {
-
   # this should work for classif, regr and cluster and surv
   pred$data[["response"]]
 }
 
 #' @export
 getPredictionResponse.PredictionMultilabel = function(pred) {
-
   i = stri_detect_regex(colnames(pred$data), "^response\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
@@ -145,44 +138,37 @@ getPredictionResponse.PredictionMultilabel = function(pred) {
 #' @rdname getPredictionResponse
 #' @export
 getPredictionSE = function(pred) {
-
   UseMethod("getPredictionSE")
 }
 
 #' @export
 getPredictionSE.default = function(pred) {
-
   pred$data[["se"]]
 }
 
 #' @rdname getPredictionResponse
 #' @export
 getPredictionTruth = function(pred) {
-
   UseMethod("getPredictionTruth")
 }
 
 #' @export
 getPredictionTruth.default = function(pred) {
-
   pred$data[["truth"]]
 }
 
 #' @export
 getPredictionTruth.PredictionCluster = function(pred) {
-
   stop("There is no truth for cluster tasks")
 }
 
 #' @export
 getPredictionTruth.PredictionSurv = function(pred) {
-
   Surv(pred$data$truth.time, pred$data$truth.event, type = "right")
 }
 
 #' @export
 getPredictionTruth.PredictionMultilabel = function(pred) {
-
   i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
@@ -200,6 +186,5 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 #' @family debug
 #' @export
 getPredictionDump = function(pred) {
-
   pred$dump
 }

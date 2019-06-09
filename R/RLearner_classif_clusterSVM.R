@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.clusterSVM = function() {
-
   makeRLearnerClassif(
     cl = "classif.clusterSVM",
     package = c("SwarmSVM", "LiblineaR"),
@@ -36,13 +35,11 @@ makeRLearner.classif.clusterSVM = function() {
 
 #' @export
 trainLearner.classif.clusterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   SwarmSVM::clusterSVM(x = d$data, y = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.clusterSVM = function(.learner, .model, .newdata, ...) {
-
   as.factor(predict(.model$learner.model, newdata = .newdata, ...)$predictions)
 }

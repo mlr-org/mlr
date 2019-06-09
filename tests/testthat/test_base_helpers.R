@@ -35,7 +35,6 @@ test_that("listLearnerProperties", {
 
 test_that("suppressWarning works", {
   foo = function(x) {
-
     if (x > 3) {
       warning("x is pretty large.")
     }

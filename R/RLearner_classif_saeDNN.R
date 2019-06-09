@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.saeDNN = function() {
-
   makeRLearnerClassif(
     cl = "classif.saeDNN",
     package = "deepnet",
@@ -28,7 +27,6 @@ makeRLearner.classif.saeDNN = function() {
 
 #' @export
 trainLearner.classif.saeDNN = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = as.numeric(d$target)
   dict = sort(unique(y))
@@ -42,7 +40,6 @@ trainLearner.classif.saeDNN = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.saeDNN = function(.learner, .model, .newdata, ...) {
-
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   pred = deepnet::nn.predict(.model$learner.model, data.matrix(.newdata))
   colnames(pred) = .model$factor.levels[[1]]

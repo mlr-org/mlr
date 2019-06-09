@@ -29,12 +29,10 @@ test_that("regr_fnn", {
   testSimpleParsets("regr.fnn", rdf, regr.target, regr.train.inds, old.predicts.list1, parset.list)
 
   tt = function(formula, data, k = 3) {
-
     j = which(colnames(data) == as.character(formula)[2])
     list(train = data[, -j], y = data[, j], k = k, target = j)
   }
   tp = function(model, newdata) {
-
     newdata = newdata[, -model$target]
     FNN::knn.reg(train = model$train, test = newdata, y = model$y, k = model$k)$pred
   }

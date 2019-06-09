@@ -166,6 +166,7 @@ Suggests:
     classiFunc,
     clue,
     cluster,
+    ClusterR,
     clusterSim (>= 0.44-5),
     clValid,
     cmaes,

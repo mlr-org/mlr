@@ -1,7 +1,6 @@
 checkLearnerBeforeTrain = function(task, learner, weights) {
 
   getColNames = function(task, property) {
-
     .data = getTaskData(task, functionals.as = "matrix")
     has.it = vlapply(.data, function(x) any(property(x)))
     clipString(collapse(colnames(.data)[has.it], ", "), 50L)

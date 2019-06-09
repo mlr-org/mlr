@@ -27,8 +27,9 @@ makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weig
     check.data = check.data)
   # currently we dont do any fixup here
   if (check.data) {
-    for (cn in target)
+    for (cn in target) {
       assertLogical(task$env$data[[cn]], any.missing = FALSE, .var.name = cn)
+    }
   }
   task$task.desc = makeMultilabelTaskDesc(id, data, target, weights, blocking, coordinates)
   addClasses(task, "MultilabelTask")
@@ -36,7 +37,6 @@ makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weig
 
 #' @export
 print.MultilabelTask = function(x, ...) {
-
   y = getTaskTargets(x)
   sums = colSums(y)
   print.SupervisedTask(x)
@@ -47,7 +47,6 @@ print.MultilabelTask = function(x, ...) {
 #' @export
 #' @rdname makeTaskDesc
 makeMultilabelTaskDesc = function(id, data, target, weights, blocking, coordinates) {
-
   levs = target
   td = makeTaskDescInternal("multilabel", id, data, target, weights, blocking, coordinates)
   td$class.levels = levs

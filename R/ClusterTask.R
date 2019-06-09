@@ -5,7 +5,6 @@
 #' @aliases ClusterTask
 #' @export
 makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
-
   assertString(id)
   assertDataFrame(data)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
@@ -21,7 +20,6 @@ makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL,
 #' @export
 #' @rdname makeTaskDesc
 makeClusterTaskDesc = function(id, data, weights, blocking, coordinates) {
-
   target = character(0L)
   td = makeTaskDescInternal("cluster", id, data, target, weights, blocking, coordinates)
   return(addClasses(td, c("ClusterTaskDesc", "UnsupervisedTaskDesc")))
@@ -29,6 +27,5 @@ makeClusterTaskDesc = function(id, data, weights, blocking, coordinates) {
 
 #' @export
 print.ClusterTask = function(x, ...) {
-
   print.UnsupervisedTask(x)
 }

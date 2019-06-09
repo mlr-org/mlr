@@ -54,7 +54,6 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
 #' @export
 #' @family fda_featextractor
 extractFDAFourier = function(trafo.coeff = "phase") {
-
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
 
@@ -437,7 +436,6 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
       # the start of the seg is clsum - seg.lens + 1, the end of the seg is cumsum(seg.lens)
       # ex: seg.lens = c(2, 3, 4), clsum = c(2, 5, 9), clsum - seg.lens +1 = 1, 3, 6
       subfeats = Map(function(seqstart, seqend) {
-
         getCurveFeatures(x[seqstart:seqend], res.level = res.level, shift = shift)
       }, clsum - seg.lens + 1, cumsum(seg.lens))
       # And return as vector
@@ -477,7 +475,6 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
   }
 
   getSegmentFeatures = function(x) {
-
     mean(x)
   }
 

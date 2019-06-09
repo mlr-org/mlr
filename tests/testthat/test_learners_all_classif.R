@@ -5,7 +5,7 @@ test_that("learners work: classif", {
   # settings to make learners faster and deal with small data size
   hyperpars = list(
     classif.boosting = list(mfinal = 2L),
-    classif.cforest = list(mtry = 1L),
+    classif.cforest = list(mtry = 1L, minsplit = 1, minbucket = 1),
     classif.bdk = list(ydim = 2L),
     classif.earth = list(degree = 3L, nprune = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
@@ -62,15 +62,23 @@ test_that("learners work: classif", {
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 
   # classif with only one feature
-  # min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
-  # lapply(lrns, testBasicLearnerProperties, task = min.task)
+  min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
+  lrns = mylist(min.task, create = TRUE)
+  # FIXME: classif.boosting: Remove if bug is removed in adabag!
+  # FIXME: classif.quaDA: Remove if bug is removed in DiscriMiner::quaDA!
+  # FIXME: classif.rknn: Remove if bug is removed in rknn::rknn!
+  # classif.cvglmnet does not claim to work for 1d problems
+  # classif.dbnDNN, classif.evtree, classif.geoDA, classif.linDA, classif.lqa (not im mlr anymore), classif.lvq1, classif.mda (maybe only subset error), classif.pamr (maybe only subset error), classif.plsdaCaret (error maybe fixable in caret), classif.rotationForest (gives some error, no one would use it for 1d anyway), classif.rrlda error eccours in the learner.
+  # classif.cforest: fraction of 0.000000 is too small (only travis?)
+  not.working = c("classif.boosting", "classif.cforest", "classif.cvglmnet", "classif.dbnDNN", "classif.evtree", "classif.geoDA", "classif.glmnet", "classif.linDA", "classif.lvq1", "classif.mda", "classif.pamr", "classif.plsdaCaret", "classif.quaDA", "classif.rknn", "classif.rotationForest", "classif.rrlda")
+  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
+  lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
 })
 
 
 test_that("weightedClassWrapper on all binary learners", {
   pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
-
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
@@ -80,7 +88,6 @@ test_that("weightedClassWrapper on all binary learners", {
 
   learners = listLearners(binaryclass.task, "class.weights")
   x = lapply(learners$class, function(lrn) {
-
     cm1 = f(lrn, 0.001)
     cm2 = f(lrn, 1)
     cm3 = f(lrn, 1000)
@@ -93,7 +100,6 @@ test_that("weightedClassWrapper on all binary learners", {
 test_that("WeightedClassWrapper on all multiclass learners", {
   levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
-
     lrn1 = makeLearner(lrn)
     param = lrn1$class.weights.param
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)

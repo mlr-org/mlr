@@ -4,12 +4,17 @@
 \alias{getClassWeightParam}
 \title{Get the class weight parameter of a learner.}
 \usage{
-getClassWeightParam(learner)
+getClassWeightParam(learner, lrn.id = NULL)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
+
+\item{lrn.id}{(\link{character})\cr
+Only used for \code{BaseEnsembles}. It is possible that multiple learners in a base
+ensemble have a class weight param. Specify the learner from which the class weight should
+be extracted.}
 }
 \value{
 \link{numeric} \link{LearnerParam}:
@@ -21,6 +26,7 @@ Gets the class weight parameter of a learner.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
   \code{\link{getLearnerPackages}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},

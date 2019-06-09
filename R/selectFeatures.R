@@ -67,7 +67,6 @@ selectFeatures = function(learner, task, resampling, measures,
     assertFunction(bits.to.features, args = c("x", "task"))
     # wrap the function to prevent wrong user input and give meaningful errors
     bits.to.features2 = function(x, task) {
-
       force(bits.to.features)
       res = bits.to.features(x, task)
       if (!testCharacter(res)) {

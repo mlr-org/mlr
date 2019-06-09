@@ -18,7 +18,6 @@ NULL
 #' @rdname MeasureProperties
 #' @export
 getMeasureProperties = function(measure) {
-
   assertClass(measure, classes = "Measure")
   measure$properties
 }
@@ -26,7 +25,6 @@ getMeasureProperties = function(measure) {
 #' @rdname MeasureProperties
 #' @export
 hasMeasureProperties = function(measure, props) {
-
   assertClass(measure, classes = "Measure")
   assertSubset(props, listMeasureProperties())
   props %in% getMeasureProperties(measure)
@@ -41,6 +39,5 @@ hasMeasureProperties = function(measure, props) {
 #'
 #' @export
 listMeasureProperties = function() {
-
   mlr$measure.properties
 }

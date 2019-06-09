@@ -2,7 +2,6 @@
 # @param size [int(1)]\cr size of the dataset to subset
 # @return numeric vector of subset indices
 checkTaskSubset = function(subset = NULL, size) {
-
   assertCount(size)
   if (is.null(subset)) {
     seq_len(size)

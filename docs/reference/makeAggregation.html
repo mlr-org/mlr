@@ -358,9 +358,11 @@ Calculates the aggregated performance. In most cases you will only need the perf
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># computes the interquartile range on all performance values</span>
-<span class='no'>test.iqr</span> <span class='kw'>=</span> <span class='fu'>makeAggregation</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"test.iqr"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Test set interquartile range"</span>,
+<span class='no'>test.iqr</span> <span class='kw'>=</span> <span class='fu'>makeAggregation</span>(
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"test.iqr"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Test set interquartile range"</span>,
   <span class='kw'>properties</span> <span class='kw'>=</span> <span class='st'>"req.test"</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span> (<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/IQR'>IQR</a></span>(<span class='no'>perf.test</span>))</div></pre>
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/IQR'>IQR</a></span>(<span class='no'>perf.test</span>)
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

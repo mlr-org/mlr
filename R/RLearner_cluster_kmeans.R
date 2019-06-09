@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.cluster.kmeans = function() {
-
   makeRLearnerCluster(
     cl = "cluster.kmeans",
     package = c("stats", "clue"),
@@ -23,13 +22,11 @@ makeRLearner.cluster.kmeans = function() {
 
 #' @export
 trainLearner.cluster.kmeans = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   stats::kmeans(getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.cluster.kmeans = function(.learner, .model, .newdata, ...) {
-
   switch(.learner$predict.type,
     response = as.integer(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids", ...)),
     prob = as.matrix(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))

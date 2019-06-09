@@ -29,7 +29,6 @@ test_that("classif_j48", {
   testProbParsets("classif.J48", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-
     RWeka::J48(formula, data = data[subset, ], control = RWeka::Weka_control(..., Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
   }
 

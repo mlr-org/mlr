@@ -31,6 +31,5 @@ makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = 
 #' @export
 #' @rdname makeTaskDesc
 makeRegrTaskDesc = function(id, data, target, weights, blocking, coordinates) {
-
   addClasses(makeTaskDescInternal("regr", id, data, target, weights, blocking, coordinates), c("RegrTaskDesc", "SupervisedTaskDesc"))
 }

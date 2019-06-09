@@ -85,7 +85,6 @@ test_that("FailureModel works", {
 })
 
 test_that("ModelMultiplexer tuning", {
-
   lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
   rdesc = makeResampleDesc("CV", iters = 2L)
 
@@ -167,7 +166,6 @@ test_that("ModelMultiplexer passes on hyper pars in predict with both", {
 
   opts = NULL
   trainLearner.test.ps = function(.learner, .task, .subset, .weights = NULL, ...) {
-
     opts <<- list(...) # nolint
     # the following to make the type checking happy
     list(dummy = getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
@@ -175,7 +173,6 @@ test_that("ModelMultiplexer passes on hyper pars in predict with both", {
   registerS3method("trainLearner", "test.ps", trainLearner.test.ps)
 
   predictLearner.test.ps = function(.learner, .model, .newdata, ...) {
-
     opts <<- list(...) # nolint
     rep(.model$learner.model$dummy, nrow(.newdata)) # just do something
   }

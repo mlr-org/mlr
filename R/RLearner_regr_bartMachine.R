@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.bartMachine = function() {
-
   makeRLearnerRegr(
     cl = "regr.bartMachine",
     package = "bartMachine",
@@ -41,13 +40,11 @@ makeRLearner.regr.bartMachine = function() {
 
 #' @export
 trainLearner.regr.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   bartMachine::bartMachine(X = d$data, y = d$target, ...)
 }
 
 #' @export
 predictLearner.regr.bartMachine = function(.learner, .model, .newdata, ...) {
-
   predict(.model$learner.model, new_data = .newdata, ...)
 }

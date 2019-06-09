@@ -93,7 +93,6 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset = NULL, .wei
 }
 
 doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learner, task, weights) {
-
   setSlaveOptions()
   bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
   train(learner$next.learner, task, subset = bag, weights = weights)
@@ -102,6 +101,5 @@ doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learne
 
 #' @export
 getLearnerProperties.OverBaggingWrapper = function(learner) {
-
   union(getLearnerProperties(learner$next.learner), "prob")
 }

@@ -55,7 +55,6 @@ test_that("selectFeatures", {
 
   bns = c("b1", "b2")
   btf = function(x, task) {
-
     fns = getTaskFeatureNames(task)
     Reduce(c, list(fns[1:2], fns[3:4])[as.logical(x)], init = character(0))
   }

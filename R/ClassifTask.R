@@ -68,7 +68,6 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, co
 
 #' @export
 print.ClassifTask = function(x, ...) {
-
   di = printToChar(x$task.desc$class.distribution)
   m = length(x$task.desc$class.levels)
   print.SupervisedTask(x)

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.FDboost = function() {
-
   makeRLearnerRegr(
     cl = "regr.FDboost",
     package = c("FDboost", "mboost"),
@@ -50,7 +49,6 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.regr.FDboost = function(.learner, .model, .newdata, ...) {
-
   nl = as.list(.newdata)
   prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
   prd

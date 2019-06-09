@@ -15,7 +15,6 @@
 #' @family performance
 #' @export
 setMeasurePars = function(measure, ..., par.vals = list()) {
-
   args = list(...)
   assertClass(measure, classes = "Measure")
   assertList(args, names = "unique", .var.name = "parameter settings")
@@ -37,7 +36,6 @@ setMeasurePars = function(measure, ..., par.vals = list()) {
 #' @family performance
 #' @export
 setAggregation = function(measure, aggr) {
-
   assertClass(measure, classes = "Measure")
   assertClass(aggr, classes = "Aggregation")
   measure$aggr = aggr

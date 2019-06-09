@@ -1,7 +1,6 @@
 # checked props
 #' @export
 makeRLearner.classif.J48 = function() {
-
   makeRLearnerClassif(
     cl = "classif.J48",
     package = "RWeka",
@@ -30,7 +29,6 @@ makeRLearner.classif.J48 = function() {
 
 #' @export
 trainLearner.classif.J48 = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   ctrl = RWeka::Weka_control(..., Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max)))
   f = getTaskFormula(.task)
   RWeka::J48(f, data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
@@ -38,7 +36,6 @@ trainLearner.classif.J48 = function(.learner, .task, .subset, .weights = NULL, .
 
 #' @export
 predictLearner.classif.J48 = function(.learner, .model, .newdata, ...) {
-
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

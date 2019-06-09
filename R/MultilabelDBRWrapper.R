@@ -21,7 +21,6 @@
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelDBRWrapper = function(learner) {
-
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = stri_paste("multilabel.DBR", getLearnerId(learner), sep = ".")
   packs = getLearnerPackages(learner)

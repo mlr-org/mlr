@@ -52,7 +52,6 @@ NULL
 #' @keywords internal
 #' @export
 makeTaskDescInternal = function(type, id, data, target, weights, blocking, coordinates) {
-
   # get classes of feature cols
   cl = vcapply(data, function(x) class(x)[1L])
   cl = table(dropNamed(cl, target))

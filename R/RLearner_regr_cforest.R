@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.cforest = function() {
-
   makeRLearnerRegr(
     cl = "regr.cforest",
     package = "party",
@@ -55,12 +54,10 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
-
   as.vector(predict(.model$learner.model, newdata = .newdata, ...))
 }
 
 #' @export
 getFeatureImportanceLearner.regr.cforest = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.cforest(.learner, .model, auc = FALSE, ...)
 }

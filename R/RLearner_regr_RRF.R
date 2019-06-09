@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.RRF = function() {
-
   makeRLearnerRegr(
     cl = "regr.RRF",
     package = "RRF",
@@ -38,20 +37,17 @@ makeRLearner.regr.RRF = function() {
 
 #' @export
 trainLearner.regr.RRF = function(.learner, .task, .subset, .weights, ...) {
-
   RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
     keep.forest = TRUE, ...)
 }
 
 #' @export
 predictLearner.regr.RRF = function(.learner, .model, .newdata, ...) {
-
   p = predict(object = .model$learner.model, newdata = .newdata, ...)
   return(p)
 }
 
 #' @export
 getFeatureImportanceLearner.regr.RRF = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.RRF(.learner, .model, ...)
 }

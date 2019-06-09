@@ -5,7 +5,6 @@
 #'
 #' @export
 makeRLearner.classif.fdausc.kernel = function() {
-
   makeRLearnerClassif(
     cl = "classif.fdausc.kernel",
     package = "fda.usc",
@@ -50,7 +49,6 @@ trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights
 
 #' @export
 predictLearner.classif.fdausc.kernel = function(.learner, .model, .newdata, ...) {
-
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)
   nd = fda.usc::fdata(mdata = as.matrix(fd))

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.cluster.kkmeans = function() {
-
   makeRLearnerCluster(
     cl = "cluster.kkmeans",
     package = "kernlab",
@@ -34,7 +33,6 @@ makeRLearner.cluster.kkmeans = function() {
 
 #' @export
 trainLearner.cluster.kkmeans = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
-
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   if (base::length(kpar) > 0L) {
     kernlab::kkmeans(as.matrix(getTaskData(.task, .subset)), kpar = kpar, ...)

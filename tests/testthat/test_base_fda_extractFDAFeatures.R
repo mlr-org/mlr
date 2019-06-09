@@ -66,9 +66,7 @@ test_that("Wrong methods yield errors", {
     "Must have formal arguments")
 
   wrng3 = function() {
-
     lrn = function(data, target, col, vals = NULL) {
-
       data.frame(1)
     }
     makeExtractFDAFeatMethod(z = lrn, rz = lrn)

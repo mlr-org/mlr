@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.rknn = function() {
-
   makeRLearnerClassif(
     cl = "classif.rknn",
     package = "rknn",
@@ -22,14 +21,12 @@ makeRLearner.classif.rknn = function() {
 
 #' @export
 trainLearner.classif.rknn = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   z = getTaskData(.task, .subset, target.extra = TRUE)
   c(list(data = z$data, y = z$target), list(...))
 }
 
 #' @export
 predictLearner.classif.rknn = function(.learner, .model, .newdata, ...) {
-
   args = .model$learner.model
   args$newdata = .newdata
   do.call(rknn::rknn, args)$pred

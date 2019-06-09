@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.gbm = function() {
-
   makeRLearnerRegr(
     cl = "regr.gbm",
     package = "gbm",
@@ -28,7 +27,6 @@ makeRLearner.regr.gbm = function() {
 
 #' @export
 trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -41,13 +39,11 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...)
 
 #' @export
 predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   gbm::predict.gbm(m, newdata = .newdata, n.trees = length(m$trees), ...)
 }
 
 #' @export
 getFeatureImportanceLearner.regr.gbm = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.gbm(.learner, .model, ...)
 }

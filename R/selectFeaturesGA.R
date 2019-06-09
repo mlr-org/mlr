@@ -51,7 +51,6 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
 # sample 2 random parents, CX, mutate --> 1 kid
 # (repeat in a loop if max.features not satisfied)
 generateKid = function(featmat, control) {
-
   parents = sample(seq_row(featmat), 2L, replace = TRUE)
   while (TRUE) {
     kid = crossover(featmat[parents[1L], ], featmat[parents[2L], ], control$extra.args$crossover.rate)

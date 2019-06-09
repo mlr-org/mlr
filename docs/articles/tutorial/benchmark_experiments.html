@@ -334,22 +334,22 @@
 <a class="sourceLine" id="cb1-9" data-line-number="9">## Task: Sonar-example, Learner: classif.lda</a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">## Resampling: holdout</a>
 <a class="sourceLine" id="cb1-11" data-line-number="11">## Measures:             mmce</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">## [Resample] iter 1:    0.3000000</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## [Resample] iter 1:    0.3142857</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13">## </a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## Aggregated Result: mmce.test.mean=0.3000000</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## Aggregated Result: mmce.test.mean=0.3142857</a>
 <a class="sourceLine" id="cb1-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb1-16" data-line-number="16">## Task: Sonar-example, Learner: classif.rpart</a>
 <a class="sourceLine" id="cb1-17" data-line-number="17">## Resampling: holdout</a>
 <a class="sourceLine" id="cb1-18" data-line-number="18">## Measures:             mmce</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">## [Resample] iter 1:    0.3428571</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## [Resample] iter 1:    0.3285714</a>
 <a class="sourceLine" id="cb1-20" data-line-number="20">## </a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">## Aggregated Result: mmce.test.mean=0.3428571</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">## Aggregated Result: mmce.test.mean=0.3285714</a>
 <a class="sourceLine" id="cb1-22" data-line-number="22">## </a>
 <a class="sourceLine" id="cb1-23" data-line-number="23"></a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">bmr</a>
 <a class="sourceLine" id="cb1-25" data-line-number="25">##         task.id    learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">## 1 Sonar-example   classif.lda      0.3000000</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">## 2 Sonar-example classif.rpart      0.3428571</a></code></pre></div>
+<a class="sourceLine" id="cb1-26" data-line-number="26">## 1 Sonar-example   classif.lda      0.3142857</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">## 2 Sonar-example classif.rpart      0.3285714</a></code></pre></div>
 <p>For convenience, if you don’t want to pass any additional arguments to <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, you don’t need to generate the <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s explicitly, but it’s sufficient to provide the learner name. In the above example we could also have written:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Vector of strings</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">lrns =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"classif.lda"</span>, <span class="st">"classif.rpart"</span>)</a>
@@ -361,22 +361,22 @@
 <a class="sourceLine" id="cb2-8" data-line-number="8">## Task: Sonar-example, Learner: classif.lda</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">## Resampling: holdout</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">## Measures:             mmce</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## [Resample] iter 1:    0.3000000</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## [Resample] iter 1:    0.3285714</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">## </a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## Aggregated Result: mmce.test.mean=0.3000000</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## Aggregated Result: mmce.test.mean=0.3285714</a>
 <a class="sourceLine" id="cb2-14" data-line-number="14">## </a>
 <a class="sourceLine" id="cb2-15" data-line-number="15">## Task: Sonar-example, Learner: classif.rpart</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16">## Resampling: holdout</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17">## Measures:             mmce</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">## [Resample] iter 1:    0.3000000</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">## [Resample] iter 1:    0.3714286</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">## </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## Aggregated Result: mmce.test.mean=0.3000000</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## Aggregated Result: mmce.test.mean=0.3714286</a>
 <a class="sourceLine" id="cb2-21" data-line-number="21">## </a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23">bmr</a>
 <a class="sourceLine" id="cb2-24" data-line-number="24">##         task.id    learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">## 1 Sonar-example   classif.lda            0.3</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">## 2 Sonar-example classif.rpart            0.3</a></code></pre></div>
+<a class="sourceLine" id="cb2-25" data-line-number="25">## 1 Sonar-example   classif.lda      0.3285714</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">## 2 Sonar-example classif.rpart      0.3714286</a></code></pre></div>
 <p>In the printed summary table every row corresponds to one pair of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. The entries show the <a href="measures.html" target="_blank">mean misclassification error</a>, the default performance measure for classification, on the test data set.</p>
 <p>The result <code>bmr</code> is an object of class <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>. Basically, it contains a <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code> of lists of <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects, first ordered by <code><a href="../../reference/Task.html">Task()</a></code> and then by <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>.</p>
 <div id="making-experiments-reproducible" class="section level2">
@@ -397,42 +397,42 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">## $`Sonar-example`</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">## $`Sonar-example`$classif.lda</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">##   iter mmce</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">## 1    1  0.3</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">##   iter      mmce</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## 1    1 0.3285714</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">## $`Sonar-example`$classif.rpart</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">##   iter mmce</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## 1    1  0.3</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">##   iter      mmce</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## 1    1 0.3714286</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span>(bmr)</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">## $`Sonar-example`</a>
 <a class="sourceLine" id="cb3-13" data-line-number="13">## $`Sonar-example`$classif.lda</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14">## mmce.test.mean </a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">##            0.3 </a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">##      0.3285714 </a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">## </a>
 <a class="sourceLine" id="cb3-17" data-line-number="17">## $`Sonar-example`$classif.rpart</a>
 <a class="sourceLine" id="cb3-18" data-line-number="18">## mmce.test.mean </a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">##            0.3</a></code></pre></div>
+<a class="sourceLine" id="cb3-19" data-line-number="19">##      0.3714286</a></code></pre></div>
 <p>Since we used holdout as resampling strategy, individual and aggregated performance values coincide.</p>
 <p>By default, nearly all “getter” functions return a nested <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code>, with the first level indicating the task and the second level indicating the learner. If only a single learner or, as in our case a single task is considered, setting <code>drop = TRUE</code> simplifies the result to a flat <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr, <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">## $classif.lda</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">##   iter mmce</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## 1    1  0.3</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">##   iter      mmce</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">## 1    1 0.3285714</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">## </a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">## $classif.rpart</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">##   iter mmce</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## 1    1  0.3</a></code></pre></div>
+<a class="sourceLine" id="cb4-7" data-line-number="7">##   iter      mmce</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">## 1    1 0.3714286</a></code></pre></div>
 <p>Often it is more convenient to work with <code><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">base::data.frame()</a></code>s. You can easily convert the result structure by setting <code>as.df = TRUE</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">##         task.id    learner.id iter mmce</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## 1 Sonar-example   classif.lda    1  0.3</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## 2 Sonar-example classif.rpart    1  0.3</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">##         task.id    learner.id iter      mmce</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## 1 Sonar-example   classif.lda    1 0.3285714</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">## 2 Sonar-example classif.rpart    1 0.3714286</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span>(bmr, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">##         task.id    learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## 1 Sonar-example   classif.lda            0.3</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## 2 Sonar-example classif.rpart            0.3</a></code></pre></div>
+<a class="sourceLine" id="cb5-8" data-line-number="8">## 1 Sonar-example   classif.lda      0.3285714</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">## 2 Sonar-example classif.rpart      0.3714286</a></code></pre></div>
 </div>
 <div id="predictions" class="section level2">
 <h2 class="hasAnchor">
@@ -498,12 +498,12 @@
 <p>It is also easily possible to access results for certain learners or tasks via their IDs. For this purpose many “getter” functions have a <code>learner.ids</code> and a <code>task.ids</code> argument.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span>(bmr, <span class="dt">learner.ids =</span> <span class="st">"classif.rpart"</span>, <span class="dt">as.df =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">##         task.id    learner.id  id truth response iter  set</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">## 1 Sonar-example classif.rpart 194     M        M    1 test</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">## 2 Sonar-example classif.rpart  18     R        R    1 test</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">## 3 Sonar-example classif.rpart 196     M        M    1 test</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">## 4 Sonar-example classif.rpart  10     R        R    1 test</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## 5 Sonar-example classif.rpart 134     M        M    1 test</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## 6 Sonar-example classif.rpart  34     R        M    1 test</a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3">## 1 Sonar-example classif.rpart 112     M        R    1 test</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">## 2 Sonar-example classif.rpart 191     M        M    1 test</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">## 3 Sonar-example classif.rpart 208     M        M    1 test</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">## 4 Sonar-example classif.rpart 203     M        M    1 test</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## 5 Sonar-example classif.rpart  23     R        M    1 test</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## 6 Sonar-example classif.rpart 162     M        M    1 test</a></code></pre></div>
 <p>If you don’t like the default IDs, you can set the IDs of learners and tasks via the <code>id</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and <code>makeTask()</code>. Moreover, you can conveniently change the ID of a <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> via function <code>setLearnerid()</code>.</p>
 </div>
 <div id="ids" class="section level2">
@@ -592,7 +592,7 @@
 <a class="sourceLine" id="cb11-26" data-line-number="26">## Minimize: TRUE</a>
 <a class="sourceLine" id="cb11-27" data-line-number="27">## Best: 0; Worst: 1</a>
 <a class="sourceLine" id="cb11-28" data-line-number="28">## Aggregated by: test.mean</a>
-<a class="sourceLine" id="cb11-29" data-line-number="29">## Arguments: list()</a>
+<a class="sourceLine" id="cb11-29" data-line-number="29">## Arguments: </a>
 <a class="sourceLine" id="cb11-30" data-line-number="30">## Note: Defined as: mean(response != truth)</a></code></pre></div>
 </div>
 </div>
@@ -604,24 +604,24 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># First benchmark result</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">bmr</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">##         task.id    learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">## 1 Sonar-example   classif.lda            0.3</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">## 2 Sonar-example classif.rpart            0.3</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">## 1 Sonar-example   classif.lda      0.3285714</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">## 2 Sonar-example classif.rpart      0.3714286</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Benchmark experiment for the additional learners</span></a>
 <a class="sourceLine" id="cb12-8" data-line-number="8">lrns2 =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>), <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.qda"</span>))</a>
 <a class="sourceLine" id="cb12-9" data-line-number="9">bmr2 =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns2, sonar.task, rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb12-10" data-line-number="10">bmr2</a>
 <a class="sourceLine" id="cb12-11" data-line-number="11">##         task.id           learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">## 1 Sonar-example classif.randomForest      0.2571429</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">## 2 Sonar-example          classif.qda      0.5142857</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">## 1 Sonar-example classif.randomForest      0.1285714</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">## 2 Sonar-example          classif.qda      0.4000000</a>
 <a class="sourceLine" id="cb12-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co"># Merge the results</span></a>
 <a class="sourceLine" id="cb12-16" data-line-number="16"><span class="kw"><a href="../../reference/mergeBenchmarkResults.html">mergeBenchmarkResults</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(bmr, bmr2))</a>
 <a class="sourceLine" id="cb12-17" data-line-number="17">##         task.id           learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">## 1 Sonar-example          classif.lda      0.3000000</a>
-<a class="sourceLine" id="cb12-19" data-line-number="19">## 2 Sonar-example        classif.rpart      0.3000000</a>
-<a class="sourceLine" id="cb12-20" data-line-number="20">## 3 Sonar-example classif.randomForest      0.2571429</a>
-<a class="sourceLine" id="cb12-21" data-line-number="21">## 4 Sonar-example          classif.qda      0.5142857</a></code></pre></div>
+<a class="sourceLine" id="cb12-18" data-line-number="18">## 1 Sonar-example          classif.lda      0.3285714</a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">## 2 Sonar-example        classif.rpart      0.3714286</a>
+<a class="sourceLine" id="cb12-20" data-line-number="20">## 3 Sonar-example classif.randomForest      0.1285714</a>
+<a class="sourceLine" id="cb12-21" data-line-number="21">## 4 Sonar-example          classif.qda      0.4000000</a></code></pre></div>
 <p>Note that in the above examples in each case a resample description (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) was passed to the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function. For this reason <code><a href="https://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code> and <code><a href="https://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code> were most likely evaluated on a different training/test set pair than <code><a href="https://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code> and <code><a href="https://www.rdocumentation.org/packages/MASS/topics/qda">MASS::qda()</a></code>.</p>
 <p>Differing training/test set pairs across learners pose an additional source of variation in the results, which can make it harder to detect actual performance differences between learners. Therefore, if you suspect that you will have to extend your benchmark experiment by another <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> later on it’s probably easiest to work with <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>s from the start. These can be stored and used for any additional experiments.</p>
 <p>Alternatively, if you used a resample description in the first benchmark experiment you could also extract the <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>s from the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> <code>bmr</code> and pass these to all further <code><a href="../../reference/benchmark.html">benchmark()</a></code> calls.</p>
@@ -636,16 +636,16 @@
 <a class="sourceLine" id="cb13-9" data-line-number="9">bmr3 =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns2, sonar.task, rin, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">bmr3</a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">##         task.id           learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb13-12" data-line-number="12">## 1 Sonar-example classif.randomForest      0.2000000</a>
-<a class="sourceLine" id="cb13-13" data-line-number="13">## 2 Sonar-example          classif.qda      0.2714286</a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">## 1 Sonar-example classif.randomForest      0.1428571</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">## 2 Sonar-example          classif.qda      0.3285714</a>
 <a class="sourceLine" id="cb13-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co"># Merge the results</span></a>
 <a class="sourceLine" id="cb13-16" data-line-number="16"><span class="kw"><a href="../../reference/mergeBenchmarkResults.html">mergeBenchmarkResults</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(bmr, bmr3))</a>
 <a class="sourceLine" id="cb13-17" data-line-number="17">##         task.id           learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb13-18" data-line-number="18">## 1 Sonar-example          classif.lda      0.3000000</a>
-<a class="sourceLine" id="cb13-19" data-line-number="19">## 2 Sonar-example        classif.rpart      0.3000000</a>
-<a class="sourceLine" id="cb13-20" data-line-number="20">## 3 Sonar-example classif.randomForest      0.2000000</a>
-<a class="sourceLine" id="cb13-21" data-line-number="21">## 4 Sonar-example          classif.qda      0.2714286</a></code></pre></div>
+<a class="sourceLine" id="cb13-18" data-line-number="18">## 1 Sonar-example          classif.lda      0.3285714</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19">## 2 Sonar-example        classif.rpart      0.3714286</a>
+<a class="sourceLine" id="cb13-20" data-line-number="20">## 3 Sonar-example classif.randomForest      0.1428571</a>
+<a class="sourceLine" id="cb13-21" data-line-number="21">## 4 Sonar-example          classif.qda      0.3285714</a></code></pre></div>
 </div>
 <div id="benchmark-analysis-and-visualization" class="section level1">
 <h1 class="hasAnchor">
@@ -715,11 +715,11 @@
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">perf =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(perf[,<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(perf)])</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3">##        task.id learner.id iter       mmce        ber</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">## 1 iris-example        lda    1 0.06666667 0.04761905</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">## 1 iris-example        lda    1 0.06666667 0.05555556</a>
 <a class="sourceLine" id="cb16-5" data-line-number="5">## 2 iris-example        lda    2 0.00000000 0.00000000</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">## 3 iris-example        lda    3 0.00000000 0.00000000</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">## 4 iris-example        lda    4 0.06666667 0.06666667</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">## 5 iris-example        lda    5 0.06666667 0.08333333</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">## 3 iris-example        lda    3 0.06666667 0.04761905</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">## 4 iris-example        lda    4 0.00000000 0.00000000</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">## 5 iris-example        lda    5 0.06666667 0.04166667</a>
 <a class="sourceLine" id="cb16-9" data-line-number="9">## 6 iris-example        lda    6 0.00000000 0.00000000</a></code></pre></div>
 <p>A closer look at the result reveals that the <code><a href="https://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code> outperforms the classification tree (<code><a href="https://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code>) in every instance, while linear discriminant analysis (<code><a href="https://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code>) performs better than <code><a href="https://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code> most of the time. Additionally <code><a href="https://www.rdocumentation.org/packages/MASS/topics/lda">MASS::lda()</a></code> sometimes even beats the <code><a href="https://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest::randomForest()</a></code>. With increasing size of such <code><a href="../../reference/benchmark.html">benchmark()</a></code> experiments, those tables become almost unreadable and hard to comprehend.</p>
 <p><code>mlr</code> features some plotting functions to visualize results of benchmark experiments that you might find useful. Moreover, <code>mlr</code> offers statistical hypothesis tests to assess performance differences between learners.</p>
@@ -757,11 +757,11 @@
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr, <span class="dt">measure =</span> mmce, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(plt<span class="op">$</span>data[, <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(plt<span class="op">$</span>data)])</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">##        task.id learner.id iter       mmce        ber</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">## 1 iris-example        lda    1 0.06666667 0.04761905</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">## 1 iris-example        lda    1 0.06666667 0.05555556</a>
 <a class="sourceLine" id="cb20-5" data-line-number="5">## 2 iris-example        lda    2 0.00000000 0.00000000</a>
-<a class="sourceLine" id="cb20-6" data-line-number="6">## 3 iris-example        lda    3 0.00000000 0.00000000</a>
-<a class="sourceLine" id="cb20-7" data-line-number="7">## 4 iris-example        lda    4 0.06666667 0.06666667</a>
-<a class="sourceLine" id="cb20-8" data-line-number="8">## 5 iris-example        lda    5 0.06666667 0.08333333</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">## 3 iris-example        lda    3 0.06666667 0.04761905</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">## 4 iris-example        lda    4 0.00000000 0.00000000</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">## 5 iris-example        lda    5 0.06666667 0.04166667</a>
 <a class="sourceLine" id="cb20-9" data-line-number="9">## 6 iris-example        lda    6 0.00000000 0.00000000</a>
 <a class="sourceLine" id="cb20-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb20-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/levels">levels</a></span>(plt<span class="op">$</span>data<span class="op">$</span>task.id) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Iris"</span>, <span class="st">"Ringnorm"</span>, <span class="st">"Waveform"</span>, <span class="st">"Diabetes"</span>, <span class="st">"Sonar"</span>)</a>
@@ -884,14 +884,17 @@
 <a class="sourceLine" id="cb32-4" data-line-number="4">df =<span class="st"> </span>reshape2<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/reshape2/topics/cast">dcast</a></span>(df, task.id <span class="op">+</span><span class="st"> </span>iter <span class="op">~</span><span class="st"> </span>variable <span class="op">+</span><span class="st"> </span>learner.id)</a>
 <a class="sourceLine" id="cb32-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df)</a>
 <a class="sourceLine" id="cb32-6" data-line-number="6">##         task.id iter  mmce_lda mmce_rpart mmce_randomForest</a>
-<a class="sourceLine" id="cb32-7" data-line-number="7">## 1 Sonar-example    1 0.2000000  0.3000000         0.1500000</a>
-<a class="sourceLine" id="cb32-8" data-line-number="8">## 2 Sonar-example    2 0.2380952  0.2857143         0.0952381</a>
-<a class="sourceLine" id="cb32-9" data-line-number="9">## 3 Sonar-example    3 0.2857143  0.1904762         0.1904762</a>
-<a class="sourceLine" id="cb32-10" data-line-number="10">## 4 Sonar-example    4 0.3333333  0.2380952         0.1428571</a>
-<a class="sourceLine" id="cb32-11" data-line-number="11">## 5 Sonar-example    5 0.2380952  0.2857143         0.0952381</a>
-<a class="sourceLine" id="cb32-12" data-line-number="12">## 6 Sonar-example    6 0.3333333  0.3333333         0.1904762</a>
+<a class="sourceLine" id="cb32-7" data-line-number="7">## 1 Sonar-example    1 0.4285714  0.2380952         0.2380952</a>
+<a class="sourceLine" id="cb32-8" data-line-number="8">## 2 Sonar-example    2 0.1904762  0.2857143         0.0952381</a>
+<a class="sourceLine" id="cb32-9" data-line-number="9">## 3 Sonar-example    3 0.3000000  0.3000000         0.1500000</a>
+<a class="sourceLine" id="cb32-10" data-line-number="10">## 4 Sonar-example    4 0.1904762  0.1904762         0.0000000</a>
+<a class="sourceLine" id="cb32-11" data-line-number="11">## 5 Sonar-example    5 0.3333333  0.4761905         0.2380952</a>
+<a class="sourceLine" id="cb32-12" data-line-number="12">## 6 Sonar-example    6 0.2500000  0.2500000         0.1000000</a>
 <a class="sourceLine" id="cb32-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb32-14" data-line-number="14">GGally<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/GGally/topics/ggpairs">ggpairs</a></span>(df, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb32-14" data-line-number="14">GGally<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/GGally/topics/ggpairs">ggpairs</a></span>(df, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb32-15" data-line-number="15">## Registered S3 method overwritten by 'GGally':</a>
+<a class="sourceLine" id="cb32-16" data-line-number="16">##   method from   </a>
+<a class="sourceLine" id="cb32-17" data-line-number="17">##   +.gg   ggplot2</a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
 </div>
 </div>

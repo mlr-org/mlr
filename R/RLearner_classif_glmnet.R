@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.glmnet = function() {
-
   makeRLearnerClassif(
     cl = "classif.glmnet",
     package = "glmnet",
@@ -78,7 +77,6 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
-
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if (.learner$predict.type == "prob") {

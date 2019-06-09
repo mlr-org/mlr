@@ -13,7 +13,6 @@
 #' # see example of makeTuneWrapper
 #' @export
 getNestedTuneResultsX = function(r) {
-
   assertClass(r, "ResampleResult")
   assertList(r$extract)
   lapply(r$extract, assertClass, classes = "TuneResult")
@@ -43,7 +42,6 @@ getNestedTuneResultsX = function(r) {
 #' # see example of makeTuneWrapper
 #' @export
 getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
-
   assertClass(r, "ResampleResult")
   assertList(r$extract)
   lapply(r$extract, assertClass, classes = "TuneResult")
@@ -52,8 +50,7 @@ getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
   if (trafo) ops = lapply(ops, trafoOptPath)
   op.dfs = lapply(ops, as.data.frame)
   op.dfs = setDF(rbindlist(lapply(seq_along(op.dfs), function(i) {
-
     op.dfs[[i]][, "iter"] = i
     op.dfs[[i]]
-  }), fill = TRUE))
+  }), fill = TRUE, use.names = TRUE))
 }
