@@ -39,7 +39,7 @@ trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = 
     c(list(group = d$target, fdataobj = data.fdclass, par.CV = par.cv, par.S = list(w = .weights)),
       list(metric = par.funs$metric)[which(names(par.funs) == "metric")],
       ...))
- }
+}
 
 #' @export
 predictLearner.classif.fdausc.knn = function(.learner, .model, .newdata, ...) {

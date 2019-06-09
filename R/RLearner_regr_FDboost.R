@@ -14,10 +14,10 @@ makeRLearner.regr.FDboost = function() {
       # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
       makeNumericLearnerParam(id = "df", default = 4, lower = 0.5), # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
       # makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols")),  # we don't use "btree" in FDboost
-      makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
-      makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L),  # degree of the b-spline
-      makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
-      makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE),  # identifiability check by testing matrix degeneracy
+      makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L), # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
+      makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L), # degree of the b-spline
+      makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L), # degree of the penalty
+      makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE), # identifiability check by testing matrix degeneracy
       forbidden = expression(df < differences)
     ),
     properties = c("numerics", "functionals"),
@@ -31,8 +31,7 @@ makeRLearner.regr.FDboost = function() {
 trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
   knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
-
-  family = switch(family,  # no binomial family
+  family = switch(family, # no binomial family
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
     Huber = mboost::Huber(d),
@@ -44,7 +43,7 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
   )
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   hh = getFDboostFormulaMat(.task, knots = knots, df = df, bsignal.check.ident = bsignal.check.ident, degree = degree, differences = differences)
-  FDboost::FDboost(formula = hh$form, timeformula = ~bols(1), data = hh$mat.list, control = ctrl, family = family)  # for scalar on function regression, the time formula is always ~bols(1)
+  FDboost::FDboost(formula = hh$form, timeformula = ~ bols(1), data = hh$mat.list, control = ctrl, family = family) # for scalar on function regression, the time formula is always ~bols(1)
 }
 
 #' @export

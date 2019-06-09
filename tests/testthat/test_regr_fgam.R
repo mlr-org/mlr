@@ -8,8 +8,8 @@ test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   # dti1 is already a matrix dataframe
   fit.af = pfr(formula = pasat ~ af(cca, Qtransform = TRUE, k = 7, m = 2), data = dti1)
   prd.refund = predict(fit.af, newdata = dti1, type = "response")
-  df = data.frame(as.list(dti1[, c("pasat", "cca")]))  # makeFunctionalData require plain dataframe
-  fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94))  # dim(dti1$cca) = (66,93)
+  df = data.frame(as.list(dti1[, c("pasat", "cca")])) # makeFunctionalData require plain dataframe
+  fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94)) # dim(dti1$cca) = (66,93)
   lrn = makeLearner("regr.fgam", Qtransform = TRUE, mgcv.te_ti.k = 7, mgcv.te_ti.m = 2)
   task = makeRegrTask(data = fdf, target = "pasat")
   mod1f = train(learner = lrn, task = task)
@@ -17,4 +17,3 @@ test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   res = all.equal(as.numeric(prd.refund), prd.mlr$data$response)
   expect_true(res)
 })
-

@@ -22,7 +22,7 @@ test_that("test if classif_FDboost train works", {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop = 100L, nu = 0.1)
   set.seed(getOption("mlr.debug.seed"))
   true.mod = FDboost::FDboost(frm, data = mat.list,
-    timeformula = ~bols(1), control = ctrl, family = mboost::Binomial())
+    timeformula = ~ bols(1), control = ctrl, family = mboost::Binomial())
 
 
   prd = predict(mlr.mod, newdata = getTaskData(fda.binary.gp.task,
@@ -41,5 +41,4 @@ test_that("test if classif_FDboost train works", {
     functionals.as = "matrix")), type = "response")
   attributes(prd2) = NULL
   expect_equal(prd$data$prob.2, prd2)
-
 })

@@ -56,7 +56,7 @@ test_that("getFDAMultiResFeatures works on data.frame", {
 
   # Learn args equal to method args
   vals1 = extractFDAMultiResFeatures()$learn(df, col = "UVVIS", res.level = 2L, shift = 0.25)
-  dfn1 = extractFDAMultiResFeatures()$reextract(df, col = "UVVIS", vals =  vals1)
+  dfn1 = extractFDAMultiResFeatures()$reextract(df, col = "UVVIS", vals = vals1)
   expect_true(nrow(df) == nrow(dfn1))
   expect_true(ncol(dfn1) == 5L)
 
@@ -69,17 +69,16 @@ test_that("getFDAMultiResFeatures works on data.frame", {
 
   extr = extractFDAMultiResFeatures()
   vals3 = extr$learn(df, col = "NIR", res.level = 3L, shift = 0.5, seg.lens = c(100L, 131L))
-  dfn3 = extr$reextract(df, col = "NIR", vals =  vals3)
+  dfn3 = extr$reextract(df, col = "NIR", vals = vals3)
   expect_true(nrow(df) == nrow(dfn3))
   expect_true(ncol(dfn3) == 19L)
 
 
   extr = extractFDAMultiResFeatures()
   vals4 = extr$learn(df, col = "NIR", res.level = 1L, shift = 0.2, seg.lens = 231L)
-  dfn4 = extr$reextract(df, col = "NIR", vals =  vals4)
+  dfn4 = extr$reextract(df, col = "NIR", vals = vals4)
   expect_true(nrow(df) == nrow(dfn4))
-  expect_true(ncol(dfn4) ==  1L)
-
+  expect_true(ncol(dfn4) == 1L)
 })
 
 test_that("extract and reextract MultiRes", {
@@ -134,7 +133,7 @@ test_that("Fourier equal to package", {
   expect_equal(nrow(fourier.gp), nrow(gp$data))
 
   # Phase (arctan(...) in range(-pi/2, pi/2) )
-  expect_true(all(fourier.gp < pi / 2 & fourier.gp > - pi / 2))
+  expect_true(all(fourier.gp < pi / 2 & fourier.gp > -pi / 2))
 
   fourier.vals = extr$learn(data = gp$data, col = "fd", trafo.coeff = "amplitude")
   fourier.gp = extr$reextract(data = gp$data, col = "fd", vals = fourier.vals)
@@ -160,7 +159,7 @@ test_that("Fourier equal to package", {
   expect_equal(df, fourier.gp)
 
   # Can not have factors
-  gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
+  gp2 = data.frame(v1 = t(1:4), X1 = as.factor(1))
   expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
 })
 
@@ -224,4 +223,3 @@ test_that("extractFDAFeaturesDTW", {
   expect_is(df, "data.frame")
   expect_equal(nrow(df), 129)
 })
-

@@ -4,17 +4,17 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
 
   data(ArrowHead, package = "classiFunc")
-  classes = ArrowHead[,"target"]
-  ArrowHead = ArrowHead[,colnames(ArrowHead) != "target"]
+  classes = ArrowHead[, "target"]
+  ArrowHead = ArrowHead[, colnames(ArrowHead) != "target"]
 
   set.seed(getOption("mlr.debug.seed"))
   train_inds = sample(1:nrow(ArrowHead), size = 0.8 * nrow(ArrowHead), replace = FALSE)
   test_inds = (1:nrow(ArrowHead))[!(1:nrow(ArrowHead)) %in% train_inds]
 
-  mlearn = ArrowHead[train_inds,]
+  mlearn = ArrowHead[train_inds, ]
   glearn = classes[train_inds]
 
-  mtest = ArrowHead[test_inds,]
+  mtest = ArrowHead[test_inds, ]
   gtest = classes[test_inds]
 
   # classiFunc implementation
@@ -32,9 +32,9 @@ test_that("classif_classiFunc.kernel behaves like original api", {
 
   # getting the data ready for mlr
   ph = as.data.frame(mlearn)
-  ph[,"label"] = glearn
+  ph[, "label"] = glearn
   phtst = as.data.frame(mtest)
-  phtst[,"label"] = gtest
+  phtst[, "label"] = gtest
 
   # mlr interface
   lrn = makeLearner("classif.classiFunc.kernel", h = 1, nderiv = 1)
@@ -59,9 +59,9 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   # test that predict.type = "prob" works
   set.seed(getOption("mlr.debug.seed"))
   lrn.prob = makeLearner("classif.classiFunc.kernel",
-                         h = 1,
-                         nderiv = 1,
-                         predict.type = "prob")
+    h = 1,
+    nderiv = 1,
+    predict.type = "prob")
   m.prob = train(lrn.prob, task)
 
   cp.prob = predict(m.prob, newdata = ftest)
@@ -70,7 +70,6 @@ test_that("classif_classiFunc.kernel behaves like original api", {
 
   expect_equal(as.matrix(getPredictionProbabilities(cp2.prob)), p2.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
-
 })
 
 test_that("resampling classiFunc.kernel", {

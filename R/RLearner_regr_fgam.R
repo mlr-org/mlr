@@ -28,7 +28,6 @@ trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, ...
 predictLearner.regr.fgam = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
-  pred = predict(.model$learner.model, newdata = nl, type = "response")  # predict.fgam, predict.gam, predict.pfr
+  pred = predict(.model$learner.model, newdata = nl, type = "response") # predict.fgam, predict.gam, predict.pfr
   return(as.vector(pred))
 }
-

@@ -51,7 +51,9 @@ test_that("Wrong methods yield errors", {
   t = subsetTask(fuelsubset.task, subset = 1:2)
 
   wrng1 = function() {
-    lrn = function(data, target, col, vals = NULL) {1}
+    lrn = function(data, target, col, vals = NULL) {
+      1
+    }
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
@@ -59,7 +61,9 @@ test_that("Wrong methods yield errors", {
 
 
   wrng2 = function() {
-    lrn = function(data) {data[, 1]}
+    lrn = function(data) {
+      data[, 1]
+    }
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),

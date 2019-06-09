@@ -67,4 +67,3 @@ test_that("resampling fdausc.knn", {
   r = resample(lrn, fda.binary.gp.task.small, hout)
   expect_class(r, "ResampleResult")
 })
-

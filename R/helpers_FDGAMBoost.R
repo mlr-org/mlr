@@ -16,7 +16,7 @@ fgam.ps = makeParamSet(
   # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
   # FIXME: currently not used in train
   # FIXME: skipped args: presmooth.opts, Xrange
-  makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
+  makeLogicalLearnerParam(id = "Qtransform", default = TRUE) # c.d.f transform
 )
 
 fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA)
@@ -71,17 +71,22 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
   return(list(form = form, mat.list = mat.list))
 }
 
-getBinomialTarget = function(.task)  {
+getBinomialTarget = function(.task) {
   vt = getTaskTargets(.task)
   uvt = unique(vt)
   dd = getTaskData(.task, target.extra = TRUE, functionals.as = "matrix")
   newtarget = sapply(dd$target, function(x) {
-    if (x == uvt[1]) return(1); return(0)})
+    if (x == uvt[1]) {
+      return(1)
+    }
+    return(0)
+  })
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
 
 getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, differences) {
+
   tdata = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
   formula.terms = namedList()
@@ -97,7 +102,7 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
     # also setup charvec of formula terms for func covars
     mat.list = namedList(fdns)
-    #formula.terms = setNames(character(length = fdns))
+    # formula.terms = setNames(character(length = fdns))
     formula.terms = namedList(fdns)
     # for each functional covariate
     for (fdn in fdns) {
@@ -113,7 +118,7 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
     # add grid names
     mat.list = c(mat.list, fdg)
   } else {
-    fdns = NULL  # no functional features
+    fdns = NULL # no functional features
   }
 
   # Add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
@@ -133,13 +138,12 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
 
 # Code below will be used in future, do not delete
 getPfrFormulaMat = function(mdata, target, fns, parlist) {
-#pfr.ps =
-# mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
+  # pfr.ps =
+  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
   # makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
   # mgcv::s:bs "tp" for thin plate regression spline, "cr" for cubic regression spline
   # makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
   # mgcv::s:m The order of the penalty for this term, default: let mgcv choose. The original default is NA but mlr will generate warnings for this.
   # makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, special.vals = list(NA)),
-#"s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
+  # "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
 }
-

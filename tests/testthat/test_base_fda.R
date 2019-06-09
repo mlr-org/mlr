@@ -413,8 +413,8 @@ test_that("Self-created data.frame's", {
 # Test whether we support stratification: #1669
 test_that("supports stratification", {
   res = makeResampleDesc(method = "RepCV", predict = "test",
-  stratify = TRUE,
-  folds = 2L, reps = 2L)
+    stratify = TRUE,
+    folds = 2L, reps = 2L)
 
   # resampling instances
   resinst = makeResampleInstance(res, gunpoint.task)

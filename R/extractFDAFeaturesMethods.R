@@ -54,6 +54,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
 #' @export
 #' @family fda_featextractor
 extractFDAFourier = function(trafo.coeff = "phase") {
+
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
 
@@ -63,6 +64,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
   }
 
   reextract = function(data, target, col, vals, args) {
+
     data = checkFDCols(data, col)
 
     # Calculate fourier coefficients (row wise) which are complex numbers
@@ -138,6 +140,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   }
 
   reextract = function(data, target, col, vals, args) {
+
     requirePackages("wavelets", default.method = "load")
     data = checkFDCols(data, col)
 
@@ -168,7 +171,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'
 #' @description
 #' The function extracts the functional principal components from a data.frame
-#' containing functional features. Currently uses `stats::prcomp`. 
+#' containing functional features. Currently uses `stats::prcomp`.
 #'
 #' @param rank. (`integer(1)`)\cr
 #'   Number of principal components to extract.
@@ -202,8 +205,8 @@ extractFDAFPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
     makeLogicalParam("center")
   )
   makeExtractFDAFeatMethod(learn = lrn, reextract = reextract,
-   args = list(rank. = rank., center = center, scale. = scale.),
-   par.set = ps)
+    args = list(rank. = rank., center = center, scale. = scale.),
+    par.set = ps)
 }
 
 #' @title Bspline mlq features
@@ -229,7 +232,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
   reextract = function(data, target, col, vals, args) {
     data = checkFDCols(data, col)
     blrn = FDboost::bsignal(x = data, s = seq_len(ncol(data)), knots = vals$bsignal.knots, degree = vals$bsignal.df)
-    feats.bsignal = mboost::extract(object = blrn, what = "design")  # get the design matrix of the base learner
+    feats.bsignal = mboost::extract(object = blrn, what = "design") # get the design matrix of the base learner
     # Add more legible column names to the output
     df = as.data.frame(feats.bsignal)
     colnames(df) = stri_paste("bsig", seq_len(ncol(df)), sep = ".")
@@ -267,7 +270,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #'   This only speeds things up when there are a large number of time series.
 #' @param na.action (`logical(1)`)\cr
 #'   A function to handle missing values. Use na.interp to estimate missing values
-#'@param ... (any)\cr
+#' @param ... (any)\cr
 #'   Further arguments passed on to the respective tsfeatures functions.
 #' @return ([data.frame])
 #' @references Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
@@ -287,6 +290,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
   }
 
   reextract = function(data, target = NULL, col, vals) {
+
     data = checkFDCols(data, col)
     # Convert to list of rows
     rowlst = convertRowsToList(data)
@@ -342,6 +346,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
 #' @export
 #' @family fda_featextractor
 extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {
+
   requirePackages("rucrdtw", default.method = "attach")
 
   # Function that extracts dtw-distances for a single observation and a set of reference
@@ -353,6 +358,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
   }
 
   lrn = function(data, target = NULL, col, ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {
+
     assertChoice(ref.method, c("random", "all", "fixed"))
     assertNumeric(n.refs, lower = 0, upper = 1)
     assertChoice(class(refs), c("matrix", "integer", "NULL"))
@@ -362,10 +368,12 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
 
     # Obtain reference curves
     if (is.null(refs) | is.integer(refs)) {
-      if (ref.method == "random")
+      if (ref.method == "random") {
         refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0)), 2L))
-      if (ref.method == "all")
+      }
+      if (ref.method == "all") {
         refs = seq_len(nrow(data))
+      }
       refs.data = data[refs, , drop = FALSE]
     } else {
       assert_true(nrow(refs) == nrow(data))
@@ -450,13 +458,13 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
   getCurveFeatures = function(x, res.level = 3L, shift = 0.5) {
     m = length(x)
     feats = numeric(0L)
-    ssize = m  # initialize segment size to be the length of the curve
+    ssize = m # initialize segment size to be the length of the curve
     for (rl in seq_len(res.level)) {
       # ssize is divided by 2 at the end of the loop
-      soffset = ceiling(shift * ssize)  # overlap distance
+      soffset = ceiling(shift * ssize) # overlap distance
       # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
       sstart = 1L
-      send = sstart + ssize - 1L  # end position
+      send = sstart + ssize - 1L # end position
       while (send <= m) {
         # until the segment reach the end
         # messagef("start, end: %i, %i", sstart, send)
@@ -481,12 +489,13 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
   lrn = function(data, target, col, res.level = 3L, shift = 0.5, seg.lens = NULL) {
     assertCount(res.level)
     assertNumber(shift)
-    assertNumeric(seg.lens, null.ok  = TRUE)
+    assertNumeric(seg.lens, null.ok = TRUE)
     list(res.level = res.level, shift = shift, seg.lens = seg.lens)
   }
 
 
   reextract = function(data, target = NULL, col, vals, args) {
+
     data = checkFDCols(data, col)
 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
@@ -498,8 +507,9 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
     }
 
     # For res.level=1 make sure we return the correct dimensions
-    if (is.null(dim(df)) | vals$res.level == 1L)
+    if (is.null(dim(df)) | vals$res.level == 1L) {
       df = data.frame(t(df))
+    }
 
     rownames(df) = NULL
     colnames(df) = stri_paste("multires", seq_len(ncol(df)), sep = ".")

@@ -45,13 +45,12 @@
 #' @export
 #' @examples
 #' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
-#' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
+#' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2 = 5:8), exclude.cols = "y")
 #' task = makeClassifTask(data = fdf, target = "y")
 #' extracted = extractFDAFeatures(task,
-#' feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
+#'   feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
 #' print(extracted$task)
 #' reextractFDAFeatures(task, extracted$desc)
-
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list(), ...) {
   assertList(feat.methods)
   UseMethod("extractFDAFeatures")
@@ -90,12 +89,14 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   # Overwrite the par.vals from ... so it is set correctly during tuning
   feat.args = list(...)
   desc$extractFDAFeat = Map(function(x) {
-    if (!is.null(x$par.set))
+    if (!is.null(x$par.set)) {
       # Only set relevant params
       feat.args = feat.args[names(feat.args) %in% getParamIds(x$par.set)]
-    if (length(feat.args) > 0)
+    }
+    if (length(feat.args) > 0) {
       # Overwrite args
       x$args = feat.args
+    }
     return(x)
   }, feat.methods)
 
@@ -168,6 +169,7 @@ reextractFDAFeatures = function(obj, desc, ...) {
 
 #' @export
 reextractFDAFeatures.data.frame = function(obj, desc, ...) {
+
   assertClass(desc, classes = "extractFDAFeatDesc")
 
   # check for new columns

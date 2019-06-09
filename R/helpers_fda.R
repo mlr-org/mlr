@@ -37,9 +37,9 @@ functionalToNormalData = function(df) {
 # Takes a data.frame and a functional data column
 # Returns the functional matrix-column
 checkFDCols = function(data, col) {
-    assertClass(data, "data.frame")
-    assertChoice(col, choices = colnames(data))
-    data = as.matrix(data[, col, drop = FALSE])
-    assertNumeric(data)
-    return(data)
+  assertClass(data, "data.frame")
+  assertChoice(col, choices = colnames(data))
+  data = as.matrix(data[, col, drop = FALSE])
+  assertNumeric(data)
+  return(data)
 }

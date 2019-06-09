@@ -56,7 +56,7 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.01, upper = 0.3),
     makeDiscreteParam("filter", values = c("la8", "haar"))
-    )
+  )
   lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 5L))
   mod = train(lrn, subsetTask(gunpoint.task, subset = 2:10))
   expect_class(mod, "TuneModel")
@@ -68,7 +68,7 @@ test_that("extractFDAFeaturesWrapper works for dtwkernel", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.01, upper = 0.3),
     makeNumericParam("n.refs", lower = 0.01, upper = 0.05)
-    )
+  )
   lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlRandom(budget = 2L))
   mod = train(lrn, subsetTask(gunpoint.task, subset = 2:30))
   expect_class(mod, "TuneModel")
