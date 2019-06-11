@@ -26,15 +26,18 @@
 #' @family filter
 makeFilterEnsemble = function(name = "E-min",
   base.methods = c("randomForestSRC.importance", "variance"),
-  desc = NULL, fun = NULL) {
+  desc = NULL, fun = NULL, ...) {
   assertString(name)
   assertString(desc)
   assertFunction(fun, c("task", "base.methods"))
+
+  ### calculate ensemble filter
   obj = makeS3Obj("FilterEnsemble",
     name = name,
     desc = desc,
     fun = fun
   )
+
   .FilterEnsembleRegister[[name]] = obj
   obj
 }
@@ -101,32 +104,24 @@ makeFilterEnsemble(
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate base filters here
-    fval = generateFilterValuesData(task, method = base.methods,
-      nselect = nselect, more.args = ...)
-
-    # rank base filters by method
-    fval_all_ranked_simple = transform(fval$data,
-      rank = ave(1:nrow(fval$data), method,
-        FUN = function(x) order(fval$data$value[x])))
-
-    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
-      order(value, rank)), ]
+    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
+      nselect = nselect, more.args = more.args, ... = ...)
 
     ### calculate ensemble filter
 
     # group by "name" and summarize the minimum of "rank"
-    fval_ens = aggregate(fval_all_ranked_simple$rank,
-      by = list(fval_all_ranked_simple$name), FUN = min)
+    fval_ens = aggregate(fval_list[[2]]$rank,
+      by = list(fval_list[[2]]$name), FUN = min)
     colnames(fval_ens) = c("name", "value")
 
     # add columns "type" and "method"
-    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
-    fval_ens$method = "E-mean"
+    fval_ens$type = fval_list[[1]]$data$type[1:length(unique(fval_list[[1]]$data$name))]
+    fval_ens$method = "E-min"
 
-    # merge ensemble and base filters
-    fval_all_ranked_simple$rank = NULL
-    return(rbind(fval_all_ranked_simple, fval_ens))
+    # merge filters
+    fval_ens = mergeFilters(fval_list[[2]], fval_ens)
+
+    return(fval_ens)
 
   }
 )
@@ -142,32 +137,24 @@ makeFilterEnsemble(
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate base filters here
-    fval = generateFilterValuesData(task, method = base.methods,
-      nselect = nselect, more.args = ...)
-
-    # rank base filters by method
-    fval_all_ranked_simple = transform(fval$data,
-      rank = ave(1:nrow(fval$data), method,
-        FUN = function(x) order(fval$data$value[x])))
-
-    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
-      order(value, rank)), ]
+    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
+      nselect = nselect, more.args = more.args, ... = ...)
 
     ### calculate ensemble filter
 
     # group by "name" and summarize the minimum of "rank"
-    fval_ens = aggregate(fval_all_ranked_simple$rank,
-      by = list(fval_all_ranked_simple$name), FUN = mean)
+    fval_ens = aggregate(fval_list[[2]]$rank,
+      by = list(fval_list[[2]]$name), FUN = mean)
     colnames(fval_ens) = c("name", "value")
 
     # add columns "type" and "method"
-    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$type = fval_list[[1]]$data$type[1:length(unique(fval_list[[1]]$data$name))]
     fval_ens$method = "E-mean"
 
-    # merge ensemble and base filters
-    fval_all_ranked_simple$rank = NULL
-    return(rbind(fval_all_ranked_simple, fval_ens))
+    # merge filters
+    fval_ens = mergeFilters(fval_list[[2]], fval_ens)
+
+    return(fval_ens)
 
   }
 )
@@ -184,32 +171,24 @@ makeFilterEnsemble(
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate base filters here
-    fval = generateFilterValuesData(task, method = base.methods,
-      nselect = nselect, more.args = ...)
-
-    # rank base filters by method
-    fval_all_ranked_simple = transform(fval$data,
-      rank = ave(1:nrow(fval$data), method,
-        FUN = function(x) order(fval$data$value[x])))
-
-    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
-      order(value, rank)), ]
+    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
+      nselect = nselect, more.args = more.args, ... = ...)
 
     ### calculate ensemble filter
 
     # group by "name" and summarize the minimum of "rank"
-    fval_ens = aggregate(fval_all_ranked_simple$rank,
-      by = list(fval_all_ranked_simple$name), FUN = max)
+    fval_ens = aggregate(fval_list[[2]]$rank,
+      by = list(fval_list[[2]]$name), FUN = max)
     colnames(fval_ens) = c("name", "value")
 
     # add columns "type" and "method"
-    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$type = fval_list[[1]]$data$type[1:length(unique(fval_list[[1]]$data$name))]
     fval_ens$method = "E-max"
 
-    # merge ensemble and base filters
-    fval_all_ranked_simple$rank = NULL
-    return(rbind(fval_all_ranked_simple, fval_ens))
+    # merge filters
+    fval_ens = mergeFilters(fval_list[[2]], fval_ens)
+
+    return(fval_ens)
   }
 )
 
@@ -225,17 +204,8 @@ makeFilterEnsemble(
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate base filters here
-    fval = generateFilterValuesData(task, method = base.methods,
-      nselect = nselect, more.args = ...)
-
-    # rank base filters by method
-    fval_all_ranked_simple = transform(fval$data,
-      rank = ave(1:nrow(fval$data), method,
-        FUN = function(x) order(fval$data$value[x])))
-
-    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
-      order(value, rank)), ]
+    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
+      nselect = nselect, more.args = more.args, ... = ...)
 
     ### calculate ensemble filter
 
@@ -245,12 +215,13 @@ makeFilterEnsemble(
     colnames(fval_ens) = c("name", "value")
 
     # add columns "type" and "method"
-    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
+    fval_ens$type = fval_list[[1]]$data$type[1:length(unique(fval_list[[1]]$data$name))]
     fval_ens$method = "E-median"
 
-    # merge ensemble and base filters
-    fval_all_ranked_simple$rank = NULL
-    return(rbind(fval_all_ranked_simple, fval_ens))
+    # merge filters
+    fval_ens = mergeFilters(fval_all_ranked_simple, fval_ens)
+
+    return(fval_ens)
   }
 )
 
@@ -266,31 +237,58 @@ makeFilterEnsemble(
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
-    # calculate base filters here
-    fval = generateFilterValuesData(task, method = base.methods,
-      nselect = nselect, more.args = ...)
-
-    # rank base filters by method
-    fval_all_ranked_simple = transform(fval$data,
-      rank = ave(1:nrow(fval$data), method,
-        FUN = function(x) order(fval$data$value[x])))
-
-    fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
-      order(value, rank)), ]
+    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
+      nselect = nselect, more.args = more.args, ... = ...)
 
     ### calculate ensemble filter
 
     # group by "name" and summarize the minimum of "rank"
-    fval_ens = aggregate(fval_all_ranked_simple$rank,
-      by = list(fval_all_ranked_simple$name), FUN = sum)
+    fval_ens = aggregate(fval_list[[2]]$rank,
+      by = list(fval_list[[2]]$name), FUN = sum)
     colnames(fval_ens) = c("name", "value")
 
     # add columns "type" and "method"
-    fval_ens$type = fval$data$type[1:length(unique(fval$data$name))]
-    fval_ens$method = "E-max"
+    fval_ens$type = fval_list[[1]]$data$type[1:length(unique(fval_list[[1]]$data$name))]
+    fval_ens$method = "E-Borda"
 
-    # merge ensemble and base filters
-    fval_all_ranked_simple$rank = NULL
-    return(rbind(fval_all_ranked_simple, fval_ens))
+    # merge filters
+    fval_ens = mergeFilters(fval_list[[2]], fval_ens)
+
+    return(fval_ens)
   }
 )
+
+
+# calculate base filters -------------------------------------------------------
+# helper fun to calculate and rank base filters for ensemble filters
+
+calcBaseFilters = function(task, base.methods = base.methods,
+  nselect = nselect, more.args = more.args) {
+
+  # calculate base filters here
+  fval_calc = generateFilterValuesData(task, method = base.methods,
+    nselect = nselect, more.args = more.args)
+
+  # rank base filters by method
+  fval_all_ranked_simple = transform(fval_calc$data,
+    rank = ave(1:nrow(fval_calc$data), method,
+      FUN = function(x) order(fval_calc$data$value[x])))
+
+  fval_all_ranked_simple = fval_all_ranked_simple[with(fval_all_ranked_simple,
+    order(value, rank)), ]
+
+  return(list(fval_calc, fval_all_ranked_simple))
+
+}
+
+# merge base and ensemble filters ------------------------------------------------------
+# helper fun to merge base and ensembe filters
+
+mergeFilters = function(simple_filters, ensemble_filters) {
+
+  # merge ensemble and base filters
+  simple_filters$rank = NULL
+  all_filters = rbind(simple_filters, ensemble_filters)
+
+  return(all_filters)
+}
