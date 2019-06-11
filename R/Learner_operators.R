@@ -50,7 +50,7 @@ getLearnerPackages = function(learner) {
 #'
 #' @description Get the note for the learner.
 #' @template arg_learner
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 #' @family learner
 getLearnerNote = function(learner) {

@@ -12,7 +12,7 @@ The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-\link{\code{character}}.
+(\link{character}).
 }
 \description{
 Get the note for the learner.
