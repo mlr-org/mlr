@@ -238,6 +238,10 @@ makeFilterEnsemble(
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
+    if (length(unique(base.methods)) == 1L) {
+      stopf("Sampling without replacement is currently not supported for simple filter methods. Please use `makeDiscreteParam()` instead of `makeDiscreteVectorParam()`.")
+    }
+
     fval_list = calcBaseFilters(task = task, base.methods = base.methods,
       nselect = nselect, more.args = more.args, ... = ...)
 

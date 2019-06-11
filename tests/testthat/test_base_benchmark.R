@@ -273,16 +273,15 @@ test_that("drop option works for BenchmarkResults_operators", {
 
 test_that("benchmark works with ensemble filters", {
   lrn = makeLearner("classif.ksvm")
-  lrn = makeFilterWrapper(lrn, fw.method = "E-Borda")
+  lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
+    fw.base.methods = c("anova.test", "variance"))
 
   par.set = makeParamSet(
     makeNumericParam("C", lower = -2, upper = 2,
       trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -2, upper = 2,
       trafo = function(x) 2^x),
-    makeNumericParam("fw.perc", lower = 0, upper = 1),
-    makeDiscreteVectorParam("fw.base.methods", len = 2,
-      values = c("anova.test", "variance"))
+    makeNumericParam("fw.perc", lower = 0, upper = 1)
   )
 
   task.names = c("binary", "multiclass")
