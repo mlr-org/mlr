@@ -275,7 +275,7 @@ test_that("benchmark works with ensemble filters", {
   lrn = makeLearner("classif.ksvm")
   lrn = makeFilterWrapper(lrn, fw.method = "E-Borda")
 
-  par.set <- makeParamSet(
+  par.set = makeParamSet(
     makeNumericParam("C", lower = -2, upper = 2,
       trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -2, upper = 2,
@@ -297,7 +297,6 @@ test_that("benchmark works with ensemble filters", {
   expect_class(benchmark(learners = tune_wrapper_svm, task = tasks,
     resampling = rin, measures = list(acc)), "BenchmarkResult"
   )
-
 })
 test_that("benchmark handles failure models correctly", {
 

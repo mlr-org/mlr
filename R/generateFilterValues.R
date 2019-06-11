@@ -134,7 +134,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
     # eval(substitute() does not work here
     out = tidyr::gather(out, method, "value", !!dplyr::enquo(method))
-
   }
 
   makeS3Obj("FilterValues",
@@ -146,7 +145,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  print(x$data[with(x$data, order(method, -value)),])
+  print(x$data[with(x$data, order(method, -value)), ])
 }
 #' Plot filter values using ggplot2.
 #'

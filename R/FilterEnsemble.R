@@ -27,6 +27,7 @@
 makeFilterEnsemble = function(name = "E-min",
   base.methods = c("randomForestSRC.importance", "variance"),
   desc = NULL, fun = NULL, ...) {
+
   assertString(name)
   assertString(desc)
   assertFunction(fun, c("task", "base.methods"))
@@ -285,7 +286,6 @@ calcBaseFilters = function(task, base.methods = base.methods,
 # helper fun to merge base and ensembe filters
 
 mergeFilters = function(simple_filters, ensemble_filters) {
-
   # merge ensemble and base filters
   simple_filters$rank = NULL
   all_filters = rbind(simple_filters, ensemble_filters)
