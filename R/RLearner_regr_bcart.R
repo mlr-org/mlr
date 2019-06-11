@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.bcart = function() {
-
   makeRLearnerRegr(
     cl = "regr.bcart",
     package = "tgp",
@@ -30,7 +29,6 @@ makeRLearner.regr.bcart = function() {
 
 #' @export
 trainLearner.regr.bcart = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   # factor variables must be in the last columns as dummy variables:
   col.types = vcapply(d$data, function(x) class(x))
@@ -49,7 +47,6 @@ trainLearner.regr.bcart = function(.learner, .task, .subset, .weights = NULL, ..
 
 #' @export
 predictLearner.regr.bcart = function(.learner, .model, .newdata, ...) {
-
   # factor variables must be in the last columns as dummy variables:
   col.types = vcapply(.newdata, function(x) class(x))
   factor.ind = (col.types == "factor")

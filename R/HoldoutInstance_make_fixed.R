@@ -10,7 +10,6 @@
 #' @return ([ResampleInstance]).
 #' @export
 makeFixedHoldoutInstance = function(train.inds, test.inds, size) {
-
   train.inds = asInteger(train.inds, any.missing = FALSE)
   test.inds = asInteger(test.inds, any.missing = FALSE)
   size = asInt(size, lower = 1L)

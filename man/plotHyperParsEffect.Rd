@@ -44,7 +44,8 @@ Default is \code{FALSE}.}
 \item{facet}{(\code{character(1)})\cr
 Specify what should be used as the facet axis for a particular geom. When
 using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
-for each outer loop. Must be a column from \code{HyperParsEffectData$data}
+for each outer loop. Must be a column from \code{HyperParsEffectData$data}.
+Please note that facetting is not supported with partial dependence plots!
 Default is \code{NULL}.}
 
 \item{global.only}{(\code{logical(1)})\cr

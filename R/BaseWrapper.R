@@ -46,7 +46,6 @@ makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.
 
 #' @export
 print.BaseWrapper = function(x, ...) {
-
   s = ""
   y = x
   while (inherits(y, "BaseWrapper")) {
@@ -72,7 +71,6 @@ print.BaseWrapper = function(x, ...) {
 
 #' @export
 predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
-
   args = removeFromDots(names(.learner$par.vals), ...)
   do.call(predictLearner, c(
     list(.learner = .learner$next.learner, .model = .model$learner.model$next.model, .newdata = .newdata),
@@ -82,7 +80,6 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
 
 #' @export
 makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset = NULL, features, factor.levels, time) {
-
   x = NextMethod()
   if (!isFailureModel(x)) {
     x = addClasses(x, c(learner$model.subclass, "BaseWrapperModel"))
@@ -94,25 +91,21 @@ makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subse
 
 #' @export
 isFailureModel.BaseWrapperModel = function(model) {
-
   return(!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
 
 #' @export
 getFailureModelMsg.BaseWrapperModel = function(model) {
-
   return(getFailureModelMsg(model$learner.model$next.model))
 }
 
 #' @export
 getFailureModelDump.BaseWrapperModel = function(model) {
-
   return(getFailureModelDump(model$learner.model$next.model))
 }
 
 #' @export
 getLearnerProperties.BaseWrapper = function(learner) {
-
   # set properties by default to what the resulting type is allowed and what the base learner can do
   intersect(listLearnerProperties(learner$type), getLearnerProperties(learner$next.learner))
 }

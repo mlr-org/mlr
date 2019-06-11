@@ -35,10 +35,10 @@
 #' @examples
 #' rdesc = makeResampleDesc("Bootstrap", iters = 10)
 #' rin = makeResampleInstance(rdesc, task = iris.task)
-#' 
+#'
 #' rdesc = makeResampleDesc("CV", iters = 50)
 #' rin = makeResampleInstance(rdesc, size = nrow(iris))
-#' 
+#'
 #' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 makeResampleInstance = function(desc, task, size, ...) {
 
@@ -137,7 +137,6 @@ makeResampleInstance = function(desc, task, size, ...) {
 }
 
 makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group = factor()) {
-
   if (missing(test.inds) && !missing(train.inds)) {
     # shuffle data set and remove inds
     test.inds = sample(size)
@@ -159,7 +158,6 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
 
 #' @export
 print.ResampleInstance = function(x, ...) {
-
   catf("Resample instance for %i cases.", x$size)
   print(x$desc)
 }

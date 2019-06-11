@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.CoxBoost = function() {
-
   makeRLearnerSurv(
     cl = "surv.CoxBoost",
     package = "!CoxBoost",
@@ -25,7 +24,6 @@ makeRLearner.surv.CoxBoost = function() {
 
 #' @export
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, unpen.index = NULL, ...) {
-
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
   info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   data$data = as.matrix(fixDataForLearner(data$data, info))
@@ -46,7 +44,6 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.surv.CoxBoost = function(.learner, .model, .newdata, ...) {
-
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))

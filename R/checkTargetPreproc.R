@@ -7,7 +7,6 @@
 # target: only given for df
 # cols: character vec for columns we operate on, or NULL if no specific ols are requested
 checkTargetPreproc = function(obj, target, cols) {
-
   assert(checkClass(obj, "data.frame"), checkClass(obj, "Task"))
   assertCharacter(target, any.missing = FALSE)
   if (!is.null(cols)) {

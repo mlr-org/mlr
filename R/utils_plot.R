@@ -2,7 +2,6 @@
 # with error message containing the learner name that appeared more
 # than once
 checkDuplicatedLearnerNames = function(learner.names) {
-
   dupl = duplicated(learner.names)
   if (any(dupl)) {
     dupl.learners = unique(learner.names[dupl])

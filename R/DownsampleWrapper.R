@@ -16,7 +16,6 @@
 #' @family wrapper
 #' @export
 makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
-
   learner = checkLearner(learner)
   pv = list()
   if (!missing(dw.perc)) {
@@ -42,7 +41,6 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
 #' @export
 trainLearner.DownsampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   dw.perc = 1, dw.stratify = FALSE, ...) {
-
   # If weights vector length fits to task size, set weights before subsetting (Issue #838)
   if (length(.weights) == getTaskSize(.task)) {
     .task$weights = .weights

@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.penalized = function() {
-
   makeRLearnerRegr(
     cl = "regr.penalized",
     package = "!penalized",
@@ -34,14 +33,12 @@ makeRLearner.regr.penalized = function() {
 
 #' @export
 trainLearner.regr.penalized = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   penalized::penalized(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.regr.penalized = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   # FIXME: should be removed, reported in issue 840
   m@formula$unpenalized[[2L]] = as.symbol(.model$task.desc$target)

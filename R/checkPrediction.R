@@ -1,5 +1,4 @@
 checkPrediction = function(pred, task.type = NULL, binary = FALSE, predict.type = NULL, check.truth = FALSE, no.na = TRUE) {
-
   assertClass(pred, "Prediction")
   if (!is.null(task.type) && pred$task.desc$type %nin% task.type) {
     stopf("Prediction must be one of '%s', but is: '%s'", collapse(task.type), pred$task.desc$type)

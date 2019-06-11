@@ -196,7 +196,6 @@ generatePartialDependenceData = function(obj, input, features = NULL,
       vars = if (interaction) list(features) else as.list(features), more.args = args)
     if (length(target) == 1L) {
       out = lapply(out, function(x) {
-
         feature = features[features %in% names(x)]
         names(x) = stri_replace_all(names(x), target, regex = "^preds")
         x = data.table(x)
@@ -310,7 +309,6 @@ generatePartialDependenceData = function(obj, input, features = NULL,
 ## second layer wrapper for numDeriv grad and jacobian use with marginal prediction
 doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2]),
   target, points, obj, data, uniform, fun, n, individual, ...) {
-
   requirePackages("numDeriv", why = "PartialDependenceData", default.method = "load")
 
   if (length(target) == 1L) {
@@ -323,7 +321,6 @@ doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2
     points[[x]], if (individual) z)
   } else {
     out = lapply(points[[x]], function(x.value) {
-
       t(numDeriv::jacobian(numDerivWrapper, x = x.value, model = obj, data = data,
         uniform = uniform, aggregate.fun = fun, vars = x, int.points = z,
         predict.fun = getPrediction, n = n, target = target,
@@ -343,7 +340,6 @@ doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2
 # so i need to pass the points as that x, and then extract the appropriate
 # vector or matrix from marginalPrediction
 numDerivWrapper = function(points, vars, individual, target, ...) {
-
   args = list(...)
   args$points = list(points)
   names(args$points) = vars
@@ -354,7 +350,6 @@ numDerivWrapper = function(points, vars, individual, target, ...) {
 
 #' @export
 print.PartialDependenceData = function(x, ...) {
-
   catf("PartialDependenceData")
   catf("Task: %s", x$task.desc$id)
   catf("Features: %s", stri_paste(x$features, collapse = ", ", sep = " "))

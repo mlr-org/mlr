@@ -73,7 +73,7 @@
 #' }
 #'
 #' @examples
-#' 
+#'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
 #' imp = generateFeatureImportanceData(iris.task, "permutation.importance",
@@ -140,7 +140,6 @@ doPermutationImportance = function(task, learner, features, interaction, measure
   if (local) {
     # subset the prediction data element to compute the per-observation performance
     perf = vnapply(1:getTaskSize(task), function(i) {
-
       pred$data = pred$data[i, ]
       performance(pred, measure)
     })
@@ -155,7 +154,6 @@ doPermutationImportance = function(task, learner, features, interaction, measure
   if (nmc == -1L) {
     ## from http://stackoverflow.com/questions/11095992/generating-all-distinct-permutations-of-a-list-in-r
     permutations = function(n) {
-
       if (n == 1L) {
         return(matrix(1L))
       } else {
@@ -178,12 +176,10 @@ doPermutationImportance = function(task, learner, features, interaction, measure
 
   doPermutationImportanceIteration = function(perf, fit, data, measure,
     contrast, indices, i, x) {
-
     data[, x] = data[indices[, i], x]
 
     if (local) {
       perf.permuted = lapply(seq_len(getTaskSize(task)), function(i, pred) {
-
         pred$data = pred$data[i, ]
         performance(pred, measure)
       }, pred = predict(fit, newdata = data))
@@ -203,7 +199,6 @@ doPermutationImportance = function(task, learner, features, interaction, measure
     colnames(out) = stri_paste(features, collapse = ":")
   } else {
     out = lapply(features, function(x) {
-
       parallelMap(doPermutationImportanceIteration, i = seq_len(nmc), more.args = c(args, x = x))
     })
     out = lapply(out, function(x) apply(do.call("rbind", x), 2, aggregation))

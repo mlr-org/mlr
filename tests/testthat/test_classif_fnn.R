@@ -33,12 +33,10 @@ test_that("classif_fnn", {
   testSimpleParsets("classif.fnn", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list2, parset.list)
 
   tt = function(formula, data, k = 1) {
-
     j = which(colnames(data) == as.character(formula)[2])
     list(train = data[, -j], cl = data[, j], k = k, target = j)
   }
   tp = function(model, newdata) {
-
     newdata = newdata[, -model$target]
     FNN::knn(train = model$train, test = newdata, cl = model$cl, k = model$k)
   }

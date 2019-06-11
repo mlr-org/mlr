@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.sparseLDA = function() {
-
   makeRLearnerClassif(
     cl = "classif.sparseLDA",
     # FIXME: maybe again broken NAMESPACE / import in package, if we dont use !, solvebeta is not found
@@ -21,7 +20,6 @@ makeRLearner.classif.sparseLDA = function() {
 
 #' @export
 trainLearner.classif.sparseLDA = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
   lvls = levels(y)
@@ -31,7 +29,6 @@ trainLearner.classif.sparseLDA = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.classif.sparseLDA = function(.learner, .model, .newdata, ...) {
-
   p = sparseLDA::predict.sda(.model$learner.model,
     newdata = subset(.newdata, select = .model$features), ...)
   if (.learner$predict.type == "response") {

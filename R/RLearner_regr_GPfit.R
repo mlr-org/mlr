@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.GPfit = function() {
-
   makeRLearnerRegr(
     cl = "regr.GPfit",
     package = "GPfit",
@@ -30,7 +29,6 @@ makeRLearner.regr.GPfit = function() {
 }
 #' @export
 trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, scale, type, matern_nu_k, power, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   low = apply(d$data, 2, min)
   high = apply(d$data, 2, max)
@@ -47,7 +45,6 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
 }
 #' @export
 predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
-
   tr.info = getTrainingInfo(.model)
   if (tr.info$scaled) {
     for (col.name in tr.info$not.const) {

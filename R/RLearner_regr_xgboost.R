@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.regr.xgboost = function() {
-
   makeRLearnerRegr(
     cl = "regr.xgboost",
     package = "xgboost",
@@ -83,13 +82,11 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
-
   m = .model$learner.model
   predict(m, newdata = data.matrix(.newdata), ...)
 }
 
 #' @export
 getFeatureImportanceLearner.regr.xgboost = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.xgboost(.learner, .model, ...)
 }

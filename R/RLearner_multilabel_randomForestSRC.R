@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.multilabel.randomForestSRC = function() {
-
   makeRLearnerMultilabel(
     cl = "multilabel.randomForestSRC",
     package = "randomForestSRC",
@@ -60,7 +59,6 @@ makeRLearner.multilabel.randomForestSRC = function() {
 
 #' @export
 trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   targets = getTaskTargetNames(.task)
   f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
   d = getTaskData(.task, .subset, recode.target = "multilabel.factor")
@@ -69,7 +67,6 @@ trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .we
 
 #' @export
 predictLearner.multilabel.randomForestSRC = function(.learner, .model, .newdata, ...) {
-
   p = predict(.model$learner.model, newdata = .newdata, importance = "none", ...)
   if (.learner$predict.type == "prob") {
     return(sapply(p$classOutput, function(x) x$predicted[, 1]))

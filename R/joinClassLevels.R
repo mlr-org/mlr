@@ -9,7 +9,6 @@
 #' @examples
 #' joinClassLevels(iris.task, new.levels = list(foo = c("setosa", "virginica")))
 joinClassLevels = function(task, new.levels) {
-
   UseMethod("joinClassLevels")
 }
 

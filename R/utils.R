@@ -1,6 +1,5 @@
 # get one el from each row of a matrix, given indices or col names (factors for colnames are converted to characters)
 getRowEls = function(mat, inds) {
-
   if (is.factor(inds)) {
     inds = as.character(inds)
   }
@@ -13,7 +12,6 @@ getRowEls = function(mat, inds) {
 
 # get one el from each col of a matrix, given indices or row names
 getColEls = function(mat, inds) {
-
   getRowEls(t(mat), inds)
 }
 
@@ -35,7 +33,6 @@ getNameProposals = function(input, possible.inputs, nproposals = 3L) {
 # shorter way of printing debug dumps
 #' @export
 print.mlr.dump = function(x, ...) {
-
   cat("<debug dump>\n")
   invisible(NULL)
 }
@@ -43,7 +40,6 @@ print.mlr.dump = function(x, ...) {
 
 # applys the appropriate getPrediction* helper function
 getPrediction = function(object, newdata, ...) {
-
   pred = do.call("predict", c(list("object" = object, "newdata" = newdata), list(...)))
   point = switch(object$task.desc$type,
     "regr" = getPredictionResponse(pred),
@@ -63,6 +59,5 @@ getPrediction = function(object, newdata, ...) {
 
 # replacement for purrr::imap()
 imap = function(.x, .f) {
-
   Map(.f, .x = .x, .y = seq_along(.x))
 }

@@ -10,14 +10,12 @@ test_that("classif_quaDA", {
   testSimple("classif.quaDA", multiclass.df, multiclass.target, multiclass.train.inds, p$pred_class)
 
   tt = function(formula, data, subset, ...) {
-
     j = which(colnames(data) == as.character(formula)[2])
     m = DiscriMiner::quaDA(variables = data[subset, -j], group = data[subset, j])
     list(model = m, target = j)
   }
 
   tp = function(model, newdata) {
-
     DiscriMiner::classify(model$model, newdata = newdata[, -model$target])$pred_class
   }
 

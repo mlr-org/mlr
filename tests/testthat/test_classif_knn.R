@@ -29,11 +29,9 @@ test_that("classif_knn", {
     old.predicts.list, parset.list)
 
   tt = function(formula, data, k = 1) {
-
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {
-
     target = as.character(model$formula)[2]
     train = model$data
     y = train[, target]

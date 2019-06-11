@@ -7,7 +7,6 @@ test_that("measures", {
   mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
     "regr", "predtype.response", "predtype.prob"),
   fun = function(task, model, pred, feats, extra.args) {
-
     tt = pred
     1
   })
@@ -53,7 +52,6 @@ test_that("measures", {
     pred = predict(mod, task = surv.task, subset = surv.test.inds)
     perf = performance(pred, model = mod, task = surv.task, measures = ms)
     Map(function(measure, perf) {
-
       r = range(measure$worst, measure$best)
       expect_number(perf, lower = r[1], upper = r[2], label = measure$id)
     }, measure = ms, perf = perf)
@@ -65,7 +63,6 @@ test_that("measures", {
     res = resample(lrn, task, resampling = rin, measures = ms)$aggr
     expect_numeric(res, any.missing = FALSE)
     Map(function(measure) {
-
       r = range(measure$worst, measure$best)
       expect_number(res[[sprintf("%s.test.mean", measure$id)]], lower = r[1], upper = r[2], label = measure$id)
     }, measure = ms)
@@ -121,7 +118,6 @@ test_that("mcc is implemented correctly", { # see issue 363
 
 test_that("listMeasures", {
   mycheck = function(type) {
-
     xs = listMeasures(type, create = TRUE)
     expect_true(is.list(xs) && length(xs) > 0L, info = type)
     expect_true(all(vlapply(xs, inherits, what = "Measure")), info = type)
@@ -461,7 +457,6 @@ test_that("check measure calculations", {
   # ssr
   pred.probs = getPredictionProbabilities(pred.classif)
   ssr.test = mean(vnapply(seq_row(pred.probs), function(i) {
-
     pred.probs[i, tar.classif[i]]
   }) / sqrt(rowSums(pred.probs^2)))
   ssr.perf = performance(pred.classif, measures = ssr, model = mod.classif)
@@ -873,7 +868,6 @@ test_that("measure properties", {
   # hasMeasureProps yields correct properties
   expect_true(all(vlapply(listMeasures(create = TRUE),
     function(m) {
-
       res = hasMeasureProperties(m, m$properties)
       all(res) & length(res) > 0
     })))
@@ -881,7 +875,6 @@ test_that("measure properties", {
   # all props exist in mlr$measure.properties
   expect_true(all(vlapply(listMeasures(create = TRUE),
     function(m) {
-
       res = all(getMeasureProperties(m) %in% props)
       all(res) & length(res) > 0
     })))

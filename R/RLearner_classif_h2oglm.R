@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.h2o.glm = function() {
-
   makeRLearnerClassif(
     cl = "classif.h2o.glm",
     package = "h2o",
@@ -76,14 +75,12 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.h2o.glm = function(.learner, .model, ...) {
-
   mod = getLearnerModel(.model, more.unwrap = TRUE)
   extractH2OGlmVarImp(mod, ...)
 }
 
 
 extractH2OGlmVarImp = function(.learner.model, ...) {
-
   imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
   res = imp$coefficients
   names(res) = imp$names

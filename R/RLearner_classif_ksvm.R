@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.ksvm = function() {
-
   makeRLearnerClassif(
     cl = "classif.ksvm",
     package = "kernlab",
@@ -64,7 +63,6 @@ trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.classif.ksvm = function(.learner, .model, .newdata, ...) {
-
   type = switch(.learner$predict.type, prob = "probabilities", "response")
   kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

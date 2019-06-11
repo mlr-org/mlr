@@ -21,7 +21,6 @@
 #' @export
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
-
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = stri_paste("multilabel.stacking", getLearnerId(learner), sep = ".")
   packs = getLearnerPackages(learner)
@@ -42,7 +41,6 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NUL
   models.lvl1 = getLearnerModel(train(makeMultilabelBinaryRelevanceWrapper(.learner$next.learner), .task, weights = .weights))
   # predict labels
   f = function(tn) {
-
     data2 = dropNamed(data, setdiff(targets, tn))
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
     rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
@@ -52,7 +50,6 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NUL
   pred.labels = sapply(targets, f)
   # train meta level learners
   g = function(tn) {
-
     data.meta = dropNamed(data.frame(data, pred.labels), setdiff(targets, tn))
     ctask = makeClassifTask(id = tn, data = data.meta, target = tn)
     train(.learner$next.learner, ctask, weights = .weights)

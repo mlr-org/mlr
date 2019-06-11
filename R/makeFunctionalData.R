@@ -58,7 +58,6 @@ makeFunctionalData = function(data, fd.features = NULL, exclude.cols = NULL) {
 
   # Create a list of functional feature matricies
   ffeats = lapply(fd.features, function(x) {
-
     as.matrix(data[, x, drop = FALSE])
   })
   # Drop original numeric data

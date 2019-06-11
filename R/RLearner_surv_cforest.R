@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.surv.cforest = function() {
-
   makeRLearnerSurv(
     cl = "surv.cforest",
     package = c("party", "survival"),
@@ -55,13 +54,11 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
-
   # cforest returns median survival times; multiply by -1 so that high values correspond to high risk
   -1 * predict(.model$learner.model, newdata = .newdata, type = "response", ...)
 }
 
 #' @export
 getFeatureImportanceLearner.surv.cforest = function(.learner, .model, ...) {
-
   getFeatureImportanceLearner.classif.cforest(.learner, .model, ...)
 }

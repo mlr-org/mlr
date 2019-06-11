@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.multilabel.rFerns = function() {
-
   makeRLearnerMultilabel(
     cl = "multilabel.rFerns",
     package = "rFerns",
@@ -17,13 +16,11 @@ makeRLearner.multilabel.rFerns = function() {
 
 #' @export
 trainLearner.multilabel.rFerns = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   rFerns::rFerns(x = d$data, y = as.matrix(d$target), ...)
 }
 
 #' @export
 predictLearner.multilabel.rFerns = function(.learner, .model, .newdata, ...) {
-
   as.matrix(predict(.model$learner.model, .newdata, ...))
 }

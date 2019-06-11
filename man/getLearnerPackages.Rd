@@ -21,6 +21,7 @@ Get the R packages the learner requires.
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},
   \code{\link{getLearnerPredictType}},

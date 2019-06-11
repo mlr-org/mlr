@@ -2,7 +2,6 @@ context("parallel_all")
 
 test_that("parallel resampling", {
   doit = function(mode, level) {
-
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     on.exit(parallelStop())
@@ -25,7 +24,6 @@ test_that("parallel resampling", {
 
 test_that("parallel tuning", {
   doit = function(mode, level) {
-
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     ps = makeParamSet(makeDiscreteParam("cp", values = c(0.01, 0.05)))
@@ -50,7 +48,6 @@ test_that("parallel tuning", {
 
 test_that("parallel featsel", {
   doit = function(mode, level) {
-
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     ctrl = makeFeatSelControlRandom(maxit = 2L)
@@ -94,7 +91,6 @@ test_that("parallel exporting of options works", {
 
 test_that("parallel partial dependence", {
   doit = function(mode) {
-
     lrn = makeLearner("regr.rpart")
     fit = train(lrn, regr.task)
     on.exit(parallelStop())

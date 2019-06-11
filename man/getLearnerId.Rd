@@ -20,7 +20,7 @@ Get the ID of the learner.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerNote}},
   \code{\link{getLearnerPackages}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},

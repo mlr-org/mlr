@@ -66,7 +66,7 @@
 #' print(r$aggr)
 #' print(r$measures.test)
 #' print(r$pred)
-#' 
+#'
 #' # include the training set performance as well
 #' rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
 #' r = resample(makeLearner("classif.qda"), task, rdesc,
@@ -91,7 +91,6 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   assertFlag(models)
   if (missing(extract)) {
     extract = function(model) {
-
     }
   } else {
     assertFunction(extract)
@@ -145,7 +144,6 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
 # this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
-
   setSlaveOptions()
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
@@ -266,7 +264,6 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   aggr = vnapply(seq_along(measures), function(i) {
-
     m = measures[[i]]
     m$aggr$fun(task, ms.test[, i], ms.train[, i], m, rin$group, pred)
   })

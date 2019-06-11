@@ -12,10 +12,15 @@
   `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
   (@jakob-r, #1784)
 
+## functions - general
+- `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
+- added `getLearnerNote()` to query the "Note" slot of a learner (@alona-sydorova, #2086)
+
 ## learners - new
 - add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)
 
 ## function - general
+- `plotHyperParsEffect()` now supports facet visualization of hyperparam effects for nested cv (@MasonGallo, #1653)
 - fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of `data.table`s default in `rbindlist()`. See #2578 for more information. (@mllg, #2579)
 - fixed a bug in which `options(on.learner.error)` was not respected in `benchmark()`. This caused `benchmark()` to stop even if it should have continued including `FailureModels` in the result (@dagola, #1984)
 

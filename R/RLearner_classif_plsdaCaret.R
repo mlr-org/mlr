@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.plsdaCaret = function() {
-
   makeRLearnerClassif(cl = "classif.plsdaCaret",
     package = c("caret", "pls"),
     par.set = makeParamSet(
@@ -18,14 +17,12 @@ makeRLearner.classif.plsdaCaret = function() {
 
 #' @export
 trainLearner.classif.plsdaCaret = function(.learner, .task, .subset, .weights, ...) {
-
   d = getTaskData(.task, .subset, target.extra = TRUE)
   caret::plsda(d$data, d$target, ...)
 }
 
 #' @export
 predictLearner.classif.plsdaCaret = function(.learner, .model, .newdata, ...) {
-
   type = ifelse(.learner$predict.type == "response", "class", "prob")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (type == "prob") {

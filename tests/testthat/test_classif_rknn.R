@@ -31,13 +31,11 @@ test_that("classif_rknn", {
     old.predicts.list, parset.list)
 
   tt = function(formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L, cluster = NULL) {
-
     return(list(formula = formula, data = data, k = k, r = r, mtry = mtry,
       seed = seed, cluster = cluster))
   }
 
   tp = function(model, newdata) {
-
     target = as.character(model$formula)[2L]
     train = model$data
     y = train[, target]

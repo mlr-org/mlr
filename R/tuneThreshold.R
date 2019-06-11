@@ -50,7 +50,6 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   cls = pred$task.desc$class.levels
   k = length(cls)
   fitn = function(x) {
-
     if (ttype == "multilabel" || k > 2) {
       names(x) = cls
     }

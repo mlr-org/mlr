@@ -28,13 +28,11 @@
 #' @export
 #' @family eda_and_preprocess
 removeConstantFeatures = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
-
   UseMethod("removeConstantFeatures")
 }
 
 #' @export
 removeConstantFeatures.Task = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
-
   assertCharacter(dont.rm)
   dont.rm = union(dont.rm, getTaskTargetNames(obj))
   data = removeConstantFeatures(getTaskData(obj), perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, tol = tol, show.info = show.info)
@@ -55,14 +53,12 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
   }
 
   isEqual = function(x, y) {
-
     res = (x == y) | (is.na(x) & is.na(y))
     replace(res, is.na(res), FALSE)
   }
   digits = ceiling(log10(1 / tol))
   cns = setdiff(colnames(obj), dont.rm)
   ratio = vnapply(obj[cns], function(x) {
-
     if (allMissing(x)) {
       return(0)
     }

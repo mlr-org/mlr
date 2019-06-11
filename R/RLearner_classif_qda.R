@@ -1,6 +1,5 @@
 #' @export
 makeRLearner.classif.qda = function() {
-
   makeRLearnerClassif(
     cl = "classif.qda",
     package = "MASS",
@@ -20,14 +19,12 @@ makeRLearner.classif.qda = function() {
 
 #' @export
 trainLearner.classif.qda = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   f = getTaskFormula(.task)
   MASS::qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), ...)
 }
 
 #' @export
 predictLearner.classif.qda = function(.learner, .model, .newdata, predict.method = "plug-in", ...) {
-
   p = predict(.model$learner.model, newdata = .newdata, method = predict.method, ...)
   if (.learner$predict.type == "response") {
     return(p$class)

@@ -34,10 +34,10 @@
 #' if (requireNamespace("caret") && requireNamespace("mlbench")) {
 #'   library(caret)
 #'   classifTask = makeClassifTask(data = iris, target = "Species")
-#' 
+#'
 #'   # (1) classification (random forest) with discretized parameters
 #'   getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
-#' 
+#'
 #'   # (2) regression (gradient boosting machine) without discretized parameters
 #'   library(mlbench)
 #'   data(BostonHousing)
@@ -52,7 +52,6 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE) {
 
   # transfer caret parameters into mlr parameters
   params = lapply(colnames(caret.grid), function(i) {
-
     par.vals = sort(unique(caret.grid[, i]))
     cl = class(par.vals)
     if (cl == "factor") {
@@ -78,7 +77,6 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE) {
 
   # are the parameters configurable or are the values unique?
   is.tunable = vlapply(params, function(x) {
-
     (!is.null(x$values) && length(x$values) > 1) |
       (!is.null(x$lower) && !is.null(x$upper) && (x$upper > x$lower))
   })
@@ -88,7 +86,6 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE) {
     par.vals = NULL
   } else {
     par.vals = lapply(caret.grid[!is.tunable], function(x) {
-
       if (is.factor(x)) {
         x = as.character(x)
       }

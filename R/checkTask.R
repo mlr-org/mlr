@@ -1,7 +1,6 @@
 # performs arg checks of a task (or maybe also allow an taskdesc)
 # you can check that the task is from a list of certain types
 checkTask = function(x, cl = "Task", allow.desc = FALSE, task.type = NULL, binary = FALSE, .var.name = "task") {
-
   if (allow.desc) {
     assert(.var.name = .var.name,
       checkClass(x, classes = cl),

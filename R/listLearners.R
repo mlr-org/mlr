@@ -6,7 +6,6 @@ getLearnerTable = function() {
   slots = c("cl", "name", "short.name", "package", "properties", "note")
   ee = asNamespace("mlr")
   tab = rbindlist(lapply(ids, function(id) {
-
     fun = getS3method("makeRLearner", id)
     row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
     data.table(
@@ -101,7 +100,6 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' @export
 listLearners = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
-
   assertSubset(properties, listLearnerProperties())
   assertFlag(quiet)
   assertFlag(warn.missing.packages)
@@ -115,7 +113,6 @@ listLearners = function(obj = NA_character_, properties = character(0L),
 #' @rdname listLearners
 listLearners.default = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
-
   listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
 }
 
@@ -171,6 +168,5 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 print.ListLearners = function(x, ...) {
-
   printHead(as.data.frame(dropNamed(x, drop = "note")), ...)
 }

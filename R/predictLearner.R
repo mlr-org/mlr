@@ -37,7 +37,6 @@
 #'  }
 #' @export
 predictLearner = function(.learner, .model, .newdata, ...) {
-
   lmod = getLearnerModel(.model)
   if (inherits(lmod, "NoFeaturesModel")) {
     predictNofeatures(.model, .newdata)
@@ -48,7 +47,6 @@ predictLearner = function(.learner, .model, .newdata, ...) {
 }
 
 predictLearner2 = function(.learner, .model, .newdata, ...) {
-
   # if we have that option enabled, set factor levels to complete levels from task
   if (.learner$fix.factors.prediction) {
     fls = .model$factor.levels
@@ -84,7 +82,6 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
 #' @keywords internal
 #' @export
 checkPredictLearnerOutput = function(learner, model, p) {
-
   cl = class(p)[1L]
   if (learner$type == "classif") {
     levs = model$task.desc$class.levels

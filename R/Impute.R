@@ -81,7 +81,6 @@
 impute = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
-
   assertList(cols)
   checkTargetPreproc(obj, target, names(cols))
   UseMethod("impute")
@@ -160,7 +159,6 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
 
   # learn and thereby transform to list(impute(...), args(...))
   desc$impute = Map(function(xn, x) {
-
     if (class(x)[1L] != "ImputeMethod") {
       x = imputeConstant(x)
     }
@@ -188,7 +186,6 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
 impute.Task = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
-
   target = getTaskTargetNames(obj)
   d = getTaskData(obj)
   imputed = impute.data.frame(d, target = target, classes = classes, cols = cols,
@@ -201,7 +198,6 @@ impute.Task = function(obj, target = character(0L), classes = list(), cols = lis
 
 #' @export
 print.ImputationDesc = function(x, ...) {
-
   catf("Imputation description")
   catf("Target: %s", collapse(x$target))
   catf("Features: %i; Imputed: %i", length(x$features), length(x$impute))
@@ -230,7 +226,6 @@ print.ImputationDesc = function(x, ...) {
 #' @family impute
 #' @export
 reimpute = function(obj, desc) {
-
   UseMethod("reimpute")
 }
 
@@ -292,7 +287,6 @@ reimpute.data.frame = function(obj, desc) {
   if (desc$recode.factor.levels) {
     cols = names(desc$lvls)
     x[cols] = Map(function(x, expected) {
-
       factor(as.character(x), levels = expected)
     }, x = x[cols], expected = desc$lvls)
   }
@@ -304,7 +298,6 @@ reimpute.data.frame = function(obj, desc) {
 
 #' @export
 reimpute.Task = function(obj, desc) {
-
   df = getTaskData(obj)
   imputed = reimpute.data.frame(df, desc)
   x = changeData(obj, data = imputed)

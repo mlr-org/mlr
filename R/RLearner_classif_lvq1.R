@@ -1,7 +1,6 @@
 # FIXME: parset
 #' @export
 makeRLearner.classif.lvq1 = function() {
-
   makeRLearnerClassif(
     cl = "classif.lvq1",
     package = "class",
@@ -31,6 +30,5 @@ trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.classif.lvq1 = function(.learner, .model, .newdata, ...) {
-
   class::lvqtest(.model$learner.model, test = .newdata, ...)
 }

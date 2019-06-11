@@ -1,7 +1,6 @@
 
 #' @export
 makeRLearner.regr.ranger = function() {
-
   makeRLearnerRegr(
     cl = "regr.ranger",
     package = "ranger",
@@ -39,7 +38,6 @@ makeRLearner.regr.ranger = function() {
 
 #' @export
 trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, ...) {
-
   tn = getTaskTargetNames(.task)
   if (is.null(keep.inbag)) keep.inbag = (.learner$predict.type == "se") # needed for jacknife and infjack!
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
@@ -48,10 +46,9 @@ trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, k
 
 #' @export
 predictLearner.regr.ranger = function(.learner, .model, .newdata, se.method = "sd", ...) {
-
   pred = predict(object = .model$learner.model, data = .newdata, type = ifelse(.learner$predict.type == "se", "se", "response"), ...)
   p = pred$predictions
-  if (is.matrix(p)) { #if someone set predict.all = TRUE for ranger
+  if (is.matrix(p)) { # if someone set predict.all = TRUE for ranger
     p = rowMeans(pred$predictions)
   }
   if (.learner$predict.type == "se") {

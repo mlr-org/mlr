@@ -26,7 +26,6 @@ test_that("classif_IBk", {
   testProbParsets("classif.IBk", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-
     RWeka::IBk(formula, data = data[subset, ], control = RWeka::Weka_control(...))
   }
 
