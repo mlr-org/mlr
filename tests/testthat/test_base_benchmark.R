@@ -276,20 +276,13 @@ test_that("benchmark works with ensemble filters", {
   lrn = makeFilterWrapper(lrn, fw.method = "E-Borda")
 
   par.set <- makeParamSet(
-    makeNumericParam("C", lower = -15, upper = 15,
+    makeNumericParam("C", lower = -2, upper = 2,
       trafo = function(x) 2^x),
-    makeNumericParam("sigma", lower = -15, upper = 15,
+    makeNumericParam("sigma", lower = -2, upper = 2,
       trafo = function(x) 2^x),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeDiscreteVectorParam("fw.base.methods", len = 2,
-      values = c("anova.test", "cforest.importance", "FSelector_chi.squared",
-        "FSelector_gain.ratio", "FSelector_information.gain", "FSelector_oneR",
-        "FSelector_relief", "FSelector_symmetrical.uncertainty", "FSelectorRcpp_gain.ratio",
-        "FSelectorRcpp_information.gain", "FSelectorRcpp_symmetrical.uncertainty",
-        "kruskal.test", "praznik_CMIM", "praznik_DISR", "praznik_JMI",
-        "praznik_JMIM", "praznik_MIM", "praznik_MRMR", "praznik_NJMIM",
-        "randomForest.importance", "randomForestSRC.rfsrc", "randomForestSRC.var.select",
-        "ranger.impurity", "ranger.permutation", "variance"))
+      values = c("anova.test", "variance"))
   )
 
   task.names = c("binary", "multiclass")
