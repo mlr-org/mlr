@@ -243,7 +243,7 @@ test.join = makeAggregation(
   id = "test.join",
   name = "Test join",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) {
+  fun = function(task, perf.test, perf.train, measure, group, pred, na.rm) {
     df = as.data.frame(pred)
     f = if (length(group)) group[df$iter] else factor(rep(1L, nrow(df)))
     mean(vnapply(split(df, f), function(df) {

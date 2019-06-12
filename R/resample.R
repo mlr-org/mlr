@@ -269,7 +269,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
   # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   aggr = vnapply(seq_along(measures), function(i) {
     m = measures[[i]]
-    # check if m$aggr$na.rm exists (is missing of no measure is explicitly specified in 'resample()' call) and add it if needed
+    # check if m$aggr$na.rm exists (is missing if no measure is explicitly specified in 'resample()' call) and add it if needed
     if (is.null(m$aggr$na.rm)) {
       m$aggr$na.rm = FALSE
     }

@@ -70,7 +70,7 @@ makeCustomResampledMeasure = function(measure.id, aggregation.id, minimize = TRU
   # args are checked here
   custom = makeMeasure(id = measure.id, minimize, properties, fun1, extra.args,
     best = best, worst = worst, name = measure.name, note = note)
-  fun2 = function(task, perf.test, perf.train, measure, group, pred)
+  fun2 = function(task, perf.test, perf.train, measure, group, pred, na.rm)
     fun(task, group, pred, extra.args)
   # we set the properties to "no requirements" here
   aggr = makeAggregation(id = aggregation.id, name = aggregation.name, properties = character(0L), fun = fun2)
