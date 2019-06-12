@@ -6,7 +6,7 @@
 \usage{
 makeFilterEnsemble(name = "E-min",
   base.methods = c("randomForestSRC.importance", "variance"),
-  desc = NULL, fun = NULL)
+  desc = NULL, fun = NULL, ...)
 }
 \arguments{
 \item{name}{(\code{character(1)})\cr

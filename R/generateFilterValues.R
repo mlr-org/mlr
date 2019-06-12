@@ -4,8 +4,10 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #' @template arg_task
-#' @param method ([character])\cr
-#'   Filter method(s), see above.
+#' @param method ([character] | [list])\cr
+#'   Filter method(s).
+#'   In case of ensemble filters the `list` notation needs to be used.
+#'   See the examples for more information.
 #'   Default is \dQuote{randomForestSRC_importance}.
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.

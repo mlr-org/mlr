@@ -12,8 +12,10 @@ generateFilterValuesData(task, method = "randomForestSRC_importance",
 \item{task}{(\link{Task})\cr
 The task.}
 
-\item{method}{(\link{character})\cr
-Filter method(s), see above.
+\item{method}{(\link{character} | \link{list})\cr
+Filter method(s).
+In case of ensemble filters the \code{list} notation needs to be used.
+See the examples for more information.
 Default is \dQuote{randomForestSRC_importance}.}
 
 \item{nselect}{(\code{integer(1)})\cr
