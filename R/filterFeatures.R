@@ -73,19 +73,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     base.methods = as.character(base.methods)
   }
 
-  # if a list is passed to arg 'method' (ensemble)
-  if (class(method) == "list") {
-    ens.method = method[[1]]
-    method = method[[2]]
-    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
-    if (length(method) == 1) {
-      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
-    }
-  } else {
-    assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
-  }
-
-  method %in% ls(.FilterEnsembleRegister)
+  assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
 
   # if an ensemble method is not passed as a list but via 'base.methods' + 'method'
   if (method %in% ls(.FilterEnsembleRegister) && !is.null(base.methods)) {
