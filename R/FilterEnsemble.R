@@ -24,19 +24,21 @@
 #' @return Object of class \dQuote{FilterEnsemble}.
 #' @export
 #' @family filter
-makeFilterEnsemble = function(name = "E-min",
-  base.methods = c("randomForestSRC.importance", "variance"),
-  desc = NULL, fun = NULL, ...) {
+makeFilterEnsemble = function(name, base.methods, desc, fun, supported.tasks, supported.features, ...) {
 
   assertString(name)
   assertString(desc)
+  assertCharacter(supported.tasks, any.missing = FALSE)
+  assertCharacter(supported.features, any.missing = FALSE)
   assertFunction(fun, c("task", "base.methods"))
 
   ### calculate ensemble filter
   obj = makeS3Obj("FilterEnsemble",
     name = name,
     desc = desc,
-    fun = fun
+    fun = fun,
+    supported.tasks = supported.tasks,
+    supported.features = supported.features
   )
 
   .FilterEnsembleRegister[[name]] = obj
@@ -102,6 +104,8 @@ print.FilterEnsemble = function(x, ...) {
 makeFilterEnsemble(
   name = "E-min",
   desc = "Minimum ensemble filter. Takes the best minimum value across all base filter methods for each feature.",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
@@ -135,6 +139,8 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-mean",
   desc = "Mean ensemble filter. Takes the mean across all base filter methods for each feature.",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
@@ -169,6 +175,8 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-max",
   desc = "Maximum ensemble filter. Takes the best maximum value across all base filter methods for each feature.",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
@@ -202,6 +210,8 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-median",
   desc = "Median ensemble filter. Takes the median across all base filter methods for each feature.",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
@@ -235,6 +245,8 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-Borda",
   desc = "Borda ensemble filter. Takes the sum across all base filter methods for each feature.",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
   fun = function(task, base.methods, nselect, more.args, ...) {
 
