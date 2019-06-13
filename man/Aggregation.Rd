@@ -17,7 +17,7 @@ Object members:
 \item{id (\code{character(1)})}{Name of the aggregation method.}
 \item{name (\code{character(1)})}{Long name of the aggregation method.}
 \item{properties (\link{character})}{Properties of the aggregation.}
-\item{fun (`function(task, perf.test, perf.train, measure, group, pred)])}{Aggregation function.}
+\item{fun (`function(task, perf.test, perf.train, measure, group, pred, na.rm)])}{Aggregation function.}
 }
 }
 \seealso{

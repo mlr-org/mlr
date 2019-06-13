@@ -20,7 +20,7 @@ Set of aggregation properties.
 \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 }}
 
-\item{fun}{(\code{function(task, perf.test, perf.train, measure, group, pred)})\cr
+\item{fun}{(\code{function(task, perf.test, perf.train, measure, group, pred, na.rm)})\cr
 Calculates the aggregated performance. In most cases you will only need the performances
 \code{perf.test} and optionally \code{perf.train} on the test and training data sets.
 \describe{
@@ -36,6 +36,7 @@ Grouping of resampling iterations. This encodes whether specific iterations
 'belong together' (e.g. repeated CV).}
 \item{\code{pred} (\link{Prediction})}{
 Prediction object.}
+\item{na.rm (\code{logical(1)})}
 }}
 
 \item{na.rm}{(\code{logical(1)})\cr}
@@ -52,7 +53,7 @@ inner workings so the result might not be compatible with everything!
 test.iqr = makeAggregation(
   id = "test.iqr", name = "Test set interquartile range",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) IQR(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred, na.rm) IQR(perf.test, na.rm)
 )
 }
 \seealso{

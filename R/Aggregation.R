@@ -13,7 +13,7 @@
 #' \item{id (`character(1)`)}{Name of the aggregation method.}
 #' \item{name (`character(1)`)}{Long name of the aggregation method.}
 #' \item{properties ([character])}{Properties of the aggregation.}
-#' \item{fun (`function(task, perf.test, perf.train, measure, group, pred)])}{Aggregation function.}
+#' \item{fun (`function(task, perf.test, perf.train, measure, group, pred, na.rm)])}{Aggregation function.}
 #' }
 #' @name Aggregation
 #' @seealso [makeAggregation]
@@ -37,7 +37,7 @@ NULL
 #'     \item{req.train}{Are prediction or train sets required to calculate the aggregation?}
 #'     \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 #'   }
-#' @param fun (`function(task, perf.test, perf.train, measure, group, pred)`)\cr
+#' @param fun (`function(task, perf.test, perf.train, measure, group, pred, na.rm)`)\cr
 #'   Calculates the aggregated performance. In most cases you will only need the performances
 #'   `perf.test` and optionally `perf.train` on the test and training data sets.
 #'   \describe{
@@ -53,6 +53,7 @@ NULL
 #'       'belong together' (e.g. repeated CV).}
 #'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
+#'     \item{na.rm (`logical(1)`)}
 #'   }
 #' @param na.rm (`logical(1)`)\cr
 #' @seealso [aggregations], [setAggregation]
@@ -62,7 +63,7 @@ NULL
 #' test.iqr = makeAggregation(
 #'   id = "test.iqr", name = "Test set interquartile range",
 #'   properties = "req.test",
-#'   fun = function(task, perf.test, perf.train, measure, group, pred) IQR(perf.test)
+#'   fun = function(task, perf.test, perf.train, measure, group, pred, na.rm) IQR(perf.test, na.rm)
 #' )
 #' @export
 makeAggregation = function(id, name = id, properties, fun, na.rm = FALSE) {
