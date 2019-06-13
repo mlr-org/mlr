@@ -47,17 +47,28 @@ predictLearner = function(.learner, .model, .newdata, ...) {
 }
 
 predictLearner2 = function(.learner, .model, .newdata, ...) {
+
   # if we have that option enabled, set factor levels to complete levels from task
   if (.learner$fix.factors.prediction) {
-    fls = .model$factor.levels
-    ns = names(fls)
-    # only take objects in .newdata
-    ns = intersect(colnames(.newdata), ns)
-    fls = fls[ns]
-    if (length(ns) > 0L) {
-      .newdata[ns] = mapply(factor, x = .newdata[ns],
-        levels = fls, SIMPLIFY = FALSE)
+    levels_model = .model$factor.levels
+    colname_model = names(levels_model)
+
+    levels_newdata = levels(.newdata[, colname_model])
+    levels_shared = intersect(levels_model[[1]], levels_newdata)
+    levels_to_replace = setdiff(levels_newdata, levels_shared)
+
+    # replace missing level with first level of shared levels
+    if (length(levels_to_replace) > 0L) {
+      levels(.newdata[[colname_model]])[levels(.newdata[[colname_model]]) == levels_to_replace] <- levels_shared[1]
     }
+
+    # ns = names(fls)
+    # # only take objects in .newdata
+    # ns = intersect(colnames(.newdata), ns)
+    # fls = fls[ns]
+    # if (length(ns) > 0L) {
+    #   .newdata[ns] = mapply(factor, x = .newdata[ns],
+    #     levels = fls, SIMPLIFY = FALSE)
   }
   p = predictLearner(.learner, .model, .newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
