@@ -22,8 +22,7 @@ makeRLearner.regr.gbm = function() {
     properties = c("missings", "numerics", "factors", "weights", "featimp"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = '`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.
-    `alpha` is only used if `distribution` = `"quantile"` (default to 0.5)',
+    note = '`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.',
     callees = "gbm"
   )
 }
