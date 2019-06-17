@@ -44,7 +44,7 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...)
   params$formula = f
   params$data = getTaskData(.task, .subset)
 
-  if (is.null(.weights)) {
+  if (!is.null(.weights)) {
     params$weights = .weights
   }
 
