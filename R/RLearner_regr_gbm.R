@@ -34,36 +34,36 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
 
-    params <- list(...)
-    if("alpha" %in% names(params)){
-      alpha <- params$alpha
-      params$alpha <- NULL
+    params = list(...)
+    if("alpha" %in% names(params)) {
+      alpha = params$alpha
+      params$alpha = NULL
     } else {
-      alpha <- 0.5
+      alpha = 0.5
     }
     if(params$distribution %in% "quantile"){
-      params$distribution <- list(name = "quantile", alpha = alpha)
+      params$distribution = list(name = "quantile", alpha = alpha)
     }
-    params$formula <- f
-    params$data <- getTaskData(.task, .subset)
+    params$formula = f
+    params$data = getTaskData(.task, .subset)
 
     do.call(gbm::gbm, params)
   } else {
     f = getTaskFormula(.task)
 
-    params <- list(...)
+    params = list(...)
     if("alpha" %in% names(params)){
-      alpha <- params$alpha
-      params$alpha <- NULL
+      alpha = params$alpha
+      params$alpha = NULL
     } else {
-      alpha <- 0.5
+      alpha = 0.5
     }
     if(params$distribution %in% "quantile"){
-      params$distribution <- list(name = "quantile", alpha = alpha)
+      params$distribution = list(name = "quantile", alpha = alpha)
     }
-    params$formula <- f
-    params$data <- getTaskData(.task, .subset)
-    params$weights <- .weights
+    params$formula = f
+    params$data = getTaskData(.task, .subset)
+    params$weights = .weights
 
     do.call(gbm::gbm, params)
   }
