@@ -30,3 +30,12 @@ test_that("regr_svm", {
 
   testCVParsets("regr.svm", regr.df, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })
+
+test_that("classif_svm with many features", {
+  set.seed(8008135)
+  xt = cbind(as.data.frame(matrix(rnorm(4e4), ncol = 2e4)), x = 1:2)
+  xt.task = makeRegrTask("xt", xt, "x")
+  # the given task has many features, the formula interface fails
+  train("regr.svm", xt.task)
+})
+

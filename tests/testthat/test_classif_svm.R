@@ -54,3 +54,11 @@ test_that("classif_svm", {
   preds = predict(model, multiclass.task)
   expect_lt(performance(preds), 0.3)
 })
+
+test_that("classif_svm with many features", {
+  set.seed(8008135)
+  xt = cbind(as.data.frame(matrix(rnorm(4e4), ncol = 2e4)), x = as.factor(c("a", "b")))
+  xt.task = makeClassifTask("xt", xt, "x")
+  # the given task has many features, the formula interface fails
+  train("classif.svm", xt.task)
+})

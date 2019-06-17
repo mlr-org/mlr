@@ -323,6 +323,8 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 (<a href='https://github.com/jakob-r'>@jakob-r</a>, <a href='https://github.com/mlr-org/mlr/issues/1784'>#1784</a>)</li>
 </ul>
 </li>
+<li>
+<code><a href="https://www.rdocumentation.org/packages/e1071/topics/svm">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from “stack overflow” issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
 </ul>
 </div>
 <div id="functions---general" class="section level2">
