@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Get specific help for a learner's parameters. — helpLearnerParam • mlr</title>
+<title>Get the note for the learner. — getLearnerNote • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Get specific help for a learner's parameters. — helpLearnerParam" />
+<meta property="og:title" content="Get the note for the learner. — getLearnerNote" />
 
-<meta property="og:description" content="Print the description of parameters of a given learner. The description
-is automatically extracted from the help pages of the learner, so it may be incomplete." />
+<meta property="og:description" content="Get the note for the learner." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -299,16 +298,15 @@ is automatically extracted from the help pages of the learner, so it may be inco
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get specific help for a learner's parameters.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/helpLearner.R'><code>R/helpLearner.R</code></a></small>
+    <h1>Get the note for the learner.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Learner_operators.R'><code>R/Learner_operators.R</code></a></small>
     </div>
 
     
-    <p>Print the description of parameters of a given learner. The description
-is automatically extracted from the help pages of the learner, so it may be incomplete.</p>
+    <p>Get the note for the learner.</p>
     
 
-    <pre class="usage"><span class='fu'>helpLearnerParam</span>(<span class='no'>learner</span>, <span class='kw'>param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>getLearnerNote</span>(<span class='no'>learner</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -319,33 +317,30 @@ is automatically extracted from the help pages of the learner, so it may be inco
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
-    <tr>
-      <th>param</th>
-      <td><p>(<code>character</code> | NULL)<br />
-Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
-status of all parameters.</p></td>
-    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other learner: <code><a href='LearnerProperties.html'>LearnerProperties</a></code>,
   <code><a href='getClassWeightParam.html'>getClassWeightParam</a></code>,
   <code><a href='getHyperPars.html'>getHyperPars</a></code>, <code><a href='getLearnerId.html'>getLearnerId</a></code>,
-  <code><a href='getLearnerNote.html'>getLearnerNote</a></code>,
   <code><a href='getLearnerPackages.html'>getLearnerPackages</a></code>,
   <code><a href='getLearnerParVals.html'>getLearnerParVals</a></code>,
   <code><a href='getLearnerParamSet.html'>getLearnerParamSet</a></code>,
   <code><a href='getLearnerPredictType.html'>getLearnerPredictType</a></code>,
   <code><a href='getLearnerShortName.html'>getLearnerShortName</a></code>,
   <code><a href='getLearnerType.html'>getLearnerType</a></code>, <code><a href='getParamSet.html'>getParamSet</a></code>,
+  <code><a href='helpLearnerParam.html'>helpLearnerParam</a></code>,
   <code><a href='helpLearner.html'>helpLearner</a></code>, <code><a href='makeLearners.html'>makeLearners</a></code>,
   <code><a href='makeLearner.html'>makeLearner</a></code>, <code><a href='removeHyperPars.html'>removeHyperPars</a></code>,
   <code><a href='setHyperPars.html'>setHyperPars</a></code>, <code><a href='setId.html'>setId</a></code>,
   <code><a href='setLearnerId.html'>setLearnerId</a></code>,
   <code><a href='setPredictThreshold.html'>setPredictThreshold</a></code>,
-  <code><a href='setPredictType.html'>setPredictType</a></code></p>
-<p>Other help: <code><a href='helpLearner.html'>helpLearner</a></code></p></div>
+  <code><a href='setPredictType.html'>setPredictType</a></code></p></div>
     
 
   </div>
@@ -354,6 +349,8 @@ status of all parameters.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 

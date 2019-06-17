@@ -14,6 +14,7 @@
 
 ## functions - general
 - `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
+- added `getLearnerNote()` to query the "Note" slot of a learner (@alona-sydorova, #2086)
 
 ## learners - new
 - add learner `cluster.MiniBatchKmeans` from package _ClusterR_ (@Prasiddhi, #2554)

@@ -23,6 +23,7 @@ is automatically extracted from the help pages of the learner, so it may be inco
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
   \code{\link{getLearnerPackages}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},
