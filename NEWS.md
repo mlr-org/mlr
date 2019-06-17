@@ -11,6 +11,7 @@
   See `?regr.randomForest` for more details.  
   `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
   (@jakob-r, #1784)
+- `regr.gbm` now supports `quantile distribution`
 
 ## functions - general
 - `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
