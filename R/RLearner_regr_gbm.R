@@ -13,7 +13,8 @@ makeRLearner.regr.gbm = function() {
       makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "alpha", default = 0.5, lower = 0, upper = 1),
+      makeNumericLearnerParam(id = "alpha", default = 0.5, lower = 0, upper = 1,
+                              requires = quote(distribution == "quantile")),
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
