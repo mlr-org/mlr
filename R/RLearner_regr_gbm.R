@@ -31,42 +31,25 @@ makeRLearner.regr.gbm = function() {
 #' @export
 trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
-  if (is.null(.weights)) {
-    f = getTaskFormula(.task)
 
-    params = list(...)
-    if("alpha" %in% names(params)) {
-      alpha = params$alpha
-      params$alpha = NULL
-    } else {
-      alpha = 0.5
-    }
-    if(params$distribution %in% "quantile"){
-      params$distribution = list(name = "quantile", alpha = alpha)
-    }
-    params$formula = f
-    params$data = getTaskData(.task, .subset)
-
-    do.call(gbm::gbm, params)
+  params = list(...)
+  if("alpha" %in% names(params)) {
+    alpha = params$alpha
+    params$alpha = NULL
   } else {
-    f = getTaskFormula(.task)
-
-    params = list(...)
-    if("alpha" %in% names(params)){
-      alpha = params$alpha
-      params$alpha = NULL
-    } else {
-      alpha = 0.5
-    }
-    if(params$distribution %in% "quantile"){
-      params$distribution = list(name = "quantile", alpha = alpha)
-    }
-    params$formula = f
-    params$data = getTaskData(.task, .subset)
-    params$weights = .weights
-
-    do.call(gbm::gbm, params)
+    alpha = 0.5
   }
+  if(params$distribution %in% "quantile") {
+    params$distribution = list(name = "quantile", alpha = alpha)
+  }
+  params$formula = f
+  params$data = getTaskData(.task, .subset)
+
+  if (is.null(.weights)) {
+    params$weights = .weights
+  }
+
+  do.call(gbm::gbm, params)
 }
 
 #' @export
