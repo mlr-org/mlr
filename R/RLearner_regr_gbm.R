@@ -32,13 +32,13 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL, ...)
   f = getTaskFormula(.task)
 
   params = list(...)
-  if("alpha" %in% names(params)) {
+  if ("alpha" %in% names(params)) {
     alpha = params$alpha
     params$alpha = NULL
   } else {
     alpha = 0.5
   }
-  if(params$distribution %in% "quantile") {
+  if (params$distribution == "quantile") {
     params$distribution = list(name = "quantile", alpha = alpha)
   }
   params$formula = f
