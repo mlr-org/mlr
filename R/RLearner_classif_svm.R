@@ -28,9 +28,16 @@ makeRLearner.classif.svm = function() {
 }
 
 #' @export
-trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL, ...) {
-  f = getTaskFormula(.task)
-  e1071::svm(f, data = getTaskData(.task, .subset), probability = .learner$predict.type == "prob", ...)
+trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  if (sum(getTaskDesc(.task)$n.feat[c("factors", "ordered")]) > 0) {
+    # use formula interface if factors are present 
+    f = getTaskFormula(.task)
+    e1071::svm(f, data = getTaskData(.task, .subset), probability = .learner$predict.type == "prob", ...)
+  } else {
+    # use the "data.frame" approach if no factors are present to prevent issues like https://github.com/mlr-org/mlr/issues/1738
+    d = getTaskData(.task, .subset, target.extra = TRUE)
+    e1071::svm(d$data, d$target, probability = .learner$predict.type == "prob", ...)
+  }
 }
 
 #' @export
