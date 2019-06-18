@@ -5,7 +5,7 @@
 - `benchmark()` does not store the tuning results (`$extract` slot) anymore by default.
   If you want to keep this slot (e.g. for post tuning analysis), set `keep.extract = TRUE`.
   This change originated from the fact that the size of `BenchmarkResult` objects with extensive tuning got very large (~ GB) which can cause memory problems during runtime if multiple `benchmark()` calls are executed on HPCs.
-- `benchmark()` and `resample()` do not store the created models (`$models` slot) anymore by default.
+- `benchmark()` does not store the created models (`$models` slot) anymore by default.
   The reason is the same as for the `$extract` slot above.
   Storing can be enabled using `models = TRUE`.
 
