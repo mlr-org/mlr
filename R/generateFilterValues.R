@@ -214,7 +214,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
       fvalues$task.desc$id,
       sum(fvalues$task.desc$n.feat),
-      methods),
+      data$method),
     x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
