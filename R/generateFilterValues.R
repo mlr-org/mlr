@@ -50,6 +50,9 @@
 #' @export
 generateFilterValuesData = function(task, method = "randomForestSRC_importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
 
+  # define for later checks
+  ens.method = NULL
+
   # ensemble
   if (class(method) == "list") {
     ens.method = method[[1]]
@@ -106,7 +109,9 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
   fn = getTaskFeatureNames(task)
 
-  if (exists("ens.method")) {
+  if (!is.null(ens.method)) {
+
+    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
 
     filter = lapply(ens.method, function(x) .FilterEnsembleRegister[[x]])
 
