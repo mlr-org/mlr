@@ -204,7 +204,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   plt = ggplot(data = data, mapping = mp)
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
-    plt = plt + facet_wrap(~method, scales = ,
+    plt = plt + facet_wrap(~method, scales = "free_y",
       nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
     plt = plt + labs(title = sprintf("%s (%i features)",
       fvalues$task.desc$id,
