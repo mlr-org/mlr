@@ -100,7 +100,7 @@ test_that("batchmark", {
   measures = list(mmce, acc)
 
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
-  res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures, reg = reg)
+  res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures, reg = reg, keep.extract = TRUE)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   expect_data_table(findErrors(reg = reg), nrow = 0L)

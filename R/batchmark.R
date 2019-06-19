@@ -35,7 +35,8 @@
 #' @noMd
 #' @export
 #' @family benchmark
-batchmark = function(learners, tasks, resamplings, measures, models = FALSE, reg = batchtools::getDefaultRegistry()) {
+batchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE,
+  keep.extract = FALSE, models = FALSE, reg = batchtools::getDefaultRegistry()) {
 
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   learners = ensureBenchmarkLearners(learners)
@@ -55,7 +56,7 @@ batchmark = function(learners, tasks, resamplings, measures, models = FALSE, reg
 
   # generate algos
   ades = Map(function(id, learner) {
-    apply.fun = getAlgoFun(learner, measures, models)
+    apply.fun = getAlgoFun(learner, measures, models, keep.extract)
     batchtools::addAlgorithm(id, apply.fun, reg = reg)
     data.table()
   }, id = names(learners), learner = learners)
@@ -68,7 +69,7 @@ resample.fun = function(job, data, i) {
   list(train = data$rin$train.inds[[i]], test = data$rin$test.inds[[i]], weights = data$rin$weights[[i]], rdesc = data$rin$desc)
 }
 
-getAlgoFun = function(lrn, measures, models) {
+getAlgoFun = function(lrn, measures, models, keep.extract) {
   force(lrn)
   force(measures)
   force(models)
