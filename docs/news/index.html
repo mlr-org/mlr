@@ -327,15 +327,6 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <code><a href="https://www.rdocumentation.org/packages/e1071/topics/svm">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from “stack overflow” issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
 </ul>
 </div>
-<div id="functions---general" class="section level2">
-<h2 class="hasAnchor">
-<a href="#functions---general" class="anchor"></a>functions - general</h2>
-<ul>
-<li>
-<code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
-<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
-</ul>
-</div>
 <div id="learners---new" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learners---new" class="anchor"></a>learners - new</h2>
@@ -351,6 +342,16 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <code><a href="../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> now supports facet visualization of hyperparam effects for nested cv (<a href='https://github.com/MasonGallo'>@MasonGallo</a>, <a href='https://github.com/mlr-org/mlr/issues/1653'>#1653</a>)</li>
 <li>fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of <code>data.table</code>s default in <code>rbindlist()</code>. See <a href='https://github.com/mlr-org/mlr/issues/2578'>#2578</a> for more information. (<a href='https://github.com/mllg'>@mllg</a>, <a href='https://github.com/mlr-org/mlr/issues/2579'>#2579</a>)</li>
 <li>fixed a bug in which <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options(on.learner.error)</a></code> was not respected in <code><a href="../reference/benchmark.html">benchmark()</a></code>. This caused <code><a href="../reference/benchmark.html">benchmark()</a></code> to stop even if it should have continued including <code>FailureModels</code> in the result (<a href='https://github.com/dagola'>@dagola</a>, <a href='https://github.com/mlr-org/mlr/issues/1984'>#1984</a>)</li>
+<li>
+<code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
+<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
+</ul>
+</div>
+<div id="filters---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---general" class="anchor"></a>filters - general</h2>
+<ul>
+<li>Filter <code>praznik_mrmr</code> also supports <code>regr</code> and <code>surv</code> tasks</li>
 </ul>
 </div>
 </div>
@@ -377,9 +378,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <code><a href="../reference/cache_helpers.html">getCacheDir()</a></code>: Return the default mlr cache directory (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2463'>#2463</a>)</li>
 </ul>
 </div>
-<div id="functions---general-1" class="section level2">
+<div id="functions---general" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-1" class="anchor"></a>functions - general</h2>
+<a href="#functions---general" class="anchor"></a>functions - general</h2>
 <ul>
 <li>
 <code><a href="../reference/getResamplingIndices.html">getResamplingIndices(inner = TRUE)</a></code> now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2413'>#2413</a>).</li>
@@ -494,9 +495,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>Suppress messages with show.learner.output = FALSE</li>
 </ul>
 </div>
-<div id="functions---general-2" class="section level2">
+<div id="functions---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-2" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-1" class="anchor"></a>functions - general</h2>
 <ul>
 <li>plotHyperParsEffect: add colors</li>
 </ul>
@@ -548,9 +549,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>Added support for growing and fixed window cross-validation for forecasting through new resample methods “GrowingWindowCV” and “FixedWindowCV”.</li>
 </ul>
 </div>
-<div id="functions---general-3" class="section level2">
+<div id="functions---general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-3" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-2" class="anchor"></a>functions - general</h2>
 <ul>
 <li>generatePartialDependenceData: depends now on the “mmpf” package, removed parameter: “center”, “resample”, “fmin”, “fmax” and “gridsize” added parameter: “uniform” and “n” to configure the grid for the partial dependence plot</li>
 <li>batchmark: allow resample instances and reduction of partial results</li>
@@ -669,9 +670,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>mlr now supports tuning with Bayesian optimization with mlrMBO</li>
 </ul>
 </div>
-<div id="functions---general-4" class="section level2">
+<div id="functions---general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-4" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-3" class="anchor"></a>functions - general</h2>
 <ul>
 <li>tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets</li>
 <li>getBMR-operators: now support “drop” argument that simplifies the resulting list</li>
@@ -725,9 +726,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <h1 class="page-header">
 <a href="#mlr-2-10" class="anchor"></a>mlr 2.10:<small> 2017-02-07 </small>
 </h1>
-<div id="functions---general-5" class="section level2">
+<div id="functions---general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-5" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-4" class="anchor"></a>functions - general</h2>
 <ul>
 <li>fixed bug in resample when using predict = “train” (issue <a href='https://github.com/mlr-org/mlr/issues/1284'>#1284</a>)</li>
 <li>update to irace 2.0 – there are algorithmic changes in irace that may affect performance</li>
@@ -842,9 +843,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <h1 class="page-header">
 <a href="#mlr-2-9" class="anchor"></a>mlr 2.9:<small> 2016-08-03 </small>
 </h1>
-<div id="functions---general-6" class="section level2">
+<div id="functions---general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-6" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-5" class="anchor"></a>functions - general</h2>
 <ul>
 <li>various cleanups that removed unused code</li>
 <li>subsetTask, getTaskData: arg “features” now also accepts logical and integer</li>
