@@ -73,7 +73,7 @@ getAlgoFun = function(lrn, measures, models, keep.extract) {
   force(lrn)
   force(measures)
   force(models)
-  function(job, data, instance) {
+  function(job, data, instance, keep.extract = keep.extract) {
     if (isTRUE(keep.extract)) {
       extract.this = getExtractor(lrn)
     } else {
