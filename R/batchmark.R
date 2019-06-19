@@ -73,7 +73,13 @@ getAlgoFun = function(lrn, measures, models) {
   force(measures)
   force(models)
   function(job, data, instance) {
-    extract.this = getExtractor(lrn)
+    if (isTRUE(keep.extract)) {
+      extract.this = getExtractor(lrn)
+    } else {
+      extract.this = function(model) {
+        NULL
+      }
+    }
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
       measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE)
   }
@@ -127,13 +133,7 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, keep.extract = F
       res = batchtools::reduceResultsList(tab[problem == prob & algorithm == algo], reg = reg)
       models = !is.null(res[[1L]]$model)
       lrn = data$learner[[algo]]
-      if (isTRUE(keep.extract)) {
-        extract.this = getExtractor(lrn)
-      } else {
-        extract.this = function(model) {
-          NULL
-        }
-      }
+      extract.this = getExtractor(lrn)
       rs = mergeResampleResult(learner.id = algo, task = data$task, iter.results = res, measures = data$measures,
         rin = data$rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
       rs$learner = lrn
