@@ -1003,7 +1003,7 @@ makeFilter(
   name = "praznik_MRMR",
   desc = "Minimum redundancy maximal relevancy filter",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("MRMR")
 )
