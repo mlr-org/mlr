@@ -177,7 +177,6 @@ Suggests:
     deepnet,
     DiceKriging,
     DiscriMiner,
-    dplyr,
     e1071,
     earth,
     elasticnet,
@@ -260,7 +259,6 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    tidyr,
     wavelets,
     xgboost (>= 0.6-2)
 VignetteBuilder:

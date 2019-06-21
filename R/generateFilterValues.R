@@ -138,8 +138,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     out = data.frame(name = row.names(fval),
       type = types, fval, row.names = NULL, stringsAsFactors = FALSE)
 
-    # eval(substitute() does not work here
-    out = tidyr::gather(out, method, "value", !!dplyr::enquo(method))
+    out = melt(out_long, value.name = "value", measure.vars = method, variable.name = "method")
   }
 
   makeS3Obj("FilterValues",
