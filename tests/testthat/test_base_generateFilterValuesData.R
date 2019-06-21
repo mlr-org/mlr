@@ -10,18 +10,18 @@ test_that("filterFeatures", {
   expect_equal(f, binaryclass.task)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task))
-  expect_data_frame(feat.imp.old$data, types = c("character", "numeric"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
 
   feat.imp.new = suppressWarnings(generateFilterValuesData(binaryclass.task))
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(names(feat.imp.new$data), c("name", "type", "method", "value"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
-  expect_data_frame(feat.imp.old$data, types = c("character", "numeric"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
@@ -32,7 +32,7 @@ test_that("filterFeatures", {
   expect_equal(f, ff)
 
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(names(feat.imp.new$data), c("name", "type", "method", "value"))
   expect_equal(ns, feat.imp.new$data$name)
