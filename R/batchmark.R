@@ -73,14 +73,14 @@ getAlgoFun = function(lrn, measures, models, keep.extract) {
   force(lrn)
   force(measures)
   force(models)
-  function(job, data, instance, keep.extract = keep.extract) {
-    if (isTRUE(keep.extract)) {
-      extract.this = getExtractor(lrn)
-    } else {
-      extract.this = function(model) {
-        NULL
-      }
+  if (isTRUE(keep.extract)) {
+    extract.this = getExtractor(lrn)
+  } else {
+    extract.this = function(model) {
+      NULL
     }
+  }
+  function(job, data, instance) {
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
       measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE)
   }
