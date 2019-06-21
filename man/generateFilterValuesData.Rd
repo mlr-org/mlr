@@ -34,7 +34,7 @@ Default is empty list.}
 (\link{FilterValues}). A \code{list} containing:
 \item{task.desc}{[\link{TaskDesc})\cr
 Task description.}
-\item{data}{(\code{tibble}) with columns:
+\item{data}{(\code{data.frame}) with columns:
 \itemize{
 \item \code{name}(\link{character})\cr
 Name of feature.

@@ -4,9 +4,8 @@
 \alias{makeFilterEnsemble}
 \title{Create an ensemble feature filter.}
 \usage{
-makeFilterEnsemble(name = "E-min",
-  base.methods = c("randomForestSRC.importance", "variance"),
-  desc = NULL, fun = NULL, ...)
+makeFilterEnsemble(name, base.methods, desc, fun, supported.tasks,
+  supported.features, ...)
 }
 \arguments{
 \item{name}{(\code{character(1)})\cr

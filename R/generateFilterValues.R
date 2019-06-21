@@ -21,7 +21,7 @@
 #' @return ([FilterValues]). A `list` containing:
 #'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
-#'   \item{data}{(`tibble`) with columns:
+#'   \item{data}{(`data.frame`) with columns:
 #'     \itemize{
 #'       \item `name`([character])\cr
 #'         Name of feature.
@@ -135,9 +135,8 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     colnames(fval) = method
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
-    # directly using `tibble()` does not work here
-    out = tibble::as_tibble(data.frame(name = row.names(fval),
-      type = types, fval, row.names = NULL, stringsAsFactors = FALSE))
+    out = data.frame(name = row.names(fval),
+      type = types, fval, row.names = NULL, stringsAsFactors = FALSE)
 
     # eval(substitute() does not work here
     out = tidyr::gather(out, method, "value", !!dplyr::enquo(method))

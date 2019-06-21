@@ -151,7 +151,6 @@ Imports:
     stats,
     stringi,
     survival,
-    tibble,
     utils,
     XML
 Suggests:

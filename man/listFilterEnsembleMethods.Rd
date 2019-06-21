@@ -12,7 +12,7 @@ Provide more detailed information about filters.
 Default is \code{TRUE}.}
 }
 \value{
-(\link{tibble}).
+(\link{data.frame}).
 }
 \description{
 Returns a subset-able dataframe with filter information.

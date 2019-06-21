@@ -53,7 +53,7 @@ makeFilterEnsemble = function(name, base.methods, desc, fun, supported.tasks, su
 #' @param desc (`logical(1)`)\cr
 #'  Provide more detailed information about filters.
 #'  Default is `TRUE`.
-#' @return ([tibble]).
+#' @return ([data.frame]).
 #' @export
 #' @family filter
 listFilterEnsembleMethods = function(desc = TRUE) {
@@ -79,7 +79,7 @@ listFilterEnsembleMethods = function(desc = TRUE) {
   }
   res = setRowNames(sortByCol(df, "id"), NULL)
   addClasses(res, "FilterMethodsList")
-  return(tibble::as_tibble(res))
+  return(res)
 }
 
 #' @export
