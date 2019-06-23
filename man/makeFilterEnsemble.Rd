@@ -4,8 +4,7 @@
 \alias{makeFilterEnsemble}
 \title{Create an ensemble feature filter.}
 \usage{
-makeFilterEnsemble(name, base.methods, desc, fun, supported.tasks,
-  supported.features, ...)
+makeFilterEnsemble(name, base.methods, desc, fun)
 }
 \arguments{
 \item{name}{(\code{character(1)})\cr

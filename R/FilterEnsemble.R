@@ -24,21 +24,17 @@
 #' @return Object of class \dQuote{FilterEnsemble}.
 #' @export
 #' @family filter
-makeFilterEnsemble = function(name, base.methods, desc, fun, supported.tasks, supported.features, ...) {
+makeFilterEnsemble = function(name, base.methods, desc, fun) {
 
   assertString(name)
   assertString(desc)
-  assertCharacter(supported.tasks, any.missing = FALSE)
-  assertCharacter(supported.features, any.missing = FALSE)
   assertFunction(fun, c("task", "base.methods"))
 
   ### calculate ensemble filter
   obj = makeS3Obj("FilterEnsemble",
     name = name,
     desc = desc,
-    fun = fun,
-    supported.tasks = supported.tasks,
-    supported.features = supported.features
+    fun = fun
   )
 
   .FilterEnsembleRegister[[name]] = obj
@@ -104,13 +100,11 @@ print.FilterEnsemble = function(x, ...) {
 makeFilterEnsemble(
   name = "E-min",
   desc = "Minimum ensemble filter. Takes the best minimum value across all base filter methods for each feature.",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
-  fun = function(task, base.methods, nselect, more.args, ...) {
+  fun = function(task, base.methods, nselect, more.args) {
 
-    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
-      nselect = nselect, more.args = more.args, ... = ...)
+    fval_list = calcBaseFilters(task = task, method = base.methods,
+      nselect = nselect, more.args = more.args)
 
     ### calculate ensemble filter
 
@@ -139,13 +133,11 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-mean",
   desc = "Mean ensemble filter. Takes the mean across all base filter methods for each feature.",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
-  fun = function(task, base.methods, nselect, more.args, ...) {
+  fun = function(task, base.methods, nselect, more.args) {
 
-    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
-      nselect = nselect, more.args = more.args, ... = ...)
+    fval_list = calcBaseFilters(task = task, method = base.methods,
+      nselect = nselect, more.args = more.args)
 
     ### calculate ensemble filter
 
@@ -175,13 +167,11 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-max",
   desc = "Maximum ensemble filter. Takes the best maximum value across all base filter methods for each feature.",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
-  fun = function(task, base.methods, nselect, more.args, ...) {
+  fun = function(task, base.methods, nselect, more.args) {
 
-    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
-      nselect = nselect, more.args = more.args, ... = ...)
+    fval_list = calcBaseFilters(task = task, method = base.methods,
+      nselect = nselect, more.args = more.args)
 
     ### calculate ensemble filter
 
@@ -210,13 +200,11 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-median",
   desc = "Median ensemble filter. Takes the median across all base filter methods for each feature.",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
-  fun = function(task, base.methods, nselect, more.args, ...) {
+  fun = function(task, base.methods, nselect, more.args) {
 
-    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
-      nselect = nselect, more.args = more.args, ... = ...)
+    fval_list = calcBaseFilters(task = task, method = base.methods,
+      nselect = nselect, more.args = more.args)
 
     ### calculate ensemble filter
 
@@ -245,17 +233,15 @@ makeFilterEnsemble(
 makeFilterEnsemble(
   name = "E-Borda",
   desc = "Borda ensemble filter. Takes the sum across all base filter methods for each feature.",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   base.methods = NULL,
-  fun = function(task, base.methods, nselect, more.args, ...) {
+  fun = function(task, base.methods, nselect, more.args) {
 
     if (length(unique(base.methods)) == 1L) {
       stopf("Sampling without replacement is currently not supported for simple filter methods. Please use `makeDiscreteParam()` instead of `makeDiscreteVectorParam()`.")
     }
 
-    fval_list = calcBaseFilters(task = task, base.methods = base.methods,
-      nselect = nselect, more.args = more.args, ... = ...)
+    fval_list = calcBaseFilters(task = task, method = base.methods,
+      nselect = nselect, more.args = more.args)
 
     ### calculate ensemble filter
 
@@ -279,11 +265,11 @@ makeFilterEnsemble(
 # calculate base filters -------------------------------------------------------
 # helper fun to calculate and rank base filters for ensemble filters
 
-calcBaseFilters = function(task, base.methods = base.methods,
+calcBaseFilters = function(task, method = method,
   nselect = nselect, more.args = more.args) {
 
   # calculate base filters here
-  fval_calc = generateFilterValuesData(task, method = base.methods,
+  fval_calc = generateFilterValuesData(task, method = method,
     nselect = nselect, more.args = more.args)
 
   # rank base filters by method
@@ -299,7 +285,7 @@ calcBaseFilters = function(task, base.methods = base.methods,
 }
 
 # merge base and ensemble filters ------------------------------------------------------
-# helper fun to merge base and ensembe filters
+# helper fun to merge base and ensemble filters
 
 mergeFilters = function(simple_filters, ensemble_filters) {
   # merge ensemble and base filters
