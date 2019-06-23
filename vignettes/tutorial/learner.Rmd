@@ -55,9 +55,13 @@ The first argument specifies which algorithm to use.
 The naming convention is ``classif.<R_method_name>`` for classification methods, ``regr.<R_method_name>`` for regression methods, ``surv.<R_method_name>`` for survival analysis, ``cluster.<R_method_name>`` for clustering methods, and ``multilabel.<R_method_name>`` for multilabel classification.
 
 Hyperparameter values can be specified either via the ``...`` argument or as a `list` via ``par.vals``.
+The first option is preferred as `par.vals` is mainly used to declare hyperparameters that are set differently in `mlr` compared to the defaults of the underlying model.
+If you want to change a hyperparameter in `mlr` by default that differs from the actual default, make sure to also add an entry in the `"note"` slot of the learner.
+This entry should describe the reason for the change.
+Common ones are turning off automatic parallelization or changing logical arguments of the learner to enable a more conservative memory management.
 
 Occasionally, `factor` features may cause problems when fewer levels are present in the test data set than in the training data.
-By setting ``fix.factors.prediction = TRUE`` these are avoided by adding a factor level for missing data in the test data set.
+By setting `fix.factors.prediction = TRUE` these are avoided by adding a factor level for missing data in the test data set.
 
 Let's have a look at two of the learners created above.
 
@@ -93,7 +97,7 @@ regr.lrn$predict.type
 Slot ``$par.set`` is an object of class `ParamSet` (`ParamHelpers::makeParamSet()`).
 It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.
 
-Moreover, `mlr` provides function `getHyperPars()` or its alternative `getLearnerParVals()` to access the current hyperparameter setting of a Learner (`makeLearner()`) and `getParamSet()` to get a description of all possible settings.
+Moreover, `mlr` provides function `getHyperPars()` or its alternative `getLearnerParVals()` to access the current hyperparameter setting of a Learner, (`makeLearner()`) and `getParamSet()` to get a description of all possible settings.
 These are particularly useful in case of wrapped Learner (`makeLearner()`)s, for example if a learner is fused with a feature selection strategy, and both, the learner as well the feature selection method, have hyperparameters.
 For details see the section on [wrapped learners](wrapper.md).
 
