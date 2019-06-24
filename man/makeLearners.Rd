@@ -18,9 +18,11 @@ Default is \code{cls}.}
 Shortcut to prepend type string to \code{cls} so one can set \code{cls = "rpart"}.
 Default is \code{NULL}, i.e., this is not used.}
 
-\item{...}{(any)\cr
-Optional named (hyper)parameters.
-Alternatively these can be given using the \code{par.vals} argument.}
+\item{...}{(any)\cr Optional named (hyper)parameters. If you want to set
+specific hyperparameters for a learner during model creation, these should
+go here. You can get a list of available hyperparameters using
+\code{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
+the \code{par.vals} argument but \code{...} should be preferred!}
 }
 \value{
 (named list of \link{Learner}). Named by \code{ids}.
