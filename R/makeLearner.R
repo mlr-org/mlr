@@ -1,45 +1,55 @@
 #' @title Create learner object.
 #'
-#' @description
-#' For a classification learner the `predict.type` can be set
-#' to \dQuote{prob} to predict probabilities and the maximum
-#' value selects the label. The threshold used to assign the label can later be changed using the
+#' @description For a classification learner the `predict.type` can be set to
+#' \dQuote{prob} to predict probabilities and the maximum value selects the
+#' label. The threshold used to assign the label can later be changed using the
 #' [setThreshold] function.
 #'
 #' To see all possible properties of a learner, go to: [LearnerProperties].
 #'
+#' @section `par.vals` vs. `...`:
+#'
+#'   The former aims at specifying default hyperparameter settings from `mlr`
+#'   which differ from the actual defaults in the underlying learner. For
+#'   example, `respect.unordered.factors` is set to `order` in `mlr` while the
+#'   default in [ranger::ranger] depends on the argument `splitrule`.
+#'   `getHyperPars(<learner>)` can be used to query hyperparameter defaults that
+#'   differ from the underlying learner. This function also shows all
+#'   hyperparameters set by the user during learner creation (if these differ
+#'   from the learner defaults).
+#'
 #' @template arg_lrncl
-#' @param id (`character(1)`)\cr
-#'   Id string for object. Used to display object.
+#' @param id (`character(1)`)\cr Id string for object. Used to display object.
 #'   Default is `cl`.
-#' @param predict.type (`character(1)`)\cr
-#'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
-#'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
-#'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
-#'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities),
-#'   Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
-#'   Default is \dQuote{response}.
+#' @param predict.type (`character(1)`)\cr Classification: \dQuote{response} (=
+#'   labels) or \dQuote{prob} (= probabilities and labels by selecting the ones
+#'   with maximal probability). Regression: \dQuote{response} (= mean response)
+#'   or \dQuote{se} (= standard errors and mean response). Survival:
+#'   \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time
+#'   dependent probabilities). Clustering: \dQuote{response} (= cluster IDS) or
+#'   \dQuote{prob} (= fuzzy cluster membership probabilities), Multilabel:
+#'   \dQuote{response} (= logical matrix indicating the predicted class labels)
+#'   or \dQuote{prob} (= probabilities and corresponding logical matrix
+#'   indicating class labels). Default is \dQuote{response}.
 #' @template arg_predictthreshold
-#' @param fix.factors.prediction (`logical(1)`)\cr
-#'   In some cases, problems occur in underlying learners for factor features during prediction.
-#'   If the new features have LESS factor levels than during training (a strict subset),
-#'   the learner might produce an  error like
-#'   \dQuote{type of predictors in new data do not match that of the training data}.
-#'   In this case one can repair this problem by setting this option to `TRUE`.
-#'   We will simply add the missing factor levels missing from the test feature
-#'   (but present in training) to that feature.
-#'   Default is `FALSE`.
-#' @param ... (any)\cr
-#'   Optional named (hyper)parameters.
-#'   Alternatively these can be given using the `par.vals` argument.
-#' @param par.vals ([list])\cr
-#'   Optional list of named (hyper)parameters. The arguments in
-#'   `...` take precedence over values in this list. We strongly
-#'   encourage you to use one or the other to pass (hyper)parameters
-#'   to the learner but not both.
-#' @param config (named [list])\cr
-#'   Named list of config option to overwrite global settings set via [configureMlr]
-#'   for this specific learner.
+#' @param fix.factors.prediction (`logical(1)`)\cr In some cases, problems occur
+#'   in underlying learners for factor features during prediction. If the new
+#'   features have LESS factor levels than during training (a strict subset),
+#'   the learner might produce an  error like \dQuote{type of predictors in new
+#'   data do not match that of the training data}. In this case one can repair
+#'   this problem by setting this option to `TRUE`. We will simply add the
+#'   missing factor levels missing from the test feature (but present in
+#'   training) to that feature. Default is `FALSE`.
+#' @param ... (any)\cr Optional named (hyper)parameters. If you want to set
+#'   specific hyperparameters for a learner during model creation, these should
+#'   go here. You can get a list of available hyperparameters using
+#'   `getParamSet(<learner>)`. Alternatively hyperparameters can be given using
+#'   the `par.vals` argument but `...` should be preferred!
+#' @param par.vals ([list])\cr Optional list of named (hyper)parameters. The
+#'   arguments in `...` take precedence over values in this list. We strongly
+#'   encourage you to use `...` for passing hyperparameters.
+#' @param config (named [list])\cr Named list of config option to overwrite
+#'   global settings set via [configureMlr] for this specific learner.
 #' @return ([Learner]).
 #' @family learner
 #' @export
@@ -48,7 +58,7 @@
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
-#' print(lrn$par.vals)
+#' getHyperPars(lrn)
 makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold = NULL,
   fix.factors.prediction = FALSE, ..., par.vals = list(), config = list()) {
 

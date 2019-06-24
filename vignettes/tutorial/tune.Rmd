@@ -209,7 +209,7 @@ res$y
 We can generate a Learner (`makeLearner()`) with optimal hyperparameter settings as follows:
 
 ```{r}
-lrn = setHyperPars(makeLearner("classif.ksvm"), par.vals = res$x)
+lrn = setHyperPars(makeLearner("classif.ksvm"), C = res$x$C, sigma = res$x$sigma)
 lrn
 ```
 

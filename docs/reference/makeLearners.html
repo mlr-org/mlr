@@ -332,9 +332,11 @@ Default is <code>NULL</code>, i.e., this is not used.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>(any)<br />
-Optional named (hyper)parameters.
-Alternatively these can be given using the <code>par.vals</code> argument.</p></td>
+      <td><p>(any)<br /> Optional named (hyper)parameters. If you want to set
+specific hyperparameters for a learner during model creation, these should
+go here. You can get a list of available hyperparameters using
+<code>getParamSet(&lt;learner&gt;)</code>. Alternatively hyperparameters can be given using
+the <code>par.vals</code> argument but <code>...</code> should be preferred!</p></td>
     </tr>
     </table>
     

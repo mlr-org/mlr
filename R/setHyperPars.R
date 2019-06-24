@@ -1,12 +1,14 @@
 #' Set the hyperparameters of a learner object.
 #'
 #' @template arg_learner
-#' @param ... (any)\cr
-#'   Named (hyper)parameters with new setting. Alternatively these can be passed
-#'   using the `par.vals` argument.
-#' @param par.vals ([list])\cr
-#'   Optional list of named (hyper)parameter settings. The arguments in
-#'   `...` take precedence over values in this list.
+#' @param ... (any)\cr Optional named (hyper)parameters. If you want to set
+#'   specific hyperparameters for a learner during model creation, these should
+#'   go here. You can get a list of available hyperparameters using
+#'   `getParamSet(<learner>)`. Alternatively hyperparameters can be given using
+#'   the `par.vals` argument but `...` should be preferred!
+#' @param par.vals ([list])\cr Optional list of named (hyper)parameters. The
+#'   arguments in `...` take precedence over values in this list. We strongly
+#'   encourage you to use `...` for passing hyperparameters.
 #' @template ret_learner
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.

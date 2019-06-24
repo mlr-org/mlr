@@ -30,9 +30,9 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Create learner object. — makeLearner" />
 
-<meta property="og:description" content="For a classification learner the predict.type can be set
-to &#8220;prob&#8221; to predict probabilities and the maximum
-value selects the label. The threshold used to assign the label can later be changed using the
+<meta property="og:description" content="For a classification learner the predict.type can be set to
+&#8220;prob&#8221; to predict probabilities and the maximum value selects the
+label. The threshold used to assign the label can later be changed using the
 setThreshold function.
 To see all possible properties of a learner, go to: LearnerProperties." />
 <meta name="twitter:card" content="summary" />
@@ -307,9 +307,9 @@ To see all possible properties of a learner, go to: LearnerProperties." />
     </div>
 
     
-    <p>For a classification learner the <code>predict.type</code> can be set
-to &#8220;prob&#8221; to predict probabilities and the maximum
-value selects the label. The threshold used to assign the label can later be changed using the
+    <p>For a classification learner the <code>predict.type</code> can be set to
+&#8220;prob&#8221; to predict probabilities and the maximum value selects the
+label. The threshold used to assign the label can later be changed using the
 <a href='setThreshold.html'>setThreshold</a> function.</p>
 <p>To see all possible properties of a learner, go to: <a href='LearnerProperties.html'>LearnerProperties</a>.</p>
     
@@ -334,19 +334,21 @@ A list of all integrated learners is available on the
     </tr>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Id string for object. Used to display object.
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Id string for object. Used to display object.
 Default is <code>cl</code>.</p></td>
     </tr>
     <tr>
       <th>predict.type</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Classification: &#8220;response&#8221; (= labels) or &#8220;prob&#8221; (= probabilities and labels by selecting the ones with maximal probability).
-Regression: &#8220;response&#8221; (= mean response) or &#8220;se&#8221; (= standard errors and mean response).
-Survival: &#8220;response&#8221; (= some sort of orderable risk) or &#8220;prob&#8221; (= time dependent probabilities).
-Clustering: &#8220;response&#8221; (= cluster IDS) or &#8220;prob&#8221; (= fuzzy cluster membership probabilities),
-Multilabel: &#8220;response&#8221; (= logical matrix indicating the predicted class labels) or &#8220;prob&#8221; (= probabilities and corresponding logical matrix indicating class labels).
-Default is &#8220;response&#8221;.</p></td>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Classification: &#8220;response&#8221; (=
+labels) or &#8220;prob&#8221; (= probabilities and labels by selecting the ones
+with maximal probability). Regression: &#8220;response&#8221; (= mean response)
+or &#8220;se&#8221; (= standard errors and mean response). Survival:
+&#8220;response&#8221; (= some sort of orderable risk) or &#8220;prob&#8221; (= time
+dependent probabilities). Clustering: &#8220;response&#8221; (= cluster IDS) or
+&#8220;prob&#8221; (= fuzzy cluster membership probabilities), Multilabel:
+&#8220;response&#8221; (= logical matrix indicating the predicted class labels)
+or &#8220;prob&#8221; (= probabilities and corresponding logical matrix
+indicating class labels). Default is &#8220;response&#8221;.</p></td>
     </tr>
     <tr>
       <th>predict.threshold</th>
@@ -358,41 +360,51 @@ Default is <code>NULL</code> which means 0.5 / an equal threshold for each class
     </tr>
     <tr>
       <th>fix.factors.prediction</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
-In some cases, problems occur in underlying learners for factor features during prediction.
-If the new features have LESS factor levels than during training (a strict subset),
-the learner might produce an  error like
-&#8220;type of predictors in new data do not match that of the training data&#8221;.
-In this case one can repair this problem by setting this option to <code>TRUE</code>.
-We will simply add the missing factor levels missing from the test feature
-(but present in training) to that feature.
-Default is <code>FALSE</code>.</p></td>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br /> In some cases, problems occur
+in underlying learners for factor features during prediction. If the new
+features have LESS factor levels than during training (a strict subset),
+the learner might produce an  error like &#8220;type of predictors in new
+data do not match that of the training data&#8221;. In this case one can repair
+this problem by setting this option to <code>TRUE</code>. We will simply add the
+missing factor levels missing from the test feature (but present in
+training) to that feature. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>(any)<br />
-Optional named (hyper)parameters.
-Alternatively these can be given using the <code>par.vals</code> argument.</p></td>
+      <td><p>(any)<br /> Optional named (hyper)parameters. If you want to set
+specific hyperparameters for a learner during model creation, these should
+go here. You can get a list of available hyperparameters using
+<code>getParamSet(&lt;learner&gt;)</code>. Alternatively hyperparameters can be given using
+the <code>par.vals</code> argument but <code>...</code> should be preferred!</p></td>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
-Optional list of named (hyper)parameters. The arguments in
-<code>...</code> take precedence over values in this list. We strongly
-encourage you to use one or the other to pass (hyper)parameters
-to the learner but not both.</p></td>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br /> Optional list of named (hyper)parameters. The
+arguments in <code>...</code> take precedence over values in this list. We strongly
+encourage you to use <code>...</code> for passing hyperparameters.</p></td>
     </tr>
     <tr>
       <th>config</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
-Named list of config option to overwrite global settings set via <a href='configureMlr.html'>configureMlr</a>
-for this specific learner.</p></td>
+      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br /> Named list of config option to overwrite
+global settings set via <a href='configureMlr.html'>configureMlr</a> for this specific learner.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(Learner).</p>
+    
+    <h2 class="hasAnchor" id="par-vals-vs-"><a class="anchor" href="#par-vals-vs-"></a><code>par.vals</code> vs. <code>...</code></h2>
+
+    
+    <p>The former aims at specifying default hyperparameter settings from <code>mlr</code>
+which differ from the actual defaults in the underlying learner. For
+example, <code>respect.unordered.factors</code> is set to <code>order</code> in <code>mlr</code> while the
+default in <a href='https://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger::ranger</a> depends on the argument <code>splitrule</code>.
+<code>getHyperPars(&lt;learner&gt;)</code> can be used to query hyperparameter defaults that
+differ from the underlying learner. This function also shows all
+hyperparameters set by the user during learner creation (if these differ
+from the learner defaults).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -431,7 +443,7 @@ for this specific learner.</p></td>
 #&gt; Predict-Type: prob
 #&gt; Hyperparameters: 
 #&gt; </div><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"t"</span>, <span class='kw'>nu</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>lrn</span>$<span class='no'>par.vals</span>)</div><div class='output co'>#&gt; $method
+<span class='fu'><a href='getHyperPars.html'>getHyperPars</a></span>(<span class='no'>lrn</span>)</div><div class='output co'>#&gt; $method
 #&gt; [1] "t"
 #&gt; 
 #&gt; $nu
@@ -444,6 +456,8 @@ for this specific learner.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#par-vals-vs-"><code>par.vals</code> vs. <code>...</code></a></li>
 
       <li><a href="#see-also">See also</a></li>
       

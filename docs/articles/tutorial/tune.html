@@ -448,7 +448,7 @@
 <a class="sourceLine" id="cb14-9" data-line-number="9">## acc.test.mean   acc.test.sd </a>
 <a class="sourceLine" id="cb14-10" data-line-number="10">##          0.96          0.00</a></code></pre></div>
 <p>We can generate a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) with optimal hyperparameter settings as follows:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setHyperPars.html">setHyperPars</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>), <span class="dt">par.vals =</span> res<span class="op">$</span>x)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setHyperPars.html">setHyperPars</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>), <span class="dt">C =</span> res<span class="op">$</span>x<span class="op">$</span>C, <span class="dt">sigma =</span> res<span class="op">$</span>x<span class="op">$</span>sigma)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">lrn</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">## Learner classif.ksvm from package kernlab</a>
 <a class="sourceLine" id="cb15-4" data-line-number="4">## Type: classif</a>
