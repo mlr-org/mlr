@@ -47,9 +47,9 @@ test_that("feature importances are returned", {
   lrn = makeLearner("classif.h2o.glm")
   mod = train(lrn, task)
   feat.imp = getFeatureImportance(mod)$res
-  feat.imp.h2o = na.omit(h2o::h2o.varimp(getLearnerModel(mod))[, c("names", "coefficients")])
+  feat.imp.h2o = na.omit(h2o::h2o.varimp(getLearnerModel(mod))[, c("variable", "relative_importance")])
   # Convert to data.frame with same structure for equality check
-  feat.imp.h2o = data.frame(as.list(xtabs(coefficients ~ names, data = feat.imp.h2o)))[names(feat.imp)]
+  feat.imp.h2o = data.frame(as.list(xtabs(relative_importance ~ variable, data = feat.imp.h2o)))[names(feat.imp)]
 
   expect_equal(feat.imp,
     feat.imp.h2o)
