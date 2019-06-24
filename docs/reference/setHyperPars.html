@@ -319,15 +319,17 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>(any)<br />
-Named (hyper)parameters with new setting. Alternatively these can be passed
-using the <code>par.vals</code> argument.</p></td>
+      <td><p>(any)<br /> Optional named (hyper)parameters. If you want to set
+specific hyperparameters for a learner during model creation, these should
+go here. You can get a list of available hyperparameters using
+<code>getParamSet(&lt;learner&gt;)</code>. Alternatively hyperparameters can be given using
+the <code>par.vals</code> argument but <code>...</code> should be preferred!</p></td>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
-Optional list of named (hyper)parameter settings. The arguments in
-<code>...</code> take precedence over values in this list.</p></td>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br /> Optional list of named (hyper)parameters. The
+arguments in <code>...</code> take precedence over values in this list. We strongly
+encourage you to use <code>...</code> for passing hyperparameters.</p></td>
     </tr>
     </table>
     
