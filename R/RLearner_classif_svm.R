@@ -30,7 +30,7 @@ makeRLearner.classif.svm = function() {
 #' @export
 trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (sum(getTaskDesc(.task)$n.feat[c("factors", "ordered")]) > 0) {
-    # use formula interface if factors are present 
+    # use formula interface if factors are present
     f = getTaskFormula(.task)
     e1071::svm(f, data = getTaskData(.task, .subset), probability = .learner$predict.type == "prob", ...)
   } else {
