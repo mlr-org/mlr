@@ -7,7 +7,6 @@
 #' documentation for the `fun` parameter specific to each filter can
 #' be found in the description.
 #'
-#' @importFrom rlang .data
 #' @param name (`character(1)`)\cr
 #'  Identifier for the filter.
 #' @param base.methods the base filter methods which the ensemble method

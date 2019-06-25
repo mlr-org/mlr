@@ -4,7 +4,6 @@
 #' First, calls [generateFilterValuesData].
 #' Features are then selected via `select` and `val`.
 #'
-#' @importFrom rlang .data
 #' @template arg_task
 #' @param method (`character(1)`)\cr
 #'   See [listFilterMethods].
