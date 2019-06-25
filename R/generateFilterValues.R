@@ -148,7 +148,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     data = out)
 }
 #' @export
-#' @importFrom rlang .data
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
