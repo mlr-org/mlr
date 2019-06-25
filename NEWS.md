@@ -11,6 +11,11 @@
   See `?regr.randomForest` for more details.  
   `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
   (@jakob-r, #1784)
+- `regr.gbm` now supports `quantile distribution` (@bthieurmel, #2603)
+
+## functions - general
+- `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
+- added `getLearnerNote()` to query the "Note" slot of a learner (@alona-sydorova, #2086)
 - `e1071::svm()` now only uses the formula interface if factors are present. This change is supposed to prevent from "stack overflow" issues some users encountered when using large datasets. See #1738 for more information. (@mb706, #1740)
 
 ## learners - new
