@@ -1032,7 +1032,7 @@ FSelectorRcpp.filter = function(type) {
     data = getTaskData(task)
     X = data[getTaskFeatureNames(task)]
     y = data[[getTaskTargetNames(task)]]
-    res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
+    res = FSelectorRcpp::information_gain(x = X, y = y, type = type, ...)
     res = setNames(res$importance, res$attributes)
     replace(res, is.nan(res), 0) # FIXME: this is a technical fix, need to report upstream
   }
