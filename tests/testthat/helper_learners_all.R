@@ -81,7 +81,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
   if (pred.type == "se") {
     s = getPredictionSE(p)
     y = getPredictionResponse(p)
-    range =  diff(range(y))
+    range = diff(range(y))
     # regr.gausspr: checked manually. the output is supposed to be an SE estimation
     if (lrn$id %in% c("regr.gausspr")) {
       range = 2 * range
