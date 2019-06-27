@@ -13,59 +13,55 @@ makeFilterWrapper(learner, fw.method = "randomForestSRC_importance",
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{fw.method}{(\code{character(1)})\cr
-Filter method. See \link{listFilterMethods}.
+\item{fw.method}{(\code{character(1)})\cr Filter method. See \link{listFilterMethods}.
 Default is \dQuote{randomForestSRC_importance}.}
 
-\item{fw.base.methods}{(\code{character(1)})\cr
-Simple Filter methods for ensemble filters. See \link{listFilterMethods}.
-Can only be used in combination with ensemble filters. See \link{listFilterEnsembleMethods}.}
+\item{fw.base.methods}{(\code{character(1)})\cr Simple Filter methods for ensemble
+filters. See \link{listFilterMethods}. Can only be used in combination with
+ensemble filters. See \link{listFilterEnsembleMethods}.}
 
-\item{fw.perc}{(\code{numeric(1)})\cr
-If set, select \code{fw.perc}*100 top scoring features.
-Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
+\item{fw.perc}{(\code{numeric(1)})\cr If set, select \code{fw.perc}*100 top scoring
+features. Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
 
-\item{fw.abs}{(\code{numeric(1)})\cr
-If set, select \code{fw.abs} top scoring features.
+\item{fw.abs}{(\code{numeric(1)})\cr If set, select \code{fw.abs} top scoring features.
 Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
 
-\item{fw.threshold}{(\code{numeric(1)})\cr
-If set, select features whose score exceeds \code{fw.threshold}.
-Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.}
+\item{fw.threshold}{(\code{numeric(1)})\cr If set, select features whose score
+exceeds \code{fw.threshold}. Mutually exclusive with arguments \code{fw.perc} and
+\code{fw.abs}.}
 
-\item{fw.mandatory.feat}{(\link{character})\cr
-Mandatory features which are always included regardless of their scores}
+\item{fw.mandatory.feat}{(\link{character})\cr Mandatory features which are always
+included regardless of their scores}
 
-\item{cache}{(\code{character(1)} | \link{logical})\cr
-Whether to use caching during filter value creation. See details.}
+\item{cache}{(\code{character(1)} | \link{logical})\cr Whether to use caching during
+filter value creation. See details.}
 
-\item{...}{(any)\cr
-Additional parameters passed down to the filter.}
+\item{...}{(any)\cr Additional parameters passed down to the filter. If you
+are using more than one filter method, you need to pass the arguments in a
+named list via \code{more.args}. For example \code{more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))}.}
 }
 \value{
 \link{Learner}.
 }
 \description{
-Fuses a base learner with a filter method. Creates a learner object, which can be
-used like any other learner object.
-Internally uses \link{filterFeatures} before every model fit.
+Fuses a base learner with a filter method. Creates a learner
+object, which can be used like any other learner object. Internally uses
+\link{filterFeatures} before every model fit.
 
 After training, the selected features can be retrieved with
 \link{getFilteredFeatures}.
 
-Note that observation weights do not influence the filtering and are simply passed
-down to the next learner.
+Note that observation weights do not influence the filtering and are simply
+passed down to the next learner.
 }
 \section{Caching}{
-
-If \code{cache = TRUE}, the default mlr cache directory is used to cache
-filter values. The directory is operating system dependent and can be
-checked with \code{getCacheDir()}.
-Alternatively a custom directory can be passed to store the cache.
-The cache can be cleared with \code{deleteCacheDir()}.
-Caching is disabled by default.
-Care should be taken when operating on large clusters due to possible write
-conflicts to disk if multiple workers try to write the same cache at the same time.
+ If \code{cache = TRUE}, the default mlr cache directory is used
+to cache filter values. The directory is operating system dependent and can
+be checked with \code{getCacheDir()}. Alternatively a custom directory can be
+passed to store the cache. The cache can be cleared with
+\code{deleteCacheDir()}. Caching is disabled by default. Care should be taken
+when operating on large clusters due to possible write conflicts to disk if
+multiple workers try to write the same cache at the same time.
 }
 
 \examples{

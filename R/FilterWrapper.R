@@ -1,48 +1,44 @@
 #' @title Fuse learner with a feature filter method.
 #'
-#' @description
-#' Fuses a base learner with a filter method. Creates a learner object, which can be
-#' used like any other learner object.
-#' Internally uses [filterFeatures] before every model fit.
+#' @description Fuses a base learner with a filter method. Creates a learner
+#' object, which can be used like any other learner object. Internally uses
+#' [filterFeatures] before every model fit.
 #'
 #' After training, the selected features can be retrieved with
 #' [getFilteredFeatures].
 #'
-#' Note that observation weights do not influence the filtering and are simply passed
-#' down to the next learner.
+#' Note that observation weights do not influence the filtering and are simply
+#' passed down to the next learner.
 #'
 #' @template arg_learner
-#' @param fw.method (`character(1)`)\cr
-#'   Filter method. See [listFilterMethods].
+#' @param fw.method (`character(1)`)\cr Filter method. See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC_importance}.
-#' @param fw.base.methods (`character(1)`)\cr
-#'   Simple Filter methods for ensemble filters. See [listFilterMethods].
-#'   Can only be used in combination with ensemble filters. See [listFilterEnsembleMethods].
-#' @param fw.perc (`numeric(1)`)\cr
-#'   If set, select `fw.perc`*100 top scoring features.
-#'   Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
-#' @param fw.abs (`numeric(1)`)\cr
-#'   If set, select `fw.abs` top scoring features.
+#' @param fw.base.methods (`character(1)`)\cr Simple Filter methods for ensemble
+#'   filters. See [listFilterMethods]. Can only be used in combination with
+#'   ensemble filters. See [listFilterEnsembleMethods].
+#' @param fw.perc (`numeric(1)`)\cr If set, select `fw.perc`*100 top scoring
+#'   features. Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
+#' @param fw.abs (`numeric(1)`)\cr If set, select `fw.abs` top scoring features.
 #'   Mutually exclusive with arguments `fw.perc` and `fw.threshold`.
-#' @param fw.threshold (`numeric(1)`)\cr
-#'   If set, select features whose score exceeds `fw.threshold`.
-#'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
-#' @param fw.mandatory.feat ([character])\cr
-#'   Mandatory features which are always included regardless of their scores
-#' @param cache (`character(1)` | [logical])\cr
-#'   Whether to use caching during filter value creation. See details.
-#' @param ... (any)\cr
-#'   Additional parameters passed down to the filter.
+#' @param fw.threshold (`numeric(1)`)\cr If set, select features whose score
+#'   exceeds `fw.threshold`. Mutually exclusive with arguments `fw.perc` and
+#'   `fw.abs`.
+#' @param fw.mandatory.feat ([character])\cr Mandatory features which are always
+#'   included regardless of their scores
+#' @param cache (`character(1)` | [logical])\cr Whether to use caching during
+#'   filter value creation. See details.
+#' @param ... (any)\cr Additional parameters passed down to the filter. If you
+#'   are using more than one filter method, you need to pass the arguments in a
+#'   named list via `more.args`. For example `more.args =
+#'   list("FSelectorRcpp_information.gain" = list(equal = TRUE))`.
 #'
-#' @section Caching:
-#' If `cache = TRUE`, the default mlr cache directory is used to cache
-#' filter values. The directory is operating system dependent and can be
-#' checked with `getCacheDir()`.
-#' Alternatively a custom directory can be passed to store the cache.
-#' The cache can be cleared with `deleteCacheDir()`.
-#' Caching is disabled by default.
-#' Care should be taken when operating on large clusters due to possible write
-#' conflicts to disk if multiple workers try to write the same cache at the same time.
+#' @section Caching: If `cache = TRUE`, the default mlr cache directory is used
+#'   to cache filter values. The directory is operating system dependent and can
+#'   be checked with `getCacheDir()`. Alternatively a custom directory can be
+#'   passed to store the cache. The cache can be cleared with
+#'   `deleteCacheDir()`. Caching is disabled by default. Care should be taken
+#'   when operating on large clusters due to possible write conflicts to disk if
+#'   multiple workers try to write the same cache at the same time.
 #'
 #' @template ret_learner
 #' @export
