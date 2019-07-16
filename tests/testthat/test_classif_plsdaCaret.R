@@ -37,8 +37,6 @@ test_that("classif_plsdaCaret_binary", {
     old.probs.list, parset.list)
 })
 
-
-
 test_that("classif_plsdaCaret_multiclass", {
   requirePackagesOrSkip("caret", default.method = "load")
   parset.list = list(
@@ -72,5 +70,4 @@ test_that("classif_plsdaCaret_multiclass", {
     old.predicts.list, parset.list)
   testProbParsets("classif.plsdaCaret", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list)
-
 })
