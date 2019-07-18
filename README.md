@@ -1,7 +1,7 @@
 # Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)j
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)
 [![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
@@ -17,7 +17,7 @@
 
 * Stackoverflow: [mlr](https://stackoverflow.com/questions/tagged/mlr)
 * [Slack](https://mlr-org.slack.com/)
-* [Blog](https://mlr-org.com/).
+* [Blog](https://mlr-org.com/)
 
 ### Installation
 
@@ -32,7 +32,6 @@ install.packages("mlr")
 ```R
 remotes::install_github("mlr-org/mlr")
 ```
-
 
 # Citing _mlr_ in publications
 Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](http://www.jmlr.org/papers/v17/15-066.bib)].
@@ -59,7 +58,6 @@ The framework provides supervised methods like classification, regression and su
 It is written in a way that you can extend it yourself or deviate from the implemented convenience methods and construct your own complex experiments or algorithms.
 
 Furthermore, the package is nicely connected to the [**OpenML**](https://github.com/openml/openml-r) R package and its [online platform](https://www.openml.org/), which aims at supporting collaborative machine learning online and allows to easily share datasets as well as machine learning tasks, algorithms and experiments in order to support reproducible research.
-
 
 # Features
 
