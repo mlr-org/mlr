@@ -37,6 +37,7 @@
 ## general
 * add option to use fully predefined indices in resampling (`makeResampleDesc(fixed = TRUE)`) (@pat-s, #2412).
 * `Task` help pages are now split into separate ones, e.g. `RegrTask`, `ClassifTask` (@pat-s, #2564)
+* `generateFeatureImportanceData()` gains argument `progress` which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature 
 
 ## functions - new
 * `deleteCacheDir()`: Clear the default mlr cache directory (@pat-s, #2463)
