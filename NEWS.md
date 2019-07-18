@@ -12,6 +12,7 @@
   `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
   (@jakob-r, #1784)
 - `regr.gbm` now supports `quantile distribution` (@bthieurmel, #2603)
+- `classif.plsdaCaret` now supports multiclass classification (@GegznaV, #2621)
 
 ## functions - general
 - `getClassWeightParam()` now also works for Wrapper* Models and ensemble models (@ja-thomas, #891)
