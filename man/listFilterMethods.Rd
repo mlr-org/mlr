@@ -34,6 +34,8 @@ Returns a subset-able dataframe with filter information.
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
+  \code{\link{makeFilterEnsemble}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

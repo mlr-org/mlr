@@ -396,13 +396,17 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">d</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">## FilterValues:</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">## Task: iris-example</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">##           name    type nonsense.filter anova.test</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## 1 Sepal.Length numeric               2  119.26450</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## 2  Sepal.Width numeric               1   49.16004</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## 3 Petal.Length numeric               4 1180.16118</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## 4  Petal.Width numeric               3  960.00715</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d)</a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5">##           name    type          method      value</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">## 3 Petal.Length numeric nonsense.filter    4.00000</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">## 4  Petal.Width numeric nonsense.filter    3.00000</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">## 1 Sepal.Length numeric nonsense.filter    2.00000</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">## 2  Sepal.Width numeric nonsense.filter    1.00000</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## 7 Petal.Length numeric      anova.test 1180.16118</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## 8  Petal.Width numeric      anova.test  960.00715</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## 5 Sepal.Length numeric      anova.test  119.26450</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">## 6  Sepal.Width numeric      anova.test   49.16004</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d)</a></code></pre></div>
 <p><img src="create_filter_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris.task.filtered =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"nonsense.filter"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">iris.task.filtered</a>

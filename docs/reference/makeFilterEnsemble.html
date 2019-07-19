@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Site Verification -->
 <meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
-<title>Plot filter values using ggplot2. — plotFilterValues • mlr</title>
+<title>Create an ensemble feature filter. — makeFilterEnsemble • mlr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,9 +28,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Plot filter values using ggplot2. — plotFilterValues" />
+<meta property="og:title" content="Create an ensemble feature filter. — makeFilterEnsemble" />
 
-<meta property="og:description" content="Plot filter values using ggplot2." />
+<meta property="og:description" content="Creates and registers custom ensemble feature filters. Implemented ensemble filters
+can be listed with listFilterEnsembleMethods. Additional
+documentation for the fun parameter specific to each filter can
+be found in the description." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -298,57 +301,52 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot filter values using ggplot2.</h1>
-    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateFilterValues.R'><code>R/generateFilterValues.R</code></a></small>
+    <h1>Create an ensemble feature filter.</h1>
+    <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FilterEnsemble.R'><code>R/FilterEnsemble.R</code></a></small>
     </div>
 
     
-    <p>Plot filter values using ggplot2.</p>
+    <p>Creates and registers custom ensemble feature filters. Implemented ensemble filters
+can be listed with <a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>. Additional
+documentation for the <code>fun</code> parameter specific to each filter can
+be found in the description.</p>
     
 
-    <pre class="usage"><span class='fu'>plotFilterValues</span>(<span class='no'>fvalues</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='st'>"dec"</span>, <span class='kw'>n.show</span> <span class='kw'>=</span> <span class='fl'>20L</span>,
-  <span class='kw'>feat.type.cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>facet.wrap.nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>facet.wrap.ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>makeFilterEnsemble</span>(<span class='no'>name</span>, <span class='no'>base.methods</span>, <span class='no'>desc</span>, <span class='no'>fun</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fvalues</th>
-      <td><p>(<a href='generateFilterValuesData.html'>FilterValues</a>)<br />
-Filter values.</p></td>
-    </tr>
-    <tr>
-      <th>sort</th>
+      <th>name</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Sort features like this.
-&#8220;dec&#8221; = decreasing, &#8220;inc&#8221; = increasing, &#8220;none&#8221; = no sorting.
-Default is decreasing.</p></td>
+Identifier for the filter.</p></td>
     </tr>
     <tr>
-      <th>n.show</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
-Number of features (maximal) to show.
-Default is 20.</p></td>
+      <th>base.methods</th>
+      <td><p>the base filter methods which the ensemble method
+will use.</p></td>
     </tr>
     <tr>
-      <th>feat.type.cols</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
-Colors for factor and numeric features.
-<code>FALSE</code> means no colors.
-Default is <code>FALSE</code>.</p></td>
+      <th>desc</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+Short description of the filter.</p></td>
     </tr>
     <tr>
-      <th>facet.wrap.nrow, facet.wrap.ncol</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
-Number of rows and columns for facetting. Default for both is <code>NULL</code>.
-In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p></td>
+      <th>fun</th>
+      <td><p>(<code>function(task, nselect, ...</code>)<br />
+Function which takes a task and returns a named numeric vector of scores,
+one score for each feature of <code>task</code>.
+Higher scores mean higher importance of the feature.
+At least <code>nselect</code> features must be calculated, the remaining may be
+set to <code>NA</code> or omitted, and thus will not be selected.
+the original order will be restored if necessary.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot2 plot object.</p>
+    <p>Object of class &#8220;FilterEnsemble&#8221;.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -357,20 +355,10 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
   <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>, <code><a href='makeFilter.html'>makeFilter</a></code></p>
-<p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
-  <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
-  <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code></p></div>
+  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
+  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fv</span> <span class='kw'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"variance"</span>)
-<span class='fu'>plotFilterValues</span>(<span class='no'>fv</span>)</div><div class='img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -380,9 +368,7 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

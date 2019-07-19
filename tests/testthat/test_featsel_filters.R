@@ -19,11 +19,10 @@ test_that("filterFeatures", {
     filterFeatures(task = regr.num.task, method = filter, perc = 0.5)
   }
 
-  # extra test of univariate filter
   fv = generateFilterValuesData(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
     perf.learner = makeLearner("classif.rpart"), measures = mmce)
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
+  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test of the permutation.importance filter
   fv = generateFilterValuesData(task = multiclass.task, method = "permutation.importance",
@@ -33,13 +32,13 @@ test_that("filterFeatures", {
     aggregation = median,
     nmc = 2L)
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
+  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test for rf.min.depth filter (#1066)
   fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rf.min.depth",
     more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
+  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test for auc filter (two class dataset)
   toy.data = data.frame(
@@ -53,6 +52,6 @@ test_that("filterFeatures", {
 
   fv = generateFilterValuesData(toy.task, method = "auc")
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data$auc, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(toy.task))
-  expect_equal(fv$data$auc, c(0.25, 0.25, 0.5, 0.5, 0.125))
+  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(toy.task))
+  expect_equal(fv$data$value, c(0.25, 0.25, 0.5, 0.5, 0.125))
 })

@@ -271,6 +271,32 @@ test_that("drop option works for BenchmarkResults_operators", {
     wrapper.class = "cl")
 })
 
+test_that("benchmark works with ensemble filters", {
+  lrn = makeLearner("classif.ksvm")
+  lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
+    fw.base.methods = c("anova.test", "variance"))
+
+  par.set = makeParamSet(
+    makeNumericParam("C", lower = -2, upper = 2,
+      trafo = function(x) 2^x),
+    makeNumericParam("sigma", lower = -2, upper = 2,
+      trafo = function(x) 2^x),
+    makeNumericParam("fw.perc", lower = 0, upper = 1)
+  )
+
+  task.names = c("binary", "multiclass")
+  tasks = list(binaryclass.task, multiclass.task)
+  rin = makeResampleDesc("CV", iters = 2L)
+  tune_ctrl = makeTuneControlRandom(maxit = 3)
+
+  tune_wrapper_svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
+    control = tune_ctrl, show.info = FALSE,
+    measures = list(acc))
+
+  expect_class(benchmark(learners = tune_wrapper_svm, task = tasks,
+    resampling = rin, measures = list(acc)), "BenchmarkResult"
+  )
+})
 test_that("benchmark handles failure models correctly", {
 
   # Define task

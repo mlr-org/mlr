@@ -1,7 +1,12 @@
 # mlr 2.14.0.9000
 
+## Breaking
+
+- Instead of a wide `data.frame` filter values are now returned in a long (tidy) `tibble`. This makes it easier to apply post-processing methods (like `group_by()`, etc) (@pat-s, #2456)
+
 ## functions - general
-* `generateFeatureImportanceData()` gains argument `show.info` which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (@pat-s, #26222)
+
+- `generateFeatureImportanceData()` gains argument `show.info` which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (@pat-s, #26222)
 
 ## learners - general
 
@@ -35,6 +40,14 @@
 ## filters - general
 
 - Filter `praznik_mrmr` also supports `regr` and `surv` tasks
+- `getFilterValuesData()` now returns a `tbl` instead of a `data.frame`. (@pat-s, #2456)
+- `plotFilterValues()` got a bit "smarter" and easier now regarding the ordering of multiple facets. (@pat-s, #2456)
+- `filterFeatures()`, `generateFilterValuesData()` and `makeFilterWrapper()` gained new examples. (@pat-s, #2456)
+
+## filters - new
+
+- Ensemble features are now supported. These filters combine multiple single filters to create a final ranking based on certain statistical operations. All new filters are listed in a dedicated section "ensemble filters" in the [tutorial](https://mlr.mlr-org.com/articles/tutorial/filter_methods.html).
+Tuning of simple features is not supported yet because of a [missing feature](https://github.com/berndbischl/ParamHelpers/pull/206) in _ParamHelpers_. (@pat-s, #2456)
 
 # mlr 2.14.0
 

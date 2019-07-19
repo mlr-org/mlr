@@ -25,6 +25,10 @@
 #'   Mutually exclusive with arguments `perc` and `abs`.
 #' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
+#' @param select.method If multiple methods are supplied in argument `method`,
+#'   specify the method that is used for the final subsetting.
+#' @param base.methods If `method` is an ensemble filter, specify the base
+#'   filter methods which the ensemble method will use.
 #' @param cache (`character(1)` | [logical])\cr
 #'   Whether to use caching during filter value creation. See details.
 #' @param ... (any)\cr
@@ -41,14 +45,43 @@
 #' computation on many systems, but there is no guarantee.
 #'
 #' @template ret_task
-#' @export
 #' @family filter
+#'
+#' @section Simple and ensemble filters:
+#'
+#' Besides passing (multiple) simple filter methods you can also pass an ensemble
+#' filter method (in a list). The ensemble method will use the simple methods to
+#' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
+#'
+#' @examples
+#' # simple filter
+#' filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
+#' # ensemble filter
+#' filterFeatures(iris.task, method = "E-min",
+#'   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
+#' @export
 filterFeatures = function(task, method = "randomForestSRC_importance", fval = NULL,
   perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
-  cache = FALSE, ...) {
+  select.method = NULL, base.methods = NULL, cache = FALSE, ...) {
 
   assertClass(task, "SupervisedTask")
-  assertChoice(method, choices = ls(.FilterRegister))
+
+  # base.methods arrive here in a list when called from 'tuneParams'.
+  # we need them as a chr vec for further proc, so transforming
+  if (is.list(base.methods)) {
+    base.methods = as.character(base.methods)
+  }
+
+  assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
+
+  # if an ensemble method is not passed as a list but via 'base.methods' + 'method'
+  if (method %in% ls(.FilterEnsembleRegister) && !is.null(base.methods)) {
+    if (length(base.methods) == 1) {
+      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+    }
+    method = list(method, base.methods)
+  }
+
   select = checkFilterArguments(perc, abs, threshold)
   p = getTaskNFeats(task)
   nselect = switch(select,
@@ -59,6 +92,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
   # Caching implementation: @pat-s, Nov 2018
   if (is.null(fval)) {
+
     if (!isFALSE(cache)) {
       requirePackages("memoise", why = "caching of filter features", default.method = "load")
 
@@ -91,7 +125,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
       method = fval$method
       fval = fval$data[, c(1, 3, 2)]
     } else {
-      methods = colnames(fval$data[, -which(colnames(fval$data) %in% c("name", "type")), drop = FALSE])
+      methods = unique(fval$data$method)
       if (length(methods) > 1) {
         assert(method %in% methods)
       } else {
@@ -101,7 +135,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     }
   }
 
-  if (all(is.na(fval[[method]]))) {
+  if (all(is.na(fval$value))) {
     stopf("Filter method returned all NA values!")
   }
 
@@ -114,12 +148,37 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
       stop("The number of features to be filtered cannot be smaller than the number of mandatory features.")
     }
     # Set the the filter values of the mandatory features to infinity to always select them
-    fval[fval$name %in% mandatory.feat, method] = Inf
+    fval[fval$name %in% mandatory.feat, "value"] = Inf
   }
   if (select == "threshold") {
-    nselect = sum(fval[[method]] >= threshold, na.rm = TRUE)
+    nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
   }
-  features = as.character(head(sortByCol(fval, method, asc = FALSE)$name, nselect))
+  # in case multiple filters have been calculated, choose which ranking is used
+  # for the final subsetting
+  if (length(levels(as.factor(fval$method))) >= 2) {
+    # if 'method' is an ensemble method, we always choose the ensemble method
+    # unless select.method is specified specifically. Method[[1]] should usually
+    # be the ensemble method
+    if (is.null(select.method) && !method[[1]] %in% ls(.FilterEnsembleRegister)) {
+      stopf("You supplied multiple filters. Please choose which should be used for the final subsetting of the features.")
+    }
+    if (is.null(select.method)) {
+      fval = fval[fval$method == fval$method, ]
+    } else {
+      assertSubset(select.method, choices = unique(fval$method))
+      fval = fval[fval$method == select.method, ]
+    }
+  }
+  if (nselect > 0L) {
+
+    # order by method and (desc(value))
+    features = fval[with(fval, order(method, -value)), ]
+    # select names of top n
+    features = features[1:nselect, ]$name
+
+  } else {
+    features = NULL
+  }
   allfeats = getTaskFeatureNames(task)
   j = match(features, allfeats)
   features = allfeats[sort(j)]

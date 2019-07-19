@@ -4,8 +4,10 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use [listFilterMethods].
 #' @template arg_task
-#' @param method ([character])\cr
-#'   Filter method(s), see above.
+#' @param method ([character] | [list])\cr
+#'   Filter method(s).
+#'   In case of ensemble filters the `list` notation needs to be used.
+#'   See the examples for more information.
 #'   Default is \dQuote{randomForestSRC_importance}.
 #' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
@@ -19,7 +21,7 @@
 #' @return ([FilterValues]). A `list` containing:
 #'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
-#'   \item{data}{([data.frame]) with columns:
+#'   \item{data}{(`data.frame`) with columns:
 #'     \itemize{
 #'       \item `name`([character])\cr
 #'         Name of feature.
@@ -28,16 +30,47 @@
 #'       \item `method`([numeric])\cr
 #'         One column for each method with the feature importance values.
 #'     }}
+#'
+#' @section Simple and ensemble filters:
+#'
+#' Besides passing (multiple) simple filter methods you can also pass an ensemble
+#' filter method (in a list). The ensemble method will use the simple methods to
+#' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
+#'
 #' @family generate_plot_data
 #' @family filter
 #' @aliases FilterValues
+#' @examples
+#' # two simple filter methods
+#' fval = generateFilterValuesData(iris.task,
+#'   method = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"))
+#' # using ensemble method "E-mean"
+#' fval = generateFilterValuesData(iris.task,
+#'   method = list("E-mean", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC_importance",
-  nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC_importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
 
+  # define for later checks
+  ens.method = NULL
+
+  # ensemble
+  if (class(method) == "list") {
+    ens.method = method[[1]]
+    method = method[[2]]
+    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
+    if (length(method) == 1) {
+      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+    }
+  }
+
+  assertSubset(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
+  filter = lapply(method, function(x) .FilterRegister[[x]])
+  if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg))))) {
+    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+  }
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
-  assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDesc(task)
+
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (any(sapply(filter, function(x) length(x$pkg) > 0))) {
     pkgs = unlist(lapply(filter, function(x) x$pkg))
@@ -76,21 +109,40 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
   fn = getTaskFeatureNames(task)
 
-  fval = do.call(filter[[1]]$fun, c(list(task = task, nselect = nselect), more.args[[filter[[1]]$name]]))
+  if (!is.null(ens.method)) {
 
-  fval = lapply(filter, function(x) {
-    x = do.call(x$fun, c(list(task = task), nselect = nselect, more.args[[x$name]]))
-    missing.score = setdiff(fn, names(x))
-    x[missing.score] = NA_real_
-    x[match(fn, names(x))]
-  })
+    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
 
-  fval = do.call(cbind, fval)
-  colnames(fval) = method
-  types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
-  out = data.frame(name = row.names(fval),
-    type = types,
-    fval, row.names = NULL, stringsAsFactors = FALSE)
+    filter = lapply(ens.method, function(x) .FilterEnsembleRegister[[x]])
+
+    out = lapply(filter, function(x) {
+      x = do.call(x$fun, c(list(task = task, nselect = nselect,
+        base.methods = method, more.args = more.args)))
+    })
+
+    if (length(out) == 1) {
+      out = out[[1]]
+    }
+
+  } else {
+    fval = lapply(filter, function(x) {
+      x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
+      missing.score = setdiff(fn, names(x))
+      x[missing.score] = NA_real_
+      x[match(fn, names(x))]
+    })
+    fval = do.call(cbind, fval)
+    colnames(fval) = method
+    types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
+
+    out = data.frame(name = row.names(fval),
+      type = types, fval, row.names = NULL, stringsAsFactors = FALSE)
+
+    # variable.factor = FALSE has no effect
+    out = melt(out, value.name = "value", measure.vars = method,
+      variable.name = "method")
+  }
+
   makeS3Obj("FilterValues",
     task.desc = td,
     data = out)
@@ -99,9 +151,8 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  printHead(x$data, ...)
+  print(x$data[with(x$data, order(method, -value)), ])
 }
-
 #' Plot filter values using ggplot2.
 #'
 #' @family filter
@@ -134,25 +185,21 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     stop("fvalues must be generated by generateFilterValuesData, not getFilterValues, which is deprecated.")
   }
 
-  n.show = asCount(n.show)
-
   data = fvalues$data
   methods = colnames(data[, -which(colnames(data) %in% c("name", "type")), drop = FALSE])
-  n.show = min(n.show, max(sapply(methods, function(x) sum(!is.na(data[[x]])))))
-  data = melt(as.data.table(data), id.vars = c("name", "type"), variable = "method")
 
-  if (sort != "none") {
-    sort.mult = if (sort == "inc") 1 else -1
-    setorderv(data, "value", sort.mult)
-    data = data[get("method") %in% methods, head(.SD, n.show), by = "method"]
-  }
-
-  data$name = factor(data$name, levels = as.character(unique(data$name)))
-  if (feat.type.cols) {
-    mp = aes_string(x = "name", y = "value", fill = "type")
-  } else {
+  if (sort == "none") {
     mp = aes_string(x = "name", y = "value")
+  } else if (sort == "dec") {
+    mp = aes_string(x = paste0("reorder(name, -value)"), y = "value")
+  } else if (sort == "inc") {
+    mp = aes_string(x = paste0("reorder(name, value)"), y = "value")
   }
+
+  if (feat.type.cols) {
+    mp = mp$fill = "type"
+  }
+
   plt = ggplot(data = data, mapping = mp)
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
@@ -166,7 +213,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
       fvalues$task.desc$id,
       sum(fvalues$task.desc$n.feat),
-      methods),
+      data$method),
     x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))

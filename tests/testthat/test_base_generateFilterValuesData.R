@@ -10,35 +10,35 @@ test_that("filterFeatures", {
   expect_equal(f, binaryclass.task)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task))
-  expect_data_frame(feat.imp.old$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
 
   feat.imp.new = suppressWarnings(generateFilterValuesData(binaryclass.task))
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC_importance"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "method", "value"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
-  expect_data_frame(feat.imp.old$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
-  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "variance", asc = FALSE), 5L)$name))
+  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
   ff = filterFeatures(binaryclass.task, fval = feat.imp.old, abs = 5L)
   expect_equal(f, ff)
 
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "variance"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "method", "value"))
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
-    head(sortByCol(feat.imp.new$data, "variance", asc = FALSE), 5L)$name))
+    head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
@@ -78,7 +78,7 @@ test_that("plotFilterValues", {
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
+  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(120))
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
 
   # facetting works:
@@ -107,10 +107,10 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
   f3 = generateFilterValuesData(task, method = "variance", more.args = list(variance = list(na.rm = TRUE)))
   f4 = generateFilterValuesData(task, method = c("univariate.model.score", "variance"), more.args = list(variance = list(na.rm = TRUE)))
 
-  expect_true(is.na(f1$data$variance[1L]))
-  expect_false(is.na(f2$data$variance[1L]))
-  expect_false(is.na(f3$data$variance[1L]))
-  expect_false(is.na(f4$data$variance[1L]))
+  expect_true(is.na(f1$data$value[1L]))
+  expect_false(is.na(f2$data$value[1L]))
+  expect_false(is.na(f3$data$value[1L]))
+  expect_false(is.na(f4$data$value[1L]))
 })
 
 test_that("errors for unsupported task and feature types", {
@@ -125,6 +125,7 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
     "mock.filter",
     desc = "Mock Filter",
     pkg = character(0),
+
     supported.tasks = c("classif", "regr", "surv"),
     supported.features = c("numerics", "factors"),
     fun = function(task, nselect) {
@@ -136,11 +137,16 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
     })
   fv = generateFilterValuesData(regr.task, method = "mock.filter")
   expect_equal(fv$data$name, ns)
-  expect_equal(fv$data$mock.filter, seq_along(ns))
+  expect_equal(fv$data$value, seq_along(ns))
   rm("mock.filter", envir = mlr:::.FilterRegister)
 })
 
 test_that("filter method 'variance' works with missing values", {
   fi = generateFilterValuesData(regr.na.num.task, method = "variance")
-  expect_false(anyMissing(fi$data$variance))
+  expect_false(anyMissing(fi$data$value))
+})
+
+test_that("ensemble methods work", {
+  fi = generateFilterValuesData(multiclass.task, method = list("E-min", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
+  expect_true(all(!is.na(fi$data$value) == TRUE))
 })

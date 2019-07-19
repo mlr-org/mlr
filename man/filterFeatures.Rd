@@ -6,7 +6,8 @@
 \usage{
 filterFeatures(task, method = "randomForestSRC_importance",
   fval = NULL, perc = NULL, abs = NULL, threshold = NULL,
-  mandatory.feat = NULL, cache = FALSE, ...)
+  mandatory.feat = NULL, select.method = NULL, base.methods = NULL,
+  cache = FALSE, ...)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -37,6 +38,12 @@ Mutually exclusive with arguments \code{perc} and \code{abs}.}
 \item{mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
 
+\item{select.method}{If multiple methods are supplied in argument \code{method},
+specify the method that is used for the final subsetting.}
+
+\item{base.methods}{If \code{method} is an ensemble filter, specify the base
+filter methods which the ensemble method will use.}
+
 \item{cache}{(\code{character(1)} | \link{logical})\cr
 Whether to use caching during filter value creation. See details.}
 
@@ -62,10 +69,27 @@ Note that caching is not thread safe. It will work for parallel
 computation on many systems, but there is no guarantee.
 }
 
+\section{Simple and ensemble filters}{
+
+
+Besides passing (multiple) simple filter methods you can also pass an ensemble
+filter method (in a list). The ensemble method will use the simple methods to
+calculate its ranking. See \code{listFilterEnsembleMethods()} for available ensemble methods.
+}
+
+\examples{
+# simple filter
+filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
+# ensemble filter
+filterFeatures(iris.task, method = "E-min",
+  base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
+}
 \seealso{
 Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
   \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

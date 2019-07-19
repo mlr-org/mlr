@@ -30,13 +30,13 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Fuse learner with a feature filter method. — makeFilterWrapper" />
 
-<meta property="og:description" content="Fuses a base learner with a filter method. Creates a learner object, which can be
-used like any other learner object.
-Internally uses filterFeatures before every model fit.
+<meta property="og:description" content="Fuses a base learner with a filter method. Creates a learner
+object, which can be used like any other learner object. Internally uses
+filterFeatures before every model fit.
 After training, the selected features can be retrieved with
 getFilteredFeatures.
-Note that observation weights do not influence the filtering and are simply passed
-down to the next learner." />
+Note that observation weights do not influence the filtering and are simply
+passed down to the next learner." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -309,18 +309,18 @@ down to the next learner." />
     </div>
 
     
-    <p>Fuses a base learner with a filter method. Creates a learner object, which can be
-used like any other learner object.
-Internally uses <a href='filterFeatures.html'>filterFeatures</a> before every model fit.</p>
+    <p>Fuses a base learner with a filter method. Creates a learner
+object, which can be used like any other learner object. Internally uses
+<a href='filterFeatures.html'>filterFeatures</a> before every model fit.</p>
 <p>After training, the selected features can be retrieved with
 <a href='getFilteredFeatures.html'>getFilteredFeatures</a>.</p>
-<p>Note that observation weights do not influence the filtering and are simply passed
-down to the next learner.</p>
+<p>Note that observation weights do not influence the filtering and are simply
+passed down to the next learner.</p>
     
 
     <pre class="usage"><span class='fu'>makeFilterWrapper</span>(<span class='no'>learner</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fw.mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>fw.base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fw.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -333,42 +333,46 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
     </tr>
     <tr>
       <th>fw.method</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
 Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
+      <th>fw.base.methods</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Simple Filter methods for ensemble
+filters. See <a href='listFilterMethods.html'>listFilterMethods</a>. Can only be used in combination with
+ensemble filters. See <a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>.</p></td>
+    </tr>
+    <tr>
       <th>fw.perc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-If set, select <code>fw.perc</code>*100 top scoring features.
-Mutually exclusive with arguments <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br /> If set, select <code>fw.perc</code>*100 top scoring
+features. Mutually exclusive with arguments <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.abs</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-If set, select <code>fw.abs</code> top scoring features.
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br /> If set, select <code>fw.abs</code> top scoring features.
 Mutually exclusive with arguments <code>fw.perc</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.threshold</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-If set, select features whose score exceeds <code>fw.threshold</code>.
-Mutually exclusive with arguments <code>fw.perc</code> and <code>fw.abs</code>.</p></td>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br /> If set, select features whose score
+exceeds <code>fw.threshold</code>. Mutually exclusive with arguments <code>fw.perc</code> and
+<code>fw.abs</code>.</p></td>
     </tr>
     <tr>
       <th>fw.mandatory.feat</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
-Mandatory features which are always included regardless of their scores</p></td>
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br /> Mandatory features which are always
+included regardless of their scores</p></td>
     </tr>
     <tr>
       <th>cache</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
-Whether to use caching during filter value creation. See details.</p></td>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br /> Whether to use caching during
+filter value creation. See details.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>(any)<br />
-Additional parameters passed down to the filter.</p></td>
+      <td><p>(any)<br /> Additional parameters passed down to the filter. If you
+are using more than one filter method, you need to pass the arguments in a
+named list via <code>more.args</code>. For example <code>more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))</code>.</p></td>
     </tr>
     </table>
     
@@ -378,47 +382,23 @@ Additional parameters passed down to the filter.</p></td>
     
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
-    
-    <p>If <code>cache = TRUE</code>, the default mlr cache directory is used to cache
-filter values. The directory is operating system dependent and can be
-checked with <code><a href='cache_helpers.html'>getCacheDir()</a></code>.
-Alternatively a custom directory can be passed to store the cache.
-The cache can be cleared with <code><a href='cache_helpers.html'>deleteCacheDir()</a></code>.
-Caching is disabled by default.
-Care should be taken when operating on large clusters due to possible write
-conflicts to disk if multiple workers try to write the same cache at the same time.</p>
+    <p>If <code>cache = TRUE</code>, the default mlr cache directory is used
+to cache filter values. The directory is operating system dependent and can
+be checked with <code><a href='cache_helpers.html'>getCacheDir()</a></code>. Alternatively a custom directory can be
+passed to store the cache. The cache can be cleared with
+<code><a href='cache_helpers.html'>deleteCacheDir()</a></code>. Caching is disabled by default. Care should be taken
+when operating on large clusters due to possible write conflicts to disk if
+multiple workers try to write the same cache at the same time.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
   <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
+  <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
-<p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
-  <code><a href='makeClassificationViaRegressionWrapper.html'>makeClassificationViaRegressionWrapper</a></code>,
-  <code><a href='makeConstantClassWrapper.html'>makeConstantClassWrapper</a></code>,
-  <code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a></code>,
-  <code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a></code>,
-  <code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a></code>,
-  <code><a href='makeDummyFeaturesWrapper.html'>makeDummyFeaturesWrapper</a></code>,
-  <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a></code>,
-  <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code>,
-  <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>,
-  <code><a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a></code>,
-  <code><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a></code>,
-  <code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a></code>,
-  <code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a></code>,
-  <code><a href='makeMultilabelNestedStackingWrapper.html'>makeMultilabelNestedStackingWrapper</a></code>,
-  <code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a></code>,
-  <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
-  <code><a href='makePreprocWrapperCaret.html'>makePreprocWrapperCaret</a></code>,
-  <code><a href='makePreprocWrapper.html'>makePreprocWrapper</a></code>,
-  <code><a href='makeRemoveConstantFeaturesWrapper.html'>makeRemoveConstantFeaturesWrapper</a></code>,
-  <code><a href='makeSMOTEWrapper.html'>makeSMOTEWrapper</a></code>,
-  <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
-  <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
-  <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
+  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
+  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -431,6 +411,19 @@ conflicts to disk if multiple workers try to write the same cache at the same ti
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
 })</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "Petal.Length" "Petal.Width" 
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "Petal.Length" "Petal.Width" 
+#&gt; </div><div class='input'>
+<span class='co'># usage of an ensemble filter</span>
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFilterWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"E-Borda"</span>,
+  <span class='kw'>fw.base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>),
+  <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
+  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "Petal.Length" "Petal.Width" 
 #&gt; 
 #&gt; [[2]]
