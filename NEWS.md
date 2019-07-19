@@ -1,7 +1,7 @@
 # mlr 2.14.0.9000
 
 ## functions - general
-* `generateFeatureImportanceData()` gains argument `progress` which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (@pat-s, #26222)
+* `generateFeatureImportanceData()` gains argument `show.info` which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (@pat-s, #26222)
 
 ## learners - general
 

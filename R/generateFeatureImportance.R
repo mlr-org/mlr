@@ -41,7 +41,7 @@
 #' @param local (`logical(1)`)\cr
 #'   Whether to compute the per-observation importance.
 #'   The default is `FALSE`.
-#' @param progress (`logical(1)`)\cr
+#' @param show.info (`logical(1)`)\cr
 #'   Whether progress output (feature name, time elapsed) should be displayed.
 #'
 #' @return (`FeatureImportance`). A named list which contains the computed feature importance and the input arguments.
@@ -85,7 +85,7 @@
 generateFeatureImportanceData = function(task, method = "permutation.importance",
   learner, features = getTaskFeatureNames(task), interaction = FALSE, measure,
   contrast = function(x, y) x - y, aggregation = mean, nmc = 50L, replace = TRUE,
-  local = FALSE, progress = FALSE) {
+  local = FALSE, show.info = FALSE) {
 
   learner = checkLearner(learner)
   measure = checkMeasures(measure, learner)
@@ -113,7 +113,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
 
   out = switch(method,
     "permutation.importance" = doPermutationImportance(
-      task, learner, features, interaction, measure, contrast, aggregation, nmc, replace, local, progress)
+      task, learner, features, interaction, measure, contrast, aggregation, nmc, replace, local, show.info)
   )
 
   makeS3Obj(
@@ -132,7 +132,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
 }
 
 doPermutationImportance = function(task, learner, features, interaction, measure,
-  contrast, aggregation, nmc, replace, local, progress) {
+  contrast, aggregation, nmc, replace, local, show.info) {
 
   ## train learner to get baseline performance
   fit = train(learner, task)
@@ -200,11 +200,11 @@ doPermutationImportance = function(task, learner, features, interaction, measure
     out = as.data.frame(out)
     colnames(out) = stri_paste(features, collapse = ":")
   } else {
-    if (isTRUE(progress)) {
+    if (isTRUE(show.info)) {
       time = Sys.time()
     }
     out = lapply(features, function(x) {
-      if (isTRUE(progress)) {
+      if (isTRUE(show.info)) {
         cat(sprintf("Feature: '%s' [%s/%s, %s min]\n", x, match(x, features),
           length(features), round(difftime(Sys.time(), time, units = "mins"), 2)))
       }
