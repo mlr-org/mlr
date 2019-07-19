@@ -325,25 +325,24 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">fv</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">## FilterValues:</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">## Task: iris-example</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">##           name    type FSelectorRcpp_information.gain</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">## 1 Sepal.Length numeric                      0.4521286</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">## 2  Sepal.Width numeric                      0.2672750</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">## 3 Petal.Length numeric                      0.9402853</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">## 4  Petal.Width numeric                      0.9554360</a></code></pre></div>
+<a class="sourceLine" id="cb1-5" data-line-number="5">##           name    type                         method     value</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a></code></pre></div>
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">fv2<span class="op">$</span>data</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">##           name    type FSelectorRcpp_information.gain</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## 1 Sepal.Length numeric                      0.4521286</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">## 2  Sepal.Width numeric                      0.2672750</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">## 3 Petal.Length numeric                      0.9402853</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">## 4  Petal.Width numeric                      0.9554360</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">##   FSelector_chi.squared</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">## 1             0.6288067</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## 2             0.4922162</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## 3             0.9346311</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## 4             0.9432359</a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4">##           name    type                         method     value</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">## 5 Sepal.Length numeric          FSelector_chi.squared 0.6288067</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## 6  Sepal.Width numeric          FSelector_chi.squared 0.4922162</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## 7 Petal.Length numeric          FSelector_chi.squared 0.9346311</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 8  Petal.Width numeric          FSelector_chi.squared 0.9432359</a></code></pre></div>
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubr</a></span>()</a></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>

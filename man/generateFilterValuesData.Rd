@@ -12,8 +12,10 @@ generateFilterValuesData(task, method = "randomForestSRC_importance",
 \item{task}{(\link{Task})\cr
 The task.}
 
-\item{method}{(\link{character})\cr
-Filter method(s), see above.
+\item{method}{(\link{character} | \link{list})\cr
+Filter method(s).
+In case of ensemble filters the \code{list} notation needs to be used.
+See the examples for more information.
 Default is \dQuote{randomForestSRC_importance}.}
 
 \item{nselect}{(\code{integer(1)})\cr
@@ -32,7 +34,7 @@ Default is empty list.}
 (\link{FilterValues}). A \code{list} containing:
 \item{task.desc}{[\link{TaskDesc})\cr
 Task description.}
-\item{data}{(\link{data.frame}) with columns:
+\item{data}{(\code{data.frame}) with columns:
 \itemize{
 \item \code{name}(\link{character})\cr
 Name of feature.
@@ -46,6 +48,22 @@ One column for each method with the feature importance values.
 Calculates numerical filter values for features.
 For a list of features, use \link{listFilterMethods}.
 }
+\section{Simple and ensemble filters}{
+
+
+Besides passing (multiple) simple filter methods you can also pass an ensemble
+filter method (in a list). The ensemble method will use the simple methods to
+calculate its ranking. See \code{listFilterEnsembleMethods()} for available ensemble methods.
+}
+
+\examples{
+# two simple filter methods
+fval = generateFilterValuesData(iris.task,
+  method = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"))
+# using ensemble method "E-mean"
+fval = generateFilterValuesData(iris.task,
+  method = list("E-mean", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
+}
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
@@ -57,7 +75,9 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
 
 Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
   \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

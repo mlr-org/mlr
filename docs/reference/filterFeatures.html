@@ -310,7 +310,8 @@ Features are then selected via <code>select</code> and <code>val</code>.</p>
 
     <pre class="usage"><span class='fu'>filterFeatures</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
   <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>select.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -358,6 +359,16 @@ Mutually exclusive with arguments <code>perc</code> and <code>abs</code>.</p></t
 Mandatory features which are always included regardless of their scores</p></td>
     </tr>
     <tr>
+      <th>select.method</th>
+      <td><p>If multiple methods are supplied in argument <code>method</code>,
+specify the method that is used for the final subsetting.</p></td>
+    </tr>
+    <tr>
+      <th>base.methods</th>
+      <td><p>If <code>method</code> is an ensemble filter, specify the base
+filter methods which the ensemble method will use.</p></td>
+    </tr>
+    <tr>
       <th>cache</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
 Whether to use caching during filter value creation. See details.</p></td>
@@ -384,15 +395,57 @@ Alternatively, a custom directory can be passed to store the cache.</p>
 <p>Note that caching is not thread safe. It will work for parallel
 computation on many systems, but there is no guarantee.</p>
     
+    <h2 class="hasAnchor" id="simple-and-ensemble-filters"><a class="anchor" href="#simple-and-ensemble-filters"></a>Simple and ensemble filters</h2>
+
+    
+    <p>Besides passing (multiple) simple filter methods you can also pass an ensemble
+filter method (in a list). The ensemble method will use the simple methods to
+calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
+  <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
+  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
   <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
   <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># simple filter</span>
+<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
+#&gt; Type: classif
+#&gt; Target: Species
+#&gt; Observations: 150
+#&gt; Features:
+#&gt;    numerics     factors     ordered functionals 
+#&gt;           2           0           0           0 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
+#&gt; Has coordinates: FALSE
+#&gt; Classes: 3
+#&gt;     setosa versicolor  virginica 
+#&gt;         50         50         50 
+#&gt; Positive class: NA</div><div class='input'><span class='co'># ensemble filter</span>
+<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"E-min"</span>,
+  <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>), <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
+#&gt; Type: classif
+#&gt; Target: Species
+#&gt; Observations: 150
+#&gt; Features:
+#&gt;    numerics     factors     ordered functionals 
+#&gt;           2           0           0           0 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
+#&gt; Has coordinates: FALSE
+#&gt; Classes: 3
+#&gt;     setosa versicolor  virginica 
+#&gt;         50         50         50 
+#&gt; Positive class: NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -403,8 +456,12 @@ computation on many systems, but there is no guarantee.</p>
 
       <li><a href="#caching">Caching</a></li>
 
+      <li><a href="#simple-and-ensemble-filters">Simple and ensemble filters</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

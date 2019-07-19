@@ -321,8 +321,10 @@ The task.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
-Filter method(s), see above.
+      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a> | <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+Filter method(s).
+In case of ensemble filters the <code>list</code> notation needs to be used.
+See the examples for more information.
 Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
@@ -350,7 +352,7 @@ Default is empty list.</p></td>
     <p>(FilterValues). A <code>list</code> containing:</p>
 <dt>task.desc</dt><dd><p>[<a href='TaskDesc.html'>TaskDesc</a>)<br />
 Task description.</p></dd>
-<dt>data</dt><dd><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>) with columns:
+<dt>data</dt><dd><p>(<code>data.frame</code>) with columns:
 <ul>
 <li><p><code>name</code>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
 Name of feature.</p></li>
@@ -360,6 +362,13 @@ Feature column type.</p></li>
 One column for each method with the feature importance values.</p></li>
 </ul></p></dd>
 
+    
+    <h2 class="hasAnchor" id="simple-and-ensemble-filters"><a class="anchor" href="#simple-and-ensemble-filters"></a>Simple and ensemble filters</h2>
+
+    
+    <p>Besides passing (multiple) simple filter methods you can also pass an ensemble
+filter method (in a list). The ensemble method will use the simple methods to
+calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -372,11 +381,20 @@ One column for each method with the feature importance values.</p></li>
   <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
 <p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
   <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
+  <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
+  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
   <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
   <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># two simple filter methods</span>
+<span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>))
+<span class='co'># using ensemble method "E-mean"</span>
+<span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>)))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -385,8 +403,12 @@ One column for each method with the feature importance values.</p></li>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#simple-and-ensemble-filters">Simple and ensemble filters</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
