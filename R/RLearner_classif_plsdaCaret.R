@@ -8,7 +8,7 @@ makeRLearner.classif.plsdaCaret = function() {
       makeDiscreteLearnerParam(id = "method", default = "kernelpls",
         values = c("kernelpls", "widekernelpls", "simpls", "oscorespls"))
     ),
-    properties = c("numerics", "prob", "twoclass"),
+    properties = c("numerics", "prob", "twoclass", "multiclass"),
     name = "Partial Least Squares (PLS) Discriminant Analysis",
     short.name = "plsdacaret",
     callees = c("plsda", "plsr")
