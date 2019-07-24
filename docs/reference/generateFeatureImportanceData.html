@@ -309,7 +309,7 @@
     <pre class="usage"><span class='fu'>generateFeatureImportanceData</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"permutation.importance"</span>,
   <span class='no'>learner</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a></span>(<span class='no'>task</span>), <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>measure</span>, <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> - <span class='no'>y</span>, <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='no'>mean</span>,
-  <span class='kw'>nmc</span> <span class='kw'>=</span> <span class='fl'>50L</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>nmc</span> <span class='kw'>=</span> <span class='fl'>50L</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -386,6 +386,11 @@ The default is <code>TRUE</code>.</p></td>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Whether to compute the per-observation importance.
 The default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>show.info</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Whether progress output (feature name, time elapsed) should be displayed.</p></td>
     </tr>
     </table>
     

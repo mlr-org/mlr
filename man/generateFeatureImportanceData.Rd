@@ -8,7 +8,7 @@
 generateFeatureImportanceData(task, method = "permutation.importance",
   learner, features = getTaskFeatureNames(task), interaction = FALSE,
   measure, contrast = function(x, y) x - y, aggregation = mean,
-  nmc = 50L, replace = TRUE, local = FALSE)
+  nmc = 50L, replace = TRUE, local = FALSE, show.info = FALSE)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -61,6 +61,9 @@ The default is \code{TRUE}.}
 \item{local}{(\code{logical(1)})\cr
 Whether to compute the per-observation importance.
 The default is \code{FALSE}.}
+
+\item{show.info}{(\code{logical(1)})\cr
+Whether progress output (feature name, time elapsed) should be displayed.}
 }
 \value{
 (\code{FeatureImportance}). A named list which contains the computed feature importance and the input arguments.

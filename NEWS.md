@@ -4,6 +4,10 @@
 
 - Instead of a wide `data.frame` filter values are now returned in a long (tidy) `tibble`. This makes it easier to apply post-processing methods (like `group_by()`, etc) (@pat-s, #2456)
 
+## functions - general
+
+- `generateFeatureImportanceData()` gains argument `show.info` which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (@pat-s, #26222)
+
 ## learners - general
 
 - `classif.liquidSVM` and `regr.liquidSVM` have been removed because `liquidSVM` has been removed from CRAN.
