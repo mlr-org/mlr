@@ -23,8 +23,13 @@ makeRLearner.classif.ctree = function() {
                                           "Univariate", "Teststatistic")),
       makeNumericLearnerParam(id = "nmax", default = Inf, lower = 0, allow.inf = TRUE),
       makeNumericLearnerParam(id = "alpha", default = 0.05, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "mincriterion", lower = 0, upper = 1), # default = 1- alpha
-      makeNumericLearnerParam(id = "logmincriterion", lower = 0, upper = 1), # default = log(mincriterion)
+      makeNumericLearnerParam(id = "mincriterion.Teststatistic", lower = 0, 
+                              upper = Inf), 
+      makeNumericLearnerParam(id = "logmincriterion.Teststatistic", lower = -Inf, 
+                              upper = Inf), 
+      makeNumericLearnerParam(id = "mincriterion.others", lower = 0, upper = 1), # default = 1 - alpha),
+      makeNumericLearnerParam(id = "logmincriterion.others", lower = -Inf, 
+                              upper = 0), # default = log(mincriterion)),
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", default = 7L, lower = 1L),
       makeNumericLearnerParam(id = "minprob", default = 0.01, lower = 0, upper = 1),
@@ -68,12 +73,23 @@ makeRLearner.classif.ctree = function() {
 
 #' @export
 trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
-  teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
-  logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
-  nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-  splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
+  teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion.Teststatistic, 
+  mincriterion.others, logmincriterion.others, logmincriterion.Teststatistic, minsplit, 
+  minbucket, minprob, stump, lookahead, MIA, nresample, tol, maxsurrogate, numsurrogate, 
+  mtry, maxdepth, multiway, splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
   update, splitflavour, ...) {
 
+  defaults = getDefaults(getParamSet(.learner))
+ 
+  if (missing(mincriterion.Teststatistic)) mincriterion.Teststatistic = 1 - defaults$alpha
+  if (missing(mincriterion.others)) mincriterion.others = 1 - defaults$alpha
+  if (missing(logmincriterion.Teststatistic)) logmincriterion.Teststatistic = log(1 - defaults$alpha)
+  if (missing(logmincriterion.others)) logmincriterion.others = log(1 - defaults$alpha)
+  
+  mincriterion <- ifelse(testtype == "Teststatistic", mincriterion.Teststatistic, mincriterion.others)
+  
+  logmincriterion <- ifelse(testtype == "Teststatistic", logmincriterion.Teststatistic, logmincriterion.others)
+  
   ctrl = learnerArgsToControl(partykit::ctree_control,
     teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
     logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
