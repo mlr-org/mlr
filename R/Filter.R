@@ -1020,7 +1020,7 @@ makeFilter(
 )
 
 #' Entropy based filters from the package \pkg{FSelectorRcpp}:
-#' \dQuote{FSelectorRcpp_gainratio}, dQuote{FSelectorRcpp_infogain}, \dQuote{FSelectorRcpp_symuncert}.
+#' \dQuote{FSelectorRcpp_gain.ratio}, dQuote{FSelectorRcpp_information.gain}, \dQuote{FSelectorRcpp_symmetrical.uncertainty}.
 #' @rdname makeFilter
 #' @name makeFilter
 NULL
@@ -1032,7 +1032,7 @@ FSelectorRcpp.filter = function(type) {
     data = getTaskData(task)
     X = data[getTaskFeatureNames(task)]
     y = data[[getTaskTargetNames(task)]]
-    res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
+    res = FSelectorRcpp::information_gain(x = X, y = y, type = type, ...)
     res = setNames(res$importance, res$attributes)
     replace(res, is.nan(res), 0) # FIXME: this is a technical fix, need to report upstream
   }

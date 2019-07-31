@@ -457,6 +457,9 @@
     <loc>https://mlr-org.github.io/mlr/reference/learners.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/listFilterEnsembleMethods.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/listFilterMethods.html</loc>
   </url>
   <url>
@@ -527,6 +530,9 @@
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeFilter.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/reference/makeFilterEnsemble.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeFilterWrapper.html</loc>

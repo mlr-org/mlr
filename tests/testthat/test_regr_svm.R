@@ -38,4 +38,3 @@ test_that("classif_svm with many features", {
   # the given task has many features, the formula interface fails
   train("regr.svm", xt.task)
 })
-
