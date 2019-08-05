@@ -310,6 +310,10 @@
 <a href="#breaking" class="anchor"></a>Breaking</h2>
 <ul>
 <li>Instead of a wide <code>data.frame</code> filter values are now returned in a long (tidy) <code>tibble</code>. This makes it easier to apply post-processing methods (like <code>group_by()</code>, etc) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
+<li>
+<code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the tuning results (<code>$extract</code> slot) anymore by default. If you want to keep this slot (e.g. for post tuning analysis), set <code>keep.extract = TRUE</code>. This change originated from the fact that the size of <code>BenchmarkResult</code> objects with extensive tuning got very large (~ GB) which can cause memory problems during runtime if multiple <code><a href="../reference/benchmark.html">benchmark()</a></code> calls are executed on HPCs.</li>
+<li>
+<code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the created models (<code>$models</code> slot) anymore by default. The reason is the same as for the <code>$extract</code> slot above. Storing can be enabled using <code>models = TRUE</code>.</li>
 </ul>
 </div>
 <div id="functions---general" class="section level2">

@@ -344,7 +344,8 @@ of dataset IDs easily with
 `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.</p>
     
 
-    <pre class="usage"><span class='fu'>batchmark</span>(<span class='no'>learners</span>, <span class='no'>tasks</span>, <span class='no'>resamplings</span>, <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>batchmark</span>(<span class='no'>learners</span>, <span class='no'>tasks</span>, <span class='no'>resamplings</span>, <span class='no'>measures</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>keep.extract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -375,10 +376,28 @@ Performance measures for all tasks.
 If missing, the default measure of the first task is used.</p></td>
     </tr>
     <tr>
+      <th>keep.pred</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Keep the prediction data in the <code>pred</code> slot of the result object.
+If you do many experiments (on larger data sets) these objects might unnecessarily increase
+object size / mem usage, if you do not really need them.
+The default is set to <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>keep.extract</th>
+      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+Keep the <code>extract</code> slot of the result object. When creating a lot of
+benchmark results with extensive tuning, the resulting R objects can become
+very large in size. That is why the tuning results stored in the <code>extract</code>
+slot are removed by default (<code>keep.extract = FALSE</code>). Note that when
+<code>keep.extract = FALSE</code> you will not be able to conduct analysis in the
+tuning results.</p></td>
+    </tr>
+    <tr>
       <th>models</th>
       <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
 Should all fitted models be stored in the <a href='ResampleResult.html'>ResampleResult</a>?
-Default is <code>TRUE</code>.</p></td>
+Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>reg</th>

@@ -357,7 +357,7 @@
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># A mixed list of Learner objects and strings works, too</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">lrns =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.lda"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>), <span class="st">"classif.rpart"</span>)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">bmr =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns, sonar.task, rdesc)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">bmr =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(lrns, sonar.task, rdesc, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">## Task: Sonar-example, Learner: classif.lda</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">## Resampling: holdout</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">## Measures:             mmce</a>
@@ -377,6 +377,7 @@
 <a class="sourceLine" id="cb2-24" data-line-number="24">##         task.id    learner.id mmce.test.mean</a>
 <a class="sourceLine" id="cb2-25" data-line-number="25">## 1 Sonar-example   classif.lda      0.3285714</a>
 <a class="sourceLine" id="cb2-26" data-line-number="26">## 2 Sonar-example classif.rpart      0.3714286</a></code></pre></div>
+<p>We also need to set <code>models = TRUE</code> explicitly if we want to take a look at them later. By default, models are not stored in the benchmark result object.</p>
 <p>In the printed summary table every row corresponds to one pair of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. The entries show the <a href="measures.html" target="_blank">mean misclassification error</a>, the default performance measure for classification, on the test data set.</p>
 <p>The result <code>bmr</code> is an object of class <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>. Basically, it contains a <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code> of lists of <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects, first ordered by <code><a href="../../reference/Task.html">Task()</a></code> and then by <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>.</p>
 <div id="making-experiments-reproducible" class="section level2">
@@ -522,7 +523,7 @@
 <div id="fitted-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fitted-models" class="anchor"></a>Fitted models</h2>
-<p>Per default the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> also contains the fitted models for all learners on all tasks. If you do not want to keep them set <code>models = FALSE</code> when calling <code><a href="../../reference/benchmark.html">benchmark()</a></code>. The fitted models can be retrieved by function <code><a href="../../reference/getBMRModels.html">getBMRModels()</a></code>. It returns a (possibly nested) <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code> of <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) objects.</p>
+<p>By default the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> does not contain the fitted models for all learners on all tasks. Since we used <code>models = TRUE</code> when calling <code><a href="../../reference/benchmark.html">benchmark()</a></code>, we can also inspect the created models. The fitted models can be retrieved by function <code><a href="../../reference/getBMRModels.html">getBMRModels()</a></code>. It returns a (possibly nested) <code><a href="https://www.rdocumentation.org/packages/base/topics/list">base::list()</a></code> of <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) objects.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRModels.html">getBMRModels</a></span>(bmr)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">## $`Sonar-example`</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">## $`Sonar-example`$classif.lda</a>

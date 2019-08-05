@@ -248,7 +248,8 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
 
 
 # Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
-mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
+mergeResampleResult = function(learner.id, task, iter.results, measures, rin,
+  models, extract, keep.pred, show.info, runtime) {
 
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)

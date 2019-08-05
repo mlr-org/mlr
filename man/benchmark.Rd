@@ -5,7 +5,8 @@
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
 benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
-  models = TRUE, show.info = getMlrOption("show.info"))
+  keep.extract = FALSE, models = FALSE,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{(list of \link{Learner} | \link{character})\cr
@@ -28,12 +29,19 @@ If missing, the default measure of the first task is used.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to \code{FALSE}.
-Default is \code{TRUE}.}
+The default is set to \code{TRUE}.}
+
+\item{keep.extract}{(\code{logical(1)})\cr
+Keep the \code{extract} slot of the result object. When creating a lot of
+benchmark results with extensive tuning, the resulting R objects can become
+very large in size. That is why the tuning results stored in the \code{extract}
+slot are removed by default (\code{keep.extract = FALSE}). Note that when
+\code{keep.extract = FALSE} you will not be able to conduct analysis in the
+tuning results.}
 
 \item{models}{(\code{logical(1)})\cr
 Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?

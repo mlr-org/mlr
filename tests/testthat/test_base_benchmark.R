@@ -76,7 +76,8 @@ test_that("benchmark", {
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 2L))
   measures = list(mmce, acc)
 
-  res = benchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
+  res = benchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures,
+    keep.extract = TRUE)
   expect_true("BenchmarkResult" %in% class(res))
 
   df = as.data.frame(res)
