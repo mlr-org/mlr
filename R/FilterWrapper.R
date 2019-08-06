@@ -4,12 +4,6 @@
 #' object, which can be used like any other learner object. Internally uses
 #' [filterFeatures] before every model fit.
 #'
-#' After training, the selected features can be retrieved with
-#' [getFilteredFeatures].
-#'
-#' Note that observation weights do not influence the filtering and are simply
-#' passed down to the next learner.
-#'
 #' @template arg_learner
 #' @param fw.method (`character(1)`)\cr Filter method. See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC_importance}.
@@ -45,8 +39,15 @@
 #' @family filter
 #' @family wrapper
 #'
+#' @details
 #' If `ensemble = TRUE`, ensemble feature selection using all methods specified
 #' in `fw.method` is performed. At least two methods need to be selected.
+#'
+#' After training, the selected features can be retrieved with
+#' [getFilteredFeatures].
+#'
+#' Note that observation weights do not influence the filtering and are simply
+#' passed down to the next learner.
 #'
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")

@@ -20,5 +20,16 @@ Default is all factor, character and logical columns of \code{obj}.}
 \description{
 Characters and logicals will be treated as factors.
 }
-\concept{eda_and_preprocess
-summarizeLevels(iris)}
+\examples{
+summarizeLevels(iris)
+}
+\seealso{
+Other eda_and_preprocess: \code{\link{capLargeValues}},
+  \code{\link{createDummyFeatures}},
+  \code{\link{dropFeatures}},
+  \code{\link{mergeSmallFactorLevels}},
+  \code{\link{normalizeFeatures}},
+  \code{\link{removeConstantFeatures}},
+  \code{\link{summarizeColumns}}
+}
+\concept{eda_and_preprocess}

@@ -47,6 +47,10 @@ named list via \code{more.args}. For example \code{more.args = list("FSelectorRc
 Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
 \link{filterFeatures} before every model fit.
+}
+\details{
+If \code{ensemble = TRUE}, ensemble feature selection using all methods specified
+in \code{fw.method} is performed. At least two methods need to be selected.
 
 After training, the selected features can be retrieved with
 \link{getFilteredFeatures}.
@@ -96,9 +100,31 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterEnsemble}},
   \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+
+Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{makeImputeWrapper}},
+  \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
+  \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
+  \code{\link{makeSMOTEWrapper}},
+  \code{\link{makeTuneWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{makeWeightedClassesWrapper}}
 }
 \concept{filter}
-\concept{wrapper
-
-If `ensemble = TRUE`, ensemble feature selection using all methods specified
-in `fw.method` is performed. At least two methods need to be selected.}
+\concept{wrapper}

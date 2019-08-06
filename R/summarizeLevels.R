@@ -10,6 +10,7 @@
 #' @return ([list]). Named list of tables.
 #' @export
 #' @family eda_and_preprocess
+#' @examples
 #' summarizeLevels(iris)
 summarizeLevels = function(obj, cols = NULL) {
   UseMethod("summarizeLevels")
