@@ -32,11 +32,7 @@
 
 <meta property="og:description" content="Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
-filterFeatures before every model fit.
-After training, the selected features can be retrieved with
-getFilteredFeatures.
-Note that observation weights do not influence the filtering and are simply
-passed down to the next learner." />
+filterFeatures before every model fit." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -312,10 +308,6 @@ passed down to the next learner." />
     <p>Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
 <a href='filterFeatures.html'>filterFeatures</a> before every model fit.</p>
-<p>After training, the selected features can be retrieved with
-<a href='getFilteredFeatures.html'>getFilteredFeatures</a>.</p>
-<p>Note that observation weights do not influence the filtering and are simply
-passed down to the next learner.</p>
     
 
     <pre class="usage"><span class='fu'>makeFilterWrapper</span>(<span class='no'>learner</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
@@ -380,6 +372,15 @@ named list via <code>more.args</code>. For example <code>more.args = list("FSele
 
     <p><a href='makeLearner.html'>Learner</a>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If <code>ensemble = TRUE</code>, ensemble feature selection using all methods specified
+in <code>fw.method</code> is performed. At least two methods need to be selected.</p>
+<p>After training, the selected features can be retrieved with
+<a href='getFilteredFeatures.html'>getFilteredFeatures</a>.</p>
+<p>Note that observation weights do not influence the filtering and are simply
+passed down to the next learner.</p>
+    
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
     <p>If <code>cache = TRUE</code>, the default mlr cache directory is used
@@ -398,7 +399,31 @@ multiple workers try to write the same cache at the same time.</p>
   <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
   <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
   <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
-  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
+  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
+<p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
+  <code><a href='makeClassificationViaRegressionWrapper.html'>makeClassificationViaRegressionWrapper</a></code>,
+  <code><a href='makeConstantClassWrapper.html'>makeConstantClassWrapper</a></code>,
+  <code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a></code>,
+  <code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a></code>,
+  <code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a></code>,
+  <code><a href='makeDummyFeaturesWrapper.html'>makeDummyFeaturesWrapper</a></code>,
+  <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a></code>,
+  <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code>,
+  <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>,
+  <code><a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a></code>,
+  <code><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a></code>,
+  <code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a></code>,
+  <code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a></code>,
+  <code><a href='makeMultilabelNestedStackingWrapper.html'>makeMultilabelNestedStackingWrapper</a></code>,
+  <code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a></code>,
+  <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
+  <code><a href='makePreprocWrapperCaret.html'>makePreprocWrapperCaret</a></code>,
+  <code><a href='makePreprocWrapper.html'>makePreprocWrapper</a></code>,
+  <code><a href='makeRemoveConstantFeaturesWrapper.html'>makeRemoveConstantFeaturesWrapper</a></code>,
+  <code><a href='makeSMOTEWrapper.html'>makeSMOTEWrapper</a></code>,
+  <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
+  <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
+  <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -436,6 +461,8 @@ multiple workers try to write the same cache at the same time.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#caching">Caching</a></li>
 
