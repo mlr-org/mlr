@@ -46,7 +46,6 @@
 ## filters - general
 
 - Filter `praznik_mrmr` also supports `regr` and `surv` tasks
-- `getFilterValuesData()` now returns a `tbl` instead of a `data.frame`. (@pat-s, #2456)
 - `plotFilterValues()` got a bit "smarter" and easier now regarding the ordering of multiple facets. (@pat-s, #2456)
 - `filterFeatures()`, `generateFilterValuesData()` and `makeFilterWrapper()` gained new examples. (@pat-s, #2456)
 
