@@ -91,3 +91,7 @@ We have a [developer guide](https://www.notion.so/mlrorg/Developer-Guide-65e60b6
 # mlr-tutorial
 
 Please read [here](https://www.notion.so/mlrorg/mlr-Tutorial-b71444fe979c4a8cafe91e10e7f81d79) if you want to contribute to the Online Manual.
+
+# Talks, Workshops, etc.
+
+[mlr-outreach](https://github.com/mlr-org/mlr-outreach) holds all outreach activities related to _mlr_ and _mlr3_.
