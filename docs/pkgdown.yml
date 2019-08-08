@@ -38,7 +38,6 @@ articles:
   preproc: tutorial/preproc.html
   resample: tutorial/resample.html
   roc_analysis: tutorial/roc_analysis.html
-  talks_videos_workshops: tutorial/talks_videos_workshops.html
   task: tutorial/task.html
   train: tutorial/train.html
   tune: tutorial/tune.html
