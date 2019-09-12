@@ -89,8 +89,7 @@ Default is to extract nothing.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to \code{FALSE}.
-Default is \code{TRUE}.}
+The default is set to \code{TRUE}.}
 
 \item{...}{(any)\cr
 Further hyperparameters passed to \code{learner}.}

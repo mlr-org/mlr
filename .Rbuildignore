@@ -32,3 +32,5 @@ appveyor.yml
 ^addon/*
 cran-comments.md
 revdep/*
+^CRAN-RELEASE$
+.pre-commit-config.yaml

@@ -35,7 +35,8 @@
 #' @noMd
 #' @export
 #' @family benchmark
-batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
+batchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE,
+  keep.extract = FALSE, models = FALSE, reg = batchtools::getDefaultRegistry()) {
 
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   learners = ensureBenchmarkLearners(learners)
@@ -55,7 +56,7 @@ batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg 
 
   # generate algos
   ades = Map(function(id, learner) {
-    apply.fun = getAlgoFun(learner, measures, models)
+    apply.fun = getAlgoFun(learner, measures, models, keep.extract)
     batchtools::addAlgorithm(id, apply.fun, reg = reg)
     data.table()
   }, id = names(learners), learner = learners)
@@ -68,12 +69,18 @@ resample.fun = function(job, data, i) {
   list(train = data$rin$train.inds[[i]], test = data$rin$test.inds[[i]], weights = data$rin$weights[[i]], rdesc = data$rin$desc)
 }
 
-getAlgoFun = function(lrn, measures, models) {
+getAlgoFun = function(lrn, measures, models, keep.extract) {
   force(lrn)
   force(measures)
   force(models)
-  function(job, data, instance) {
+  if (isTRUE(keep.extract)) {
     extract.this = getExtractor(lrn)
+  } else {
+    extract.this = function(model) {
+      NULL
+    }
+  }
+  function(job, data, instance) {
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
       measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE)
   }
@@ -91,6 +98,7 @@ getAlgoFun = function(lrn, measures, models) {
 #'   Alternatively, you may also pass a vector of integerish job ids.
 #'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone].
 #' @template arg_keep_pred
+#' @template arg_keep_extract
 #' @template arg_showinfo
 #' @param reg ([batchtools::ExperimentRegistry])\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
@@ -98,7 +106,7 @@ getAlgoFun = function(lrn, measures, models) {
 #' @return ([BenchmarkResult]).
 #' @export
 #' @family benchmark
-reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
+reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, keep.extract = FALSE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
 
   # registry and ids are asserted later
   requirePackages("batchtools", why = "batchmark", default.method = "load")

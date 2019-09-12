@@ -60,10 +60,13 @@ lrns = c("classif.lda", "classif.rpart")
 # A mixed list of Learner objects and strings works, too
 lrns = list(makeLearner("classif.lda", predict.type = "prob"), "classif.rpart")
 
-bmr = benchmark(lrns, sonar.task, rdesc)
+bmr = benchmark(lrns, sonar.task, rdesc, models = TRUE)
 
 bmr
 ```
+
+We also need to set `models = TRUE` explicitly if we want to take a look at them later.
+By default, models are not stored in the benchmark result object.
 
 In the printed summary table every row corresponds to one pair of `Task()` and `makeLearner()`.
 The entries show the [mean misclassification error](measures.html){target="_blank"}, the default performance measure for classification, on the test data set.
@@ -211,8 +214,8 @@ getBMRMeasureIds(bmr)
 
 ## Fitted models
 
-Per default the `BenchmarkResult()` also contains the fitted models for all learners on all tasks.
-If you do not want to keep them set `models = FALSE` when calling `benchmark()`.
+By default the `BenchmarkResult()` does not contain the fitted models for all learners on all tasks.
+Since we used `models = TRUE` when calling `benchmark()`, we can also inspect the created models.
 The fitted models can be retrieved by function `getBMRModels()`.
 It returns a (possibly nested) `base::list()` of `WrappedModel` (`makeWrappedModel()`) objects.
 

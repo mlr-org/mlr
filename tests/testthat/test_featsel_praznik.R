@@ -17,8 +17,8 @@ test_that("filterFeatures_praznik", {
     expect_class(fv, "FilterValues")
     expect_data_frame(fv$data, nrow = getTaskNFeats(task))
     expect_set_equal(fv$data$name, getTaskFeatureNames(task))
-    expect_equal(sum(!is.na(fv$data[[candidate]])), 2L)
-    expect_numeric(fv$data[[candidate]], lower = 0, upper = 1, all.missing = FALSE)
+    expect_equal(sum(!is.na(fv$data$value)), 2L)
+    expect_numeric(fv$data$value, lower = 0, upper = 1, all.missing = FALSE)
 
     lrn = makeLearner("classif.featureless")
     lrn = makeFilterWrapper(learner = lrn, fw.method = candidate, fw.abs = 3L)

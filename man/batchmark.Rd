@@ -4,7 +4,8 @@
 \alias{batchmark}
 \title{Run machine learning benchmarks as distributed experiments.}
 \usage{
-batchmark(learners, tasks, resamplings, measures, models = TRUE,
+batchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
+  keep.extract = FALSE, models = FALSE,
   reg = batchtools::getDefaultRegistry())
 }
 \arguments{
@@ -24,9 +25,23 @@ If missing, a 10-fold cross validation is used.}
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
 
+\item{keep.pred}{(\code{logical(1)})\cr
+Keep the prediction data in the \code{pred} slot of the result object.
+If you do many experiments (on larger data sets) these objects might unnecessarily increase
+object size / mem usage, if you do not really need them.
+The default is set to \code{TRUE}.}
+
+\item{keep.extract}{(\code{logical(1)})\cr
+Keep the \code{extract} slot of the result object. When creating a lot of
+benchmark results with extensive tuning, the resulting R objects can become
+very large in size. That is why the tuning results stored in the \code{extract}
+slot are removed by default (\code{keep.extract = FALSE}). Note that when
+\code{keep.extract = FALSE} you will not be able to conduct analysis in the
+tuning results.}
+
 \item{models}{(\code{logical(1)})\cr
 Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{reg}{([batchtools::Registry])\cr
 Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,

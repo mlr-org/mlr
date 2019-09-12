@@ -82,7 +82,7 @@ getFeatureImportanceLearner.classif.h2o.glm = function(.learner, .model, ...) {
 
 extractH2OGlmVarImp = function(.learner.model, ...) {
   imp = na.omit(as.data.frame(h2o::h2o.varimp(.learner.model)))
-  res = imp$coefficients
-  names(res) = imp$names
+  res = imp$relative_importance
+  names(res) = imp$variable
   res
 }

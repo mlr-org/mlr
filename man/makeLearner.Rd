@@ -19,17 +19,19 @@ classification learners start with \dQuote{multilabel.}.
 A list of all integrated learners is available on the
 \link{learners} help page.}
 
-\item{id}{(\code{character(1)})\cr
-Id string for object. Used to display object.
+\item{id}{(\code{character(1)})\cr Id string for object. Used to display object.
 Default is \code{cl}.}
 
-\item{predict.type}{(\code{character(1)})\cr
-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
-Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
-Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
-Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities),
-Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
-Default is \dQuote{response}.}
+\item{predict.type}{(\code{character(1)})\cr Classification: \dQuote{response} (=
+labels) or \dQuote{prob} (= probabilities and labels by selecting the ones
+with maximal probability). Regression: \dQuote{response} (= mean response)
+or \dQuote{se} (= standard errors and mean response). Survival:
+\dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time
+dependent probabilities). Clustering: \dQuote{response} (= cluster IDS) or
+\dQuote{prob} (= fuzzy cluster membership probabilities), Multilabel:
+\dQuote{response} (= logical matrix indicating the predicted class labels)
+or \dQuote{prob} (= probabilities and corresponding logical matrix
+indicating class labels). Default is \dQuote{response}.}
 
 \item{predict.threshold}{(\link{numeric})\cr
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
@@ -37,46 +39,57 @@ Only for binary classification it can be a single numerical threshold for the po
 See \link{setThreshold} for details on how it is applied.
 Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
 
-\item{fix.factors.prediction}{(\code{logical(1)})\cr
-In some cases, problems occur in underlying learners for factor features during prediction.
-If the new features have LESS factor levels than during training (a strict subset),
-the learner might produce an  error like
-\dQuote{type of predictors in new data do not match that of the training data}.
-In this case one can repair this problem by setting this option to \code{TRUE}.
-We will simply add the missing factor levels missing from the test feature
-(but present in training) to that feature.
-Default is \code{FALSE}.}
+\item{fix.factors.prediction}{(\code{logical(1)})\cr In some cases, problems occur
+in underlying learners for factor features during prediction. If the new
+features have LESS factor levels than during training (a strict subset),
+the learner might produce an  error like \dQuote{type of predictors in new
+data do not match that of the training data}. In this case one can repair
+this problem by setting this option to \code{TRUE}. We will simply add the
+missing factor levels missing from the test feature (but present in
+training) to that feature. Default is \code{FALSE}.}
 
-\item{...}{(any)\cr
-Optional named (hyper)parameters.
-Alternatively these can be given using the \code{par.vals} argument.}
+\item{...}{(any)\cr Optional named (hyper)parameters. If you want to set
+specific hyperparameters for a learner during model creation, these should
+go here. You can get a list of available hyperparameters using
+\code{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
+the \code{par.vals} argument but \code{...} should be preferred!}
 
-\item{par.vals}{(\link{list})\cr
-Optional list of named (hyper)parameters. The arguments in
-\code{...} take precedence over values in this list. We strongly
-encourage you to use one or the other to pass (hyper)parameters
-to the learner but not both.}
+\item{par.vals}{(\link{list})\cr Optional list of named (hyper)parameters. The
+arguments in \code{...} take precedence over values in this list. We strongly
+encourage you to use \code{...} for passing hyperparameters.}
 
-\item{config}{(named \link{list})\cr
-Named list of config option to overwrite global settings set via \link{configureMlr}
-for this specific learner.}
+\item{config}{(named \link{list})\cr Named list of config option to overwrite
+global settings set via \link{configureMlr} for this specific learner.}
 }
 \value{
 (\link{Learner}).
 }
 \description{
-For a classification learner the \code{predict.type} can be set
-to \dQuote{prob} to predict probabilities and the maximum
-value selects the label. The threshold used to assign the label can later be changed using the
+For a classification learner the \code{predict.type} can be set to
+\dQuote{prob} to predict probabilities and the maximum value selects the
+label. The threshold used to assign the label can later be changed using the
 \link{setThreshold} function.
 
 To see all possible properties of a learner, go to: \link{LearnerProperties}.
 }
+\section{\code{par.vals} vs. \code{...}}{
+
+
+The former aims at specifying default hyperparameter settings from \code{mlr}
+which differ from the actual defaults in the underlying learner. For
+example, \code{respect.unordered.factors} is set to \code{order} in \code{mlr} while the
+default in \link[ranger:ranger]{ranger::ranger} depends on the argument \code{splitrule}.
+\code{getHyperPars(<learner>)} can be used to query hyperparameter defaults that
+differ from the underlying learner. This function also shows all
+hyperparameters set by the user during learner creation (if these differ
+from the learner defaults).
+}
+
 \examples{
 makeLearner("classif.rpart")
 makeLearner("classif.lda", predict.type = "prob")
 lrn = makeLearner("classif.lda", method = "t", nu = 10)
-print(lrn$par.vals)
+getHyperPars(lrn)
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},

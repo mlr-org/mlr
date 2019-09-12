@@ -5,8 +5,9 @@ test_that("regr_gbm", {
 
   parset.list = list(
     list(),
-    list(n.trees = 600),
-    list(interaction.depth = 2)
+    list(n.trees = 600, distribution = "gaussian"),
+    list(interaction.depth = 2, distribution = "gaussian"),
+    list(distribution = list(name = "quantile", alpha = 0.2))
   )
 
 
@@ -14,7 +15,7 @@ test_that("regr_gbm", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(regr.formula, data = regr.train, distribution = "gaussian")
+    pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output({
@@ -24,6 +25,10 @@ test_that("regr_gbm", {
     p = gbm::predict.gbm(m, newdata = regr.test, n.trees = length(m$trees))
     old.predicts.list[[i]] = p
   }
+
+  #  Different way to pass quantile distribution in mlr
+  parset.list[[4]]$distribution = "quantile"
+  parset.list[[4]]$alpha = 0.2
 
   testSimpleParsets("regr.gbm", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
 })

@@ -47,11 +47,14 @@ test_that("batchmark", {
   expect_equal(unique(preds$iter), 1:2)
 
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
-  res = batchmark(learners = learners, task = tasks, resampling = rin, reg = reg)
+  res = batchmark(learners = learners, tasks = tasks, resamplings = rin, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
 
   res = reduceBatchmarkResults(reg = reg)
+
+  # check if keep.extract = FALSE really throws away the tuning results
+  expect_true(all(sapply(res$results$binary[[1]]$extract, function(x) is.null(x))))
 
   expect_true("BenchmarkResult" %in% class(res))
 
@@ -100,7 +103,8 @@ test_that("batchmark", {
   measures = list(mmce, acc)
 
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
-  res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures, reg = reg)
+  res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings,
+    measures = measures, reg = reg, keep.extract = TRUE)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   expect_data_table(findErrors(reg = reg), nrow = 0L)

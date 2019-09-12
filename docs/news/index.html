@@ -272,7 +272,7 @@
   </a>
 </li>
 <li>
-  <a href="https://mlr-blog.netlify.com/">
+  <a href="https://mlr-org.com/">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -301,10 +301,29 @@
     </div>
 
     <div class="contents">
-    <div id="mlr-2-14-0-9000" class="section level1">
+    <div id="mlr-2-15-0" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-14-0-9000" class="anchor"></a>mlr 2.14.0.9000<small> Unreleased </small>
+<a href="#mlr-2-15-0" class="anchor"></a>mlr 2.15.0<small> 2019-08-06 </small>
 </h1>
+<div id="breaking" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking" class="anchor"></a>Breaking</h2>
+<ul>
+<li>Instead of a wide <code>data.frame</code> filter values are now returned in a long (tidy) <code>tibble</code>. This makes it easier to apply post-processing methods (like <code>group_by()</code>, etc) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
+<li>
+<code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the tuning results (<code>$extract</code> slot) anymore by default. If you want to keep this slot (e.g. for post tuning analysis), set <code>keep.extract = TRUE</code>. This change originated from the fact that the size of <code>BenchmarkResult</code> objects with extensive tuning got very large (~ GB) which can cause memory problems during runtime if multiple <code><a href="../reference/benchmark.html">benchmark()</a></code> calls are executed on HPCs.</li>
+<li>
+<code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the created models (<code>$models</code> slot) anymore by default. The reason is the same as for the <code>$extract</code> slot above. Storing can be enabled using <code>models = TRUE</code>.</li>
+</ul>
+</div>
+<div id="functions---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functions---general" class="anchor"></a>functions - general</h2>
+<ul>
+<li>
+<code><a href="../reference/generateFeatureImportanceData.html">generateFeatureImportanceData()</a></code> gains argument <code>show.info</code> which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/26222'>#26222</a>)</li>
+</ul>
+</div>
 <div id="learners---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learners---general" class="anchor"></a>learners - general</h2>
@@ -323,14 +342,21 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 (<a href='https://github.com/jakob-r'>@jakob-r</a>, <a href='https://github.com/mlr-org/mlr/issues/1784'>#1784</a>)</li>
 </ul>
 </li>
+<li>
+<code>regr.gbm</code> now supports <code>quantile distribution</code> (<a href='https://github.com/bthieurmel'>@bthieurmel</a>, <a href='https://github.com/mlr-org/mlr/issues/2603'>#2603</a>)</li>
+<li>
+<code>classif.plsdaCaret</code> now supports multiclass classification (<a href='https://github.com/GegznaV'>@GegznaV</a>, <a href='https://github.com/mlr-org/mlr/issues/2621'>#2621</a>)</li>
 </ul>
 </div>
-<div id="functions---general" class="section level2">
+<div id="functions---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-1" class="anchor"></a>functions - general</h2>
 <ul>
 <li>
 <code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
+<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
+<li>
+<code><a href="https://www.rdocumentation.org/packages/e1071/topics/svm">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from “stack overflow” issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
@@ -348,6 +374,27 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <code><a href="../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> now supports facet visualization of hyperparam effects for nested cv (<a href='https://github.com/MasonGallo'>@MasonGallo</a>, <a href='https://github.com/mlr-org/mlr/issues/1653'>#1653</a>)</li>
 <li>fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of <code>data.table</code>s default in <code>rbindlist()</code>. See <a href='https://github.com/mlr-org/mlr/issues/2578'>#2578</a> for more information. (<a href='https://github.com/mllg'>@mllg</a>, <a href='https://github.com/mlr-org/mlr/issues/2579'>#2579</a>)</li>
 <li>fixed a bug in which <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options(on.learner.error)</a></code> was not respected in <code><a href="../reference/benchmark.html">benchmark()</a></code>. This caused <code><a href="../reference/benchmark.html">benchmark()</a></code> to stop even if it should have continued including <code>FailureModels</code> in the result (<a href='https://github.com/dagola'>@dagola</a>, <a href='https://github.com/mlr-org/mlr/issues/1984'>#1984</a>)</li>
+<li>
+<code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
+<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
+</ul>
+</div>
+<div id="filters---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---general" class="anchor"></a>filters - general</h2>
+<ul>
+<li>Filter <code>praznik_mrmr</code> also supports <code>regr</code> and <code>surv</code> tasks</li>
+<li>
+<code><a href="../reference/plotFilterValues.html">plotFilterValues()</a></code> got a bit “smarter” and easier now regarding the ordering of multiple facets. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
+<li>
+<code><a href="../reference/filterFeatures.html">filterFeatures()</a></code>, <code><a href="../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> and <code><a href="../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code> gained new examples. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
+</ul>
+</div>
+<div id="filters---new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---new" class="anchor"></a>filters - new</h2>
+<ul>
+<li>Ensemble features are now supported. These filters combine multiple single filters to create a final ranking based on certain statistical operations. All new filters are listed in a dedicated section “ensemble filters” in the <a href="https://mlr.mlr-org.com/articles/tutorial/filter_methods.html">tutorial</a>. Tuning of simple features is not supported yet because of a <a href="https://github.com/berndbischl/ParamHelpers/pull/206">missing feature</a> in <em>ParamHelpers</em>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
 </ul>
 </div>
 </div>
@@ -374,9 +421,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <code><a href="../reference/cache_helpers.html">getCacheDir()</a></code>: Return the default mlr cache directory (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2463'>#2463</a>)</li>
 </ul>
 </div>
-<div id="functions---general-1" class="section level2">
+<div id="functions---general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-1" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-2" class="anchor"></a>functions - general</h2>
 <ul>
 <li>
 <code><a href="../reference/getResamplingIndices.html">getResamplingIndices(inner = TRUE)</a></code> now correctly returns the inner indices (before inner indices referred to the subset of the respective outer level train set) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2413'>#2413</a>).</li>
@@ -491,9 +538,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>Suppress messages with show.learner.output = FALSE</li>
 </ul>
 </div>
-<div id="functions---general-2" class="section level2">
+<div id="functions---general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-2" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-3" class="anchor"></a>functions - general</h2>
 <ul>
 <li>plotHyperParsEffect: add colors</li>
 </ul>
@@ -545,9 +592,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>Added support for growing and fixed window cross-validation for forecasting through new resample methods “GrowingWindowCV” and “FixedWindowCV”.</li>
 </ul>
 </div>
-<div id="functions---general-3" class="section level2">
+<div id="functions---general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-3" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-4" class="anchor"></a>functions - general</h2>
 <ul>
 <li>generatePartialDependenceData: depends now on the “mmpf” package, removed parameter: “center”, “resample”, “fmin”, “fmax” and “gridsize” added parameter: “uniform” and “n” to configure the grid for the partial dependence plot</li>
 <li>batchmark: allow resample instances and reduction of partial results</li>
@@ -666,9 +713,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>mlr now supports tuning with Bayesian optimization with mlrMBO</li>
 </ul>
 </div>
-<div id="functions---general-4" class="section level2">
+<div id="functions---general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-4" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-5" class="anchor"></a>functions - general</h2>
 <ul>
 <li>tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets</li>
 <li>getBMR-operators: now support “drop” argument that simplifies the resulting list</li>
@@ -722,9 +769,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <h1 class="page-header">
 <a href="#mlr-2-10" class="anchor"></a>mlr 2.10:<small> 2017-02-07 </small>
 </h1>
-<div id="functions---general-5" class="section level2">
+<div id="functions---general-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-5" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-6" class="anchor"></a>functions - general</h2>
 <ul>
 <li>fixed bug in resample when using predict = “train” (issue <a href='https://github.com/mlr-org/mlr/issues/1284'>#1284</a>)</li>
 <li>update to irace 2.0 – there are algorithmic changes in irace that may affect performance</li>
@@ -839,9 +886,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <h1 class="page-header">
 <a href="#mlr-2-9" class="anchor"></a>mlr 2.9:<small> 2016-08-03 </small>
 </h1>
-<div id="functions---general-6" class="section level2">
+<div id="functions---general-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions---general-6" class="anchor"></a>functions - general</h2>
+<a href="#functions---general-7" class="anchor"></a>functions - general</h2>
 <ul>
 <li>various cleanups that removed unused code</li>
 <li>subsetTask, getTaskData: arg “features” now also accepts logical and integer</li>
@@ -1528,7 +1575,7 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mlr-2-14-0-9000">2.14.0.9000</a></li>
+        <li><a href="#mlr-2-15-0">2.15.0</a></li>
         <li><a href="#mlr-2-14-0">2.14.0</a></li>
         <li><a href="#mlr-2-13">2.13</a></li>
         <li><a href="#mlr-2-12">2.12</a></li>

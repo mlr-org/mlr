@@ -11,13 +11,15 @@ setHyperPars(learner, ..., par.vals = list())
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{...}{(any)\cr
-Named (hyper)parameters with new setting. Alternatively these can be passed
-using the \code{par.vals} argument.}
+\item{...}{(any)\cr Optional named (hyper)parameters. If you want to set
+specific hyperparameters for a learner during model creation, these should
+go here. You can get a list of available hyperparameters using
+\code{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
+the \code{par.vals} argument but \code{...} should be preferred!}
 
-\item{par.vals}{(\link{list})\cr
-Optional list of named (hyper)parameter settings. The arguments in
-\code{...} take precedence over values in this list.}
+\item{par.vals}{(\link{list})\cr Optional list of named (hyper)parameters. The
+arguments in \code{...} take precedence over values in this list. We strongly
+encourage you to use \code{...} for passing hyperparameters.}
 }
 \value{
 \link{Learner}.

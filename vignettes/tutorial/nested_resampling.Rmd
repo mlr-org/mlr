@@ -416,7 +416,8 @@ lrns = list(lrn1, lrn2)
 
 # Outer resampling loop
 outer = list(makeResampleDesc("Holdout"), makeResampleDesc("Bootstrap", iters = 2))
-res = benchmark(lrns, tasks, outer, measures = list(acc, ber), show.info = FALSE)
+res = benchmark(lrns, tasks, outer, measures = list(acc, ber), show.info = FALSE, 
+  keep.extract = TRUE)
 res
 ```
 
@@ -469,7 +470,8 @@ lrns = list("regr.rpart", lrn)
 
 # Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
-res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, show.info = FALSE)
+res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, 
+  show.info = FALSE, keep.extract = TRUE)
 
 res
 ```

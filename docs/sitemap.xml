@@ -298,6 +298,9 @@
     <loc>https://mlr-org.github.io/mlr/reference/getLearnerModel.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/getLearnerNote.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/getLearnerPackages.html</loc>
   </url>
   <url>
@@ -454,6 +457,9 @@
     <loc>https://mlr-org.github.io/mlr/reference/learners.html</loc>
   </url>
   <url>
+    <loc>https://mlr-org.github.io/mlr/reference/listFilterEnsembleMethods.html</loc>
+  </url>
+  <url>
     <loc>https://mlr-org.github.io/mlr/reference/listFilterMethods.html</loc>
   </url>
   <url>
@@ -524,6 +530,9 @@
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeFilter.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr-org.github.io/mlr/reference/makeFilterEnsemble.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/reference/makeFilterWrapper.html</loc>
@@ -929,9 +938,6 @@
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/articles/tutorial/roc_analysis.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/talks_videos_workshops.html</loc>
   </url>
   <url>
     <loc>https://mlr-org.github.io/mlr/articles/tutorial/task.html</loc>

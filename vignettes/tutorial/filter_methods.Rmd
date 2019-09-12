@@ -45,6 +45,18 @@ rownames(dfnd) = seq_len(nrow(dfnd))
 pandoc.table(dfnd, style = "rmarkdown", split.tables = Inf, split.cells = Inf, emphasize.rownames = FALSE, justify = just)
 ```
 
+# Ensemble methods
+
+```{r, echo = FALSE, results = "asis"}
+df_ens = listFilterEnsembleMethods(desc = TRUE)
+colnames(df_ens) = c("Name", "Description")
+#rownames(df_ens) = seq_len(nrow(df_ens))
+#just = rep(c("left"), c(ncol(df)))
+pandoc.table(df_ens, style = "rmarkdown", 
+  split.tables = Inf, split.cells = Inf,
+  justify = "left")
+```
+
 # Deprecated methods
 
 ```{r, echo = FALSE, results = "asis"}
