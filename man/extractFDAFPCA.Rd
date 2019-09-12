@@ -4,27 +4,32 @@
 \alias{extractFDAFPCA}
 \title{Extract functional principal component analysis features.}
 \usage{
-extractFDAFPCA(pve = 0.99, npc = NULL)
+extractFDAFPCA(rank. = NULL, center = TRUE, scale. = FALSE)
 }
 \arguments{
-\item{pve}{(\link{numeric})\cr
-Fraction of variance explained for the functional principal components.
-Default is 0.99.}
-
-\item{npc}{(\link{integer})\cr
-Number of principal components to extract. Overrides \code{pve} param.
+\item{rank.}{(\code{integer(1)})\cr
+Number of principal components to extract.
 Default is \code{NULL}}
+
+\item{center}{(\code{logical(1)}) \cr
+Should data be centered before applying pca?}
+
+\item{scale.}{(\code{logical(1)}) \cr
+Should data be scaled before applying pca?}
 }
 \value{
 (\link{data.frame}).
 }
 \description{
 The function extracts the functional principal components from a data.frame
-containing functional features.
+containing functional features. Currently uses \code{stats::prcomp}.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDAFourier}},
+Other fda_featextractor: \code{\link{extractFDABsignal}},
+  \code{\link{extractFDADTWKernel}},
+  \code{\link{extractFDAFourier}},
   \code{\link{extractFDAMultiResFeatures}},
+  \code{\link{extractFDATsfeatures}},
   \code{\link{extractFDAWavelets}}
 }
 \concept{fda_featextractor}
