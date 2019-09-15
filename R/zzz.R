@@ -13,6 +13,7 @@
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
+  configureMlr()
   backports::import(pkgname)
 }
 
