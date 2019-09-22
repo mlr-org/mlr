@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## misc
+
+- Add `configureMlr()` to `.onLoad()`, possibly fixing some edge cases (#2585) (@pat-s, #2637)
+
 # mlr 2.15.0
 
 ## Breaking
