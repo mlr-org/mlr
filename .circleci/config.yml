@@ -36,9 +36,12 @@ jobs:
           paths:
             - /usr/local/lib/R/site-library
   deploy:
+    docker:
+      - image: rocker/base
     machine:
       enabled: true
     steps:
+      - checkout
       - run:
           name: Deploy Over SSH
           command: R -q -e 'tic::deploy()'
