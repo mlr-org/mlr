@@ -28,10 +28,27 @@ jobs:
           command: |
             cd project && R -q -e 'tic::before_script()'
             R -q -e 'tic::script()'
-
       # save R pkg cache -------------------------------------------------------
       - save_cache: # Caches dependencies with a cache key
           key: R-package-library
           paths:
             - /usr/local/lib/R/site-library
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          name: Deploy Over SSH
+          command: R -q -e 'tic::deploy()'
 
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: circle-ci
