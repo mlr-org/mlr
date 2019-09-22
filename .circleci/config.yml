@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: rocker/verse
+    steps:
+      - checkout
+      - run:
+          name: Install
+          command: |
+            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
+            R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
+            R -q -e 'tic::before_install()'
+            R -q -e 'tic::install()'
+      - run:
+          name: Check
+          command: |
+            cd tic.package && R -q -e 'tic::before_script()'
+            R -q -e 'tic::script()'
+      - save_cache: # Caches dependencies with a cache key
+      # template for an environment variable,
+      # see circleci.com/docs/2.0/caching/
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/circleci-demo-workflows
+
