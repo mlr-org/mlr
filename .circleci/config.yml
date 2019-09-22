@@ -14,10 +14,9 @@ jobs:
           name: Install
           command: |
             sudo apt update
-            sudo apt install ccache libglu1-mesa-dev libgmp-dev libgsl0-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+            sudo apt install libglu1-mesa-dev libgmp-dev libgsl0-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = parallel::detectCores())' > $HOME/.Rprofile
             R -q -e 'print(parallel::detectCores())'
-            mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
