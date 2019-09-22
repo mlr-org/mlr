@@ -13,9 +13,10 @@ jobs:
       - run:
           name: Install
           command: |
+            export OMP_NUM_THREADS=2
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
-            echo -e 'options(Ncpus = 2)' > $HOME/.Rprofile
+            echo -e 'options(Ncpus = 32)' > $HOME/.Rprofile
             R -q -e 'print(parallel::detectCores())'
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
