@@ -14,7 +14,7 @@ jobs:
           name: Install
           command: |
             sudo apt update
-            sudo apt install libglu1-mesa-dev libgmp-dev libgsl0-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+            sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = parallel::detectCores())' > $HOME/.Rprofile
             R -q -e 'print(parallel::detectCores())'
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
