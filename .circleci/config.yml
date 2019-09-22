@@ -4,6 +4,9 @@ jobs:
     docker:
       - image: rocker/verse
     steps:
+      - restore_cache:
+          keys:
+            - R-package-library
       - checkout
       - run:
           name: Install
@@ -21,7 +24,7 @@ jobs:
       - save_cache: # Caches dependencies with a cache key
       # template for an environment variable,
       # see circleci.com/docs/2.0/caching/
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: R-package-library
           paths:
             - /usr/local/lib/R/site-library
 
