@@ -8,12 +8,15 @@ jobs:
           keys:
             - R-package-library
       - checkout
+
+      # install deps and check pkg ---------------------------------------------
       - run:
           name: Install
           command: |
             sudo apt update
             sudo apt install ccache
             echo -e 'options(Ncpus = parallel::detectCores())' > $HOME/.Rprofile
+            R -q -e 'print(parallel::detectCores())'
             mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
@@ -25,9 +28,9 @@ jobs:
           command: |
             cd tic.package && R -q -e 'tic::before_script()'
             R -q -e 'tic::script()'
+
+      # save R pkg cache -------------------------------------------------------
       - save_cache: # Caches dependencies with a cache key
-      # template for an environment variable,
-      # see circleci.com/docs/2.0/caching/
           key: R-package-library
           paths:
             - /usr/local/lib/R/site-library
