@@ -38,8 +38,6 @@ jobs:
   deploy:
     docker:
       - image: rocker/base
-    machine:
-      enabled: true
     steps:
       - checkout
       - run:
