@@ -23,5 +23,5 @@ jobs:
       # see circleci.com/docs/2.0/caching/
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/circleci-demo-workflows
+            - /usr/local/lib/R/site-library
 
