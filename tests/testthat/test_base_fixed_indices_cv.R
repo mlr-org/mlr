@@ -8,7 +8,6 @@ test_that("fixed in single resampling", {
 
   # test blocking in single resample
   lrn = makeLearner("classif.lda")
-  set.seed(getOption("mlr.debug.seed"))
   rdesc = makeResampleDesc("CV", fixed = TRUE)
   p = resample(lrn, ct, rdesc)$pred
 
