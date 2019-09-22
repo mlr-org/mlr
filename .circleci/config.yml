@@ -14,7 +14,7 @@ jobs:
           name: Install
           command: |
             sudo apt update
-            sudo apt install ccache
+            sudo apt install ccache libglu1-mesa-dev libgmp-dev libgsl0-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = parallel::detectCores())' > $HOME/.Rprofile
             R -q -e 'print(parallel::detectCores())'
             mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
