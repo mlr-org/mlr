@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rocker/verse:3.6.1
+      - image: rocker/verse:3.5.3
     steps:
       - restore_cache:
           keys:
@@ -15,7 +15,7 @@ jobs:
           command: |
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
-            echo -e 'options(Ncpus = parallel::detectCores())' > $HOME/.Rprofile
+            echo -e 'options(Ncpus = 12)' > $HOME/.Rprofile
             R -q -e 'print(parallel::detectCores())'
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
