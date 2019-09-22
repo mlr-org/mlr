@@ -1,6 +1,7 @@
 context("regr_h2ogbm")
 
 test_that("regr_h2ogbm", {
+  skip_on_ci()
   skip_on_travis()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
