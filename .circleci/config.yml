@@ -2,7 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rocker/verse
+      - image: rocker/verse:3.6.1
+      - image: rocker/verse:3.5.3
+      - image: rocker/verse:3.4.4
     steps:
       - restore_cache:
           keys:
