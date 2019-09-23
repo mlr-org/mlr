@@ -28,6 +28,7 @@ jobs:
             R -q -e 'tic::install()'
       - run:
           name: Check
+          no_output_timeout: 60m
           command: |
             cd project && R -q -e 'tic::before_script()'
             R -q -e 'tic::script()'
