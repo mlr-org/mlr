@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
       environment:
-      DAY: $(date -d "$D" '+%d')
+        DAY: $(date -d "$D" '+%d')
     docker:
       - image: rocker/verse:3.6.1
     steps:
