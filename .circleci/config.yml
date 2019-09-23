@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rocker/verse:3.5.3
+      - image: rocker/verse:3.6.1
     steps:
       - restore_cache:
           keys:
@@ -13,9 +13,12 @@ jobs:
       - run:
           name: Install
           command: |
+            export OMP_NUM_THREADS=2
+            # for caching later
+            DAY=$(date -d "$D" '+%d')
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
-            echo -e 'options(Ncpus = 12)' > $HOME/.Rprofile
+            echo -e 'options(Ncpus = 6, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
             R -q -e 'print(parallel::detectCores())'
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
@@ -25,12 +28,30 @@ jobs:
       - run:
           name: Check
           command: |
-            cd tic.package && R -q -e 'tic::before_script()'
+            cd project && R -q -e 'tic::before_script()'
             R -q -e 'tic::script()'
-
       # save R pkg cache -------------------------------------------------------
       - save_cache: # Caches dependencies with a cache key
-          key: R-package-library
+          key: R-package-library-{{ DAY }}
           paths:
             - /usr/local/lib/R/site-library
+  deploy:
+    docker:
+      - image: rocker/base
+    steps:
+      - checkout
+      - run:
+          name: Deploy Over SSH
+          command: R -q -e 'tic::deploy()'
 
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: circle-ci
