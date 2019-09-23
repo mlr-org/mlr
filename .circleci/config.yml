@@ -1,14 +1,13 @@
 version: 2
 jobs:
   build:
-    environment:
-      DAY: eval $(date -d "$D" '+%d')
+    run: echo "$(date -d "$D" '+%d')" > _tmp_file
     docker:
       - image: rocker/verse:3.6.1
     steps:
       - restore_cache:
           keys:
-            - R-package-library-{{ .Environment.DAY }}
+            - R-package-library-{{ checksum "_tmp_file" }}
       - checkout
 
       # install deps and check pkg ---------------------------------------------
