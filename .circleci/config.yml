@@ -1,13 +1,12 @@
 version: 2
 jobs:
   build:
-    run: echo "$(date -d "$D" '+%d')" > _tmp_file
     docker:
       - image: rocker/verse:3.6.1
     steps:
+      - run: echo "$(date -d "$D" '+%d')" > _tmp_file
       - restore_cache:
-          keys:
-            - R-package-library-{{ checksum "_tmp_file" }}
+          key: R-package-library-{{ checksum "_tmp_file" }}
       - checkout
 
       # install deps and check pkg ---------------------------------------------
