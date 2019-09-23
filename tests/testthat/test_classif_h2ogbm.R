@@ -1,7 +1,7 @@
 context("classif_h2ogbm")
 
 test_that("classif_h2ogbm", {
-  skip_on_travis()
+  skip_on_ci()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
 
