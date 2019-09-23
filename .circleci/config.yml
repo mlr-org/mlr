@@ -6,7 +6,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - R-package-library
+            - R-package-library-{{ DAY }}
       - checkout
 
       # install deps and check pkg ---------------------------------------------
