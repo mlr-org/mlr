@@ -2,13 +2,13 @@ version: 2
 jobs:
   build:
     environment:
-      DAY: eval $(date -d "$D" '+%d')
+      DAY: $(date -d "$D" '+%d')
     docker:
       - image: rocker/verse:3.6.1
     steps:
       - restore_cache:
           keys:
-            - R-package-library-{{ .DAY }}
+            - R-package-library-{{ .Environment.DAY }}
       - checkout
 
       # install deps and check pkg ---------------------------------------------
@@ -32,7 +32,7 @@ jobs:
             R -q -e 'tic::script()'
       # save R pkg cache -------------------------------------------------------
       - save_cache: # Caches dependencies with a cache key
-          key: R-package-library-{{ .DAY }}
+          key: R-package-library-{{ .Environment.DAY }}
           paths:
             - /usr/local/lib/R/site-library
   deploy:
