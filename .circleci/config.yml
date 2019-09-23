@@ -4,10 +4,11 @@ jobs:
     docker:
       - image: rocker/verse:3.6.1
     steps:
-      - run: echo "$(date -d "$D" '+%d')" > _tmp_file
-      - restore_cache:
-          key: R-package-library-{{ checksum "_tmp_file" }}
       - checkout
+      - run: echo "$(date -d "$D" '+%d')" > /tmp/_tmp_file
+      - restore_cache:
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
+
 
       # install deps and check pkg ---------------------------------------------
       - run:
@@ -30,7 +31,7 @@ jobs:
             R -q -e 'tic::script()'
       # save R pkg cache -------------------------------------------------------
       - save_cache: # Caches dependencies with a cache key
-          key: R-package-library-{{ .Environment.DAY }}
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
           paths:
             - /usr/local/lib/R/site-library
   deploy:
