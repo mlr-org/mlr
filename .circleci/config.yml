@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+      environment:
+      DAY: $(date -d "$D" '+%d')
     docker:
       - image: rocker/verse:3.6.1
     steps:
@@ -15,7 +17,6 @@ jobs:
           command: |
             export OMP_NUM_THREADS=2
             # for caching later
-            DAY=$(date -d "$D" '+%d')
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = 6, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
@@ -37,7 +38,7 @@ jobs:
             - /usr/local/lib/R/site-library
   deploy:
     docker:
-      - image: rocker/base
+      - image: rocker/r-base
     steps:
       - checkout
       - run:
