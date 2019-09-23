@@ -8,7 +8,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - R-package-library-{{ DAY }}
+            - R-package-library-{{ .DAY }}
       - checkout
 
       # install deps and check pkg ---------------------------------------------
@@ -34,7 +34,7 @@ jobs:
             R -q -e 'tic::script()'
       # save R pkg cache -------------------------------------------------------
       - save_cache: # Caches dependencies with a cache key
-          key: R-package-library-{{ DAY }}
+          key: R-package-library-{{ .DAY }}
           paths:
             - /usr/local/lib/R/site-library
   deploy:
