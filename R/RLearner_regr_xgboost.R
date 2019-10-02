@@ -67,10 +67,7 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
   }
 
   task.data = getTaskData(.task, .subset, target.extra = TRUE)
-  # recode to 0:1 to that for the binary case the positive class translates to 1 (#32)
-  # task$truth() is guaranteed to have the factor levels in the right order
-  label = nlvls - as.integer(task.data$target)
-  parlist$data = xgboost::xgb.DMatrix(data = data.matrix(task.data$data), label = label)
+  parlist$data = xgboost::xgb.DMatrix(data = data.matrix(task.data$data), label = task.data$target)
 
   if (!is.null(.weights)) {
     xgboost::setinfo(parlist$data, "weight", .weights)
