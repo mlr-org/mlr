@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rocker/verse:3.6.1
+      - image: rocker/verse
     steps:
       - checkout
 
@@ -39,3 +39,20 @@ jobs:
           paths:
             - /usr/local/lib/R/site-library
 
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+# CRON job daily at 3 am in the morning
+# - runs the "build" job on the master branch
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 3 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
