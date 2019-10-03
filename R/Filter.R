@@ -276,8 +276,8 @@ rf.min.depth = makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, ...)$md.obj$order
-    setNames(-im[, 1L], rownames(im))
+		method = method, verbose = FALSE, ...)$varselect
+    setNames(im[, 1L], rownames(im))
   })
 .FilterRegister[["rf.min.depth"]] = rf.min.depth
 .FilterRegister[["rf.min.depth"]]$desc = "(DEPRECATED)"
@@ -294,8 +294,8 @@ randomForestSRC.var.select = makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, ...)$md.obj$order
-    setNames(-im[, 1L], rownames(im))
+		method = method, verbose = FALSE, ...)$varselect
+    setNames(im[, 1L], rownames(im))
   })
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
