@@ -266,8 +266,6 @@ randomForestSRC.rfsrc = makeFilter(
 #' @name makeFilter
 NULL
 
-# for some reason we cannot call 'randomForestSRC_var.select' directly as we then face
-# nested recursion problems when using other methods than "md".
 rf.min.depth = makeFilter(
   name = "randomForestSRC_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
@@ -275,9 +273,7 @@ rf.min.depth = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
-    im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, ...)$md.obj$order
-    setNames(-im[, 1L], rownames(im))
+    # redirected to randomForestSRC.var.select()
   })
 .FilterRegister[["rf.min.depth"]] = rf.min.depth
 .FilterRegister[["rf.min.depth"]]$desc = "(DEPRECATED)"
@@ -292,10 +288,17 @@ randomForestSRC.var.select = makeFilter(
   pkg = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
-  fun = function(task, nselect, method = "md", ...) {
+  fun = function(task, nselect, method = "md", conservative = "medium", ...) {
+    # method "vh.imp" is not supported as it does return values to rank features on
+    assert_choice(method, c("md", "vh"))
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, ...)$md.obj$order
-    setNames(-im[, 1L], rownames(im))
+      method = method, verbose = FALSE, always.use =  getTaskFeatureNames(task),
+      ...)
+    if (method == "md") {
+      setNames(im$varselect$depth, im$topvars)
+    } else if (method == "vh") {
+      im[["varselect"]][, 1L]
+    }
   })
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
