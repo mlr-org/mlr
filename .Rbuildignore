@@ -34,3 +34,4 @@ cran-comments.md
 revdep/*
 ^CRAN-RELEASE$
 .pre-commit-config.yaml
+^\.circleci$
