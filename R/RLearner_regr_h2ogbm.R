@@ -66,7 +66,6 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
-  weights_col = NULL
   if (!missing(.weights)) {
     wcol = ".mlr.weights"
     d[[wcol]] = .weights
