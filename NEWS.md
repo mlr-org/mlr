@@ -6,7 +6,7 @@
 
 ## filters - general
 
-- Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information.
+- Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information (@pat-s, )
 
 # mlr 2.15.0
 
