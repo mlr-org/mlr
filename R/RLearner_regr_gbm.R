@@ -5,7 +5,6 @@ makeRLearner.regr.gbm = function() {
     package = "gbm",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "distribution", default = "bernoulli", values = c("gaussian", "bernoulli", "huberized", "adaboost", "coxph", "pairwise", "laplace", "poisson", "tdist", "quantile")),
-      # FIXME default for distribution in gbm() is bernoulli
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
