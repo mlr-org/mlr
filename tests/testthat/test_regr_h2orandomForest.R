@@ -1,7 +1,7 @@
 context("regr_h2orandomForest")
 
 test_that("regr_h2orandomForest", {
-  skip_on_travis()
+  skip_on_ci()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
 

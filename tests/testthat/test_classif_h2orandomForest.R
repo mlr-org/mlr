@@ -1,7 +1,7 @@
 context("classif_h2orandomForest")
 
 test_that("classif_h2orandomForest", {
-  skip_on_travis()
+  skip_on_ci()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
 
@@ -29,6 +29,7 @@ test_that("classif_h2orandomForest", {
 })
 
 test_that("class names are integers and probabilities predicted (#1787)", {
+  skip_on_ci()
   df = data.frame(matrix(runif(100, 0, 1), 100, 9))
   classx = factor(sample(c(0, 1), 100, replace = TRUE))
   df = cbind(classx, df)
@@ -42,6 +43,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
 })
 
 test_that("feature importances are returned", {
+  skip_on_ci()
   iris2 = iris[iris$Species %in% c("versicolor", "virginica"), ]
   iris2$Species = droplevels(iris2$Species)
   task = makeClassifTask(data = iris2, target = "Species")
