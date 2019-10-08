@@ -4,7 +4,7 @@ makeRLearner.regr.gbm = function() {
     cl = "regr.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", default = "bernoulli", values = c("gaussian", "bernoulli", "huberized", "adaboost", "coxph", "pairwise", "laplace", "poisson", "tdist", "quantile")),
+      makeDiscreteLearnerParam(id = "distribution", default = "gaussian", values = c("gaussian", "bernoulli", "huberized", "adaboost", "coxph", "pairwise", "laplace", "poisson", "tdist", "quantile")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
@@ -22,7 +22,7 @@ makeRLearner.regr.gbm = function() {
     properties = c("missings", "numerics", "factors", "weights", "featimp"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = poaste0(collapse = "", c('`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.',
+    note = paste0(collapse = "", c('`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.',
                                     "Param 'n.cores' has been to set to '1' by default to suppress parallelization by the package.")),
     callees = "gbm"
   )
