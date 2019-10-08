@@ -21,8 +21,6 @@ makeRLearner.classif.gbm = function() {
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = paste0(collapse = "", c("`keep.data` is set to FALSE to reduce memory requirements.\n",
-      "Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for multiclass problems.\n",
-      "The latter is the only setting that works for > 2 classes. It is recommended to NOT use the 'multinomial' setting, see https://github.com/mlr-org/mlr/issues/2612.",
       "Param 'n.cores' has been to set to '1' by default to suppress parallelization by the package.")),
     callees = "gbm"
   )
