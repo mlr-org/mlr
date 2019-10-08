@@ -4,13 +4,13 @@ makeRLearner.regr.gbm = function() {
     cl = "regr.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", default = "gaussian", values = c("gaussian", "laplace", "poisson", "tdist", "quantile")),
+      makeDiscreteLearnerParam(id = "distribution", default = "bernoulli", values = c("gaussian", "bernoulli", "huberized", "adaboost", "coxph", "pairwise", "laplace", "poisson", "tdist", "quantile")),
       # FIXME default for distribution in gbm() is bernoulli
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "n.minobsinnode", default = 10L, lower = 1L),
-      makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
+      makeNumericLearnerParam(id = "shrinkage", default = 0.1, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "alpha", default = 0.5, lower = 0, upper = 1,
