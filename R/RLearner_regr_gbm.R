@@ -15,13 +15,15 @@ makeRLearner.regr.gbm = function() {
       makeNumericLearnerParam(id = "alpha", default = 0.5, lower = 0, upper = 1,
         requires = quote(distribution == "quantile")),
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
-      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "n.cores", default = 1, tunable = FALSE)
     ),
     par.vals = list(distribution = "gaussian", keep.data = FALSE),
     properties = c("missings", "numerics", "factors", "weights", "featimp"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = poaste0(collapse = "", c('`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.')),
+    note = poaste0(collapse = "", c('`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.',
+                                    "Param 'n.cores' has been to set to '1' by default to suppress parallelization by the package.")),
     callees = "gbm"
   )
 }
