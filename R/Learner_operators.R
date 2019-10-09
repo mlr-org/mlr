@@ -55,7 +55,7 @@ getLearnerPackages = function(learner) {
 #' @family learner
 getLearnerNote = function(learner) {
   learner = checkLearner(learner)
-  return(learner$note)
+  messagef(learner$note)
 }
 
 #' @title Get the parameter set of the learner.

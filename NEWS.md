@@ -4,6 +4,10 @@
 
 - Add `configureMlr()` to `.onLoad()`, possibly fixing some edge cases (#2585) (@pat-s, #2637)
 
+## filters - general
+
+- Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information (@pat-s, #2649)
+
 # mlr 2.15.0
 
 ## Breaking
