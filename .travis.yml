@@ -11,7 +11,6 @@ env:
     - _R_CHECK_TESTS_NLINES_=999
     # for RWeka http://weka.8497.n7.nabble.com/warnings-td42935.htm
     - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
-    - NOT_CRAN = true # for lintr::expect_lint_free()
 
 matrix:
   allow_failures:
