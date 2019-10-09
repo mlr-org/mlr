@@ -8,7 +8,7 @@ test_that("filterFeatures", {
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   # univariate.model.score, permutation.importance and auc are handled extra test below
   # 'univariate', 'randomForest_importance' and 'rfsrc_var.select' are deprecated
-  filter_list_classif = setdiff(filter.list.classif, c(
+  filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
     "univariate", "randomForest_importance", "randomForestSRC_var.select"))
   for (filter in filter.list.classif) {
