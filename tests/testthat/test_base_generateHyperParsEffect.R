@@ -29,7 +29,7 @@ test_that("generate data", {
 
 test_that("1 numeric hyperparam", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)))
+  ps = makeParamSet(makeDiscreteParam("C", values = 2^ (-2:2)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,

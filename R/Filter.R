@@ -229,7 +229,7 @@ rf.importance = makeFilter(
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
 
-randomForestSRC.rfsrc = makeFilter(
+randomForestSRC.rfsrc = makeFilter( #nolint
   name = "randomForestSRC_importance",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg = "randomForestSRC",
@@ -282,7 +282,7 @@ rf.min.depth = makeFilter(
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
 
-randomForestSRC.var.select = makeFilter(
+randomForestSRC.var.select = makeFilter( #nolint
   name = "randomForestSRC_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg = "randomForestSRC",
@@ -411,7 +411,7 @@ makeFilter(
     setNames(im, rownames(im))
   })
 
-randomForest.importance = makeFilter(
+randomForest.importance = makeFilter( #nolint
   name = "randomForest_importance",
   desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
   pkg = "randomForest",
@@ -697,7 +697,7 @@ makeFilter(
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
 
-oneR = makeFilter(
+oneR = makeFilter( #nolint
   name = "FSelector_oneR",
   desc = "oneR association rule",
   pkg = "FSelector",
@@ -922,7 +922,7 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-praznik_filter = function(fun) {
+praznik_filter = function(fun) { #nolint
   force(fun)
 
   function(task, nselect, ...) {
@@ -935,6 +935,7 @@ praznik_filter = function(fun) {
     k = max(min(nselect, ncol(X)), 1L)
     selected = names(fun(X, Y, k = k)$selection)
     score = setNames(rev(seq_along(selected)) / length(selected), selected)
+
 
     if (length(score) < ncol(X)) {
       unscored = sample(setdiff(names(X), names(score)))
@@ -1028,7 +1029,7 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-FSelectorRcpp.filter = function(type) {
+FSelectorRcpp.filter = function(type) { #nolint
   force(type)
 
   function(task, nselect, ...) {
