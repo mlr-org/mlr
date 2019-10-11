@@ -43,9 +43,9 @@ npv Negative predictive value
 acc Accuracy
 lrm Negative likelihood ratio (LR-)
 dor Diagnostic odds ratio
-" />
 
-<meta property="og:description" content="For details on the used measures see measures and also
+
+For details on the used measures see measures and also
 https://en.wikipedia.org/wiki/Receiver_operating_characteristic.
 The element for the false omission rate in the resulting object is not called for but
 fomr since for should never be used as a variable name in an object." />
@@ -67,6 +67,7 @@ fomr since for should never be used as a variable name in an object." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -311,6 +312,7 @@ fomr since for should never be used as a variable name in an object." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -336,7 +338,7 @@ fomr since for should never be used as a variable name in an object." />
 <li><p><code>dor</code> Diagnostic odds ratio</p></li>
 </ul>
 
-    <p>For details on the used measures see <a href='measures.html'>measures</a> and also
+<p>For details on the used measures see <a href='measures.html'>measures</a> and also
 <a href='https://en.wikipedia.org/wiki/Receiver_operating_characteristic'>https://en.wikipedia.org/wiki/Receiver_operating_characteristic</a>.</p>
 <p>The element for the false omission rate in the resulting object is not called <code>for</code> but
 <code>fomr</code> since <code>for</code> should never be used as a variable name in an object.</p>
@@ -345,7 +347,7 @@ fomr since for should never be used as a variable name in an object." />
     <pre class="usage"><span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)
 
 <span class='co'># S3 method for ROCMeasures</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='kw'>abbreviations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>abbreviations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -362,12 +364,12 @@ Created by calculateROCMeasures.</p></td>
     </tr>
     <tr>
       <th>abbreviations</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 If <code>TRUE</code> a short paragraph with explanations of the used measures is printed additionally.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of digits the measures are rounded to.</p></td>
     </tr>
     <tr>
@@ -385,7 +387,8 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
     
     <h2 class="hasAnchor" id="methods-by-generic-"><a class="anchor" href="#methods-by-generic-"></a>Methods (by generic)</h2>
 
-    <ul>
+    
+<ul>
 <li><p><code>print</code>:</p></li>
 </ul>
     
@@ -405,7 +408,7 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
 <span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)</div><div class='output co'>#&gt;     predicted
 #&gt; true M        R                             
 #&gt;    M 95       16        tpr: 0.86 fnr: 0.14 
@@ -445,6 +448,7 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -454,6 +458,7 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -468,6 +473,8 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
 </script>
 
 
+
   </body>
 </html>
+
 

@@ -56,6 +56,7 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -300,6 +301,7 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -328,7 +330,7 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -373,7 +375,7 @@ Also selects the optimization algorithm for feature selection.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
@@ -392,7 +394,8 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlSequential</a></span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"sfs"</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>NA</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>selectFeatures</span>(<span class='st'>"classif.rpart"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[FeatSel] Started selecting features for learner 'classif.rpart'</span></div><div class='output co'>#&gt; <span class='message'>With control class: FeatSelControlSequential</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 1: 0000 (0 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 1: mmce.test.mean=0.6400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 1000 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.2800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0100 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.4800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0010 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0001 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 1010 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0110 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0011 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Result: Petal.Length (1 bits)</span></div><div class='input'><span class='fu'><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Features         : 1
 #&gt; Performance      : mmce.test.mean=0.0400000
@@ -402,7 +405,8 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 #&gt; - Features:    0  Init   :                       Perf = 0.64  Diff: NA  *
 #&gt; - Features:    1  Add    : Petal.Length          Perf = 0.04  Diff: 0.6  *
 #&gt; 
-#&gt; Stopped, because no improving feature was found.</div></pre>
+#&gt; Stopped, because no improving feature was found.</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -419,6 +423,7 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -428,6 +433,7 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -442,6 +448,8 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 </script>
 
 
+
   </body>
 </html>
+
 

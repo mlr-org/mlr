@@ -50,6 +50,7 @@ To setup the benchmark have a look at batchmark." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -294,6 +295,7 @@ To setup the benchmark have a look at batchmark." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -304,28 +306,28 @@ To setup the benchmark have a look at batchmark." />
     </div>
 
     
-    <p>This creates a <a href='BenchmarkResult.html'>BenchmarkResult</a> from a <a href='https://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>.
+    <p>This creates a <a href='BenchmarkResult.html'>BenchmarkResult</a> from a <a href='https://rdrr.io/pkg/batchtools/man/makeExperimentRegistry.html'>batchtools::ExperimentRegistry</a>.
 To setup the benchmark have a look at <a href='batchmark.html'>batchmark</a>.</p>
     
 
     <pre class="usage"><span class='fu'>reduceBatchmarkResults</span>(<span class='kw'>ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.extract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>),
-  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
+  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/batchtools/man/getDefaultRegistry.html'>getDefaultRegistry</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ids</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> or <a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
-A <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>base::data.frame</a> (or <a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table::data.table</a>)
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> or <a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
+A <a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a> (or <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>)
 with a column named &#8220;job.id&#8221;.
 Alternatively, you may also pass a vector of integerish job ids.
-If not set, defaults to all successfully terminated jobs (return value of <a href='https://www.rdocumentation.org/packages/batchtools/topics/findJobs'>batchtools::findDone</a>.</p></td>
+If not set, defaults to all successfully terminated jobs (return value of <a href='https://rdrr.io/pkg/batchtools/man/findJobs.html'>batchtools::findDone</a>.</p></td>
     </tr>
     <tr>
       <th>keep.pred</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the prediction data in the <code>pred</code> slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
@@ -333,7 +335,7 @@ The default is set to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>keep.extract</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the <code>extract</code> slot of the result object. When creating a lot of
 benchmark results with extensive tuning, the resulting R objects can become
 very large in size. That is why the tuning results stored in the <code>extract</code>
@@ -343,14 +345,14 @@ tuning results.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     <tr>
       <th>reg</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::ExperimentRegistry</a>)<br />
-Registry, created by <a href='https://www.rdocumentation.org/packages/batchtools/topics/makeExperimentRegistry'>batchtools::makeExperimentRegistry</a>. If not explicitly passed,
+      <td><p>(<a href='https://rdrr.io/pkg/batchtools/man/makeExperimentRegistry.html'>batchtools::ExperimentRegistry</a>)<br />
+Registry, created by <a href='https://rdrr.io/pkg/batchtools/man/makeExperimentRegistry.html'>batchtools::makeExperimentRegistry</a>. If not explicitly passed,
 uses the last created registry.</p></td>
     </tr>
     </table>
@@ -400,6 +402,7 @@ uses the last created registry.</p></td>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -409,6 +412,7 @@ uses the last created registry.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -423,6 +427,8 @@ uses the last created registry.</p></td>
 </script>
 
 
+
   </body>
 </html>
+
 

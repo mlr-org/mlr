@@ -55,6 +55,7 @@ exceeds the threshold of the corresponding label." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -299,6 +300,7 @@ exceeds the threshold of the corresponding label." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -330,7 +332,7 @@ Prediction object.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 Only for binary classification it can be a single numerical threshold for the positive class.</p></td>
     </tr>
@@ -351,10 +353,10 @@ Only for binary classification it can be a single numerical threshold for the po
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>
 <span class='co'># predict probabilities and compute performance</span>
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div><div class='input'>
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div><div class='input'>
 <span class='co'># adjust threshold and predict probabilities again</span>
-<span class='no'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>setosa</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>versicolor</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>virginica</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>setThreshold</span>(<span class='no'>pred</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='no'>threshold</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div></pre>
+<span class='no'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>setosa</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>versicolor</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>virginica</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>setThreshold</span>(<span class='no'>pred</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='no'>threshold</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -371,6 +373,7 @@ Only for binary classification it can be a single numerical threshold for the po
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -380,6 +383,7 @@ Only for binary classification it can be a single numerical threshold for the po
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -394,6 +398,8 @@ Only for binary classification it can be a single numerical threshold for the po
 </script>
 
 
+
   </body>
 </html>
+
 

@@ -32,9 +32,9 @@
 
 <meta property="og:description" content="For some learners it is possible to calculate a feature importance measure.
 `getFeatureImportance` extracts those values from trained models.
-See below for a list of supported learners." />
+See below for a list of supported learners.
 
-<meta property="og:description" content="
+
 boosting 
    Measure which accounts the gain of Gini index given by a feature
    in a tree and the weight of that tree.
@@ -76,6 +76,7 @@ xgboost
    The value implies the relative contribution of the corresponding feature to the model
    calculated by taking each feature's contribution for each tree in the model. The exact
    computation of the importance in xgboost is undocumented.
+
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -95,6 +96,7 @@ xgboost
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -339,6 +341,7 @@ xgboost
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -353,7 +356,7 @@ xgboost
 `getFeatureImportance` extracts those values from trained models.
 See below for a list of supported learners.</p>
 
-    <ul>
+<ul>
 <li><p>boosting <br />
    Measure which accounts the gain of Gini index given by a feature
    in a tree and the weight of that tree.</p></li>
@@ -362,13 +365,13 @@ See below for a list of supported learners.</p>
    in randomForest. If `auc=TRUE` (only for binary classification),
    area under the curve is used as measure.  The algorithm used for the survival
    learner is 'extremely slow and experimental; use at your own risk'.
-   See <a href='https://www.rdocumentation.org/packages/party/topics/varimp'>varimp</a> for details and further parameters.</p></li>
+   See <a href='https://rdrr.io/pkg/party/man/varimp.html'>varimp</a> for details and further parameters.</p></li>
 <li><p>gbm <br />
    Estimation of relative influence for each feature. See
-   <a href='https://www.rdocumentation.org/packages/gbm/topics/relative.influence'>relative.influence</a>
+   <a href='https://rdrr.io/pkg/gbm/man/relative.influence.html'>relative.influence</a>
    for details and further parameters.</p></li>
 <li><p>h2o <br />
-   Relative feature importances as returned by <a href='https://www.rdocumentation.org/packages/h2o/topics/h2o.varimp'>varimp</a>.</p></li>
+   Relative feature importances as returned by <a href='https://rdrr.io/pkg/h2o/man/h2o.varimp.html'>varimp</a>.</p></li>
 <li><p>randomForest <br />
    For `type = 2` (the default) the 'MeanDecreaseGini' is measured,
    which is based on the Gini impurity index used for the calculation of the nodes.
@@ -376,19 +379,19 @@ See below for a list of supported learners.</p>
    decrease in accuracy calculated on OOB data. Note, that in this case
    the learner's parameter `importance` needs to be set to be able to compute
    feature importance values.
-   See <a href='https://www.rdocumentation.org/packages/randomForest/topics/importance'>importance</a> for details.</p></li>
+   See <a href='https://rdrr.io/pkg/randomForest/man/importance.html'>importance</a> for details.</p></li>
 <li><p>RRF <br />
    This is identical to randomForest.</p></li>
 <li><p>randomForestSRC <br />
    This method can calculate feature importance for
    various measures. By default the Breiman-Cutler permutation method is used.
-   See <a href='https://www.rdocumentation.org/packages/randomForestSRC/topics/vimp.rfsrc'>vimp</a> for details.</p></li>
+   See <a href='https://rdrr.io/pkg/randomForestSRC/man/vimp.rfsrc.html'>vimp</a> for details.</p></li>
 <li><p>ranger <br />
    Supports both measures mentioned above for the randomForest
    learner. Note, that you need to specifically set the learners parameter
    `importance`, to be able to compute feature importance measures.
-   See <a href='https://www.rdocumentation.org/packages/ranger/topics/importance.ranger'>importance</a> and
-   <a href='https://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger</a> for details.</p></li>
+   See <a href='https://rdrr.io/pkg/ranger/man/importance.ranger.html'>importance</a> and
+   <a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a> for details.</p></li>
 <li><p>rpart <br />
    Sum of decrease in impurity for each of the surrogate variables at each node.</p></li>
 <li><p>xgboost <br />
@@ -396,6 +399,7 @@ See below for a list of supported learners.</p>
    calculated by taking each feature's contribution for each tree in the model. The exact
    computation of the importance in xgboost is undocumented.</p></li>
 </ul>
+
     
 
     <pre class="usage"><span class='fu'>getFeatureImportance</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
@@ -433,6 +437,7 @@ generating function.</p></td>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -442,6 +447,7 @@ generating function.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -456,6 +462,8 @@ generating function.</p></td>
 </script>
 
 
+
   </body>
 </html>
+
 

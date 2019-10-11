@@ -58,6 +58,7 @@ test splits (i.e., resampling instances), you have to stick with resample." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -302,6 +303,7 @@ test splits (i.e., resampling instances), you have to stick with resample." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -369,7 +371,7 @@ test splits (i.e., resampling instances), you have to stick with <code>resample<
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -392,7 +394,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as observations in task and in corresponding order.
 Overwrites weights specified in the <code>task</code>.
@@ -400,7 +402,7 @@ By default <code>NULL</code> which means no weights are used unless specified in
     </tr>
     <tr>
       <th>models</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should all fitted models be returned?
 Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -414,7 +416,7 @@ Default is to extract nothing.</p></td>
     </tr>
     <tr>
       <th>keep.pred</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the prediction data in the <code>pred</code> slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
@@ -427,48 +429,48 @@ Further hyperparameters passed to <code>learner</code>.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     <tr>
       <th>iters</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>stratify</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>folds</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>reps</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>split</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>horizon</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>initial.window</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 See <a href='makeResampleDesc.html'>ResampleDesc</a>.</p></td>
     </tr>
     </table>
@@ -498,10 +500,10 @@ the measure. See example code below.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>resample</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.qda"</span>), <span class='no'>task</span>, <span class='no'>rdesc</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>aggr</span>)</div><div class='output co'>#&gt; mmce.test.mean 
-#&gt;     0.04666667 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>measures.test</span>)</div><div class='output co'>#&gt;   iter       mmce
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>resample</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.qda"</span>), <span class='no'>task</span>, <span class='no'>rdesc</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>aggr</span>)</div><div class='output co'>#&gt; mmce.test.mean 
+#&gt;     0.04666667 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>measures.test</span>)</div><div class='output co'>#&gt;   iter       mmce
 #&gt; 1    1 0.02666667
-#&gt; 2    2 0.06666667</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>pred</span>)</div><div class='output co'>#&gt; Resampled Prediction for:
+#&gt; 2    2 0.06666667</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>pred</span>)</div><div class='output co'>#&gt; Resampled Prediction for:
 #&gt; Resample description: cross-validation with 2 iterations.
 #&gt; Predict: test
 #&gt; Stratification: FALSE
@@ -519,7 +521,7 @@ the measure. See example code below.</p>
 <span class='co'># include the training set performance as well</span>
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"both"</span>)
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>resample</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.qda"</span>), <span class='no'>task</span>, <span class='no'>rdesc</span>,
-  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0000000    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667,mmce.train.mean=0.0066667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>aggr</span>)</div><div class='output co'>#&gt;  mmce.test.mean mmce.train.mean 
+  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0000000    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667,mmce.train.mean=0.0066667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>aggr</span>)</div><div class='output co'>#&gt;  mmce.test.mean mmce.train.mean 
 #&gt;     0.026666667     0.006666667 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -539,6 +541,7 @@ the measure. See example code below.</p>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -548,6 +551,7 @@ the measure. See example code below.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -562,6 +566,8 @@ the measure. See example code below.</p>
 </script>
 
 
+
   </body>
 </html>
+
 

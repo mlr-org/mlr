@@ -49,6 +49,7 @@
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -306,7 +308,7 @@
     <p>Create a multilabel task.</p>
     
 
-    <pre class="usage"><span class='fu'>makeMultilabelTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
+    <pre class="usage"><span class='fu'>makeMultilabelTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
   <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -315,18 +317,18 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Id string for object.
 Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(2)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(n.classes)</a></code>)<br />
 Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
 so it has length 2. For multilabel classification it contains the names of the logical
@@ -335,14 +337,14 @@ number of classes.</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Optional, non-negative case weight vector to be used during fitting.
 Cannot be set for cost-sensitive learning.
 Default is <code>NULL</code> which means no (= equal) weights.</p></td>
     </tr>
     <tr>
       <th>blocking</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/factor.html'>factor</a>)<br />
 An optional factor of the same length as the number of observations.
 Observations with the same blocking level &#8220;belong together&#8221;.
 Specifically, they are either put all in the training or the test set
@@ -351,14 +353,14 @@ Default is <code>NULL</code> which means no blocking.</p></td>
     </tr>
     <tr>
       <th>coordinates</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 Coordinates have to be numeric values.
-Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
+Provided <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
     </tr>
     <tr>
       <th>fixup.data</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Should some basic cleaning up of data be performed?
 Currently this means removing empty factor levels for the columns.
 Possible choices are:
@@ -369,7 +371,7 @@ Default is &#8220;warn&#8221;.</p></td>
     </tr>
     <tr>
       <th>check.data</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is <code>TRUE</code>.</p></td>
@@ -385,7 +387,8 @@ is then a char vector that points to these columns.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     
-    <p>For multilabel classification we assume that the presence of labels is encoded via logical
+
+<p>For multilabel classification we assume that the presence of labels is encoded via logical
 columns in <code>data</code>. The name of the column specifies the name of the label. <code>target</code>
 is then a char vector that points to these columns.</p>
     
@@ -410,6 +413,7 @@ is then a char vector that points to these columns.</p>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -419,6 +423,7 @@ is then a char vector that points to these columns.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -433,6 +438,8 @@ is then a char vector that points to these columns.</p>
 </script>
 
 
+
   </body>
 </html>
+
 

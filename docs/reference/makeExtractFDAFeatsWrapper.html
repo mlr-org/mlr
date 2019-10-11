@@ -52,6 +52,7 @@ reextractFDAFeatures before predicting." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -296,6 +297,7 @@ reextractFDAFeatures before predicting." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -312,26 +314,26 @@ Internally uses <a href='extractFDAFeatures.html'>extractFDAFeatures</a> before 
 <a href='reextractFDAFeatures.html'>reextractFDAFeatures</a> before predicting.</p>
     
 
-    <pre class="usage"><span class='fu'>makeExtractFDAFeatsWrapper</span>(<span class='no'>learner</span>, <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
+    <pre class="usage"><span class='fu'>makeExtractFDAFeatsWrapper</span>(<span class='no'>learner</span>, <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>feat.methods</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 List of functional features along with the desired methods for each functional feature.
 &#8220;all&#8221; applies the <a href='extractFDAFeatures.html'>extractFDAFeatures</a> method to each
 functional feature.
 Names of <code>feat.methods</code> must match column names of functional features.
 Available feature extraction methods are available under family <code>fda_featextractor</code>.
-Default is <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> which does nothing.</p></td>
+Default is <a href='https://rdrr.io/r/base/list.html'>list</a> which does nothing.</p></td>
     </tr>
     </table>
     
@@ -383,6 +385,7 @@ Default is <a href='https://www.rdocumentation.org/packages/base/topics/list'>li
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -392,6 +395,7 @@ Default is <a href='https://www.rdocumentation.org/packages/base/topics/list'>li
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -406,6 +410,8 @@ Default is <a href='https://www.rdocumentation.org/packages/base/topics/list'>li
 </script>
 
 
+
   </body>
 </html>
+
 
