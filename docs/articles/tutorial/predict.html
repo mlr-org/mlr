@@ -303,327 +303,324 @@
 <p>The first way is preferable if you want predictions for data already included in a <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>Just as <code><a href="../../reference/train.html">train()</a></code>, the <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) function has a <code>subset</code> argument, so you can set aside different portions of the data in <code><a href="../../reference/Task.html">Task()</a></code> for training and prediction (more advanced methods for splitting the data in train and test set are described in the section on <a href="resample.html" target="_blank">resampling</a>).</p>
 <p>In the following example we fit a gradient boosting machine (<code><a href="https://rdrr.io/pkg/gbm/man/gbm.html">gbm::gbm()</a></code>) to every second observation of the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set and make predictions on the remaining data in <code><a href="../../reference/bh.task.html">bh.task()</a></code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>n =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(bh.task)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>train.set =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, n, <span class="dt">by =</span> <span class="dv">2</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>test.set =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, n, <span class="dt">by =</span> <span class="dv">2</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, <span class="dt">n.trees =</span> <span class="dv">100</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task, <span class="dt">subset =</span> train.set)</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a>task.pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.set)</span>
-<span id="cb1-8"><a href="#cb1-8"></a>task.pred</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">## Prediction: 253 observations</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">## predict.type: response</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">## threshold: </span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">## time: 0.00</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">##    id truth response</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">## 2   2  21.6 22.27841</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">## 4   4  33.4 38.92484</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">## 6   6  28.7 25.36387</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">## 8   8  27.1 15.61735</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="co">## 10 10  18.9 16.98708</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">## 12 12  18.9 20.41749</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">## ... (#rows: 253, #cols: 3)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">n =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(bh.task)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">train.set =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, n, <span class="dt">by =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">test.set =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, n, <span class="dt">by =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, <span class="dt">n.trees =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task, <span class="dt">subset =</span> train.set)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">task.pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.set)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">task.pred</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">## Prediction: 253 observations</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">## predict.type: response</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## threshold: </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">## time: 0.00</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">##    id truth response</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">## 2   2  21.6 22.27841</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 4   4  33.4 38.92484</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 6   6  28.7 25.36387</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## 8   8  27.1 15.61735</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## 10 10  18.9 16.98708</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">## 12 12  18.9 20.41749</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">## ... (#rows: 253, #cols: 3)</a></code></pre></div>
 <p>The second way is useful if you want to predict data not included in the <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>Here we cluster the <code>iris</code> data set without the target variable. All observations with an odd index are included in the <code><a href="../../reference/Task.html">Task()</a></code> and used for training. Predictions are made for the remaining observations.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>n =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(iris)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>iris.train =<span class="st"> </span>iris[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, n, <span class="dt">by =</span> <span class="dv">2</span>), <span class="dv">-5</span>]</span>
-<span id="cb2-3"><a href="#cb2-3"></a>iris.test =<span class="st"> </span>iris[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, n, <span class="dt">by =</span> <span class="dv">2</span>), <span class="dv">-5</span>]</span>
-<span id="cb2-4"><a href="#cb2-4"></a>task =<span class="st"> </span><span class="kw"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> iris.train)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"cluster.kmeans"</span>, task)</span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a>newdata.pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris.test)</span>
-<span id="cb2-8"><a href="#cb2-8"></a>newdata.pred</span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">## Prediction: 75 observations</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">## predict.type: response</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">## threshold: </span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">## time: 0.00</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">##    response</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">## 2         2</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">## 4         2</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">## 6         2</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">## 8         2</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">## 10        2</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">## 12        2</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">## ... (#rows: 75, #cols: 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">n =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(iris)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">iris.train =<span class="st"> </span>iris[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, n, <span class="dt">by =</span> <span class="dv">2</span>), <span class="dv">-5</span>]</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">iris.test =<span class="st"> </span>iris[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, n, <span class="dt">by =</span> <span class="dv">2</span>), <span class="dv">-5</span>]</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">task =<span class="st"> </span><span class="kw"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> iris.train)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"cluster.kmeans"</span>, task)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">newdata.pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris.test)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">newdata.pred</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## Prediction: 75 observations</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## predict.type: response</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## threshold: </a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## time: 0.00</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">##    response</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">## 2         2</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">## 4         2</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">## 6         2</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">## 8         2</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">## 10        2</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">## 12        2</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">## ... (#rows: 75, #cols: 1)</a></code></pre></div>
 <p>Note that for supervised learning you do not have to remove the target columns from the data. These columns are automatically removed prior to calling the underlying <code>predict</code> method of the learner.</p>
 <div id="accessing-the-prediction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#accessing-the-prediction" class="anchor"></a>Accessing the prediction</h1>
 <p>Function <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> returns a named <code>list</code> of class <code><a href="../../reference/Prediction.html">Prediction()</a></code>. Its most important element is <code>$data</code> which is a <code>data.frame</code> that contains columns with the true values of the target variable (in case of supervised learning problems) and the predictions. Use <code>as.data.frame</code> (<code><a href="../../reference/Prediction.html">Prediction()</a></code>) for direct access.</p>
 <p>In the following the predictions on the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) and the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data sets are shown. As you may recall, the predictions in the first case were made from a <code><a href="../../reference/Task.html">Task()</a></code> and in the second case from a <code>data.frame</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">### Result of predict with data passed via task argument</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(task.pred))</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">##    id truth response</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">## 2   2  21.6 22.52737</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">## 4   4  33.4 36.06190</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">## 6   6  28.7 24.75354</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">## 8   8  27.1 16.90299</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">## 10 10  18.9 17.25558</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">## 12 12  18.9 20.54365</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">### Result of predict with data passed via newdata argument</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(newdata.pred))</span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">##    response</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">## 2         1</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">## 4         1</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">## 6         1</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">## 8         1</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">## 10        1</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">## 12        1</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">### Result of predict with data passed via task argument</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(task.pred))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">##    id truth response</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">## 2   2  21.6 22.52737</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## 4   4  33.4 36.06190</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">## 6   6  28.7 24.75354</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">## 8   8  27.1 16.90299</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## 10 10  18.9 17.25558</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## 12 12  18.9 20.54365</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">### Result of predict with data passed via newdata argument</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(newdata.pred))</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">##    response</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">## 2         1</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">## 4         1</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">## 6         1</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">## 8         1</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">## 10        1</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">## 12        1</a></code></pre></div>
 <p>As you can see when predicting from a <code><a href="../../reference/Task.html">Task()</a></code>, the resulting <code>data.frame</code> contains an additional column, called <code>id</code>, which tells us which element in the original data set the prediction corresponds to.</p>
 <p>A direct way to access the true and predicted values of the target variable(s) is provided by functions <code>getPredictionTruth</code> (<code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code>) and [<code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code>].</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(task.pred))</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## [1] 21.6 33.4 28.7 27.1 18.9 18.9</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(task.pred))</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">## [1] 22.52737 36.06190 24.75354 16.90299 17.25558 20.54365</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(task.pred))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">## [1] 21.6 33.4 28.7 27.1 18.9 18.9</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(task.pred))</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">## [1] 22.52737 36.06190 24.75354 16.90299 17.25558 20.54365</a></code></pre></div>
 <div id="regression-extracting-standard-errors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression-extracting-standard-errors" class="anchor"></a>Regression: Extracting standard errors</h2>
 <p>Some learners provide standard errors for predictions, which can be accessed in <code>mlr</code>. An overview is given by calling the function <code><a href="../../reference/listLearners.html">listLearners()</a></code> and setting <code>properties = "se"</code>. By assigning <code>FALSE</code> to <code>check.packages</code> learners from packages which are not installed will be included in the overview.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"regr"</span>, <span class="dt">check.packages =</span> <span class="ot">FALSE</span>, <span class="dt">properties =</span> <span class="st">"se"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"name"</span>)]</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">## Warning in listLearners.character("regr", check.packages = FALSE, properties = "se"): The following learners could not be constructed, probably because their packages are not installed:</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">## cluster.MiniBatchKmeans</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">##          class</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">## 1   regr.bcart</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">## 2     regr.bgp</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">## 3  regr.bgpllm</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">## 4     regr.blm</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## 5    regr.btgp</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## 6 regr.btgpllm</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">##                                                                      name</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">## 1                                                           Bayesian CART</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## 2                                               Bayesian Gaussian Process</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">## 3       Bayesian Gaussian Process with jumps to the Limiting Linear Model</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## 4                                                   Bayesian Linear Model</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">## 5                                         Bayesian Treed Gaussian Process</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">## 6 Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">## ... (#rows: 16, #cols: 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"regr"</span>, <span class="dt">check.packages =</span> <span class="ot">FALSE</span>, <span class="dt">properties =</span> <span class="st">"se"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"name"</span>)]</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">##          class</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## 1   regr.bcart</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">## 2     regr.bgp</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">## 3  regr.bgpllm</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">## 4     regr.blm</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">## 5    regr.btgp</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">## 6 regr.btgpllm</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">##                                                                      name</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## 1                                                           Bayesian CART</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## 2                                               Bayesian Gaussian Process</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## 3       Bayesian Gaussian Process with jumps to the Limiting Linear Model</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">## 4                                                   Bayesian Linear Model</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">## 5                                         Bayesian Treed Gaussian Process</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">## 6 Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">## ... (#rows: 16, #cols: 2)</a></code></pre></div>
 <p>In this example we train a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code>) on the <code>BostonHousing</code> (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) dataset. In order to calculate standard errors set the <code>predict.type</code> to <code>"se"</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">### Create learner and specify predict.type</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>lrn.lm =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">predict.type =</span> <span class="st">'se'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3"></a>mod.lm =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.lm, bh.task, <span class="dt">subset =</span> train.set)</span>
-<span id="cb6-4"><a href="#cb6-4"></a>task.pred.lm =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod.lm, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.set)</span>
-<span id="cb6-5"><a href="#cb6-5"></a>task.pred.lm</span>
-<span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">## Prediction: 253 observations</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">## predict.type: se</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">## threshold: </span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">## time: 0.00</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">##    id truth response        se</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## 2   2  21.6 24.83734 0.7501615</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">## 4   4  33.4 28.38206 0.8742590</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">## 6   6  28.7 25.16725 0.8652139</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">## 8   8  27.1 19.38145 1.1963265</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">## 10 10  18.9 18.66449 1.1793944</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">## 12 12  18.9 21.25802 1.0727918</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="co">## ... (#rows: 253, #cols: 4)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">### Create learner and specify predict.type</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">lrn.lm =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">predict.type =</span> <span class="st">'se'</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">mod.lm =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn.lm, bh.task, <span class="dt">subset =</span> train.set)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">task.pred.lm =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod.lm, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.set)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">task.pred.lm</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">## Prediction: 253 observations</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">## predict.type: se</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">## threshold: </a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">## time: 0.00</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">##    id truth response        se</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">## 2   2  21.6 24.83734 0.7501615</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">## 4   4  33.4 28.38206 0.8742590</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">## 6   6  28.7 25.16725 0.8652139</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">## 8   8  27.1 19.38145 1.1963265</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">## 10 10  18.9 18.66449 1.1793944</a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">## 12 12  18.9 21.25802 1.0727918</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">## ... (#rows: 253, #cols: 4)</a></code></pre></div>
 <p>The standard errors can then be extracted using <code><a href="../../reference/getPredictionResponse.html">getPredictionSE()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionSE</a></span>(task.pred.lm))</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="co">## [1] 0.7501615 0.8742590 0.8652139 1.1963265 1.1793944 1.0727918</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionSE</a></span>(task.pred.lm))</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">## [1] 0.7501615 0.8742590 0.8652139 1.1963265 1.1793944 1.0727918</a></code></pre></div>
 </div>
 <div id="classification-and-clustering-extracting-probabilities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classification-and-clustering-extracting-probabilities" class="anchor"></a>Classification and clustering: Extracting probabilities</h2>
 <p>The predicted probabilities can be extracted from the <code><a href="../../reference/Prediction.html">Prediction()</a></code> using function <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code>. Here is another cluster analysis example. We use fuzzy c-means clustering (<code><a href="https://rdrr.io/pkg/e1071/man/cmeans.html">e1071::cmeans()</a></code>) on the <code>mtcars</code> (<code><a href="https://rdrr.io/r/datasets/mtcars.html">datasets::mtcars()</a></code>) data set.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.cmeans"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> mtcars.task)</span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">##                            1           2</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## Mazda RX4         0.97959904 0.020400964</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## Mazda RX4 Wag     0.97963925 0.020360747</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## Datsun 710        0.99265879 0.007341207</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## Hornet 4 Drive    0.54294775 0.457052250</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## Hornet Sportabout 0.01870883 0.981291168</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## Valiant           0.75748561 0.242514386</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.cmeans"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> mtcars.task)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">##                            1           2</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## Mazda RX4         0.97959904 0.020400964</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">## Mazda RX4 Wag     0.97963925 0.020360747</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## Datsun 710        0.99265879 0.007341207</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## Hornet 4 Drive    0.54294775 0.457052250</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## Hornet Sportabout 0.01870883 0.981291168</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## Valiant           0.75748561 0.242514386</a></code></pre></div>
 <p>For <em>classification problems</em> there are some more things worth mentioning. By default, class labels are predicted.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">### Linear discriminant analysis on the iris data set</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, <span class="dt">task =</span> iris.task)</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> iris.task)</span>
-<span id="cb9-5"><a href="#cb9-5"></a>pred</span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">## Prediction: 150 observations</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">## predict.type: response</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">## threshold: </span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">## time: 0.00</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">##   id  truth response</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">## 1  1 setosa   setosa</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">## 2  2 setosa   setosa</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">## 3  3 setosa   setosa</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">## 4  4 setosa   setosa</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">## 5  5 setosa   setosa</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co">## 6  6 setosa   setosa</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="co">## ... (#rows: 150, #cols: 3)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">### Linear discriminant analysis on the iris data set</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, <span class="dt">task =</span> iris.task)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> iris.task)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">pred</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">## Prediction: 150 observations</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">## predict.type: response</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">## threshold: </a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">## time: 0.00</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">##   id  truth response</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">## 1  1 setosa   setosa</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">## 2  2 setosa   setosa</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">## 3  3 setosa   setosa</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">## 4  4 setosa   setosa</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">## 5  5 setosa   setosa</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">## 6  6 setosa   setosa</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">## ... (#rows: 150, #cols: 3)</a></code></pre></div>
 <p>In order to get predicted posterior probabilities we have to create a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) with the appropriate <code>predict.type</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred))</span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co">##    truth prob.setosa prob.versicolor prob.virginica response</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co">## 1 setosa           1               0              0   setosa</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">## 2 setosa           1               0              0   setosa</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">## 3 setosa           1               0              0   setosa</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">## 4 setosa           1               0              0   setosa</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">## 5 setosa           1               0              0   setosa</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="co">## 6 setosa           1               0              0   setosa</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred))</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">##    truth prob.setosa prob.versicolor prob.virginica response</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## 1 setosa           1               0              0   setosa</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">## 2 setosa           1               0              0   setosa</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">## 3 setosa           1               0              0   setosa</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">## 4 setosa           1               0              0   setosa</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">## 5 setosa           1               0              0   setosa</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">## 6 setosa           1               0              0   setosa</a></code></pre></div>
 <p>In addition to the probabilities, class labels are predicted by choosing the class with the maximum probability and breaking ties at random.</p>
 <p>As mentioned above, the predicted posterior probabilities can be accessed via the <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> function.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="co">##   setosa versicolor virginica</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="co">## 1      1          0         0</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co">## 2      1          0         0</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="co">## 3      1          0         0</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="co">## 4      1          0         0</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="co">## 5      1          0         0</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="co">## 6      1          0         0</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred))</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">##   setosa versicolor virginica</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">## 1      1          0         0</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">## 2      1          0         0</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">## 3      1          0         0</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">## 4      1          0         0</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">## 5      1          0         0</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">## 6      1          0         0</a></code></pre></div>
 </div>
 <div id="classification-confusion-matrix" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classification-confusion-matrix" class="anchor"></a>Classification: Confusion matrix</h2>
 <p>A confusion matrix can be obtained by calling <code><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix()</a></code>. The columns represent predicted and the rows true class labels.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred)</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">##             predicted</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">## true         setosa versicolor virginica -err.-</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">##   setosa         50          0         0      0</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">##   versicolor      0         49         1      1</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="co">##   virginica       0          5        45      5</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">##   -err.-          0          5         1      6</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">##             predicted</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">## true         setosa versicolor virginica -err.-</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">##   setosa         50          0         0      0</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">##   versicolor      0         49         1      1</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">##   virginica       0          5        45      5</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">##   -err.-          0          5         1      6</a></code></pre></div>
 <p>You can see the number of correctly classified observations on the diagonal of the matrix. Misclassified observations are on the off-diagonal. The total number of errors for single (true and predicted) classes is shown in the <code>-err.-</code> row and column, respectively.</p>
 <p>To get relative frequencies additional to the absolute numbers we can set <code>relative = TRUE</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>conf.matrix =<span class="st"> </span><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred, <span class="dt">relative =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb13-2"><a href="#cb13-2"></a>conf.matrix</span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">## Relative confusion matrix (normalized by row/column):</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co">##             predicted</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co">## true         setosa    versicolor virginica -err.-   </span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="co">##   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00     </span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co">##   versicolor 0.00/0.00 0.98/0.91  0.02/0.02 0.02     </span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co">##   virginica  0.00/0.00 0.10/0.09  0.90/0.98 0.10     </span></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">##   -err.-          0.00      0.09       0.02 0.04     </span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co">## </span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="co">## </span></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="co">## Absolute confusion matrix:</span></span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="co">##             predicted</span></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="co">## true         setosa versicolor virginica -err.-</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co">##   setosa         50          0         0      0</span></span>
-<span id="cb13-16"><a href="#cb13-16"></a><span class="co">##   versicolor      0         49         1      1</span></span>
-<span id="cb13-17"><a href="#cb13-17"></a><span class="co">##   virginica       0          5        45      5</span></span>
-<span id="cb13-18"><a href="#cb13-18"></a><span class="co">##   -err.-          0          5         1      6</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">conf.matrix =<span class="st"> </span><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred, <span class="dt">relative =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">conf.matrix</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">## Relative confusion matrix (normalized by row/column):</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">##             predicted</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">## true         setosa    versicolor virginica -err.-   </a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">##   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00     </a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">##   versicolor 0.00/0.00 0.98/0.91  0.02/0.02 0.02     </a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">##   virginica  0.00/0.00 0.10/0.09  0.90/0.98 0.10     </a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">##   -err.-          0.00      0.09       0.02 0.04     </a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">## </a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">## </a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">## Absolute confusion matrix:</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">##             predicted</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14">## true         setosa versicolor virginica -err.-</a>
+<a class="sourceLine" id="cb13-15" data-line-number="15">##   setosa         50          0         0      0</a>
+<a class="sourceLine" id="cb13-16" data-line-number="16">##   versicolor      0         49         1      1</a>
+<a class="sourceLine" id="cb13-17" data-line-number="17">##   virginica       0          5        45      5</a>
+<a class="sourceLine" id="cb13-18" data-line-number="18">##   -err.-          0          5         1      6</a></code></pre></div>
 <p>It is possible to normalize by either row or column, therefore every element of the above relative confusion matrix contains two values. The first is the relative frequency grouped by row (the true label) and the second value grouped by column (the predicted label).</p>
 <p>If you want to access the relative values directly you can do this through the <code>$relative.row</code> and <code>$relative.col</code> members of the returned object <code>conf.matrix</code>. For more details see the <code><a href="../../reference/ConfusionMatrix.html">ConfusionMatrix()</a></code> documentation page.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>conf.matrix<span class="op">$</span>relative.row</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co">##            setosa versicolor virginica -err-</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="co">## setosa          1       0.00      0.00  0.00</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co">## versicolor      0       0.98      0.02  0.02</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co">## virginica       0       0.10      0.90  0.10</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">conf.matrix<span class="op">$</span>relative.row</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">##            setosa versicolor virginica -err-</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">## setosa          1       0.00      0.00  0.00</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">## versicolor      0       0.98      0.02  0.02</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">## virginica       0       0.10      0.90  0.10</a></code></pre></div>
 <p>Finally, we can also add the absolute number of observations for each predicted and true class label to the matrix (both absolute and relative) by setting <code>sums = TRUE</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred, <span class="dt">relative =</span> <span class="ot">TRUE</span>, <span class="dt">sums =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="co">## Relative confusion matrix (normalized by row/column):</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="co">##             predicted</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co">## true         setosa    versicolor virginica -err.-    -n- </span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">##   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00      50  </span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co">##   versicolor 0.00/0.00 0.98/0.91  0.02/0.02 0.02      54  </span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co">##   virginica  0.00/0.00 0.10/0.09  0.90/0.98 0.10      46  </span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="co">##   -err.-          0.00      0.09       0.02 0.04      &lt;NA&gt;</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a><span class="co">##   -n-        50        50         50        &lt;NA&gt;      150 </span></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co">## </span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="co">## </span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">## Absolute confusion matrix:</span></span>
-<span id="cb15-13"><a href="#cb15-13"></a><span class="co">##            setosa versicolor virginica -err.- -n-</span></span>
-<span id="cb15-14"><a href="#cb15-14"></a><span class="co">## setosa         50          0         0      0  50</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="co">## versicolor      0         49         1      1  50</span></span>
-<span id="cb15-16"><a href="#cb15-16"></a><span class="co">## virginica       0          5        45      5  50</span></span>
-<span id="cb15-17"><a href="#cb15-17"></a><span class="co">## -err.-          0          5         1      6  NA</span></span>
-<span id="cb15-18"><a href="#cb15-18"></a><span class="co">## -n-            50         54        46     NA 150</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred, <span class="dt">relative =</span> <span class="ot">TRUE</span>, <span class="dt">sums =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">## Relative confusion matrix (normalized by row/column):</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">##             predicted</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">## true         setosa    versicolor virginica -err.-    -n- </a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">##   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00      50  </a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">##   versicolor 0.00/0.00 0.98/0.91  0.02/0.02 0.02      54  </a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">##   virginica  0.00/0.00 0.10/0.09  0.90/0.98 0.10      46  </a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">##   -err.-          0.00      0.09       0.02 0.04      &lt;NA&gt;</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">##   -n-        50        50         50        &lt;NA&gt;      150 </a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">## </a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">## </a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">## Absolute confusion matrix:</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">##            setosa versicolor virginica -err.- -n-</a>
+<a class="sourceLine" id="cb15-14" data-line-number="14">## setosa         50          0         0      0  50</a>
+<a class="sourceLine" id="cb15-15" data-line-number="15">## versicolor      0         49         1      1  50</a>
+<a class="sourceLine" id="cb15-16" data-line-number="16">## virginica       0          5        45      5  50</a>
+<a class="sourceLine" id="cb15-17" data-line-number="17">## -err.-          0          5         1      6  NA</a>
+<a class="sourceLine" id="cb15-18" data-line-number="18">## -n-            50         54        46     NA 150</a></code></pre></div>
 </div>
 <div id="classification-adjusting-the-decision-threshold" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classification-adjusting-the-decision-threshold" class="anchor"></a>Classification: Adjusting the decision threshold</h2>
 <p>We can set the threshold value that is used to map the predicted posterior probabilities to class labels. Note that for this purpose we need to create a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) that predicts probabilities. For binary classification, the threshold determines when the <em>positive</em> class is predicted. The default is 0.5. Now, we set the threshold for the positive class to 0.9 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.9). Which of the two classes is the positive one can be seen by accessing the <code><a href="../../reference/Task.html">Task()</a></code>. To illustrate binary classification, we use the <code>Sonar</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html">mlbench::Sonar()</a></code>) data set from the <code>mlbench</code> package.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</span>
-<span id="cb16-3"><a href="#cb16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">### Label of the positive class</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="kw"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span>(sonar.task)<span class="op">$</span>positive</span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="co">## [1] "M"</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="co">### Default threshold</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a>pred1 =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, sonar.task)</span>
-<span id="cb16-10"><a href="#cb16-10"></a>pred1<span class="op">$</span>threshold</span>
-<span id="cb16-11"><a href="#cb16-11"></a><span class="co">##   M   R </span></span>
-<span id="cb16-12"><a href="#cb16-12"></a><span class="co">## 0.5 0.5</span></span>
-<span id="cb16-13"><a href="#cb16-13"></a></span>
-<span id="cb16-14"><a href="#cb16-14"></a><span class="co">### Set the threshold value for the positive class</span></span>
-<span id="cb16-15"><a href="#cb16-15"></a>pred2 =<span class="st"> </span><span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(pred1, <span class="fl">0.9</span>)</span>
-<span id="cb16-16"><a href="#cb16-16"></a>pred2<span class="op">$</span>threshold</span>
-<span id="cb16-17"><a href="#cb16-17"></a><span class="co">##   M   R </span></span>
-<span id="cb16-18"><a href="#cb16-18"></a><span class="co">## 0.9 0.1</span></span>
-<span id="cb16-19"><a href="#cb16-19"></a></span>
-<span id="cb16-20"><a href="#cb16-20"></a>pred2</span>
-<span id="cb16-21"><a href="#cb16-21"></a><span class="co">## Prediction: 208 observations</span></span>
-<span id="cb16-22"><a href="#cb16-22"></a><span class="co">## predict.type: prob</span></span>
-<span id="cb16-23"><a href="#cb16-23"></a><span class="co">## threshold: M=0.90,R=0.10</span></span>
-<span id="cb16-24"><a href="#cb16-24"></a><span class="co">## time: 0.00</span></span>
-<span id="cb16-25"><a href="#cb16-25"></a><span class="co">##   id truth    prob.M    prob.R response</span></span>
-<span id="cb16-26"><a href="#cb16-26"></a><span class="co">## 1  1     R 0.1060606 0.8939394        R</span></span>
-<span id="cb16-27"><a href="#cb16-27"></a><span class="co">## 2  2     R 0.7333333 0.2666667        R</span></span>
-<span id="cb16-28"><a href="#cb16-28"></a><span class="co">## 3  3     R 0.0000000 1.0000000        R</span></span>
-<span id="cb16-29"><a href="#cb16-29"></a><span class="co">## 4  4     R 0.1060606 0.8939394        R</span></span>
-<span id="cb16-30"><a href="#cb16-30"></a><span class="co">## 5  5     R 0.9250000 0.0750000        M</span></span>
-<span id="cb16-31"><a href="#cb16-31"></a><span class="co">## 6  6     R 0.0000000 1.0000000        R</span></span>
-<span id="cb16-32"><a href="#cb16-32"></a><span class="co">## ... (#rows: 208, #cols: 5)</span></span>
-<span id="cb16-33"><a href="#cb16-33"></a></span>
-<span id="cb16-34"><a href="#cb16-34"></a><span class="co">### We can also set the effect in the confusion matrix</span></span>
-<span id="cb16-35"><a href="#cb16-35"></a><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred1)</span>
-<span id="cb16-36"><a href="#cb16-36"></a><span class="co">##         predicted</span></span>
-<span id="cb16-37"><a href="#cb16-37"></a><span class="co">## true      M  R -err.-</span></span>
-<span id="cb16-38"><a href="#cb16-38"></a><span class="co">##   M      95 16     16</span></span>
-<span id="cb16-39"><a href="#cb16-39"></a><span class="co">##   R      10 87     10</span></span>
-<span id="cb16-40"><a href="#cb16-40"></a><span class="co">##   -err.- 10 16     26</span></span>
-<span id="cb16-41"><a href="#cb16-41"></a></span>
-<span id="cb16-42"><a href="#cb16-42"></a><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred2)</span>
-<span id="cb16-43"><a href="#cb16-43"></a><span class="co">##         predicted</span></span>
-<span id="cb16-44"><a href="#cb16-44"></a><span class="co">## true      M  R -err.-</span></span>
-<span id="cb16-45"><a href="#cb16-45"></a><span class="co">##   M      84 27     27</span></span>
-<span id="cb16-46"><a href="#cb16-46"></a><span class="co">##   R       6 91      6</span></span>
-<span id="cb16-47"><a href="#cb16-47"></a><span class="co">##   -err.-  6 27     33</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">### Label of the positive class</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="kw"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span>(sonar.task)<span class="op">$</span>positive</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">## [1] "M"</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">### Default threshold</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">pred1 =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, sonar.task)</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">pred1<span class="op">$</span>threshold</a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">##   M   R </a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">## 0.5 0.5</a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14">### Set the threshold value for the positive class</a>
+<a class="sourceLine" id="cb16-15" data-line-number="15">pred2 =<span class="st"> </span><span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(pred1, <span class="fl">0.9</span>)</a>
+<a class="sourceLine" id="cb16-16" data-line-number="16">pred2<span class="op">$</span>threshold</a>
+<a class="sourceLine" id="cb16-17" data-line-number="17">##   M   R </a>
+<a class="sourceLine" id="cb16-18" data-line-number="18">## 0.9 0.1</a>
+<a class="sourceLine" id="cb16-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb16-20" data-line-number="20">pred2</a>
+<a class="sourceLine" id="cb16-21" data-line-number="21">## Prediction: 208 observations</a>
+<a class="sourceLine" id="cb16-22" data-line-number="22">## predict.type: prob</a>
+<a class="sourceLine" id="cb16-23" data-line-number="23">## threshold: M=0.90,R=0.10</a>
+<a class="sourceLine" id="cb16-24" data-line-number="24">## time: 0.00</a>
+<a class="sourceLine" id="cb16-25" data-line-number="25">##   id truth    prob.M    prob.R response</a>
+<a class="sourceLine" id="cb16-26" data-line-number="26">## 1  1     R 0.1060606 0.8939394        R</a>
+<a class="sourceLine" id="cb16-27" data-line-number="27">## 2  2     R 0.7333333 0.2666667        R</a>
+<a class="sourceLine" id="cb16-28" data-line-number="28">## 3  3     R 0.0000000 1.0000000        R</a>
+<a class="sourceLine" id="cb16-29" data-line-number="29">## 4  4     R 0.1060606 0.8939394        R</a>
+<a class="sourceLine" id="cb16-30" data-line-number="30">## 5  5     R 0.9250000 0.0750000        M</a>
+<a class="sourceLine" id="cb16-31" data-line-number="31">## 6  6     R 0.0000000 1.0000000        R</a>
+<a class="sourceLine" id="cb16-32" data-line-number="32">## ... (#rows: 208, #cols: 5)</a>
+<a class="sourceLine" id="cb16-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb16-34" data-line-number="34">### We can also set the effect in the confusion matrix</a>
+<a class="sourceLine" id="cb16-35" data-line-number="35"><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred1)</a>
+<a class="sourceLine" id="cb16-36" data-line-number="36">##         predicted</a>
+<a class="sourceLine" id="cb16-37" data-line-number="37">## true      M  R -err.-</a>
+<a class="sourceLine" id="cb16-38" data-line-number="38">##   M      95 16     16</a>
+<a class="sourceLine" id="cb16-39" data-line-number="39">##   R      10 87     10</a>
+<a class="sourceLine" id="cb16-40" data-line-number="40">##   -err.- 10 16     26</a>
+<a class="sourceLine" id="cb16-41" data-line-number="41"></a>
+<a class="sourceLine" id="cb16-42" data-line-number="42"><span class="kw"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(pred2)</a>
+<a class="sourceLine" id="cb16-43" data-line-number="43">##         predicted</a>
+<a class="sourceLine" id="cb16-44" data-line-number="44">## true      M  R -err.-</a>
+<a class="sourceLine" id="cb16-45" data-line-number="45">##   M      84 27     27</a>
+<a class="sourceLine" id="cb16-46" data-line-number="46">##   R       6 91      6</a>
+<a class="sourceLine" id="cb16-47" data-line-number="47">##   -err.-  6 27     33</a></code></pre></div>
 <p>Note that in the binary case <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> by default extracts the posterior probabilities of the positive class only.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred1))</span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="co">## [1] 0.1060606 0.7333333 0.0000000 0.1060606 0.9250000 0.0000000</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co">### But we can change that, too</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred1, <span class="dt">cl =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"M"</span>, <span class="st">"R"</span>)))</span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="co">##           M         R</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="co">## 1 0.1060606 0.8939394</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a><span class="co">## 2 0.7333333 0.2666667</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">## 3 0.0000000 1.0000000</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="co">## 4 0.1060606 0.8939394</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="co">## 5 0.9250000 0.0750000</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="co">## 6 0.0000000 1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred1))</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">## [1] 0.1060606 0.7333333 0.0000000 0.1060606 0.9250000 0.0000000</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">### But we can change that, too</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(pred1, <span class="dt">cl =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"M"</span>, <span class="st">"R"</span>)))</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">##           M         R</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">## 1 0.1060606 0.8939394</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">## 2 0.7333333 0.2666667</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">## 3 0.0000000 1.0000000</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">## 4 0.1060606 0.8939394</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11">## 5 0.9250000 0.0750000</a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">## 6 0.0000000 1.0000000</a></code></pre></div>
 <p>It works similarly for multiclass classification. The threshold has to be given by a named vector specifying the values by which each probability will be divided. The class with the maximum resulting value is then selected.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</span>
-<span id="cb18-3"><a href="#cb18-3"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>pred<span class="op">$</span>threshold</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="co">##     setosa versicolor  virginica </span></span>
-<span id="cb18-6"><a href="#cb18-6"></a><span class="co">##  0.3333333  0.3333333  0.3333333</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred)<span class="op">$</span>response)</span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co">## </span></span>
-<span id="cb18-9"><a href="#cb18-9"></a><span class="co">##     setosa versicolor  virginica </span></span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="co">##         50         54         46</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a>pred =<span class="st"> </span><span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(pred, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">setosa =</span> <span class="fl">0.01</span>, <span class="dt">versicolor =</span> <span class="dv">50</span>, <span class="dt">virginica =</span> <span class="dv">1</span>))</span>
-<span id="cb18-12"><a href="#cb18-12"></a>pred<span class="op">$</span>threshold</span>
-<span id="cb18-13"><a href="#cb18-13"></a><span class="co">##     setosa versicolor  virginica </span></span>
-<span id="cb18-14"><a href="#cb18-14"></a><span class="co">##       0.01      50.00       1.00</span></span>
-<span id="cb18-15"><a href="#cb18-15"></a><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred)<span class="op">$</span>response)</span>
-<span id="cb18-16"><a href="#cb18-16"></a><span class="co">## </span></span>
-<span id="cb18-17"><a href="#cb18-17"></a><span class="co">##     setosa versicolor  virginica </span></span>
-<span id="cb18-18"><a href="#cb18-18"></a><span class="co">##         50          0        100</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">pred<span class="op">$</span>threshold</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">##     setosa versicolor  virginica </a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">##  0.3333333  0.3333333  0.3333333</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred)<span class="op">$</span>response)</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">## </a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">##     setosa versicolor  virginica </a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">##         50         54         46</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">pred =<span class="st"> </span><span class="kw"><a href="../../reference/setThreshold.html">setThreshold</a></span>(pred, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">setosa =</span> <span class="fl">0.01</span>, <span class="dt">versicolor =</span> <span class="dv">50</span>, <span class="dt">virginica =</span> <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12">pred<span class="op">$</span>threshold</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13">##     setosa versicolor  virginica </a>
+<a class="sourceLine" id="cb18-14" data-line-number="14">##       0.01      50.00       1.00</a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred)<span class="op">$</span>response)</a>
+<a class="sourceLine" id="cb18-16" data-line-number="16">## </a>
+<a class="sourceLine" id="cb18-17" data-line-number="17">##     setosa versicolor  virginica </a>
+<a class="sourceLine" id="cb18-18" data-line-number="18">##         50          0        100</a></code></pre></div>
 <p>If you are interested in tuning the threshold (vector) have a look at the section about <a href="roc_analysis.html" target="_blank">performance curves and threshold tuning</a>.</p>
 </div>
 </div>
@@ -633,25 +630,26 @@
 <p>The function <code><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction()</a></code> allows to visualize predictions, e.g., for teaching purposes or exploring models. It trains the chosen learning method for 1 or 2 selected features and then displays the predictions with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code>.</p>
 <p>For <em>classification</em>, we get a scatter plot of 2 features (by default the first 2 in the data set). The type of symbol shows the true class labels of the data points. Symbols with white border indicate misclassified observations. The posterior probabilities (if the learner under consideration supports this) are represented by the background color where higher saturation means larger probabilities.</p>
 <p>The plot title displays the ID of the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (in the following example CART), its parameters, its training performance and its cross-validation performance. <a href="measures.html" target="_blank">mmce</a> stands for <em>mean misclassification error</em>, i.e., the error rate. See the sections on <a href="performance.html" target="_blank">performance</a> and <a href="resample.html" target="_blank">resampling</a> for further explanations.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">id =</span> <span class="st">"CART"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> iris.task)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">id =</span> <span class="st">"CART"</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> iris.task)</a></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>For <em>clustering</em> we also get a scatter plot of two selected features. The color of the points indicates the predicted cluster.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>)</span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> mtcars.task, <span class="dt">features =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), <span class="dt">cv =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> mtcars.task, <span class="dt">features =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), <span class="dt">cv =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</a></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>For <em>regression</em>, there are two types of plots. The 1D plot shows the target values in relation to a single feature, the regression curve and, if the chosen learner supports this, the estimated standard error.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="st">"lstat"</span>, <span class="dt">task =</span> bh.task)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="st">"lstat"</span>, <span class="dt">task =</span> bh.task)</a></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
 <p>The 2D variant, as in the classification case, generates a scatter plot of 2 features. The fill color of the dots illustrates the value of the target variable <code>"medv"</code>, the background colors show the estimated mean. The plot does not represent the estimated standard error.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lstat"</span>, <span class="st">"rm"</span>), <span class="dt">task =</span> bh.task)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lstat"</span>, <span class="st">"rm"</span>), <span class="dt">task =</span> bh.task)</a></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -683,7 +681,8 @@
 --></footer>
 </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

@@ -297,55 +297,55 @@
 <li>evaluate the performance of the model (<a href="performance.html">here</a>).</li>
 </ul>
 <p>First, let’s have a look at the data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(BostonHousing, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(BostonHousing)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">##       crim                zn             indus       chas   </span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471  </span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">##  1st Qu.: 0.08204   1st Qu.:  0.00   1st Qu.: 5.19   1: 35  </span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">##  Median : 0.25651   Median :  0.00   Median : 9.69          </span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co">##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14          </span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10          </span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">##  Max.   :88.97620   Max.   :100.00   Max.   :27.74          </span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">##       nox               rm             age              dis        </span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  </span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  </span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  </span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  </span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  </span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  </span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">##       rad              tax           ptratio            b         </span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  </span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="co">##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  </span></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  </span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  </span></span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="co">##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  </span></span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="co">##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  </span></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="co">##      lstat            medv      </span></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="co">##  Min.   : 1.73   Min.   : 5.00  </span></span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="co">##  1st Qu.: 6.95   1st Qu.:17.02  </span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="co">##  Median :11.36   Median :21.20  </span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">##  Mean   :12.65   Mean   :22.53  </span></span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="co">##  3rd Qu.:16.95   3rd Qu.:25.00  </span></span>
-<span id="cb1-30"><a href="#cb1-30"></a><span class="co">##  Max.   :37.97   Max.   :50.00</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(BostonHousing, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(BostonHousing)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">##       crim                zn             indus       chas   </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471  </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">##  1st Qu.: 0.08204   1st Qu.:  0.00   1st Qu.: 5.19   1: 35  </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">##  Median : 0.25651   Median :  0.00   Median : 9.69          </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14          </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10          </a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">##  Max.   :88.97620   Max.   :100.00   Max.   :27.74          </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">##       nox               rm             age              dis        </a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  </a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  </a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  </a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">##       rad              tax           ptratio            b         </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  </a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  </a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  </a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  </a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  </a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  </a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">##      lstat            medv      </a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">##  Min.   : 1.73   Min.   : 5.00  </a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">##  1st Qu.: 6.95   1st Qu.:17.02  </a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">##  Median :11.36   Median :21.20  </a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">##  Mean   :12.65   Mean   :22.53  </a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">##  3rd Qu.:16.95   3rd Qu.:25.00  </a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">##  Max.   :37.97   Max.   :50.00</a></code></pre></div>
 <p>This data set concerns housing in the suburban area of Boston. The target variable, chosen for the regression task, is <code>medv</code> - the median value of owner-occupied homes in $1000’s. Description of the others 13 attributes can be found at <code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>).</p>
 <div id="define-a-task" class="section level1">
 <h1 class="hasAnchor">
 <a href="#define-a-task" class="anchor"></a>Define a task</h1>
 <p>Now, let us continue with defining the regression <a href="task.html">task</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Make a task</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>regr.task =<span class="st"> </span><span class="kw"><a href="../../reference/RegrTask.html">makeRegrTask</a></span>(<span class="dt">data =</span> BostonHousing, <span class="dt">target =</span> <span class="st">"medv"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>regr.task</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">## Supervised task: BostonHousing</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## Type: regr</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">## Target: medv</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">## Observations: 506</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">## Features:</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">##    numerics     factors     ordered functionals </span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">##          12           1           0           0 </span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">## Missings: FALSE</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">## Has weights: FALSE</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">## Has blocking: FALSE</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">## Has coordinates: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Make a task</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">regr.task =<span class="st"> </span><span class="kw"><a href="../../reference/RegrTask.html">makeRegrTask</a></span>(<span class="dt">data =</span> BostonHousing, <span class="dt">target =</span> <span class="st">"medv"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">regr.task</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## Supervised task: BostonHousing</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## Type: regr</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## Target: medv</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## Observations: 506</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## Features:</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">##          12           1           0           0 </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## Missings: FALSE</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">## Has coordinates: FALSE</a></code></pre></div>
 <p>In order to get an overview of the features type, we can print out the <code>regr.task</code>. This shows that there are 12 numeric and one factor variables in the data set.</p>
 </div>
 <div id="tuning" class="section level1">
@@ -355,69 +355,68 @@
 <p>With so many learners it is difficult to choose which one would be optimal for this specific task. As such we will choose a sample of these learners and compare their results. This analysis uses the classical linear regression model (<code>regr.lm</code>), SVM (<code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code>) with a radial basis kernel (<code>regr.ksvm</code>) and random forest from the ranger (<code><a href="https://rdrr.io/pkg/ranger/man/ranger.html">ranger::ranger()</a></code>) package (<code>regr.ranger</code>). In order to get a quick overview of all learner-specific tunable parameters you can call <code><a href="../../reference/getLearnerParamSet.html">getLearnerParamSet()</a></code> or its alias <code><a href="https://rdrr.io/pkg/ParamHelpers/man/getParamSet.html">ParamHelpers::getParamSet()</a></code>, which will list learner’s hyperparameters and their properties.</p>
 <p>Before setting up a <a href="benchmark_experiments.html">benchmark experiment</a> we can specify which hyperparameters are going to be tuned. The <code>mlr</code> package provides powerful tuning algorithms, such as iterated F-racing (<code><a href="https://rdrr.io/pkg/irace/man/irace.html">irace::irace()</a></code>), CMA Evolution Strategy (<code><a href="https://rdrr.io/pkg/cmaes/man/cma_es.html">cmaes::cma_es()</a></code>), model-based / Bayesian optimization (<code><a href="https://rdrr.io/pkg/mlrMBO/man/mbo.html">mlrMBO::mbo()</a></code>) and generalized simulated annealing (<code><a href="https://rdrr.io/pkg/GenSA/man/GenSA.html">GenSA::GenSA()</a></code>). See <a href="tuning.html">Tuning</a> and <a href="advanced_tune.html">Advanced Tuning</a> for more details.</p>
 <p>For each learner one hyperparameter will be tuned, i.e. kernel parameter <code>sigma</code> for SVM model and the number of trees (<code>num.trees</code>) in the random forest model. We start with specifying a search space for each of these parameters. With <code><a href="../../reference/makeTuneControlCMAES.html">makeTuneControlCMAES()</a></code> we set the tuning method to be CMA Evolution Strategy (<code><a href="https://rdrr.io/pkg/cmaes/man/cma_es.html">cmaes::cma_es()</a></code>). Afterwards we take 5-fold cross validation as our <a href="resample.html">resampling strategy</a> and root mean squared error (<code>rmse</code>) as optimization criterion. Finally, we make tuning wrapper for each learner.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Define a search space for each learner'S parameter</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>ps_ksvm =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a>ps_rf =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
-<span id="cb3-9"><a href="#cb3-9"></a>  <span class="kw">makeIntegerParam</span>(<span class="st">"num.trees"</span>, <span class="dt">lower =</span> 1L, <span class="dt">upper =</span> 200L)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>)</span>
-<span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Choose a resampling strategy</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 5L)</span>
-<span id="cb3-14"><a href="#cb3-14"></a></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># Choose a performance measure</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>meas =<span class="st"> </span>rmse</span>
-<span id="cb3-17"><a href="#cb3-17"></a></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># Choose a tuning method</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlCMAES.html">makeTuneControlCMAES</a></span>(<span class="dt">budget =</span> 100L)</span>
-<span id="cb3-20"><a href="#cb3-20"></a></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co"># Make tuning wrappers</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a>tuned.ksvm =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ksvm"</span>, <span class="dt">resampling =</span> rdesc, <span class="dt">measures =</span> meas,</span>
-<span id="cb3-23"><a href="#cb3-23"></a>  <span class="dt">par.set =</span> ps_ksvm, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb3-24"><a href="#cb3-24"></a>tuned.rf =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ranger"</span>, <span class="dt">resampling =</span> rdesc, <span class="dt">measures =</span> meas,</span>
-<span id="cb3-25"><a href="#cb3-25"></a>  <span class="dt">par.set =</span> ps_rf, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># Define a search space for each learner'S parameter</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">ps_ksvm =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">ps_rf =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">makeIntegerParam</span>(<span class="st">"num.trees"</span>, <span class="dt">lower =</span> 1L, <span class="dt">upper =</span> 200L)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># Choose a resampling strategy</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 5L)</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># Choose a performance measure</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">meas =<span class="st"> </span>rmse</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co"># Choose a tuning method</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlCMAES.html">makeTuneControlCMAES</a></span>(<span class="dt">budget =</span> 100L)</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co"># Make tuning wrappers</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">tuned.ksvm =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ksvm"</span>, <span class="dt">resampling =</span> rdesc, <span class="dt">measures =</span> meas,</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">  <span class="dt">par.set =</span> ps_ksvm, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">tuned.rf =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ranger"</span>, <span class="dt">resampling =</span> rdesc, <span class="dt">measures =</span> meas,</a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">  <span class="dt">par.set =</span> ps_rf, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
 <div id="benchmark-experiment" class="section level1">
 <h1 class="hasAnchor">
 <a href="#benchmark-experiment" class="anchor"></a>Benchmark Experiment</h1>
 <p>In order to conduct a <a href="benchmark_experiments.html">benchmark experiment</a>, it is necessary to choose an evaluation method. We will use the resampling strategy and the performance measure from the previous section and then pass the tuning wrappers as arguments into the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Four learners to be compared</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>lrns =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>), tuned.ksvm, tuned.rf)</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># Conduct the benchmark experiment</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>bmr =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">learners =</span> lrns, <span class="dt">tasks =</span> regr.task, <span class="dt">resamplings =</span> rdesc, <span class="dt">measures =</span> rmse, </span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Four learners to be compared</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">lrns =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>), tuned.ksvm, tuned.rf)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Conduct the benchmark experiment</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">bmr =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">learners =</span> lrns, <span class="dt">tasks =</span> regr.task, <span class="dt">resamplings =</span> rdesc, <span class="dt">measures =</span> rmse, </a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
 <div id="performance" class="section level1">
 <h1 class="hasAnchor">
 <a href="#performance" class="anchor"></a>Performance</h1>
 <p>Now we want to evaluate the results.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span>(bmr)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">## $BostonHousing</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">## $BostonHousing$regr.lm</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">## rmse.test.rmse </span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">##       4.841535 </span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">## </span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">## $BostonHousing$regr.ksvm.tuned</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">## rmse.test.rmse </span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">##       3.775318 </span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## </span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## $BostonHousing$regr.ranger.tuned</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## rmse.test.rmse </span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">##       3.478283</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span>(bmr)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">## $BostonHousing</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## $BostonHousing$regr.lm</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">## rmse.test.rmse </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">##       4.841535 </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">## </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">## $BostonHousing$regr.ksvm.tuned</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">## rmse.test.rmse </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">##       3.775318 </a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## </a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## $BostonHousing$regr.ranger.tuned</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## rmse.test.rmse </a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">##       3.478283</a></code></pre></div>
 <p>A closer look at the boxplot reveals that RF outperforms the other learners for this specific task. Despite the tuning procedure performed before, the benchmark experiment for linear and lasso regression yields similar but poor results.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr)</a></code></pre></div>
 <p><img src="usecase_regression_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -444,7 +443,8 @@
 --></footer>
 </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

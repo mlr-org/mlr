@@ -14,7 +14,6 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,13 +28,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-
 <meta property="og:title" content="Fuse learner with preprocessing. — makePreprocWrapper" />
+
 <meta property="og:description" content="Fuses a base learner with a preprocessing method. Creates a learner object, which can be
 used like any other learner object, but which internally preprocesses the data as requested.
 If the train or predict function is called on data / a task, the preprocessing is always performed automatically." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -45,6 +43,7 @@ If the train or predict function is called on data / a task, the preprocessing i
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -258,6 +257,7 @@ If the train or predict function is called on data / a task, the preprocessing i
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -306,13 +306,15 @@ If the train or predict function is called on data / a task, the preprocessing i
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/PreprocWrapper.R'><code>R/PreprocWrapper.R</code></a></small>
     </div>
 
+    
     <p>Fuses a base learner with a preprocessing method. Creates a learner object, which can be
 used like any other learner object, but which internally preprocesses the data as requested.
 If the train or predict function is called on data / a task, the preprocessing is always performed automatically.</p>
+    
 
     <pre class="usage"><span class='fu'>makePreprocWrapper</span>(<span class='no'>learner</span>, <span class='no'>train</span>, <span class='no'>predict</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(),
   <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -356,10 +358,11 @@ Named list of default values for params in <code>args</code> respectively <code>
 Default is empty list.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='makeLearner.html'>Learner</a>).</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
@@ -386,15 +389,18 @@ Default is empty list.</p></td>
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
@@ -413,7 +419,8 @@ Default is empty list.</p></td>
       </footer>
    </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -421,6 +428,7 @@ Default is empty list.</p></td>
  debug: false // Set debug to true if you want to inspect the dropdown
 });
 </script>
+
 
 
   </body>

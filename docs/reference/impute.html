@@ -14,7 +14,6 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,8 +28,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-
 <meta property="og:title" content="Impute and re-impute data — impute" />
+
 <meta property="og:description" content="Allows imputation of missing feature values through various techniques.
 Note that you have the possibility to re-impute a data set
 in the same way as the imputation was performed during training.
@@ -47,7 +46,6 @@ under imputations or create one yourself using makeImputeMethod." />
 <meta name="twitter:card" content="summary" />
 
 
-
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,6 +53,7 @@ under imputations or create one yourself using makeImputeMethod." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -268,6 +267,7 @@ under imputations or create one yourself using makeImputeMethod." />
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -316,6 +316,7 @@ under imputations or create one yourself using makeImputeMethod." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Impute.R'><code>R/Impute.R</code></a></small>
     </div>
 
+    
     <p>Allows imputation of missing feature values through various techniques.
 Note that you have the possibility to re-impute a data set
 in the same way as the imputation was performed during training.
@@ -329,12 +330,13 @@ It can then be passed together with a new data set to <a href='reimpute.html'>re
 see function arguments.</p>
 <p>You can either provide an arbitrary object, use a built-in imputation method listed
 under <a href='imputations.html'>imputations</a> or create one yourself using <a href='makeImputeMethod.html'>makeImputeMethod</a>.</p>
+    
 
     <pre class="usage"><span class='fu'>impute</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
   <span class='kw'>dummy.type</span> <span class='kw'>=</span> <span class='st'>"factor"</span>, <span class='kw'>force.dummies</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>impute.new.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>recode.factor.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -406,13 +408,14 @@ feature factor in the training data after imputation?.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)</p>
 <dt>data (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)</dt><dd><p>Imputed data.</p></dd>
 <dt>desc (<code>ImputationDesc</code>)</dt><dd><p>Description object.</p></dd>
 
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The description object contains these slots</p><dl class='dl-horizontal'>
@@ -428,11 +431,13 @@ including newly created ones during imputation.</p></dd>
 
 </dl>
 
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other impute: <code><a href='imputations.html'>imputations</a></code>,
   <code><a href='makeImputeMethod.html'>makeImputeMethod</a></code>,
   <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>, <code><a href='reimpute.html'>reimpute</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>NA</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>)), <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>)
@@ -447,9 +452,13 @@ including newly created ones during imputation.</p></dd>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -470,7 +479,8 @@ including newly created ones during imputation.</p></dd>
       </footer>
    </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -478,6 +488,7 @@ including newly created ones during imputation.</p></dd>
  debug: false // Set debug to true if you want to inspect the dropdown
 });
 </script>
+
 
 
   </body>

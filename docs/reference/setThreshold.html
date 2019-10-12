@@ -14,7 +14,6 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,8 +28,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-
 <meta property="og:title" content="Set threshold of prediction object. — setThreshold" />
+
 <meta property="og:description" content="Set threshold of prediction object for classification or multilabel classification.
 Creates corresponding discrete class response for the newly set threshold.
 For binary classification: The positive class is predicted if the probability value exceeds the threshold.
@@ -41,7 +40,6 @@ exceeds the threshold of the corresponding label." />
 <meta name="twitter:card" content="summary" />
 
 
-
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -49,6 +47,7 @@ exceeds the threshold of the corresponding label." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -262,6 +261,7 @@ exceeds the threshold of the corresponding label." />
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -310,6 +310,7 @@ exceeds the threshold of the corresponding label." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/setThreshold.R'><code>R/setThreshold.R</code></a></small>
     </div>
 
+    
     <p>Set threshold of prediction object for classification or multilabel classification.
 Creates corresponding discrete class response for the newly set threshold.
 For binary classification: The positive class is predicted if the probability value exceeds the threshold.
@@ -317,9 +318,10 @@ For multiclass: Probabilities are divided by corresponding thresholds and the cl
 The result of both are equivalent if in the multi-threshold case the values are greater than 0 and sum to 1.
 For multilabel classification: A label is predicted (with entry <code>TRUE</code>) if a probability matrix entry
 exceeds the threshold of the corresponding label.</p>
+    
 
     <pre class="usage"><span class='fu'>setThreshold</span>(<span class='no'>pred</span>, <span class='no'>threshold</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -335,13 +337,15 @@ Threshold to produce class labels. Has to be a named vector, where names corresp
 Only for binary classification it can be a single numerical threshold for the positive class.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='Prediction.html'>Prediction</a>) with changed threshold and corresponding response.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='predict.WrappedModel.html'>predict.WrappedModel</a></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># create task and train learner (LDA)</span>
@@ -358,8 +362,11 @@ Only for binary classification it can be a single numerical threshold for the po
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -380,7 +387,8 @@ Only for binary classification it can be a single numerical threshold for the po
       </footer>
    </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -388,6 +396,7 @@ Only for binary classification it can be a single numerical threshold for the po
  debug: false // Set debug to true if you want to inspect the dropdown
 });
 </script>
+
 
 
   </body>
