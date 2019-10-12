@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Get target data of task. — getTaskTargets" />
 
+<meta property="og:title" content="Get target data of task. — getTaskTargets" />
 <meta property="og:description" content="Get target data of task." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,12 +304,10 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Task_operators.R'><code>R/Task_operators.R</code></a></small>
     </div>
 
-    
     <p>Get target data of task.</p>
-    
 
     <pre class="usage"><span class='fu'>getTaskTargets</span>(<span class='no'>task</span>, <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -318,7 +318,7 @@ The task.</p></td>
     </tr>
     <tr>
       <th>recode.target</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are &#8220;01&#8221;, &#8220;-1+1&#8221; and &#8220;drop.levels&#8221;.
 In the two latter cases the target vector is converted into a numeric vector.
@@ -327,16 +327,15 @@ The positive class is coded as &#8220;+1&#8221; and the negative class either as
 In the multilabel case the logical targets can be converted to factors with &#8220;multilabel.factor&#8221;.
 For survival, you may choose to recode the survival times to &#8220;left&#8221;, &#8220;right&#8221; or &#8220;interval2&#8221; censored times
 using &#8220;lcens&#8221;, &#8220;rcens&#8221; or &#8220;icens&#8221;, respectively.
-See <a href='https://www.rdocumentation.org/packages/survival/topics/Surv'>survival::Surv</a> for the format specification.
+See <a href='https://rdrr.io/pkg/survival/man/Surv.html'>survival::Surv</a> for the format specification.
 Default for both binary classification and survival is &#8220;no&#8221; (do nothing).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>factor</code> for classification or a <code>numeric</code> for regression, a data.frame
 of logical columns for multilabel.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other task: <code><a href='getTaskClassLevels.html'>getTaskClassLevels</a></code>,
@@ -347,7 +346,6 @@ of logical columns for multilabel.</p>
   <code><a href='getTaskNFeats.html'>getTaskNFeats</a></code>, <code><a href='getTaskSize.html'>getTaskSize</a></code>,
   <code><a href='getTaskTargetNames.html'>getTaskTargetNames</a></code>,
   <code><a href='getTaskType.html'>getTaskType</a></code>, <code><a href='subsetTask.html'>subsetTask</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
@@ -382,16 +380,14 @@ of logical columns for multilabel.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -402,11 +398,11 @@ of logical columns for multilabel.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -418,4 +414,5 @@ of logical columns for multilabel.</p>
 
   </body>
 </html>
+
 

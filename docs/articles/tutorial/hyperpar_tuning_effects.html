@@ -263,6 +263,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
@@ -292,20 +293,20 @@
 <ul>
 <li>the hyperparameter search space:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># ex: create a search space for the C hyperparameter from 0.01 to 0.1</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="fl">0.01</span>, <span class="dt">upper =</span> <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># ex: create a search space for the C hyperparameter from 0.01 to 0.1</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="fl">0.01</span>, <span class="dt">upper =</span> <span class="fl">0.1</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>)</span></code></pre></div>
 <ul>
 <li>the optimization algorithm (aka tuning method):</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># ex: random search with 100 iterations</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># ex: random search with 100 iterations</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</span></code></pre></div>
 <ul>
 <li>an evaluation method, i.e., a resampling strategy and a performance measure:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># ex: 2-fold CV</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># ex: 2-fold CV</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</span></code></pre></div>
 <p>After tuning, you may want to evaluate the tuning process in order to answer questions such as:</p>
 <ul>
 <li>How does varying the value of a hyperparameter change the performance of the machine learning algorithm?</li>
@@ -318,121 +319,121 @@
 <a href="#generating-hyperparameter-tuning-data" class="anchor"></a>Generating hyperparameter tuning data</h1>
 <p><code>mlr</code> separates the generation of the data from the plotting of the data in case the user wishes to use the data in a custom way downstream.</p>
 <p>The <code><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData()</a></code> method takes the tuning result along with 2 additional arguments: <code>trafo</code> and <code>include.diagnostics</code>. The <code>trafo</code> argument will convert the hyperparameter data to be on the transformed scale in case a transformation was used when creating the parameter (as in the case below). The <code>include.diagnostics</code> argument will tell <code>mlr</code> whether to include the eol and any error messages from the learner.</p>
-<p>Below we perform random search on the <code>C</code> parameter for SVM on the famous Pima Indians (<code><a href="https://www.rdocumentation.org/packages/mlbench/topics/PimaIndiansDiabetes">mlbench::PimaIndiansDiabetes()</a></code>) dataset. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the transformed scale and we do not include diagnostic data:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res, <span class="dt">trafo =</span> T, <span class="dt">include.diagnostics =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## HyperParsEffectData:</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## Hyperparameters: C</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## Measures: acc.test.mean,mmce.test.mean</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## Optimizer: TuneControlRandom</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## Nested CV Used: FALSE</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## Snapshot of data:</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">##            C acc.test.mean mmce.test.mean iteration exec.time</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## 1 0.18477464     0.7317708      0.2682292         1     0.833</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## 2 0.19252244     0.7304688      0.2695312         2     0.041</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## 3 4.75219120     0.7200521      0.2799479         3     0.040</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## 4 0.05567812     0.6536458      0.3463542         4     0.579</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## 5 0.12179856     0.7161458      0.2838542         5     0.064</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">## 6 6.25359181     0.7239583      0.2760417         6     0.056</a></code></pre></div>
+<p>Below we perform random search on the <code>C</code> parameter for SVM on the famous Pima Indians (<code><a href="https://rdrr.io/pkg/mlbench/man/PimaIndiansDiabetes.html">mlbench::PimaIndiansDiabetes()</a></code>) dataset. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the transformed scale and we do not include diagnostic data:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res, <span class="dt">trafo =</span> T, <span class="dt">include.diagnostics =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## HyperParsEffectData:</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## Hyperparameters: C</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## Measures: acc.test.mean,mmce.test.mean</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## Optimizer: TuneControlRandom</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## Nested CV Used: FALSE</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## Snapshot of data:</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">##            C acc.test.mean mmce.test.mean iteration exec.time</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 1 0.18477464     0.7317708      0.2682292         1     0.833</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 2 0.19252244     0.7304688      0.2695312         2     0.041</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 3 4.75219120     0.7200521      0.2799479         3     0.040</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 4 0.05567812     0.6536458      0.3463542         4     0.579</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## 5 0.12179856     0.7161458      0.2838542         5     0.064</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## 6 6.25359181     0.7239583      0.2760417         6     0.056</span></span></code></pre></div>
 <p>As a reminder from the <a href="resample.html" target="_blank">resampling</a> tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L, <span class="dt">predict =</span> <span class="st">"both"</span>)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, <span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(acc, train.mean), mmce, <span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(mmce,</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">    train.mean)), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res, <span class="dt">trafo =</span> T, <span class="dt">include.diagnostics =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## HyperParsEffectData:</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## Hyperparameters: C</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## Measures: acc.test.mean,acc.train.mean,mmce.test.mean,mmce.train.mean</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## Optimizer: TuneControlRandom</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## Nested CV Used: FALSE</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">## Snapshot of data:</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">##            C acc.test.mean acc.train.mean mmce.test.mean mmce.train.mean</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">## 1 0.07253028     0.6575521      0.6588542      0.3424479       0.3411458</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## 2 4.09306975     0.7617188      0.8906250      0.2382812       0.1093750</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">## 3 2.23762232     0.7552083      0.8710938      0.2447917       0.1289062</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21">## 4 0.11080224     0.6940104      0.7187500      0.3059896       0.2812500</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">## 5 3.37586150     0.7565104      0.8867188      0.2434896       0.1132812</a>
-<a class="sourceLine" id="cb5-23" data-line-number="23">## 6 1.77872565     0.7669271      0.8567708      0.2330729       0.1432292</a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">##   iteration exec.time</a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">## 1         1     0.095</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">## 2         2     0.079</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27">## 3         3     0.102</a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">## 4         4     0.092</a>
-<a class="sourceLine" id="cb5-29" data-line-number="29">## 5         5     0.071</a>
-<a class="sourceLine" id="cb5-30" data-line-number="30">## 6         6     0.088</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L, <span class="dt">predict =</span> <span class="st">"both"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, <span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(acc, train.mean), mmce, <span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(mmce,</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    train.mean)), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res, <span class="dt">trafo =</span> T, <span class="dt">include.diagnostics =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## HyperParsEffectData:</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## Hyperparameters: C</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">## Measures: acc.test.mean,acc.train.mean,mmce.test.mean,mmce.train.mean</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## Optimizer: TuneControlRandom</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">## Nested CV Used: FALSE</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## Snapshot of data:</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">##            C acc.test.mean acc.train.mean mmce.test.mean mmce.train.mean</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">## 1 0.07253028     0.6575521      0.6588542      0.3424479       0.3411458</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">## 2 4.09306975     0.7617188      0.8906250      0.2382812       0.1093750</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">## 3 2.23762232     0.7552083      0.8710938      0.2447917       0.1289062</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## 4 0.11080224     0.6940104      0.7187500      0.3059896       0.2812500</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">## 5 3.37586150     0.7565104      0.8867188      0.2434896       0.1132812</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">## 6 1.77872565     0.7669271      0.8567708      0.2330729       0.1432292</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">##   iteration exec.time</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">## 1         1     0.095</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">## 2         2     0.079</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">## 3         3     0.102</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">## 4         4     0.092</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">## 5         5     0.071</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">## 6         6     0.088</span></span></code></pre></div>
 <p>In the example below, we perform grid search on the <code>C</code> parameter for SVM on the Pima Indians dataset using nested cross validation. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the untransformed scale and we do not include diagnostic data. As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">## HyperParsEffectData:</a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">## Hyperparameters: C</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">## Measures: acc.test.mean,mmce.test.mean</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">## Optimizer: TuneControlGrid</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">## Nested CV Used: TRUE</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">## Snapshot of data:</a>
-<a class="sourceLine" id="cb6-17" data-line-number="17">##            C acc.test.mean mmce.test.mean iteration exec.time</a>
-<a class="sourceLine" id="cb6-18" data-line-number="18">## 1 -5.0000000     0.6536458      0.3463542         1     0.064</a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">## 2 -3.8888889     0.6536458      0.3463542         2     0.037</a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">## 3 -2.7777778     0.6718750      0.3281250         3     0.036</a>
-<a class="sourceLine" id="cb6-21" data-line-number="21">## 4 -1.6666667     0.7291667      0.2708333         4     0.038</a>
-<a class="sourceLine" id="cb6-22" data-line-number="22">## 5 -0.5555556     0.7369792      0.2630208         5     0.037</a>
-<a class="sourceLine" id="cb6-23" data-line-number="23">## 6  0.5555556     0.7369792      0.2630208         6     0.051</a>
-<a class="sourceLine" id="cb6-24" data-line-number="24">##   nested_cv_run</a>
-<a class="sourceLine" id="cb6-25" data-line-number="25">## 1             1</a>
-<a class="sourceLine" id="cb6-26" data-line-number="26">## 2             1</a>
-<a class="sourceLine" id="cb6-27" data-line-number="27">## 3             1</a>
-<a class="sourceLine" id="cb6-28" data-line-number="28">## 4             1</a>
-<a class="sourceLine" id="cb6-29" data-line-number="29">## 5             1</a>
-<a class="sourceLine" id="cb6-30" data-line-number="30">## 6             1</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">## HyperParsEffectData:</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">## Hyperparameters: C</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">## Measures: acc.test.mean,mmce.test.mean</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">## Optimizer: TuneControlGrid</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">## Nested CV Used: TRUE</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">## Snapshot of data:</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">##            C acc.test.mean mmce.test.mean iteration exec.time</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">## 1 -5.0000000     0.6718750      0.3281250         1     0.066</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">## 2 -3.8888889     0.6718750      0.3281250         2     0.077</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## 3 -2.7777778     0.6744792      0.3255208         3     0.070</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## 4 -1.6666667     0.7187500      0.2812500         4     0.049</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## 5 -0.5555556     0.7526042      0.2473958         5     0.049</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## 6  0.5555556     0.7630208      0.2369792         6     0.054</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">##   nested_cv_run</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## 1             1</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">## 2             1</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## 3             1</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## 4             1</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## 5             1</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## 6             1</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</span>
+<span id="cb6-5"><a href="#cb6-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">control =</span> ctrl,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb6-8"><a href="#cb6-8"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">## HyperParsEffectData:</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## Hyperparameters: C</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">## Measures: acc.test.mean,mmce.test.mean</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">## Optimizer: TuneControlGrid</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">## Nested CV Used: TRUE</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">## Snapshot of data:</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">##            C acc.test.mean mmce.test.mean iteration exec.time</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">## 1 -5.0000000     0.6536458      0.3463542         1     0.064</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">## 2 -3.8888889     0.6536458      0.3463542         2     0.037</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">## 3 -2.7777778     0.6718750      0.3281250         3     0.036</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">## 4 -1.6666667     0.7291667      0.2708333         4     0.038</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="co">## 5 -0.5555556     0.7369792      0.2630208         5     0.037</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co">## 6  0.5555556     0.7369792      0.2630208         6     0.051</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">##   nested_cv_run</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co">## 1             1</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a><span class="co">## 2             1</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="co">## 3             1</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a><span class="co">## 4             1</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="co">## 5             1</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="co">## 6             1</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</span>
+<span id="cb7-5"><a href="#cb7-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">control =</span> ctrl,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">## HyperParsEffectData:</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">## Hyperparameters: C</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">## Measures: acc.test.mean,mmce.test.mean</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">## Optimizer: TuneControlGrid</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">## Nested CV Used: TRUE</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">## Snapshot of data:</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">##            C acc.test.mean mmce.test.mean iteration exec.time</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">## 1 -5.0000000     0.6718750      0.3281250         1     0.066</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">## 2 -3.8888889     0.6718750      0.3281250         2     0.077</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="co">## 3 -2.7777778     0.6744792      0.3255208         3     0.070</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="co">## 4 -1.6666667     0.7187500      0.2812500         4     0.049</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="co">## 5 -0.5555556     0.7526042      0.2473958         5     0.049</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="co">## 6  0.5555556     0.7630208      0.2369792         6     0.054</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a><span class="co">##   nested_cv_run</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="co">## 1             1</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="co">## 2             1</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="co">## 3             1</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="co">## 4             1</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a><span class="co">## 5             1</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a><span class="co">## 6             1</span></span></code></pre></div>
 <p>After generating the hyperparameter effect data, the next step is to visualize it. <code>mlr</code> has several methods built-in to visualize the data, meant to support the needs of the researcher and the engineer in industry. The next few sections will walk through the visualization support for several use-cases.</p>
 </div>
 <div id="visualizing-the-effect-of-a-single-hyperparameter" class="section level1">
@@ -440,61 +441,61 @@
 <a href="#visualizing-the-effect-of-a-single-hyperparameter" class="anchor"></a>Visualizing the effect of a single hyperparameter</h1>
 <p>In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.</p>
 <p>In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. We specify the x-axis with the <code>x</code> argument and the y-axis with the <code>y</code> argument. If the <code>plot.type</code> argument is not specified, <code>mlr</code> will attempt to plot a scatterplot by default. Since <code><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> returns a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> object, we can easily customize it to our liking!</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"clusterSim"</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">  <span class="kw">makeDiscreteParam</span>(<span class="st">"centers"</span>, <span class="dt">values =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">task =</span> mtcars.task, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">  <span class="dt">measures =</span> silhouette, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"centers"</span>, <span class="dt">y =</span> <span class="st">"silhouette.test.mean"</span>)</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co"># add our own touches to the plot</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">plt <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">"red"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Evaluating Number of Cluster Centers on mtcars"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"clusterSim"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="kw">makeDiscreteParam</span>(<span class="st">"centers"</span>, <span class="dt">values =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</span>
+<span id="cb8-7"><a href="#cb8-7"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">task =</span> mtcars.task, <span class="dt">control =</span> ctrl,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>  <span class="dt">measures =</span> silhouette, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb8-11"><a href="#cb8-11"></a>plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"centers"</span>, <span class="dt">y =</span> <span class="st">"silhouette.test.mean"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co"># add our own touches to the plot</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>plt <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">"red"</span>) <span class="op">+</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Evaluating Number of Cluster Centers on mtcars"</span>) <span class="op">+</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p>In the example below, we tune SVM with the <code>C</code> hyperparameter on the Pima dataset. We will use simulated annealing optimizer, so we are interested in seeing if the optimization algorithm actually improves with iterations. By default, <code>mlr</code> only plots improvements to the global optimum.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGenSA.html">makeTuneControlGenSA</a></span>(<span class="dt">budget =</span> 100L)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"iteration"</span>, <span class="dt">y =</span> <span class="st">"mmce.test.mean"</span>,</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">  <span class="dt">plot.type =</span> <span class="st">"line"</span>)</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">plt <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"Analyzing convergence of simulated annealing"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGenSA.html">makeTuneControlGenSA</a></span>(<span class="dt">budget =</span> 100L)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb9-8"><a href="#cb9-8"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb9-9"><a href="#cb9-9"></a>plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"iteration"</span>, <span class="dt">y =</span> <span class="st">"mmce.test.mean"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>  <span class="dt">plot.type =</span> <span class="st">"line"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a>plt <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"Analyzing convergence of simulated annealing"</span>) <span class="op">+</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="st">  </span><span class="kw">theme_minimal</span>()</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/sa_single-1.png" width="700"></p>
 <p>In the case of a learner crash, <code>mlr</code> will impute the crash with the worst value graphically and indicate the point. In the example below, we give the <code>C</code> parameter negative values, which will result in a learner crash for SVM.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="kw">makeDiscreteParam</span>(<span class="st">"C"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">-0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>))</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>)</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">plt <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"SVM learner crashes with negative C"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="kw">makeDiscreteParam</span>(<span class="st">"C"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">-0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>))</span>
+<span id="cb10-3"><a href="#cb10-3"></a>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</span>
+<span id="cb10-5"><a href="#cb10-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</span>
+<span id="cb10-6"><a href="#cb10-6"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb10-8"><a href="#cb10-8"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10"></a>plt <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">"SVM learner crashes with negative C"</span>) <span class="op">+</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/single_crash-1.png" width="700"></p>
 <p>The example below uses <a href="nested_resampling.html" target="_blank">nested cross validation</a> with an outer loop of 2 runs. <code>mlr</code> indicates each run within the visualization.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>, <span class="dt">plot.type =</span> <span class="st">"line"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</span>
+<span id="cb11-5"><a href="#cb11-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">control =</span> ctrl,</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, mmce), <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb11-8"><a href="#cb11-8"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb11-9"><a href="#cb11-9"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>, <span class="dt">plot.type =</span> <span class="st">"line"</span>)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/single_nested-1.png" width="700"></p>
 </div>
 <div id="visualizing-the-effect-of-2-hyperparameters" class="section level1">
@@ -502,102 +503,103 @@
 <a href="#visualizing-the-effect-of-2-hyperparameters" class="anchor"></a>Visualizing the effect of 2 hyperparameters</h1>
 <p>In the case of tuning 2 hyperparameters simultaneously, <code>mlr</code> provides the ability to plot a heatmap and contour plot in addition to a scatterplot or line.</p>
 <p>In the example below, we tune the <code>C</code> and <code>sigma</code> parameters for SVM on the Pima dataset. We use interpolation to produce a regular grid for plotting the heatmap. The <code>interpolation</code> argument accepts any regression learner from <code>mlr</code> to perform the interpolation. The <code>z</code> argument will be used to fill the heatmap or color lines, depending on the <code>plot.type</code> used.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x))</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">kernel =</span> <span class="st">"rbfdot"</span>))</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(learn, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl, <span class="dt">measures =</span> acc,</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">min_plt =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">min</a></span>(data<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">max_plt =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(data<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">med_plt =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(min_plt, max_plt))</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">plt <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(min_plt, max_plt, <span class="dt">length.out =</span> <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">  <span class="dt">low =</span> <span class="st">"blue"</span>, <span class="dt">mid =</span> <span class="st">"white"</span>, <span class="dt">high =</span> <span class="st">"red"</span>, <span class="dt">midpoint =</span> med_plt)</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17">## Scale for 'fill' is already present. Adding another scale for 'fill',</a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">## which will replace the existing scale.</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x))</span>
+<span id="cb12-4"><a href="#cb12-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">kernel =</span> <span class="st">"rbfdot"</span>))</span>
+<span id="cb12-7"><a href="#cb12-7"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(learn, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl, <span class="dt">measures =</span> acc,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb12-9"><a href="#cb12-9"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb12-10"><a href="#cb12-10"></a>plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12"></a>min_plt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(data<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb12-13"><a href="#cb12-13"></a>max_plt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(data<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb12-14"><a href="#cb12-14"></a>med_plt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(min_plt, max_plt))</span>
+<span id="cb12-15"><a href="#cb12-15"></a>plt <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(min_plt, max_plt, <span class="dt">length.out =</span> <span class="dv">5</span>),</span>
+<span id="cb12-16"><a href="#cb12-16"></a>  <span class="dt">low =</span> <span class="st">"blue"</span>, <span class="dt">mid =</span> <span class="st">"white"</span>, <span class="dt">high =</span> <span class="st">"red"</span>, <span class="dt">midpoint =</span> med_plt)</span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="co">## Scale for 'fill' is already present. Adding another scale for 'fill',</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="co">## which will replace the existing scale.</span></span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two-1.png" width="700"></p>
 <p>We can use the <code>show.experiments</code> argument in order to visualize which points were specifically passed to the learner in the original experiment and which points were interpolated by <code>mlr</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>, <span class="dt">show.experiments =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">plt <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(min_plt, max_plt, <span class="dt">length.out =</span> <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">  <span class="dt">low =</span> <span class="st">"blue"</span>, <span class="dt">mid =</span> <span class="st">"white"</span>, <span class="dt">high =</span> <span class="st">"red"</span>, <span class="dt">midpoint =</span> med_plt)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">## Scale for 'fill' is already present. Adding another scale for 'fill',</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">## which will replace the existing scale.</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>, <span class="dt">show.experiments =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>plt <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(min_plt, max_plt, <span class="dt">length.out =</span> <span class="dv">5</span>),</span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="dt">low =</span> <span class="st">"blue"</span>, <span class="dt">mid =</span> <span class="st">"white"</span>, <span class="dt">high =</span> <span class="st">"red"</span>, <span class="dt">midpoint =</span> med_plt)</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">## Scale for 'fill' is already present. Adding another scale for 'fill',</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">## which will replace the existing scale.</span></span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_showargs-1.png" width="700"></p>
 <p>We can also visualize how long the optimizer takes to reach an optima for the same example:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"iteration"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>,</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="dt">plot.type =</span> <span class="st">"line"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"iteration"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>,</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="dt">plot.type =</span> <span class="st">"line"</span>)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_optima-1.png" width="700"></p>
 <p>In the case where we are tuning 2 hyperparameters and we have a learner crash, <code>mlr</code> will indicate the respective points and impute them with the worst value. In the example below, we tune <code>C</code> and <code>sigma</code>, forcing <code>C</code> to be negative for some instances which will crash SVM. We perform interpolation to get a regular grid in order to plot a heatmap. We can see that the interpolation creates axis parallel lines resulting from the learner crashes.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">  <span class="kw">makeDiscreteParam</span>(<span class="st">"C"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="dv">5</span>)),</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="kw">makeDiscreteParam</span>(<span class="st">"sigma"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="dv">5</span>)))</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">kernel =</span> <span class="st">"rbfdot"</span>))</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(learn, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl, <span class="dt">measures =</span> acc,</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</a>
-<a class="sourceLine" id="cb15-11" data-line-number="11">  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="kw">makeDiscreteParam</span>(<span class="st">"C"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="dv">5</span>)),</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="kw">makeDiscreteParam</span>(<span class="st">"sigma"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="dv">5</span>)))</span>
+<span id="cb15-4"><a href="#cb15-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()</span>
+<span id="cb15-5"><a href="#cb15-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a>learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">kernel =</span> <span class="st">"rbfdot"</span>))</span>
+<span id="cb15-7"><a href="#cb15-7"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(learn, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl, <span class="dt">measures =</span> acc,</span>
+<span id="cb15-8"><a href="#cb15-8"></a>  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb15-9"><a href="#cb15-9"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_crash-1.png" width="700"></p>
 <p>A slightly more complicated example is using nested cross validation while simultaneously tuning 2 hyperparameters. In order to plot a heatmap in this case, <code>mlr</code> will aggregate each of the nested runs by a user-specified function. The default function is <code>mean</code>. As expected, we can still take advantage of interpolation.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x))</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">kernel =</span> <span class="st">"rbfdot"</span>))</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(learn, <span class="dt">control =</span> ctrl, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, mmce),</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>, <span class="dt">show.experiments =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb16-13" data-line-number="13">  <span class="dt">nested.agg =</span> mean)</a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">min_plt =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">min</a></span>(plt<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb16-15" data-line-number="15">max_plt =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(plt<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb16-16" data-line-number="16">med_plt =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(min_plt, max_plt))</a>
-<a class="sourceLine" id="cb16-17" data-line-number="17">plt <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(min_plt, max_plt, <span class="dt">length.out =</span> <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb16-18" data-line-number="18">  <span class="dt">low =</span> <span class="st">"red"</span>, <span class="dt">mid =</span> <span class="st">"white"</span>, <span class="dt">high =</span> <span class="st">"blue"</span>, <span class="dt">midpoint =</span> med_plt)</a>
-<a class="sourceLine" id="cb16-19" data-line-number="19">## Scale for 'fill' is already present. Adding another scale for 'fill',</a>
-<a class="sourceLine" id="cb16-20" data-line-number="20">## which will replace the existing scale.</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x))</span>
+<span id="cb16-4"><a href="#cb16-4"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">100</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">kernel =</span> <span class="st">"rbfdot"</span>))</span>
+<span id="cb16-7"><a href="#cb16-7"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(learn, <span class="dt">control =</span> ctrl, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, mmce),</span>
+<span id="cb16-8"><a href="#cb16-8"></a>  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb16-9"><a href="#cb16-9"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, <span class="dt">task =</span> pid.task, <span class="dt">resampling =</span> cv2, <span class="dt">extract =</span> getTuneResult, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb16-10"><a href="#cb16-10"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res)</span>
+<span id="cb16-11"><a href="#cb16-11"></a>plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12"></a>  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">interpolate =</span> <span class="st">"regr.earth"</span>, <span class="dt">show.experiments =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb16-13"><a href="#cb16-13"></a>  <span class="dt">nested.agg =</span> mean)</span>
+<span id="cb16-14"><a href="#cb16-14"></a>min_plt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(plt<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb16-15"><a href="#cb16-15"></a>max_plt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(plt<span class="op">$</span>data<span class="op">$</span>acc.test.mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb16-16"><a href="#cb16-16"></a>med_plt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(min_plt, max_plt))</span>
+<span id="cb16-17"><a href="#cb16-17"></a>plt <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(min_plt, max_plt, <span class="dt">length.out =</span> <span class="dv">5</span>),</span>
+<span id="cb16-18"><a href="#cb16-18"></a>  <span class="dt">low =</span> <span class="st">"red"</span>, <span class="dt">mid =</span> <span class="st">"white"</span>, <span class="dt">high =</span> <span class="st">"blue"</span>, <span class="dt">midpoint =</span> med_plt)</span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co">## Scale for 'fill' is already present. Adding another scale for 'fill',</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co">## which will replace the existing scale.</span></span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_nested-1.png" width="700"></p>
 </div>
 <div id="visualizing-the-effects-of-more-than-2-hyperparameters" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualizing-the-effects-of-more-than-2-hyperparameters" class="anchor"></a>Visualizing the effects of more than 2 hyperparameters</h1>
 <p>In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of <a href="partial_dependence.html" target="_blank">partial dependence plots</a> to show how the performance depends on a one- or two-dimensional subset of the hyperparameters. Below we tune three hyperparameters <code>C</code>, <code>sigma</code>, and <code>degree</code> of an SVM with Bessel kernel and set the <code>partial.dep</code> flag to <code>TRUE</code> to indicate that we intend to calculate partial dependences.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">  <span class="kw">makeDiscreteParam</span>(<span class="st">"degree"</span>, <span class="dt">values =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>, <span class="dt">predict =</span> <span class="st">"both"</span>)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">kernel =</span> <span class="st">"besseldot"</span>))</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(learn, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(acc, <span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(acc, train.mean)), <span class="dt">resampling =</span> rdesc,</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">  <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res, <span class="dt">partial.dep =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-5</span>, <span class="dt">upper =</span> <span class="dv">5</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="kw">makeDiscreteParam</span>(<span class="st">"degree"</span>, <span class="dt">values =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>))</span>
+<span id="cb17-5"><a href="#cb17-5"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> 100L)</span>
+<span id="cb17-6"><a href="#cb17-6"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>, <span class="dt">predict =</span> <span class="st">"both"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7"></a>learn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">par.vals =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">kernel =</span> <span class="st">"besseldot"</span>))</span>
+<span id="cb17-8"><a href="#cb17-8"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(learn, <span class="dt">task =</span> pid.task, <span class="dt">control =</span> ctrl,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(acc, <span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(acc, train.mean)), <span class="dt">resampling =</span> rdesc,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>  <span class="dt">par.set =</span> ps, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>data =<span class="st"> </span><span class="kw"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span>(res, <span class="dt">partial.dep =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>You can generate a plot for a single hyperparameter like <code>C</code> as shown below. The <code>partial.dep.learn</code> can be any regression Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) in <code>mlr</code> and is used to regress the attained performance values on the values of the 3 hyperparameters visited during tuning. The fitted model serves as basis for calculating partial dependences.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>, <span class="dt">plot.type =</span> <span class="st">"line"</span>,</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">  <span class="dt">partial.dep.learn =</span> <span class="st">"regr.randomForest"</span>)</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">## Loading required package: mmpf</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"acc.test.mean"</span>, <span class="dt">plot.type =</span> <span class="st">"line"</span>,</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="dt">partial.dep.learn =</span> <span class="st">"regr.randomForest"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co">## Loading required package: mmpf</span></span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>We can also look at two hyperparameters simultaneously, for example <code>C</code> and <code>sigma</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">partial.dep.learn =</span> <span class="st">"regr.randomForest"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span>(data, <span class="dt">x =</span> <span class="st">"C"</span>, <span class="dt">y =</span> <span class="st">"sigma"</span>, <span class="dt">z =</span> <span class="st">"acc.test.mean"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="dt">plot.type =</span> <span class="st">"heatmap"</span>, <span class="dt">partial.dep.learn =</span> <span class="st">"regr.randomForest"</span>)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -613,6 +615,7 @@
 </div>
 
 
+
       <footer><!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
 </div>
@@ -623,8 +626,7 @@
 --></footer>
 </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

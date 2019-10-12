@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Plots multi-criteria results after tuning using ggplot2. — plotTuneMultiCritResult" />
 
+<meta property="og:title" content="Plots multi-criteria results after tuning using ggplot2. — plotTuneMultiCritResult" />
 <meta property="og:description" content="Visualizes the pareto front and possibly the dominated points." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,13 +304,11 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/plotTuneMultiCritResult.R'><code>R/plotTuneMultiCritResult.R</code></a></small>
     </div>
 
-    
     <p>Visualizes the pareto front and possibly the dominated points.</p>
-    
 
     <pre class="usage"><span class='fu'>plotTuneMultiCritResult</span>(<span class='no'>res</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shape</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -319,45 +319,43 @@ Result of <a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>.</p></td>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Visualize all evaluated points (or only the non-dominated pareto front)?
 For the full path, the size of the points on the front is slightly increased.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Which column of <code>res$opt.path</code> should be mapped to ggplot2 color?
 Default is <code>NULL</code>, which means none.</p></td>
     </tr>
     <tr>
       <th>shape</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Which column of <code>res$opt.path</code> should be mapped to ggplot2 shape?
 Default is <code>NULL</code>, which means none.</p></td>
     </tr>
     <tr>
       <th>pointsize</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Point size for ggplot2 <a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>ggplot2::geom_point</a> for data points.
 Default is 2.</p></td>
     </tr>
     <tr>
       <th>pretty.names</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to use the ID of the measures instead of their name in labels. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot2 plot object.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune_multicrit: <code><a href='TuneMultiCritControl.html'>TuneMultiCritControl</a></code>,
   <code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># see tuneParamsMultiCrit
@@ -367,16 +365,14 @@ Whether to use the ID of the measures instead of their name in labels. Defaults 
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -387,11 +383,11 @@ Whether to use the ID of the measures instead of their name in labels. Defaults 
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -403,4 +399,5 @@ Whether to use the ID of the measures instead of their name in labels. Defaults 
 
   </body>
 </html>
+
 

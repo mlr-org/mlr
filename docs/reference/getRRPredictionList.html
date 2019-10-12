@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Get list of predictions for train and test set of each single resample iteration. — getRRPredictionList" />
 
+<meta property="og:title" content="Get list of predictions for train and test set of each single resample iteration. — getRRPredictionList" />
 <meta property="og:description" content="This function creates a list with two slots train and test where
 each slot is again a list of Prediction objects for each single
 resample iteration.
@@ -38,6 +39,7 @@ In case that predict = "train" was used for the resample description
 and in case that predict = "test" was used, the slot train will be
 NULL." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -49,12 +51,12 @@ NULL." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -260,7 +262,6 @@ NULL." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -299,6 +300,7 @@ NULL." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -308,7 +310,6 @@ NULL." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ResampleResult_operators.R'><code>R/ResampleResult_operators.R</code></a></small>
     </div>
 
-    
     <p>This function creates a list with two slots <code>train</code> and <code>test</code> where
 each slot is again a list of <a href='Prediction.html'>Prediction</a> objects for each single
 resample iteration.
@@ -316,10 +317,9 @@ In case that <code>predict = "train"</code> was used for the resample descriptio
 (see <a href='makeResampleDesc.html'>makeResampleDesc</a>), the slot <code>test</code> will be <code>NULL</code>
 and in case that <code>predict = "test"</code> was used, the slot <code>train</code> will be
 <code>NULL</code>.</p>
-    
 
     <pre class="usage"><span class='fu'>getRRPredictionList</span>(<span class='no'>res</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -334,11 +334,10 @@ The result of <a href='resample.html'>resample</a> run with <code>keep.pred = TR
 Further options passed to <a href='Prediction.html'>makePrediction</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>.</p>
-    
+    <p><a href='https://rdrr.io/r/base/list.html'>list</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other resample: <code><a href='ResamplePrediction.html'>ResamplePrediction</a></code>,
@@ -349,21 +348,19 @@ Further options passed to <a href='Prediction.html'>makePrediction</a>.</p></td>
   <code><a href='makeResampleDesc.html'>makeResampleDesc</a></code>,
   <code><a href='makeResampleInstance.html'>makeResampleInstance</a></code>,
   <code><a href='resample.html'>resample</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -374,11 +371,11 @@ Further options passed to <a href='Prediction.html'>makePrediction</a>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -390,4 +387,5 @@ Further options passed to <a href='Prediction.html'>makePrediction</a>.</p></td>
 
   </body>
 </html>
+
 

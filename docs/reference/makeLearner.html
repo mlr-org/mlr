@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,14 +29,15 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create learner object. — makeLearner" />
 
+<meta property="og:title" content="Create learner object. — makeLearner" />
 <meta property="og:description" content="For a classification learner the predict.type can be set to
 &#8220;prob&#8221; to predict probabilities and the maximum value selects the
 label. The threshold used to assign the label can later be changed using the
 setThreshold function.
 To see all possible properties of a learner, go to: LearnerProperties." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -47,12 +49,12 @@ To see all possible properties of a learner, go to: LearnerProperties." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -258,7 +260,6 @@ To see all possible properties of a learner, go to: LearnerProperties." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -297,6 +298,7 @@ To see all possible properties of a learner, go to: LearnerProperties." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -306,24 +308,22 @@ To see all possible properties of a learner, go to: LearnerProperties." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/makeLearner.R'><code>R/makeLearner.R</code></a></small>
     </div>
 
-    
     <p>For a classification learner the <code>predict.type</code> can be set to
 &#8220;prob&#8221; to predict probabilities and the maximum value selects the
 label. The threshold used to assign the label can later be changed using the
 <a href='setThreshold.html'>setThreshold</a> function.</p>
 <p>To see all possible properties of a learner, go to: <a href='LearnerProperties.html'>LearnerProperties</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>makeLearner</span>(<span class='no'>cl</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>,
   <span class='kw'>predict.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fix.factors.prediction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
-    
+  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cl</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Class of learner. By convention, all classification learners
 start with &#8220;classif.&#8221; all regression learners with
 &#8220;regr.&#8221; all survival learners start with &#8220;surv.&#8221;
@@ -334,12 +334,12 @@ A list of all integrated learners is available on the
     </tr>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Id string for object. Used to display object.
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Id string for object. Used to display object.
 Default is <code>cl</code>.</p></td>
     </tr>
     <tr>
       <th>predict.type</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Classification: &#8220;response&#8221; (=
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Classification: &#8220;response&#8221; (=
 labels) or &#8220;prob&#8221; (= probabilities and labels by selecting the ones
 with maximal probability). Regression: &#8220;response&#8221; (= mean response)
 or &#8220;se&#8221; (= standard errors and mean response). Survival:
@@ -352,7 +352,7 @@ indicating class labels). Default is &#8220;response&#8221;.</p></td>
     </tr>
     <tr>
       <th>predict.threshold</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 Only for binary classification it can be a single numerical threshold for the positive class.
 See <a href='setThreshold.html'>setThreshold</a> for details on how it is applied.
@@ -360,7 +360,7 @@ Default is <code>NULL</code> which means 0.5 / an equal threshold for each class
     </tr>
     <tr>
       <th>fix.factors.prediction</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br /> In some cases, problems occur
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br /> In some cases, problems occur
 in underlying learners for factor features during prediction. If the new
 features have LESS factor levels than during training (a strict subset),
 the learner might produce an  error like &#8220;type of predictors in new
@@ -379,33 +379,33 @@ the <code>par.vals</code> argument but <code>...</code> should be preferred!</p>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br /> Optional list of named (hyper)parameters. The
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br /> Optional list of named (hyper)parameters. The
 arguments in <code>...</code> take precedence over values in this list. We strongly
 encourage you to use <code>...</code> for passing hyperparameters.</p></td>
     </tr>
     <tr>
       <th>config</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br /> Named list of config option to overwrite
+      <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br /> Named list of config option to overwrite
 global settings set via <a href='configureMlr.html'>configureMlr</a> for this specific learner.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(Learner).</p>
-    
     <h2 class="hasAnchor" id="par-vals-vs-"><a class="anchor" href="#par-vals-vs-"></a><code>par.vals</code> vs. <code>...</code></h2>
 
     
-    <p>The former aims at specifying default hyperparameter settings from <code>mlr</code>
+
+
+<p>The former aims at specifying default hyperparameter settings from <code>mlr</code>
 which differ from the actual defaults in the underlying learner. For
 example, <code>respect.unordered.factors</code> is set to <code>order</code> in <code>mlr</code> while the
-default in <a href='https://www.rdocumentation.org/packages/ranger/topics/ranger'>ranger::ranger</a> depends on the argument <code>splitrule</code>.
+default in <a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger::ranger</a> depends on the argument <code>splitrule</code>.
 <code>getHyperPars(&lt;learner&gt;)</code> can be used to query hyperparameter defaults that
 differ from the underlying learner. This function also shows all
 hyperparameters set by the user during learner creation (if these differ
 from the learner defaults).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other learner: <code><a href='LearnerProperties.html'>LearnerProperties</a></code>,
@@ -425,7 +425,6 @@ from the learner defaults).</p>
   <code><a href='setLearnerId.html'>setLearnerId</a></code>,
   <code><a href='setPredictThreshold.html'>setPredictThreshold</a></code>,
   <code><a href='setPredictType.html'>setPredictType</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.rpart"</span>)</div><div class='output co'>#&gt; Learner classif.rpart from package rpart
@@ -454,18 +453,15 @@ from the learner defaults).</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#par-vals-vs-"><code>par.vals</code> vs. <code>...</code></a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -476,11 +472,11 @@ from the learner defaults).</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -492,4 +488,5 @@ from the learner defaults).</p>
 
   </body>
 </html>
+
 

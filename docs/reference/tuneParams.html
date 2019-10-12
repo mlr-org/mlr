@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Hyperparameter tuning. — tuneParams" />
 
+<meta property="og:title" content="Hyperparameter tuning. — tuneParams" />
 <meta property="og:description" content="Optimizes the hyperparameters of a learner.
 Allows for different optimization methods, such as grid search, evolutionary strategies,
 iterated F-race, etc. You can select such an algorithm (and its settings)
@@ -37,6 +38,7 @@ by passing a corresponding control object. For a complete list of implemented al
 TuneControl.
 Multi-criteria tuning can be done with tuneParamsMultiCrit." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -48,12 +50,12 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -259,7 +261,6 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -298,6 +299,7 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -307,24 +309,22 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/tuneParams.R'><code>R/tuneParams.R</code></a></small>
     </div>
 
-    
     <p>Optimizes the hyperparameters of a learner.
 Allows for different optimization methods, such as grid search, evolutionary strategies,
 iterated F-race, etc. You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
 <a href='TuneControl.html'>TuneControl</a>.</p>
 <p>Multi-criteria tuning can be done with <a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>tuneParams</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='no'>par.set</span>, <span class='no'>control</span>,
   <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>), <span class='kw'>resample.fun</span> <span class='kw'>=</span> <span class='no'>resample</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -350,7 +350,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
+      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></td>
@@ -362,13 +362,13 @@ Control object for search method. Also selects the optimization algorithm for tu
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     <tr>
       <th>resample.fun</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/function'>closure</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/function.html'>closure</a>)<br />
 The function to use for resampling. Defaults to <a href='resample.html'>resample</a>. If a user-given function
 is to be used instead, it should take the arguments &#8220;learner&#8221;, &#8220;task&#8221;, &#8220;resampling&#8221;,
 &#8220;measures&#8221;, and &#8220;show.info&#8221;; see <a href='resample.html'>resample</a>. Within this function,
@@ -379,17 +379,15 @@ the &#8220;aggr&#8221; slot for general tuning, additionally the &#8220;pred&#82
 This parameter must be the default when <code>mbo</code> tuning is performed.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='TuneResult.html'>TuneResult</a>).</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>If you would like to include results from the training data set, make
 sure to appropriately adjust the resampling strategy and the aggregation for
 the measure. See example code below.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></p>
@@ -409,10 +407,9 @@ the measure. See example code below.</p>
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
   <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>123</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
 <span class='co'># a grid search for an SVM (with a tiny number of points...)</span>
 <span class='co'># note how easily we can optimize on a log-scale</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
@@ -423,74 +420,71 @@ the measure. See example code below.</p>
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>C     numeric   -   - -12 to 12   -    TRUE     Y</span>
-#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0533333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0533333</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0533333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0533333</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: C=4.1e+03; sigma=0.000244
 #&gt; mmce.test.mean=0.0533333</div><div class='input'><span class='co'># access data for all evaluated points</span>
-<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
-<span class='no'>df1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>df</span>[, -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
+<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
+<span class='no'>df1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
 #&gt; 1 -12   -12     0.73333333   1  NA          &lt;NA&gt;
 #&gt; 2  12   -12     0.05333333   2  NA          &lt;NA&gt;
 #&gt; 3 -12    12     0.73333333   3  NA          &lt;NA&gt;
-#&gt; 4  12    12     0.73333333   4  NA          &lt;NA&gt;</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>df1</span>[, -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
+#&gt; 4  12    12     0.73333333   4  NA          &lt;NA&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df1</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
 #&gt; 1 -12   -12     0.73333333   1  NA          &lt;NA&gt;
 #&gt; 2  12   -12     0.05333333   2  NA          &lt;NA&gt;
 #&gt; 3 -12    12     0.73333333   3  NA          &lt;NA&gt;
 #&gt; 4  12    12     0.73333333   4  NA          &lt;NA&gt;</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
 <span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)
 <span class='no'>df3</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>df2</span>$<span class='no'>data</span>[, -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df2</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean iteration
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df2</span>$<span class='no'>data</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df2</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean iteration
 #&gt; 1 -12   -12     0.73333333         1
 #&gt; 2  12   -12     0.05333333         2
 #&gt; 3 -12    12     0.73333333         3
-#&gt; 4  12    12     0.73333333         4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>df3</span>$<span class='no'>data</span>[, -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df3</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;              C        sigma mmce.test.mean iteration
+#&gt; 4  12    12     0.73333333         4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df3</span>$<span class='no'>data</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df3</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;              C        sigma mmce.test.mean iteration
 #&gt; 1 2.441406e-04 2.441406e-04     0.73333333         1
 #&gt; 2 4.096000e+03 2.441406e-04     0.05333333         2
 #&gt; 3 2.441406e-04 4.096000e+03     0.73333333         3
-#&gt; 4 4.096000e+03 4.096000e+03     0.73333333         4</div><span class='co'># NOT RUN {</span>
+#&gt; 4 4.096000e+03 4.096000e+03     0.73333333         4</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># we optimize the SVM over 3 kernels simultanously</span>
 <span class='co'># note how we use dependent params (requires = ...) and iterated F-racing here</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
   <span class='fu'>makeNumericParam</span>(<span class='st'>"C"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>),
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"kernel"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"vanilladot"</span>, <span class='st'>"polydot"</span>, <span class='st'>"rbfdot"</span>)),
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"kernel"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vanilladot"</span>, <span class='st'>"polydot"</span>, <span class='st'>"rbfdot"</span>)),
   <span class='fu'>makeNumericParam</span>(<span class='st'>"sigma"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>,
-    <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>quote</a></span>(<span class='no'>kernel</span> <span class='kw'>==</span> <span class='st'>"rbfdot"</span>)),
+    <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>kernel</span> <span class='kw'>==</span> <span class='st'>"rbfdot"</span>)),
   <span class='fu'>makeIntegerParam</span>(<span class='st'>"degree"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
-    <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>quote</a></span>(<span class='no'>kernel</span> <span class='kw'>==</span> <span class='st'>"polydot"</span>))
+    <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>kernel</span> <span class='kw'>==</span> <span class='st'>"polydot"</span>))
 )
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>ps</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ps</span>)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></span>(<span class='kw'>maxExperiments</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nbIterations</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minNbSurvival</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>)
-<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>df</span>[, -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df</span>)]))
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)
+<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>)]))
 
 <span class='co'># include the training set performance as well</span>
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"both"</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>,
-  <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>res</span>)
-<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>df2</span>[, -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df2</span>)]))
-<span class='co'># }</span></pre>
+  <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)
+<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df2</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df2</span>)]))
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -501,11 +495,11 @@ the measure. See example code below.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -517,4 +511,5 @@ the measure. See example code below.</p>
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create control structures for multi-criteria tuning. — TuneMultiCritControl" />
 
+<meta property="og:title" content="Create control structures for multi-criteria tuning. — TuneMultiCritControl" />
 <meta property="og:description" content="The following tuners are available:
 makeTuneMultiCritControlGridGrid search. All kinds of parameter types can be handled.
 You can either use their correct param type and resolution,
@@ -41,8 +42,11 @@ Can handle numeric(vector) and integer(vector) hyperparameters, but no dependenc
 For integers the internally proposed numeric values are automatically rounded.
 makeTuneMultiCritControlMBOModel-based/ Bayesian optimization. All kinds of
 parameter types can be handled.
+
+
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -54,12 +58,12 @@ parameter types can be handled.
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -265,7 +269,6 @@ parameter types can be handled.
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -304,6 +307,7 @@ parameter types can be handled.
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -313,20 +317,20 @@ parameter types can be handled.
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControl.R'><code>R/TuneMultiCritControl.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControlGrid.R'><code>R/TuneMultiCritControlGrid.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControlMBO.R'><code>R/TuneMultiCritControlMBO.R</code></a>, and 3 more</small>
     </div>
 
-    
     <p>The following tuners are available:</p><dl class='dl-horizontal'>
 <dt>makeTuneMultiCritControlGrid</dt><dd><p>Grid search. All kinds of parameter types can be handled.
 You can either use their correct param type and <code>resolution</code>,
-or discretize them yourself by always using <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/Param'>ParamHelpers::makeDiscreteParam</a>
+or discretize them yourself by always using <a href='https://rdrr.io/pkg/ParamHelpers/man/Param.html'>ParamHelpers::makeDiscreteParam</a>
 in the <code>par.set</code> passed to <a href='tuneParams.html'>tuneParams</a>.</p></dd>
 <dt>makeTuneMultiCritControlRandom</dt><dd><p>Random search. All kinds of parameter types can be handled.</p></dd>
-<dt>makeTuneMultiCritControlNSGA2</dt><dd><p>Evolutionary method <a href='https://www.rdocumentation.org/packages/mco/topics/nsga2'>mco::nsga2</a>.
+<dt>makeTuneMultiCritControlNSGA2</dt><dd><p>Evolutionary method <a href='https://rdrr.io/pkg/mco/man/nsga2.html'>mco::nsga2</a>.
 Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 For integers the internally proposed numeric values are automatically rounded.</p></dd>
 <dt>makeTuneMultiCritControlMBO</dt><dd><p>Model-based/ Bayesian optimization. All kinds of
 parameter types can be handled.</p></dd>
+
 </dl>
-    
+
 
     <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -335,7 +339,7 @@ parameter types can be handled.</p></dd>
 <span class='fu'>makeTuneMultiCritControlMBO</span>(<span class='kw'>n.objectives</span> <span class='kw'>=</span> <span class='no'>mbo.control</span>$<span class='no'>n.objectives</span>,
   <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -346,38 +350,38 @@ parameter types can be handled.</p></dd>
 <span class='fu'>makeTuneMultiCritControlRandom</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>resolution</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
 Resolution of the grid for each numeric/integer parameter in <code>par.set</code>.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
-See <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/generateGridDesign'>ParamHelpers::generateGridDesign</a>.
+See <a href='https://rdrr.io/pkg/ParamHelpers/man/generateGridDesign.html'>ParamHelpers::generateGridDesign</a>.
 Default is 10.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code>function</code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> small increase
 in run time.
-Otherwise <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from <a href='https://www.rdocumentation.org/packages/base/topics/gc'>gc</a>).
+(the latter two both taken from <a href='https://rdrr.io/r/base/gc.html'>gc</a>).
 See the implementation for details.</p></td>
     </tr>
     <tr>
@@ -388,7 +392,7 @@ Default is <code>NULL</code> which will not change anything.</p></td>
     </tr>
     <tr>
       <th>budget</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Maximum budget for tuning. This value restricts the number of function
 evaluations. In case of <code>makeTuneMultiCritControlGrid</code> this number
 must be identical to the size of the grid. For
@@ -396,7 +400,7 @@ must be identical to the size of the grid. For
 of iterations (<code>maxit</code>) performed by the random search algorithm.
 In case of <code>makeTuneMultiCritControlNSGA2</code> the <code>budget</code>
 corresponds to the product of the maximum number of generations
-(<code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max(generations)</a></code>) + 1 (for the initial population) and the size of
+(<code><a href='https://rdrr.io/r/base/Extremes.html'>max(generations)</a></code>) + 1 (for the initial population) and the size of
 the population (<code>popsize</code>). For <code>makeTuneMultiCritControlMBO</code> the
 <code>budget</code> equals the number of objective function evaluations, i.e. the
 number of MBO iterations + the size of the initial design. If not <code>NULL</code>,
@@ -404,12 +408,12 @@ this will overwrite existing stopping conditions in <code>mbo.control</code>.</p
     </tr>
     <tr>
       <th>n.objectives</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of objectives, i.e. number of <a href='makeMeasure.html'>Measure</a>s to optimize.</p></td>
     </tr>
     <tr>
       <th>impute.val</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -425,17 +429,17 @@ in the same order as your measures.</p></td>
       <th>learner</th>
       <td><p>(<a href='makeLearner.html'>Learner</a> | <code>NULL</code>)<br />
 The surrogate learner: A regression learner to model performance landscape.
-For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOLearner'>mlrMBO::makeMBOLearner</a>.</p></td>
+For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='https://rdrr.io/pkg/mlrMBO/man/makeMBOLearner.html'>mlrMBO::makeMBOLearner</a>.</p></td>
     </tr>
     <tr>
       <th>mbo.control</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
+      <td><p>(<a href='https://rdrr.io/pkg/mlrMBO/man/makeMBOControl.html'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
 Control object for model-based optimization tuning.
-For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::makeMBOControl</a>.</p></td>
+For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='https://rdrr.io/pkg/mlrMBO/man/makeMBOControl.html'>mlrMBO::makeMBOControl</a>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -443,67 +447,64 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold.args</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Further arguments for threshold tuning that are passed down to <a href='tuneThreshold.html'>tuneThreshold</a>.
 Default is none.</p></td>
     </tr>
     <tr>
       <th>continue</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
-Resume calculation from previous run using <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mboContinue'>mlrMBO::mboContinue</a>?
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Resume calculation from previous run using <a href='https://rdrr.io/pkg/mlrMBO/man/mboContinue.html'>mlrMBO::mboContinue</a>?
 Requires &#8220;save.file.path&#8221; to be set.
-Note that the <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a> in the <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/OptResult'>mlrMBO::OptResult</a>
+Note that the <a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a> in the <a href='https://rdrr.io/pkg/mlrMBO/man/OptResult.html'>mlrMBO::OptResult</a>
 will only include the evaluations after the continuation.
 The complete OptPath will be found in the slot <code>$mbo.result$opt.path</code>.</p></td>
     </tr>
     <tr>
       <th>mbo.design</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <code>NULL</code>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <code>NULL</code>)<br />
 Initial design as data frame.
 If the parameters have corresponding trafo functions,
 the design must not be transformed before it is passed!
-For the default, <code>NULL</code>, a default design is created like described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a>.</p></td>
+For the default, <code>NULL</code>, a default design is created like described in <a href='https://rdrr.io/pkg/mlrMBO/man/mbo.html'>mlrMBO::mbo</a>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>(any)<br />
 Further control parameters passed to the <code>control</code> arguments of
-<a href='https://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a> or <a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a>, as well as
-towards the <code>tunerConfig</code> argument of <a href='https://www.rdocumentation.org/packages/irace/topics/irace'>irace::irace</a>.</p></td>
+<a href='https://rdrr.io/pkg/cmaes/man/cma_es.html'>cmaes::cma_es</a> or <a href='https://rdrr.io/pkg/GenSA/man/GenSA.html'>GenSA::GenSA</a>, as well as
+towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>.</p></td>
     </tr>
     <tr>
       <th>maxit</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of iterations for random search.
 Default is 100.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(TuneMultiCritControl). The specific subclass is one of
 TuneMultiCritControlGrid, TuneMultiCritControlRandom,
 TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune_multicrit: <code><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a></code>,
   <code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -514,11 +515,11 @@ TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -530,4 +531,5 @@ TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
 
   </body>
 </html>
+
 

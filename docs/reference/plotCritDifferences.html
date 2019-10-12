@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Plot critical differences for a selected measure. — plotCritDifferences" />
 
+<meta property="og:title" content="Plot critical differences for a selected measure. — plotCritDifferences" />
 <meta property="og:description" content="Plots a critical-differences diagram for all classifiers and
 a selected measure. If a baseline is selected for the Bonferroni-Dunn
 test, the critical difference interval will be positioned arround the baseline.
@@ -37,6 +38,7 @@ If not, the best performing algorithm will be chosen as baseline.
 The positioning of some descriptive elements can be moved by modifying the
 generated data." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -48,12 +50,12 @@ generated data." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -259,7 +261,6 @@ generated data." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -298,6 +299,7 @@ generated data." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -307,17 +309,15 @@ generated data." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/plotCritDifferences.R'><code>R/plotCritDifferences.R</code></a></small>
     </div>
 
-    
     <p>Plots a critical-differences diagram for all classifiers and
 a selected measure. If a baseline is selected for the Bonferroni-Dunn
 test, the critical difference interval will be positioned arround the baseline.
 If not, the best performing algorithm will be chosen as baseline.
 The positioning of some descriptive elements can be moved by modifying the
 generated data.</p>
-    
 
     <pre class="usage"><span class='fu'>plotCritDifferences</span>(<span class='no'>obj</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -336,20 +336,18 @@ Defaults to best performing algorithm.</p></td>
     </tr>
     <tr>
       <th>pretty.names</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to use the short name of the learner instead of its ID in labels. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot2 plot object.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
 JMLR, 2006</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: <code><a href='createSpatialResamplingPlots.html'>createSpatialResamplingPlots</a></code>,
@@ -384,7 +382,6 @@ JMLR, 2006</p>
   <code><a href='plotBMRRanksAsBarChart.html'>plotBMRRanksAsBarChart</a></code>,
   <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
   <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># see benchmark
@@ -394,18 +391,15 @@ JMLR, 2006</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -416,11 +410,11 @@ JMLR, 2006</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -432,4 +426,5 @@ JMLR, 2006</p>
 
   </body>
 </html>
+
 

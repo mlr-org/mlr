@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Get tuning parameters from a learner of the caret R-package. — getCaretParamSet" />
 
+<meta property="og:title" content="Get tuning parameters from a learner of the caret R-package. — getCaretParamSet" />
 <meta property="og:description" content="Constructs a grid of tuning parameters from a learner of the caret
 R-package. These values are then converted into a list of non-tunable
 parameters (par.vals) and a tunable
@@ -38,6 +39,7 @@ tuneParams for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
 discretized into specific values." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -49,12 +51,12 @@ discretized into specific values." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -260,7 +262,6 @@ discretized into specific values." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -299,6 +300,7 @@ discretized into specific values." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -308,31 +310,29 @@ discretized into specific values." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/getCaretParamSet.R'><code>R/getCaretParamSet.R</code></a></small>
     </div>
 
-    
     <p>Constructs a grid of tuning parameters from a learner of the <code>caret</code>
 R-package. These values are then converted into a list of non-tunable
 parameters (<code>par.vals</code>) and a tunable
-<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a> (<code>par.set</code>), which can be used by
+<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a> (<code>par.set</code>), which can be used by
 <a href='tuneParams.html'>tuneParams</a> for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
 discretized into specific values.</p>
-    
 
     <pre class="usage"><span class='fu'>getCaretParamSet</span>(<span class='no'>learner</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='no'>task</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The name of the learner from <code>caret</code>
 (cf. <a href='https://topepo.github.io/caret/available-models.html'>https://topepo.github.io/caret/available-models.html</a>). Note that the
 names in <code>caret</code> often differ from the ones in <code>mlr</code>.</p></td>
     </tr>
     <tr>
       <th>length</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 A length / precision parameter which is used by <code>caret</code> for
 generating the grid of tuning parameters. <code>caret</code> generates either as
 many values per tuning parameter / dimension as defined by <code>length</code>
@@ -345,33 +345,32 @@ Learning task, which might be requested for creating the tuning grid.</p></td>
     </tr>
     <tr>
       <th>discretize</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the numerical parameters be discretized? Alternatively, they will
 be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(2)</a></code>). A list of parameters:</p><ul>
+    <p>(<code><a href='https://rdrr.io/r/base/list.html'>list(2)</a></code>). A list of parameters:</p><ul>
 <li><p><code>par.vals</code> contains a list of all constant tuning parameters</p></li>
-<li><p><code>par.set</code> is a <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>, containing all the configurable
+<li><p><code>par.set</code> is a <a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>, containing all the configurable
 tuning parameters</p></li>
 </ul>
 
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>caret</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>caret</span>)
   <span class='no'>classifTask</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
   <span class='co'># (1) classification (random forest) with discretized parameters</span>
   <span class='fu'>getCaretParamSet</span>(<span class='st'>"rf"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>classifTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
   <span class='co'># (2) regression (gradient boosting machine) without discretized parameters</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mlbench</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlbench</span>)
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BostonHousing</span>)
   <span class='no'>regrTask</span> <span class='kw'>=</span> <span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='fu'>getCaretParamSet</span>(<span class='st'>"gbm"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>regrTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
@@ -396,14 +395,13 @@ tuning parameters</p></li>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -414,11 +412,11 @@ tuning parameters</p></li>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -430,4 +428,5 @@ tuning parameters</p></li>
 
   </body>
 </html>
+
 

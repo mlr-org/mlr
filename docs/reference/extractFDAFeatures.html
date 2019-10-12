@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Extract features from functional data. — extractFDAFeatures" />
 
+<meta property="og:title" content="Extract features from functional data. — extractFDAFeatures" />
 <meta property="og:description" content="Extract non-functional features from functional features using various methods.
 The function extractFDAFeatures performs the extraction for all functional features
 via the methods specified in feat.methods and transforms all mentioned functional
@@ -41,6 +42,7 @@ reextractFDAFeatures in order to extract features during the prediction phase." 
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,12 +52,12 @@ reextractFDAFeatures in order to extract features during the prediction phase." 
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -261,7 +263,6 @@ reextractFDAFeatures in order to extract features during the prediction phase." 
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -300,6 +301,7 @@ reextractFDAFeatures in order to extract features during the prediction phase." 
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -309,7 +311,6 @@ reextractFDAFeatures in order to extract features during the prediction phase." 
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/extractFDAFeatures.R'><code>R/extractFDAFeatures.R</code></a></small>
     </div>
 
-    
     <p>Extract non-functional features from functional features using various methods.
 The function extractFDAFeatures performs the extraction for all functional features
 via the methods specified in <code>feat.methods</code> and transforms all mentioned functional
@@ -318,76 +319,72 @@ Additionally, a &#8220;<code>extractFDAFeatDesc</code>&#8221; object
 which contains learned coefficients and other helpful data for
 extraction during the predict-phase is returned. This can be used with
 <a href='reextractFDAFeatures.html'>reextractFDAFeatures</a> in order to extract features during the prediction phase.</p>
-    
 
-    <pre class="usage"><span class='fu'>extractFDAFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
-    
+    <pre class="usage"><span class='fu'>extractFDAFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<a href='Task.html'>Task</a> | <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='Task.html'>Task</a> | <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 Task or data.frame to extract functional features from.
 Must contain functional features as matrix columns.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Task target column. Only neccessary for data.frames
-Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
+Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>feat.methods</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 List of functional features along with the desired methods for each functional feature.
 &#8220;all&#8221; applies the extractFDAFeatures method to each
 functional feature.
 Names of <code>feat.methods</code> must match column names of functional features.
 Available feature extraction methods are available under family <code>fda_featextractor</code>.
-Default is <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> which does nothing.</p></td>
+Default is <a href='https://rdrr.io/r/base/list.html'>list</a> which does nothing.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</p>
-<dt>data (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)</dt><dd><p>Extracted features, returns a data.frame when
-given a <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> and a Task when given a Task.</p></dd>
+    <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)</p>
+<dt>data (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <a href='Task.html'>Task</a>)</dt><dd><p>Extracted features, returns a data.frame when
+given a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> and a Task when given a Task.</p></dd>
 <dt>desc (<code>extractFDAFeatDesc</code>)</dt><dd><p>Description object. See description for details.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The description object contains these slots</p><dl class='dl-horizontal'>
-<dt>target <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></dt><dd><p>See argument.</p></dd>
-<dt>coln <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></dt><dd><p>colum names of data.</p></dd>
-<dt>fd.cols <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></dt><dd><p>Functional feature names.</p></dd>
-<dt>extractFDAFeat <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></dt><dd><p>Contains <code>feature.methods</code> and relevant
+<dt>target <a href='https://rdrr.io/r/base/character.html'>character</a></dt><dd><p>See argument.</p></dd>
+<dt>coln <a href='https://rdrr.io/r/base/character.html'>character</a></dt><dd><p>colum names of data.</p></dd>
+<dt>fd.cols <a href='https://rdrr.io/r/base/character.html'>character</a></dt><dd><p>Functional feature names.</p></dd>
+<dt>extractFDAFeat <a href='https://rdrr.io/r/base/list.html'>list</a></dt><dd><p>Contains <code>feature.methods</code> and relevant
 parameters for reextraction</p></dd>.
+
 </dl>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other fda: <code><a href='makeExtractFDAFeatMethod.html'>makeExtractFDAFeatMethod</a></code>,
   <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -398,11 +395,11 @@ parameters for reextraction</p></dd>.
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -414,4 +411,5 @@ parameters for reextraction</p></dd>.
 
   </body>
 </html>
+
 

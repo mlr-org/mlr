@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Return the error dump of ResampleResult. — getRRDump" />
 
+<meta property="og:title" content="Return the error dump of ResampleResult. — getRRDump" />
 <meta property="og:description" content="Returns the error dumps generated during resampling, which can be used with debugger()
 to debug errors. These dumps are saved if configureMlr configuration on.error.dump,
 or the corresponding learner config, is TRUE.
@@ -38,6 +39,7 @@ entries can have a subset of the following slots, depending on which step in the
 &#8220;train&#8221; (error during training step), &#8220;predict.train&#8221; (prediction on training subset),
 &#8220;predict.test&#8221; (prediction on test subset)." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -49,12 +51,12 @@ entries can have a subset of the following slots, depending on which step in the
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -260,7 +262,6 @@ entries can have a subset of the following slots, depending on which step in the
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -299,6 +300,7 @@ entries can have a subset of the following slots, depending on which step in the
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -308,18 +310,16 @@ entries can have a subset of the following slots, depending on which step in the
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ResampleResult_operators.R'><code>R/ResampleResult_operators.R</code></a></small>
     </div>
 
-    
-    <p>Returns the error dumps generated during resampling, which can be used with <code><a href='https://www.rdocumentation.org/packages/utils/topics/debugger'>debugger()</a></code>
+    <p>Returns the error dumps generated during resampling, which can be used with <code><a href='https://rdrr.io/r/utils/debugger.html'>debugger()</a></code>
 to debug errors. These dumps are saved if <a href='configureMlr.html'>configureMlr</a> configuration <code>on.error.dump</code>,
 or the corresponding learner <code>config</code>, is <code>TRUE</code>.</p>
 <p>The returned object is a list with as many entries as the resampling being used has folds. Each of these
 entries can have a subset of the following slots, depending on which step in the resampling iteration failed:
 &#8220;train&#8221; (error during training step), &#8220;predict.train&#8221; (prediction on training subset),
 &#8220;predict.test&#8221; (prediction on test subset).</p>
-    
 
     <pre class="usage"><span class='fu'>getRRDump</span>(<span class='no'>res</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -329,31 +329,28 @@ entries can have a subset of the following slots, depending on which step in the
 The result of <a href='resample.html'>resample</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>.</p>
-    
+    <p><a href='https://rdrr.io/r/base/list.html'>list</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other debug: <code><a href='FailureModel.html'>FailureModel</a></code>,
   <code><a href='ResampleResult.html'>ResampleResult</a></code>,
   <code><a href='getPredictionDump.html'>getPredictionDump</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -364,11 +361,11 @@ The result of <a href='resample.html'>resample</a>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -380,4 +377,5 @@ The result of <a href='resample.html'>resample</a>.</p></td>
 
   </body>
 </html>
+
 

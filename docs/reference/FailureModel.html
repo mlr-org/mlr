@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,15 +29,15 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Failure model. — FailureModel" />
 
+<meta property="og:title" content="Failure model. — FailureModel" />
 <meta property="og:description" content="A subclass of WrappedModel. It is created
 if you set the respective option in configureMlr -
 when a model internally crashed during training.
 The model always predicts NAs.
-" />
 
-<meta property="og:description" content="The if mlr option on.error.dump is TRUE, the
+
+The if mlr option on.error.dump is TRUE, the
 FailureModel contains the debug trace of the error.
 It can be accessed with getFailureModelDump and
 inspected with debugger.
@@ -44,6 +45,7 @@ Its encapsulated learner.model is simply a string:
 The error message that was generated when the model crashed.
 The following code shows how to access the message." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -55,12 +57,12 @@ The following code shows how to access the message." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -266,7 +268,6 @@ The following code shows how to access the message." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -305,6 +306,7 @@ The following code shows how to access the message." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -314,28 +316,26 @@ The following code shows how to access the message." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FailureModel.R'><code>R/FailureModel.R</code></a></small>
     </div>
 
-    
     <p>A subclass of <a href='makeWrappedModel.html'>WrappedModel</a>. It is created</p><ul>
 <li><p>if you set the respective option in <a href='configureMlr.html'>configureMlr</a> -
 when a model internally crashed during training.
 The model always predicts NAs.</p></li>
 </ul>
 
-    <p>The if mlr option <code>on.error.dump</code> is <code>TRUE</code>, the
+<p>The if mlr option <code>on.error.dump</code> is <code>TRUE</code>, the
 <code>FailureModel</code> contains the debug trace of the error.
 It can be accessed with <code>getFailureModelDump</code> and
 inspected with <code>debugger</code>.</p>
 <p>Its encapsulated <code>learner.model</code> is simply a string:
 The error message that was generated when the model crashed.
 The following code shows how to access the message.</p>
-    
 
-        
+
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other debug: <code><a href='ResampleResult.html'>ResampleResult</a></code>,
   <code><a href='getPredictionDump.html'>getPredictionDump</a></code>, <code><a href='getRRDump.html'>getRRDump</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='configureMlr.html'>configureMlr</a></span>(<span class='kw'>on.learner.error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)
@@ -343,7 +343,7 @@ The following code shows how to access the message.</p>
 <span class='no'>data</span>$<span class='no'>newfeat</span> <span class='kw'>=</span> <span class='fl'>1</span> <span class='co'># will make LDA crash</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>m</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>task</span>) <span class='co'># LDA crashed, but mlr catches this</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Could not train learner classif.lda: Error in lda.default(x, grouping, ...) : </span>
-#&gt; <span class='warning'>  variable 5 appears to be constant within groups</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; <span class='warning'>  variable 5 appears to be constant within groups</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
 #&gt; Trained on: task.id = data; obs = 150; features = 5
 #&gt; Hyperparameters: 
 #&gt; Training failed: Error in lda.default(x, grouping, ...) : 
@@ -351,8 +351,8 @@ The following code shows how to access the message.</p>
 #&gt; 
 #&gt; Training failed: Error in lda.default(x, grouping, ...) : 
 #&gt;   variable 5 appears to be constant within groups
-#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>m</span>$<span class='no'>learner.model</span>) <span class='co'># the error message</span></div><div class='output co'>#&gt; [1] "Error in lda.default(x, grouping, ...) : \n  variable 5 appears to be constant within groups\n"</div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>m</span>, <span class='no'>task</span>) <span class='co'># this will predict NAs</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; Prediction: 150 observations
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>m</span>$<span class='no'>learner.model</span>) <span class='co'># the error message</span></div><div class='output co'>#&gt; [1] "Error in lda.default(x, grouping, ...) : \n  variable 5 appears to be constant within groups\n"</div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>m</span>, <span class='no'>task</span>) <span class='co'># this will predict NAs</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
 #&gt; time: NA
@@ -363,20 +363,19 @@ The following code shows how to access the message.</p>
 #&gt; 4  4 setosa     &lt;NA&gt;
 #&gt; 5  5 setosa     &lt;NA&gt;
 #&gt; 6  6 setosa     &lt;NA&gt;
-#&gt; ... (#rows: 150, #cols: 3)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>p</span>))</div><div class='output co'>#&gt; mmce 
+#&gt; ... (#rows: 150, #cols: 3)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>p</span>))</div><div class='output co'>#&gt; mmce 
 #&gt;   NA </div><div class='input'><span class='fu'><a href='configureMlr.html'>configureMlr</a></span>(<span class='kw'>on.learner.error</span> <span class='kw'>=</span> <span class='st'>"stop"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -387,11 +386,11 @@ The following code shows how to access the message.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -403,4 +402,5 @@ The following code shows how to access the message.</p>
 
   </body>
 </html>
+
 

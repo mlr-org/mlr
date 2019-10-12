@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,16 +29,18 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Creates a parameter set for model multiplexer tuning. — makeModelMultiplexerParamSet" />
 
+<meta property="og:title" content="Creates a parameter set for model multiplexer tuning. — makeModelMultiplexerParamSet" />
 <meta property="og:description" content="Handy way to create the param set with less typing.
 The following is done automatically:
 The selected.learner param is created
 Parameter names are prefixed.
 The requires field of each param is set.
 This makes all parameters subordinate to selected.learner
+
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -49,12 +52,12 @@ This makes all parameters subordinate to selected.learner
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -260,7 +263,6 @@ This makes all parameters subordinate to selected.learner
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -299,6 +301,7 @@ This makes all parameters subordinate to selected.learner
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -308,7 +311,6 @@ This makes all parameters subordinate to selected.learner
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ModelMultiplexerParamSet.R'><code>R/ModelMultiplexerParamSet.R</code></a></small>
     </div>
 
-    
     <p>Handy way to create the param set with less typing.</p>
 <p>The following is done automatically:</p><ul>
 <li><p>The <code>selected.learner</code> param is created</p></li>
@@ -316,10 +318,10 @@ This makes all parameters subordinate to selected.learner
 <li><p>The <code>requires</code> field of each param is set.
 This makes all parameters subordinate to <code>selected.learner</code></p></li>
 </ul>
-    
+
 
     <pre class="usage"><span class='fu'>makeModelMultiplexerParamSet</span>(<span class='no'>multiplexer</span>, <span class='no'>...</span>, <span class='kw'>.check</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -330,7 +332,7 @@ The muliplexer learner.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a> | <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/Param'>ParamHelpers::Param</a>)<br />
+      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a> | <a href='https://rdrr.io/pkg/ParamHelpers/man/Param.html'>ParamHelpers::Param</a>)<br />
 (a) First option: Named param sets. Names must correspond to base learners.
 You only need to enter the parameters you want to tune without reference
 to the <code>selected.learner</code> field in any way.<br />
@@ -340,16 +342,15 @@ learner each of your passed parameters belongs.</p></td>
     </tr>
     <tr>
       <th>.check</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br />
 Check that for each param in <code>...</code> one param in found in the base learners.
 Default is <code>TRUE</code></p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ParamSet.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other multiplexer: <code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a></code></p>
@@ -368,7 +369,6 @@ Default is <code>TRUE</code></p></td>
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
   <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># See makeModelMultiplexer
@@ -378,16 +378,14 @@ Default is <code>TRUE</code></p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -398,11 +396,11 @@ Default is <code>TRUE</code></p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -414,4 +412,5 @@ Default is <code>TRUE</code></p></td>
 
   </body>
 </html>
+
 

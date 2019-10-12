@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Fuse learner with the bagging technique and oversampling for imbalancy correction. — makeOverBaggingWrapper" />
 
+<meta property="og:title" content="Fuse learner with the bagging technique and oversampling for imbalancy correction. — makeOverBaggingWrapper" />
 <meta property="og:description" content="Fuses a classification learner for binary classification with an over-bagging method
 for imbalancy correction when we have strongly unequal class sizes.
 Creates a learner object, which can be
@@ -47,6 +48,7 @@ probabilities are predicted by considering the proportions of all predicted labe
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,12 +58,12 @@ probabilities are predicted by considering the proportions of all predicted labe
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -267,7 +269,6 @@ probabilities are predicted by considering the proportions of all predicted labe
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -306,6 +307,7 @@ probabilities are predicted by considering the proportions of all predicted labe
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -315,7 +317,6 @@ probabilities are predicted by considering the proportions of all predicted labe
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/OverBaggingWrapper.R'><code>R/OverBaggingWrapper.R</code></a></small>
     </div>
 
-    
     <p>Fuses a classification learner for binary classification with an over-bagging method
 for imbalancy correction when we have strongly unequal class sizes.
 Creates a learner object, which can be
@@ -330,29 +331,28 @@ Features are currently not changed or sampled.</p>
 <p>Prediction works as follows:
 For classification we do majority voting to create a discrete label and
 probabilities are predicted by considering the proportions of all predicted labels.</p>
-    
 
     <pre class="usage"><span class='fu'>makeOverBaggingWrapper</span>(<span class='no'>learner</span>, <span class='kw'>obw.iters</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>obw.rate</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>obw.maxcl</span> <span class='kw'>=</span> <span class='st'>"boot"</span>, <span class='kw'>obw.cl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>obw.iters</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of fitted models in bagging.
 Default is 10.</p></td>
     </tr>
     <tr>
       <th>obw.rate</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Factor to upsample a class in each bag.
 Must be between 1 and <code>Inf</code>,
 where 1 means no oversampling and 2 would mean doubling the class size.
@@ -360,7 +360,7 @@ Default is 1.</p></td>
     </tr>
     <tr>
       <th>obw.maxcl</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 How should other class (usually larger class) be handled?
 &#8220;all&#8221; means every instance of the class gets in each bag,
 &#8220;boot&#8221; means the class instances are bootstrapped in each iteration.
@@ -368,16 +368,15 @@ Default is &#8220;boot&#8221;.</p></td>
     </tr>
     <tr>
       <th>obw.cl</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Which class should be over- or undersampled. If <code>NULL</code>, <code>makeOverBaggingWrapper</code>
 will take the smaller class.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='makeLearner.html'>Learner</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other imbalancy: <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
@@ -406,21 +405,19 @@ will take the smaller class.</p></td>
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -431,11 +428,11 @@ will take the smaller class.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -447,4 +444,5 @@ will take the smaller class.</p></td>
 
   </body>
 </html>
+
 

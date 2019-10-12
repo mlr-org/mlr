@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Run machine learning benchmarks as distributed experiments. — batchmark" />
 
+<meta property="og:title" content="Run machine learning benchmarks as distributed experiments. — batchmark" />
 <meta property="og:description" content="This function is a very parallel version of [benchmark] using batchtools.
 Experiments are created in the provided registry for each combination of
 learners, tasks and resamplings. The experiments are then stored in a registry and the
@@ -45,12 +46,13 @@ Call `batchmark(...)` which defines jobs for all learners and tasks in an [base:
 Submit jobs using [batchtools::submitJobs].
 Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].
 Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].
-" />
 
-<meta property="og:description" content="If you want to use this with OpenML datasets you can generate tasks from a vector
+
+If you want to use this with OpenML datasets you can generate tasks from a vector
 of dataset IDs easily with
 `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -62,12 +64,12 @@ of dataset IDs easily with
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -273,7 +275,6 @@ of dataset IDs easily with
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -312,6 +313,7 @@ of dataset IDs easily with
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -321,7 +323,6 @@ of dataset IDs easily with
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/batchmark.R'><code>R/batchmark.R</code></a></small>
     </div>
 
-    
     <p>This function is a very parallel version of [benchmark] using <span class="pkg">batchtools</span>.
 Experiments are created in the provided registry for each combination of
 learners, tasks and resamplings. The experiments are then stored in a registry and the
@@ -339,21 +340,20 @@ a look at the batchtools tutorial page:
 <li><p>Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].</p></li>
 </ol>
 
-    <p>If you want to use this with <span class="pkg">OpenML</span> datasets you can generate tasks from a vector
+<p>If you want to use this with <span class="pkg">OpenML</span> datasets you can generate tasks from a vector
 of dataset IDs easily with
 `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.</p>
-    
 
     <pre class="usage"><span class='fu'>batchmark</span>(<span class='no'>learners</span>, <span class='no'>tasks</span>, <span class='no'>resamplings</span>, <span class='no'>measures</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.extract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
-    
+  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/batchtools/man/getDefaultRegistry.html'>getDefaultRegistry</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learners</th>
-      <td><p>(list of <a href='makeLearner.html'>Learner</a> | <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(list of <a href='makeLearner.html'>Learner</a> | <a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Learning algorithms which should be compared, can also be a single learner.
 If you pass strings the learners will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -377,7 +377,7 @@ If missing, the default measure of the first task is used.</p></td>
     </tr>
     <tr>
       <th>keep.pred</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the prediction data in the <code>pred</code> slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
@@ -385,7 +385,7 @@ The default is set to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>keep.extract</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the <code>extract</code> slot of the result object. When creating a lot of
 benchmark results with extensive tuning, the resulting R objects can become
 very large in size. That is why the tuning results stored in the <code>extract</code>
@@ -395,7 +395,7 @@ tuning results.</p></td>
     </tr>
     <tr>
       <th>models</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should all fitted models be stored in the <a href='ResampleResult.html'>ResampleResult</a>?
 Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -406,11 +406,10 @@ Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly pas
 uses the last created registry.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>([data.table]). Generated job ids are stored in the column &#8220;job.id&#8221;.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other benchmark: <code><a href='BenchmarkResult.html'>BenchmarkResult</a></code>,
@@ -437,21 +436,19 @@ uses the last created registry.</p></td>
   <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
   <code><a href='plotCritDifferences.html'>plotCritDifferences</a></code>,
   <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -462,11 +459,11 @@ uses the last created registry.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -478,4 +475,5 @@ uses the last created registry.</p></td>
 
   </body>
 </html>
+
 

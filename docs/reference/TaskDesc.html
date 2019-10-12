@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Description object for task. — TaskDesc" />
 
+<meta property="og:title" content="Description object for task. — TaskDesc" />
 <meta property="og:description" content="Description object for task, encapsulates basic properties of the task
 without having to store the complete data set." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ without having to store the complete data set." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ without having to store the complete data set." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ without having to store the complete data set." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,51 +305,51 @@ without having to store the complete data set." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TaskDesc.R'><code>R/TaskDesc.R</code></a></small>
     </div>
 
-    
     <p>Description object for task, encapsulates basic properties of the task
 without having to store the complete data set.</p>
-    
 
-        
+
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Object members:</p><dl class='dl-horizontal'>
-<dt>id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Id string of task.</p></dd>
-<dt>type (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Type of task, &#8220;classif&#8221; for classification,
+<dt>id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Id string of task.</p></dd>
+<dt>type (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Type of task, &#8220;classif&#8221; for classification,
 &#8220;regr&#8221; for regression, &#8220;surv&#8221; for survival and &#8220;cluster&#8221; for
 cluster analysis, &#8220;costsens&#8221; for cost-sensitive classification, and
 &#8220;multilabel&#8221; for multilabel classification.</p></dd>
-<dt>target (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)</dt><dd><p>Name(s) of the target variable(s).
+<dt>target (<code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(2)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(n.classes)</a></code>)</dt><dd><p>Name(s) of the target variable(s).
 For &#8220;surv&#8221; these are the names of the survival time and event columns, so it has length 2.
 For &#8220;costsens&#8221; it has length 0, as there is no target column, but a cost matrix instead.
 For &#8220;multilabel&#8221; these are the names of logical columns that indicate whether a
 class label is present and the number of target variables corresponds to the number of
 classes.</p></dd>
-<dt>size (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>Number of cases in data set.</p></dd>
-<dt>n.feat (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(2)</a></code>)</dt><dd><p>Number of features, named vector with entries:
+<dt>size (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Number of cases in data set.</p></dd>
+<dt>n.feat (<code><a href='https://rdrr.io/r/base/integer.html'>integer(2)</a></code>)</dt><dd><p>Number of features, named vector with entries:
 &#8220;numerics&#8221;, &#8220;factors&#8221;, &#8220;ordered&#8221;, &#8220;functionals&#8221;.</p></dd>
-<dt>has.missings (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>Are missing values present?</p></dd>
-<dt>has.weights (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>Are weights specified for each observation?</p></dd>
-<dt>has.blocking (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>Is a blocking factor for cases available in the task?</p></dd>
-<dt>class.levels (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)</dt><dd><p>All possible classes.
+<dt>has.missings (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>Are missing values present?</p></dd>
+<dt>has.weights (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>Are weights specified for each observation?</p></dd>
+<dt>has.blocking (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>Is a blocking factor for cases available in the task?</p></dd>
+<dt>class.levels (<a href='https://rdrr.io/r/base/character.html'>character</a>)</dt><dd><p>All possible classes.
 Only present for &#8220;classif&#8221;, &#8220;costsens&#8221;, and &#8220;multilabel&#8221;.</p></dd>
-<dt>positive (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Positive class label for binary classification.
+<dt>positive (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Positive class label for binary classification.
 Only present for &#8220;classif&#8221;, NA for multiclass.</p></dd>
-<dt>negative (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Negative class label for binary classification.
+<dt>negative (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Negative class label for binary classification.
 Only present for &#8220;classif&#8221;, NA for multiclass.</p></dd>
+
 </dl>
-    
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -358,11 +360,11 @@ Only present for &#8220;classif&#8221;, NA for multiclass.</p></dd>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -374,4 +376,5 @@ Only present for &#8220;classif&#8221;, NA for multiclass.</p></dd>
 
   </body>
 </html>
+
 

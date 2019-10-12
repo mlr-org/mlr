@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Get current parameter settings for a learner. — getHyperPars" />
 
+<meta property="og:title" content="Get current parameter settings for a learner. — getHyperPars" />
 <meta property="og:description" content="Retrieves the current hyperparameter settings of a learner." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,12 +304,10 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/getHyperPars.R'><code>R/getHyperPars.R</code></a></small>
     </div>
 
-    
     <p>Retrieves the current hyperparameter settings of a learner.</p>
-    
 
-    <pre class="usage"><span class='fu'>getHyperPars</span>(<span class='no'>learner</span>, <span class='kw'>for.fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"predict"</span>, <span class='st'>"both"</span>))</pre>
-    
+    <pre class="usage"><span class='fu'>getHyperPars</span>(<span class='no'>learner</span>, <span class='kw'>for.fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"predict"</span>, <span class='st'>"both"</span>))</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -317,24 +317,22 @@
     </tr>
     <tr>
       <th>for.fun</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Restrict the returned settings to
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Restrict the returned settings to
 hyperparameters corresponding to <code>when</code> the are used (see
-<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/LearnerParam'>ParamHelpers::LearnerParam</a>). Must be a subset of: &#8220;train&#8221;,
-&#8220;predict&#8221; or &#8220;both&#8221;. Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("train", "predict", "both")</a></code>.</p></td>
+<a href='https://rdrr.io/pkg/ParamHelpers/man/LearnerParam.html'>ParamHelpers::LearnerParam</a>). Must be a subset of: &#8220;train&#8221;,
+&#8220;predict&#8221; or &#8220;both&#8221;. Default is <code><a href='https://rdrr.io/r/base/c.html'>c("train", "predict", "both")</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>). A named list of values.</p>
-    
+    <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>). A named list of values.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function only shows hyperparameters that differ from the
 learner default (because <code>mlr</code> changed the default) or if the user set
 hyperparameters manually during learner creation. If you want to have an
 overview of all available hyperparameters use <code><a href='getParamSet.html'>getParamSet()</a></code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other learner: <code><a href='LearnerProperties.html'>LearnerProperties</a></code>,
@@ -353,7 +351,6 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
   <code><a href='setLearnerId.html'>setLearnerId</a></code>,
   <code><a href='setPredictThreshold.html'>setPredictThreshold</a></code>,
   <code><a href='setPredictType.html'>setPredictType</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>getHyperPars</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ranger"</span>))</div><div class='output co'>#&gt; $num.threads
@@ -383,18 +380,15 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -405,11 +399,11 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -421,4 +415,5 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
 
   </body>
 </html>
+
 

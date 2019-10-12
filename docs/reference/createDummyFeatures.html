@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate dummy variables for factor features. — createDummyFeatures" />
 
+<meta property="og:title" content="Generate dummy variables for factor features. — createDummyFeatures" />
 <meta property="og:description" content="Replace all factor features with their dummy variables. Internally model.matrix is used.
 Non factor features will be left untouched and passed to the result." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ Non factor features will be left untouched and passed to the result." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ Non factor features will be left untouched and passed to the result." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ Non factor features will be left untouched and passed to the result." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,25 +305,23 @@ Non factor features will be left untouched and passed to the result." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/createDummyFeatures.R'><code>R/createDummyFeatures.R</code></a></small>
     </div>
 
-    
-    <p>Replace all factor features with their dummy variables. Internally <a href='https://www.rdocumentation.org/packages/stats/topics/model.matrix'>model.matrix</a> is used.
+    <p>Replace all factor features with their dummy variables. Internally <a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a> is used.
 Non factor features will be left untouched and passed to the result.</p>
-    
 
-    <pre class="usage"><span class='fu'>createDummyFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"1-of-n"</span>,
+    <pre class="usage"><span class='fu'>createDummyFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"1-of-n"</span>,
   <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(2)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(n.classes)</a></code>)<br />
 Name(s) of the target variable(s).
 Only used when <code>obj</code> is a data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
@@ -332,23 +332,23 @@ classes.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Available are:</p><dl class='dl-horizontal'>
 <dt>"1-of-n":</dt><dd><p>For n factor levels there will be n dummy variables.</p></dd>
 <dt>"reference":</dt><dd><p>There will be n-1 dummy variables leaving out the first factor level of each variable.</p></dd>
+
 </dl><p>Default is &#8220;1-of-n&#8221;.</p></td>
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Columns to create dummy features for. Default is to use all columns.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
-    
+    <p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <a href='Task.html'>Task</a>. Same type as <code>obj</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other eda_and_preprocess: <code><a href='capLargeValues.html'>capLargeValues</a></code>,
@@ -358,21 +358,19 @@ Columns to create dummy features for. Default is to use all columns.</p></td>
   <code><a href='removeConstantFeatures.html'>removeConstantFeatures</a></code>,
   <code><a href='summarizeColumns.html'>summarizeColumns</a></code>,
   <code><a href='summarizeLevels.html'>summarizeLevels</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -383,11 +381,11 @@ Columns to create dummy features for. Default is to use all columns.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -399,4 +397,5 @@ Columns to create dummy features for. Default is to use all columns.</p></td>
 
   </body>
 </html>
+
 

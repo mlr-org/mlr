@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,12 +29,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Fuse learner with preprocessing. — makePreprocWrapper" />
 
+<meta property="og:title" content="Fuse learner with preprocessing. — makePreprocWrapper" />
 <meta property="og:description" content="Fuses a base learner with a preprocessing method. Creates a learner object, which can be
 used like any other learner object, but which internally preprocesses the data as requested.
 If the train or predict function is called on data / a task, the preprocessing is always performed automatically." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -45,12 +47,12 @@ If the train or predict function is called on data / a task, the preprocessing i
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -256,7 +258,6 @@ If the train or predict function is called on data / a task, the preprocessing i
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -295,6 +296,7 @@ If the train or predict function is called on data / a task, the preprocessing i
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -304,21 +306,19 @@ If the train or predict function is called on data / a task, the preprocessing i
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/PreprocWrapper.R'><code>R/PreprocWrapper.R</code></a></small>
     </div>
 
-    
     <p>Fuses a base learner with a preprocessing method. Creates a learner object, which can be
 used like any other learner object, but which internally preprocesses the data as requested.
 If the train or predict function is called on data / a task, the preprocessing is always performed automatically.</p>
-    
 
     <pre class="usage"><span class='fu'>makePreprocWrapper</span>(<span class='no'>learner</span>, <span class='no'>train</span>, <span class='no'>predict</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(),
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
-    
+  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -329,7 +329,7 @@ Function to preprocess the data before training.
 <code>target</code> is a string and denotes the target variable in <code>data</code>.
 <code>args</code> is a list of further arguments and parameters to influence the
 preprocessing.
-Must return a <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(data, control)</a></code>, where <code>data</code> is the preprocessed
+Must return a <code><a href='https://rdrr.io/r/base/list.html'>list(data, control)</a></code>, where <code>data</code> is the preprocessed
 data and <code>control</code> stores all information necessary to do the preprocessing
 before predictions.</p></td>
     </tr>
@@ -344,23 +344,22 @@ Must return the processed data.</p></td>
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
-Parameter set of <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/LearnerParam'>ParamHelpers::LearnerParam</a> objects to describe the
+      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
+Parameter set of <a href='https://rdrr.io/pkg/ParamHelpers/man/LearnerParam.html'>ParamHelpers::LearnerParam</a> objects to describe the
 parameters in <code>args</code>.
 Default is empty set.</p></td>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list of default values for params in <code>args</code> respectively <code>par.set</code>.
 Default is empty list.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='makeLearner.html'>Learner</a>).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
@@ -387,21 +386,19 @@ Default is empty list.</p></td>
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -412,11 +409,11 @@ Default is empty list.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -428,4 +425,5 @@ Default is empty list.</p></td>
 
   </body>
 </html>
+
 

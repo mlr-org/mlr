@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Measure performance of prediction. — performance" />
 
+<meta property="og:title" content="Measure performance of prediction. — performance" />
 <meta property="og:description" content="Measures the quality of a prediction w.r.t. some performance measure." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,13 +304,11 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/performance.R'><code>R/performance.R</code></a></small>
     </div>
 
-    
     <p>Measures the quality of a prediction w.r.t. some performance measure.</p>
-    
 
     <pre class="usage"><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='no'>measures</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>feats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>simpleaggr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -335,22 +335,21 @@ Model built on training data, might be requested by performance measure, usually
     </tr>
     <tr>
       <th>feats</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a <code>task</code>, you can also pass this instead and the features
 are extracted from it.</p></td>
     </tr>
     <tr>
       <th>simpleaggr</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br />
 If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This is used internally for threshold tuning. Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(named <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>). Performance value(s), named by measure(s).</p>
-    
+    <p>(named <a href='https://rdrr.io/r/base/numeric.html'>numeric</a>). Performance value(s), named by measure(s).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other performance: <code><a href='ConfusionMatrix.html'>ConfusionMatrix</a></code>,
@@ -362,33 +361,30 @@ If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This
   <code><a href='makeMeasure.html'>makeMeasure</a></code>, <code><a href='measures.html'>measures</a></code>,
   <code><a href='setAggregation.html'>setAggregation</a></code>,
   <code><a href='setMeasurePars.html'>setMeasurePars</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>training.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>test.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='no'>training.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>test.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>[<span class='no'>test.set</span>, ])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris[test.set, ]): object 'mod' not found</span></div><div class='input'><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>[<span class='no'>test.set</span>, ])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris[test.set, ]): object 'mod' not found</span></div><div class='input'><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'>
 <span class='co'># Compute multiple performance measures at once</span>
-<span class='no'>ms</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"mmce"</span> <span class='kw'>=</span> <span class='no'>mmce</span>, <span class='st'>"acc"</span> <span class='kw'>=</span> <span class='no'>acc</span>, <span class='st'>"timetrain"</span> <span class='kw'>=</span> <span class='no'>timetrain</span>)
+<span class='no'>ms</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"mmce"</span> <span class='kw'>=</span> <span class='no'>mmce</span>, <span class='st'>"acc"</span> <span class='kw'>=</span> <span class='no'>acc</span>, <span class='st'>"timetrain"</span> <span class='kw'>=</span> <span class='no'>timetrain</span>)
 <span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>ms</span>, <span class='no'>task</span>, <span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = ms, task, mod): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -399,11 +395,11 @@ If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -415,4 +411,5 @@ If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This
 
   </body>
 </html>
+
 

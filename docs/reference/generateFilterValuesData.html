@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Calculates feature filter values. — generateFilterValuesData" />
 
+<meta property="og:title" content="Calculates feature filter values. — generateFilterValuesData" />
 <meta property="og:description" content="Calculates numerical filter values for features.
 For a list of features, use listFilterMethods." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ For a list of features, use listFilterMethods." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ For a list of features, use listFilterMethods." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ For a list of features, use listFilterMethods." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,14 +305,12 @@ For a list of features, use listFilterMethods." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateFilterValues.R'><code>R/generateFilterValues.R</code></a></small>
     </div>
 
-    
     <p>Calculates numerical filter values for features.
 For a list of features, use <a href='listFilterMethods.html'>listFilterMethods</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>generateFilterValuesData</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>), <span class='no'>...</span>, <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
-    
+  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>), <span class='no'>...</span>, <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -321,7 +321,7 @@ The task.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a> | <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a> | <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Filter method(s).
 In case of ensemble filters the <code>list</code> notation needs to be used.
 See the examples for more information.
@@ -329,7 +329,7 @@ Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>nselect</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of scores to request. Scores are getting calculated for all features per default.</p></td>
     </tr>
     <tr>
@@ -339,14 +339,14 @@ Passed down to selected method. Can only be use if <code>method</code> contains 
     </tr>
     <tr>
       <th>more.args</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Extra args passed down to filter methods. List elements are named with the filter
 <code>method</code> name the args should be passed down to.
 A more general and flexible option than <code>...</code>.
 Default is empty list.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(FilterValues). A <code>list</code> containing:</p>
@@ -354,22 +354,22 @@ Default is empty list.</p></td>
 Task description.</p></dd>
 <dt>data</dt><dd><p>(<code>data.frame</code>) with columns:
 <ul>
-<li><p><code>name</code>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+<li><p><code>name</code>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Name of feature.</p></li>
-<li><p><code>type</code>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+<li><p><code>type</code>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Feature column type.</p></li>
-<li><p><code>method</code>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+<li><p><code>method</code>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 One column for each method with the feature importance values.</p></li>
 </ul></p></dd>
 
-    
     <h2 class="hasAnchor" id="simple-and-ensemble-filters"><a class="anchor" href="#simple-and-ensemble-filters"></a>Simple and ensemble filters</h2>
 
     
-    <p>Besides passing (multiple) simple filter methods you can also pass an ensemble
+
+
+<p>Besides passing (multiple) simple filter methods you can also pass an ensemble
 filter method (in a list). The ensemble method will use the simple methods to
 calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
@@ -386,32 +386,27 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
   <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
   <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
   <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># two simple filter methods</span>
 <span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>))
-<span class='co'># using ensemble method "E-mean"</span>
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='input'><span class='co'># using ensemble method "E-mean"</span>
 <span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>)))</div></pre>
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#simple-and-ensemble-filters">Simple and ensemble filters</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -422,11 +417,11 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -438,4 +433,5 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
 
   </body>
 </html>
+
 

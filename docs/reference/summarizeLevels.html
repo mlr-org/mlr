@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Summarizes factors of a data.frame by tabling them. — summarizeLevels" />
 
+<meta property="og:title" content="Summarizes factors of a data.frame by tabling them. — summarizeLevels" />
 <meta property="og:description" content="Characters and logicals will be treated as factors." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,32 +304,29 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/summarizeLevels.R'><code>R/summarizeLevels.R</code></a></small>
     </div>
 
-    
     <p>Characters and logicals will be treated as factors.</p>
-    
 
     <pre class="usage"><span class='fu'>summarizeLevels</span>(<span class='no'>obj</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Restrict result to columns in <code>cols</code>.
 Default is all factor, character and logical columns of <code>obj</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>). Named list of tables.</p>
-    
+    <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>). Named list of tables.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other eda_and_preprocess: <code><a href='capLargeValues.html'>capLargeValues</a></code>,
@@ -337,7 +336,6 @@ Default is all factor, character and logical columns of <code>obj</code>.</p></t
   <code><a href='normalizeFeatures.html'>normalizeFeatures</a></code>,
   <code><a href='removeConstantFeatures.html'>removeConstantFeatures</a></code>,
   <code><a href='summarizeColumns.html'>summarizeColumns</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>summarizeLevels</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt; $Species
@@ -350,16 +348,14 @@ Default is all factor, character and logical columns of <code>obj</code>.</p></t
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -370,11 +366,11 @@ Default is all factor, character and logical columns of <code>obj</code>.</p></t
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -386,4 +382,5 @@ Default is all factor, character and logical columns of <code>obj</code>.</p></t
 
   </body>
 </html>
+
 

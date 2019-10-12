@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,12 +29,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create control object for hyperparameter tuning with MBO. — makeTuneControlMBO" />
 
+<meta property="og:title" content="Create control object for hyperparameter tuning with MBO. — makeTuneControlMBO" />
 <meta property="og:description" content="Model-based / Bayesian optimization with the function
 mlrMBO::mbo from the mlrMBO package.
 Please refer to https://github.com/mlr-org/mlrMBO for further info." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -45,12 +47,12 @@ Please refer to https://github.com/mlr-org/mlrMBO for further info." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -256,7 +258,6 @@ Please refer to https://github.com/mlr-org/mlrMBO for further info." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -295,6 +296,7 @@ Please refer to https://github.com/mlr-org/mlrMBO for further info." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -304,30 +306,28 @@ Please refer to https://github.com/mlr-org/mlrMBO for further info." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneControlMBO.R'><code>R/TuneControlMBO.R</code></a></small>
     </div>
 
-    
     <p>Model-based / Bayesian optimization with the function
-<a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a> from the <span class="pkg">mlrMBO</span> package.
+<a href='https://rdrr.io/pkg/mlrMBO/man/mbo.html'>mlrMBO::mbo</a> from the <span class="pkg">mlrMBO</span> package.
 Please refer to <a href='https://github.com/mlr-org/mlrMBO'>https://github.com/mlr-org/mlrMBO</a> for further info.</p>
-    
 
     <pre class="usage"><span class='fu'>makeTuneControlMBO</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.val</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -343,17 +343,17 @@ in the same order as your measures.</p></td>
       <th>learner</th>
       <td><p>(<a href='makeLearner.html'>Learner</a> | <code>NULL</code>)<br />
 The surrogate learner: A regression learner to model performance landscape.
-For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOLearner'>mlrMBO::makeMBOLearner</a>.</p></td>
+For the default, <code>NULL</code>, <span class="pkg">mlrMBO</span> will automatically create a suitable learner based on the rules described in <a href='https://rdrr.io/pkg/mlrMBO/man/makeMBOLearner.html'>mlrMBO::makeMBOLearner</a>.</p></td>
     </tr>
     <tr>
       <th>mbo.control</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
+      <td><p>(<a href='https://rdrr.io/pkg/mlrMBO/man/makeMBOControl.html'>mlrMBO::MBOControl</a> | <code>NULL</code>)<br />
 Control object for model-based optimization tuning.
-For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/makeMBOControl'>mlrMBO::makeMBOControl</a>.</p></td>
+For the default, <code>NULL</code>, the control object will be created with all the defaults as described in <a href='https://rdrr.io/pkg/mlrMBO/man/makeMBOControl.html'>mlrMBO::makeMBOControl</a>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -361,32 +361,32 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold.args</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Further arguments for threshold tuning that are passed down to <a href='tuneThreshold.html'>tuneThreshold</a>.
 Default is none.</p></td>
     </tr>
     <tr>
       <th>continue</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
-Resume calculation from previous run using <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mboContinue'>mlrMBO::mboContinue</a>?
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Resume calculation from previous run using <a href='https://rdrr.io/pkg/mlrMBO/man/mboContinue.html'>mlrMBO::mboContinue</a>?
 Requires &#8220;save.file.path&#8221; to be set.
-Note that the <a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a> in the <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/OptResult'>mlrMBO::OptResult</a>
+Note that the <a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a> in the <a href='https://rdrr.io/pkg/mlrMBO/man/OptResult.html'>mlrMBO::OptResult</a>
 will only include the evaluations after the continuation.
 The complete OptPath will be found in the slot <code>$mbo.result$opt.path</code>.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code>function</code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> small increase
 in run time.
-Otherwise <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from <a href='https://www.rdocumentation.org/packages/base/topics/gc'>gc</a>).
+(the latter two both taken from <a href='https://rdrr.io/r/base/gc.html'>gc</a>).
 See the implementation for details.</p></td>
     </tr>
     <tr>
@@ -397,27 +397,25 @@ Default is <code>NULL</code> which will not change anything.</p></td>
     </tr>
     <tr>
       <th>budget</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Maximum budget for tuning. This value restricts the number of function evaluations.</p></td>
     </tr>
     <tr>
       <th>mbo.design</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <code>NULL</code>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <code>NULL</code>)<br />
 Initial design as data frame.
 If the parameters have corresponding trafo functions,
 the design must not be transformed before it is passed!
-For the default, <code>NULL</code>, a default design is created like described in <a href='https://www.rdocumentation.org/packages/mlrMBO/topics/mbo'>mlrMBO::mbo</a>.</p></td>
+For the default, <code>NULL</code>, a default design is created like described in <a href='https://rdrr.io/pkg/mlrMBO/man/mbo.html'>mlrMBO::mbo</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(TuneControlMBO)</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel Lang; mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions, Preprint: <a href='https://arxiv.org/abs/1703.03373'>https://arxiv.org/abs/1703.03373</a> (2017).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
@@ -435,23 +433,20 @@ For the default, <code>NULL</code>, a default design is created like described i
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
   <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -462,11 +457,11 @@ For the default, <code>NULL</code>, a default design is created like described i
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -478,4 +473,5 @@ For the default, <code>NULL</code>, a default design is created like described i
 
   </body>
 </html>
+
 

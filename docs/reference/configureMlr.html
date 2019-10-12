@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,12 +29,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Configures the behavior of the package. — configureMlr" />
 
+<meta property="og:title" content="Configures the behavior of the package. — configureMlr" />
 <meta property="og:description" content="Configuration is done by setting custom options.
 If you do not set an option here, its current value will be kept.
 If you call this function with an empty argument list, everything is set to its defaults." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -45,12 +47,12 @@ If you call this function with an empty argument list, everything is set to its 
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -256,7 +258,6 @@ If you call this function with an empty argument list, everything is set to its 
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -295,6 +296,7 @@ If you call this function with an empty argument list, everything is set to its 
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -304,22 +306,20 @@ If you call this function with an empty argument list, everything is set to its 
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/configureMlr.R'><code>R/configureMlr.R</code></a></small>
     </div>
 
-    
-    <p>Configuration is done by setting custom <a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a>.</p>
+    <p>Configuration is done by setting custom <a href='https://rdrr.io/r/base/options.html'>options</a>.</p>
 <p>If you do not set an option here, its current value will be kept.</p>
 <p>If you call this function with an empty argument list, everything is set to its defaults.</p>
-    
 
     <pre class="usage"><span class='fu'>configureMlr</span>(<span class='no'>show.info</span>, <span class='no'>on.learner.error</span>, <span class='no'>on.learner.warning</span>,
   <span class='no'>on.par.without.desc</span>, <span class='no'>on.par.out.of.bounds</span>, <span class='no'>on.measure.not.applicable</span>,
   <span class='no'>show.learner.output</span>, <span class='no'>on.error.dump</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Some methods of mlr support a <code>show.info</code> argument to enable
 verbose output on the console. This option sets the default value for these arguments.
 Setting the argument manually in one of these functions will overwrite the default
@@ -328,7 +328,7 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>on.learner.error</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 What should happen if an error in an underlying learning algorithm is caught:<br />
 &#8220;stop&#8221;: R exception is generated.<br />
 &#8220;warn&#8221;: A <code>FailureModel</code> will be created, which predicts only NAs and a warning will be generated.<br />
@@ -337,7 +337,7 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.learner.warning</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 What should happen if a warning in an underlying learning algorithm is generated:<br />
 &#8220;warn&#8221;: The warning is generated as usual.<br />
 &#8220;quiet&#8221;: The warning is suppressed.<br />
@@ -345,7 +345,7 @@ Default is &#8220;warn&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.par.without.desc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 What should happen if a parameter of a learner is set to a value, but no parameter description object exists,
 indicating a possibly wrong name:<br />
 &#8220;stop&#8221;: R exception is generated.<br />
@@ -355,7 +355,7 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.par.out.of.bounds</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 What should happen if a parameter of a learner is set to an out of bounds value.<br />
 &#8220;stop&#8221;: R exception is generated.<br />
 &#8220;warn&#8221;: Warning, but parameter is still passed along to learner.<br />
@@ -364,7 +364,7 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>on.measure.not.applicable</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 What should happen if a measure is not applicable to a learner.<br />
 &#8220;stop&#8221;: R exception is generated.<br />
 &#8220;warn&#8221;: Warning, but value of the measure will be <code>NA</code>.<br />
@@ -373,14 +373,14 @@ Default is &#8220;stop&#8221;.</p></td>
     </tr>
     <tr>
       <th>show.learner.output</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the output of the learning algorithm during training and prediction be shown or captured and
 suppressed?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>on.error.dump</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Specify whether <a href='FailureModel.html'>FailureModel</a> models and failed predictions should contain an error dump
 that can be used with <code>debugger</code> to inspect an error. This option is only effective if <code>on.learner.error</code>
 is &#8220;warn&#8221; or &#8220;quiet&#8221;. If it is <code>TRUE</code>, the dump can be accessed using
@@ -388,29 +388,26 @@ is &#8220;warn&#8221; or &#8220;quiet&#8221;. If it is <code>TRUE</code>, the du
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(NULL)</a></code>).</p>
-    
+    <p>(<code><a href='https://rdrr.io/r/base/invisible.html'>invisible(NULL)</a></code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other configure: <code><a href='getMlrOptions.html'>getMlrOptions</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -421,11 +418,11 @@ Default is <code>FALSE</code>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -437,4 +434,5 @@ Default is <code>FALSE</code>.</p></td>
 
   </body>
 </html>
+
 

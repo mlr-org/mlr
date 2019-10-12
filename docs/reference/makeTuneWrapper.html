@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Fuse learner with tuning. — makeTuneWrapper" />
 
+<meta property="og:title" content="Fuse learner with tuning. — makeTuneWrapper" />
 <meta property="og:description" content="Fuses a base learner with a search strategy to select its hyperparameters.
 Creates a learner object, which can be used like any other learner object,
 but which internally uses tuneParams.
@@ -43,6 +44,7 @@ getTuneResult." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -52,12 +54,12 @@ getTuneResult." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -263,7 +265,6 @@ getTuneResult." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -302,6 +303,7 @@ getTuneResult." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -311,7 +313,6 @@ getTuneResult." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneWrapper.R'><code>R/TuneWrapper.R</code></a></small>
     </div>
 
-    
     <p>Fuses a base learner with a search strategy to select its hyperparameters.
 Creates a learner object, which can be used like any other learner object,
 but which internally uses <a href='tuneParams.html'>tuneParams</a>.
@@ -322,17 +323,16 @@ complete training data with these optimal hyperparameters and returned.
 See <a href='tuneParams.html'>tuneParams</a> for more details.</p>
 <p>After training, the optimal hyperparameters (and other related information) can be retrieved with
 <a href='getTuneResult.html'>getTuneResult</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>makeTuneWrapper</span>(<span class='no'>learner</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='no'>par.set</span>, <span class='no'>control</span>,
   <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -353,7 +353,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
+      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></td>
@@ -365,16 +365,15 @@ Control object for search method. Also selects the optimization algorithm for tu
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='makeLearner.html'>Learner</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
@@ -416,27 +415,27 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
   <code><a href='makeSMOTEWrapper.html'>makeSMOTEWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>)
 <span class='co'># stupid mini grid</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
 )
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeTuneWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>inner</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='getTuneResult.html'>getTuneResult</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'mod' not found</span></div><div class='input'><span class='co'># nested resampling for evaluation</span>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='getTuneResult.html'>getTuneResult</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'mod' not found</span></div><div class='input'><span class='co'># nested resampling for evaluation</span>
 <span class='co'># we also extract tuned hyper pars in each iteration</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getTuneResult</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
 #&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.1; minsplit=20 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0533333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0533333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; Tune result:
 #&gt; Op. pars: cp=0.1; minsplit=20
 #&gt; mmce.test.mean=0.0800000
@@ -448,22 +447,21 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 #&gt; </div><div class='input'><span class='fu'><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a></span>(<span class='no'>r</span>)
 <span class='fu'><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt;    cp minsplit
 #&gt; 1 0.1       20
-#&gt; 2 0.1       10</div></pre>
+#&gt; 2 0.1       10</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -474,11 +472,11 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -490,4 +488,5 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 
   </body>
 </html>
+
 

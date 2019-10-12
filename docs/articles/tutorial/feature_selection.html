@@ -263,6 +263,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
@@ -321,30 +322,46 @@
 <a href="#calculating-the-feature-importance" class="anchor"></a>Calculating the feature importance</h2>
 <p>Different methods for calculating the feature importance are built into <code>mlr</code>’s function <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>. Currently, classification, regression and survival analysis tasks are supported. A table showing all available methods can be found in article <a href="filter_methods.html" target="_blank">filter methods</a>.</p>
 <p>The most basic approach is to use <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> directly on a <code><a href="../../reference/Task.html">Task()</a></code> with a character string specifying the filter method.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fv =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">fv</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">## FilterValues:</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">## Task: iris-example</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">##           name    type                         method     value</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>fv =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">## error.</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>fv</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">## FilterValues:</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">## Task: iris-example</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">##           name    type                         method     value</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</span></span></code></pre></div>
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">fv2<span class="op">$</span>data</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">##           name    type                         method     value</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">## 5 Sepal.Length numeric          FSelector_chi.squared 0.6288067</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">## 6  Sepal.Width numeric          FSelector_chi.squared 0.4922162</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## 7 Petal.Length numeric          FSelector_chi.squared 0.9346311</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## 8  Petal.Width numeric          FSelector_chi.squared 0.9432359</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">method =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">## error.</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>fv2<span class="op">$</span>data</span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">##           name    type                         method     value</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">## 5 Sepal.Length numeric          FSelector_chi.squared 0.6288067</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">## 6  Sepal.Width numeric          FSelector_chi.squared 0.4922162</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">## 7 Petal.Length numeric          FSelector_chi.squared 0.9346311</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">## 8  Petal.Width numeric          FSelector_chi.squared 0.9432359</span></span></code></pre></div>
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggpubr/topics/theme_pubr">theme_pubr</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubr</a></span>()</span></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
 <p>By default <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code> will create facetted subplots if multiple filter methods are passed as input to <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>.</p>
 <p>According to the <code>"information.gain"</code> measure, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information about the target variable <code>Species</code>.</p>
@@ -360,30 +377,38 @@
 <li>Keep all features whose importance exceeds a certain <em>threshold value</em> (<code>threshold</code>).</li>
 </ul>
 <p>Function <code><a href="../../reference/filterFeatures.html">filterFeatures()</a></code> supports these three methods as shown in the following example. Moreover, you can either specify the <code>method</code> for calculating the feature importance or you can use previously computed importance values via argument <code>fval</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Keep the 2 most important features</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Keep the 25% most important features</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">perc =</span> <span class="fl">0.25</span>)</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Keep all features with importance greater than 0.5</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">threshold =</span> <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">filtered.task</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## Supervised task: iris-example</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## Type: classif</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## Target: Species</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## Observations: 150</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## Features:</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">##    numerics     factors     ordered functionals </a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">##           2           0           0           0 </a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## Missings: FALSE</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## Has weights: FALSE</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## Has blocking: FALSE</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## Has coordinates: FALSE</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## Classes: 3</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">##     setosa versicolor  virginica </a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">##         50         50         50 </a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">## Positive class: NA</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Keep the 2 most important features</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## error.</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># Keep the 25% most important features</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">perc =</span> <span class="fl">0.25</span>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># Keep all features with importance greater than 0.5</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">threshold =</span> <span class="fl">0.5</span>)</span>
+<span id="cb4-17"><a href="#cb4-17"></a>filtered.task</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## Supervised task: iris-example</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## Type: classif</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## Target: Species</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## Observations: 150</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## Features:</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co">##           2           0           0           0 </span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="co">## Missings: FALSE</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co">## Has weights: FALSE</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="co">## Has blocking: FALSE</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co">## Has coordinates: FALSE</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="co">## Classes: 3</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="co">##     setosa versicolor  virginica </span></span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="co">##         50         50         50 </span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="co">## Positive class: NA</span></span></code></pre></div>
 </div>
 <div id="fuse-a-learner-with-a-filter-method" class="section level2">
 <h2 class="hasAnchor">
@@ -392,21 +417,110 @@
 <div id="using-fixed-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-fixed-parameters" class="anchor"></a>Using fixed parameters</h3>
-<p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="https://www.rdocumentation.org/packages/datasets/topics/iris">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"classif.fnn"</span>, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">fw.method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">fw.abs =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> iris.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">r<span class="op">$</span>aggr</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">## mmce.test.mean </a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">##     0.05333333</a></code></pre></div>
+<p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"classif.fnn"</span>, </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="dt">fw.method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">fw.abs =</span> <span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> iris.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## error.</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## error.</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">## error.</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a><span class="co">## error.</span></span>
+<span id="cb5-40"><a href="#cb5-40"></a></span>
+<span id="cb5-41"><a href="#cb5-41"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-42"><a href="#cb5-42"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-43"><a href="#cb5-43"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-44"><a href="#cb5-44"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-45"><a href="#cb5-45"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-46"><a href="#cb5-46"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-47"><a href="#cb5-47"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-48"><a href="#cb5-48"></a><span class="co">## error.</span></span>
+<span id="cb5-49"><a href="#cb5-49"></a></span>
+<span id="cb5-50"><a href="#cb5-50"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-51"><a href="#cb5-51"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-52"><a href="#cb5-52"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-53"><a href="#cb5-53"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-54"><a href="#cb5-54"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-55"><a href="#cb5-55"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-56"><a href="#cb5-56"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-57"><a href="#cb5-57"></a><span class="co">## error.</span></span>
+<span id="cb5-58"><a href="#cb5-58"></a></span>
+<span id="cb5-59"><a href="#cb5-59"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-60"><a href="#cb5-60"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-61"><a href="#cb5-61"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-62"><a href="#cb5-62"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-63"><a href="#cb5-63"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-64"><a href="#cb5-64"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-65"><a href="#cb5-65"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-66"><a href="#cb5-66"></a><span class="co">## error.</span></span>
+<span id="cb5-67"><a href="#cb5-67"></a></span>
+<span id="cb5-68"><a href="#cb5-68"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-69"><a href="#cb5-69"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-70"><a href="#cb5-70"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-71"><a href="#cb5-71"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-72"><a href="#cb5-72"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-73"><a href="#cb5-73"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-74"><a href="#cb5-74"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-75"><a href="#cb5-75"></a><span class="co">## error.</span></span>
+<span id="cb5-76"><a href="#cb5-76"></a></span>
+<span id="cb5-77"><a href="#cb5-77"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-78"><a href="#cb5-78"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-79"><a href="#cb5-79"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-80"><a href="#cb5-80"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-81"><a href="#cb5-81"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-82"><a href="#cb5-82"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-83"><a href="#cb5-83"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-84"><a href="#cb5-84"></a><span class="co">## error.</span></span>
+<span id="cb5-85"><a href="#cb5-85"></a></span>
+<span id="cb5-86"><a href="#cb5-86"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb5-87"><a href="#cb5-87"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb5-88"><a href="#cb5-88"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb5-89"><a href="#cb5-89"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb5-90"><a href="#cb5-90"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb5-91"><a href="#cb5-91"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb5-92"><a href="#cb5-92"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb5-93"><a href="#cb5-93"></a><span class="co">## error.</span></span>
+<span id="cb5-94"><a href="#cb5-94"></a>r<span class="op">$</span>aggr</span>
+<span id="cb5-95"><a href="#cb5-95"></a><span class="co">## mmce.test.mean </span></span>
+<span id="cb5-96"><a href="#cb5-96"></a><span class="co">##     0.05333333</span></span></code></pre></div>
 <p>You may want to know which features have been used. Luckily, we have called <code><a href="../../reference/resample.html">resample()</a></code> with the argument <code>models = TRUE</code>, which means that <code>r$models</code> contains a <code>list</code> of models (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) fitted in the individual resampling iterations. In order to access the selected feature subsets we can call <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code> on each model.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(r<span class="op">$</span>models, getFilteredFeatures)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(sfeats)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">## sfeats</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">## Petal.Length  Petal.Width </a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">##           10           10</a></code></pre></div>
-<p>The result shows that in the ten folds always <code>Petal.Length</code> and <code>Petal.Width</code> have been chosen (remember we wanted to have the best two, i.e. <span class="math inline">\(10 \times 2\)</span>). The selection of features seems to be very stable for this dataset. The features <code>Sepal.Length</code> and <code>Sepal.Width</code> did not make it into a single fold.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>sfeats =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(r<span class="op">$</span>models, getFilteredFeatures)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(sfeats)</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## sfeats</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">## Petal.Length  Petal.Width </span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">##           10           10</span></span></code></pre></div>
+<p>The result shows that in the ten folds always <code>Petal.Length</code> and <code>Petal.Width</code> have been chosen (remember we wanted to have the best two, i.e. <span class="math inline">\(10 \times 2\)</span>). The selection of features seems to be very stable for this dataset. The features <code>Sepal.Length</code> and <code>Sepal.Width</code> did not make it into a single fold.</p>
 </div>
 <div id="tuning-the-size-of-the-feature-subset" class="section level3">
 <h3 class="hasAnchor">
@@ -417,72 +531,210 @@
 <li>The absolute number of features selected (<code>fw.abs</code>)</li>
 <li>The threshold of the filter method (<code>fw.threshold</code>)</li>
 </ul>
-<p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="https://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ksvm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeNumericParam</span>(<span class="st">"fw.perc"</span>, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">                  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">                    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">                  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">                    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">                  )</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, <span class="dt">task =</span> bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">  <span class="dt">control =</span> <span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">## [Tune] Started tuning learner regr.ksvm.filtered for parameter set:</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">##            Type len Def    Constr Req Tunable Trafo</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">## fw.perc numeric   -   -    0 to 1   -    TRUE     -</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">## C       numeric   -   - -10 to 10   -    TRUE     Y</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">## sigma   numeric   -   - -10 to 10   -    TRUE     Y</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">## With control class: TuneControlRandom</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">## Imputation value: Inf</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">## [Tune-x] 1: fw.perc=0.00461; C=955; sigma=0.273</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">## [Tune-y] 1: mse.test.mean=85.5217120; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## [Tune-x] 2: fw.perc=0.118; C=168; sigma=1.75</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## [Tune-y] 2: mse.test.mean=34.9702516; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## [Tune-x] 3: fw.perc=0.882; C=0.00164; sigma=198</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## [Tune-y] 3: mse.test.mean=86.6100764; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">## [Tune-x] 4: fw.perc=0.722; C=42.1; sigma=155</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## [Tune-y] 4: mse.test.mean=85.5512510; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">## [Tune-x] 5: fw.perc=0.501; C=366; sigma=0.0175</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## [Tune-y] 5: mse.test.mean=15.6374544; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## [Tune] Result: fw.perc=0.501; C=366; sigma=0.0175 : mse.test.mean=15.6374544</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">res</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## Tune result:</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">## Op. pars: fw.perc=0.501; C=366; sigma=0.0175</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## mse.test.mean=15.6374544</a></code></pre></div>
+<p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ksvm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeNumericParam</span>(<span class="st">"fw.perc"</span>, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">1</span>),</span>
+<span id="cb7-3"><a href="#cb7-3"></a>                  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>, </span>
+<span id="cb7-4"><a href="#cb7-4"></a>                    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
+<span id="cb7-5"><a href="#cb7-5"></a>                  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>                    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>                  )</span>
+<span id="cb7-8"><a href="#cb7-8"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, <span class="dt">task =</span> bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="dt">control =</span> <span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">5</span>))</span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">## [Tune] Started tuning learner regr.ksvm.filtered for parameter set:</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">##            Type len Def    Constr Req Tunable Trafo</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">## fw.perc numeric   -   -    0 to 1   -    TRUE     -</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">## C       numeric   -   - -10 to 10   -    TRUE     Y</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">## sigma   numeric   -   - -10 to 10   -    TRUE     Y</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">## With control class: TuneControlRandom</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">## Imputation value: Inf</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">## [Tune-x] 1: fw.perc=0.00461; C=955; sigma=0.273</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="co">## error.</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-35"><a href="#cb7-35"></a><span class="co">## error.</span></span>
+<span id="cb7-36"><a href="#cb7-36"></a></span>
+<span id="cb7-37"><a href="#cb7-37"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-38"><a href="#cb7-38"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-39"><a href="#cb7-39"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-40"><a href="#cb7-40"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-41"><a href="#cb7-41"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-44"><a href="#cb7-44"></a><span class="co">## error.</span></span>
+<span id="cb7-45"><a href="#cb7-45"></a><span class="co">## [Tune-y] 1: mse.test.mean=85.5217120; time: 0.0 min</span></span>
+<span id="cb7-46"><a href="#cb7-46"></a><span class="co">## [Tune-x] 2: fw.perc=0.118; C=168; sigma=1.75</span></span>
+<span id="cb7-47"><a href="#cb7-47"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-48"><a href="#cb7-48"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-49"><a href="#cb7-49"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-50"><a href="#cb7-50"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-51"><a href="#cb7-51"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-52"><a href="#cb7-52"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-53"><a href="#cb7-53"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-54"><a href="#cb7-54"></a><span class="co">## error.</span></span>
+<span id="cb7-55"><a href="#cb7-55"></a></span>
+<span id="cb7-56"><a href="#cb7-56"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-57"><a href="#cb7-57"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-58"><a href="#cb7-58"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-59"><a href="#cb7-59"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-60"><a href="#cb7-60"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-61"><a href="#cb7-61"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-62"><a href="#cb7-62"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-63"><a href="#cb7-63"></a><span class="co">## error.</span></span>
+<span id="cb7-64"><a href="#cb7-64"></a></span>
+<span id="cb7-65"><a href="#cb7-65"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-66"><a href="#cb7-66"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-67"><a href="#cb7-67"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-68"><a href="#cb7-68"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-69"><a href="#cb7-69"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-70"><a href="#cb7-70"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-71"><a href="#cb7-71"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-72"><a href="#cb7-72"></a><span class="co">## error.</span></span>
+<span id="cb7-73"><a href="#cb7-73"></a><span class="co">## [Tune-y] 2: mse.test.mean=34.9702516; time: 0.0 min</span></span>
+<span id="cb7-74"><a href="#cb7-74"></a><span class="co">## [Tune-x] 3: fw.perc=0.882; C=0.00164; sigma=198</span></span>
+<span id="cb7-75"><a href="#cb7-75"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-76"><a href="#cb7-76"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-77"><a href="#cb7-77"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-78"><a href="#cb7-78"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-79"><a href="#cb7-79"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-80"><a href="#cb7-80"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-81"><a href="#cb7-81"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-82"><a href="#cb7-82"></a><span class="co">## error.</span></span>
+<span id="cb7-83"><a href="#cb7-83"></a></span>
+<span id="cb7-84"><a href="#cb7-84"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-85"><a href="#cb7-85"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-86"><a href="#cb7-86"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-87"><a href="#cb7-87"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-88"><a href="#cb7-88"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-89"><a href="#cb7-89"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-90"><a href="#cb7-90"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-91"><a href="#cb7-91"></a><span class="co">## error.</span></span>
+<span id="cb7-92"><a href="#cb7-92"></a></span>
+<span id="cb7-93"><a href="#cb7-93"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-94"><a href="#cb7-94"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-95"><a href="#cb7-95"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-96"><a href="#cb7-96"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-97"><a href="#cb7-97"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-98"><a href="#cb7-98"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-99"><a href="#cb7-99"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-100"><a href="#cb7-100"></a><span class="co">## error.</span></span>
+<span id="cb7-101"><a href="#cb7-101"></a><span class="co">## [Tune-y] 3: mse.test.mean=86.6100764; time: 0.0 min</span></span>
+<span id="cb7-102"><a href="#cb7-102"></a><span class="co">## [Tune-x] 4: fw.perc=0.722; C=42.1; sigma=155</span></span>
+<span id="cb7-103"><a href="#cb7-103"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-104"><a href="#cb7-104"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-105"><a href="#cb7-105"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-106"><a href="#cb7-106"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-107"><a href="#cb7-107"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-108"><a href="#cb7-108"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-109"><a href="#cb7-109"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-110"><a href="#cb7-110"></a><span class="co">## error.</span></span>
+<span id="cb7-111"><a href="#cb7-111"></a></span>
+<span id="cb7-112"><a href="#cb7-112"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-113"><a href="#cb7-113"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-114"><a href="#cb7-114"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-115"><a href="#cb7-115"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-116"><a href="#cb7-116"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-117"><a href="#cb7-117"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-118"><a href="#cb7-118"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-119"><a href="#cb7-119"></a><span class="co">## error.</span></span>
+<span id="cb7-120"><a href="#cb7-120"></a></span>
+<span id="cb7-121"><a href="#cb7-121"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-122"><a href="#cb7-122"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-123"><a href="#cb7-123"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-124"><a href="#cb7-124"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-125"><a href="#cb7-125"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-126"><a href="#cb7-126"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-127"><a href="#cb7-127"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-128"><a href="#cb7-128"></a><span class="co">## error.</span></span>
+<span id="cb7-129"><a href="#cb7-129"></a><span class="co">## [Tune-y] 4: mse.test.mean=85.5512510; time: 0.0 min</span></span>
+<span id="cb7-130"><a href="#cb7-130"></a><span class="co">## [Tune-x] 5: fw.perc=0.501; C=366; sigma=0.0175</span></span>
+<span id="cb7-131"><a href="#cb7-131"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-132"><a href="#cb7-132"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-133"><a href="#cb7-133"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-134"><a href="#cb7-134"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-135"><a href="#cb7-135"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-136"><a href="#cb7-136"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-137"><a href="#cb7-137"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-138"><a href="#cb7-138"></a><span class="co">## error.</span></span>
+<span id="cb7-139"><a href="#cb7-139"></a></span>
+<span id="cb7-140"><a href="#cb7-140"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-141"><a href="#cb7-141"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-142"><a href="#cb7-142"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-143"><a href="#cb7-143"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-144"><a href="#cb7-144"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-145"><a href="#cb7-145"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-146"><a href="#cb7-146"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-147"><a href="#cb7-147"></a><span class="co">## error.</span></span>
+<span id="cb7-148"><a href="#cb7-148"></a></span>
+<span id="cb7-149"><a href="#cb7-149"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb7-150"><a href="#cb7-150"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb7-151"><a href="#cb7-151"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb7-152"><a href="#cb7-152"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb7-153"><a href="#cb7-153"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb7-154"><a href="#cb7-154"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb7-155"><a href="#cb7-155"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb7-156"><a href="#cb7-156"></a><span class="co">## error.</span></span>
+<span id="cb7-157"><a href="#cb7-157"></a><span class="co">## [Tune-y] 5: mse.test.mean=15.6374544; time: 0.0 min</span></span>
+<span id="cb7-158"><a href="#cb7-158"></a><span class="co">## [Tune] Result: fw.perc=0.501; C=366; sigma=0.0175 : mse.test.mean=15.6374544</span></span>
+<span id="cb7-159"><a href="#cb7-159"></a>res</span>
+<span id="cb7-160"><a href="#cb7-160"></a><span class="co">## Tune result:</span></span>
+<span id="cb7-161"><a href="#cb7-161"></a><span class="co">## Op. pars: fw.perc=0.501; C=366; sigma=0.0175</span></span>
+<span id="cb7-162"><a href="#cb7-162"></a><span class="co">## mse.test.mean=15.6374544</span></span></code></pre></div>
 <p>The performance of all percentage values visited during tuning is:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">df[, <span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(df)]</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">##       fw.perc         C      sigma mse.test.mean dob eol error.message</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">## 1 0.004608974  9.899890 -1.8707510      85.52171   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">## 2 0.117951637  7.390782  0.8038591      34.97025   2  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">## 3 0.881597668 -9.249203  7.6286792      86.61008   3  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## 4 0.722349670  5.396206  7.2718742      85.55125   4  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## 5 0.500742103  8.517280 -5.8385066      15.63745   5  NA          &lt;NA&gt;</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">##       fw.perc         C      sigma mse.test.mean dob eol error.message</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">## 1 0.004608974  9.899890 -1.8707510      85.52171   1  NA          &lt;NA&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">## 2 0.117951637  7.390782  0.8038591      34.97025   2  NA          &lt;NA&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">## 3 0.881597668 -9.249203  7.6286792      86.61008   3  NA          &lt;NA&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 4 0.722349670  5.396206  7.2718742      85.55125   4  NA          &lt;NA&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 5 0.500742103  8.517280 -5.8385066      15.63745   5  NA          &lt;NA&gt;</span></span></code></pre></div>
 <p>The optimal percentage and the corresponding performance can be accessed as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">res<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">## $fw.perc</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">## [1] 0.5007421</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">## </a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">## $C</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">## [1] 366.4012</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">## </a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">## $sigma</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">## [1] 0.01747569</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">res<span class="op">$</span>y</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">## mse.test.mean </a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">##      15.63745</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>res<span class="op">$</span>x</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">## $fw.perc</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">## [1] 0.5007421</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">## </span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">## $C</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">## [1] 366.4012</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">## </span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">## $sigma</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">## [1] 0.01747569</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>res<span class="op">$</span>y</span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">## mse.test.mean </span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">##      15.63745</span></span></code></pre></div>
 <p>After tuning we can generate a new wrapped learner with the optimal percentage value for further use (e.g. to predict to new data).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>, </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">        <span class="dt">fw.perc =</span> res<span class="op">$</span>x<span class="op">$</span>fw.perc, <span class="dt">C =</span> res<span class="op">$</span>x<span class="op">$</span>C, <span class="dt">sigma =</span> res<span class="op">$</span>x<span class="op">$</span>sigma)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">mod</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">## Model for learner.id=regr.lm.filtered; learner.class=FilterWrapper</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## Trained on: task.id = BostonHousing-example; obs = 506; features = 13</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## Hyperparameters: fw.method=FSelector_ch...,fw.perc=0.501</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(mod)</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">## [1] "crim"  "zn"    "rm"    "dis"   "rad"   "b"     "lstat"</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>        <span class="dt">fw.perc =</span> res<span class="op">$</span>x<span class="op">$</span>fw.perc, <span class="dt">C =</span> res<span class="op">$</span>x<span class="op">$</span>C, <span class="dt">sigma =</span> res<span class="op">$</span>x<span class="op">$</span>sigma)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">## Warning in melt(out, value.name = "value", measure.vars = method,</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">## variable.name = "method"): The melt generic in data.table has been passed</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">## a data.frame and will attempt to redirect to the relevant reshape2 method;</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">## please note that reshape2 is deprecated, and this redirection is now</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">## deprecated as well. To continue using melt methods from reshape2 while</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">## both libraries are attached, e.g. melt.list, you can prepend the namespace</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">## like reshape2::melt(out). In the next version, this warning will become an</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">## error.</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>mod</span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">## Model for learner.id=regr.lm.filtered; learner.class=FilterWrapper</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">## Trained on: task.id = BostonHousing-example; obs = 506; features = 13</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">## Hyperparameters: fw.method=FSelector_ch...,fw.perc=0.501</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(mod)</span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co">## [1] "crim"  "zn"    "rm"    "dis"   "rad"   "b"     "lstat"</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -507,159 +759,160 @@
 <h2 class="hasAnchor">
 <a href="#select-a-feature-subset" class="anchor"></a>Select a feature subset</h2>
 <p>Feature selection can be conducted with function <code><a href="../../reference/selectFeatures.html">selectFeatures()</a></code>.</p>
-<p>In the following example we perform an exhaustive search on the <code>Wisconsin Prognostic Breast Cancer</code> (<code><a href="https://www.rdocumentation.org/packages/TH.data/topics/wpbc">TH.data::wpbc()</a></code>) data set. As learning method we use the <code>Cox proportional hazards model</code> (<code><a href="https://www.rdocumentation.org/packages/survival/topics/coxph">survival::coxph()</a></code>). The performance is assessed by the holdout estimate of the concordance index <a href="measures.html" target="_blank">cindex</a>).</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Specify the search strategy</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlRandom</a></span>(<span class="dt">maxit =</span> 20L)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">ctrl</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">## FeatSel control: FeatSelControlRandom</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">## Same resampling instance: TRUE</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">## Imputation value: &lt;worst&gt;</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">## Max. features: &lt;not used&gt;</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">## Max. iterations: 20</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">## Tune threshold: FALSE</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">## Further arguments: prob=0.5</a></code></pre></div>
+<p>In the following example we perform an exhaustive search on the <code>Wisconsin Prognostic Breast Cancer</code> (<code><a href="https://rdrr.io/pkg/TH.data/man/wpbc.html">TH.data::wpbc()</a></code>) data set. As learning method we use the <code>Cox proportional hazards model</code> (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>). The performance is assessed by the holdout estimate of the concordance index <a href="measures.html" target="_blank">cindex</a>).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Specify the search strategy</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlRandom</a></span>(<span class="dt">maxit =</span> 20L)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>ctrl</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">## FeatSel control: FeatSelControlRandom</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">## Same resampling instance: TRUE</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">## Imputation value: &lt;worst&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co">## Max. features: &lt;not used&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">## Max. iterations: 20</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">## Tune threshold: FALSE</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">## Further arguments: prob=0.5</span></span></code></pre></div>
 <p><code>ctrl</code> is a<code><a href="../../reference/FeatSelControl.html">FeatSelControl()</a></code> object that contains information about the search strategy and potential parameter values.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Resample description</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># Select features</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="dt">learner =</span> <span class="st">"surv.coxph"</span>, <span class="dt">task =</span> wpbc.task, <span class="dt">resampling =</span> rdesc,</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">  <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">sfeats</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">## FeatSel result:</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">## Features (12): mean_perimeter, mean_area, mean_concavity, mean...</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">## cindex.test.mean=0.6819127</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Resample description</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># Select features</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="dt">learner =</span> <span class="st">"surv.coxph"</span>, <span class="dt">task =</span> wpbc.task, <span class="dt">resampling =</span> rdesc,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a>sfeats</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">## Features (12): mean_perimeter, mean_area, mean_concavity, mean...</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">## cindex.test.mean=0.6819127</span></span></code></pre></div>
 <p><code>sfeats</code>is a <code>FeatSelResult</code> (<code><a href="../../reference/selectFeatures.html">selectFeatures()</a></code>) object. The selected features and the corresponding performance can be accessed as follows:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">sfeats<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">##  [1] "mean_perimeter"     "mean_area"          "mean_concavity"    </a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">##  [4] "mean_concavepoints" "mean_symmetry"      "mean_fractaldim"   </a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">##  [7] "SE_texture"         "SE_smoothness"      "SE_compactness"    </a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">## [10] "worst_concavity"    "worst_fractaldim"   "pnodes"</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">sfeats<span class="op">$</span>y</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">## cindex.test.mean </a>
-<a class="sourceLine" id="cb13-8" data-line-number="8">##        0.6819127</a></code></pre></div>
-<p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="https://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Specify the search strategy</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlSequential</a></span>(<span class="dt">method =</span> <span class="st">"sfs"</span>, <span class="dt">alpha =</span> <span class="fl">0.02</span>)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co"># Select features</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">task =</span> bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">control =</span> ctrl,</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">sfeats</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">## FeatSel result:</a>
-<a class="sourceLine" id="cb14-10" data-line-number="10">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio...</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">## mse.test.mean=23.3702960</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>sfeats<span class="op">$</span>x</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">##  [1] "mean_perimeter"     "mean_area"          "mean_concavity"    </span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co">##  [4] "mean_concavepoints" "mean_symmetry"      "mean_fractaldim"   </span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">##  [7] "SE_texture"         "SE_smoothness"      "SE_compactness"    </span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">## [10] "worst_concavity"    "worst_fractaldim"   "pnodes"</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>sfeats<span class="op">$</span>y</span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">## cindex.test.mean </span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">##        0.6819127</span></span></code></pre></div>
+<p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Specify the search strategy</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlSequential</a></span>(<span class="dt">method =</span> <span class="st">"sfs"</span>, <span class="dt">alpha =</span> <span class="fl">0.02</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># Select features</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">task =</span> bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">control =</span> ctrl,</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb14-8"><a href="#cb14-8"></a>sfeats</span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">## Features (11): crim, zn, chas, nox, rm, dis, rad, tax, ptratio...</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">## mse.test.mean=23.3702960</span></span></code></pre></div>
 <p>Further information about the sequential feature selection process can be obtained by function <code><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult()</a></code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult</a></span>(sfeats)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">## Features         : 11</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">## Performance      : mse.test.mean=23.3702960</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">## crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">## </a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">## Path to optimum:</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">## - Features:    0  Init   :                       Perf = 84.667  Diff: NA  *</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">## - Features:    1  Add    : lstat                 Perf = 38.737  Diff: 45.93  *</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9">## - Features:    2  Add    : rm                    Perf = 31.205  Diff: 7.5323  *</a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">## - Features:    3  Add    : ptratio               Perf = 27.911  Diff: 3.2939  *</a>
-<a class="sourceLine" id="cb15-11" data-line-number="11">## - Features:    4  Add    : dis                   Perf = 27.028  Diff: 0.88227  *</a>
-<a class="sourceLine" id="cb15-12" data-line-number="12">## - Features:    5  Add    : nox                   Perf = 25.562  Diff: 1.4663  *</a>
-<a class="sourceLine" id="cb15-13" data-line-number="13">## - Features:    6  Add    : b                     Perf = 24.962  Diff: 0.59985  *</a>
-<a class="sourceLine" id="cb15-14" data-line-number="14">## - Features:    7  Add    : zn                    Perf = 24.644  Diff: 0.3182  *</a>
-<a class="sourceLine" id="cb15-15" data-line-number="15">## - Features:    8  Add    : chas                  Perf = 24.334  Diff: 0.3103  *</a>
-<a class="sourceLine" id="cb15-16" data-line-number="16">## - Features:    9  Add    : crim                  Perf = 24.217  Diff: 0.11693  *</a>
-<a class="sourceLine" id="cb15-17" data-line-number="17">## - Features:   10  Add    : rad                   Perf = 23.856  Diff: 0.36066  *</a>
-<a class="sourceLine" id="cb15-18" data-line-number="18">## - Features:   11  Add    : tax                   Perf = 23.37  Diff: 0.48579  *</a>
-<a class="sourceLine" id="cb15-19" data-line-number="19">## </a>
-<a class="sourceLine" id="cb15-20" data-line-number="20">## Stopped, because no improving feature was found.</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult</a></span>(sfeats)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">## Features         : 11</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">## Performance      : mse.test.mean=23.3702960</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">## crim, zn, chas, nox, rm, dis, rad, tax, ptratio, b, lstat</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co">## </span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">## Path to optimum:</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co">## - Features:    0  Init   :                       Perf = 84.667  Diff: NA  *</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="co">## - Features:    1  Add    : lstat                 Perf = 38.737  Diff: 45.93  *</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="co">## - Features:    2  Add    : rm                    Perf = 31.205  Diff: 7.5323  *</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co">## - Features:    3  Add    : ptratio               Perf = 27.911  Diff: 3.2939  *</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="co">## - Features:    4  Add    : dis                   Perf = 27.028  Diff: 0.88227  *</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">## - Features:    5  Add    : nox                   Perf = 25.562  Diff: 1.4663  *</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="co">## - Features:    6  Add    : b                     Perf = 24.962  Diff: 0.59985  *</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="co">## - Features:    7  Add    : zn                    Perf = 24.644  Diff: 0.3182  *</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="co">## - Features:    8  Add    : chas                  Perf = 24.334  Diff: 0.3103  *</span></span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="co">## - Features:    9  Add    : crim                  Perf = 24.217  Diff: 0.11693  *</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a><span class="co">## - Features:   10  Add    : rad                   Perf = 23.856  Diff: 0.36066  *</span></span>
+<span id="cb15-18"><a href="#cb15-18"></a><span class="co">## - Features:   11  Add    : tax                   Perf = 23.37  Diff: 0.48579  *</span></span>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="co">## </span></span>
+<span id="cb15-20"><a href="#cb15-20"></a><span class="co">## Stopped, because no improving feature was found.</span></span></code></pre></div>
 </div>
 <div id="fuse-a-learner-with-feature-selection" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fuse-a-learner-with-feature-selection" class="anchor"></a>Fuse a learner with feature selection</h2>
 <p>A Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) can be fused with a feature selection strategy (i.e., a search strategy, a performance measure and a resampling strategy) by function <code><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper()</a></code>. During training features are selected according to the specified selection scheme. Then, the learner is trained on the selected feature subset.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper</a></span>(<span class="st">"surv.coxph"</span>, <span class="dt">resampling =</span> rdesc,</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="dt">control =</span> <span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">10</span>), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> wpbc.task)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">mod</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">## Model for learner.id=surv.coxph.featsel; learner.class=FeatSelWrapper</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">## Trained on: task.id = wpbc-example; obs = 194; features = 32</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">## Hyperparameters:</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper</a></span>(<span class="st">"surv.coxph"</span>, <span class="dt">resampling =</span> rdesc,</span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="dt">control =</span> <span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">10</span>), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> wpbc.task)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>mod</span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co">## Model for learner.id=surv.coxph.featsel; learner.class=FeatSelWrapper</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co">## Trained on: task.id = wpbc-example; obs = 194; features = 32</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="co">## Hyperparameters:</span></span></code></pre></div>
 <p>The result of the feature selection can be extracted by function <code><a href="../../reference/getFeatSelResult.html">getFeatSelResult()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/getFeatSelResult.html">getFeatSelResult</a></span>(mod)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">sfeats</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">## FeatSel result:</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">## Features (16): mean_texture, mean_perimeter, mean_smoothness, ...</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">## cindex.test.mean=0.5951147</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>sfeats =<span class="st"> </span><span class="kw"><a href="../../reference/getFeatSelResult.html">getFeatSelResult</a></span>(mod)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>sfeats</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co">## Features (16): mean_texture, mean_perimeter, mean_smoothness, ...</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="co">## cindex.test.mean=0.5951147</span></span></code></pre></div>
 <p>The selected features are:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">sfeats<span class="op">$</span>x</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">##  [1] "mean_texture"       "mean_perimeter"     "mean_smoothness"   </a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">##  [4] "mean_compactness"   "mean_concavepoints" "mean_fractaldim"   </a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">##  [7] "SE_radius"          "SE_area"            "SE_smoothness"     </a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">## [10] "SE_fractaldim"      "worst_texture"      "worst_perimeter"   </a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">## [13] "worst_smoothness"   "worst_concavity"    "worst_fractaldim"  </a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">## [16] "pnodes"</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>sfeats<span class="op">$</span>x</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">##  [1] "mean_texture"       "mean_perimeter"     "mean_smoothness"   </span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co">##  [4] "mean_compactness"   "mean_concavepoints" "mean_fractaldim"   </span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">##  [7] "SE_radius"          "SE_area"            "SE_smoothness"     </span></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co">## [10] "SE_fractaldim"      "worst_texture"      "worst_perimeter"   </span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co">## [13] "worst_smoothness"   "worst_concavity"    "worst_fractaldim"  </span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co">## [16] "pnodes"</span></span></code></pre></div>
 <p>The 5-fold cross-validated performance of the learner specified above can be computed as follows:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">out.rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> wpbc.task, <span class="dt">resampling =</span> out.rdesc, <span class="dt">models =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">r<span class="op">$</span>aggr</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">## cindex.test.mean </a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">##         0.606664</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>out.rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">5</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a>r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> wpbc.task, <span class="dt">resampling =</span> out.rdesc, <span class="dt">models =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a>r<span class="op">$</span>aggr</span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co">## cindex.test.mean </span></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="co">##         0.606664</span></span></code></pre></div>
 <p>The selected feature sets in the individual resampling iterations can be extracted as follows:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(r<span class="op">$</span>models, getFeatSelResult)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">## [[1]]</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">## FeatSel result:</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">## Features (16): mean_concavity, mean_symmetry, mean_fractaldim,...</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">## cindex.test.mean=0.6282322</a>
-<a class="sourceLine" id="cb20-6" data-line-number="6">## </a>
-<a class="sourceLine" id="cb20-7" data-line-number="7">## [[2]]</a>
-<a class="sourceLine" id="cb20-8" data-line-number="8">## FeatSel result:</a>
-<a class="sourceLine" id="cb20-9" data-line-number="9">## Features (16): mean_radius, mean_texture, mean_perimeter, mean...</a>
-<a class="sourceLine" id="cb20-10" data-line-number="10">## cindex.test.mean=0.5250988</a>
-<a class="sourceLine" id="cb20-11" data-line-number="11">## </a>
-<a class="sourceLine" id="cb20-12" data-line-number="12">## [[3]]</a>
-<a class="sourceLine" id="cb20-13" data-line-number="13">## FeatSel result:</a>
-<a class="sourceLine" id="cb20-14" data-line-number="14">## Features (15): mean_texture, mean_perimeter, mean_smoothness, ...</a>
-<a class="sourceLine" id="cb20-15" data-line-number="15">## cindex.test.mean=0.7002573</a>
-<a class="sourceLine" id="cb20-16" data-line-number="16">## </a>
-<a class="sourceLine" id="cb20-17" data-line-number="17">## [[4]]</a>
-<a class="sourceLine" id="cb20-18" data-line-number="18">## FeatSel result:</a>
-<a class="sourceLine" id="cb20-19" data-line-number="19">## Features (15): mean_radius, mean_texture, mean_area, mean_smoo...</a>
-<a class="sourceLine" id="cb20-20" data-line-number="20">## cindex.test.mean=0.6983633</a>
-<a class="sourceLine" id="cb20-21" data-line-number="21">## </a>
-<a class="sourceLine" id="cb20-22" data-line-number="22">## [[5]]</a>
-<a class="sourceLine" id="cb20-23" data-line-number="23">## FeatSel result:</a>
-<a class="sourceLine" id="cb20-24" data-line-number="24">## Features (18): mean_texture, mean_smoothness, mean_concavity, ...</a>
-<a class="sourceLine" id="cb20-25" data-line-number="25">## cindex.test.mean=0.6896807</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(r<span class="op">$</span>models, getFeatSelResult)</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co">## [[1]]</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="co">## Features (16): mean_concavity, mean_symmetry, mean_fractaldim,...</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co">## cindex.test.mean=0.6282322</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">## </span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co">## [[2]]</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="co">## Features (16): mean_radius, mean_texture, mean_perimeter, mean...</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="co">## cindex.test.mean=0.5250988</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a><span class="co">## </span></span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="co">## [[3]]</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a><span class="co">## Features (15): mean_texture, mean_perimeter, mean_smoothness, ...</span></span>
+<span id="cb20-15"><a href="#cb20-15"></a><span class="co">## cindex.test.mean=0.7002573</span></span>
+<span id="cb20-16"><a href="#cb20-16"></a><span class="co">## </span></span>
+<span id="cb20-17"><a href="#cb20-17"></a><span class="co">## [[4]]</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb20-19"><a href="#cb20-19"></a><span class="co">## Features (15): mean_radius, mean_texture, mean_area, mean_smoo...</span></span>
+<span id="cb20-20"><a href="#cb20-20"></a><span class="co">## cindex.test.mean=0.6983633</span></span>
+<span id="cb20-21"><a href="#cb20-21"></a><span class="co">## </span></span>
+<span id="cb20-22"><a href="#cb20-22"></a><span class="co">## [[5]]</span></span>
+<span id="cb20-23"><a href="#cb20-23"></a><span class="co">## FeatSel result:</span></span>
+<span id="cb20-24"><a href="#cb20-24"></a><span class="co">## Features (18): mean_texture, mean_smoothness, mean_concavity, ...</span></span>
+<span id="cb20-25"><a href="#cb20-25"></a><span class="co">## cindex.test.mean=0.6896807</span></span></code></pre></div>
 </div>
 </div>
 <div id="feature-importance-from-trained-models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#feature-importance-from-trained-models" class="anchor"></a>Feature importance from trained models</h1>
 <p>Some algorithms internally compute a feature importance during training. By using <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code> it is possible to extract this part from the trained model.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, <span class="dt">importance =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"permutation"</span>))</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="../../reference/getFeatureImportance.html">getFeatureImportance</a></span>(mod)</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">## FeatureImportance:</a>
-<a class="sourceLine" id="cb21-7" data-line-number="7">## Task: iris</a>
-<a class="sourceLine" id="cb21-8" data-line-number="8">## </a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">## Learner: classif.ranger</a>
-<a class="sourceLine" id="cb21-10" data-line-number="10">## Measure: NA</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11">## Contrast: NA</a>
-<a class="sourceLine" id="cb21-12" data-line-number="12">## Aggregation: function (x)  x</a>
-<a class="sourceLine" id="cb21-13" data-line-number="13">## Replace: NA</a>
-<a class="sourceLine" id="cb21-14" data-line-number="14">## Number of Monte-Carlo iterations: NA</a>
-<a class="sourceLine" id="cb21-15" data-line-number="15">## Local: FALSE</a>
-<a class="sourceLine" id="cb21-16" data-line-number="16">##   Sepal.Length Sepal.Width Petal.Length Petal.Width</a>
-<a class="sourceLine" id="cb21-17" data-line-number="17">## 1   0.02896182 0.005060765    0.3105543   0.3007185</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, <span class="dt">importance =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"permutation"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="kw"><a href="../../reference/getFeatureImportance.html">getFeatureImportance</a></span>(mod)</span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="co">## FeatureImportance:</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="co">## Task: iris</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co">## </span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="co">## Learner: classif.ranger</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="co">## Measure: NA</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="co">## Contrast: NA</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">## Aggregation: function (x)  x</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="co">## Replace: NA</span></span>
+<span id="cb21-14"><a href="#cb21-14"></a><span class="co">## Number of Monte-Carlo iterations: NA</span></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="co">## Local: FALSE</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="co">## 1   0.03185321 0.004561184    0.3125292   0.3000365</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -690,6 +943,7 @@
 </div>
 
 
+
       <footer><!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
 </div>
@@ -700,8 +954,7 @@
 --></footer>
 </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

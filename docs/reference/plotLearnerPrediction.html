@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Visualizes a learning algorithm on a 1D or 2D data set. — plotLearnerPrediction" />
 
+<meta property="og:title" content="Visualizes a learning algorithm on a 1D or 2D data set. — plotLearnerPrediction" />
 <meta property="og:description" content="Trains the model for 1 or 2 selected features, then displays it via ggplot2::ggplot.
 Good for teaching or exploring models.
 For classification and clustering, only 2D plots are supported. The data points, the classification and
@@ -42,6 +43,7 @@ and the cross-validation performance." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,12 +53,12 @@ and the cross-validation performance." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -262,7 +264,6 @@ and the cross-validation performance." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -301,6 +302,7 @@ and the cross-validation performance." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -310,7 +312,6 @@ and the cross-validation performance." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/plotLearnerPrediction.R'><code>R/plotLearnerPrediction.R</code></a></small>
     </div>
 
-    
     <p>Trains the model for 1 or 2 selected features, then displays it via <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2::ggplot</a>.
 Good for teaching or exploring models.</p>
 <p>For classification and clustering, only 2D plots are supported. The data points, the classification and
@@ -320,20 +321,19 @@ the estimated standard error. 2D does not show estimated standard error,
 but only the estimated mean via background color.</p>
 <p>The plot title displays the model id, its parameters, the training performance
 and the cross-validation performance.</p>
-    
 
     <pre class="usage"><span class='fu'>plotLearnerPrediction</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>measures</span>,
   <span class='kw'>cv</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='no'>...</span>, <span class='no'>gridsize</span>, <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>prob.alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>se.band</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>err.mark</span> <span class='kw'>=</span> <span class='st'>"train"</span>, <span class='kw'>bg.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"darkblue"</span>,
+  <span class='kw'>se.band</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>err.mark</span> <span class='kw'>=</span> <span class='st'>"train"</span>, <span class='kw'>bg.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"darkblue"</span>,
   <span class='st'>"green"</span>, <span class='st'>"darkred"</span>), <span class='kw'>err.col</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>err.size</span> <span class='kw'>=</span> <span class='no'>pointsize</span>,
   <span class='kw'>greyscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -344,7 +344,7 @@ The task.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Selected features for model.
 By default the first 2 features are used.</p></td>
     </tr>
@@ -356,7 +356,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>cv</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Do cross-validation and display in plot title?
 Number of folds. 0 means no CV.
 Default is 10.</p></td>
@@ -368,19 +368,19 @@ Parameters for <code>learner</code>.</p></td>
     </tr>
     <tr>
       <th>gridsize</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Grid resolution per axis for background predictions.
 Default is 500 for 1D and 100 for 2D.</p></td>
     </tr>
     <tr>
       <th>pointsize</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Pointsize for ggplot2 <a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>ggplot2::geom_point</a> for data points.
 Default is 2.</p></td>
     </tr>
     <tr>
       <th>prob.alpha</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 For classification: Set alpha value of background to probability for
 predicted class? Allows visualization of &#8220;confidence&#8221; for prediction.
 If not, only a constant color is displayed in the background for the predicted label.
@@ -388,65 +388,64 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>se.band</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 For regression in 1D: Show band for standard error estimation?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>err.mark</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>):
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>):
 For classification: Either mark error of the model on the training data (&#8220;train&#8221;) or
 during cross-validation (&#8220;cv&#8221;) or not at all with &#8220;none&#8221;.
 Default is &#8220;train&#8221;.</p></td>
     </tr>
     <tr>
       <th>bg.cols</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(3)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(3)</a></code>)<br />
 Background colors for classification and regression.
 Sorted from low, medium to high.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>err.col</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 For classification: Color of misclassified data points.
 Default is &#8220;white&#8221;</p></td>
     </tr>
     <tr>
       <th>err.size</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 For classification: Size of misclassified data points.
 Default is <code>pointsize</code>.</p></td>
     </tr>
     <tr>
       <th>greyscale</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the plot be greyscale completely?
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>pretty.names</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to use the short name of the learner instead of its ID in labels. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The ggplot2 object.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -457,11 +456,11 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -473,4 +472,5 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
 
   </body>
 </html>
+
 

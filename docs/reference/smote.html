@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification. — smote" />
 
+<meta property="og:title" content="Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification. — smote" />
 <meta property="og:description" content="In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
 Both points are now interpolated / convex-combined, resulting in a new virtual data point x3
 for the minority class.
@@ -38,6 +39,7 @@ calculation, see cluster::daisy.
 For interpolation, the new factor level for x3
 is sampled from the two given levels of x1 and x2 per feature." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -49,12 +51,12 @@ is sampled from the two given levels of x1 and x2 per feature." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -260,7 +262,6 @@ is sampled from the two given levels of x1 and x2 per feature." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -299,6 +300,7 @@ is sampled from the two given levels of x1 and x2 per feature." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -308,18 +310,16 @@ is sampled from the two given levels of x1 and x2 per feature." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/smote.R'><code>R/smote.R</code></a></small>
     </div>
 
-    
     <p>In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
 Both points are now interpolated / convex-combined, resulting in a new virtual data point x3
 for the minority class.</p>
 <p>The method handles factor features, too. The gower distance is used for nearest neighbor
-calculation, see <a href='https://www.rdocumentation.org/packages/cluster/topics/daisy'>cluster::daisy</a>.
+calculation, see <a href='https://rdrr.io/pkg/cluster/man/daisy.html'>cluster::daisy</a>.
 For interpolation, the new factor level for x3
 is sampled from the two given levels of x1 and x2 per feature.</p>
-    
 
     <pre class="usage"><span class='fu'>smote</span>(<span class='no'>task</span>, <span class='no'>rate</span>, <span class='kw'>nn</span> <span class='kw'>=</span> <span class='fl'>5L</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alt.logic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -330,20 +330,20 @@ The task.</p></td>
     </tr>
     <tr>
       <th>rate</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Factor to upsample the smaller class.
 Must be between 1 and <code>Inf</code>,
 where 1 means no oversampling and 2 would mean doubling the class size.</p></td>
     </tr>
     <tr>
       <th>nn</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of nearest neighbors to consider.
 Default is 5.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Standardize input variables before calculating the nearest neighbors
 for data sets with numeric input variables only. For mixed variables
 (numeric and factor) the gower distance is used and variables are
@@ -352,7 +352,7 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>alt.logic</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Use an alternative logic for selection of minority class observations.
 Instead of sampling a minority class element AND one of its nearest
 neighbors, each minority class element is taken multiple times (depending
@@ -361,40 +361,35 @@ is sampled.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='Task.html'>Task</a>.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Chawla, N., Bowyer, K., Hall, L., &amp; Kegelmeyer, P. (2000)
 <em>SMOTE: Synthetic Minority Over-sampling TEchnique.</em>
 In International Conference of Knowledge Based Computer Systems, pp. 46-57.
 National Center for Software Technology, Mumbai, India, Allied Press.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other imbalancy: <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='oversample.html'>oversample</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -405,11 +400,11 @@ National Center for Software Technology, Mumbai, India, Allied Press.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -421,4 +416,5 @@ National Center for Software Technology, Mumbai, India, Allied Press.</p>
 
   </body>
 </html>
+
 

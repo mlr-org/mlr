@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,12 +29,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Fuse learner with a feature filter method. — makeFilterWrapper" />
 
+<meta property="og:title" content="Fuse learner with a feature filter method. — makeFilterWrapper" />
 <meta property="og:description" content="Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
 filterFeatures before every model fit." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -45,12 +47,12 @@ filterFeatures before every model fit." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -256,7 +258,6 @@ filterFeatures before every model fit." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -295,6 +296,7 @@ filterFeatures before every model fit." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -304,60 +306,58 @@ filterFeatures before every model fit." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FilterWrapper.R'><code>R/FilterWrapper.R</code></a></small>
     </div>
 
-    
     <p>Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
 <a href='filterFeatures.html'>filterFeatures</a> before every model fit.</p>
-    
 
     <pre class="usage"><span class='fu'>makeFilterWrapper</span>(<span class='no'>learner</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
   <span class='kw'>fw.base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fw.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>fw.method</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
 Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>fw.base.methods</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Simple Filter methods for ensemble
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Simple Filter methods for ensemble
 filters. See <a href='listFilterMethods.html'>listFilterMethods</a>. Can only be used in combination with
 ensemble filters. See <a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>.</p></td>
     </tr>
     <tr>
       <th>fw.perc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br /> If set, select <code>fw.perc</code>*100 top scoring
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select <code>fw.perc</code>*100 top scoring
 features. Mutually exclusive with arguments <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.abs</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br /> If set, select <code>fw.abs</code> top scoring features.
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select <code>fw.abs</code> top scoring features.
 Mutually exclusive with arguments <code>fw.perc</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.threshold</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br /> If set, select features whose score
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select features whose score
 exceeds <code>fw.threshold</code>. Mutually exclusive with arguments <code>fw.perc</code> and
 <code>fw.abs</code>.</p></td>
     </tr>
     <tr>
       <th>fw.mandatory.feat</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br /> Mandatory features which are always
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br /> Mandatory features which are always
 included regardless of their scores</p></td>
     </tr>
     <tr>
       <th>cache</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>)<br /> Whether to use caching during
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br /> Whether to use caching during
 filter value creation. See details.</p></td>
     </tr>
     <tr>
@@ -367,11 +367,10 @@ are using more than one filter method, you need to pass the arguments in a
 named list via <code>more.args</code>. For example <code>more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='makeLearner.html'>Learner</a>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If <code>ensemble = TRUE</code>, ensemble feature selection using all methods specified
@@ -380,7 +379,6 @@ in <code>fw.method</code> is performed. At least two methods need to be selected
 <a href='getFilteredFeatures.html'>getFilteredFeatures</a>.</p>
 <p>Note that observation weights do not influence the filtering and are simply
 passed down to the next learner.</p>
-    
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
     <p>If <code>cache = TRUE</code>, the default mlr cache directory is used
@@ -390,7 +388,6 @@ passed to store the cache. The cache can be cleared with
 <code><a href='cache_helpers.html'>deleteCacheDir()</a></code>. Caching is disabled by default. Care should be taken
 when operating on large clusters due to possible write conflicts to disk if
 multiple workers try to write the same cache at the same time.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
@@ -424,7 +421,6 @@ multiple workers try to write the same cache at the same time.</p>
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
@@ -432,10 +428,10 @@ multiple workers try to write the same cache at the same time.</p>
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFilterWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
-})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "Petal.Length" "Petal.Width" 
 #&gt; 
 #&gt; [[2]]
@@ -444,11 +440,11 @@ multiple workers try to write the same cache at the same time.</p>
 <span class='co'># usage of an ensemble filter</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFilterWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"E-Borda"</span>,
-  <span class='kw'>fw.base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>),
+  <span class='kw'>fw.base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>),
   <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
-})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "Petal.Length" "Petal.Width" 
 #&gt; 
 #&gt; [[2]]
@@ -459,20 +455,16 @@ multiple workers try to write the same cache at the same time.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#caching">Caching</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -483,11 +475,11 @@ multiple workers try to write the same cache at the same time.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -499,4 +491,5 @@ multiple workers try to write the same cache at the same time.</p>
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Downsample (subsample) a task or a data.frame. — downsample" />
 
+<meta property="og:title" content="Downsample (subsample) a task or a data.frame. — downsample" />
 <meta property="og:description" content="Decrease the observations in a task or a ResampleInstance
 to a given percentage of observations." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ to a given percentage of observations." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ to a given percentage of observations." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ to a given percentage of observations." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,13 +305,11 @@ to a given percentage of observations." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/downsample.R'><code>R/downsample.R</code></a></small>
     </div>
 
-    
     <p>Decrease the observations in a <code>task</code> or a <code>ResampleInstance</code>
 to a given percentage of observations.</p>
-    
 
     <pre class="usage"><span class='fu'>downsample</span>(<span class='no'>obj</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -320,42 +320,39 @@ Input data or a <code>ResampleInstance</code>.</p></td>
     </tr>
     <tr>
       <th>perc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Percentage from (0, 1).
 Default is 1.</p></td>
     </tr>
     <tr>
       <th>stratify</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Only for classification:
 Should the downsampled data be stratified according to the target classes?
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>([data.frame<code>| [Task] | [ResampleInstance]). Same type as</code>obj`.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='makeResampleInstance.html'>makeResampleInstance</a></p>
 <p>Other downsample: <code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -366,11 +363,11 @@ Default is <code>FALSE</code>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -382,4 +379,5 @@ Default is <code>FALSE</code>.</p></td>
 
   </body>
 </html>
+
 

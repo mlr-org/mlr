@@ -15,6 +15,7 @@ multilabel task. — Task • mlr</title>
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,9 +30,9 @@ multilabel task. — Task • mlr</title>
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
+
 <meta property="og:title" content="Create a classification, regression, survival, cluster, cost-sensitive classification or
 multilabel task. — Task" />
-
 <meta property="og:description" content="The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.
@@ -41,19 +42,21 @@ getTaskFeatureNames,
 getTaskData,
 getTaskTargets, and
 subsetTask.
-" />
 
-<meta property="og:description" content="Object members:
+
+Object members:
 env (environment)Environment where data for the task are stored.
 Use getTaskData in order to access it.
 weights (numeric)See argument. NULL if not present.
 blocking (factor)See argument. NULL if not present.
 task.desc (TaskDesc)Encapsulates further information about the task.
-" />
 
-<meta property="og:description" content="Functional data can be added to a task via matrix columns. For more information refer to
+
+
+Functional data can be added to a task via matrix columns. For more information refer to
 makeFunctionalData." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -65,12 +68,12 @@ makeFunctionalData." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -276,7 +279,6 @@ makeFunctionalData." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -315,6 +317,7 @@ makeFunctionalData." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -325,7 +328,6 @@ multilabel task.</h1>
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Task.R'><code>R/Task.R</code></a></small>
     </div>
 
-    
     <p>The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.</p>
@@ -337,36 +339,36 @@ It also contains a description object detailing further aspects of the data.</p>
 <li><p><a href='subsetTask.html'>subsetTask</a>.</p></li>
 </ul>
 
-    <p>Object members:</p><dl class='dl-horizontal'>
+<p>Object members:</p><dl class='dl-horizontal'>
 <dt>env (<code>environment</code>)</dt><dd><p>Environment where data for the task are stored.
 Use <a href='getTaskData.html'>getTaskData</a> in order to access it.</p></dd>
-<dt>weights (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
-<dt>blocking (<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
+<dt>weights (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
+<dt>blocking (<a href='https://rdrr.io/r/base/factor.html'>factor</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
 <dt>task.desc (<a href='TaskDesc.html'>TaskDesc</a>)</dt><dd><p>Encapsulates further information about the task.</p></dd>
+
 </dl>
 
-    <p>Functional data can be added to a task via matrix columns. For more information refer to
+<p>Functional data can be added to a task via matrix columns. For more information refer to
 <a href='makeFunctionalData.html'>makeFunctionalData</a>.</p>
-    
 
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Id string for object.
 Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(2)</a></code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(n.classes)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(2)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(n.classes)</a></code>)<br />
 Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
 so it has length 2. For multilabel classification it contains the names of the logical
@@ -375,7 +377,7 @@ number of classes.</p></td>
     </tr>
     <tr>
       <th>costs</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 A numeric matrix or data frame containing the costs of misclassification.
 We assume the general case of observation specific costs.
 This means we have n rows, corresponding to the observations, in the same order as <code>data</code>.
@@ -386,14 +388,14 @@ for observation i.</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Optional, non-negative case weight vector to be used during fitting.
 Cannot be set for cost-sensitive learning.
 Default is <code>NULL</code> which means no (= equal) weights.</p></td>
     </tr>
     <tr>
       <th>blocking</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/factor.html'>factor</a>)<br />
 An optional factor of the same length as the number of observations.
 Observations with the same blocking level &#8220;belong together&#8221;.
 Specifically, they are either put all in the training or the test set
@@ -402,13 +404,13 @@ Default is <code>NULL</code> which means no blocking.</p></td>
     </tr>
     <tr>
       <th>positive</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Positive class for binary classification (otherwise ignored and set to NA).
 Default is the first factor level of the target attribute.</p></td>
     </tr>
     <tr>
       <th>fixup.data</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Should some basic cleaning up of data be performed?
 Currently this means removing empty factor levels for the columns.
 Possible choices are:
@@ -419,39 +421,37 @@ Default is &#8220;warn&#8221;.</p></td>
     </tr>
     <tr>
       <th>check.data</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>coordinates</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 Coordinates have to be numeric values.
-Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
+Provided <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> needs to have the same number of rows as data and consist of at least two dimensions.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Task.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mlbench</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>BostonHousing</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Ionosphere</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlbench</span>)
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BostonHousing</span>)
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Ionosphere</span>)
 
   <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
   <span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='co'># an example of a classification task with more than those standard arguments:</span>
-  <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
+  <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
   <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"myIonosphere"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Ionosphere</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>,
     <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"good"</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='no'>blocking</span>)
   <span class='fu'><a href='ClusterTask.html'>makeClusterTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])
@@ -470,16 +470,14 @@ Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -490,11 +488,11 @@ Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -506,4 +504,5 @@ Provided <a href='https://www.rdocumentation.org/packages/base/topics/data.frame
 
   </body>
 </html>
+
 

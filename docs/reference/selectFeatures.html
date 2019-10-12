@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Feature selection by wrapper approach. — selectFeatures" />
 
+<meta property="og:title" content="Feature selection by wrapper approach. — selectFeatures" />
 <meta property="og:description" content="Optimizes the features for a classification or regression problem by choosing a variable selection wrapper approach.
 Allows for different optimization methods, such as forward search or a genetic algorithm.
 You can select such an algorithm (and its settings)
@@ -41,6 +42,7 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,12 +52,12 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -261,7 +263,6 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -300,6 +301,7 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -309,7 +311,6 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/selectFeatures.R'><code>R/selectFeatures.R</code></a></small>
     </div>
 
-    
     <p>Optimizes the features for a classification or regression problem by choosing a variable selection wrapper approach.
 Allows for different optimization methods, such as forward search or a genetic algorithm.
 You can select such an algorithm (and its settings)
@@ -318,17 +319,16 @@ subclasses of ([FeatSelControl]).</p>
 <p>All algorithms operate on a 0-1-bit encoding of candidate solutions. Per default a single bit corresponds
 to a single feature, but you are able to change this by using the arguments `bit.names`
 and `bits.to.features`. Thus allowing you to switch on whole groups of features with a single bit.</p>
-    
 
     <pre class="usage"><span class='fu'>selectFeatures</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='no'>bit.names</span>,
   <span class='no'>bits.to.features</span>, <span class='no'>control</span>, <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -373,26 +373,25 @@ Also selects the optimization algorithm for feature selection.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>([FeatSelResult]).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other featsel: <code><a href='FeatSelControl.html'>FeatSelControl</a></code>,
   <code><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a></code>,
   <code><a href='getFeatSelResult.html'>getFeatSelResult</a></code>,
   <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlSequential</a></span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"sfs"</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>NA</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>selectFeatures</span>(<span class='st'>"classif.rpart"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[FeatSel] Started selecting features for learner 'classif.rpart'</span></div><div class='output co'>#&gt; <span class='message'>With control class: FeatSelControlSequential</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 1: 0000 (0 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 1: mmce.test.mean=0.6400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 1000 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.2800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0100 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.4800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0010 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0001 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 1010 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0110 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0011 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Result: Petal.Length (1 bits)</span></div><div class='input'><span class='fu'><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Features         : 1
 #&gt; Performance      : mmce.test.mean=0.0400000
@@ -402,22 +401,21 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 #&gt; - Features:    0  Init   :                       Perf = 0.64  Diff: NA  *
 #&gt; - Features:    1  Add    : Petal.Length          Perf = 0.04  Diff: 0.6  *
 #&gt; 
-#&gt; Stopped, because no improving feature was found.</div></pre>
+#&gt; Stopped, because no improving feature was found.</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -428,11 +426,11 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -444,4 +442,5 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate threshold vs. performance(s) for 2-class classification. — generateThreshVsPerfData" />
 
+<meta property="og:title" content="Generate threshold vs. performance(s) for 2-class classification. — generateThreshVsPerfData" />
 <meta property="og:description" content="Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,13 +304,11 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateThreshVsPerf.R'><code>R/generateThreshVsPerf.R</code></a></small>
     </div>
 
-    
     <p>Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.</p>
-    
 
     <pre class="usage"><span class='fu'>generateThreshVsPerfData</span>(<span class='no'>obj</span>, <span class='no'>measures</span>, <span class='kw'>gridsize</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
   <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>task.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -328,31 +328,30 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>gridsize</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Grid resolution for x-axis (threshold).
 Default is 100.</p></td>
     </tr>
     <tr>
       <th>aggregate</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to aggregate <a href='ResamplePrediction.html'>ResamplePrediction</a>s or to plot the performance
 of each iteration separately.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>task.id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Selected task in <a href='BenchmarkResult.html'>BenchmarkResult</a> to do plots for, ignored otherwise.
 Default is first task.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(ThreshVsPerfData). A named list containing the measured performance
 across the threshold grid, the measures, and whether the performance estimates were
 aggregated (only applicable for (list of) <a href='ResampleResult.html'>ResampleResult</a>s).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
@@ -364,21 +363,19 @@ aggregated (only applicable for (list of) <a href='ResampleResult.html'>Resample
   <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
 <p>Other thresh_vs_perf: <code><a href='plotROCCurves.html'>plotROCCurves</a></code>,
   <code><a href='plotThreshVsPerf.html'>plotThreshVsPerf</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -389,11 +386,11 @@ aggregated (only applicable for (list of) <a href='ResampleResult.html'>Resample
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -405,4 +402,5 @@ aggregated (only applicable for (list of) <a href='ResampleResult.html'>Resample
 
   </body>
 </html>
+
 

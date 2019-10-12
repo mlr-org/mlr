@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Find matching learning algorithms. — listLearners" />
 
+<meta property="og:title" content="Find matching learning algorithms. — listLearners" />
 <meta property="og:description" content="Returns learning algorithms which have specific characteristics, e.g.
 whether they support missing values, case weights, etc.
 Note that the packages of all learners are loaded during the search if you create them.
@@ -42,6 +43,7 @@ The same applies for many multilabel methods, see, e.g., makeMultilabelBinaryRel
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,12 +53,12 @@ The same applies for many multilabel methods, see, e.g., makeMultilabelBinaryRel
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -262,7 +264,6 @@ The same applies for many multilabel methods, see, e.g., makeMultilabelBinaryRel
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -301,6 +302,7 @@ The same applies for many multilabel methods, see, e.g., makeMultilabelBinaryRel
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -310,7 +312,6 @@ The same applies for many multilabel methods, see, e.g., makeMultilabelBinaryRel
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/listLearners.R'><code>R/listLearners.R</code></a></small>
     </div>
 
-    
     <p>Returns learning algorithms which have specific characteristics, e.g.
 whether they support missing values, case weights, etc.</p>
 <p>Note that the packages of all learners are loaded during the search if you create them.
@@ -320,63 +321,62 @@ This will be a lot faster.</p>
 &#8220;wrapper&#8221; approaches like <a href='makeCostSensWeightedPairsWrapper.html'>CostSensWeightedPairsWrapper</a>,
 which are not listed, as they are not basic R learning algorithms.
 The same applies for many multilabel methods, see, e.g., <a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a>.</p>
-    
 
-    <pre class="usage"><span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>),
+    <pre class="usage"><span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for character</span>
 <span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for Task</span>
 <span class='fu'>listLearners</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>warn.missing.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>check.packages</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='Task.html'>Task</a>)<br />
-Either <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> task or the type of the task, in the latter case one of:
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='Task.html'>Task</a>)<br />
+Either <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> task or the type of the task, in the latter case one of:
 &#8220;classif&#8221; &#8220;regr&#8221; &#8220;surv&#8221; &#8220;costsens&#8221; &#8220;cluster&#8221; &#8220;multilabel&#8221;.
 Default is <code>NA</code> matching all types.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
-Set of required properties to filter for. Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+Set of required properties to filter for. Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>warn.missing.packages</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>check.packages</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
-Check if required packages are installed. Calls <code><a href='https://www.rdocumentation.org/packages/base/topics/find.package'>find.package()</a></code>.
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Check if required packages are installed. Calls <code><a href='https://rdrr.io/r/base/find.package.html'>find.package()</a></code>.
 If <code>create</code> is <code>TRUE</code>, this is done implicitly and the value of this parameter is ignored.
 If <code>create</code> is <code>FALSE</code> and <code>check.packages</code> is <code>TRUE</code> the returned table only
 contains learners whose dependencies are installed.
@@ -386,40 +386,38 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>create</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Instantiate objects (or return info table)?
 Packages are loaded if and only if this option is <code>TRUE</code>.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>([data.frame<code>|</code>list` of <a href='makeLearner.html'>Learner</a>).
 Either a descriptive data.frame that allows access to all properties of the learners
 or a list of created learner objects (named by ids of listed learners).</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>listLearners</span>(<span class='st'>"classif"</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"multiclass"</span>, <span class='st'>"prob"</span>))
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>listLearners</span>(<span class='st'>"classif"</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"multiclass"</span>, <span class='st'>"prob"</span>))
 <span class='no'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='fu'>listLearners</span>(<span class='no'>task</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -430,11 +428,11 @@ or a list of created learner objects (named by ids of listed learners).</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -446,4 +444,5 @@ or a list of created learner objects (named by ids of listed learners).</p>
 
   </body>
 </html>
+
 

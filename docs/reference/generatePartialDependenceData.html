@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,14 +29,15 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate partial dependence. — generatePartialDependenceData" />
 
+<meta property="og:title" content="Generate partial dependence. — generatePartialDependenceData" />
 <meta property="og:description" content="Estimate how the learned prediction function is affected by one or more features.
 For a learned function f(x) where x is partitioned into x_s and x_c, the partial dependence of
 f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
 estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
 Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -47,12 +49,12 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -258,7 +260,6 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -297,6 +298,7 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -306,19 +308,17 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generatePartialDependence.R'><code>R/generatePartialDependence.R</code></a></small>
     </div>
 
-    
     <p>Estimate how the learned prediction function is affected by one or more features.
 For a learned function f(x) where x is partitioned into x_s and x_c, the partial dependence of
 f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
 estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
 Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed.</p>
-    
 
     <pre class="usage"><span class='fu'>generatePartialDependenceData</span>(<span class='no'>obj</span>, <span class='no'>input</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>derivative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>individual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>qnorm</a></span>(<span class='fl'>0.975</span>)), <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>), <span class='no'>...</span>)</pre>
-    
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.975</span>)), <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>), <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -329,18 +329,18 @@ Result of <a href='train.html'>train</a>.</p></td>
     </tr>
     <tr>
       <th>input</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> | <a href='Task.html'>Task</a>)<br />
 Input data.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a><br />
+      <td><p><a href='https://rdrr.io/r/base/character.html'>character</a><br />
 A vector of feature names contained in the training data.
 If not specified all features in the <code>input</code> will be used.</p></td>
     </tr>
     <tr>
       <th>interaction</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether the <code>features</code> should be interacted or not. If <code>TRUE</code> then the Cartesian product of the
 prediction grid for each feature is taken, and the partial dependence at each unique combination of
 values of the features is estimated. Note that if the length of <code>features</code> is greater than two,
@@ -351,20 +351,20 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>derivative</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not the partial derivative of the learned function with respect to the features should be
 estimated. If <code>TRUE</code> <code>interaction</code> must be <code>FALSE</code>. The partial derivative of individual
 observations may be estimated. Note that computation time increases as the learned prediction function
 is evaluated at <code>gridsize</code> points * the number of points required to estimate the partial derivative.
-Additional arguments may be passed to <a href='https://www.rdocumentation.org/packages/numDeriv/topics/grad'>numDeriv::grad</a> (for regression or survival tasks) or
-<a href='https://www.rdocumentation.org/packages/numDeriv/topics/jacobian'>numDeriv::jacobian</a> (for classification tasks). Note that functions which are not smooth may
+Additional arguments may be passed to <a href='https://rdrr.io/pkg/numDeriv/man/grad.html'>numDeriv::grad</a> (for regression or survival tasks) or
+<a href='https://rdrr.io/pkg/numDeriv/man/jacobian.html'>numDeriv::jacobian</a> (for classification tasks). Note that functions which are not smooth may
 result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
 or estimates trending towards +/- infinity (at discontinuities).
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>individual</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
 rather than aggregating (using <code>fun</code>) the partial dependences of <code>features</code>, plot the
 partial dependences of all observations in <code>data</code> across all values of the <code>features</code>.
@@ -384,14 +384,14 @@ in which case the default is the proportion of observations predicted to be in e
     </tr>
     <tr>
       <th>bounds</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(2)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(2)</a></code>)<br />
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 confidence region for a partial dependence. Ignored if <code>predict.type != "se"</code> for the learner.
 Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.</p></td>
     </tr>
     <tr>
       <th>uniform</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not the prediction grid for the <code>features</code> is a uniform grid of size <code>n[1]</code> or sampled with
 replacement from the <code>input</code>.
 Default is <code>TRUE</code>.</p></td>
@@ -406,17 +406,17 @@ The default for <code>n[1]</code> is 10, and the default for <code>n[2]</code> i
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments to be passed to <a href='https://www.rdocumentation.org/packages/mmpf/topics/marginalPrediction'>mmpf::marginalPrediction</a>.</p></td>
+      <td><p>additional arguments to be passed to <a href='https://rdrr.io/pkg/mmpf/man/marginalPrediction.html'>mmpf::marginalPrediction</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>PartialDependenceData. A named list, which contains the partial dependence,
 input data, target, features, task description, and other arguments controlling the type of
 partial dependences made.</p>
 <p>Object members:</p>
-<dt>data</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a><br />
+<dt>data</dt><dd><p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a><br />
 Has columns for the prediction: one column for regression and
 survival analysis, and a column for class and the predicted probability for classification as well
 as a a column for each element of <code>features</code>. If <code>individual = TRUE</code> then there is an
@@ -425,21 +425,19 @@ additional column <code>idx</code> which gives the index of the <code>data</code
 Task description.</p></dd>
 <dt>target</dt><dd><p>Target feature for regression, target feature levels for classification,
 survival and event indicator for survival.</p></dd>
-<dt>features</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a><br />
+<dt>features</dt><dd><p><a href='https://rdrr.io/r/base/character.html'>character</a><br />
 Features argument input.</p></dd>
-<dt>interaction</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+<dt>interaction</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not the features were interacted (i.e. conditioning).</p></dd>
-<dt>derivative</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+<dt>derivative</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not the partial derivative was estimated.</p></dd>
-<dt>individual</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+<dt>individual</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether the partial dependences were aggregated or the individual curves are retained.</p></dd>
 
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. &#8220;Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.&#8221; Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.</p>
 <p>Friedman, Jerome. &#8220;Greedy Function Approximation: A Gradient Boosting Machine.&#8221; The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other partial_dependence: <code><a href='plotPartialDependence.html'>plotPartialDependence</a></code></p>
@@ -450,7 +448,6 @@ Whether the partial dependences were aggregated or the individual curves are ret
   <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
   <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
   <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.svm"</span>)
@@ -465,18 +462,15 @@ Whether the partial dependences were aggregated or the individual curves are ret
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -487,11 +481,11 @@ Whether the partial dependences were aggregated or the individual curves are ret
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -503,4 +497,5 @@ Whether the partial dependences were aggregated or the individual curves are ret
 
   </body>
 </html>
+
 

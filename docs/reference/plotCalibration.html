@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Plot calibration data using ggplot2. — plotCalibration" />
 
+<meta property="og:title" content="Plot calibration data using ggplot2. — plotCalibration" />
 <meta property="og:description" content="Plots calibration data from generateCalibrationData." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,13 +304,11 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateCalibration.R'><code>R/generateCalibration.R</code></a></small>
     </div>
 
-    
     <p>Plots calibration data from <a href='generateCalibrationData.html'>generateCalibrationData</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>plotCalibration</span>(<span class='no'>obj</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>facet.wrap.nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>facet.wrap.ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -319,35 +319,34 @@ Result of <a href='generateCalibrationData.html'>generateCalibrationData</a>.</p
     </tr>
     <tr>
       <th>smooth</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to use a loess smoother.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>reference</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to plot a reference line showing perfect calibration.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>rag</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to include a rag plot which shows a rug plot on the top which pertains to
 positive cases and on the bottom which pertains to negative cases.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>facet.wrap.nrow, facet.wrap.ncol</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
 Number of rows and columns for facetting. Default for both is <code>NULL</code>.
 In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot2 plot object.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: <code><a href='createSpatialResamplingPlots.html'>createSpatialResamplingPlots</a></code>,
@@ -360,39 +359,36 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
   <code><a href='plotROCCurves.html'>plotROCCurves</a></code>, <code><a href='plotResiduals.html'>plotResiduals</a></code>,
   <code><a href='plotThreshVsPerf.html'>plotThreshVsPerf</a></code></p>
 <p>Other calibration: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>),
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>),
   <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.nnet"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>))
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>train</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>fit</span>, <span class='no'>predict</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>pred</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"nnet"</span>)
+<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>train</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>fit</span>, <span class='no'>predict</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>pred</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"nnet"</span>)
 <span class='no'>out</span> <span class='kw'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span>(<span class='no'>pred</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'>plotCalibration</span>(<span class='no'>out</span>)
 
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>train</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>fit</span>, <span class='no'>predict</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>pred</span>) <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"lda"</span>)
+<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>train</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
+<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>fit</span>, <span class='no'>predict</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>pred</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"lda"</span>)
 <span class='no'>out</span> <span class='kw'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span>(<span class='no'>pred</span>)
 <span class='fu'>plotCalibration</span>(<span class='no'>out</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -403,11 +399,11 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -419,4 +415,5 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,22 +29,24 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="BenchmarkResult object. — BenchmarkResult" />
 
+<meta property="og:title" content="BenchmarkResult object. — BenchmarkResult" />
 <meta property="og:description" content="Result of a benchmark experiment conducted by benchmark
 with the following members:
 results (list of ResampleResult):A nested list of resample results,
 first ordered by task id, then by learner id.
 measures (list of Measure):The performance measures used in the benchmark experiment.
 learners (list of Learner):The learning algorithms compared in the benchmark experiment.
-" />
 
-<meta property="og:description" content="The print method of this object shows aggregated performance values
+
+
+The print method of this object shows aggregated performance values
 for all tasks and learners.
 It is recommended to
 retrieve required information via the getBMR* getter functions.
 You can also convert the object using as.data.frame." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -55,12 +58,12 @@ You can also convert the object using as.data.frame." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -266,7 +269,6 @@ You can also convert the object using as.data.frame." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -305,6 +307,7 @@ You can also convert the object using as.data.frame." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -314,23 +317,23 @@ You can also convert the object using as.data.frame." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/benchmark.R'><code>R/benchmark.R</code></a></small>
     </div>
 
-    
     <p>Result of a benchmark experiment conducted by <a href='benchmark.html'>benchmark</a>
 with the following members:</p><dl class='dl-horizontal'>
-<dt>results (list of <a href='ResampleResult.html'>ResampleResult</a>):</dt><dd><p>A nested <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> of resample results,
+<dt>results (list of <a href='ResampleResult.html'>ResampleResult</a>):</dt><dd><p>A nested <a href='https://rdrr.io/r/base/list.html'>list</a> of resample results,
 first ordered by task id, then by learner id.</p></dd>
 <dt>measures (list of <a href='makeMeasure.html'>Measure</a>):</dt><dd><p>The performance measures used in the benchmark experiment.</p></dd>
 <dt>learners (list of <a href='makeLearner.html'>Learner</a>):</dt><dd><p>The learning algorithms compared in the benchmark experiment.</p></dd>
+
 </dl>
 
-    <p>The print method of this object shows aggregated performance values
+<p>The print method of this object shows aggregated performance values
 for all tasks and learners.</p>
 <p>It is recommended to
 retrieve required information via the <code>getBMR*</code> getter functions.
-You can also convert the object using <a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a>.</p>
-    
+You can also convert the object using <a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a>.</p>
 
-        
+
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other benchmark: <code><a href='batchmark.html'>batchmark</a></code>,
@@ -357,18 +360,17 @@ You can also convert the object using <a href='https://www.rdocumentation.org/pa
   <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
   <code><a href='plotCritDifferences.html'>plotCritDifferences</a></code>,
   <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -379,11 +381,11 @@ You can also convert the object using <a href='https://www.rdocumentation.org/pa
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -395,4 +397,5 @@ You can also convert the object using <a href='https://www.rdocumentation.org/pa
 
   </body>
 </html>
+
 

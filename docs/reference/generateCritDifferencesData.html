@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate data for critical-differences plot. — generateCritDifferencesData" />
 
+<meta property="og:title" content="Generate data for critical-differences plot. — generateCritDifferencesData" />
 <meta property="og:description" content="Generates data that can be used to plot a
 critical differences plot. Computes the critical differences according
 to either the
@@ -50,6 +51,7 @@ See references for details." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -59,12 +61,12 @@ See references for details." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -270,7 +272,6 @@ See references for details." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -309,6 +310,7 @@ See references for details." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -318,7 +320,6 @@ See references for details." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/plotCritDifferences.R'><code>R/plotCritDifferences.R</code></a></small>
     </div>
 
-    
     <p>Generates data that can be used to plot a
 critical differences plot. Computes the critical differences according
 to either the
@@ -336,11 +337,10 @@ Calculation:
 $$CD = q_{\alpha} \sqrt{\left(\frac{k(k+1)}{6N}\right)}$$ <br />
 Where \(q_\alpha\) is based on the studentized range statistic.
 See references for details.</p>
-    
 
     <pre class="usage"><span class='fu'>generateCritDifferencesData</span>(<span class='no'>bmr</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>p.value</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
   <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"bd"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -357,12 +357,12 @@ Default is the first measure used in the benchmark experiment.</p></td>
     </tr>
     <tr>
       <th>p.value</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 P-value for the critical difference. Default: 0.05</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>): (<code>learner.id</code>) <br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>): (<code>learner.id</code>) <br />
 Select a <code>learner.id</code> as baseline for the <code>test = "bd"</code>
 ("Bonferroni-Dunn") critical differences
 diagram. The critical difference interval will then be positioned arround this learner.
@@ -372,20 +372,20 @@ comparisons</em>.</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>) <br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) <br />
 Test for which the critical differences are computed. <br />
 &#8220;bd&#8221; for the Bonferroni-Dunn Test, which is comparing all
 classifiers to a <code>baseline</code>, thus performing a comparison
 of one classifier to all others. <br />
 Algorithms not connected by a single line are statistically different
 from the baseline. <br />
-&#8220;nemenyi&#8221; for the <a href='https://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
+&#8220;nemenyi&#8221; for the <a href='https://rdrr.io/pkg/PMCMR/man/posthoc.friedman.nemenyi.test.html'>PMCMR::posthoc.friedman.nemenyi.test</a>
 which is comparing all classifiers to each other. The null hypothesis that
 there is a difference between the classifiers can not be rejected for all
 classifiers that have a single grey bar connecting them.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<code>critDifferencesData</code>). List containing:</p>
@@ -393,14 +393,13 @@ classifiers that have a single grey bar connecting them.</p></td>
 part of the plot</p></dd>
 <dt>friedman.nemenyi.test</dt><dd><p>(list) of class <code>pairwise.htest</code> <br />
 contains the calculated
-<a href='https://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a></p></dd>
+<a href='https://rdrr.io/pkg/PMCMR/man/posthoc.friedman.nemenyi.test.html'>PMCMR::posthoc.friedman.nemenyi.test</a></p></dd>
 <dt>cd.info</dt><dd><p>(list) containing info on the critical difference
 and its positioning</p></dd>
 <dt>baseline</dt><dd><p><code>baseline</code> chosen for plotting</p></dd>
-<dt>p.value</dt><dd><p>p.value used for the <a href='https://www.rdocumentation.org/packages/PMCMR/topics/posthoc.friedman.nemenyi.test'>PMCMR::posthoc.friedman.nemenyi.test</a>
+<dt>p.value</dt><dd><p>p.value used for the <a href='https://rdrr.io/pkg/PMCMR/man/posthoc.friedman.nemenyi.test.html'>PMCMR::posthoc.friedman.nemenyi.test</a>
 and for computation of the critical difference</p></dd>
 
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
@@ -433,21 +432,19 @@ and for computation of the critical difference</p></dd>
   <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
   <code><a href='plotCritDifferences.html'>plotCritDifferences</a></code>,
   <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -458,11 +455,11 @@ and for computation of the critical difference</p></dd>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -474,4 +471,5 @@ and for computation of the critical difference</p></dd>
 
   </body>
 </html>
+
 

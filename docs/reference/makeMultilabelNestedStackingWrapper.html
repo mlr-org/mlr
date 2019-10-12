@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Use nested stacking method to create a multilabel learner. — makeMultilabelNestedStackingWrapper" />
 
+<meta property="og:title" content="Use nested stacking method to create a multilabel learner. — makeMultilabelNestedStackingWrapper" />
 <meta property="og:description" content="Every learner which is implemented in mlr and which supports binary
 classification can be converted to a wrapped nested stacking multilabel learner.
 Nested stacking trains a binary classifier for each label following a given order. In training phase,
@@ -41,6 +42,7 @@ Models can easily be accessed via getLearnerModel." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,12 +52,12 @@ Models can easily be accessed via getLearnerModel." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -261,7 +263,6 @@ Models can easily be accessed via getLearnerModel." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -300,6 +301,7 @@ Models can easily be accessed via getLearnerModel." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -309,7 +311,6 @@ Models can easily be accessed via getLearnerModel." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/MultilabelNestedStackingWrapper.R'><code>R/MultilabelNestedStackingWrapper.R</code></a></small>
     </div>
 
-    
     <p>Every learner which is implemented in mlr and which supports binary
 classification can be converted to a wrapped nested stacking multilabel learner.
 Nested stacking trains a binary classifier for each label following a given order. In training phase,
@@ -318,44 +319,41 @@ of all previous labels in the chain.
 During the prediction phase, predicted labels are obtained by the classifiers, which have been learned on
 all training data.</p>
 <p>Models can easily be accessed via <a href='getLearnerModel.html'>getLearnerModel</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>makeMultilabelNestedStackingWrapper</span>(<span class='no'>learner</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cv.folds</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>order</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Specifies the chain order using the names of the target labels.
 E.g. for <code>m</code> target labels, this must be a character vector of length <code>m</code> that contains a permutation of the target label names.
 Default is <code>NULL</code> which uses a random ordering of the target label names.</p></td>
     </tr>
     <tr>
       <th>cv.folds</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is <code>2</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='makeLearner.html'>Learner</a>.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Montanes, E. et al. (2013),
 <em>Dependent binary relevance models for multi-label classification</em>
 Artificial Intelligence Center, University of Oviedo at Gijon, Spain.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
@@ -387,19 +385,18 @@ Artificial Intelligence Center, University of Oviedo at Gijon, Spain.</p>
   <code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a></code>,
   <code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a></code>,
   <code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>yeast.task</span>)
 <span class='co'># drop some labels so example runs faster</span>
-<span class='no'>d</span> <span class='kw'>=</span> <span class='no'>d</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>d</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>20</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>15</span>:<span class='fl'>17</span>)]
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='MultilabelTask.html'>makeMultilabelTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"label1"</span>, <span class='st'>"label2"</span>))
+<span class='no'>d</span> <span class='kw'>=</span> <span class='no'>d</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>d</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>20</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>15</span>:<span class='fl'>17</span>)]
+<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='MultilabelTask.html'>makeMultilabelTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"label1"</span>, <span class='st'>"label2"</span>))
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a></span>(<span class='no'>lrn</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='setPredictType.html'>setPredictType</a></span>(<span class='no'>lrn</span>, <span class='st'>"prob"</span>)
 <span class='co'># train, predict and evaluate</span>
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, task): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>multilabel.hamloss</span>, <span class='no'>multilabel.subset01</span>, <span class='no'>multilabel.f1</span>))</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measure = list(multilabel.hamloss, multilabel.subset01,     multilabel.f1)): object 'pred' not found</span></div><div class='input'><span class='co'># the next call basically has the same structure for any multilabel meta wrapper</span>
-<span class='fu'><a href='getMultilabelBinaryPerformances.html'>getMultilabelBinaryPerformances</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>mmce</span>, <span class='no'>auc</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'># above works also with predictions from resample!
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, task): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>multilabel.hamloss</span>, <span class='no'>multilabel.subset01</span>, <span class='no'>multilabel.f1</span>))</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measure = list(multilabel.hamloss, multilabel.subset01,     multilabel.f1)): object 'pred' not found</span></div><div class='input'><span class='co'># the next call basically has the same structure for any multilabel meta wrapper</span>
+<span class='fu'><a href='getMultilabelBinaryPerformances.html'>getMultilabelBinaryPerformances</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mmce</span>, <span class='no'>auc</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'># above works also with predictions from resample!
 
 </div></pre>
   </div>
@@ -407,18 +404,15 @@ Artificial Intelligence Center, University of Oviedo at Gijon, Spain.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -429,11 +423,11 @@ Artificial Intelligence Center, University of Oviedo at Gijon, Spain.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -445,4 +439,5 @@ Artificial Intelligence Center, University of Oviedo at Gijon, Spain.</p>
 
   </body>
 </html>
+
 

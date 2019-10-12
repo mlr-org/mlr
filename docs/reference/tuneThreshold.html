@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,13 +29,14 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Tune prediction threshold. — tuneThreshold" />
 
+<meta property="og:title" content="Tune prediction threshold. — tuneThreshold" />
 <meta property="og:description" content="Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
 Uses BBmisc::optimizeSubInts for normal binary class problems and
 GenSA::GenSA for multiclass and multilabel problems." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -46,12 +48,12 @@ GenSA::GenSA for multiclass and multilabel problems." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -257,7 +259,6 @@ GenSA::GenSA for multiclass and multilabel problems." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -296,6 +297,7 @@ GenSA::GenSA for multiclass and multilabel problems." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -305,15 +307,13 @@ GenSA::GenSA for multiclass and multilabel problems." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/tuneThreshold.R'><code>R/tuneThreshold.R</code></a></small>
     </div>
 
-    
     <p>Optimizes the threshold of predictions based on probabilities.
 Works for classification and multilabel tasks.
-Uses <a href='https://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for normal binary class problems and
-<a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a> for multiclass and multilabel problems.</p>
-    
+Uses <a href='https://rdrr.io/pkg/BBmisc/man/optimizeSubInts.html'>BBmisc::optimizeSubInts</a> for normal binary class problems and
+<a href='https://rdrr.io/pkg/GenSA/man/GenSA.html'>GenSA::GenSA</a> for multiclass and multilabel problems.</p>
 
-    <pre class="usage"><span class='fu'>tuneThreshold</span>(<span class='no'>pred</span>, <span class='no'>measure</span>, <span class='no'>task</span>, <span class='no'>model</span>, <span class='kw'>nsub</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
-    
+    <pre class="usage"><span class='fu'>tuneThreshold</span>(<span class='no'>pred</span>, <span class='no'>measure</span>, <span class='no'>task</span>, <span class='no'>model</span>, <span class='kw'>nsub</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -342,23 +342,22 @@ only when required for the performance measure.</p></td>
     </tr>
     <tr>
       <th>nsub</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
-Passed to <a href='https://www.rdocumentation.org/packages/BBmisc/topics/optimizeSubInts'>BBmisc::optimizeSubInts</a> for 2class problems.
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+Passed to <a href='https://rdrr.io/pkg/BBmisc/man/optimizeSubInts.html'>BBmisc::optimizeSubInts</a> for 2class problems.
 Default is 20.</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
-Control object for <a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a> when used.
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
+Control object for <a href='https://rdrr.io/pkg/GenSA/man/GenSA.html'>GenSA::GenSA</a> when used.
 Default is empty list.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>). A named list with with the following components:
+    <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>). A named list with with the following components:
 <code>th</code> is the optimal threshold, <code>perf</code> the performance value.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
@@ -376,21 +375,19 @@ Default is empty list.</p></td>
   <code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a></code>,
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -401,11 +398,11 @@ Default is empty list.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -417,4 +414,5 @@ Default is empty list.</p></td>
 
   </body>
 </html>
+
 

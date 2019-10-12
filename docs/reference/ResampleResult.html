@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="ResampleResult object. — ResampleResult" />
 
+<meta property="og:title" content="ResampleResult object. — ResampleResult" />
 <meta property="og:description" content="A resample result is created by resample and
 contains the following object members:
 task.id (character(1)):Name of the Task.
@@ -58,9 +59,11 @@ pred (ResamplePrediction):Container for all predictions during resampling.
 models [list of WrappedModel):List of fitted models or NULL.
 extract (list):List of extracted parts from fitted models or NULL.
 runtime (numeric(1)):Time in seconds it took to execute the resampling.
+
 The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -72,12 +75,12 @@ task and learner ids, aggregated measures and runtime for the resampling." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -283,7 +286,6 @@ task and learner ids, aggregated measures and runtime for the resampling." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -322,6 +324,7 @@ task and learner ids, aggregated measures and runtime for the resampling." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -331,26 +334,25 @@ task and learner ids, aggregated measures and runtime for the resampling." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ResampleResult.R'><code>R/ResampleResult.R</code></a></small>
     </div>
 
-    
     <p>A resample result is created by <a href='resample.html'>resample</a> and
 contains the following object members:</p><dl class='dl-horizontal'>
-<dt>task.id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>):</dt><dd><p>Name of the Task.</p></dd>
-<dt>learner.id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>):</dt><dd><p>Name of the Learner.</p></dd>
-<dt>measures.test (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
+<dt>task.id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>):</dt><dd><p>Name of the Task.</p></dd>
+<dt>learner.id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>):</dt><dd><p>Name of the Learner.</p></dd>
+<dt>measures.test (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
 on the individual test sets. Rows correspond to sets in resampling iterations,
 columns to performance measures.</p></dd>
-<dt>measures.train (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
+<dt>measures.train (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
 on the individual training sets. Rows correspond to sets in resampling iterations,
 columns to performance measures. Usually not available, only if specifically requested,
 see general description above.</p></dd>
-<dt>aggr (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>):</dt><dd><p>Named vector of aggregated performance values. Names are coded like
+<dt>aggr (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>):</dt><dd><p>Named vector of aggregated performance values. Names are coded like
 this &lt;measure&gt;.&lt;aggregation&gt;.</p></dd>
-<dt>err.msgs (<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>):</dt><dd><p>Number of rows equals resampling iterations
+<dt>err.msgs (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>):</dt><dd><p>Number of rows equals resampling iterations
 and columns are: &#8220;iter&#8221;, &#8220;train&#8221;, &#8220;predict&#8221;.
 Stores error messages generated during train or predict, if these were caught
 via <a href='configureMlr.html'>configureMlr</a>.</p></dd>
-<dt>err.dumps (list of list of <a href='https://www.rdocumentation.org/packages/utils/topics/debugger'>dump.frames</a>):</dt><dd><p>List with length equal to number of resampling iterations. Contains lists
-of <code>dump.frames</code> objects that can be fed to <code><a href='https://www.rdocumentation.org/packages/utils/topics/debugger'>debugger()</a></code> to inspect
+<dt>err.dumps (list of list of <a href='https://rdrr.io/r/utils/debugger.html'>dump.frames</a>):</dt><dd><p>List with length equal to number of resampling iterations. Contains lists
+of <code>dump.frames</code> objects that can be fed to <code><a href='https://rdrr.io/r/utils/debugger.html'>debugger()</a></code> to inspect
 error dumps generated on learner errors. One iteration can generate more than
 one error dump depending on which of training, prediction on training set,
 or prediction on test set, operations fail. Therefore the lists have named
@@ -358,13 +360,14 @@ slots <code>$train</code>, <code>$predict.train</code>, or <code>$predict.test</
 The error dumps are only saved when option <code>on.error.dump</code> is <code>TRUE</code>.</p></dd>
 <dt>pred (<a href='ResamplePrediction.html'>ResamplePrediction</a>):</dt><dd><p>Container for all predictions during resampling.</p></dd>
 <dt>models [list of <a href='makeWrappedModel.html'>WrappedModel</a>):</dt><dd><p>List of fitted models or <code>NULL</code>.</p></dd>
-<dt>extract (<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>):</dt><dd><p>List of extracted parts from fitted models or <code>NULL</code>.</p></dd>
-<dt>runtime (<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>):</dt><dd><p>Time in seconds it took to execute the resampling.</p></dd>
+<dt>extract (<a href='https://rdrr.io/r/base/list.html'>list</a>):</dt><dd><p>List of extracted parts from fitted models or <code>NULL</code>.</p></dd>
+<dt>runtime (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>):</dt><dd><p>Time in seconds it took to execute the resampling.</p></dd>
+
 </dl><p>The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling.</p>
-    
 
-        
+
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other resample: <code><a href='ResamplePrediction.html'>ResamplePrediction</a></code>,
@@ -378,18 +381,17 @@ task and learner ids, aggregated measures and runtime for the resampling.</p>
   <code><a href='resample.html'>resample</a></code></p>
 <p>Other debug: <code><a href='FailureModel.html'>FailureModel</a></code>,
   <code><a href='getPredictionDump.html'>getPredictionDump</a></code>, <code><a href='getRRDump.html'>getRRDump</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -400,11 +402,11 @@ task and learner ids, aggregated measures and runtime for the resampling.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -416,4 +418,5 @@ task and learner ids, aggregated measures and runtime for the resampling.</p>
 
   </body>
 </html>
+
 

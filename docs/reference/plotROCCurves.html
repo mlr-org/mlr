@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Plots a ROC curve using ggplot2. — plotROCCurves" />
 
+<meta property="og:title" content="Plots a ROC curve using ggplot2. — plotROCCurves" />
 <meta property="og:description" content="Plots a ROC curve from predictions." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,13 +304,11 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateThreshVsPerf.R'><code>R/generateThreshVsPerf.R</code></a></small>
     </div>
 
-    
     <p>Plots a ROC curve from predictions.</p>
-    
 
     <pre class="usage"><span class='fu'>plotROCCurves</span>(<span class='no'>obj</span>, <span class='no'>measures</span>, <span class='kw'>diagonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>facet.learner</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -324,28 +324,27 @@ Default is the first 2 measures passed to <a href='generateThreshVsPerfData.html
     </tr>
     <tr>
       <th>diagonal</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to plot a dashed diagonal line.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>pretty.names</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to use the <a href='makeMeasure.html'>Measure</a> name instead of the id in the plot.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>facet.learner</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Weather to use facetting or different colors to compare multiple learners.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot2 plot object.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: <code><a href='createSpatialResamplingPlots.html'>createSpatialResamplingPlots</a></code>,
@@ -360,30 +359,29 @@ Default is <code>FALSE</code>.</p></td>
   <code><a href='plotThreshVsPerf.html'>plotThreshVsPerf</a></code></p>
 <p>Other thresh_vs_perf: <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
   <code><a href='plotThreshVsPerf.html'>plotThreshVsPerf</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(fit, task = sonar.task): object 'fit' not found</span></div><div class='input'><span class='no'>roc</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>))</div><div class='output co'>#&gt; <span class='error'>Error in generateThreshVsPerfData(pred, list(fpr, tpr)): object 'pred' not found</span></div><div class='input'><span class='fu'>plotROCCurves</span>(<span class='no'>roc</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'roc' not found</span></div><div class='input'>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>bootstrapB632plus</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: OOB bootstrapping</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0673077    0.2631579    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0865385    0.3333333    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 3:    0.0769231    0.3098592    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.b632plus=0.2547399</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>roc_r</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>r</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>), <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
+<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(fit, task = sonar.task): object 'fit' not found</span></div><div class='input'><span class='no'>roc</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>))</div><div class='output co'>#&gt; <span class='error'>Error in generateThreshVsPerfData(pred, list(fpr, tpr)): object 'pred' not found</span></div><div class='input'><span class='fu'>plotROCCurves</span>(<span class='no'>roc</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'roc' not found</span></div><div class='input'>
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>bootstrapB632plus</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: OOB bootstrapping</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0673077    0.2631579    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0865385    0.3333333    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 3:    0.0769231    0.3098592    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.b632plus=0.2547399</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>roc_r</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>r</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>), <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'>plotROCCurves</span>(<span class='no'>roc_r</span>)</div><div class='img'><img src='plotROCCurves-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>r2</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.3913043 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.2571429 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 3:    0.2898551 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3127674</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>roc_l</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>boot</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>cv</span> <span class='kw'>=</span> <span class='no'>r2</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>), <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plotROCCurves</span>(<span class='no'>roc_l</span>)</div><div class='img'><img src='plotROCCurves-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>r2</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.3913043 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.2571429 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 3:    0.2898551 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3127674</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>roc_l</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>boot</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>cv</span> <span class='kw'>=</span> <span class='no'>r2</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>), <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>plotROCCurves</span>(<span class='no'>roc_l</span>)</div><div class='img'><img src='plotROCCurves-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -394,11 +392,11 @@ Default is <code>FALSE</code>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -410,4 +408,5 @@ Default is <code>FALSE</code>.</p></td>
 
   </body>
 </html>
+
 

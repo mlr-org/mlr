@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Get formula of a task. — getTaskFormula" />
 
+<meta property="og:title" content="Get formula of a task. — getTaskFormula" />
 <meta property="og:description" content="This is usually simply &#8220;&lt;target&gt; ~ .&#8221;.
 For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,14 +305,12 @@ For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Task_operators.R'><code>R/Task_operators.R</code></a></small>
     </div>
 
-    
     <p>This is usually simply &#8220;&lt;target&gt; ~ .&#8221;.
 For multilabel it is &#8220;&lt;target_1&gt; + ... + &lt;target_k&gt; ~ .&#8221;.</p>
-    
 
     <pre class="usage"><span class='fu'>getTaskFormula</span>(<span class='no'>x</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskTargetNames.html'>getTaskTargetNames</a></span>(<span class='no'>x</span>),
-  <span class='kw'>explicit.features</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>())</pre>
-    
+  <span class='kw'>explicit.features</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>())</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -321,28 +321,27 @@ Task or its description object.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Left hand side of the formula.
 Default is defined by task <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>explicit.features</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the features (right hand side of the formula) be explicitly listed?
 Default is <code>FALSE</code>, i.e., they will be represented as <code>"."</code>.</p></td>
     </tr>
     <tr>
       <th>env</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/environment'>environment</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/environment.html'>environment</a>)<br />
 Environment of the formula.
-Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame()</a></code>.</p></td>
+Default is <code><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame()</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a>).</p>
-    
+    <p>(<a href='https://rdrr.io/r/stats/formula.html'>formula</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other task: <code><a href='getTaskClassLevels.html'>getTaskClassLevels</a></code>,
@@ -354,21 +353,19 @@ Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/sy
   <code><a href='getTaskTargetNames.html'>getTaskTargetNames</a></code>,
   <code><a href='getTaskTargets.html'>getTaskTargets</a></code>, <code><a href='getTaskType.html'>getTaskType</a></code>,
   <code><a href='subsetTask.html'>subsetTask</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -379,11 +376,11 @@ Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/sy
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -395,4 +392,5 @@ Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/sy
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,13 +29,14 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Show and visualize the steps of feature selection. — analyzeFeatSelResult" />
 
+<meta property="og:title" content="Show and visualize the steps of feature selection. — analyzeFeatSelResult" />
 <meta property="og:description" content="This function prints the steps selectFeatures took to find its optimal set
 of features and the reason why it stopped.
 It can also print information about all calculations done in each intermediate step.
 Currently only implemented for sequential feature selection." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -46,12 +48,12 @@ Currently only implemented for sequential feature selection." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -257,7 +259,6 @@ Currently only implemented for sequential feature selection." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -296,6 +297,7 @@ Currently only implemented for sequential feature selection." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -305,15 +307,13 @@ Currently only implemented for sequential feature selection." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/analyzeFeatSelResult.R'><code>R/analyzeFeatSelResult.R</code></a></small>
     </div>
 
-    
     <p>This function prints the steps <a href='selectFeatures.html'>selectFeatures</a> took to find its optimal set
 of features and the reason why it stopped.
 It can also print information about all calculations done in each intermediate step.</p>
 <p>Currently only implemented for sequential feature selection.</p>
-    
 
     <pre class="usage"><span class='fu'>analyzeFeatSelResult</span>(<span class='no'>res</span>, <span class='kw'>reduce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -324,37 +324,34 @@ The result of of <a href='selectFeatures.html'>selectFeatures</a>.</p></td>
     </tr>
     <tr>
       <th>reduce</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Per iteration: Print only the selected feature (or all features that were evaluated)?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(NULL)</a></code>).</p>
-    
+    <p>(<code><a href='https://rdrr.io/r/base/invisible.html'>invisible(NULL)</a></code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other featsel: <code><a href='FeatSelControl.html'>FeatSelControl</a></code>,
   <code><a href='getFeatSelResult.html'>getFeatSelResult</a></code>,
   <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code>,
   <code><a href='selectFeatures.html'>selectFeatures</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -365,11 +362,11 @@ Default is <code>TRUE</code>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -381,4 +378,5 @@ Default is <code>TRUE</code>.</p></td>
 
   </body>
 </html>
+
 

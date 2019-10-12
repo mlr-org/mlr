@@ -263,6 +263,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
@@ -294,66 +295,66 @@
 <h1 class="hasAnchor">
 <a href="#performance-measures-and-aggregation-schemes" class="anchor"></a>Performance measures and aggregation schemes</h1>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). For example the <a href="measures.html" target="_blank">mse</a> (mean squared error) looks as follows.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(mse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">## List of 10</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">##  $ id        : chr "mse"</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">##  $ minimize  : logi TRUE</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">##  $ fun       :function (task, model, pred, feats, extra.args)  </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x5596902b5300&gt; </a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">##  $ extra.args: list()</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">##  $ best      : num 0</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">##  $ worst     : num Inf</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">##  $ name      : chr "Mean of squared errors"</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">##  $ note      : chr "Defined as: mean((response - truth)^2)"</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">##  $ aggr      :List of 4</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">##   ..$ id        : chr "test.mean"</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">##   ..$ name      : chr "Test mean"</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  </a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55969028dc98&gt; </a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">##   ..$ properties: chr "req.test"</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">##   ..- attr(*, "class")= chr "Aggregation"</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">##  - attr(*, "class")= chr "Measure"</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">mse<span class="op">$</span>fun</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">## function(task, model, pred, feats, extra.args) {</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">##     measureMSE(pred$data$truth, pred$data$response)</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">##   }</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">## &lt;bytecode: 0x55968f621870&gt;</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">## &lt;environment: namespace:mlr&gt;</a>
-<a class="sourceLine" id="cb1-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">measureMSE</a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">## function(truth, response) {</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">##   mean((response - truth)^2)</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">## }</a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">## &lt;bytecode: 0x559691533288&gt;</a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(mse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">## List of 10</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">##  $ id        : chr "mse"</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">##  $ minimize  : logi TRUE</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">##  $ fun       :function (task, model, pred, feats, extra.args)  </span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x5596902b5300&gt; </span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">##  $ extra.args: list()</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">##  $ best      : num 0</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">##  $ worst     : num Inf</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">##  $ name      : chr "Mean of squared errors"</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">##  $ note      : chr "Defined as: mean((response - truth)^2)"</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">##  $ aggr      :List of 4</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co">##   ..$ id        : chr "test.mean"</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">##   ..$ name      : chr "Test mean"</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  </span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co">##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co">##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55969028dc98&gt; </span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="co">##   ..$ properties: chr "req.test"</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="co">##  - attr(*, "class")= chr "Measure"</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a></span>
+<span id="cb1-24"><a href="#cb1-24"></a>mse<span class="op">$</span>fun</span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="co">## function(task, model, pred, feats, extra.args) {</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="co">##     measureMSE(pred$data$truth, pred$data$response)</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="co">##   }</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="co">## &lt;bytecode: 0x55968f621870&gt;</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="co">## &lt;environment: namespace:mlr&gt;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a>measureMSE</span>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="co">## function(truth, response) {</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a><span class="co">##   mean((response - truth)^2)</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a><span class="co">## }</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a><span class="co">## &lt;bytecode: 0x559691533288&gt;</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a><span class="co">## &lt;environment: namespace:mlr&gt;</span></span></code></pre></div>
 <p>See the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) documentation page for a detailed description of the object slots.</p>
 <p>At the core is slot <code>$fun</code> which contains the function that calculates the performance value. The actual work is done by function <code>measureMSE</code> (<code><a href="../../reference/measures.html">measures()</a></code>). Similar functions, generally adhering to the naming scheme <code>measure</code> followed by the capitalized measure ID, exist for most performance measures. See the [<code><a href="../../reference/measures.html">measures()</a></code>] help page for a complete list.</p>
 <p>Just as <code><a href="../../reference/Task.html">Task()</a></code> and Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) has an identifier <code>$id</code> which is for example used to annotate results and plots. For plots there is also the option to use the longer measure <code>$name</code> instead. See the tutorial page on <a href="visualization.html" target="_blank">visualization</a> for more information.</p>
 <p>Moreover, a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) includes a number of <code>$properties</code> that indicate for which types of learning problems it is suitable and what information is required to calculate it. Obviously, most measures need the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (<code>"req.pred"</code>) and, for supervised problems, the true values of the target variable(s) (<code>"req.truth"</code>). You can use functions <code>getMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) and <code>hasMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) to determine the properties of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). Moreover, <code><a href="../../reference/listMeasureProperties.html">listMeasureProperties()</a></code> shows all measure properties currently available in <code>mlr</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../../reference/listMeasureProperties.html">listMeasureProperties</a></span>()</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">##  [9] "req.truth"     "req.task"      "req.feats"     "req.model"    </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## [13] "req.prob"</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="../../reference/listMeasureProperties.html">listMeasureProperties</a></span>()</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">##  [9] "req.truth"     "req.task"      "req.feats"     "req.model"    </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## [13] "req.prob"</span></span></code></pre></div>
 <p>Additional to its properties, each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) knows its extreme values <code>$best</code> and <code>$worst</code> and if it wants to be minimized or maximized (<code>$minimize</code>) during <a href="tune.html" target="_blank">tuning</a> or <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <p>For resampling slot <code>$aggr</code> specifies how the overall performance across all resampling iterations is calculated. Typically, this is just a matter of aggregating the performance values obtained on the test sets <code>perf.test</code> or the training sets <code>perf.train</code> by a simple function. The by far most common scheme is <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), i.e., the unweighted mean of the performances on the test sets.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(test.mean)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">## List of 4</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">##  $ id        : chr "test.mean"</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">##  $ name      : chr "Test mean"</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)  </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">##  $ properties: chr "req.test"</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##  - attr(*, "class")= chr "Aggregation"</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">test.mean<span class="op">$</span>fun</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">## function (task, perf.test, perf.train, measure, group, pred) </a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## mean(perf.test)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## &lt;bytecode: 0xc0a82e8&gt;</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(test.mean)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">## List of 4</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">##  $ id        : chr "test.mean"</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">##  $ name      : chr "Test mean"</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)  </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">##  $ properties: chr "req.test"</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">##  - attr(*, "class")= chr "Aggregation"</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>test.mean<span class="op">$</span>fun</span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">## mean(perf.test)</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">## &lt;bytecode: 0xc0a82e8&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">## &lt;environment: namespace:mlr&gt;</span></span></code></pre></div>
 <p>All aggregation schemes are objects of class <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> with the function in slot <code>$fun</code> doing the actual work. The <code>$properties</code> member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.</p>
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>
 <p>You can construct your own <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) and <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> objects via functions <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>, <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>, <code><a href="../../reference/makeCustomResampledMeasure.html">makeCustomResampledMeasure()</a></code> and <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Some examples are shown in the following.</p>
@@ -364,33 +365,33 @@
 <p>Function <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> provides a simple way to construct your own performance measure.</p>
 <p>Below this is exemplified by re-implementing the mean misclassification error <a href="measures.html" target="_blank">mmce</a>. We first write a function that computes the measure on the basis of the true and predicted class labels. Note that this function must have certain formal arguments listed in the documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>. Then the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object is created and we work with it as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> for more details on the various parameters.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Define a function that calculates the misclassification rate</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">my.mmce.fun =<span class="st"> </span><span class="cf">function</span>(task, model, pred, feats, extra.args) {</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  tb =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred), <span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(tb)) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(tb)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Generate the Measure object</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">my.mmce =<span class="st"> </span><span class="kw"><a href="../../reference/makeMeasure.html">makeMeasure</a></span>(</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="dt">id =</span> <span class="st">"my.mmce"</span>, <span class="dt">name =</span> <span class="st">"My Mean Misclassification Error"</span>,</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">  <span class="dt">properties =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"classif"</span>, <span class="st">"classif.multi"</span>, <span class="st">"req.pred"</span>, <span class="st">"req.truth"</span>),</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">  <span class="dt">minimize =</span> <span class="ot">TRUE</span>, <span class="dt">best =</span> <span class="dv">0</span>, <span class="dt">worst =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">  <span class="dt">fun =</span> my.mmce.fun</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">)</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># Train a learner and make predictions</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, iris.task)</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">task =</span> iris.task)</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co"># Calculate the performance using the new measure</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.mmce)</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## my.mmce </a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">##    0.02</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co"># Apparently the result coincides with the mlr implementation</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> mmce)</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">## mmce </a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">## 0.02</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define a function that calculates the misclassification rate</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>my.mmce.fun =<span class="st"> </span><span class="cf">function</span>(task, model, pred, feats, extra.args) {</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  tb =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred), <span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(tb)) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(tb)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># Generate the Measure object</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>my.mmce =<span class="st"> </span><span class="kw"><a href="../../reference/makeMeasure.html">makeMeasure</a></span>(</span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="dt">id =</span> <span class="st">"my.mmce"</span>, <span class="dt">name =</span> <span class="st">"My Mean Misclassification Error"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>  <span class="dt">properties =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"classif"</span>, <span class="st">"classif.multi"</span>, <span class="st">"req.pred"</span>, <span class="st">"req.truth"</span>),</span>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="dt">minimize =</span> <span class="ot">TRUE</span>, <span class="dt">best =</span> <span class="dv">0</span>, <span class="dt">worst =</span> <span class="dv">1</span>,</span>
+<span id="cb4-12"><a href="#cb4-12"></a>  <span class="dt">fun =</span> my.mmce.fun</span>
+<span id="cb4-13"><a href="#cb4-13"></a>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># Train a learner and make predictions</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, iris.task)</span>
+<span id="cb4-17"><a href="#cb4-17"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> iris.task)</span>
+<span id="cb4-18"><a href="#cb4-18"></a></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co"># Calculate the performance using the new measure</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.mmce)</span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## my.mmce </span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">##    0.02</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co"># Apparently the result coincides with the mlr implementation</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> mmce)</span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co">## mmce </span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="co">## 0.02</span></span></code></pre></div>
 </div>
 <div id="constructing-a-measure-for-ordinary-misclassification-costs" class="section level1">
 <h1 class="hasAnchor">
@@ -398,83 +399,83 @@
 <p>For in depth explanations and details see the tutorial page on <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a>.</p>
 <p>To create a measure that involves ordinary, i.e., class-dependent misclassification costs you can use function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>. You first need to define the cost matrix. The rows indicate true and the columns predicted classes and the rows and columns have to be named by the class labels. The cost matrix can then be wrapped in a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object and predictions can be evaluated as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code> for details on the various parameters.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Create the cost matrix</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">costs =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(iris.task)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># Encapsulate the cost matrix in a Measure object</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">my.costs =<span class="st"> </span><span class="kw"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span>(</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  <span class="dt">id =</span> <span class="st">"my.costs"</span>, <span class="dt">name =</span> <span class="st">"My Costs"</span>,</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">  <span class="dt">costs =</span> costs,</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">  <span class="dt">minimize =</span> <span class="ot">TRUE</span>, <span class="dt">best =</span> <span class="dv">0</span>, <span class="dt">worst =</span> <span class="dv">3</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">)</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># Train a learner and make a prediction</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, iris.task)</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">pred =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co"># Calculate the average costs</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.costs)</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">##   my.costs </a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## 0.02666667</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Create the cost matrix</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>costs =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(costs) =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(iris.task)</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># Encapsulate the cost matrix in a Measure object</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>my.costs =<span class="st"> </span><span class="kw"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span>(</span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="dt">id =</span> <span class="st">"my.costs"</span>, <span class="dt">name =</span> <span class="st">"My Costs"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="dt">costs =</span> costs,</span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="dt">minimize =</span> <span class="ot">TRUE</span>, <span class="dt">best =</span> <span class="dv">0</span>, <span class="dt">worst =</span> <span class="dv">3</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># Train a learner and make a prediction</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, iris.task)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">newdata =</span> iris)</span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co"># Calculate the average costs</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.costs)</span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">##   my.costs </span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">## 0.02666667</span></span></code></pre></div>
 </div>
 <div id="creating-an-aggregation-scheme" class="section level1">
 <h1 class="hasAnchor">
 <a href="#creating-an-aggregation-scheme" class="anchor"></a>Creating an aggregation scheme</h1>
 <p>It is possible to create your own aggregation scheme using function <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. You need to specify an identifier <code>id</code>, the <code>properties</code>, and write a function that does the actual aggregation. Optionally, you can <code>name</code> your aggregation scheme.</p>
-<p>Possible settings for <code>properties</code> are <code>"req.test"</code> and <code>"req.train"</code> if predictions on either the training or test sets are required, and the vector <code><a href="https://www.rdocumentation.org/packages/base/topics/c">c("req.train", "req.test")</a></code> if both are needed.</p>
+<p>Possible settings for <code>properties</code> are <code>"req.test"</code> and <code>"req.train"</code> if predictions on either the training or test sets are required, and the vector <code><a href="https://rdrr.io/r/base/c.html">c("req.train", "req.test")</a></code> if both are needed.</p>
 <p>The aggregation function must have a certain signature detailed in the documentation of <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Usually, you will only need the performance values on the test sets <code>perf.test</code> or the training sets <code>perf.train</code>. In rare cases, e.g., the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object <code>pred</code> or information stored in the <code><a href="../../reference/Task.html">Task()</a></code> object might be required to obtain the aggregated performance. For an example have a look at the <a href="https://github.com/mlr-org/mlr/blob/master/R/aggregations.R#L211">definition</a> of function <code>test.join</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>).</p>
 </div>
 <div id="example-evaluating-the-range-of-measures" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-evaluating-the-range-of-measures" class="anchor"></a>Example: Evaluating the range of measures</h1>
 <p>Let’s say you are interested in the range of the performance values obtained on individual test sets.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">my.range.aggr =<span class="st"> </span><span class="kw"><a href="../../reference/makeAggregation.html">makeAggregation</a></span>(<span class="dt">id =</span> <span class="st">"test.range"</span>, <span class="dt">name =</span> <span class="st">"Test Range"</span>,</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="dt">properties =</span> <span class="st">"req.test"</span>,</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">fun =</span> <span class="cf">function</span> (task, perf.test, perf.train, measure, group, pred)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diff">diff</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/range">range</a></span>(perf.test))</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>my.range.aggr =<span class="st"> </span><span class="kw"><a href="../../reference/makeAggregation.html">makeAggregation</a></span>(<span class="dt">id =</span> <span class="st">"test.range"</span>, <span class="dt">name =</span> <span class="st">"Test Range"</span>,</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="dt">properties =</span> <span class="st">"req.test"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">fun =</span> <span class="cf">function</span> (task, perf.test, perf.train, measure, group, pred)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="kw"><a href="https://rdrr.io/r/base/diff.html">diff</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(perf.test))</span>
+<span id="cb6-5"><a href="#cb6-5"></a>)</span></code></pre></div>
 <p><code>perf.train</code> and <code>perf.test</code> are both numerical vectors containing the performances on the train and test data sets. In most cases (unless you are using bootstrap as resampling strategy or have set <code>predict = "both"</code> in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) the <code>perf.train</code> vector is empty.</p>
 <p>Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># mmce with default aggregation scheme test.mean</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">ms1 =<span class="st"> </span>mmce</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># mmce with new aggregation scheme my.range.aggr</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">ms2 =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(ms1, my.range.aggr)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># Minimum and maximum of the mmce over test sets</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">ms1min =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(ms1, test.min)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">ms1max =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(ms1, test.max)</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Feature selection</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">res =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(ms1, ms2, ms1min, ms1max),</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">  <span class="dt">control =</span> <span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlExhaustive</a></span>(), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co"># Optimization path, i.e., performances for the 16 possible feature subsets</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">perf.data =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## 1            0           0            0           0     0.68000000</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## 2            1           0            0           0     0.34000000</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## 3            0           1            0           0     0.48666667</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## 4            0           0            1           0     0.06666667</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">## 5            0           0            0           1     0.04666667</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## 6            1           1            0           0     0.36000000</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">##   mmce.test.range mmce.test.min mmce.test.max</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## 1            0.20          0.56          0.76</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## 2            0.32          0.18          0.50</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## 3            0.18          0.42          0.60</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## 4            0.06          0.04          0.10</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">## 5            0.06          0.02          0.08</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## 6            0.22          0.28          0.50</a>
-<a class="sourceLine" id="cb7-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb7-34" data-line-number="34">pd =<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.005</span>, <span class="dt">height =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb7-35" data-line-number="35">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mmce.test.range, <span class="dt">y =</span> mmce.test.mean, <span class="dt">ymax =</span> mmce.test.max, <span class="dt">ymin =</span> mmce.test.min,</a>
-<a class="sourceLine" id="cb7-36" data-line-number="36">  <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(Sepal.Width), <span class="dt">pch =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(Petal.Width)), <span class="dt">data =</span> perf.data) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-37" data-line-number="37"><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">position =</span> pd) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-38" data-line-number="38"><span class="st">  </span><span class="kw">coord_flip</span>()</a>
-<a class="sourceLine" id="cb7-39" data-line-number="39"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># mmce with default aggregation scheme test.mean</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>ms1 =<span class="st"> </span>mmce</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># mmce with new aggregation scheme my.range.aggr</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>ms2 =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(ms1, my.range.aggr)</span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># Minimum and maximum of the mmce over test sets</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>ms1min =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(ms1, test.min)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>ms1max =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(ms1, test.max)</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># Feature selection</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/selectFeatures.html">selectFeatures</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(ms1, ms2, ms1min, ms1max),</span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="dt">control =</span> <span class="kw"><a href="../../reference/FeatSelControl.html">makeFeatSelControlExhaustive</a></span>(), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># Optimization path, i.e., performances for the 16 possible feature subsets</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>perf.data =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="co">## 1            0           0            0           0     0.68000000</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="co">## 2            1           0            0           0     0.34000000</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="co">## 3            0           1            0           0     0.48666667</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="co">## 4            0           0            1           0     0.06666667</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a><span class="co">## 5            0           0            0           1     0.04666667</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="co">## 6            1           1            0           0     0.36000000</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="co">##   mmce.test.range mmce.test.min mmce.test.max</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="co">## 1            0.20          0.56          0.76</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="co">## 2            0.32          0.18          0.50</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a><span class="co">## 3            0.18          0.42          0.60</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a><span class="co">## 4            0.06          0.04          0.10</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="co">## 5            0.06          0.02          0.08</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="co">## 6            0.22          0.28          0.50</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a></span>
+<span id="cb7-34"><a href="#cb7-34"></a>pd =<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.005</span>, <span class="dt">height =</span> <span class="dv">0</span>)</span>
+<span id="cb7-35"><a href="#cb7-35"></a>p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mmce.test.range, <span class="dt">y =</span> mmce.test.mean, <span class="dt">ymax =</span> mmce.test.max, <span class="dt">ymin =</span> mmce.test.min,</span>
+<span id="cb7-36"><a href="#cb7-36"></a>  <span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(Sepal.Width), <span class="dt">pch =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(Petal.Width)), <span class="dt">data =</span> perf.data) <span class="op">+</span></span>
+<span id="cb7-37"><a href="#cb7-37"></a><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">position =</span> pd) <span class="op">+</span></span>
+<span id="cb7-38"><a href="#cb7-38"></a><span class="st">  </span><span class="kw">coord_flip</span>()</span>
+<span id="cb7-39"><a href="#cb7-39"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(p)</span></code></pre></div>
 <p><img src="create_measure_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>The plot shows the range versus the mean misclassification error. The value on the y-axis thus corresponds to the length of the error bars. (Note that the points and error bars are jittered in y-direction.)</p>
 </div>
@@ -482,6 +483,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -498,6 +500,7 @@
 </div>
 
 
+
       <footer><!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
 </div>
@@ -508,8 +511,7 @@
 --></footer>
 </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

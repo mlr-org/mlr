@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate feature importance. — generateFeatureImportanceData" />
 
+<meta property="og:title" content="Generate feature importance. — generateFeatureImportanceData" />
 <meta property="og:description" content="Estimate how important individual features or groups of features are by contrasting prediction performances. For method &#8220;permutation.importance&#8221; compute the change in performance from permuting the values of a feature (or a group of features) and compare that to the predictions made on the unmcuted data." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,15 +304,13 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateFeatureImportance.R'><code>R/generateFeatureImportance.R</code></a></small>
     </div>
 
-    
     <p>Estimate how important individual features or groups of features are by contrasting prediction performances. For method &#8220;permutation.importance&#8221; compute the change in performance from permuting the values of a feature (or a group of features) and compare that to the predictions made on the unmcuted data.</p>
-    
 
     <pre class="usage"><span class='fu'>generateFeatureImportanceData</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"permutation.importance"</span>,
   <span class='no'>learner</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a></span>(<span class='no'>task</span>), <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>measure</span>, <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> - <span class='no'>y</span>, <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='no'>mean</span>,
   <span class='kw'>nmc</span> <span class='kw'>=</span> <span class='fl'>50L</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -321,26 +321,26 @@ The task.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The method used to compute the feature importance.
 The only method available is &#8220;permutation.importance&#8221;.
 Default is &#8220;permutation.importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 The features to compute the importance of.
 The default is all of the features contained in the <a href='Task.html'>Task</a>.</p></td>
     </tr>
     <tr>
       <th>interaction</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to compute the importance of the <code>features</code> argument jointly.
 For <code>method = "permutation.importance"</code> this entails permuting the values of
 all <code>features</code> together and then contrasting the performance with that of
@@ -369,7 +369,7 @@ The default is <code>mean</code>.</p></td>
     </tr>
     <tr>
       <th>nmc</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 The number of Monte-Carlo iterations to use in computing the feature importance.
 If <code>nmc == -1</code> and <code>method = "permutation.importance"</code> then all
 permutations of the <code>features</code> are used.
@@ -377,31 +377,31 @@ The default is 50.</p></td>
     </tr>
     <tr>
       <th>replace</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not to sample the feature values with or without replacement.
 The default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>local</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether to compute the per-observation importance.
 The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether progress output (feature name, time elapsed) should be displayed.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<code>FeatureImportance</code>). A named list which contains the computed feature importance and the input arguments.</p>
 <p>Object members:</p>
-<dt>res</dt><dd><p>(<a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a>)<br />
+<dt>res</dt><dd><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 Has columns for each feature or combination of features (colon separated) for which the importance is computed.
 A row coresponds to importance of the feature specified in the column for the target.</p></dd>
-<dt>interaction</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+<dt>interaction</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not the importance of the <code>features</code> was computed jointly rather than individually.</p></dd>
 <dt>measure</dt><dd><p>(<a href='makeMeasure.html'>Measure</a>)</p></dd>
 The measure used to compute performance.
@@ -409,20 +409,18 @@ The measure used to compute performance.
 The function used to compare the performance of predictions.</p></dd>
 <dt>aggregation</dt><dd><p>(<code>function</code>)<br />
 The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.</p></dd>
-<dt>replace</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+<dt>replace</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether or not, when <code>method = "permutation.importance"</code>, the feature values
 are sampled with replacement.</p></dd>
-<dt>nmc</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+<dt>nmc</dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 The number of Monte-Carlo iterations used to compute the feature importance.
 When <code>nmc == -1</code> and <code>method = "permutation.importance"</code> all permutations are used.</p></dd>
-<dt>local</dt><dd><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+<dt>local</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether observation-specific importance is computed for the <code>features</code>.</p></dd>
 
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
@@ -432,7 +430,6 @@ Whether observation-specific importance is computed for the <code>features</code
   <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
   <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
   <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -445,18 +442,15 @@ Whether observation-specific importance is computed for the <code>features</code
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -467,11 +461,11 @@ Whether observation-specific importance is computed for the <code>features</code
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -483,4 +477,5 @@ Whether observation-specific importance is computed for the <code>features</code
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Supported parallelization methods — parallelization" />
 
+<meta property="og:title" content="Supported parallelization methods — parallelization" />
 <meta property="og:description" content="mlr supports different methods to activate parallel computing capabilities through the integration of the parallelMap::parallelMap package, which supports all major parallelization backends for R.
 You can start parallelization with parallelStart*, where * should be replaced with the chosen backend.
 parallelMap::parallelStop is used to stop all parallelization backends.
@@ -44,8 +45,11 @@ If a tuner works in a purely sequential fashion, we cannot work magic and the hy
 "mlr.selectFeatures"Each evaluation in feature space "resample with this feature subset" is a parallel job. The same comments as for "mlr.tuneParams" apply here.
 "mlr.ensemble"For all ensemble methods, the training and prediction of each individual learner is a parallel job.
 Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, makeMulticlassWrapper, makeMultilabelBinaryRelevanceWrapper and the makeOverBaggingWrapper.
+
+
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -57,12 +61,12 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -268,7 +272,6 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -307,6 +310,7 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -316,11 +320,10 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/parallelization.R'><code>R/parallelization.R</code></a></small>
     </div>
 
-    
-    <p>mlr supports different methods to activate parallel computing capabilities through the integration of the <a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelMap'>parallelMap::parallelMap</a> package, which supports all major parallelization backends for R.
-You can start parallelization with <code><a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelStart'>parallelStart</a>*</code>, where <code>*</code> should be replaced with the chosen backend.
-<a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelStop'>parallelMap::parallelStop</a> is used to stop all parallelization backends.</p>
-<p>Parallelization is divided into different levels and will automatically be carried out for the first level that occurs, e.g. if you call <code><a href='resample.html'>resample()</a></code> after <a href='https://www.rdocumentation.org/packages/parallelMap/topics/parallelStart'>parallelMap::parallelStart</a>, each resampling iteration is a parallel job and possible underlying calls like parameter tuning won't be parallelized further.</p>
+    <p>mlr supports different methods to activate parallel computing capabilities through the integration of the <a href='https://rdrr.io/pkg/parallelMap/man/parallelMap.html'>parallelMap::parallelMap</a> package, which supports all major parallelization backends for R.
+You can start parallelization with <code><a href='https://rdrr.io/pkg/parallelMap/man/parallelStart.html'>parallelStart</a>*</code>, where <code>*</code> should be replaced with the chosen backend.
+<a href='https://rdrr.io/pkg/parallelMap/man/parallelStop.html'>parallelMap::parallelStop</a> is used to stop all parallelization backends.</p>
+<p>Parallelization is divided into different levels and will automatically be carried out for the first level that occurs, e.g. if you call <code><a href='resample.html'>resample()</a></code> after <a href='https://rdrr.io/pkg/parallelMap/man/parallelStart.html'>parallelMap::parallelStart</a>, each resampling iteration is a parallel job and possible underlying calls like parameter tuning won't be parallelized further.</p>
 <p>The supported levels of parallelization are:</p><dl class='dl-horizontal'>
 <dt><code>"mlr.resample"</code></dt><dd><p>Each resampling iteration (a train/test step) is a parallel job.</p></dd>
 <dt><code>"mlr.benchmark"</code></dt><dd><p>Each experiment "run this learner on this data set" is a parallel job.</p></dd>
@@ -331,19 +334,22 @@ If a tuner works in a purely sequential fashion, we cannot work magic and the hy
 <dt><code>"mlr.selectFeatures"</code></dt><dd><p>Each evaluation in feature space "resample with this feature subset" is a parallel job. The same comments as for <code>"mlr.tuneParams"</code> apply here.</p></dd>
 <dt><code>"mlr.ensemble"</code></dt><dd><p>For all ensemble methods, the training and prediction of each individual learner is a parallel job.
 Supported ensemble methods are the <a href='makeBaggingWrapper.html'>makeBaggingWrapper</a>, <a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a>, <a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a>, <a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a> and the <a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a>.</p></dd>
-</dl>
-    
 
-        
+</dl>
+
+
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -354,11 +360,11 @@ Supported ensemble methods are the <a href='makeBaggingWrapper.html'>makeBagging
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -370,4 +376,5 @@ Supported ensemble methods are the <a href='makeBaggingWrapper.html'>makeBagging
 
   </body>
 </html>
+
 

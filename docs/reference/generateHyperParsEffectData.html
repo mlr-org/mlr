@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,13 +29,14 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate hyperparameter effect data. — generateHyperParsEffectData" />
 
+<meta property="og:title" content="Generate hyperparameter effect data. — generateHyperParsEffectData" />
 <meta property="og:description" content="Generate cleaned hyperparameter effect data from a tuning result or from a
 nested cross-validation tuning result. The object returned can be used for
 custom visualization or passed downstream to an out of the box mlr method,
 plotHyperParsEffect." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -46,12 +48,12 @@ plotHyperParsEffect." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -257,7 +259,6 @@ plotHyperParsEffect." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -296,6 +297,7 @@ plotHyperParsEffect." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -305,16 +307,14 @@ plotHyperParsEffect." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateHyperParsEffect.R'><code>R/generateHyperParsEffect.R</code></a></small>
     </div>
 
-    
     <p>Generate cleaned hyperparameter effect data from a tuning result or from a
 nested cross-validation tuning result. The object returned can be used for
 custom visualization or passed downstream to an out of the box mlr method,
 <a href='plotHyperParsEffect.html'>plotHyperParsEffect</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>generateHyperParsEffectData</span>(<span class='no'>tune.result</span>, <span class='kw'>include.diagnostics</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>partial.dep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -330,13 +330,13 @@ included in the dataframe within the returned <code>HyperParsEffectData</code>.<
     </tr>
     <tr>
       <th>include.diagnostics</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should diagnostic info (eol and error msg) be included?
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>trafo</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the units of the hyperparameter path be converted to the
 transformed scale? This is only useful when trafo was used to create the
 path.
@@ -344,7 +344,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>partial.dep</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should partial dependence be requested based on converting to reg task? This
 sets a flag so that we know to use partial dependence downstream. This
 should most likely be set to <code>TRUE</code> if 2 or more hyperparameters were
@@ -355,7 +355,7 @@ plot partial dependence when called downstream.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<code>HyperParsEffectData</code>)
@@ -363,10 +363,9 @@ Object containing the hyperparameter effects dataframe, the tuning
 performance measures used, the hyperparameters used, a flag for including
 diagnostic info, a flag for whether nested cv was used, a flag for whether
 partial dependence should be generated, and the optimization algorithm used.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># 3-fold cross validation</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(<span class='fu'>makeDiscreteParam</span>(<span class='st'>"C"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fl'>2</span>^(-<span class='fl'>4</span>:<span class='fl'>4</span>)))
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
@@ -387,20 +386,19 @@ partial dependence should be generated, and the optimization algorithm used.</p>
   <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getTuneResult</span>)
 <span class='no'>data</span> <span class='kw'>=</span> <span class='fu'>generateHyperParsEffectData</span>(<span class='no'>res</span>)
 <span class='fu'><a href='plotHyperParsEffect.html'>plotHyperParsEffect</a></span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"mmce.test.mean"</span>, <span class='kw'>plot.type</span> <span class='kw'>=</span> <span class='st'>"line"</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -411,11 +409,11 @@ partial dependence should be generated, and the optimization algorithm used.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -427,4 +425,5 @@ partial dependence should be generated, and the optimization algorithm used.</p>
 
   </body>
 </html>
+
 

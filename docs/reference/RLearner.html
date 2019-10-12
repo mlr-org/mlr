@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Internal construction / wrapping of learner object. — RLearner" />
 
+<meta property="og:title" content="Internal construction / wrapping of learner object. — RLearner" />
 <meta property="og:description" content="Wraps an already implemented learning method from R to make it accessible to mlr.
 Call this method in your constructor. You have to pass an id (name), the required
 package(s), a description object for all changeable parameters (you do not have to do this for the
@@ -42,6 +43,7 @@ To see all possible properties of a learner, go to: LearnerProperties." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,12 +53,12 @@ To see all possible properties of a learner, go to: LearnerProperties." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -262,7 +264,6 @@ To see all possible properties of a learner, go to: LearnerProperties." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -301,6 +302,7 @@ To see all possible properties of a learner, go to: LearnerProperties." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -310,7 +312,6 @@ To see all possible properties of a learner, go to: LearnerProperties." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/RLearner.R'><code>R/RLearner.R</code></a></small>
     </div>
 
-    
     <p>Wraps an already implemented learning method from R to make it accessible to mlr.
 Call this method in your constructor. You have to pass an id (name), the required
 package(s), a description object for all changeable parameters (you do not have to do this for the
@@ -320,40 +321,39 @@ features of the learner.</p>
 section in the online tutorial:
 <a href='https://mlr.mlr-org.com/articles/tutorial/create_learner.html'>https://mlr.mlr-org.com/articles/tutorial/create_learner.html</a></p>
 <p>To see all possible properties of a learner, go to: <a href='LearnerProperties.html'>LearnerProperties</a>.</p>
-    
 
     <pre class="usage"><span class='fu'>makeRLearner</span>()
 
-<span class='fu'>makeRLearnerClassif</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>class.weights.param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>))
+<span class='fu'>makeRLearnerClassif</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>class.weights.param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerMultilabel</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>))
+<span class='fu'>makeRLearnerMultilabel</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerRegr</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>))
+<span class='fu'>makeRLearnerRegr</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerSurv</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>))
+<span class='fu'>makeRLearnerSurv</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerCluster</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>))
+<span class='fu'>makeRLearnerCluster</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerCostSens</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>))</pre>
-    
+<span class='fu'>makeRLearnerCostSens</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cl</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Class of learner. By convention, all classification learners
 start with &#8220;classif.&#8221; all regression learners with
 &#8220;regr.&#8221; all survival learners start with &#8220;surv.&#8221;
@@ -364,19 +364,19 @@ A list of all integrated learners is available on the
     </tr>
     <tr>
       <th>package</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Package(s) to load for the implementation of the learner.</p></td>
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/makeParamSet'>ParamHelpers::ParamSet</a>)<br />
+      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
 Parameter set of (hyper)parameters and their constraints.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></td>
     </tr>
     <tr>
       <th>par.vals</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Always set hyperparameters to these values when the object is constructed.
 Useful when default values are missing in the underlying function.
 The values can later be overwritten when the user sets hyperparameters.
@@ -384,61 +384,60 @@ Default is empty list.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Set of learner properties. See above.
-Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
+Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Meaningful name for learner.
 Default is <code>id</code>.</p></td>
     </tr>
     <tr>
       <th>short.name</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Short name for learner.
 Should only be a few characters so it can be used in plots and tables.
 Default is <code>id</code>.</p></td>
     </tr>
     <tr>
       <th>note</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Additional notes regarding the learner and its integration in mlr.
 Default is &#8220;&#8221;.</p></td>
     </tr>
     <tr>
       <th>class.weights.param</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Name of the parameter, which can be used for providing class weights.</p></td>
     </tr>
     <tr>
       <th>callees</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Character vector naming all functions of the learner's package being called which
 have a relevant R help page.
-Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
+Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(RLearner). The specific subclass is one of RLearnerClassif,
 RLearnerCluster, RLearnerMultilabel,
 RLearnerRegr, RLearnerSurv.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -449,11 +448,11 @@ RLearnerRegr, RLearnerSurv.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -465,4 +464,5 @@ RLearnerRegr, RLearnerSurv.</p>
 
   </body>
 </html>
+
 

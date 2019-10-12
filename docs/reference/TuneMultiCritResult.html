@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Result of multi-criteria tuning. — TuneMultiCritResult" />
 
+<meta property="og:title" content="Result of multi-criteria tuning. — TuneMultiCritResult" />
 <meta property="og:description" content="Container for results of hyperparameter tuning.
 Contains the obtained pareto set and front
 and the optimization path which lead there.
@@ -47,8 +48,11 @@ UNTRANSFORMED values on the original scale. You can simply call trafoOptPath(opt
 transform them, or, as.data.frame{trafoOptPath(opt.path)}
 ind (integer(n))Indices of Pareto optimal params in opt.path.
 measures [(list of) Measure)Performance measures.
+
+
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -60,12 +64,12 @@ measures [(list of) Measure)Performance measures.
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -271,7 +275,6 @@ measures [(list of) Measure)Performance measures.
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -310,6 +313,7 @@ measures [(list of) Measure)Performance measures.
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -319,37 +323,39 @@ measures [(list of) Measure)Performance measures.
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritResult.R'><code>R/TuneMultiCritResult.R</code></a></small>
     </div>
 
-    
     <p>Container for results of hyperparameter tuning.
 Contains the obtained pareto set and front
 and the optimization path which lead there.</p>
 <p>Object members:</p><dl class='dl-horizontal'>
 <dt>learner (<a href='makeLearner.html'>Learner</a>)</dt><dd><p>Learner that was optimized.</p></dd>
 <dt>control (<a href='TuneControl.html'>TuneControl</a>)</dt><dd><p>Control object from tuning.</p></dd>
-<dt>x (<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</dt><dd><p>List of lists of non-dominated hyperparameter settings in pareto set.
+<dt>x (<a href='https://rdrr.io/r/base/list.html'>list</a>)</dt><dd><p>List of lists of non-dominated hyperparameter settings in pareto set.
 Note that when you have trafos on some of your params, <code>x</code> will always be
 on the TRANSFORMED scale so you directly use it.</p></dd>
-<dt>y (<a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a>)</dt><dd><p>Pareto front for <code>x</code>.</p></dd>
+<dt>y (<a href='https://rdrr.io/r/base/matrix.html'>matrix</a>)</dt><dd><p>Pareto front for <code>x</code>.</p></dd>
 <dt>threshold</dt><dd><p>Currently <code>NULL</code>.</p></dd>
-<dt>opt.path (<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.
+<dt>opt.path (<a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.
 Note that when you have trafos on some of your params, the opt.path always contains the
 UNTRANSFORMED values on the original scale. You can simply call <code>trafoOptPath(opt.path)</code> to
 transform them, or, <code>as.data.frame{trafoOptPath(opt.path)}</code></p></dd>
-<dt>ind (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(n)</a></code>)</dt><dd><p>Indices of Pareto optimal params in <code>opt.path</code>.</p></dd>
+<dt>ind (<code><a href='https://rdrr.io/r/base/integer.html'>integer(n)</a></code>)</dt><dd><p>Indices of Pareto optimal params in <code>opt.path</code>.</p></dd>
 <dt>measures [(list of) <a href='makeMeasure.html'>Measure</a>)</dt><dd><p>Performance measures.</p></dd>
-</dl>
-    
 
-        
+</dl>
+
+
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -360,11 +366,11 @@ transform them, or, <code>as.data.frame{trafoOptPath(opt.path)}</code></p></dd>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -376,4 +382,5 @@ transform them, or, <code>as.data.frame{trafoOptPath(opt.path)}</code></p></dd>
 
   </body>
 </html>
+
 

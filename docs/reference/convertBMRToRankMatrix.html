@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,14 +29,15 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Convert BenchmarkResult to a rank-matrix. — convertBMRToRankMatrix" />
 
+<meta property="og:title" content="Convert BenchmarkResult to a rank-matrix. — convertBMRToRankMatrix" />
 <meta property="og:description" content="Computes a matrix of all the ranks of different algorithms
 over different datasets (tasks). Ranks are computed from aggregated
 measures.
 Smaller ranks imply better methods, so for measures that are minimized, small ranks imply small scores.
 for measures that are maximized, small ranks imply large scores." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -47,12 +49,12 @@ for measures that are maximized, small ranks imply large scores." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -258,7 +260,6 @@ for measures that are maximized, small ranks imply large scores." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -297,6 +298,7 @@ for measures that are maximized, small ranks imply large scores." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -306,17 +308,15 @@ for measures that are maximized, small ranks imply large scores." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/convertBMRToRankMatrix.R'><code>R/convertBMRToRankMatrix.R</code></a></small>
     </div>
 
-    
     <p>Computes a matrix of all the ranks of different algorithms
 over different datasets (tasks). Ranks are computed from aggregated
 measures.
 Smaller ranks imply better methods, so for measures that are minimized, small ranks imply small scores.
 for measures that are maximized, small ranks imply large scores.</p>
-    
 
     <pre class="usage"><span class='fu'>convertBMRToRankMatrix</span>(<span class='no'>bmr</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ties.method</span> <span class='kw'>=</span> <span class='st'>"average"</span>,
   <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='st'>"default"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -333,22 +333,21 @@ Default is the first measure used in the benchmark experiment.</p></td>
     </tr>
     <tr>
       <th>ties.method</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
-See <a href='https://www.rdocumentation.org/packages/base/topics/rank'>base::rank</a> for details.</p></td>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+See <a href='https://rdrr.io/r/base/rank.html'>base::rank</a> for details.</p></td>
     </tr>
     <tr>
       <th>aggregation</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>) <br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) <br />
 &#8220;mean&#8221; or &#8220;default&#8221;. See <a href='getBMRAggrPerformances.html'>getBMRAggrPerformances</a>
 for details on &#8220;default&#8221;.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a>) with measure ranks as entries.
+    <p>(<a href='https://rdrr.io/r/base/matrix.html'>matrix</a>) with measure ranks as entries.
 The matrix has one row for each <code>learner</code>, and one column for each <code>task</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other benchmark: <code><a href='BenchmarkResult.html'>BenchmarkResult</a></code>,
@@ -374,7 +373,6 @@ The matrix has one row for each <code>learner</code>, and one column for each <c
   <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
   <code><a href='plotCritDifferences.html'>plotCritDifferences</a></code>,
   <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># see benchmark
@@ -384,16 +382,14 @@ The matrix has one row for each <code>learner</code>, and one column for each <c
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -404,11 +400,11 @@ The matrix has one row for each <code>learner</code>, and one column for each <c
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -420,4 +416,5 @@ The matrix has one row for each <code>learner</code>, and one column for each <c
 
   </body>
 </html>
+
 

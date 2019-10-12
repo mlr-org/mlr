@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,13 +29,14 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Over- or undersample binary classification task to handle class imbalancy. — oversample" />
 
+<meta property="og:title" content="Over- or undersample binary classification task to handle class imbalancy. — oversample" />
 <meta property="og:description" content="Oversampling: For a given class (usually the smaller one) all existing observations are
 taken and copied and extra observations are added by randomly sampling with replacement from this class.
 Undersampling: For a given class (usually the larger one) the number of observations is
 reduced (downsampled) by randomly sampling without replacement from this class." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -46,12 +48,12 @@ reduced (downsampled) by randomly sampling without replacement from this class."
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -257,7 +259,6 @@ reduced (downsampled) by randomly sampling without replacement from this class."
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -296,6 +297,7 @@ reduced (downsampled) by randomly sampling without replacement from this class."
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -305,17 +307,15 @@ reduced (downsampled) by randomly sampling without replacement from this class."
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/OverUnderSampling.R'><code>R/OverUnderSampling.R</code></a></small>
     </div>
 
-    
     <p>Oversampling: For a given class (usually the smaller one) all existing observations are
 taken and copied and extra observations are added by randomly sampling with replacement from this class.</p>
 <p>Undersampling: For a given class (usually the larger one) the number of observations is
 reduced (downsampled) by randomly sampling without replacement from this class.</p>
-    
 
     <pre class="usage"><span class='fu'>oversample</span>(<span class='no'>task</span>, <span class='no'>rate</span>, <span class='kw'>cl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>undersample</span>(<span class='no'>task</span>, <span class='no'>rate</span>, <span class='kw'>cl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -326,7 +326,7 @@ The task.</p></td>
     </tr>
     <tr>
       <th>rate</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Factor to upsample or downsample a class.
 For undersampling: Must be between 0 and 1,
 where 1 means no downsampling, 0.5 implies reduction to 50 percent
@@ -336,35 +336,32 @@ where 1 means no oversampling and 2 would mean doubling the class size.</p></td>
     </tr>
     <tr>
       <th>cl</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Which class should be over- or undersampled. If <code>NULL</code>, <code>oversample</code>
 will select the smaller and <code>undersample</code> the larger class.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='Task.html'>Task</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other imbalancy: <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>, <code><a href='smote.html'>smote</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -375,11 +372,11 @@ will select the smaller and <code>undersample</code> the larger class.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -391,4 +388,5 @@ will select the smaller and <code>undersample</code> the larger class.</p></td>
 
   </body>
 </html>
+
 

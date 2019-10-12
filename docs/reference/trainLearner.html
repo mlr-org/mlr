@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Train an R learner. — trainLearner" />
 
+<meta property="og:title" content="Train an R learner. — trainLearner" />
 <meta property="og:description" content="Mainly for internal use. Trains a wrapped learner on a given training set.
 You have to implement this method if you want to add another learner to this package." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ You have to implement this method if you want to add another learner to this pac
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ You have to implement this method if you want to add another learner to this pac
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ You have to implement this method if you want to add another learner to this pac
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,13 +305,11 @@ You have to implement this method if you want to add another learner to this pac
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/trainLearner.R'><code>R/trainLearner.R</code></a></small>
     </div>
 
-    
     <p>Mainly for internal use. Trains a wrapped learner on a given training set.
 You have to implement this method if you want to add another learner to this package.</p>
-    
 
     <pre class="usage"><span class='fu'>trainLearner</span>(<span class='no'>.learner</span>, <span class='no'>.task</span>, <span class='no'>.subset</span>, <span class='kw'>.weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -325,13 +325,13 @@ Task to train learner on.</p></td>
     </tr>
     <tr>
       <th>.subset</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
 Subset of cases for training set, index the task with this.
 You probably want to use <a href='getTaskData.html'>getTaskData</a> for this purpose.</p></td>
     </tr>
     <tr>
       <th>.weights</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Weights for each observation.</p></td>
     </tr>
     <tr>
@@ -340,31 +340,28 @@ Weights for each observation.</p></td>
 Additional (hyper)parameters, which need to be passed to the underlying train function.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(any). Model of the underlying learner.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Your implementation must adhere to the following:
 The model must be fitted on the subset of <code>.task</code> given by <code>.subset</code>. All parameters
 in <code>...</code> must be passed to the underlying training function.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -375,11 +372,11 @@ in <code>...</code> must be passed to the underlying training function.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -391,4 +388,5 @@ in <code>...</code> must be passed to the underlying training function.</p>
 
   </body>
 </html>
+
 

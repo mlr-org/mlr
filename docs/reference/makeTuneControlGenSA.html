@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,12 +29,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create control object for hyperparameter tuning with GenSA. — makeTuneControlGenSA" />
 
+<meta property="og:title" content="Create control object for hyperparameter tuning with GenSA. — makeTuneControlGenSA" />
 <meta property="og:description" content="Generalized simulated annealing with method GenSA::GenSA.
 Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 For integers the internally proposed numeric values are automatically rounded." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -45,12 +47,12 @@ For integers the internally proposed numeric values are automatically rounded." 
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -256,7 +258,6 @@ For integers the internally proposed numeric values are automatically rounded." 
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -295,6 +296,7 @@ For integers the internally proposed numeric values are automatically rounded." 
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -304,29 +306,27 @@ For integers the internally proposed numeric values are automatically rounded." 
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneControlGenSA.R'><code>R/TuneControlGenSA.R</code></a></small>
     </div>
 
-    
-    <p>Generalized simulated annealing with method <a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a>.
+    <p>Generalized simulated annealing with method <a href='https://rdrr.io/pkg/GenSA/man/GenSA.html'>GenSA::GenSA</a>.
 Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 For integers the internally proposed numeric values are automatically rounded.</p>
-    
 
     <pre class="usage"><span class='fu'>makeTuneControlGenSA</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.val</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -340,12 +340,12 @@ in the same order as your measures.</p></td>
     </tr>
     <tr>
       <th>start</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list of initial parameter values.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -353,23 +353,23 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tune.threshold.args</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Further arguments for threshold tuning that are passed down to <a href='tuneThreshold.html'>tuneThreshold</a>.
 Default is none.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code>function</code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> small increase
 in run time.
-Otherwise <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from <a href='https://www.rdocumentation.org/packages/base/topics/gc'>gc</a>).
+(the latter two both taken from <a href='https://rdrr.io/r/base/gc.html'>gc</a>).
 See the implementation for details.</p></td>
     </tr>
     <tr>
@@ -380,9 +380,9 @@ Default is <code>NULL</code> which will not change anything.</p></td>
     </tr>
     <tr>
       <th>budget</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Maximum budget for tuning. This value restricts the number of function
-evaluations. <a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a> defines the <code>budget</code> via
+evaluations. <a href='https://rdrr.io/pkg/GenSA/man/GenSA.html'>GenSA::GenSA</a> defines the <code>budget</code> via
 the argument <code>max.call</code>. However, one should note that this algorithm
 does not stop its local search before its end. This behavior might lead
 to an extension of the defined budget and will result in a warning.</p></td>
@@ -391,15 +391,14 @@ to an extension of the defined budget and will result in a warning.</p></td>
       <th>...</th>
       <td><p>(any)<br />
 Further control parameters passed to the <code>control</code> arguments of
-<a href='https://www.rdocumentation.org/packages/cmaes/topics/cma_es'>cmaes::cma_es</a> or <a href='https://www.rdocumentation.org/packages/GenSA/topics/GenSA'>GenSA::GenSA</a>, as well as
-towards the <code>tunerConfig</code> argument of <a href='https://www.rdocumentation.org/packages/irace/topics/irace'>irace::irace</a>.</p></td>
+<a href='https://rdrr.io/pkg/cmaes/man/cma_es.html'>cmaes::cma_es</a> or <a href='https://rdrr.io/pkg/GenSA/man/GenSA.html'>GenSA::GenSA</a>, as well as
+towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(TuneControlGenSA).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
@@ -417,21 +416,19 @@ towards the <code>tunerConfig</code> argument of <a href='https://www.rdocumenta
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
   <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -442,11 +439,11 @@ towards the <code>tunerConfig</code> argument of <a href='https://www.rdocumenta
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -458,4 +455,5 @@ towards the <code>tunerConfig</code> argument of <a href='https://www.rdocumenta
 
   </body>
 </html>
+
 

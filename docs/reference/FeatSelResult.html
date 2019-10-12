@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,13 +29,14 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Result of feature selection. — FeatSelResult" />
 
+<meta property="og:title" content="Result of feature selection. — FeatSelResult" />
 <meta property="og:description" content="Container for results of feature selection.
 Contains the obtained features, their performance values
 and the optimization path which lead there.  
 You can visualize it using analyzeFeatSelResult." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -46,12 +48,12 @@ You can visualize it using analyzeFeatSelResult." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -257,7 +259,6 @@ You can visualize it using analyzeFeatSelResult." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -296,6 +297,7 @@ You can visualize it using analyzeFeatSelResult." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -305,38 +307,38 @@ You can visualize it using analyzeFeatSelResult." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelResult.R'><code>R/FeatSelResult.R</code></a></small>
     </div>
 
-    
     <p>Container for results of feature selection.
 Contains the obtained features, their performance values
 and the optimization path which lead there.  <br />
 You can visualize it using <a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a>.</p>
-    
 
-        
+
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Object members:</p><dl class='dl-horizontal'>
 <dt>learner (<a href='makeLearner.html'>Learner</a>)</dt><dd><p>Learner that was optimized.</p></dd>
 <dt>control (<a href='FeatSelControl.html'>FeatSelControl</a>)</dt><dd><p>Control object from feature selection.</p></dd>
-<dt>x (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)</dt><dd><p>Vector of feature names identified as optimal.</p></dd>
-<dt>y (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>Performance values for optimal <code>x</code>.</p></dd>
-<dt>threshold (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>Vector of finally found and used thresholds
+<dt>x (<a href='https://rdrr.io/r/base/character.html'>character</a>)</dt><dd><p>Vector of feature names identified as optimal.</p></dd>
+<dt>y (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>Performance values for optimal <code>x</code>.</p></dd>
+<dt>threshold (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>Vector of finally found and used thresholds
 if <code>tune.threshold</code> was enabled in <a href='FeatSelControl.html'>FeatSelControl</a>, otherwise not present and
 hence <code>NULL</code>.</p></dd>
-<dt>opt.path (<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.</p></dd>
+<dt>opt.path (<a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.</p></dd>
+
 </dl>
-    
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -347,11 +349,11 @@ hence <code>NULL</code>.</p></dd>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -363,4 +365,5 @@ hence <code>NULL</code>.</p></dd>
 
   </body>
 </html>
+
 

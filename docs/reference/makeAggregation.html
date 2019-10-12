@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Specify your own aggregation of measures. — makeAggregation" />
 
+<meta property="og:title" content="Specify your own aggregation of measures. — makeAggregation" />
 <meta property="og:description" content="This is an advanced feature of mlr. It gives access to some
 inner workings so the result might not be compatible with everything!" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ inner workings so the result might not be compatible with everything!" />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ inner workings so the result might not be compatible with everything!" />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ inner workings so the result might not be compatible with everything!" />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,32 +305,31 @@ inner workings so the result might not be compatible with everything!" />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/Aggregation.R'><code>R/Aggregation.R</code></a></small>
     </div>
 
-    
     <p>This is an advanced feature of mlr. It gives access to some
 inner workings so the result might not be compatible with everything!</p>
-    
 
     <pre class="usage"><span class='fu'>makeAggregation</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>id</span>, <span class='no'>properties</span>, <span class='no'>fun</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Name of the aggregation method (preferably the same name as the generated function).</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Long name of the aggregation method. Default is <code>id</code>.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Set of aggregation properties.</p><dl class='dl-horizontal'>
 <dt>req.train</dt><dd><p>Are prediction or train sets required to calculate the aggregation?</p></dd>
 <dt>req.test</dt><dd><p>Are prediction or test sets required to calculate the aggregation?</p></dd>
+
 </dl></td>
     </tr>
     <tr>
@@ -337,47 +338,44 @@ Set of aggregation properties.</p><dl class='dl-horizontal'>
 Calculates the aggregated performance. In most cases you will only need the performances
 <code>perf.test</code> and optionally <code>perf.train</code> on the test and training data sets.</p><dl class='dl-horizontal'>
 <dt><code>task</code> (<a href='Task.html'>Task</a>)</dt><dd><p>The task.</p></dd>
-<dt><code>perf.test</code> (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the test data sets.</p></dd>
-<dt><code>perf.train</code> (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the training data sets.</p></dd>
+<dt><code>perf.test</code> (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the test data sets.</p></dd>
+<dt><code>perf.train</code> (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the training data sets.</p></dd>
 <dt><code>measure</code> (<a href='makeMeasure.html'>Measure</a>)</dt><dd><p>Performance measure.</p></dd>
-<dt><code>group</code> (<a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a>)</dt><dd><p>Grouping of resampling iterations. This encodes whether specific iterations
+<dt><code>group</code> (<a href='https://rdrr.io/r/base/factor.html'>factor</a>)</dt><dd><p>Grouping of resampling iterations. This encodes whether specific iterations
 'belong together' (e.g. repeated CV).</p></dd>
 <dt><code>pred</code> (<a href='Prediction.html'>Prediction</a>)</dt><dd><p>Prediction object.</p></dd>
+
 </dl></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='Aggregation.html'>Aggregation</a>).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='aggregations.html'>aggregations</a>, <a href='setAggregation.html'>setAggregation</a></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># computes the interquartile range on all performance values</span>
 <span class='no'>test.iqr</span> <span class='kw'>=</span> <span class='fu'>makeAggregation</span>(
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"test.iqr"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Test set interquartile range"</span>,
   <span class='kw'>properties</span> <span class='kw'>=</span> <span class='st'>"req.test"</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/IQR'>IQR</a></span>(<span class='no'>perf.test</span>)
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'><a href='https://rdrr.io/r/stats/IQR.html'>IQR</a></span>(<span class='no'>perf.test</span>)
 )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -388,11 +386,11 @@ Calculates the aggregated performance. In most cases you will only need the perf
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -404,4 +402,5 @@ Calculates the aggregated performance. In most cases you will only need the perf
 
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,11 +29,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Create a description object for a resampling strategy. — makeResampleDesc" />
 
+<meta property="og:title" content="Create a description object for a resampling strategy. — makeResampleDesc" />
 <meta property="og:description" content="A description of a resampling algorithm contains all necessary information to
 create a ResampleInstance, when given the size of the data set." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -44,12 +46,12 @@ create a ResampleInstance, when given the size of the data set." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -255,7 +257,6 @@ create a ResampleInstance, when given the size of the data set." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -294,6 +295,7 @@ create a ResampleInstance, when given the size of the data set." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -303,20 +305,18 @@ create a ResampleInstance, when given the size of the data set." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ResampleDesc.R'><code>R/ResampleDesc.R</code></a></small>
     </div>
 
-    
     <p>A description of a resampling algorithm contains all necessary information to
 create a <a href='makeResampleInstance.html'>ResampleInstance</a>, when given the size of the data set.</p>
-    
 
     <pre class="usage"><span class='fu'>makeResampleDesc</span>(<span class='no'>method</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"test"</span>, <span class='no'>...</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>stratify.cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>blocking.cv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>method</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 &#8220;CV&#8221; for cross-validation, &#8220;LOO&#8221; for leave-one-out, &#8220;RepCV&#8221; for
 repeated cross-validation, &#8220;Bootstrap&#8221; for out-of-bag bootstrap, &#8220;Subsample&#8221; for
 subsampling, &#8220;Holdout&#8221; for holdout, &#8220;GrowingWindowCV&#8221; for growing window
@@ -324,7 +324,7 @@ cross-validation, &#8220;FixedWindowCV&#8221; for fixed window cross validation.
     </tr>
     <tr>
       <th>predict</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 What to predict during resampling: &#8220;train&#8221;, &#8220;test&#8221; or &#8220;both&#8221; sets.
 Default is &#8220;test&#8221;.</p></td>
     </tr>
@@ -332,35 +332,36 @@ Default is &#8220;test&#8221;.</p></td>
       <th>...</th>
       <td><p>(any)<br />
 Further parameters for strategies.<br /></p><dl class='dl-horizontal'>
-<dt>iters (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>Number of iterations, for &#8220;CV&#8221;, &#8220;Subsample&#8221;
+<dt>iters (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Number of iterations, for &#8220;CV&#8221;, &#8220;Subsample&#8221;
 and &#8220;Bootstrap&#8221;.</p></dd>
-<dt>split (<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)</dt><dd><p>Proportion of training cases for &#8220;Holdout&#8221; and
+<dt>split (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)</dt><dd><p>Proportion of training cases for &#8220;Holdout&#8221; and
 &#8220;Subsample&#8221; between 0 and 1. Default is 2 / 3.</p></dd>
-<dt>reps (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>Repeats for &#8220;RepCV&#8221;. Here <code>iters = folds * reps</code>.
+<dt>reps (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Repeats for &#8220;RepCV&#8221;. Here <code>iters = folds * reps</code>.
 Default is 10.</p></dd>
-<dt>folds (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>Folds in the repeated CV for <code>RepCV</code>.
+<dt>folds (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Folds in the repeated CV for <code>RepCV</code>.
 Here <code>iters = folds * reps</code>. Default is 10.</p></dd>
-<dt>horizon (<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)</dt><dd><p>Number of observations in the forecast test set for &#8220;GrowingWindowCV&#8221;
+<dt>horizon (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)</dt><dd><p>Number of observations in the forecast test set for &#8220;GrowingWindowCV&#8221;
 and &#8220;FixedWindowCV&#8221;. When <code>horizon &gt; 1</code> this will be treated as the number of
 observations to forecast, else it will be a fraction of the initial window. IE,
 for 100 observations, initial window of .5, and horizon of .2, the test set will have
 10 observations. Default is 1.</p></dd>
-<dt>initial.window (<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)</dt><dd><p>Fraction of observations to start with
+<dt>initial.window (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)</dt><dd><p>Fraction of observations to start with
 in the training set for &#8220;GrowingWindowCV&#8221; and &#8220;FixedWindowCV&#8221;.
 When <code>initial.window &gt; 1</code> this will be treated as the number of
 observations in the initial window, else it will be treated as the fraction
 of observations to have in the initial window. Default is 0.5.</p></dd>
-<dt>skip (<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)</dt><dd><p>How many resamples to skip to thin the total amount
+<dt>skip (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)</dt><dd><p>How many resamples to skip to thin the total amount
 for &#8220;GrowingWindowCV&#8221; and &#8220;FixedWindowCV&#8221;. This is passed through as the &#8220;by&#8221; argument
-in <code><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq()</a></code>. When <code>skip &gt; 1</code> this will be treated as the increment of the sequence of resampling indices,
+in <code><a href='https://rdrr.io/r/base/seq.html'>seq()</a></code>. When <code>skip &gt; 1</code> this will be treated as the increment of the sequence of resampling indices,
 else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
 of the resampling indices will be 20. Default is &#8220;horizon&#8221; which gives mutually exclusive chunks
 of test indices.</p></dd>
+
 </dl></td>
     </tr>
     <tr>
       <th>stratify</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should stratification be done for the target variable?
 For classification tasks, this means that the resampling strategy is applied to all classes
 individually and the resulting index sets are joined to make sure that the proportion of
@@ -370,7 +371,7 @@ censoring rates.</p></td>
     </tr>
     <tr>
       <th>stratify.cols</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Stratify on specific columns referenced by name. All columns have to be factor or integer.
 Note that you have to ensure yourself that stratification is possible, i.e.
 that each strata contains enough observations.
@@ -378,7 +379,7 @@ This argument and <code>stratify</code> are mutually exclusive.</p></td>
     </tr>
     <tr>
       <th>fixed</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether indices supplied via argument 'blocking' in the task should be used as
 fully pre-defined indices. Default is <code>FALSE</code> which means
 they will be used following the 'blocking' approach.
@@ -388,17 +389,16 @@ and is interally set to the number of supplied factor levels in <code>blocking</
     </tr>
     <tr>
       <th>blocking.cv</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should 'blocking' be used in <code>CV</code>? Default to <code>FALSE</code>.
 This is different to <code>fixed = TRUE</code> and cannot be combined. Please check the mlr online tutorial
 for more details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(ResampleDesc).</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Some notes on some special strategies:</p><dl class='dl-horizontal'>
@@ -412,20 +412,24 @@ Then you have to set the aggregation function for your preferred performance mea
 Then you have to set the aggregation function for your preferred performance measure to
 &#8220;b632plus&#8221; via <a href='setAggregation.html'>setAggregation</a>.</p></dd>
 <dt>Fixed Holdout set</dt><dd><p>Use <a href='makeFixedHoldoutInstance.html'>makeFixedHoldoutInstance</a>.</p></dd>
+
 </dl>
-    <p>Object slots:</p><dl class='dl-horizontal'>
-<dt>id (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>Name of resampling strategy.</p></dd>
-<dt>iters (<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)</dt><dd><p>Number of iterations. Note that this is always the complete number
+
+<p>Object slots:</p><dl class='dl-horizontal'>
+<dt>id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Name of resampling strategy.</p></dd>
+<dt>iters (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Number of iterations. Note that this is always the complete number
 of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.</p></dd>
-<dt>predict (<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)</dt><dd><p>See argument.</p></dd>
-<dt>stratify (<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)</dt><dd><p>See argument.</p></dd>
+<dt>predict (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>See argument.</p></dd>
+<dt>stratify (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>See argument.</p></dd>
 <dt>All parameters passed in ... under the respective argument name</dt><dd><p>See arguments.</p></dd>
+
 </dl>
-    
+
     <h2 class="hasAnchor" id="standard-resampledesc-objects"><a class="anchor" href="#standard-resampledesc-objects"></a>Standard ResampleDesc objects</h2>
 
     
-    <p>For common resampling strategies you can save some typing
+
+<p>For common resampling strategies you can save some typing
 by using the following description objects:</p><dl class='dl-horizontal'>
 <dt>hout</dt><dd><p>holdout a.k.a. test sample estimation
 (two-thirds training set, one-third testing set)</p></dd>
@@ -433,8 +437,9 @@ by using the following description objects:</p><dl class='dl-horizontal'>
 <dt>cv3</dt><dd><p>3-fold cross-validation</p></dd>
 <dt>cv5</dt><dd><p>5-fold cross-validation</p></dd>
 <dt>cv10</dt><dd><p>10-fold cross-validation</p></dd>
+
 </dl>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other resample: <code><a href='ResamplePrediction.html'>ResamplePrediction</a></code>,
@@ -445,7 +450,6 @@ by using the following description objects:</p><dl class='dl-horizontal'>
   <code><a href='getRRTaskDesc.html'>getRRTaskDesc</a></code>,
   <code><a href='makeResampleInstance.html'>makeResampleInstance</a></code>,
   <code><a href='resample.html'>resample</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Bootstraping</span>
@@ -469,20 +473,16 @@ by using the following description objects:</p><dl class='dl-horizontal'>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#standard-resampledesc-objects">Standard ResampleDesc objects</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -493,11 +493,11 @@ by using the following description objects:</p><dl class='dl-horizontal'>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -509,4 +509,5 @@ by using the following description objects:</p><dl class='dl-horizontal'>
 
   </body>
 </html>
+
 

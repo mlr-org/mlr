@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,10 +29,11 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Plot filter values using ggplot2. — plotFilterValues" />
 
+<meta property="og:title" content="Plot filter values using ggplot2. — plotFilterValues" />
 <meta property="og:description" content="Plot filter values using ggplot2." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -43,12 +45,12 @@
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -254,7 +256,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -302,14 +304,12 @@
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateFilterValues.R'><code>R/generateFilterValues.R</code></a></small>
     </div>
 
-    
     <p>Plot filter values using ggplot2.</p>
-    
 
     <pre class="usage"><span class='fu'>plotFilterValues</span>(<span class='no'>fvalues</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='st'>"dec"</span>, <span class='kw'>n.show</span> <span class='kw'>=</span> <span class='fl'>20L</span>,
   <span class='kw'>feat.type.cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>facet.wrap.nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>facet.wrap.ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -320,36 +320,35 @@ Filter values.</p></td>
     </tr>
     <tr>
       <th>sort</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Sort features like this.
 &#8220;dec&#8221; = decreasing, &#8220;inc&#8221; = increasing, &#8220;none&#8221; = no sorting.
 Default is decreasing.</p></td>
     </tr>
     <tr>
       <th>n.show</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of features (maximal) to show.
 Default is 20.</p></td>
     </tr>
     <tr>
       <th>feat.type.cols</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Colors for factor and numeric features.
 <code>FALSE</code> means no colors.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>facet.wrap.nrow, facet.wrap.ncol</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
 Number of rows and columns for facetting. Default for both is <code>NULL</code>.
 In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot2 plot object.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
@@ -366,26 +365,22 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
   <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
   <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
   <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fv</span> <span class='kw'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"variance"</span>)
-<span class='fu'>plotFilterValues</span>(<span class='no'>fv</span>)</div><div class='img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>fv</span> <span class='kw'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"variance"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='input'><span class='fu'>plotFilterValues</span>(<span class='no'>fv</span>)</div><div class='img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -396,11 +391,11 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -412,4 +407,5 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 
   </body>
 </html>
+
 

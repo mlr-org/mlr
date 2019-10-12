@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Generate classifier calibration data. — generateCalibrationData" />
 
+<meta property="og:title" content="Generate classifier calibration data. — generateCalibrationData" />
 <meta property="og:description" content="A calibrated classifier is one where the predicted probability of a class closely matches the
 rate at which that class occurs, e.g. for data points which are assigned a predicted probability
 of class A of .8, approximately 80 percent of such points should belong to class A if the classifier
@@ -37,6 +38,7 @@ is well calibrated. This is estimated empirically by grouping data points with s
 probabilities for each class, and plotting the rate of each class within each bin against the
 predicted probability bins." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -48,12 +50,12 @@ predicted probability bins." />
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -259,7 +261,6 @@ predicted probability bins." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -298,6 +299,7 @@ predicted probability bins." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -307,18 +309,16 @@ predicted probability bins." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/generateCalibration.R'><code>R/generateCalibration.R</code></a></small>
     </div>
 
-    
     <p>A calibrated classifier is one where the predicted probability of a class closely matches the
 rate at which that class occurs, e.g. for data points which are assigned a predicted probability
 of class A of .8, approximately 80 percent of such points should belong to class A if the classifier
 is well calibrated. This is estimated empirically by grouping data points with similar predicted
 probabilities for each class, and plotting the rate of each class within each bin against the
 predicted probability bins.</p>
-    
 
     <pre class="usage"><span class='fu'>generateCalibrationData</span>(<span class='no'>obj</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='st'>"Sturges"</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>task.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -332,31 +332,31 @@ learner shortnames or ids.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> | <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
-If <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>, the algorithm to use in generating probability bins.
-See <a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a> for details.
-If <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>, the cut points for the bins.
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
+If <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, the algorithm to use in generating probability bins.
+See <a href='https://rdrr.io/r/graphics/hist.html'>hist</a> for details.
+If <a href='https://rdrr.io/r/base/numeric.html'>numeric</a>, the cut points for the bins.
 Default is &#8220;Sturges&#8221;.</p></td>
     </tr>
     <tr>
       <th>groups</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 The number of bins to construct.
 If specified, <code>breaks</code> is ignored.
 Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>task.id</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Selected task in <a href='BenchmarkResult.html'>BenchmarkResult</a> to do plots for, ignored otherwise.
 Default is first task.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>CalibrationData. A <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a> containing:</p>
-<dt>proportion</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> with columns:
+    <p>CalibrationData. A <a href='https://rdrr.io/r/base/list.html'>list</a> containing:</p>
+<dt>proportion</dt><dd><p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with columns:
 <ul>
 <li><p><code>Learner</code> Name of learner.</p></li>
 <li><p><code>bin</code> Bins calculated according to the <code>breaks</code> or <code>groups</code> argument.</p></li>
@@ -365,7 +365,7 @@ Default is first task.</p></td>
 observations with posterior probabilities of class <code>Class</code> within the
 interval given in <code>bin</code>.</p></li>
 </ul></p></dd>
-<dt>data</dt><dd><p><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a> with columns:
+<dt>data</dt><dd><p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with columns:
 <ul>
 <li><p><code>Learner</code> Name of learner.</p></li>
 <li><p><code>truth</code> True class label.</p></li>
@@ -376,11 +376,9 @@ interval given in <code>bin</code>.</p></li>
 <dt>task</dt><dd><p>(<a href='TaskDesc.html'>TaskDesc</a>)<br />
 Task description.</p></dd>
 
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Vuk, Miha, and Curk, Tomaz. &#8220;ROC Curve, Lift Chart, and Calibration Plot.&#8221; Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
@@ -391,23 +389,20 @@ Task description.</p></dd>
   <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
   <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
 <p>Other calibration: <code><a href='plotCalibration.html'>plotCalibration</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -418,11 +413,11 @@ Task description.</p></dd>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -434,4 +429,5 @@ Task description.</p></dd>
 
   </body>
 </html>
+
 

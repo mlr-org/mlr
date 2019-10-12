@@ -14,6 +14,7 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -28,8 +29,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Built-in imputation methods. — imputations" />
 
+<meta property="og:title" content="Built-in imputation methods. — imputations" />
 <meta property="og:description" content="The built-ins are:
 imputeConstant(const) for imputation using a constant value,
 imputeMedian() for imputation using the median,
@@ -45,8 +46,10 @@ imputeHist(breaks, use.mids) for imputation using random values
 with probabilities calculated using table or hist.
 imputeLearner(learner, features = NULL) for imputations using the response
 of a classification or regression learner.
+
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,12 +61,12 @@ of a classification or regression learner.
 <![endif]-->
 
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -269,7 +272,6 @@ of a classification or regression learner.
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -308,6 +310,7 @@ of a classification or regression learner.
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -317,7 +320,6 @@ of a classification or regression learner.
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ImputeMethods.R'><code>R/ImputeMethods.R</code></a></small>
     </div>
 
-    
     <p>The built-ins are:</p><ul>
 <li><p><code>imputeConstant(const)</code> for imputation using a constant value,</p></li>
 <li><p><code>imputeMedian()</code> for imputation using the median,</p></li>
@@ -334,7 +336,7 @@ with probabilities calculated using <code>table</code> or <code>hist</code>.</p>
 <li><p><code>imputeLearner(learner, features = NULL)</code> for imputations using the response
 of a classification or regression learner.</p></li>
 </ul>
-    
+
 
     <pre class="usage"><span class='fu'>imputeConstant</span>(<span class='no'>const</span>)
 
@@ -355,7 +357,7 @@ of a classification or regression learner.</p></li>
 <span class='fu'>imputeHist</span>(<span class='no'>breaks</span>, <span class='kw'>use.mids</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>imputeLearner</span>(<span class='no'>learner</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -366,77 +368,76 @@ Constant valued use for imputation.</p></td>
     </tr>
     <tr>
       <th>multiplier</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Value that stored minimum or maximum is multiplied with when imputation is done.</p></td>
     </tr>
     <tr>
       <th>min</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Lower bound for uniform distribution.
 If NA (default), it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>max</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Upper bound for uniform distribution.
 If NA (default), it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>mu</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Mean of normal distribution. If missing it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>sd</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Standard deviation of normal distribution. If missing it will be estimated from the data.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>)<br />
-Number of breaks to use in <a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>graphics::hist</a>. If missing,
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+Number of breaks to use in <a href='https://rdrr.io/r/graphics/hist.html'>graphics::hist</a>. If missing,
 defaults to auto-detection via &#8220;Sturges&#8221;.</p></td>
     </tr>
     <tr>
       <th>use.mids</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 If <code>x</code> is numeric and a histogram is used, impute with bin mids (default)
 or instead draw uniformly distributed samples within bin range.</p></td>
     </tr>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Supervised learner. Its predictions will be used for imputations.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.
 Note that the target column is not available for this operation.</p></td>
     </tr>
     <tr>
       <th>features</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Features to use in <code>learner</code> for prediction.
 Default is <code>NULL</code> which uses all available features except the target column
 of the original task.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other impute: <code><a href='impute.html'>impute</a></code>,
   <code><a href='makeImputeMethod.html'>makeImputeMethod</a></code>,
   <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>, <code><a href='reimpute.html'>reimpute</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <!--<div class="copyright">
@@ -447,11 +448,11 @@ of the original task.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
-   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -463,4 +464,5 @@ of the original task.</p></td>
 
   </body>
 </html>
+
 
