@@ -314,6 +314,13 @@
 <li>Add <code><a href="../reference/configureMlr.html">configureMlr()</a></code> to <code><a href="https://rdrr.io/r/base/ns-hooks.html">.onLoad()</a></code>, possibly fixing some edge cases (<a href='https://github.com/mlr-org/mlr/issues/2585'>#2585</a>) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2637'>#2637</a>)</li>
 </ul>
 </div>
+<div id="learners---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<ul>
+<li>Updated ParamSet for learners <code>classif.gbm</code> and <code>regr.gbm</code>. Specifically, param <code>shrinkage</code> now defaults to 0.1 instead of 0.001. Also more choices for param <code>distribution</code> have been added. Internal parallelization by the package is now suppressed (param <code>n.cores</code>). (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2651'>#2651</a>)</li>
+</ul>
+</div>
 <div id="filters---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filters---general" class="anchor"></a>filters - general</h2>
@@ -345,9 +352,9 @@
 <code><a href="../reference/generateFeatureImportanceData.html">generateFeatureImportanceData()</a></code> gains argument <code>show.info</code> which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/26222'>#26222</a>)</li>
 </ul>
 </div>
-<div id="learners---general" class="section level2">
+<div id="learners---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-1" class="anchor"></a>learners - general</h2>
 <ul>
 <li>
 <code>classif.liquidSVM</code> and <code>regr.liquidSVM</code> have been removed because <code>liquidSVM</code> has been removed from CRAN.</li>
@@ -521,9 +528,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>regr.liquidSVM (<a href='https://github.com/PhilippPro'>@PhilippPro</a>, <a href='https://github.com/mlr-org/mlr/issues/2428'>#2428</a>)</li>
 </ul>
 </div>
-<div id="learners---general-1" class="section level2">
+<div id="learners---general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-1" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-2" class="anchor"></a>learners - general</h2>
 <ul>
 <li>regr.h2o.gbm: Various parameters added, <code>"h2o.use.data.table" = TRUE</code> is now the default (<a href='https://github.com/j-hartshorn'>@j-hartshorn</a>, <a href='https://github.com/mlr-org/mlr/issues/2508'>#2508</a>)</li>
 <li>h2o learners now support getting feature importance (<a href='https://github.com/markusdumke'>@markusdumke</a>, <a href='https://github.com/mlr-org/mlr/issues/2434'>#2434</a>)</li>
@@ -574,9 +581,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>createSpatialResamplingPlots</li>
 </ul>
 </div>
-<div id="learners---general-2" class="section level2">
+<div id="learners---general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-2" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-3" class="anchor"></a>learners - general</h2>
 <ul>
 <li>regr.nnet: Removed unneeded params linout, entropy, softmax and censored</li>
 <li>regr.ranger: Add weight handling</li>
@@ -668,9 +675,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>cindex.uno, iauc.uno</li>
 </ul>
 </div>
-<div id="learners---general-3" class="section level2">
+<div id="learners---general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-3" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-4" class="anchor"></a>learners - general</h2>
 <ul>
 <li>unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized</li>
 <li>fixed a bug where surv.cforest gave wrong risk predictions (<a href='https://github.com/mlr-org/mlr/issues/1833'>#1833</a>)</li>
@@ -768,9 +775,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>kendalltau, spearmanrho</li>
 </ul>
 </div>
-<div id="learners---general-4" class="section level2">
+<div id="learners---general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-4" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-5" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.plsdaCaret: added parameter “method”.</li>
 <li>regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = “jackknife”.</li>
@@ -861,9 +868,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>mergeBenchmarkResultLearner, mergeBenchmarkResultTask</li>
 </ul>
 </div>
-<div id="learners---general-5" class="section level2">
+<div id="learners---general-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-5" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-6" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.ada: fixed some param problem with rpart.control params</li>
 <li>classif.cforest, regr.cforest, surv.cforest: removed parameters “minprob”, “pvalue”, “randomsplits” as these are set internally and cannot be changed by the user</li>
@@ -955,9 +962,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>plotPartialPredictionGGVIS to plotPartialDependenceGGVIS</li>
 </ul>
 </div>
-<div id="learners---general-6" class="section level2">
+<div id="learners---general-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-6" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-7" class="anchor"></a>learners - general</h2>
 <ul>
 <li>fixed weight handling and weight tag for some learners</li>
 <li>remove unnecessary linear.output parameter for classif.neuralnet</li>
