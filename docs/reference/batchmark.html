@@ -45,9 +45,9 @@ Call `batchmark(...)` which defines jobs for all learners and tasks in an [base:
 Submit jobs using [batchtools::submitJobs].
 Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].
 Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].
-" />
 
-<meta property="og:description" content="If you want to use this with OpenML datasets you can generate tasks from a vector
+
+If you want to use this with OpenML datasets you can generate tasks from a vector
 of dataset IDs easily with
 `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`." />
 <meta name="twitter:card" content="summary" />
@@ -68,6 +68,7 @@ of dataset IDs easily with
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -312,6 +313,7 @@ of dataset IDs easily with
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -339,21 +341,21 @@ a look at the batchtools tutorial page:
 <li><p>Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].</p></li>
 </ol>
 
-    <p>If you want to use this with <span class="pkg">OpenML</span> datasets you can generate tasks from a vector
+<p>If you want to use this with <span class="pkg">OpenML</span> datasets you can generate tasks from a vector
 of dataset IDs easily with
 `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.</p>
     
 
     <pre class="usage"><span class='fu'>batchmark</span>(<span class='no'>learners</span>, <span class='no'>tasks</span>, <span class='no'>resamplings</span>, <span class='no'>measures</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.extract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/batchtools/topics/getDefaultRegistry'>getDefaultRegistry</a></span>())</pre>
+  <span class='kw'>reg</span> <span class='kw'>=</span> <span class='kw pkg'>batchtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/batchtools/man/getDefaultRegistry.html'>getDefaultRegistry</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learners</th>
-      <td><p>(list of <a href='makeLearner.html'>Learner</a> | <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(list of <a href='makeLearner.html'>Learner</a> | <a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Learning algorithms which should be compared, can also be a single learner.
 If you pass strings the learners will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -377,7 +379,7 @@ If missing, the default measure of the first task is used.</p></td>
     </tr>
     <tr>
       <th>keep.pred</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the prediction data in the <code>pred</code> slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
@@ -385,7 +387,7 @@ The default is set to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>keep.extract</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Keep the <code>extract</code> slot of the result object. When creating a lot of
 benchmark results with extensive tuning, the resulting R objects can become
 very large in size. That is why the tuning results stored in the <code>extract</code>
@@ -395,7 +397,7 @@ tuning results.</p></td>
     </tr>
     <tr>
       <th>models</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should all fitted models be stored in the <a href='ResampleResult.html'>ResampleResult</a>?
 Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -453,6 +455,7 @@ uses the last created registry.</p></td>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -462,6 +465,7 @@ uses the last created registry.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -476,6 +480,8 @@ uses the last created registry.</p></td>
 </script>
 
 
+
   </body>
 </html>
+
 

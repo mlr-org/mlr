@@ -229,7 +229,7 @@ rf.importance = makeFilter(
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
 
-randomForestSRC.rfsrc = makeFilter(
+randomForestSRC.rfsrc = makeFilter( #nolint
   name = "randomForestSRC_importance",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg = "randomForestSRC",
@@ -266,8 +266,6 @@ randomForestSRC.rfsrc = makeFilter(
 #' @name makeFilter
 NULL
 
-# for some reason we cannot call 'randomForestSRC_var.select' directly as we then face
-# nested recursion problems when using other methods than "md".
 rf.min.depth = makeFilter(
   name = "randomForestSRC_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
@@ -275,9 +273,7 @@ rf.min.depth = makeFilter(
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
-    im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, ...)$md.obj$order
-    setNames(-im[, 1L], rownames(im))
+    # redirected to randomForestSRC.var.select()
   })
 .FilterRegister[["rf.min.depth"]] = rf.min.depth
 .FilterRegister[["rf.min.depth"]]$desc = "(DEPRECATED)"
@@ -286,16 +282,23 @@ rf.min.depth = makeFilter(
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
 
-randomForestSRC.var.select = makeFilter(
+randomForestSRC.var.select = makeFilter( #nolint
   name = "randomForestSRC_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
-  fun = function(task, nselect, method = "md", ...) {
+  fun = function(task, nselect, method = "md", conservative = "medium", ...) {
+    # method "vh.imp" is not supported as it does return values to rank features on
+    assert_choice(method, c("md", "vh"))
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, ...)$md.obj$order
-    setNames(-im[, 1L], rownames(im))
+      method = method, verbose = FALSE, always.use =  getTaskFeatureNames(task),
+      ...)
+    if (method == "md") {
+      setNames(im$varselect$depth, im$topvars)
+    } else if (method == "vh") {
+      im[["varselect"]][, 1L]
+    }
   })
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
@@ -408,7 +411,7 @@ makeFilter(
     setNames(im, rownames(im))
   })
 
-randomForest.importance = makeFilter(
+randomForest.importance = makeFilter( #nolint
   name = "randomForest_importance",
   desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
   pkg = "randomForest",
@@ -694,7 +697,7 @@ makeFilter(
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
 
-oneR = makeFilter(
+oneR = makeFilter( #nolint
   name = "FSelector_oneR",
   desc = "oneR association rule",
   pkg = "FSelector",
@@ -919,7 +922,7 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-praznik_filter = function(fun) {
+praznik_filter = function(fun) { #nolint
   force(fun)
 
   function(task, nselect, ...) {
@@ -932,6 +935,7 @@ praznik_filter = function(fun) {
     k = max(min(nselect, ncol(X)), 1L)
     selected = names(fun(X, Y, k = k)$selection)
     score = setNames(rev(seq_along(selected)) / length(selected), selected)
+
 
     if (length(score) < ncol(X)) {
       unscored = sample(setdiff(names(X), names(score)))
@@ -1025,7 +1029,7 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-FSelectorRcpp.filter = function(type) {
+FSelectorRcpp.filter = function(type) { #nolint
   force(type)
 
   function(task, nselect, ...) {

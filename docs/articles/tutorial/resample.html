@@ -263,6 +263,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
@@ -357,7 +358,7 @@ Resampling Figure
 <h2 class="hasAnchor">
 <a href="#performing-the-resampling" class="anchor"></a>Performing the resampling</h2>
 <p>Function <code><a href="../../reference/resample.html">resample()</a></code> evaluates a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) on a given machine learning <code><a href="../../reference/Task.html">Task()</a></code> using the selected resampling strategy (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>).</p>
-<p>As a first example, the performance of linear regression (<code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">stats::lm()</a></code>) on the <code>BostonHousing</code> (<code><a href="https://www.rdocumentation.org/packages/mlbench/topics/BostonHousing">mlbench::BostonHousing()</a></code>) data set is calculated using <em>3-fold cross-validation</em>.</p>
+<p>As a first example, the performance of linear regression (<code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code>) on the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set is calculated using <em>3-fold cross-validation</em>.</p>
 <p>Generally, for <em><span class="math inline">\(K\)</span>-fold cross-validation</em> the data set <span class="math inline">\(D\)</span> is partitioned into <span class="math inline">\(K\)</span> subsets of (approximately) equal size. In the <span class="math inline">\(b\)</span>-th of the <span class="math inline">\(K\)</span> iterations, the <span class="math inline">\(b\)</span>-th subset is used for testing, while the union of the remaining parts forms the training set.</p>
 <p>As usual, you can either pass a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) object to <code><a href="../../reference/resample.html">resample()</a></code> or, as done here, provide the class name <code>"regr.lm"</code> of the learner. Since no performance measure is specified the default for regression learners (mean squared error, <a href="measures.html" target="_blank">mse</a>) is calculated.</p>
 <pre><code>## Resampling: cross-validation
@@ -390,7 +391,7 @@ Resampling Figure
 <a class="sourceLine" id="cb5-20" data-line-number="20">## Runtime: 0.0375051</a></code></pre></div>
 <p>The result <code>r</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> result. It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Peak into r</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(r)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(r)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">##  [1] "learner.id"     "task.id"        "task.desc"      "measures.train"</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">##  [5] "measures.test"  "aggr"           "pred"           "models"        </a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">##  [9] "err.msgs"       "err.dumps"      "extract"        "runtime"</a>
@@ -405,7 +406,7 @@ Resampling Figure
 <a class="sourceLine" id="cb6-14" data-line-number="14">## 2    2 29.48319</a>
 <a class="sourceLine" id="cb6-15" data-line-number="15">## 3    3 21.26948</a></code></pre></div>
 <p><code>r$measures.test</code> gives the performance on each of the 3 test data sets. <code>r$aggr</code> shows the aggregated performance value. Its name <code>"mse.test.mean"</code> indicates the performance measure, <a href="measures.html" target="_blank">mse</a>, and the method, <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), used to aggregate the 3 individual performances. <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>) is the default aggregation scheme for most performance measures and, as the name implies, takes the mean over the performances on the test data sets.</p>
-<p>Resampling in <code>mlr</code> works the same way for all types of learning problems and learners. Below is a classification example where a classification tree (rpart) (<code><a href="https://www.rdocumentation.org/packages/rpart/topics/rpart">rpart::rpart()</a></code>) is evaluated on the <code>Sonar</code> (<code>mlbench::sonar()</code>) data set by subsampling with 5 iterations.</p>
+<p>Resampling in <code>mlr</code> works the same way for all types of learning problems and learners. Below is a classification example where a classification tree (rpart) (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code>) is evaluated on the <code>Sonar</code> (<code>mlbench::sonar()</code>) data set by subsampling with 5 iterations.</p>
 <p>In each subsampling iteration the data set <span class="math inline">\(D\)</span> is randomly partitioned into a training and a test set according to a given percentage, e.g., 2/3 training and 1/3 test set. If there is just one iteration, the strategy is commonly called <em>holdout</em> or <em>test sample estimation</em>.</p>
 <p>You can calculate several measures at once by passing a <code>list</code> of Measures (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>)s to <code><a href="../../reference/resample.html">resample()</a></code>. Below, the error rate (<a href="measures.html" target="_blank">mmce</a>), false positive and false negative rates (<a href="measures.html" target="_blank">fpr</a>, <a href="measures.html" target="_blank">fnr</a>), and the time it takes to train the learner (<a href="measures.html" target="_blank">timetrain</a>) are estimated by <em>subsampling</em> with 5 iterations.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Subsampling with 5 iterations and default split ratio 2/3</span></a>
@@ -415,10 +416,10 @@ Resampling Figure
 <a class="sourceLine" id="cb7-5" data-line-number="5">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Subsample"</span>, <span class="dt">iters =</span> <span class="dv">5</span>, <span class="dt">split =</span> <span class="dv">4</span><span class="op">/</span><span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># Classification tree with information splitting criterion</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">parms =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">split =</span> <span class="st">"information"</span>))</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">parms =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">split =</span> <span class="st">"information"</span>))</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co"># Calculate the performance measures</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, sonar.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, fpr, fnr, timetrain))</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, sonar.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mmce, fpr, fnr, timetrain))</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">## Resampling: subsampling</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">## Measures:             mmce        fpr         fnr         timetrain</a>
 <a class="sourceLine" id="cb7-14" data-line-number="14">## [Resample] iter 1:    0.4047619   0.5416667   0.2222222   0.0110000</a>
@@ -438,7 +439,7 @@ Resampling Figure
 <a class="sourceLine" id="cb7-28" data-line-number="28">## Runtime: 0.10692</a></code></pre></div>
 <p>If you want to add further measures afterwards, use <code><a href="../../reference/addRRMeasure.html">addRRMeasure()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Add balanced error rate (ber) and time used to predict</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/addRRMeasure.html">addRRMeasure</a></span>(r, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(ber, timepredict))</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/addRRMeasure.html">addRRMeasure</a></span>(r, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(ber, timepredict))</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">## Resample Result</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">## Task: Sonar-example</a>
@@ -447,8 +448,8 @@ Resampling Figure
 <a class="sourceLine" id="cb8-8" data-line-number="8">## Runtime: 0.10692</a></code></pre></div>
 <p>By default, <code><a href="../../reference/resample.html">resample()</a></code> prints progress messages and intermediate results. You can turn this off by setting <code>show.info = FALSE</code>, as done in the code chunk below. (If you are interested in suppressing these messages permanently have a look at the tutorial page about <a href="configureMlr.html" target="_blank">configuring mlr</a>.)</p>
 <p>In the above example, the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) was explicitly constructed. For convenience you can also specify the learner as a string and pass any learner parameters via the <code>...</code> argument of <code><a href="../../reference/resample.html">resample()</a></code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">parms =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">split =</span> <span class="st">"information"</span>), sonar.task, rdesc,</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, fpr, fnr, timetrain), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">parms =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">split =</span> <span class="st">"information"</span>), sonar.task, rdesc,</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mmce, fpr, fnr, timetrain), <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">r</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5"></a>
@@ -502,7 +503,7 @@ Resampling Figure
 <a class="sourceLine" id="cb10-33" data-line-number="33">## 6 111     M        M    1 test</a>
 <a class="sourceLine" id="cb10-34" data-line-number="34">## ... (#rows: 210, #cols: 5)</a></code></pre></div>
 <p><code>pred</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> Prediction. Just as a <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (see the tutorial page on making <a href="predict.html" target="_blank">predictions</a> it has an element <code>$data</code> which is a <code>data.frame</code> that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s). You can use <code>as.data.frame</code> (<code><a href="../../reference/Prediction.html">Prediction()</a></code> to directly access the <code>$data</code> slot. Moreover, all getter functions for <code><a href="../../reference/Prediction.html">Prediction()</a></code> objects like <code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code> or <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> are applicable.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(pred))</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred))</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">##    id truth response iter  set</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">## 1  66     R        R    1 test</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4">## 2 170     M        M    1 test</a>
@@ -511,11 +512,11 @@ Resampling Figure
 <a class="sourceLine" id="cb11-7" data-line-number="7">## 5 187     M        R    1 test</a>
 <a class="sourceLine" id="cb11-8" data-line-number="8">## 6  89     R        M    1 test</a>
 <a class="sourceLine" id="cb11-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a>
 <a class="sourceLine" id="cb11-11" data-line-number="11">## [1] R M R R M R</a>
 <a class="sourceLine" id="cb11-12" data-line-number="12">## Levels: M R</a>
 <a class="sourceLine" id="cb11-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred))</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred))</a>
 <a class="sourceLine" id="cb11-15" data-line-number="15">## [1] R M M R R M</a>
 <a class="sourceLine" id="cb11-16" data-line-number="16">## Levels: M R</a></code></pre></div>
 <p>The columns <code>iter</code> and <code>set</code> in the <code>data.frame</code> indicate the resampling iteration and the data set (<code>train</code> or <code>test</code>) for which the prediction was made.</p>
@@ -598,7 +599,7 @@ Resampling Figure
 <h3 class="hasAnchor">
 <a href="#the-extract-option" class="anchor"></a>The extract option</h3>
 <p>Keeping complete fitted models can be memory-intensive if these objects are large or the number of resampling iterations is high. Alternatively, you can use the <code>extract</code> argument of <code><a href="../../reference/resample.html">resample()</a></code> to retain only the information you need. To this end you need to pass a function to <code>extract</code> which is applied to each <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) object fitted in each resampling iteration.</p>
-<p>Below, we cluster the <code><a href="https://www.rdocumentation.org/packages/datasets/topics/mtcars">datasets::mtcars()</a></code> data using the <span class="math inline">\(k\)</span>-means algorithm with <span class="math inline">\(k = 3\)</span> and keep only the cluster centers.</p>
+<p>Below, we cluster the <code><a href="https://rdrr.io/r/datasets/mtcars.html">datasets::mtcars()</a></code> data using the <span class="math inline">\(k\)</span>-means algorithm with <span class="math inline">\(k = 3\)</span> and keep only the cluster centers.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># 3-fold cross-validation</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"></a>
@@ -839,7 +840,7 @@ Resampling Figure
 <a href="#blocking-cv-with-flexible-predefined-indices" class="anchor"></a>Blocking: CV with flexible predefined indices</h3>
 <p>If some observations “belong together” and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a <code>blocking</code> factor when creating the <a href="task.html" target="_blank">task</a>.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># 5 blocks containing 30 observations each</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>, <span class="dt">blocking =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">each =</span> <span class="dv">30</span>)))</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>, <span class="dt">blocking =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">each =</span> <span class="dv">30</span>)))</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">task</a>
 <a class="sourceLine" id="cb20-4" data-line-number="4">## Supervised task: iris</a>
 <a class="sourceLine" id="cb20-5" data-line-number="5">## Type: classif</a>
@@ -868,7 +869,7 @@ Resampling Figure
 <a class="sourceLine" id="cb21-9" data-line-number="9">## Aggregated Result: mmce.test.mean=0.0333333</a>
 <a class="sourceLine" id="cb21-10" data-line-number="10">## </a>
 <a class="sourceLine" id="cb21-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds[[<span class="dv">1</span>]])</a>
 <a class="sourceLine" id="cb21-13" data-line-number="13">##   [1]  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47</a>
 <a class="sourceLine" id="cb21-14" data-line-number="14">##  [18]  48  49  50  51  52  53  54  55  56  57  58  59  60  61  62  63  64</a>
 <a class="sourceLine" id="cb21-15" data-line-number="15">##  [35]  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80  81</a>
@@ -878,7 +879,7 @@ Resampling Figure
 <a class="sourceLine" id="cb21-19" data-line-number="19">## [103] 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149</a>
 <a class="sourceLine" id="cb21-20" data-line-number="20">## [120] 150</a></code></pre></div>
 <p>However, please note the effects of this method: The created folds will not have the same size! Here, Fold 1 has a 120/30 split while the other two folds have a 90/60 split.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(x))</a>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds, <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x))</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">## [1] 120</a>
 <a class="sourceLine" id="cb22-4" data-line-number="4">## </a>
@@ -908,7 +909,7 @@ Resampling Figure
 <a class="sourceLine" id="cb23-12" data-line-number="12">## </a>
 <a class="sourceLine" id="cb23-13" data-line-number="13">## Aggregated Result: mmce.test.mean=0.0400000</a>
 <a class="sourceLine" id="cb23-14" data-line-number="14">## </a>
-<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds[[<span class="dv">1</span>]])</a>
 <a class="sourceLine" id="cb23-16" data-line-number="16">##   [1]  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47</a>
 <a class="sourceLine" id="cb23-17" data-line-number="17">##  [18]  48  49  50  51  52  53  54  55  56  57  58  59  60  61  62  63  64</a>
 <a class="sourceLine" id="cb23-18" data-line-number="18">##  [35]  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80  81</a>
@@ -919,7 +920,7 @@ Resampling Figure
 <a class="sourceLine" id="cb23-23" data-line-number="23">## [120] 150</a></code></pre></div>
 <p>You can see that we automatically created five folds in which the test set always corresponds to one factor level.</p>
 <p>Doing it this way also means that we cannot do repeated CV because there is no way to create multiple shuffled folds of this fixed arrangement.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(x))</a>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(p<span class="op">$</span>pred<span class="op">$</span>instance<span class="op">$</span>train.inds, <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x))</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2">## [[1]]</a>
 <a class="sourceLine" id="cb24-3" data-line-number="3">## [1] 120</a>
 <a class="sourceLine" id="cb24-4" data-line-number="4">## </a>
@@ -949,7 +950,7 @@ Resampling Figure
 <a class="sourceLine" id="cb25-11" data-line-number="11">  <span class="dt">extract =</span> getTuneResult)</a></code></pre></div>
 <p>To check on the inner resampling indices, you can call <code><a href="../../reference/getResamplingIndices.html">getResamplingIndices(inner = TRUE)</a></code>. You can see that for every outer fold (List of 5), four inner folds were created that respect the grouping supplied via the <code>blocking</code> argument.</p>
 <p>Of course you can also use a normal random sampling “CV” description in the inner level by just setting <code>fixed = FALSE</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(<span class="kw"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span>(p, <span class="dt">inner =</span> <span class="ot">TRUE</span>))</a>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span>(p, <span class="dt">inner =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb26-2" data-line-number="2">## List of 5</a>
 <a class="sourceLine" id="cb26-3" data-line-number="3">##  $ :List of 2</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">##   ..$ train.inds:List of 4</a>
@@ -1018,7 +1019,7 @@ Resampling Figure
 <a class="sourceLine" id="cb27-4" data-line-number="4">## Predict: test</a>
 <a class="sourceLine" id="cb27-5" data-line-number="5">## Stratification: FALSE</a>
 <a class="sourceLine" id="cb27-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(rdesc)</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(rdesc)</a>
 <a class="sourceLine" id="cb27-8" data-line-number="8">## List of 6</a>
 <a class="sourceLine" id="cb27-9" data-line-number="9">##  $ fixed      : logi FALSE</a>
 <a class="sourceLine" id="cb27-10" data-line-number="10">##  $ blocking.cv: logi FALSE</a>
@@ -1028,7 +1029,7 @@ Resampling Figure
 <a class="sourceLine" id="cb27-14" data-line-number="14">##  $ stratify   : logi FALSE</a>
 <a class="sourceLine" id="cb27-15" data-line-number="15">##  - attr(*, "class")= chr [1:2] "CVDesc" "ResampleDesc"</a>
 <a class="sourceLine" id="cb27-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(<span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Subsample"</span>, <span class="dt">stratify.cols =</span> <span class="st">"chas"</span>))</a>
+<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Subsample"</span>, <span class="dt">stratify.cols =</span> <span class="st">"chas"</span>))</a>
 <a class="sourceLine" id="cb27-18" data-line-number="18">## List of 8</a>
 <a class="sourceLine" id="cb27-19" data-line-number="19">##  $ split        : num 0.667</a>
 <a class="sourceLine" id="cb27-20" data-line-number="20">##  $ id           : chr "subsampling"</a>
@@ -1049,7 +1050,7 @@ Resampling Figure
 <a class="sourceLine" id="cb28-6" data-line-number="6">## Predict: test</a>
 <a class="sourceLine" id="cb28-7" data-line-number="7">## Stratification: FALSE</a>
 <a class="sourceLine" id="cb28-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(rin)</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(rin)</a>
 <a class="sourceLine" id="cb28-10" data-line-number="10">## List of 5</a>
 <a class="sourceLine" id="cb28-11" data-line-number="11">##  $ desc      :List of 6</a>
 <a class="sourceLine" id="cb28-12" data-line-number="12">##   ..$ fixed      : logi FALSE</a>
@@ -1072,8 +1073,8 @@ Resampling Figure
 <a class="sourceLine" id="cb28-29" data-line-number="29">##  - attr(*, "class")= chr "ResampleInstance"</a>
 <a class="sourceLine" id="cb28-30" data-line-number="30"></a>
 <a class="sourceLine" id="cb28-31" data-line-number="31"><span class="co"># Create a resample instance given the size of the data set</span></a>
-<a class="sourceLine" id="cb28-32" data-line-number="32">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(rdesc, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(iris))</a>
-<a class="sourceLine" id="cb28-33" data-line-number="33"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(rin)</a>
+<a class="sourceLine" id="cb28-32" data-line-number="32">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(rdesc, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(iris))</a>
+<a class="sourceLine" id="cb28-33" data-line-number="33"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(rin)</a>
 <a class="sourceLine" id="cb28-34" data-line-number="34">## List of 5</a>
 <a class="sourceLine" id="cb28-35" data-line-number="35">##  $ desc      :List of 6</a>
 <a class="sourceLine" id="cb28-36" data-line-number="36">##   ..$ fixed      : logi FALSE</a>
@@ -1186,7 +1187,7 @@ Resampling Figure
 <a class="sourceLine" id="cb33-13" data-line-number="13">## Note: Defined as: mean((response - truth)^2)</a>
 <a class="sourceLine" id="cb33-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb33-15" data-line-number="15">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb33-16" data-line-number="16">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.lm"</span>, bh.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mse, mseTestMedian, mseTestMin, mseTestMax))</a>
+<a class="sourceLine" id="cb33-16" data-line-number="16">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.lm"</span>, bh.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mse, mseTestMedian, mseTestMin, mseTestMax))</a>
 <a class="sourceLine" id="cb33-17" data-line-number="17">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb33-18" data-line-number="18">## Measures:             mse       mse       mse       mse</a>
 <a class="sourceLine" id="cb33-19" data-line-number="19">## [Resample] iter 1:    24.078202624.078202624.078202624.0782026</a>
@@ -1213,7 +1214,7 @@ Resampling Figure
 <p>Below we calculate the mean misclassification error (<a href="measures.html" target="_blank">mmce</a>) on the training and the test data sets. Note that we have to set <code>predict = "both"</code> when calling <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code> in order to get predictions on both training and test sets.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">mmceTrainMean =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(mmce, train.mean)</a>
 <a class="sourceLine" id="cb34-2" data-line-number="2">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">predict =</span> <span class="st">"both"</span>)</a>
-<a class="sourceLine" id="cb34-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, mmceTrainMean))</a>
+<a class="sourceLine" id="cb34-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mmce, mmceTrainMean))</a>
 <a class="sourceLine" id="cb34-4" data-line-number="4">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb34-5" data-line-number="5">## Measures:             mmce.train   mmce.test</a>
 <a class="sourceLine" id="cb34-6" data-line-number="6">## [Resample] iter 1:    0.0300000    0.0600000</a>
@@ -1260,9 +1261,9 @@ Resampling Figure
 <a class="sourceLine" id="cb35-15" data-line-number="15">## Arguments: </a>
 <a class="sourceLine" id="cb35-16" data-line-number="16">## Note: Defined as: mean(response != truth)</a>
 <a class="sourceLine" id="cb35-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb35-18" data-line-number="18">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, mmceB632, mmceB632plus),</a>
+<a class="sourceLine" id="cb35-18" data-line-number="18">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mmce, mmceB632, mmceB632plus),</a>
 <a class="sourceLine" id="cb35-19" data-line-number="19">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb35-20" data-line-number="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(r<span class="op">$</span>measures.train)</a>
+<a class="sourceLine" id="cb35-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(r<span class="op">$</span>measures.train)</a>
 <a class="sourceLine" id="cb35-21" data-line-number="21">##   iter       mmce       mmce       mmce</a>
 <a class="sourceLine" id="cb35-22" data-line-number="22">## 1    1 0.04000000 0.04000000 0.04000000</a>
 <a class="sourceLine" id="cb35-23" data-line-number="23">## 2    2 0.02666667 0.02666667 0.02666667</a>
@@ -1297,7 +1298,7 @@ Resampling Figure
 ## 
 ## Aggregated Result: mse.b632plus=24.5409802,mae.b632plus=3.5372475
 ## </code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="../../reference/resample.html">crossval</a></span>(<span class="st">"classif.lda"</span>, iris.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mmce, ber))</a>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="../../reference/resample.html">crossval</a></span>(<span class="st">"classif.lda"</span>, iris.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mmce, ber))</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2">## Resampling: cross-validation</a>
 <a class="sourceLine" id="cb37-3" data-line-number="3">## Measures:             mmce      ber</a>
 <a class="sourceLine" id="cb37-4" data-line-number="4">## [Resample] iter 1:    0.0200000 0.0238095</a>
@@ -1312,7 +1313,7 @@ Resampling Figure
 <a class="sourceLine" id="cb37-13" data-line-number="13">## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0202822</a>
 <a class="sourceLine" id="cb37-14" data-line-number="14">## Runtime: 0.0205457</a>
 <a class="sourceLine" id="cb37-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="kw"><a href="../../reference/resample.html">bootstrapB632plus</a></span>(<span class="st">"regr.lm"</span>, bh.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(mse, mae))</a>
+<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="kw"><a href="../../reference/resample.html">bootstrapB632plus</a></span>(<span class="st">"regr.lm"</span>, bh.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(mse, mae))</a>
 <a class="sourceLine" id="cb37-17" data-line-number="17">## Resampling: OOB bootstrapping</a>
 <a class="sourceLine" id="cb37-18" data-line-number="18">## Measures:             mse.train   mae.train   mse.test    mae.test</a>
 <a class="sourceLine" id="cb37-19" data-line-number="19">## [Resample] iter 1:    24.6425511  3.4107320   16.3415466  3.0123263</a>
@@ -1365,6 +1366,7 @@ Resampling Figure
       </div>
 
 </div>
+
 
 
       <footer><!--<div class="copyright">

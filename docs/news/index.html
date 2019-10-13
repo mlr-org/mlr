@@ -46,6 +46,7 @@
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -290,6 +291,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -301,6 +303,32 @@
     </div>
 
     <div class="contents">
+    <div id="mlr-development-version" class="section level1">
+<h1 class="page-header">
+<a href="#mlr-development-version" class="anchor"></a>mlr (development version)<small> Unreleased </small>
+</h1>
+<div id="misc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#misc" class="anchor"></a>misc</h2>
+<ul>
+<li>Add <code><a href="../reference/configureMlr.html">configureMlr()</a></code> to <code><a href="https://rdrr.io/r/base/ns-hooks.html">.onLoad()</a></code>, possibly fixing some edge cases (<a href='https://github.com/mlr-org/mlr/issues/2585'>#2585</a>) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2637'>#2637</a>)</li>
+</ul>
+</div>
+<div id="learners---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<ul>
+<li>Updated ParamSet for learners <code>classif.gbm</code> and <code>regr.gbm</code>. Specifically, param <code>shrinkage</code> now defaults to 0.1 instead of 0.001. Also more choices for param <code>distribution</code> have been added. Internal parallelization by the package is now suppressed (param <code>n.cores</code>). (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2651'>#2651</a>)</li>
+</ul>
+</div>
+<div id="filters---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---general" class="anchor"></a>filters - general</h2>
+<ul>
+<li>Bugfix: Allow <code>method = "vh"</code> for filter <code>randomForestSRC_var.select</code> and return informative error message for not supported values. Also argument <code>conservative</code> can now be passed. See <a href='https://github.com/mlr-org/mlr/issues/2646'>#2646</a> and <a href='https://github.com/mlr-org/mlr/issues/2639'>#2639</a> for more information (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2649'>#2649</a>)</li>
+</ul>
+</div>
+</div>
     <div id="mlr-2-15-0" class="section level1">
 <h1 class="page-header">
 <a href="#mlr-2-15-0" class="anchor"></a>mlr 2.15.0<small> 2019-08-06 </small>
@@ -324,9 +352,9 @@
 <code><a href="../reference/generateFeatureImportanceData.html">generateFeatureImportanceData()</a></code> gains argument <code>show.info</code> which shows the name of the current feature being calculated, its index in the queue and the elapsed time for each feature (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/26222'>#26222</a>)</li>
 </ul>
 </div>
-<div id="learners---general" class="section level2">
+<div id="learners---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-1" class="anchor"></a>learners - general</h2>
 <ul>
 <li>
 <code>classif.liquidSVM</code> and <code>regr.liquidSVM</code> have been removed because <code>liquidSVM</code> has been removed from CRAN.</li>
@@ -356,7 +384,7 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
 <li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
 <li>
-<code><a href="https://www.rdocumentation.org/packages/e1071/topics/svm">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from “stack overflow” issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
+<code><a href="https://rdrr.io/pkg/e1071/man/svm.html">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from “stack overflow” issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
@@ -373,15 +401,15 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>
 <code><a href="../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> now supports facet visualization of hyperparam effects for nested cv (<a href='https://github.com/MasonGallo'>@MasonGallo</a>, <a href='https://github.com/mlr-org/mlr/issues/1653'>#1653</a>)</li>
 <li>fixed a bug that caused an incorrect aggregation of probabilities in some cases. The bug existed since quite some time and was exposed due to the change of <code>data.table</code>s default in <code>rbindlist()</code>. See <a href='https://github.com/mlr-org/mlr/issues/2578'>#2578</a> for more information. (<a href='https://github.com/mllg'>@mllg</a>, <a href='https://github.com/mlr-org/mlr/issues/2579'>#2579</a>)</li>
-<li>fixed a bug in which <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options(on.learner.error)</a></code> was not respected in <code><a href="../reference/benchmark.html">benchmark()</a></code>. This caused <code><a href="../reference/benchmark.html">benchmark()</a></code> to stop even if it should have continued including <code>FailureModels</code> in the result (<a href='https://github.com/dagola'>@dagola</a>, <a href='https://github.com/mlr-org/mlr/issues/1984'>#1984</a>)</li>
+<li>fixed a bug in which <code><a href="https://rdrr.io/r/base/options.html">options(on.learner.error)</a></code> was not respected in <code><a href="../reference/benchmark.html">benchmark()</a></code>. This caused <code><a href="../reference/benchmark.html">benchmark()</a></code> to stop even if it should have continued including <code>FailureModels</code> in the result (<a href='https://github.com/dagola'>@dagola</a>, <a href='https://github.com/mlr-org/mlr/issues/1984'>#1984</a>)</li>
 <li>
 <code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
 <li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
 </ul>
 </div>
-<div id="filters---general" class="section level2">
+<div id="filters---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#filters---general" class="anchor"></a>filters - general</h2>
+<a href="#filters---general-1" class="anchor"></a>filters - general</h2>
 <ul>
 <li>Filter <code>praznik_mrmr</code> also supports <code>regr</code> and <code>surv</code> tasks</li>
 <li>
@@ -500,9 +528,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>regr.liquidSVM (<a href='https://github.com/PhilippPro'>@PhilippPro</a>, <a href='https://github.com/mlr-org/mlr/issues/2428'>#2428</a>)</li>
 </ul>
 </div>
-<div id="learners---general-1" class="section level2">
+<div id="learners---general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-1" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-2" class="anchor"></a>learners - general</h2>
 <ul>
 <li>regr.h2o.gbm: Various parameters added, <code>"h2o.use.data.table" = TRUE</code> is now the default (<a href='https://github.com/j-hartshorn'>@j-hartshorn</a>, <a href='https://github.com/mlr-org/mlr/issues/2508'>#2508</a>)</li>
 <li>h2o learners now support getting feature importance (<a href='https://github.com/markusdumke'>@markusdumke</a>, <a href='https://github.com/mlr-org/mlr/issues/2434'>#2434</a>)</li>
@@ -553,9 +581,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>createSpatialResamplingPlots</li>
 </ul>
 </div>
-<div id="learners---general-2" class="section level2">
+<div id="learners---general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-2" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-3" class="anchor"></a>learners - general</h2>
 <ul>
 <li>regr.nnet: Removed unneeded params linout, entropy, softmax and censored</li>
 <li>regr.ranger: Add weight handling</li>
@@ -647,9 +675,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>cindex.uno, iauc.uno</li>
 </ul>
 </div>
-<div id="learners---general-3" class="section level2">
+<div id="learners---general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-3" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-4" class="anchor"></a>learners - general</h2>
 <ul>
 <li>unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized</li>
 <li>fixed a bug where surv.cforest gave wrong risk predictions (<a href='https://github.com/mlr-org/mlr/issues/1833'>#1833</a>)</li>
@@ -747,9 +775,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>kendalltau, spearmanrho</li>
 </ul>
 </div>
-<div id="learners---general-4" class="section level2">
+<div id="learners---general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-4" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-5" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.plsdaCaret: added parameter “method”.</li>
 <li>regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = “jackknife”.</li>
@@ -840,9 +868,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>mergeBenchmarkResultLearner, mergeBenchmarkResultTask</li>
 </ul>
 </div>
-<div id="learners---general-5" class="section level2">
+<div id="learners---general-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-5" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-6" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.ada: fixed some param problem with rpart.control params</li>
 <li>classif.cforest, regr.cforest, surv.cforest: removed parameters “minprob”, “pvalue”, “randomsplits” as these are set internally and cannot be changed by the user</li>
@@ -934,9 +962,9 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 <li>plotPartialPredictionGGVIS to plotPartialDependenceGGVIS</li>
 </ul>
 </div>
-<div id="learners---general-6" class="section level2">
+<div id="learners---general-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#learners---general-6" class="anchor"></a>learners - general</h2>
+<a href="#learners---general-7" class="anchor"></a>learners - general</h2>
 <ul>
 <li>fixed weight handling and weight tag for some learners</li>
 <li>remove unnecessary linear.output parameter for classif.neuralnet</li>
@@ -1575,6 +1603,7 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mlr-development-version">development version</a></li>
         <li><a href="#mlr-2-15-0">2.15.0</a></li>
         <li><a href="#mlr-2-14-0">2.14.0</a></li>
         <li><a href="#mlr-2-13">2.13</a></li>
@@ -1598,6 +1627,7 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -1607,6 +1637,7 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -1621,6 +1652,8 @@ See <code><a href="../reference/regr.randomForest.html">?regr.randomForest</a></
 </script>
 
 
+
   </body>
 </html>
+
 
