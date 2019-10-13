@@ -289,127 +289,127 @@
 <div class="contents">
 <p>Training a learner means fitting a model to a given data set. In <code>mlr</code> this can be done by calling function <code><a href="../../reference/train.html">train()</a></code> on a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and a suitable <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>We start with a classification example and perform a linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) on the iris (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data set.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Generate the task</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Generate the learner</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.lda"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># Train the learner</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>mod</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">## Model for learner.id=classif.lda; learner.class=classif.lda</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">## Hyperparameters:</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Generate the task</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Generate the learner</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.lda"</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Train the learner</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, task)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">mod</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">## Model for learner.id=classif.lda; learner.class=classif.lda</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">## Trained on: task.id = iris; obs = 150; features = 4</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## Hyperparameters:</a></code></pre></div>
 <p>In the above example creating the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) explicitly is not absolutely necessary. As a general rule, you have to generate the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) yourself if you want to change any defaults, e.g., setting hyperparameter values or altering the predict type. Otherwise, <code><a href="../../reference/train.html">train()</a></code> and many other functions also accept the class name of the learner and call <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> internally with default settings.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, task)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>mod</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">## Model for learner.id=classif.lda; learner.class=classif.lda</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## Hyperparameters:</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, task)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">mod</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">## Model for learner.id=classif.lda; learner.class=classif.lda</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## Trained on: task.id = iris; obs = 150; features = 4</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## Hyperparameters:</a></code></pre></div>
 <p>Training a learner works the same way for every type of learning problem. Below is a survival analysis example where a Cox proportional hazards model (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>) is fitted to the <code><a href="https://rdrr.io/pkg/survival/man/lung.html">survival::lung()</a></code> data set. Note that we use the corresponding <code><a href="../../reference/lung.task.html">lung.task()</a></code> provided by <code>mlr</code>. All available <code><a href="../../reference/Task.html">Task()</a></code>s are listed in the <a href="example_tasks.html" target="_blank">Appendix</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"surv.coxph"</span>, lung.task)</span>
-<span id="cb3-2"><a href="#cb3-2"></a>mod</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">## Model for learner.id=surv.coxph; learner.class=surv.coxph</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">## Trained on: task.id = lung-example; obs = 167; features = 8</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">## Hyperparameters:</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"surv.coxph"</span>, lung.task)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">mod</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">## Model for learner.id=surv.coxph; learner.class=surv.coxph</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">## Trained on: task.id = lung-example; obs = 167; features = 8</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">## Hyperparameters:</a></code></pre></div>
 <div id="accessing-learner-models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#accessing-learner-models" class="anchor"></a>Accessing learner models</h1>
 <p>Function <code><a href="../../reference/train.html">train()</a></code> returns an object of class <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>), which encapsulates the fitted model, i.e., the output of the underlying <strong>R</strong> learning method. Additionally, it contains some information about the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>), the <code><a href="../../reference/Task.html">Task()</a></code>, the features and observations used for training, and the training time. A <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) can subsequently be used to make a prediction (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) for new observations.</p>
 <p>The fitted model in slot <code>$learner.model</code> of the <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) object can be accessed using function <code>getLearnerModel</code>.</p>
 <p>In the following example we cluster the <code>Ruspini</code> (<code><a href="https://rdrr.io/pkg/cluster/man/ruspini.html">cluster::ruspini()</a></code>) data set (which has four groups and two features) by <span class="math inline">\(K\)</span>-means with <span class="math inline">\(K = 4\)</span> and extract the output of the underlying <code><a href="https://rdrr.io/r/stats/kmeans.html">stats::kmeans()</a></code> function.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(ruspini, <span class="dt">package =</span> <span class="st">"cluster"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(y <span class="op">~</span><span class="st"> </span>x, ruspini)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(ruspini, <span class="dt">package =</span> <span class="st">"cluster"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(y <span class="op">~</span><span class="st"> </span>x, ruspini)</a></code></pre></div>
 <p><img src="train_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Generate the task</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>ruspini.task =<span class="st"> </span><span class="kw"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> ruspini)</span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># Generate the learner</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">4</span>)</span>
-<span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># Train the learner</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, ruspini.task)</span>
-<span id="cb5-9"><a href="#cb5-9"></a>mod</span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## Model for learner.id=cluster.kmeans; learner.class=cluster.kmeans</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## Trained on: task.id = ruspini; obs = 75; features = 2</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## Hyperparameters: centers=4</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># Peak into mod</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(mod)</span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## [1] "learner"       "learner.model" "task.desc"     "subset"       </span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">## [5] "features"      "factor.levels" "time"          "dump"</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a></span>
-<span id="cb5-19"><a href="#cb5-19"></a>mod<span class="op">$</span>learner</span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">## Learner cluster.kmeans from package stats,clue</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## Type: cluster</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co">## Name: K-Means; Short name: kmeans</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="co">## Class: cluster.kmeans</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co">## Properties: numerics,prob</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a><span class="co">## Predict-Type: response</span></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="co">## Hyperparameters: centers=4</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a></span>
-<span id="cb5-28"><a href="#cb5-28"></a>mod<span class="op">$</span>features</span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="co">## [1] "x" "y"</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a></span>
-<span id="cb5-31"><a href="#cb5-31"></a><span class="co"># Extract the fitted model</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod)</span>
-<span id="cb5-33"><a href="#cb5-33"></a><span class="co">## K-means clustering with 4 clusters of sizes 23, 17, 20, 15</span></span>
-<span id="cb5-34"><a href="#cb5-34"></a><span class="co">## </span></span>
-<span id="cb5-35"><a href="#cb5-35"></a><span class="co">## Cluster means:</span></span>
-<span id="cb5-36"><a href="#cb5-36"></a><span class="co">##          x        y</span></span>
-<span id="cb5-37"><a href="#cb5-37"></a><span class="co">## 1 43.91304 146.0435</span></span>
-<span id="cb5-38"><a href="#cb5-38"></a><span class="co">## 2 98.17647 114.8824</span></span>
-<span id="cb5-39"><a href="#cb5-39"></a><span class="co">## 3 20.15000  64.9500</span></span>
-<span id="cb5-40"><a href="#cb5-40"></a><span class="co">## 4 68.93333  19.4000</span></span>
-<span id="cb5-41"><a href="#cb5-41"></a><span class="co">## </span></span>
-<span id="cb5-42"><a href="#cb5-42"></a><span class="co">## Clustering vector:</span></span>
-<span id="cb5-43"><a href="#cb5-43"></a><span class="co">##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 </span></span>
-<span id="cb5-44"><a href="#cb5-44"></a><span class="co">##  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  1  1  1  1  1 </span></span>
-<span id="cb5-45"><a href="#cb5-45"></a><span class="co">## 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 </span></span>
-<span id="cb5-46"><a href="#cb5-46"></a><span class="co">##  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2 </span></span>
-<span id="cb5-47"><a href="#cb5-47"></a><span class="co">## 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 </span></span>
-<span id="cb5-48"><a href="#cb5-48"></a><span class="co">##  2  2  2  2  2  2  2  2  2  2  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4 </span></span>
-<span id="cb5-49"><a href="#cb5-49"></a><span class="co">## </span></span>
-<span id="cb5-50"><a href="#cb5-50"></a><span class="co">## Within cluster sum of squares by cluster:</span></span>
-<span id="cb5-51"><a href="#cb5-51"></a><span class="co">## [1] 3176.783 4558.235 3689.500 1456.533</span></span>
-<span id="cb5-52"><a href="#cb5-52"></a><span class="co">##  (between_SS / total_SS =  94.7 %)</span></span>
-<span id="cb5-53"><a href="#cb5-53"></a><span class="co">## </span></span>
-<span id="cb5-54"><a href="#cb5-54"></a><span class="co">## Available components:</span></span>
-<span id="cb5-55"><a href="#cb5-55"></a><span class="co">## </span></span>
-<span id="cb5-56"><a href="#cb5-56"></a><span class="co">## [1] "cluster"      "centers"      "totss"        "withinss"    </span></span>
-<span id="cb5-57"><a href="#cb5-57"></a><span class="co">## [5] "tot.withinss" "betweenss"    "size"         "iter"        </span></span>
-<span id="cb5-58"><a href="#cb5-58"></a><span class="co">## [9] "ifault"</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Generate the task</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">ruspini.task =<span class="st"> </span><span class="kw"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="dt">data =</span> ruspini)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># Generate the learner</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># Train the learner</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, ruspini.task)</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">mod</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## Model for learner.id=cluster.kmeans; learner.class=cluster.kmeans</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## Trained on: task.id = ruspini; obs = 75; features = 2</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## Hyperparameters: centers=4</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># Peak into mod</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(mod)</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">## [1] "learner"       "learner.model" "task.desc"     "subset"       </a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">## [5] "features"      "factor.levels" "time"          "dump"</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">mod<span class="op">$</span>learner</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">## Learner cluster.kmeans from package stats,clue</a>
+<a class="sourceLine" id="cb5-21" data-line-number="21">## Type: cluster</a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">## Name: K-Means; Short name: kmeans</a>
+<a class="sourceLine" id="cb5-23" data-line-number="23">## Class: cluster.kmeans</a>
+<a class="sourceLine" id="cb5-24" data-line-number="24">## Properties: numerics,prob</a>
+<a class="sourceLine" id="cb5-25" data-line-number="25">## Predict-Type: response</a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">## Hyperparameters: centers=4</a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28">mod<span class="op">$</span>features</a>
+<a class="sourceLine" id="cb5-29" data-line-number="29">## [1] "x" "y"</a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co"># Extract the fitted model</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod)</a>
+<a class="sourceLine" id="cb5-33" data-line-number="33">## K-means clustering with 4 clusters of sizes 23, 17, 20, 15</a>
+<a class="sourceLine" id="cb5-34" data-line-number="34">## </a>
+<a class="sourceLine" id="cb5-35" data-line-number="35">## Cluster means:</a>
+<a class="sourceLine" id="cb5-36" data-line-number="36">##          x        y</a>
+<a class="sourceLine" id="cb5-37" data-line-number="37">## 1 43.91304 146.0435</a>
+<a class="sourceLine" id="cb5-38" data-line-number="38">## 2 98.17647 114.8824</a>
+<a class="sourceLine" id="cb5-39" data-line-number="39">## 3 20.15000  64.9500</a>
+<a class="sourceLine" id="cb5-40" data-line-number="40">## 4 68.93333  19.4000</a>
+<a class="sourceLine" id="cb5-41" data-line-number="41">## </a>
+<a class="sourceLine" id="cb5-42" data-line-number="42">## Clustering vector:</a>
+<a class="sourceLine" id="cb5-43" data-line-number="43">##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 </a>
+<a class="sourceLine" id="cb5-44" data-line-number="44">##  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  1  1  1  1  1 </a>
+<a class="sourceLine" id="cb5-45" data-line-number="45">## 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 </a>
+<a class="sourceLine" id="cb5-46" data-line-number="46">##  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2 </a>
+<a class="sourceLine" id="cb5-47" data-line-number="47">## 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 </a>
+<a class="sourceLine" id="cb5-48" data-line-number="48">##  2  2  2  2  2  2  2  2  2  2  4  4  4  4  4  4  4  4  4  4  4  4  4  4  4 </a>
+<a class="sourceLine" id="cb5-49" data-line-number="49">## </a>
+<a class="sourceLine" id="cb5-50" data-line-number="50">## Within cluster sum of squares by cluster:</a>
+<a class="sourceLine" id="cb5-51" data-line-number="51">## [1] 3176.783 4558.235 3689.500 1456.533</a>
+<a class="sourceLine" id="cb5-52" data-line-number="52">##  (between_SS / total_SS =  94.7 %)</a>
+<a class="sourceLine" id="cb5-53" data-line-number="53">## </a>
+<a class="sourceLine" id="cb5-54" data-line-number="54">## Available components:</a>
+<a class="sourceLine" id="cb5-55" data-line-number="55">## </a>
+<a class="sourceLine" id="cb5-56" data-line-number="56">## [1] "cluster"      "centers"      "totss"        "withinss"    </a>
+<a class="sourceLine" id="cb5-57" data-line-number="57">## [5] "tot.withinss" "betweenss"    "size"         "iter"        </a>
+<a class="sourceLine" id="cb5-58" data-line-number="58">## [9] "ifault"</a></code></pre></div>
 </div>
 <div id="further-options-and-comments" class="section level1">
 <h1 class="hasAnchor">
 <a href="#further-options-and-comments" class="anchor"></a>Further options and comments</h1>
 <p>By default, the whole data set in the <code><a href="../../reference/Task.html">Task()</a></code> is used for training. The <code>subset</code> argument of <code><a href="../../reference/train.html">train()</a></code> takes a logical or integer vector that indicates which observations to use, for example if you want to split your data into a training and a test set or if you want to fit separate models to different subgroups in the data.</p>
 <p>Below we fit a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code>) to the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) and randomly select 1/3 of the data set for training.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Get the number of observations</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>n =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(bh.task)</span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># Use 1/3 of the observations for training</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>train.set =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(n, <span class="dt">size =</span> n<span class="op">/</span><span class="dv">3</span>)</span>
-<span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Train the learner</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"regr.lm"</span>, bh.task, <span class="dt">subset =</span> train.set)</span>
-<span id="cb6-9"><a href="#cb6-9"></a>mod</span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">## Model for learner.id=regr.lm; learner.class=regr.lm</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">## Trained on: task.id = BostonHousing-example; obs = 168; features = 13</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## Hyperparameters:</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Get the number of observations</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">n =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(bh.task)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># Use 1/3 of the observations for training</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">train.set =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(n, <span class="dt">size =</span> n<span class="op">/</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co"># Train the learner</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"regr.lm"</span>, bh.task, <span class="dt">subset =</span> train.set)</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">mod</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">## Model for learner.id=regr.lm; learner.class=regr.lm</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">## Trained on: task.id = BostonHousing-example; obs = 168; features = 13</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">## Hyperparameters:</a></code></pre></div>
 <p>Note, for later, that all standard <a href="resample.html" target="_blank">resampling strategies</a> are supported. Therefore you usually do not have to subset the data yourself.</p>
 <p>Moreover, if the learner supports this, you can specify observation <code>weights</code> that reflect the relevance of observations in the training process. Weights can be useful in many regards, for example to express the reliability of the training observations, reduce the influence of outliers or, if the data were collected over a longer time period, increase the influence of recent data. In supervised classification weights can be used to incorporate misclassification costs or account for class imbalance.</p>
 <p>For example in the <code><a href="https://rdrr.io/pkg/mlbench/man/BreastCancer.html">mlbench::BreastCancer()</a></code> data set class <code>benign</code> is almost twice as frequent as class <code>malignant</code>. In order to grant both classes equal importance in training the classifier we can weight the examples according to the inverse class frequencies in the data set as shown in the following <strong>R</strong> code.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Calculate the observation weights</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>target =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(bc.task)</span>
-<span id="cb7-3"><a href="#cb7-3"></a>tab =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(target))</span>
-<span id="cb7-4"><a href="#cb7-4"></a>w =<span class="st"> </span><span class="dv">1</span><span class="op">/</span>tab[target]</span>
-<span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">task =</span> bc.task, <span class="dt">weights =</span> w)</span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">## Model for learner.id=classif.rpart; learner.class=classif.rpart</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">## Trained on: task.id = BreastCancer-example; obs = 683; features = 9</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">## Hyperparameters: xval=0</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Calculate the observation weights</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">target =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(bc.task)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">tab =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(target))</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">w =<span class="st"> </span><span class="dv">1</span><span class="op">/</span>tab[target]</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">task =</span> bc.task, <span class="dt">weights =</span> w)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## Model for learner.id=classif.rpart; learner.class=classif.rpart</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## Trained on: task.id = BreastCancer-example; obs = 683; features = 9</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## Hyperparameters: xval=0</a></code></pre></div>
 <p>Note, for later, that <code>mlr</code> offers much more functionality to deal with <a href="over_and_undersampling.html" target="_blank">imbalanced classification problems</a>.</p>
 <p>As another side remark for more advanced readers: By varying the weights in the calls to <code><a href="../../reference/train.html">train()</a></code>, you could also implement your own variant of a general boosting type algorithm on arbitrary <code>mlr</code> base learners.</p>
 <p>As you may recall, it is also possible to set observation weights when creating the <code><a href="../../reference/Task.html">Task()</a></code>. As a general rule, you should specify them in <code>make*Task</code> (<code><a href="../../reference/Task.html">Task()</a></code>) if the weights really “belong” to the task and always should be used. Otherwise, pass them to <code><a href="../../reference/train.html">train()</a></code>. The weights in <code><a href="../../reference/train.html">train()</a></code> take precedence over the weights in <code><a href="../../reference/Task.html">Task()</a></code>.</p>
@@ -418,7 +418,6 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -443,7 +442,8 @@
 --></footer>
 </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

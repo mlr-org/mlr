@@ -14,7 +14,6 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,8 +28,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-
 <meta property="og:title" content="Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification. — smote" />
+
 <meta property="og:description" content="In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
 Both points are now interpolated / convex-combined, resulting in a new virtual data point x3
 for the minority class.
@@ -41,7 +40,6 @@ is sampled from the two given levels of x1 and x2 per feature." />
 <meta name="twitter:card" content="summary" />
 
 
-
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -49,6 +47,7 @@ is sampled from the two given levels of x1 and x2 per feature." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -262,6 +261,7 @@ is sampled from the two given levels of x1 and x2 per feature." />
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -310,6 +310,7 @@ is sampled from the two given levels of x1 and x2 per feature." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/smote.R'><code>R/smote.R</code></a></small>
     </div>
 
+    
     <p>In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
 Both points are now interpolated / convex-combined, resulting in a new virtual data point x3
 for the minority class.</p>
@@ -317,9 +318,10 @@ for the minority class.</p>
 calculation, see <a href='https://rdrr.io/pkg/cluster/man/daisy.html'>cluster::daisy</a>.
 For interpolation, the new factor level for x3
 is sampled from the two given levels of x1 and x2 per feature.</p>
+    
 
     <pre class="usage"><span class='fu'>smote</span>(<span class='no'>task</span>, <span class='no'>rate</span>, <span class='kw'>nn</span> <span class='kw'>=</span> <span class='fl'>5L</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alt.logic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -361,31 +363,37 @@ is sampled.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='Task.html'>Task</a>.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Chawla, N., Bowyer, K., Hall, L., &amp; Kegelmeyer, P. (2000)
 <em>SMOTE: Synthetic Minority Over-sampling TEchnique.</em>
 In International Conference of Knowledge Based Computer Systems, pp. 46-57.
 National Center for Software Technology, Mumbai, India, Allied Press.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other imbalancy: <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='oversample.html'>oversample</a></code></p></div>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
@@ -404,7 +412,8 @@ National Center for Software Technology, Mumbai, India, Allied Press.</p>
       </footer>
    </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -412,6 +421,7 @@ National Center for Software Technology, Mumbai, India, Allied Press.</p>
  debug: false // Set debug to true if you want to inspect the dropdown
 });
 </script>
+
 
 
   </body>

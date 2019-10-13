@@ -1741,7 +1741,7 @@
 <td align="center"></td>
 <td align="center"></td>
 <td align="left">se</td>
-<td align="left">(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has to be set. (2) We replace the GPfit parameter ‘corr = list(type = ’exponential’,power = 1.95)’ to be seperate parameters ‘type’ and ‘power’, in the case of corr = list(type = ‘matern’, nu = 0.5), the seperate parameters are ‘type’ and ‘matern_nu_k = 0’, and nu is computed by ‘nu = (2 * matern_nu_k + 1) / 2 = 0.5’</td>
+<td align="left">(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has to be set. (2) We replace the GPfit parameter ‘corr = list(type = ’exponential’,power = 1.95)‘to be seperate parameters ’type’ and ‘power’, in the case of corr = list(type = ‘matern’, nu = 0.5), the seperate parameters are ‘type’ and ‘matern_nu_k = 0’, and nu is computed by ‘nu = (2 * matern_nu_k + 1) / 2 = 0.5’</td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -2547,7 +2547,6 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -2576,7 +2575,8 @@
 --></footer>
 </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

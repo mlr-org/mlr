@@ -288,83 +288,83 @@
     
 <div class="contents">
 <p>The package supports a larger number of tuning algorithms, which can all be looked up and selected via <code><a href="../../reference/TuneControl.html">TuneControl()</a></code>. One of the cooler algorithms is iterated F-racing from the <code><a href="https://rdrr.io/pkg/irace/man/irace.html">irace::irace()</a></code> package (technical description <a href="http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf">here</a>). This not only works for arbitrary parameter types (numeric, integer, discrete, logical), but also for so-called dependent / hierarchical parameters:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="kw">makeDiscreteParam</span>(<span class="st">"kernel"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"vanilladot"</span>, <span class="st">"polydot"</span>, <span class="st">"rbfdot"</span>)),</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x,</span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">requires =</span> <span class="kw"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span>(kernel <span class="op">==</span><span class="st"> "rbfdot"</span>)),</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="kw">makeIntegerParam</span>(<span class="st">"degree"</span>, <span class="dt">lower =</span> 2L, <span class="dt">upper =</span> 5L,</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">requires =</span> <span class="kw"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span>(kernel <span class="op">==</span><span class="st"> "polydot"</span>))</span>
-<span id="cb1-8"><a href="#cb1-8"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</span>
-<span id="cb1-10"><a href="#cb1-10"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl,</span>
-<span id="cb1-12"><a href="#cb1-12"></a>  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb1-13"><a href="#cb1-13"></a>df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]))</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">##           C     kernel     sigma degree mmce.test.mean dob eol</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">## 1  2.345763    polydot        NA      2           0.04   1  NA</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">## 2 10.275488 vanilladot        NA     NA           0.02   1  NA</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">## 3  2.595082    polydot        NA      4           0.10   1  NA</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="co">## 4 -4.176448     rbfdot -7.601708     NA           0.68   1  NA</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">## 5  4.040167 vanilladot        NA     NA           0.02   1  NA</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">## 6 10.677478    polydot        NA      4           0.10   1  NA</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="co">##   error.message</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="co">## 1          &lt;NA&gt;</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="co">## 2          &lt;NA&gt;</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="co">## 3          &lt;NA&gt;</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="co">## 4          &lt;NA&gt;</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="co">## 5          &lt;NA&gt;</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">## 6          &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">makeDiscreteParam</span>(<span class="st">"kernel"</span>, <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"vanilladot"</span>, <span class="st">"polydot"</span>, <span class="st">"rbfdot"</span>)),</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x,</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="dt">requires =</span> <span class="kw"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span>(kernel <span class="op">==</span><span class="st"> "rbfdot"</span>)),</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="kw">makeIntegerParam</span>(<span class="st">"degree"</span>, <span class="dt">lower =</span> 2L, <span class="dt">upper =</span> 5L,</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="dt">requires =</span> <span class="kw"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span>(kernel <span class="op">==</span><span class="st"> "polydot"</span>))</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl,</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]))</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">##           C     kernel     sigma degree mmce.test.mean dob eol</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">## 1  2.345763    polydot        NA      2           0.04   1  NA</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">## 2 10.275488 vanilladot        NA     NA           0.02   1  NA</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">## 3  2.595082    polydot        NA      4           0.10   1  NA</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">## 4 -4.176448     rbfdot -7.601708     NA           0.68   1  NA</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">## 5  4.040167 vanilladot        NA     NA           0.02   1  NA</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">## 6 10.677478    polydot        NA      4           0.10   1  NA</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">##   error.message</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">## 1          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">## 2          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">## 3          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">## 4          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">## 5          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">## 6          &lt;NA&gt;</a></code></pre></div>
 <p>See how we made the kernel parameters like <code>sigma</code> and <code>degree</code> dependent on the <code>kernel</code> selection parameters? This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.</p>
 <div id="tuning-across-whole-model-spaces-with-modelmultiplexer" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tuning-across-whole-model-spaces-with-modelmultiplexer" class="anchor"></a>Tuning across whole model spaces with ModelMultiplexer</h1>
 <p>We can now take the following example even one step further. If we use the <code><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer()</a></code> we can tune over different model classes at once, just as we did with the SVM kernels above.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>base.learners =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>),</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer</a></span>(base.learners)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">base.learners =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer</a></span>(base.learners)</a></code></pre></div>
 <p>Function <code><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet()</a></code> offers a simple way to construct a parameter set for tuning: The parameter names are prefixed automatically and the <code>requires</code> element is set, too, to make all parameters subordinate to <code>selected.learner</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>ps =<span class="st"> </span><span class="kw"><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></span>(lrn,</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="kw">makeIntegerParam</span>(<span class="st">"ntree"</span>, <span class="dt">lower =</span> 1L, <span class="dt">upper =</span> 500L)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(ps)</span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">##                                Type len Def</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">## selected.learner           discrete   -   -</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">## classif.ksvm.sigma          numeric   -   -</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">## classif.randomForest.ntree  integer   -   -</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">##                                                       Constr Req Tunable</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">## selected.learner           classif.ksvm,classif.randomForest   -    TRUE</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">## classif.ksvm.sigma                                 -12 to 12   Y    TRUE</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">## classif.randomForest.ntree                          1 to 500   Y    TRUE</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">##                            Trafo</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">## selected.learner               -</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">## classif.ksvm.sigma             Y</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">## classif.randomForest.ntree     -</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a></span>
-<span id="cb3-19"><a href="#cb3-19"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</span>
-<span id="cb3-20"><a href="#cb3-20"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</span>
-<span id="cb3-21"><a href="#cb3-21"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl,</span>
-<span id="cb3-22"><a href="#cb3-22"></a>  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb3-23"><a href="#cb3-23"></a>df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]))</span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="co">## 1         classif.ksvm           5.459183                         NA</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="co">## 2         classif.ksvm         -11.194386                         NA</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="co">## 3         classif.ksvm           9.999280                         NA</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a><span class="co">## 4 classif.randomForest                 NA                        383</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a><span class="co">## 5 classif.randomForest                 NA                        248</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="co">## 6         classif.ksvm          -9.148848                         NA</span></span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="co">##   mmce.test.mean dob eol error.message</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a><span class="co">## 1     0.52000000   1  NA          &lt;NA&gt;</span></span>
-<span id="cb3-34"><a href="#cb3-34"></a><span class="co">## 2     0.70000000   1  NA          &lt;NA&gt;</span></span>
-<span id="cb3-35"><a href="#cb3-35"></a><span class="co">## 3     0.70000000   1  NA          &lt;NA&gt;</span></span>
-<span id="cb3-36"><a href="#cb3-36"></a><span class="co">## 4     0.07333333   1  NA          &lt;NA&gt;</span></span>
-<span id="cb3-37"><a href="#cb3-37"></a><span class="co">## 5     0.06666667   1  NA          &lt;NA&gt;</span></span>
-<span id="cb3-38"><a href="#cb3-38"></a><span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">ps =<span class="st"> </span><span class="kw"><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></span>(lrn,</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw">makeIntegerParam</span>(<span class="st">"ntree"</span>, <span class="dt">lower =</span> 1L, <span class="dt">upper =</span> 500L)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(ps)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">##                                Type len Def</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">## selected.learner           discrete   -   -</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">## classif.ksvm.sigma          numeric   -   -</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">## classif.randomForest.ntree  integer   -   -</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">##                                                       Constr Req Tunable</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">## selected.learner           classif.ksvm,classif.randomForest   -    TRUE</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">## classif.ksvm.sigma                                 -12 to 12   Y    TRUE</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">## classif.randomForest.ntree                          1 to 500   Y    TRUE</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">##                            Trafo</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">## selected.learner               -</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">## classif.ksvm.sigma             Y</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">## classif.randomForest.ntree     -</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl,</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]))</a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">## 1         classif.ksvm           5.459183                         NA</a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">## 2         classif.ksvm         -11.194386                         NA</a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">## 3         classif.ksvm           9.999280                         NA</a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">## 4 classif.randomForest                 NA                        383</a>
+<a class="sourceLine" id="cb3-30" data-line-number="30">## 5 classif.randomForest                 NA                        248</a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">## 6         classif.ksvm          -9.148848                         NA</a>
+<a class="sourceLine" id="cb3-32" data-line-number="32">##   mmce.test.mean dob eol error.message</a>
+<a class="sourceLine" id="cb3-33" data-line-number="33">## 1     0.52000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-34" data-line-number="34">## 2     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-35" data-line-number="35">## 3     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-36" data-line-number="36">## 4     0.07333333   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-37" data-line-number="37">## 5     0.06666667   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb3-38" data-line-number="38">## 6     0.53333333   1  NA          &lt;NA&gt;</a></code></pre></div>
 </div>
 <div id="multi-criteria-evaluation-and-optimization" class="section level1">
 <h1 class="hasAnchor">
@@ -372,43 +372,42 @@
 <p>During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.</p>
 <p>In the following example we aim to minimize both, the false positive and the false negative rates (<code>fpr</code> and <code>fnr</code>). We again tune the hyperparameters of an SVM (function <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code>) with a radial basis kernel and use <code><a href="../../reference/sonar.task.html">sonar.task()</a></code> for illustration. As search strategy we choose a random search.</p>
 <p>For all available multi-criteria tuning algorithms see <code><a href="../../reference/TuneMultiCritControl.html">TuneMultiCritControl()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a></span>(<span class="dt">maxit =</span> 30L)</span>
-<span id="cb4-6"><a href="#cb4-6"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7"></a>res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> sonar.task, </span>
-<span id="cb4-8"><a href="#cb4-8"></a>  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(fpr, fnr), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb4-10"><a href="#cb4-10"></a>res</span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## Tune multicrit result:</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## Points on front: 5</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]))</span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 1         classif.ksvm           5.459183                         NA</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 2         classif.ksvm         -11.194386                         NA</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 3         classif.ksvm           9.999280                         NA</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 4 classif.randomForest                 NA                        383</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 5 classif.randomForest                 NA                        248</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## 6         classif.ksvm          -9.148848                         NA</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co">##   mmce.test.mean dob eol error.message</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="co">## 1     0.52000000   1  NA          &lt;NA&gt;</span></span>
-<span id="cb4-24"><a href="#cb4-24"></a><span class="co">## 2     0.70000000   1  NA          &lt;NA&gt;</span></span>
-<span id="cb4-25"><a href="#cb4-25"></a><span class="co">## 3     0.70000000   1  NA          &lt;NA&gt;</span></span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="co">## 4     0.07333333   1  NA          &lt;NA&gt;</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a><span class="co">## 5     0.06666667   1  NA          &lt;NA&gt;</span></span>
-<span id="cb4-28"><a href="#cb4-28"></a><span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a></span>(<span class="dt">maxit =</span> 30L)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> sonar.task, </a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(fpr, fnr), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">res</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## Tune multicrit result:</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## Points on front: 5</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]))</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">## 1         classif.ksvm           5.459183                         NA</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">## 2         classif.ksvm         -11.194386                         NA</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">## 3         classif.ksvm           9.999280                         NA</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">## 4 classif.randomForest                 NA                        383</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">## 5 classif.randomForest                 NA                        248</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">## 6         classif.ksvm          -9.148848                         NA</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">##   mmce.test.mean dob eol error.message</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">## 1     0.52000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">## 2     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">## 3     0.70000000   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">## 4     0.07333333   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">## 5     0.06666667   1  NA          &lt;NA&gt;</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">## 6     0.53333333   1  NA          &lt;NA&gt;</a></code></pre></div>
 <p>The results can be visualized with function <code><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult()</a></code>. The plot shows the false positive and false negative rates for all parameter settings evaluated during tuning. Points on the Pareto front are slightly increased.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</a></code></pre></div>
 <p><img src="advanced_tune_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -433,7 +432,8 @@
 --></footer>
 </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

@@ -14,7 +14,6 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,14 +28,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-
 <meta property="og:title" content="Get the <code>opt.path</code>s from each tuning step from the outer resampling. — getNestedTuneResultsOptPathDf" />
+
 <meta property="og:description" content="After you resampled a tuning wrapper (see makeTuneWrapper)
 with resample(..., extract = getTuneResult) this helper returns a data.frame with
 with all opt.paths combined by rbind.
 An additional column iter indicates to what resampling iteration the row belongs." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -46,6 +44,7 @@ An additional column iter indicates to what resampling iteration the row belongs
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -259,6 +258,7 @@ An additional column iter indicates to what resampling iteration the row belongs
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -307,13 +307,15 @@ An additional column iter indicates to what resampling iteration the row belongs
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/getNestedTuneResults.R'><code>R/getNestedTuneResults.R</code></a></small>
     </div>
 
+    
     <p>After you resampled a tuning wrapper (see <a href='makeTuneWrapper.html'>makeTuneWrapper</a>)
 with <code><a href='resample.html'>resample(..., extract = getTuneResult)</a></code> this helper returns a <code>data.frame</code> with
 with all <code>opt.path</code>s combined by <code>rbind</code>.
 An additional column <code>iter</code> indicates to what resampling iteration the row belongs.</p>
+    
 
     <pre class="usage"><span class='fu'>getNestedTuneResultsOptPathDf</span>(<span class='no'>r</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -332,10 +334,11 @@ untransformed scale.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>). See above.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
@@ -353,6 +356,7 @@ Default is <code>FALSE</code>.</p></td>
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
   <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># see example of makeTuneWrapper
@@ -362,8 +366,11 @@ Default is <code>FALSE</code>.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -384,7 +391,8 @@ Default is <code>FALSE</code>.</p></td>
       </footer>
    </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -392,6 +400,7 @@ Default is <code>FALSE</code>.</p></td>
  debug: false // Set debug to true if you want to inspect the dropdown
 });
 </script>
+
 
 
   </body>

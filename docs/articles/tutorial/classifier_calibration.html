@@ -281,51 +281,50 @@
 <div class="contents">
 <p>A classifier is “calibrated” when the predicted probability of a class matches the expected frequency of that class. <code>mlr</code> can visualize this by plotting estimated class probabilities (which are discretized) against the observed frequency of said class in the data using <code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> and <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>.</p>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> takes as input <code><a href="../../reference/Prediction.html">Prediction()</a></code>, <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code>, <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>, or a named list of <code><a href="../../reference/Prediction.html">Prediction()</a></code> or <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects on a classification (multiclass or binary) task with learner(s) that are capable of outputting probabiliites (i.e., learners must be constructed with <code>predict.type = "prob"</code>). The result is an object of class <code>CalibrationData</code> (<code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code>) which has elements <code>proportion</code>, <code>data</code>, and <code>task</code>. <code>proportion</code> gives the proportion of observations labelled with a given class for each predicted probability bin (e.g., for observations which are predicted to have class “A” with probability <span class="math inline">\((0, 0.1]\)</span>, what is the proportion of said observations which have class “A”?).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> sonar.task)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>cal<span class="op">$</span>proportion</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">##      Learner       bin Class Proportion</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co">## 1 prediction (0.1,0.2]     M  0.1060606</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">## 2 prediction (0.7,0.8]     M  0.7333333</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">## 3 prediction   [0,0.1]     M  0.0000000</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">## 4 prediction   (0.9,1]     M  0.9333333</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">## 5 prediction (0.2,0.3]     M  0.2727273</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">## 6 prediction (0.4,0.5]     M  0.4615385</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">## 7 prediction (0.8,0.9]     M  0.0000000</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">## 8 prediction (0.5,0.6]     M  0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> sonar.task)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">cal<span class="op">$</span>proportion</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">##      Learner       bin Class Proportion</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">## 1 prediction (0.1,0.2]     M  0.1060606</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## 2 prediction (0.7,0.8]     M  0.7333333</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">## 3 prediction   [0,0.1]     M  0.0000000</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">## 4 prediction   (0.9,1]     M  0.9333333</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">## 5 prediction (0.2,0.3]     M  0.2727273</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">## 6 prediction (0.4,0.5]     M  0.4615385</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">## 7 prediction (0.8,0.9]     M  0.0000000</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">## 8 prediction (0.5,0.6]     M  0.0000000</a></code></pre></div>
 <p>The manner in which the predicted probabilities are discretized is controlled by two arguments: <code>breaks</code> and <code>groups</code>. By default <code>breaks = "Sturges"</code> which uses the Sturges algorithm in <code><a href="https://rdrr.io/r/graphics/hist.html">graphics::hist()</a></code>. This argument can specify other algorithms available in <code><a href="https://rdrr.io/r/graphics/hist.html">graphics::hist()</a></code>, it can be a numeric vector specifying breakpoints for <code><a href="https://rdrr.io/r/base/cut.html">base::cut()</a></code>, or a single integer specifying the number of bins to create (which are evenly spaced). Alternatively, <code>groups</code> can be set to a positive integer value (by default <code>groups = NULL</code>) in which case <code><a href="https://rdrr.io/pkg/Hmisc/man/cut2.html">Hmisc::cut2()</a></code> is used to create bins with an approximately equal number of observations in each bin.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">groups =</span> <span class="dv">3</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>cal<span class="op">$</span>proportion</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">##      Learner           bin Class Proportion</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">## 1 prediction [0.000,0.267)     M 0.08860759</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## 2 prediction [0.267,0.925)     M 0.51282051</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">## 3 prediction [0.925,1.000]     M 0.93333333</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">groups =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">cal<span class="op">$</span>proportion</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">##      Learner           bin Class Proportion</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## 1 prediction [0.000,0.267)     M 0.08860759</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## 2 prediction [0.267,0.925)     M 0.51282051</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## 3 prediction [0.925,1.000]     M 0.93333333</a></code></pre></div>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> objects can be plotted using <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>. <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code> by default plots a reference line which shows perfect calibration and a “rag” plot, which is a rug plot on the top and bottom of the graph, where the top pertains to “positive” cases, where the predicted class matches the observed class, and the bottom pertains to “negative” cases, where the predicted class does not match the observed class. Perfect classifier performance would result in all the positive cases clustering in the top right (i.e., the correct classes are predicted with high probability) and the negative cases clustering in the bottom left.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</a></code></pre></div>
 <p><img src="../../reference/figures/classifier-calibration-4-1.png"><!-- --></p>
 <p>Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. Though <code>smooth = FALSE</code> by default, setting this option to <code>TRUE</code> replaces the estimated proportions with a loess smoother.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2"></a>cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal, <span class="dt">smooth =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal, <span class="dt">smooth =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="../../reference/figures/classifier-calibration-5-1.png"><!-- --></p>
 <p>All of the above functionality works with multi-class classification as well.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>lrns =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>),</span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.nnet"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a>mod =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(lrns, train, <span class="dt">task =</span> iris.task)</span>
-<span id="cb5-6"><a href="#cb5-6"></a>pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(mod, predict, <span class="dt">task =</span> iris.task)</span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(pred) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"randomForest"</span>, <span class="st">"nnet"</span>)</span>
-<span id="cb5-8"><a href="#cb5-8"></a>cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="dv">1</span>))</span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrns =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>),</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.nnet"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">mod =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(lrns, train, <span class="dt">task =</span> iris.task)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(mod, predict, <span class="dt">task =</span> iris.task)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(pred) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"randomForest"</span>, <span class="st">"nnet"</span>)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</a></code></pre></div>
 <p><img src="../../reference/figures/classifier-calibration-6-1.png"><!-- --></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
       </div>
 
 </div>
@@ -342,7 +341,8 @@
 --></footer>
 </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
  inputSelector: 'input#search-input.form-control',

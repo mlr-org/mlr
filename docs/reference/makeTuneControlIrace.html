@@ -14,7 +14,6 @@
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -29,8 +28,8 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-
 <meta property="og:title" content="Create control object for hyperparameter tuning with Irace. — makeTuneControlIrace" />
+
 <meta property="og:description" content="Tuning with iterated F-Racing with method irace::irace.
 All kinds of parameter types can be handled. We return the best of the final elite
 candidates found by irace in the last race. Its estimated performance is the mean of all
@@ -46,7 +45,6 @@ and how to change the file path." />
 <meta name="twitter:card" content="summary" />
 
 
-
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,6 +52,7 @@ and how to change the file path." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
@@ -267,6 +266,7 @@ and how to change the file path." />
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -315,6 +315,7 @@ and how to change the file path." />
     <small>Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneControlIrace.R'><code>R/TuneControlIrace.R</code></a></small>
     </div>
 
+    
     <p>Tuning with iterated F-Racing with method <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>.
 All kinds of parameter types can be handled. We return the best of the final elite
 candidates found by irace in the last race. Its estimated performance is the mean of all
@@ -327,12 +328,13 @@ these are the instances in the sense of irace (<code>instances</code> element of
 in <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>). Also note that irace will always
 store its tuning results in a file on disk, see the package documentation for details on this
 and how to change the file path.</p>
+    
 
     <pre class="usage"><span class='fu'>makeTuneControlIrace</span>(<span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n.instances</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
   <span class='kw'>show.irace.output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -411,10 +413,11 @@ Further control parameters passed to the <code>control</code> arguments of
 towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>(TuneControlIrace)</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
@@ -432,15 +435,18 @@ towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/ir
   <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
   <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
@@ -459,7 +465,8 @@ towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/ir
       </footer>
    </div>
 
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 <script type="text/javascript"> docsearch({
  apiKey: 'e300ecafdf04fe1199e3339c825ce7d0',
  indexName: 'mlr',
@@ -467,6 +474,7 @@ towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/ir
  debug: false // Set debug to true if you want to inspect the dropdown
 });
 </script>
+
 
 
   </body>
