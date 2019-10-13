@@ -57,6 +57,7 @@ are required." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -301,6 +302,7 @@ are required." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -317,7 +319,7 @@ This means *all pairwise comparisons* of `learners` are performed.
 The null hypothesis of the post hoc test is that each pair of learners is equal.
 If the null hypothesis of the included ad hoc [stats::friedman.test]
 can be rejected an object of class `pairwise.htest` is returned. If not, the function returns the
-corresponding <a href='https://www.rdocumentation.org/packages/stats/topics/friedman.test'>friedman.test</a>.
+corresponding <a href='https://rdrr.io/r/stats/friedman.test.html'>friedman.test</a>.
 Note that benchmark results for at least two learners on at least two tasks
 are required.</p>
     
@@ -346,7 +348,7 @@ p-value for the tests. Default: 0.05</p></td>
     </tr>
     <tr>
       <th>aggregation</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>) <br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) <br />
 &#8220;mean&#8221; or &#8220;default&#8221;. See <a href='getBMRAggrPerformances.html'>getBMRAggrPerformances</a>
 for details on &#8220;default&#8221;.</p></td>
     </tr>
@@ -358,6 +360,7 @@ for details on &#8220;default&#8221;.</p></td>
 Additionally two components are added to the list:</p><dl class='dl-horizontal'>
   <dt>f.rejnull (`logical(1)`)</dt><dd><p>Whether the according friedman.test rejects the Null hypothesis at the selected p.value</p></dd>
   <dt>crit.difference (`list(2)`)</dt><dd><p>Minimal difference the mean ranks of two learners need to have in order to be significantly different</p></dd>
+
 </dl>
 
     
@@ -407,6 +410,7 @@ Additionally two components are added to the list:</p><dl class='dl-horizontal'>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -416,6 +420,7 @@ Additionally two components are added to the list:</p><dl class='dl-horizontal'>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -430,6 +435,8 @@ Additionally two components are added to the list:</p><dl class='dl-horizontal'>
 </script>
 
 
+
   </body>
 </html>
+
 

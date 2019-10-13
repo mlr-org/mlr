@@ -51,6 +51,7 @@ the resampling indices used for the respective method." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -295,6 +296,7 @@ the resampling indices used for the respective method." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -322,14 +324,14 @@ The result of resampling of a tuning or feature selection wrapper.</p></td>
     </tr>
     <tr>
       <th>inner</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical</a>) <br />
+      <td><p>(<a href='https://rdrr.io/r/base/logical.html'>logical</a>) <br />
 If <code>TRUE</code>, returns the inner indices of a nested resampling setting.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>). One list for each outer resampling fold.</p>
+    <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>). One list for each outer resampling fold.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -355,8 +357,8 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>)
 <span class='co'># stupid mini grid</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"cp"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.1</span>)),
+  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"minsplit"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
 )
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>()
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
@@ -415,6 +417,7 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -424,6 +427,7 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -438,6 +442,8 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 </script>
 
 
+
   </body>
 </html>
+
 

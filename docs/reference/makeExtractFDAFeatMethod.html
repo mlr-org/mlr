@@ -49,6 +49,7 @@
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -306,7 +308,7 @@
     <p>This can be used to implement custom feature FDA extraction.</p>
     
 
-    <pre class="usage"><span class='fu'>makeExtractFDAFeatMethod</span>(<span class='no'>learn</span>, <span class='no'>reextract</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>())</pre>
+    <pre class="usage"><span class='fu'>makeExtractFDAFeatMethod</span>(<span class='no'>learn</span>, <span class='no'>reextract</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,17 +318,17 @@
       <td><p>(<code>function(data, target, col, ...)</code>)<br />
 Function to learn and extract information on functional column <code>col</code>.
 Arguments are:</p><ul>
-<li><p>data <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a><br />
+<li><p>data <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a><br />
 Data.frame with one row per observation of a single functional feature
 or time series and one column per measurement time point.
 All entries need to be numeric.</p></li>
-<li><p>data <a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a><br />
+<li><p>data <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a><br />
 Data.frame containing matricies with one row per observation of a single functional
 or time series and one column per measurement time point. All entries need to be numeric.</p></li>
-<li><p>target <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a><br />
+<li><p>target <a href='https://rdrr.io/r/base/character.html'>character</a><br />
 Name of the target variable. Default: &#8220;NULL&#8221;.
 The variable is only set to be consistent with the API.</p></li>
-<li><p>col (<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a> | <a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)<br />
+<li><p>col (<a href='https://rdrr.io/r/base/character.html'>character</a> | <a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 column names or indices, the extraction should be performed on.
 The function has to return a named list of values.</p></li>
 </ul></td>
@@ -339,7 +341,7 @@ Can be equal to <code>learn</code>.</p></td>
     </tr>
     <tr>
       <th>args</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list of arguments to pass to <code>learn</code> via <code>...</code>.</p></td>
     </tr>
     </table>
@@ -362,6 +364,7 @@ Named list of arguments to pass to <code>learn</code> via <code>...</code>.</p><
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -371,6 +374,7 @@ Named list of arguments to pass to <code>learn</code> via <code>...</code>.</p><
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -385,6 +389,8 @@ Named list of arguments to pass to <code>learn</code> via <code>...</code>.</p><
 </script>
 
 
+
   </body>
 </html>
+
 

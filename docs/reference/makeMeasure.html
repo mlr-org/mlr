@@ -47,6 +47,8 @@ Object slots:
   worst (numeric(1))See argument.
   name (character(1))See argument.
   note (character(1))See argument.
+
+
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -66,6 +68,7 @@ Object slots:
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -310,6 +313,7 @@ Object slots:
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -337,11 +341,13 @@ the fitted model and the prediction.</p>
   <dt>worst (numeric(1))</dt><dd><p>See argument.</p></dd>
   <dt>name (character(1))</dt><dd><p>See argument.</p></dd>
   <dt>note (character(1))</dt><dd><p>See argument.</p></dd>
+
 </dl>
+
     
 
-    <pre class="usage"><span class='fu'>makeMeasure</span>(<span class='no'>id</span>, <span class='no'>minimize</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='no'>fun</span>,
-  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>, <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>makeMeasure</span>(<span class='no'>id</span>, <span class='no'>minimize</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='no'>fun</span>,
+  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>, <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>id</span>, <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -375,6 +381,7 @@ Set of measure properties. Some standard property names include:</p><dl class='d
   <dt>req.model</dt><dd><p>Is model object required in calculation? Usually not the case.</p></dd>
   <dt>req.feats</dt><dd><p>Are feature values required in calculation? Usually not the case.</p></dd>
   <dt>req.prob</dt><dd><p>Are predicted probabilities required in calculation? Usually not the case, example would be AUC.</p></dd>
+
 </dl><p>Default is `character(0)`.</p></td>
     </tr>
     <tr>
@@ -387,6 +394,7 @@ object `pred`.</p><dl class='dl-horizontal'>
   <dt>`pred` ([Prediction])</dt><dd><p>Prediction object.</p></dd>
   <dt>`feats` ([data.frame])</dt><dd><p>The features.</p></dd>
   <dt>`extra.args` ([list])</dt><dd><p>See below.</p></dd>
+
 </dl></td>
     </tr>
     <tr>
@@ -446,8 +454,8 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>model</span>, <span class='no'>pred</span>, <span class='no'>extra.args</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>((<span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>response</span> - <span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>truth</span>)^<span class='fl'>2</span>)
-<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
+  <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>((<span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>response</span> - <span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>truth</span>)^<span class='fl'>2</span>)
+<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
 #&gt; Performance measure: my.sse
 #&gt; Properties: regr,response
 #&gt; Minimize: TRUE
@@ -471,6 +479,7 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -480,6 +489,7 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -494,6 +504,8 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
 </script>
 
 
+
   </body>
 </html>
+
 

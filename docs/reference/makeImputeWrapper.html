@@ -52,6 +52,7 @@ before predicting." />
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -296,6 +297,7 @@ before predicting." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -312,8 +314,8 @@ Internally uses <a href='impute.html'>impute</a> before training the learner and
 before predicting.</p>
     
 
-    <pre class="usage"><span class='fu'>makeImputeWrapper</span>(<span class='no'>learner</span>, <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>0L</span>),
+    <pre class="usage"><span class='fu'>makeImputeWrapper</span>(<span class='no'>learner</span>, <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
   <span class='kw'>dummy.type</span> <span class='kw'>=</span> <span class='st'>"factor"</span>, <span class='kw'>force.dummies</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>impute.new.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>recode.factor.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -322,45 +324,45 @@ before predicting.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>classes</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list containing imputation techniques for classes of columns.
-E.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(numeric = imputeMedian())</a></code>.</p></td>
+E.g. <code><a href='https://rdrr.io/r/base/list.html'>list(numeric = imputeMedian())</a></code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>(named <a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)<br />
+      <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overrules imputation set via
 <code>classes</code>.</p></td>
     </tr>
     <tr>
       <th>dummy.classes</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Classes of columns to create dummy columns for.
-Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
+Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>dummy.cols</th>
-      <td><p>(<a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>)<br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Column names to create dummy columns (containing binary missing indicator) for.
-Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(0)</a></code>.</p></td>
+Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>dummy.type</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 How dummy columns are encoded. Either as 0/1 with type &#8220;numeric&#8221;
 or as &#8220;factor&#8221;.
 Default is &#8220;factor&#8221;.</p></td>
     </tr>
     <tr>
       <th>force.dummies</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
@@ -369,14 +371,14 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.new.levels</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>recode.factor.levels</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Recode factor levels after reimputation, so they match the respective element of
 <code>lvls</code> (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.
@@ -433,6 +435,7 @@ Default is <code>TRUE</code>.</p></td>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -442,6 +445,7 @@ Default is <code>TRUE</code>.</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -456,6 +460,8 @@ Default is <code>TRUE</code>.</p></td>
 </script>
 
 
+
   </body>
 </html>
+
 

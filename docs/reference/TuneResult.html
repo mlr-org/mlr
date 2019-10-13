@@ -50,6 +50,8 @@ transform them, or, as.data.frame{trafoOptPath(opt.path)}.
 If mlr option on.error.dump is TRUE, OptPath will have a .dump object
 in its extra column which contains error dump traces from failed optimization evaluations.
 It can be accessed by getOptPathEl(opt.path)$extra$.dump.
+
+
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -69,6 +71,7 @@ It can be accessed by getOptPathEl(opt.path)$extra$.dump.
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -313,6 +316,7 @@ It can be accessed by getOptPathEl(opt.path)$extra$.dump.
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -329,21 +333,23 @@ and the optimization path which lead there.</p>
 <p>Object members:</p><dl class='dl-horizontal'>
 <dt>learner (<a href='makeLearner.html'>Learner</a>)</dt><dd><p>Learner that was optimized.</p></dd>
 <dt>control (<a href='TuneControl.html'>TuneControl</a>)</dt><dd><p>Control object from tuning.</p></dd>
-<dt>x (<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>)</dt><dd><p>Named list of hyperparameter values identified as optimal.
+<dt>x (<a href='https://rdrr.io/r/base/list.html'>list</a>)</dt><dd><p>Named list of hyperparameter values identified as optimal.
 Note that when you have trafos on some of your params, <code>x</code> will always be
 on the TRANSFORMED scale so you directly use it.</p></dd>
-<dt>y (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>Performance values for optimal <code>x</code>.</p></dd>
-<dt>threshold (<a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric</a>)</dt><dd><p>Vector of finally found and used thresholds
+<dt>y (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>Performance values for optimal <code>x</code>.</p></dd>
+<dt>threshold (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>Vector of finally found and used thresholds
 if <code>tune.threshold</code> was enabled in <a href='TuneControl.html'>TuneControl</a>, otherwise not present and
 hence <code>NULL</code>.</p></dd>
-<dt>opt.path (<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/OptPath'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.
+<dt>opt.path (<a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.
 Note that when you have trafos on some of your params, the opt.path always contains the
 UNTRANSFORMED values on the original scale. You can simply call <code>trafoOptPath(opt.path)</code> to
 transform them, or, <code>as.data.frame{trafoOptPath(opt.path)}</code>.
 If mlr option <code>on.error.dump</code> is <code>TRUE</code>, <code>OptPath</code> will have a <code>.dump</code> object
 in its <code>extra</code> column which contains error dump traces from failed optimization evaluations.
 It can be accessed by <code>getOptPathEl(opt.path)$extra$.dump</code>.</p></dd>
+
 </dl>
+
     
 
         
@@ -357,6 +363,7 @@ It can be accessed by <code>getOptPathEl(opt.path)$extra$.dump</code>.</p></dd>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -366,6 +373,7 @@ It can be accessed by <code>getOptPathEl(opt.path)$extra$.dump</code>.</p></dd>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -380,6 +388,8 @@ It can be accessed by <code>getOptPathEl(opt.path)$extra$.dump</code>.</p></dd>
 </script>
 
 
+
   </body>
 </html>
+
 
