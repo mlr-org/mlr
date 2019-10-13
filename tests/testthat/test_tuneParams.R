@@ -100,7 +100,7 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
     "univariate.model.score", "permutation.importance", "auc",
     "univariate", "rf.importance", "rf.min.depth"))
 
-  ps = makeParamSet( # makeDiscreteParam("fw.method"),
+  ps = makeParamSet(
     makeDiscreteVectorParam("fw.base.methods", len = 2, values = filter.list.classif),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeNumericParam("C", lower = -10, upper = 10,
@@ -110,7 +110,7 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
   )
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-    control = makeTuneControlRandom(maxit = 5), show.info = T)
+    control = makeTuneControlRandom(maxit = 5), show.info = TRUE)
 })
 
 test_that("tuning with a fixed ensemble methods and varying base methods works", {
@@ -125,7 +125,7 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
     "univariate.model.score", "permutation.importance", "auc",
     "univariate", "rf.importance", "rf.min.depth"))
 
-  ps = makeParamSet( # makeDiscreteParam("fw.method"),
+  ps = makeParamSet(
     makeDiscreteVectorParam("fw.base.methods", len = 2, values = filter.list.classif),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
     makeNumericParam("C", lower = -10, upper = 10,
@@ -135,7 +135,7 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
   )
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-    control = makeTuneControlRandom(maxit = 5), show.info = T)
+    control = makeTuneControlRandom(maxit = 5), show.info = TRUE)
 })
 
 test_that("tuning with fixed base methods and varying ensemble methods works", {
@@ -150,7 +150,7 @@ test_that("tuning with fixed base methods and varying ensemble methods works", {
   )
   rdesc = makeResampleDesc("CV", iters = 3)
   out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-    control = makeTuneControlRandom(maxit = 5), show.info = T)
+    control = makeTuneControlRandom(maxit = 5), show.info = TRUE)
 })
 
 test_that("passing more than one fw.method raises an error", {

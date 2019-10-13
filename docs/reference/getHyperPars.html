@@ -49,6 +49,7 @@
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -293,6 +294,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -306,7 +308,7 @@
     <p>Retrieves the current hyperparameter settings of a learner.</p>
     
 
-    <pre class="usage"><span class='fu'>getHyperPars</span>(<span class='no'>learner</span>, <span class='kw'>for.fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"predict"</span>, <span class='st'>"both"</span>))</pre>
+    <pre class="usage"><span class='fu'>getHyperPars</span>(<span class='no'>learner</span>, <span class='kw'>for.fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"predict"</span>, <span class='st'>"both"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -317,16 +319,16 @@
     </tr>
     <tr>
       <th>for.fun</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br /> Restrict the returned settings to
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Restrict the returned settings to
 hyperparameters corresponding to <code>when</code> the are used (see
-<a href='https://www.rdocumentation.org/packages/ParamHelpers/topics/LearnerParam'>ParamHelpers::LearnerParam</a>). Must be a subset of: &#8220;train&#8221;,
-&#8220;predict&#8221; or &#8220;both&#8221;. Default is <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("train", "predict", "both")</a></code>.</p></td>
+<a href='https://rdrr.io/pkg/ParamHelpers/man/LearnerParam.html'>ParamHelpers::LearnerParam</a>). Must be a subset of: &#8220;train&#8221;,
+&#8220;predict&#8221; or &#8220;both&#8221;. Default is <code><a href='https://rdrr.io/r/base/c.html'>c("train", "predict", "both")</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a>). A named list of values.</p>
+    <p>(<a href='https://rdrr.io/r/base/list.html'>list</a>). A named list of values.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -396,6 +398,7 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -405,6 +408,7 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -419,6 +423,8 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
 </script>
 
 
+
   </body>
 </html>
+
 

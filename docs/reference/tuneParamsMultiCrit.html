@@ -53,6 +53,7 @@ by passing a corresponding control object. For a complete list of implemented al
 
 <link rel="icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
 <link rel="apple-touch-icon" type="image/png" href="https://mlr-org.github.io/mlr/favicon.ico">
+
   </head>
 
   <body>
@@ -297,6 +298,7 @@ by passing a corresponding control object. For a complete list of implemented al
 </div><!--/.navbar -->
 
       
+
       </header>
 
       <div class="row">
@@ -322,7 +324,7 @@ by passing a corresponding control object. For a complete list of implemented al
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -358,7 +360,7 @@ Control object for search method. Also selects the optimization algorithm for tu
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
@@ -381,7 +383,8 @@ same arguments as, and return the same result type as, [resample].</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># multi-criteria optimization of (tpr, fpr) with NGSA-II</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'># multi-criteria optimization of (tpr, fpr) with NGSA-II</span>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ksvm"</span>)
 <span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
@@ -390,9 +393,10 @@ same arguments as, and return the same result type as, [resample].</p></td>
 )
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='TuneMultiCritControl.html'>makeTuneMultiCritControlNSGA2</a></span>(<span class='kw'>popsize</span> <span class='kw'>=</span> <span class='fl'>4L</span>, <span class='kw'>generations</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
 <span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParamsMultiCrit</span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>,
-  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>tpr</span>, <span class='no'>fpr</span>), <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
+  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>tpr</span>, <span class='no'>fpr</span>), <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>C     numeric   -   - -12 to 12   -    TRUE     Y</span>
-#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneMultiCritControlNSGA2</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: -0Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.0036; sigma=0.207</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=0.072; sigma=0.244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.0384; sigma=2.73</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=0.00326; sigma=1.99e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 5: C=0.338; sigma=0.207</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 5: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 6: C=0.00335; sigma=0.244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 6: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 7: C=0.0882; sigma=0.145</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 7: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 8: C=0.00267; sigma=1.99e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 8: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: Points on front : 8</span></div><div class='input'><span class='fu'><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a></span>(<span class='no'>res</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='tuneParamsMultiCrit-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneMultiCritControlNSGA2</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: -0Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.0036; sigma=0.207</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=0.072; sigma=0.244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.0384; sigma=2.73</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=0.00326; sigma=1.99e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 5: C=0.338; sigma=0.207</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 5: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 6: C=0.00335; sigma=0.244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 6: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 7: C=0.0882; sigma=0.145</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 7: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 8: C=0.00267; sigma=1.99e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 8: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: Points on front : 8</span></div><div class='input'><span class='fu'><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a></span>(<span class='no'>res</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='tuneParamsMultiCrit-1.png' alt='' width='700' height='433' /></div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -409,6 +413,7 @@ same arguments as, and return the same result type as, [resample].</p></td>
   </div>
 </div>
 
+
       <footer>
       <!--<div class="copyright">
   <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
@@ -418,6 +423,7 @@ same arguments as, and return the same result type as, [resample].</p></td>
   <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 -->
+
       </footer>
    </div>
 
@@ -432,6 +438,8 @@ same arguments as, and return the same result type as, [resample].</p></td>
 </script>
 
 
+
   </body>
 </html>
+
 

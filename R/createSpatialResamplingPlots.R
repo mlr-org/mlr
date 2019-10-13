@@ -191,11 +191,11 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   # more than 1 repetition?
   if (repetitions > 1) {
     labels = c(length = nfolds * repetitions)
-    nfolds_reps = rep(seq_len(nfolds), repetitions)
-    reps_nfolds = c()
-    names.resample = c()
+    nfolds.reps = rep(seq_len(nfolds), repetitions)
+    reps.nfolds = vector()
+    names.resample = vector()
     for (i in seq_len(repetitions)) {
-      reps_nfolds = c(reps_nfolds, rep(i, nfolds))
+      reps.nfolds = c(reps.nfolds, rep(i, nfolds))
       if (!is.null(names(resample))) {
         names.resample = c(names.resample, rep(names(resample)[i],
           nfolds * repetitions))
@@ -204,20 +204,20 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
     # account for multiple resamp objects
     if (n.resamp > 1) {
       labels = rep(rep(sprintf("[%s] Fold %s (Rep %s)", names.resample,
-        nfolds_reps, reps_nfolds)), n.resamp)
+        nfolds.reps, reps.nfolds)), n.resamp)
     } else {
       if (!is.null(names(resample))) {
         labels = sprintf("[%s] Fold %s (Rep %s)",
           rep(names(resample), nfolds * repetitions),
-          seq_len(nfolds), reps_nfolds)
+          seq_len(nfolds), reps.nfolds)
       } else {
-        labels = rep(sprintf("Fold %s (Rep %s)", nfolds_reps, reps_nfolds))
+        labels = rep(sprintf("Fold %s (Rep %s)", nfolds.reps, reps.nfolds))
       }
     }
   } else {
     # account for multiple resamp objects
     if (n.resamp > 1) {
-      names.resample = c()
+      names.resample = vector()
       for (i in seq_len(length(names(resample)))) {
         names.resample = c(names.resample, rep(names(resample)[i], nfolds))
       }
