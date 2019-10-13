@@ -37,7 +37,7 @@ test_that("classif_gbm", {
   p = gbm::predict.gbm(m, newdata = multiclass.test, n.trees = 300)
   y = factor(apply(p[, , 1], 1, function(r) colnames(p)[which.max(r)]))
   testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,
-    parset = list(n.trees = 300, interaction.depth = 2, distribution = "bernoulli"))
+    parset = list(n.trees = 300, interaction.depth = 2, distribution = "multinomial"))
 })
 
 test_that("classif_gbm keep.data is passed correctly", {
