@@ -394,57 +394,41 @@
 <a class="sourceLine" id="cb3-35" data-line-number="35">## 48 Levels: anova.test auc carscore cforest.importance ... variance</a></code></pre></div>
 <p>You can use it like any other filter method already integrated in <code>mlr</code> (i.e., via the <code>method</code> argument of <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> or the <code>fw.method</code> argument of <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code>; see also the page on <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, <span class="dt">method =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"nonsense.filter"</span>, <span class="st">"anova.test"</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## error.</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">d</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## FilterValues:</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## Task: iris-example</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">##           name    type          method      value</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## 3 Petal.Length numeric nonsense.filter    4.00000</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## 4  Petal.Width numeric nonsense.filter    3.00000</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">## 1 Sepal.Length numeric nonsense.filter    2.00000</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## 2  Sepal.Width numeric nonsense.filter    1.00000</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## 7 Petal.Length numeric      anova.test 1180.16118</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## 8  Petal.Width numeric      anova.test  960.00715</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## 5 Sepal.Length numeric      anova.test  119.26450</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## 6  Sepal.Width numeric      anova.test   49.16004</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d)</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">d</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">## FilterValues:</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">## Task: iris-example</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">##            name    type          method      value</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">## 1: Petal.Length numeric nonsense.filter    4.00000</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">## 2:  Petal.Width numeric nonsense.filter    3.00000</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">## 3: Sepal.Length numeric nonsense.filter    2.00000</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">## 4:  Sepal.Width numeric nonsense.filter    1.00000</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## 5: Petal.Length numeric      anova.test 1180.16118</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## 6:  Petal.Width numeric      anova.test  960.00715</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## 7: Sepal.Length numeric      anova.test  119.26450</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">## 8:  Sepal.Width numeric      anova.test   49.16004</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d)</a></code></pre></div>
 <p><img src="create_filter_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris.task.filtered =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"nonsense.filter"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## error.</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">iris.task.filtered</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## Supervised task: iris-example</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## Type: classif</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## Target: Species</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## Observations: 150</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## Features:</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">##    numerics     factors     ordered functionals </a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">##           2           0           0           0 </a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">## Missings: FALSE</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## Has weights: FALSE</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">## Has blocking: FALSE</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21">## Has coordinates: FALSE</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">## Classes: 3</a>
-<a class="sourceLine" id="cb5-23" data-line-number="23">##     setosa versicolor  virginica </a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">##         50         50         50 </a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">## Positive class: NA</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="kw"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span>(iris.task.filtered)</a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">## [1] "Petal.Length" "Petal.Width"</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">iris.task.filtered</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">## Supervised task: iris-example</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">## Type: classif</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">## Target: Species</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">## Observations: 150</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">## Features:</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">##           2           0           0           0 </a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## Missings: FALSE</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">## Has coordinates: FALSE</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">## Classes: 3</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">##     setosa versicolor  virginica </a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">##         50         50         50 </a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">## Positive class: NA</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="kw"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span>(iris.task.filtered)</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">## [1] "Petal.Length" "Petal.Width"</a></code></pre></div>
 <p>You might also want to have a look at the <a href="https://github.com/mlr-org/mlr/blob/master/R/Filter.R#L95">source code</a> of the filter methods already integrated in <code>mlr</code> for some more complex and meaningful examples.</p>
 </div>
 </div>

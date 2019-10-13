@@ -420,7 +420,7 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simple filter</span>
-<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='output co'>#&gt; Supervised task: iris-example
+<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species
 #&gt; Observations: 150
@@ -436,7 +436,7 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
 #&gt;         50         50         50 
 #&gt; Positive class: NA</div><div class='input'><span class='co'># ensemble filter</span>
 <span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"E-min"</span>,
-  <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>), <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The melt generic in data.table has been passed a data.frame and will attempt to redirect to the relevant reshape2 method; please note that reshape2 is deprecated, and this redirection is now deprecated as well. To continue using melt methods from reshape2 while both libraries are attached, e.g. melt.list, you can prepend the namespace like reshape2::melt(out). In the next version, this warning will become an error.</span></div><div class='output co'>#&gt; Supervised task: iris-example
+  <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>), <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species
 #&gt; Observations: 150
