@@ -323,43 +323,27 @@
 <p>Different methods for calculating the feature importance are built into <code>mlr</code>’s function <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>. Currently, classification, regression and survival analysis tasks are supported. A table showing all available methods can be found in article <a href="filter_methods.html" target="_blank">filter methods</a>.</p>
 <p>The most basic approach is to use <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> directly on a <code><a href="../../reference/Task.html">Task()</a></code> with a character string specifying the filter method.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">fv =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">## error.</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">fv</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">## FilterValues:</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">## Task: iris-example</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">##           name    type                         method     value</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">fv</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">## FilterValues:</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">## Task: iris-example</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">##            name    type                         method     value</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">## 1:  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">## 2: Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">## 3: Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">## 4:  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a></code></pre></div>
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">## error.</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">fv2<span class="op">$</span>data</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">##           name    type                         method     value</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## 1 Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## 2  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## 3 Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">## 4  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">## 5 Sepal.Length numeric          FSelector_chi.squared 0.6288067</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">## 6  Sepal.Width numeric          FSelector_chi.squared 0.4922162</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">## 7 Petal.Length numeric          FSelector_chi.squared 0.9346311</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">## 8  Petal.Width numeric          FSelector_chi.squared 0.9432359</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3">fv2<span class="op">$</span>data</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">##            name    type                         method     value</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## 1: Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## 2:  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## 3: Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">## 4:  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">## 5: Sepal.Length numeric          FSelector_chi.squared 0.6288067</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## 6:  Sepal.Width numeric          FSelector_chi.squared 0.4922162</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">## 7: Petal.Length numeric          FSelector_chi.squared 0.9346311</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">## 8:  Petal.Width numeric          FSelector_chi.squared 0.9432359</a></code></pre></div>
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubr</a></span>()</a></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
@@ -379,36 +363,28 @@
 <p>Function <code><a href="../../reference/filterFeatures.html">filterFeatures()</a></code> supports these three methods as shown in the following example. Moreover, you can either specify the <code>method</code> for calculating the feature importance or you can use previously computed importance values via argument <code>fval</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Keep the 2 most important features</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## error.</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co"># Keep the 25% most important features</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">perc =</span> <span class="fl">0.25</span>)</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># Keep all features with importance greater than 0.5</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">threshold =</span> <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">filtered.task</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## Supervised task: iris-example</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## Type: classif</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## Target: Species</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## Observations: 150</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">## Features:</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">##    numerics     factors     ordered functionals </a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">##           2           0           0           0 </a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">## Missings: FALSE</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">## Has weights: FALSE</a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">## Has blocking: FALSE</a>
-<a class="sourceLine" id="cb4-28" data-line-number="28">## Has coordinates: FALSE</a>
-<a class="sourceLine" id="cb4-29" data-line-number="29">## Classes: 3</a>
-<a class="sourceLine" id="cb4-30" data-line-number="30">##     setosa versicolor  virginica </a>
-<a class="sourceLine" id="cb4-31" data-line-number="31">##         50         50         50 </a>
-<a class="sourceLine" id="cb4-32" data-line-number="32">## Positive class: NA</a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Keep the 25% most important features</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">perc =</span> <span class="fl">0.25</span>)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Keep all features with importance greater than 0.5</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">filtered.task =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">fval =</span> fv, <span class="dt">threshold =</span> <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">filtered.task</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">## Supervised task: iris-example</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## Type: classif</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## Target: Species</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">## Observations: 150</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">## Features:</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">##    numerics     factors     ordered functionals </a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">##           2           0           0           0 </a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">## Missings: FALSE</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">## Has weights: FALSE</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">## Has blocking: FALSE</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">## Has coordinates: FALSE</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">## Classes: 3</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">##     setosa versicolor  virginica </a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">##         50         50         50 </a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">## Positive class: NA</a></code></pre></div>
 </div>
 <div id="fuse-a-learner-with-a-filter-method" class="section level2">
 <h2 class="hasAnchor">
@@ -422,98 +398,9 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">fw.method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">fw.abs =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> iris.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## error.</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21">## error.</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-29" data-line-number="29">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-30" data-line-number="30">## error.</a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-33" data-line-number="33">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-34" data-line-number="34">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-35" data-line-number="35">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-36" data-line-number="36">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-37" data-line-number="37">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-38" data-line-number="38">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-39" data-line-number="39">## error.</a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"></a>
-<a class="sourceLine" id="cb5-41" data-line-number="41">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-42" data-line-number="42">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-43" data-line-number="43">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-44" data-line-number="44">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-45" data-line-number="45">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-46" data-line-number="46">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-47" data-line-number="47">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-48" data-line-number="48">## error.</a>
-<a class="sourceLine" id="cb5-49" data-line-number="49"></a>
-<a class="sourceLine" id="cb5-50" data-line-number="50">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-51" data-line-number="51">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-52" data-line-number="52">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-53" data-line-number="53">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-54" data-line-number="54">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-55" data-line-number="55">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-56" data-line-number="56">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-57" data-line-number="57">## error.</a>
-<a class="sourceLine" id="cb5-58" data-line-number="58"></a>
-<a class="sourceLine" id="cb5-59" data-line-number="59">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-60" data-line-number="60">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-61" data-line-number="61">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-62" data-line-number="62">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-63" data-line-number="63">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-64" data-line-number="64">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-65" data-line-number="65">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-66" data-line-number="66">## error.</a>
-<a class="sourceLine" id="cb5-67" data-line-number="67"></a>
-<a class="sourceLine" id="cb5-68" data-line-number="68">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-69" data-line-number="69">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-70" data-line-number="70">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-71" data-line-number="71">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-72" data-line-number="72">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-73" data-line-number="73">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-74" data-line-number="74">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-75" data-line-number="75">## error.</a>
-<a class="sourceLine" id="cb5-76" data-line-number="76"></a>
-<a class="sourceLine" id="cb5-77" data-line-number="77">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-78" data-line-number="78">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-79" data-line-number="79">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-80" data-line-number="80">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-81" data-line-number="81">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-82" data-line-number="82">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-83" data-line-number="83">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-84" data-line-number="84">## error.</a>
-<a class="sourceLine" id="cb5-85" data-line-number="85"></a>
-<a class="sourceLine" id="cb5-86" data-line-number="86">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb5-87" data-line-number="87">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb5-88" data-line-number="88">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb5-89" data-line-number="89">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb5-90" data-line-number="90">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb5-91" data-line-number="91">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb5-92" data-line-number="92">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb5-93" data-line-number="93">## error.</a>
-<a class="sourceLine" id="cb5-94" data-line-number="94">r<span class="op">$</span>aggr</a>
-<a class="sourceLine" id="cb5-95" data-line-number="95">## mmce.test.mean </a>
-<a class="sourceLine" id="cb5-96" data-line-number="96">##     0.05333333</a></code></pre></div>
+<a class="sourceLine" id="cb5-5" data-line-number="5">r<span class="op">$</span>aggr</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">## mmce.test.mean </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">##     0.05333333</a></code></pre></div>
 <p>You may want to know which features have been used. Luckily, we have called <code><a href="../../reference/resample.html">resample()</a></code> with the argument <code>models = TRUE</code>, which means that <code>r$models</code> contains a <code>list</code> of models (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) fitted in the individual resampling iterations. In order to access the selected feature subsets we can call <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code> on each model.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sfeats =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(r<span class="op">$</span>models, getFilteredFeatures)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(sfeats)</a>
@@ -550,150 +437,20 @@
 <a class="sourceLine" id="cb7-16" data-line-number="16">## With control class: TuneControlRandom</a>
 <a class="sourceLine" id="cb7-17" data-line-number="17">## Imputation value: Inf</a>
 <a class="sourceLine" id="cb7-18" data-line-number="18">## [Tune-x] 1: fw.perc=0.00461; C=955; sigma=0.273</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">## error.</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-33" data-line-number="33">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-34" data-line-number="34">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-35" data-line-number="35">## error.</a>
-<a class="sourceLine" id="cb7-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb7-37" data-line-number="37">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-38" data-line-number="38">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-39" data-line-number="39">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-40" data-line-number="40">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-41" data-line-number="41">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-42" data-line-number="42">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-43" data-line-number="43">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-44" data-line-number="44">## error.</a>
-<a class="sourceLine" id="cb7-45" data-line-number="45">## [Tune-y] 1: mse.test.mean=85.5217120; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-46" data-line-number="46">## [Tune-x] 2: fw.perc=0.118; C=168; sigma=1.75</a>
-<a class="sourceLine" id="cb7-47" data-line-number="47">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-48" data-line-number="48">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-49" data-line-number="49">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-50" data-line-number="50">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-51" data-line-number="51">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-52" data-line-number="52">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-53" data-line-number="53">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-54" data-line-number="54">## error.</a>
-<a class="sourceLine" id="cb7-55" data-line-number="55"></a>
-<a class="sourceLine" id="cb7-56" data-line-number="56">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-57" data-line-number="57">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-58" data-line-number="58">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-59" data-line-number="59">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-60" data-line-number="60">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-61" data-line-number="61">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-62" data-line-number="62">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-63" data-line-number="63">## error.</a>
-<a class="sourceLine" id="cb7-64" data-line-number="64"></a>
-<a class="sourceLine" id="cb7-65" data-line-number="65">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-66" data-line-number="66">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-67" data-line-number="67">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-68" data-line-number="68">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-69" data-line-number="69">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-70" data-line-number="70">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-71" data-line-number="71">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-72" data-line-number="72">## error.</a>
-<a class="sourceLine" id="cb7-73" data-line-number="73">## [Tune-y] 2: mse.test.mean=34.9702516; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-74" data-line-number="74">## [Tune-x] 3: fw.perc=0.882; C=0.00164; sigma=198</a>
-<a class="sourceLine" id="cb7-75" data-line-number="75">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-76" data-line-number="76">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-77" data-line-number="77">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-78" data-line-number="78">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-79" data-line-number="79">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-80" data-line-number="80">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-81" data-line-number="81">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-82" data-line-number="82">## error.</a>
-<a class="sourceLine" id="cb7-83" data-line-number="83"></a>
-<a class="sourceLine" id="cb7-84" data-line-number="84">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-85" data-line-number="85">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-86" data-line-number="86">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-87" data-line-number="87">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-88" data-line-number="88">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-89" data-line-number="89">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-90" data-line-number="90">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-91" data-line-number="91">## error.</a>
-<a class="sourceLine" id="cb7-92" data-line-number="92"></a>
-<a class="sourceLine" id="cb7-93" data-line-number="93">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-94" data-line-number="94">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-95" data-line-number="95">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-96" data-line-number="96">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-97" data-line-number="97">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-98" data-line-number="98">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-99" data-line-number="99">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-100" data-line-number="100">## error.</a>
-<a class="sourceLine" id="cb7-101" data-line-number="101">## [Tune-y] 3: mse.test.mean=86.6100764; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-102" data-line-number="102">## [Tune-x] 4: fw.perc=0.722; C=42.1; sigma=155</a>
-<a class="sourceLine" id="cb7-103" data-line-number="103">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-104" data-line-number="104">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-105" data-line-number="105">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-106" data-line-number="106">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-107" data-line-number="107">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-108" data-line-number="108">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-109" data-line-number="109">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-110" data-line-number="110">## error.</a>
-<a class="sourceLine" id="cb7-111" data-line-number="111"></a>
-<a class="sourceLine" id="cb7-112" data-line-number="112">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-113" data-line-number="113">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-114" data-line-number="114">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-115" data-line-number="115">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-116" data-line-number="116">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-117" data-line-number="117">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-118" data-line-number="118">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-119" data-line-number="119">## error.</a>
-<a class="sourceLine" id="cb7-120" data-line-number="120"></a>
-<a class="sourceLine" id="cb7-121" data-line-number="121">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-122" data-line-number="122">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-123" data-line-number="123">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-124" data-line-number="124">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-125" data-line-number="125">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-126" data-line-number="126">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-127" data-line-number="127">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-128" data-line-number="128">## error.</a>
-<a class="sourceLine" id="cb7-129" data-line-number="129">## [Tune-y] 4: mse.test.mean=85.5512510; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-130" data-line-number="130">## [Tune-x] 5: fw.perc=0.501; C=366; sigma=0.0175</a>
-<a class="sourceLine" id="cb7-131" data-line-number="131">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-132" data-line-number="132">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-133" data-line-number="133">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-134" data-line-number="134">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-135" data-line-number="135">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-136" data-line-number="136">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-137" data-line-number="137">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-138" data-line-number="138">## error.</a>
-<a class="sourceLine" id="cb7-139" data-line-number="139"></a>
-<a class="sourceLine" id="cb7-140" data-line-number="140">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-141" data-line-number="141">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-142" data-line-number="142">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-143" data-line-number="143">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-144" data-line-number="144">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-145" data-line-number="145">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-146" data-line-number="146">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-147" data-line-number="147">## error.</a>
-<a class="sourceLine" id="cb7-148" data-line-number="148"></a>
-<a class="sourceLine" id="cb7-149" data-line-number="149">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb7-150" data-line-number="150">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb7-151" data-line-number="151">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb7-152" data-line-number="152">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb7-153" data-line-number="153">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb7-154" data-line-number="154">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb7-155" data-line-number="155">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb7-156" data-line-number="156">## error.</a>
-<a class="sourceLine" id="cb7-157" data-line-number="157">## [Tune-y] 5: mse.test.mean=15.6374544; time: 0.0 min</a>
-<a class="sourceLine" id="cb7-158" data-line-number="158">## [Tune] Result: fw.perc=0.501; C=366; sigma=0.0175 : mse.test.mean=15.6374544</a>
-<a class="sourceLine" id="cb7-159" data-line-number="159">res</a>
-<a class="sourceLine" id="cb7-160" data-line-number="160">## Tune result:</a>
-<a class="sourceLine" id="cb7-161" data-line-number="161">## Op. pars: fw.perc=0.501; C=366; sigma=0.0175</a>
-<a class="sourceLine" id="cb7-162" data-line-number="162">## mse.test.mean=15.6374544</a></code></pre></div>
+<a class="sourceLine" id="cb7-19" data-line-number="19">## [Tune-y] 1: mse.test.mean=85.5217120; time: 0.0 min</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">## [Tune-x] 2: fw.perc=0.118; C=168; sigma=1.75</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">## [Tune-y] 2: mse.test.mean=34.9702516; time: 0.0 min</a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">## [Tune-x] 3: fw.perc=0.882; C=0.00164; sigma=198</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">## [Tune-y] 3: mse.test.mean=86.6100764; time: 0.0 min</a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">## [Tune-x] 4: fw.perc=0.722; C=42.1; sigma=155</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">## [Tune-y] 4: mse.test.mean=85.5512510; time: 0.0 min</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">## [Tune-x] 5: fw.perc=0.501; C=366; sigma=0.0175</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">## [Tune-y] 5: mse.test.mean=15.6374544; time: 0.0 min</a>
+<a class="sourceLine" id="cb7-28" data-line-number="28">## [Tune] Result: fw.perc=0.501; C=366; sigma=0.0175 : mse.test.mean=15.6374544</a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">res</a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">## Tune result:</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">## Op. pars: fw.perc=0.501; C=366; sigma=0.0175</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">## mse.test.mean=15.6374544</a></code></pre></div>
 <p>The performance of all percentage values visited during tuning is:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]</a>
@@ -720,21 +477,13 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>, </a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">        <span class="dt">fw.perc =</span> res<span class="op">$</span>x<span class="op">$</span>fw.perc, <span class="dt">C =</span> res<span class="op">$</span>x<span class="op">$</span>C, <span class="dt">sigma =</span> res<span class="op">$</span>x<span class="op">$</span>sigma)</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">## Warning in melt(out, value.name = "value", measure.vars = method,</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">## variable.name = "method"): The melt generic in data.table has been passed</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">## a data.frame and will attempt to redirect to the relevant reshape2 method;</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## please note that reshape2 is deprecated, and this redirection is now</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">## deprecated as well. To continue using melt methods from reshape2 while</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">## both libraries are attached, e.g. melt.list, you can prepend the namespace</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">## like reshape2::melt(out). In the next version, this warning will become an</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">## error.</a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">mod</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">## Model for learner.id=regr.lm.filtered; learner.class=FilterWrapper</a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">## Trained on: task.id = BostonHousing-example; obs = 506; features = 13</a>
-<a class="sourceLine" id="cb10-15" data-line-number="15">## Hyperparameters: fw.method=FSelector_ch...,fw.perc=0.501</a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(mod)</a>
-<a class="sourceLine" id="cb10-18" data-line-number="18">## [1] "crim"  "zn"    "rm"    "dis"   "rad"   "b"     "lstat"</a></code></pre></div>
+<a class="sourceLine" id="cb10-4" data-line-number="4">mod</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">## Model for learner.id=regr.lm.filtered; learner.class=FilterWrapper</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">## Trained on: task.id = BostonHousing-example; obs = 506; features = 13</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">## Hyperparameters: fw.method=FSelector_ch...,fw.perc=0.501</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span>(mod)</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">## [1] "crim"  "zn"    "rm"    "dis"   "rad"   "b"     "lstat"</a></code></pre></div>
 </div>
 </div>
 </div>
