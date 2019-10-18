@@ -45,6 +45,6 @@ articles:
   visualization: tutorial/visualization.html
   wrapper: tutorial/wrapper.html
 urls:
-  reference: https://mlr-org.github.io/mlr/reference
-  article: https://mlr-org.github.io/mlr/articles
+  reference: https://mlr.mlr-org.com/reference
+  article: https://mlr.mlr-org.com/articles
 

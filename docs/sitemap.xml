@@ -1,960 +1,960 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mlr-org.github.io/mlr/index.html</loc>
+    <loc>https://mlr.mlr-org.com/index.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/Aggregation.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/Aggregation.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/BenchmarkResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/BenchmarkResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/ClassifTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/ClassifTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/ClusterTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/ClusterTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/ConfusionMatrix.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/ConfusionMatrix.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/CostSensTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/CostSensTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/FailureModel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/FailureModel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/FeatSelControl.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/FeatSelControl.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/FeatSelResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/FeatSelResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/LearnerProperties.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/LearnerProperties.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/MeasureProperties.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/MeasureProperties.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/MultilabelTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/MultilabelTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/Prediction.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/Prediction.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/RLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/RLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/RegrTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/RegrTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/ResamplePrediction.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/ResamplePrediction.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/ResampleResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/ResampleResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/SurvTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/SurvTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/Task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/Task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/TaskDesc.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/TaskDesc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/TuneControl.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/TuneControl.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/TuneMultiCritControl.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/TuneMultiCritControl.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/TuneMultiCritResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/TuneMultiCritResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/TuneResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/TuneResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/addRRMeasure.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/addRRMeasure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/aggregations.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/aggregations.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/agri.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/agri.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/analyzeFeatSelResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/analyzeFeatSelResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/asROCRPrediction.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/asROCRPrediction.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/batchmark.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/batchmark.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/bc.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/bc.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/benchmark.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/benchmark.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/bh.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/bh.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/cache_helpers.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/cache_helpers.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/calculateConfusionMatrix.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/calculateConfusionMatrix.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/calculateROCMeasures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/calculateROCMeasures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/capLargeValues.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/capLargeValues.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/changeData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/changeData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/checkLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/checkLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/checkPredictLearnerOutput.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/checkPredictLearnerOutput.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/classif.featureless.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/classif.featureless.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/configureMlr.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/configureMlr.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/convertBMRToRankMatrix.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/convertBMRToRankMatrix.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/convertMLBenchObjToTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/convertMLBenchObjToTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/costiris.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/costiris.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/createDummyFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/createDummyFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/createSpatialResamplingPlots.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/createSpatialResamplingPlots.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/crossover.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/crossover.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/downsample.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/downsample.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/dropFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/dropFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/estimateRelativeOverfitting.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/estimateRelativeOverfitting.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/estimateResidualVariance.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/estimateResidualVariance.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/extractFDAFPCA.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/extractFDAFPCA.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/extractFDAFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/extractFDAFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/extractFDAFourier.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/extractFDAFourier.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/extractFDAMultiResFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/extractFDAMultiResFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/extractFDAWavelets.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/extractFDAWavelets.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/filterFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/filterFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/friedmanPostHocTestBMR.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/friedmanPostHocTestBMR.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/friedmanTestBMR.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/friedmanTestBMR.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/fuelsubset.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/fuelsubset.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateCalibrationData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateCalibrationData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateCritDifferencesData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateCritDifferencesData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateFeatureImportanceData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateFeatureImportanceData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateFilterValuesData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateFilterValuesData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateHyperParsEffectData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateHyperParsEffectData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateLearningCurveData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateLearningCurveData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generatePartialDependenceData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generatePartialDependenceData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/generateThreshVsPerfData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/generateThreshVsPerfData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRAggrPerformances.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRAggrPerformances.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRFeatSelResults.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRFeatSelResults.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRFilteredFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRFilteredFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRLearnerIds.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRLearnerIds.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRLearnerShortNames.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRLearnerShortNames.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRLearners.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRLearners.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRMeasureIds.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRMeasureIds.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRMeasures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRMeasures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRModels.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRModels.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRPerformances.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRPerformances.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRPredictions.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRPredictions.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRTaskDescriptions.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRTaskDescriptions.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRTaskDescs.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRTaskDescs.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRTaskIds.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRTaskIds.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getBMRTuneResults.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getBMRTuneResults.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getCaretParamSet.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getCaretParamSet.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getClassWeightParam.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getClassWeightParam.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getConfMatrix.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getConfMatrix.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getDefaultMeasure.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getDefaultMeasure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getFailureModelDump.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getFailureModelDump.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getFailureModelMsg.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getFailureModelMsg.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getFeatSelResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getFeatSelResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getFeatureImportance.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getFeatureImportance.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getFeatureImportanceLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getFeatureImportanceLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getFilteredFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getFilteredFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getHomogeneousEnsembleModels.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getHomogeneousEnsembleModels.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getHyperPars.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getHyperPars.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerId.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerId.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerModel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerModel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerNote.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerNote.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerPackages.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerPackages.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerParVals.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerParVals.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerParamSet.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerParamSet.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerPredictType.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerPredictType.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerShortName.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerShortName.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getLearnerType.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getLearnerType.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getMlrOptions.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getMlrOptions.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getMultilabelBinaryPerformances.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getMultilabelBinaryPerformances.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getNestedTuneResultsOptPathDf.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getNestedTuneResultsOptPathDf.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getNestedTuneResultsX.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getNestedTuneResultsX.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getOOBPreds.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getOOBPreds.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getOOBPredsLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getOOBPredsLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getParamSet.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getParamSet.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getPredictionDump.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getPredictionDump.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getPredictionProbabilities.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getPredictionProbabilities.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getPredictionResponse.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getPredictionResponse.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getPredictionTaskDesc.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getPredictionTaskDesc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getProbabilities.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getProbabilities.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getRRDump.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getRRDump.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getRRPredictionList.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getRRPredictionList.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getRRPredictions.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getRRPredictions.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getRRTaskDesc.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getRRTaskDesc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getRRTaskDescription.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getRRTaskDescription.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getResamplingIndices.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getResamplingIndices.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getStackedBaseLearnerPredictions.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getStackedBaseLearnerPredictions.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskClassLevels.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskClassLevels.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskCosts.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskCosts.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskDesc.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskDesc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskDescription.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskDescription.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskFeatureNames.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskFeatureNames.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskFormula.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskFormula.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskId.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskId.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskNFeats.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskNFeats.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskSize.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskSize.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskTargetNames.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskTargetNames.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskTargets.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskTargets.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTaskType.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTaskType.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTuneResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTuneResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/getTuneResultOptPath.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/getTuneResultOptPath.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/gunpoint.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/gunpoint.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/hasFunctionalFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/hasFunctionalFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/hasProperties.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/hasProperties.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/helpLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/helpLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/helpLearnerParam.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/helpLearnerParam.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/imputations.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/imputations.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/impute.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/impute.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/iris.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/iris.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/isFailureModel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/isFailureModel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/joinClassLevels.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/joinClassLevels.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/learnerArgsToControl.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/learnerArgsToControl.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/learners.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/learners.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listFilterEnsembleMethods.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listFilterEnsembleMethods.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listFilterMethods.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listFilterMethods.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listLearnerProperties.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listLearnerProperties.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listLearners.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listLearners.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listMeasureProperties.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listMeasureProperties.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listMeasures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listMeasures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/listTaskTypes.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/listTaskTypes.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/lung.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/lung.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeAggregation.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeAggregation.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeBaggingWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeBaggingWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeBaseWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeBaseWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeChainModel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeChainModel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeClassificationViaRegressionWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeClassificationViaRegressionWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeConstantClassWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeConstantClassWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeCostMeasure.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeCostMeasure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeCostSensClassifWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeCostSensClassifWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeCostSensRegrWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeCostSensRegrWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeCostSensWeightedPairsWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeCostSensWeightedPairsWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeCustomResampledMeasure.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeCustomResampledMeasure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeDownsampleWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeDownsampleWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeDummyFeaturesWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeDummyFeaturesWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeExtractFDAFeatMethod.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeExtractFDAFeatMethod.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeExtractFDAFeatsWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeExtractFDAFeatsWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeFeatSelWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeFeatSelWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeFilter.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeFilter.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeFilterEnsemble.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeFilterEnsemble.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeFilterWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeFilterWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeFixedHoldoutInstance.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeFixedHoldoutInstance.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeFunctionalData.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeFunctionalData.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeImputeMethod.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeImputeMethod.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeImputeWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeImputeWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeLearners.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeLearners.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMeasure.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMeasure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeModelMultiplexer.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeModelMultiplexer.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeModelMultiplexerParamSet.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeModelMultiplexerParamSet.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMulticlassWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMulticlassWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMultilabelBinaryRelevanceWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMultilabelBinaryRelevanceWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMultilabelClassifierChainsWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMultilabelClassifierChainsWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMultilabelDBRWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMultilabelDBRWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMultilabelNestedStackingWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMultilabelNestedStackingWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeMultilabelStackingWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeMultilabelStackingWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeOverBaggingWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeOverBaggingWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makePreprocWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makePreprocWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makePreprocWrapperCaret.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makePreprocWrapperCaret.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeRLearner.classif.fdausc.glm.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeRLearner.classif.fdausc.glm.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeRLearner.classif.fdausc.kernel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeRLearner.classif.fdausc.kernel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeRLearner.classif.fdausc.np.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeRLearner.classif.fdausc.np.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeRemoveConstantFeaturesWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeRemoveConstantFeaturesWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeResampleDesc.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeResampleDesc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeResampleInstance.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeResampleInstance.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeSMOTEWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeSMOTEWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeStackedLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeStackedLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTaskDesc.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTaskDesc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTaskDescInternal.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTaskDescInternal.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlCMAES.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlCMAES.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlDesign.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlDesign.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlGenSA.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlGenSA.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlGrid.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlGrid.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlIrace.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlIrace.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlMBO.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlMBO.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneControlRandom.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneControlRandom.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeTuneWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeTuneWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeUndersampleWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeUndersampleWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeWeightedClassesWrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeWeightedClassesWrapper.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/makeWrappedModel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/makeWrappedModel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/measures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/measures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/mergeBenchmarkResults.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/mergeBenchmarkResults.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/mergeSmallFactorLevels.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/mergeSmallFactorLevels.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/mlr-package.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/mlr-package.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/mlrFamilies.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/mlrFamilies.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/mtcars.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/mtcars.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/normalizeFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/normalizeFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/oversample.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/oversample.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/parallelization.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/parallelization.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/performance.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/performance.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/phoneme.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/phoneme.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/pid.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/pid.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotBMRBoxplots.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotBMRBoxplots.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotBMRRanksAsBarChart.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotBMRRanksAsBarChart.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotBMRSummary.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotBMRSummary.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotCalibration.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotCalibration.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotCritDifferences.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotCritDifferences.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotFilterValues.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotFilterValues.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotHyperParsEffect.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotHyperParsEffect.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotLearnerPrediction.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotLearnerPrediction.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotLearningCurve.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotLearningCurve.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotPartialDependence.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotPartialDependence.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotROCCurves.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotROCCurves.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotResiduals.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotResiduals.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotThreshVsPerf.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotThreshVsPerf.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/plotTuneMultiCritResult.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/plotTuneMultiCritResult.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/predict.WrappedModel.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/predict.WrappedModel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/predictLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/predictLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/reduceBatchmarkResults.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/reduceBatchmarkResults.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/reextractFDAFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/reextractFDAFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/regr.featureless.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/regr.featureless.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/regr.randomForest.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/regr.randomForest.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/reimpute.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/reimpute.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/removeConstantFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/removeConstantFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/removeHyperPars.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/removeHyperPars.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/resample.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/resample.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/selectFeatures.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/selectFeatures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setAggregation.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setAggregation.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setHyperPars.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setHyperPars.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setHyperPars2.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setHyperPars2.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setId.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setId.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setLearnerId.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setLearnerId.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setMeasurePars.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setMeasurePars.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setPredictThreshold.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setPredictThreshold.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setPredictType.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setPredictType.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/setThreshold.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/setThreshold.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/simplifyMeasureNames.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/simplifyMeasureNames.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/smote.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/smote.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/sonar.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/sonar.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/spam.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/spam.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/spatial.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/spatial.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/subsetTask.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/subsetTask.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/summarizeColumns.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/summarizeColumns.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/summarizeLevels.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/summarizeLevels.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/train.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/train.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/trainLearner.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/trainLearner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/tuneParams.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/tuneParams.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/tuneParamsMultiCrit.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/tuneParamsMultiCrit.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/tuneThreshold.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/tuneThreshold.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/wpbc.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/wpbc.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/reference/yeast.task.html</loc>
+    <loc>https://mlr.mlr-org.com/reference/yeast.task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/mlr.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/mlr.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/advanced_tune.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/advanced_tune.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/bagging.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/bagging.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/benchmark_experiments.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/benchmark_experiments.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/classifier_calibration.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/classifier_calibration.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/configureMlr.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/configureMlr.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/cost_sensitive_classif.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/cost_sensitive_classif.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_filter.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/create_filter.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_imputation.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/create_imputation.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_learner.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/create_learner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/create_measure.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/create_measure.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/example_tasks.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/example_tasks.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/feature_selection.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/feature_selection.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/filter_methods.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/filter_methods.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/functional_data.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/functional_data.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/handling_of_spatial_data.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/hyperpar_tuning_effects.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/hyperpar_tuning_effects.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/impute.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/impute.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/integrated_learners.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/integrated_learners.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/learner.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/learner.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/learning_curve.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/learning_curve.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/measures.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/measures.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/mlr_publications.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/mlr_publications.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/multilabel.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/multilabel.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/nested_resampling.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/nested_resampling.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/out_of_bag_predictions.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/out_of_bag_predictions.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/over_and_undersampling.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/over_and_undersampling.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/parallelization.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/parallelization.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/partial_dependence.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/partial_dependence.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/performance.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/performance.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/predict.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/predict.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/preproc.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/preproc.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/resample.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/resample.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/roc_analysis.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/roc_analysis.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/task.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/task.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/train.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/train.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/tune.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/tune.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/usecase_regression.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/usecase_regression.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/visualization.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/visualization.html</loc>
   </url>
   <url>
-    <loc>https://mlr-org.github.io/mlr/articles/tutorial/wrapper.html</loc>
+    <loc>https://mlr.mlr-org.com/articles/tutorial/wrapper.html</loc>
   </url>
 </urlset>
