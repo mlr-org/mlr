@@ -46,11 +46,11 @@ test_that("getFDAMultiResFeatures works on data.frame", {
   expect_true(nrow(ngp1) == nrow(gp))
   expect_true(ncol(ngp1) == 9L)
 
-  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", seg.lens = c(25, 25),
+  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", seg.lens = c(15, 15),
     res.level = 3, shift = 0.5)
   ngp2 = extractFDAMultiResFeatures()$reextract(data = gp, col = "fd", vals = ngp2)
   expect_true(nrow(ngp2) == nrow(gp))
-  expect_true(ncol(ngp2) == 16L)
+  expect_true(ncol(ngp2) == 18L)
 
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
 
@@ -216,6 +216,7 @@ test_that("extractBsignal features", {
 })
 
 test_that("extractFDAFeaturesDTW", {
+  requirePackagesOrSkip("rucrdtw")
   methods = list("UVVIS" = extractFDADTWKernel(), "NIR" = extractFDADTWKernel())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data

@@ -23,6 +23,7 @@ makeRLearner.classif.fdausc.knn = function() {
 #' @export
 trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric = "metric.lp", ...) {
 
+
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
@@ -35,10 +36,11 @@ trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = 
   par.funs = lapply(par.funs, function(x) getFromNamespace(x, "fda.usc"))
 
   trainfun = getFromNamespace("classif.knn", "fda.usc")
-  mod = do.call("trainfun",
+  # supress printer
+  mod = suppressAll(do.call("trainfun",
     c(list(group = d$target, fdataobj = data.fdclass, par.CV = par.cv, par.S = list(w = .weights)),
       list(metric = par.funs$metric)[which(names(par.funs) == "metric")],
-      ...))
+      ...)))
 }
 
 #' @export
