@@ -46,7 +46,7 @@ makeRLearner.classif.classiFunc.knn = function() {
       makeNumericLearnerParam(id = "dtwwindow", lower = 0, upper = 1, requires = quote(metric == "rucrdtw")),
       # TODO additional arguments to Data2fd
       # TODO additional arguments to custom metric
-      keys = c("task"),
+      keys = "task",
       forbidden = expression(dmin >= dmax,
         dmin1 >= dmax1 |
           # dmax1 > dmin2 |

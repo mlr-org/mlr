@@ -52,7 +52,7 @@ makeRLearner.classif.classiFunc.kernel = function() {
       makeNumericLearnerParam(id = "p", default = 2),
       # TODO additional arguments to Data2fd
       # TODO additional arguments to custom metric
-      keys = c("task"),
+      keys = "task",
       forbidden = expression(dmin > dmax,
         knn %% 2 == 0)
     ),

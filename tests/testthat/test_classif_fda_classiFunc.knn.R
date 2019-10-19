@@ -4,18 +4,19 @@ test_that("classif_classiFunc.knn behaves like original api", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
 
   data(ArrowHead, package = "classiFunc")
-  classes = ArrowHead[, "target"]
-  ArrowHead = ArrowHead[, colnames(ArrowHead) != "target"]
+  arrow.head = ArrowHead
+  classes = arrow.head[, "target"]
+  arrow.head = arrow.head[, colnames(arrow.head) != "target"]
 
   set.seed(getOption("mlr.debug.seed"))
-  train_inds = sample(1:nrow(ArrowHead), size = 0.8 * nrow(ArrowHead), replace = FALSE)
-  test_inds = (1:nrow(ArrowHead))[!(1:nrow(ArrowHead)) %in% train_inds]
+  train.inds = sample(1:nrow(arrow.head), size = 0.8 * nrow(arrow.head), replace = FALSE)
+  test.inds = (1:nrow(arrow.head))[!(1:nrow(arrow.head)) %in% train.inds]
 
-  mlearn = ArrowHead[train_inds, ]
-  glearn = classes[train_inds]
+  mlearn = arrow.head[train.inds, ]
+  glearn = classes[train.inds]
 
-  mtest = ArrowHead[test_inds, ]
-  gtest = classes[test_inds]
+  mtest = arrow.head[test.inds, ]
+  gtest = classes[test.inds]
 
   # classiFunc implementation
   set.seed(getOption("mlr.debug.seed"))
@@ -82,11 +83,12 @@ test_that("classiFunc.knn can be predicted in parallel", {
   requirePackagesOrSkip(c("classiFunc", "parallelMap"), default.method = "load")
 
   data(ArrowHead, package = "classiFunc")
+  arrow.head = ArrowHead
 
   lrn = makeLearner("classif.classiFunc.knn")
 
   # create task
-  fdata = makeFunctionalData(ArrowHead, exclude.cols = "target")
+  fdata = makeFunctionalData(arrow.head, exclude.cols = "target")
   task = makeClassifTask(data = fdata, target = "target")
 
   # train model
@@ -113,13 +115,14 @@ test_that("rucrdtw can be used as distance measure in classiFunc.knn", {
   requirePackagesOrSkip(c("classiFunc", "rucrdtw"), default.method = "load")
 
   data(ArrowHead, package = "classiFunc")
+  arrow.head = ArrowHead
 
   lrn = makeLearner("classif.classiFunc.knn",
     par.vals = list(metric = "L2", knn = 3),
     predict.type = "prob")
 
   # create task
-  fdata = makeFunctionalData(ArrowHead, exclude.cols = "target")
+  fdata = makeFunctionalData(arrow.head, exclude.cols = "target")
   task = makeClassifTask(data = fdata, target = "target")
 
   # train model

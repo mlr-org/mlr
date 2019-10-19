@@ -4,18 +4,19 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
 
   data(ArrowHead, package = "classiFunc")
-  classes = ArrowHead[, "target"]
-  ArrowHead = ArrowHead[, colnames(ArrowHead) != "target"]
+  arrow.head = ArrowHead
+  classes = arrow.head[, "target"]
+  arrow.head = arrow.head[, colnames(arrow.head) != "target"]
 
   set.seed(getOption("mlr.debug.seed"))
-  train_inds = sample(1:nrow(ArrowHead), size = 0.8 * nrow(ArrowHead), replace = FALSE)
-  test_inds = (1:nrow(ArrowHead))[!(1:nrow(ArrowHead)) %in% train_inds]
+  test.inds = sample(1:nrow(arrow.head), size = 0.8 * nrow(arrow.head), replace = FALSE)
+  test.inds = (1:nrow(arrow.head))[!(1:nrow(arrow.head)) %in% test.inds]
 
-  mlearn = ArrowHead[train_inds, ]
-  glearn = classes[train_inds]
+  mlearn = arrow.head[test.inds, ]
+  glearn = classes[test.inds]
 
-  mtest = ArrowHead[test_inds, ]
-  gtest = classes[test_inds]
+  mtest = arrow.head[test.inds, ]
+  gtest = classes[test.inds]
 
   # classiFunc implementation
   set.seed(getOption("mlr.debug.seed"))
