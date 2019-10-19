@@ -113,7 +113,7 @@ getSurvData = function(n = 100, p = 10) {
   beta = c(rep(1, 10), rep(0, p - 10))
   x = matrix(rnorm(n * p), n, p)
   colnames(x) = sprintf("x%01i", 1:p)
-  real.time = -(log(runif(n))) / (10 * exp(drop(x %*% beta)))
+  real.time = - (log(runif(n))) / (10 * exp(drop(x %*% beta)))
   cens.time = rexp(n, rate = 1 / 10)
   status = ifelse(real.time <= cens.time, TRUE, FALSE)
   obs.time = ifelse(real.time <= cens.time, real.time, cens.time) + 1

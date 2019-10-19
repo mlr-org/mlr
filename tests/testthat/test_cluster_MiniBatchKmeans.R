@@ -21,13 +21,13 @@ test_that("cluster_MiniBatchKmeans", {
     }
 
     if ("batch_size" %in% names(parset)) {
-      btch_size = parset[["batch_size"]]
+      btch.size = parset[["batch_size"]]
     } else {
-      btch_size = 10L
+      btch.size = 10L
     }
 
     m = ClusterR::MiniBatchKmeans(noclass.train,
-      clusters = clst, batch_size = btch_size)
+      clusters = clst, batch_size = btch.size)
     p = as.integer(ClusterR::predict_MBatchKMeans(data = noclass.test, CENTROIDS = m$centroids, fuzzy = FALSE))
     old.predicts.list[[i]] = p
   }
