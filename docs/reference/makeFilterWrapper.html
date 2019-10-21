@@ -8,12 +8,24 @@
 
 <title>Fuse learner with a feature filter method. — makeFilterWrapper • mlr</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- Google Site Verification -->
+<meta name="google-site-verification" content="BrjL5fpoyHZu1rR8rwnnM2MBO3u3iIFB8NsmSuOsY84" />
+
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
@@ -22,14 +34,12 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<link href="../extra.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 
+<!-- docsearch -->
 
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
@@ -38,16 +48,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-  <link href="../extra.css" rel="stylesheet">
-  <script src="../extra.js"></script>
 <meta property="og:title" content="Fuse learner with a feature filter method. — makeFilterWrapper" />
-
 <meta property="og:description" content="Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
 filterFeatures before every model fit." />
 <meta name="twitter:card" content="summary" />
 
+<!--
 
+//-->
+
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -57,8 +71,6 @@ filterFeatures before every model fit." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
   </head>
 
@@ -248,31 +260,21 @@ filterFeatures before every model fit." />
     <li>
       <a href="../articles/tutorial/talks_videos_workshops.html">Talks, Videos and Workshops</a>
     </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    mlr-org Packages
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="https://github.com/mlr-org/mlrMBO">mlrMBO</a>
+      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlrCPO">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
     </li>
     <li>
       <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
     </li>
     <li>
-      <a href="https://openml.github.io/openml-r/vignettes/OpenML.html">OpenML</a>
+      <a href="http://openml.github.io/openml-r/">OpenML</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
@@ -323,17 +325,15 @@ filterFeatures before every model fit." />
     </div>
 
     <div class="ref-description">
-    
     <p>Fuses a base learner with a filter method. Creates a learner
 object, which can be used like any other learner object. Internally uses
 <a href='filterFeatures.html'>filterFeatures</a> before every model fit.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>makeFilterWrapper</span>(<span class='no'>learner</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
   <span class='kw'>fw.base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fw.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fw.mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -387,11 +387,10 @@ are using more than one filter method, you need to pass the arguments in a
 named list via <code>more.args</code>. For example <code>more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='makeLearner.html'>Learner</a>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If <code>ensemble = TRUE</code>, ensemble feature selection using all methods specified
@@ -400,7 +399,6 @@ in <code>fw.method</code> is performed. At least two methods need to be selected
 <a href='getFilteredFeatures.html'>getFilteredFeatures</a>.</p>
 <p>Note that observation weights do not influence the filtering and are simply
 passed down to the next learner.</p>
-    
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
     <p>If <code>cache = TRUE</code>, the default mlr cache directory is used
@@ -410,7 +408,6 @@ passed to store the cache. The cache can be cleared with
 <code><a href='cache_helpers.html'>deleteCacheDir()</a></code>. Caching is disabled by default. Care should be taken
 when operating on large clusters due to possible write conflicts to disk if
 multiple workers try to write the same cache at the same time.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
@@ -444,7 +441,6 @@ multiple workers try to write the same cache at the same time.</p>
   <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
   <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
   <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
@@ -479,15 +475,10 @@ multiple workers try to write the same cache at the same time.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#caching">Caching</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
