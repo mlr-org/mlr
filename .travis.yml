@@ -1,8 +1,6 @@
 language: r
 dist: bionic
-cache:
-  - packages
-  - ccache
+cache: packages
 latex: true
 env:
   global:
