@@ -1,4 +1,6 @@
-# Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
+# mlr <img src="man/figures/logo_navbar.png" align="right" />
+
+Machine learning in R.
 
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)

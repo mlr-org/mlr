@@ -1,6 +1,7 @@
 url: https://mlr.mlr-org.com
 
 template:
+  package: mlr3pkgdowntemplate
   params:
     bootswatch: journal
     docsearch:
@@ -18,6 +19,7 @@ toc:
   depth: 3
 
 home:
+  strip_header: true
   links:
   - text: Cheatsheet
     href: https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf
@@ -123,17 +125,14 @@ navbar:
       href: articles/tutorial/mlr_publications.html
     - text: Talks, Videos and Workshops
       href: articles/tutorial/talks_videos_workshops.html
-
-  - text: mlr-org Packages
-    menu:
     - text: mlrMBO
-      href: https://github.com/mlr-org/mlrMBO
+      href: https://mlrmbo.mlr-org.com
     - text: mlrCPO
-      href: https://github.com/mlr-org/mlrCPO
+      href: https://https://mlrcpo.mlr-org.com
     - text: mlrHyperopt
       href: https://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
-      href: https://openml.github.io/openml-r/vignettes/OpenML.html
+      href: http://openml.github.io/openml-r/
 
   right:
   - icon: fa-github fa-lg
