@@ -7,7 +7,6 @@ template:
     docsearch:
       api_key: e300ecafdf04fe1199e3339c825ce7d0
       index_name: mlr
-  assets: pkgdown/assets
   default_assets: false
 
 development:
