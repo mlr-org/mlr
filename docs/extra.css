@@ -39,6 +39,7 @@ body {
   font-size: 15px;
   font-weight: 400;
   color: black;
+  padding-top: 15px; /* a bit of space to the navbar */
 }
 
 
