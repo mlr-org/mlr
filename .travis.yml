@@ -1,6 +1,6 @@
 language: r
 sudo: false
-dist: xenial
+dist: bionic
 cache:
   - packages
   - ccache
