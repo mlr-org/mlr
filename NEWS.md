@@ -8,6 +8,10 @@
 
 - Updated ParamSet for learners `classif.gbm` and `regr.gbm`. Specifically, param `shrinkage` now defaults to 0.1 instead of 0.001. Also more choices for param `distribution` have been added. Internal parallelization by the package is now suppressed (param `n.cores`). (@pat-s, #2651)
 
+## learners - bugfixes
+
+- `h2o.gbm` learners were not running until `wcol` was passed somehow due to an internal bug. In addition, this bug caused another issue during prediction where the prediction `data.frame` was somehow formatted as a character rather a numeric. Thanks to @nagdevAmruthnath for bringing this up in #2630.
+
 ## filters - general
 
 - Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information (@pat-s, #2649)
