@@ -337,6 +337,14 @@
 <li>Updated ParamSet for learners <code>classif.gbm</code> and <code>regr.gbm</code>. Specifically, param <code>shrinkage</code> now defaults to 0.1 instead of 0.001. Also more choices for param <code>distribution</code> have been added. Internal parallelization by the package is now suppressed (param <code>n.cores</code>). (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2651'>#2651</a>)</li>
 </ul>
 </div>
+<div id="learners---bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---bugfixes" class="anchor"></a>learners - bugfixes</h2>
+<ul>
+<li>
+<code>h2o.gbm</code> learners were not running until <code>wcol</code> was passed somehow due to an internal bug. In addition, this bug caused another issue during prediction where the prediction <code>data.frame</code> was somehow formatted as a character rather a numeric. Thanks to <a href='https://github.com/nagdevAmruthnath'>@nagdevAmruthnath</a> for bringing this up in <a href='https://github.com/mlr-org/mlr/issues/2630'>#2630</a>.</li>
+</ul>
+</div>
 <div id="filters---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filters---general" class="anchor"></a>filters - general</h2>
