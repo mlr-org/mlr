@@ -1,14 +1,9 @@
-version: 2
+version: 2.1
 jobs:
   build:
-  r-361:
     docker:
       - image: rocker/verse:3.6.1
-  r-353:
-    docker:
       - image: rocker/verse:3.5.3
-  r-344:
-    docker:
       - image: rocker/verse:3.4.4
     steps:
       - checkout
