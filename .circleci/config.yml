@@ -13,7 +13,6 @@ jobs:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
       # install deps and check pkg ---------------------------------------------
-      - run: apt-get install -y sudo
       - run:
           name: Install package dependencies
           command: |
@@ -52,7 +51,6 @@ jobs:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
       # install deps and check pkg ---------------------------------------------
-      - run: apt-get install -y sudo
       - run:
           name: Install package dependencies
           command: |
@@ -91,7 +89,6 @@ jobs:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
       # install deps and check pkg ---------------------------------------------
-      - run: apt-get install -y sudo
       - run:
           name: Install package dependencies
           command: |
