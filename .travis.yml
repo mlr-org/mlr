@@ -1,9 +1,6 @@
 language: r
-sudo: false
-dist: xenial
-cache:
-  - packages
-  - ccache
+dist: bionic
+cache: packages
 latex: true
 env:
   global:
