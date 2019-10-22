@@ -2,21 +2,21 @@
   "index_name": "mlr",
   "start_urls": [
     {
-      "url": "https://mlr-org.github.io/mlr/index.html",
+      "url": "https://mlr.mlr-org.com/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://mlr-org.github.io/mlr/reference",
+      "url": "https://mlr.mlr-org.com/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://mlr-org.github.io/mlr/articles",
+      "url": "https://mlr.mlr-org.com/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://mlr-org.github.io/mlr/sitemap.xml"
+    "https://mlr.mlr-org.com/sitemap.xml"
   ],
   "selectors": {
     "homepage": {

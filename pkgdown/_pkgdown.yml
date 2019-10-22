@@ -1,25 +1,24 @@
-url: https://mlr-org.github.io/mlr
+url: https://mlr.mlr-org.com
 
 template:
+  package: mlr3pkgdowntemplate
   params:
-    bootswatch: cosmo
+    bootswatch: journal
     docsearch:
       api_key: e300ecafdf04fe1199e3339c825ce7d0
       index_name: mlr
-  path: pkgdown/templates
-  assets: pkgdown/assets
   default_assets: false
 
 development:
-  mode: unreleased
-  destination: devel
+  destination: dev
   version_label: default
-  version_tooltip: "Github version"
+  version_tooltip: "Development version"
 
 toc:
   depth: 3
 
 home:
+  strip_header: true
   links:
   - text: Cheatsheet
     href: https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf
@@ -28,8 +27,8 @@ navbar:
   title:
   type: default
   left:
-  #- icon: fa-home
-  #  href: index.html
+  - icon: fa-home
+    href: index.html
   - text: Basics
     menu:
     - text: Tasks
@@ -125,17 +124,14 @@ navbar:
       href: articles/tutorial/mlr_publications.html
     - text: Talks, Videos and Workshops
       href: articles/tutorial/talks_videos_workshops.html
-
-  - text: mlr-org Packages
-    menu:
     - text: mlrMBO
-      href: https://github.com/mlr-org/mlrMBO
+      href: https://mlrmbo.mlr-org.com
     - text: mlrCPO
-      href: https://github.com/mlr-org/mlrCPO
+      href: https://https://mlrcpo.mlr-org.com
     - text: mlrHyperopt
       href: https://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
-      href: https://openml.github.io/openml-r/vignettes/OpenML.html
+      href: http://openml.github.io/openml-r/
 
   right:
   - icon: fa-github fa-lg
