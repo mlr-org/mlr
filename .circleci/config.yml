@@ -19,7 +19,7 @@ jobs:
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = 6, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'if (!requireNamespace("remotes") || "remotes" %in% old.packages()) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
             R -q -e 'tic::before_install()'
@@ -56,7 +56,7 @@ jobs:
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = 6, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'if (!requireNamespace("remotes") || "remotes" %in% old.packages()) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
             R -q -e 'tic::before_install()'
@@ -93,7 +93,7 @@ jobs:
             sudo apt update
             sudo apt install -y libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
             echo -e 'options(Ncpus = 6, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'if (!requireNamespace("remotes") || "remotes" %in% old.packages()) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
             R -q -e 'tic::before_install()'
