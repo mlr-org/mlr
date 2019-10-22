@@ -1,6 +1,7 @@
 language: r
 dist: bionic
 cache:
+  - packages
   - $HOME/.ccache
 latex: true
 env:
