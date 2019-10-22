@@ -2,9 +2,9 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: rocker/verse:3.6.1
-      - image: rocker/verse:3.5.3
-      - image: rocker/verse:3.4.4
+      - image: rocker/base:3.6.1
+      - image: rocker/base:3.5.3
+      - image: rocker/base:3.4.4
     steps:
       - checkout
 
