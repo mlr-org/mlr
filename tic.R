@@ -1,3 +1,7 @@
+if (ci_on_travis()) {
+  get_stage("before_script") %>%
+  add_code_step(install.packages("rJava", type = "source"))
+}
 get_stage("script") %>%
   add_code_step(RWeka::WPM("refresh-cache")) %>%
   add_code_step(RWeka::WPM('install-package', 'XMeans'))
