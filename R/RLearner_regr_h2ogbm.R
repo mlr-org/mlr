@@ -57,22 +57,25 @@ makeRLearner.regr.h2o.gbm = function() {
 #' @export
 trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
 
+  params = list(...)
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
     options("h2o.use.data.table" = TRUE)
   }
-  y = getTaskTargetNames(.task)
-  x = getTaskFeatureNames(.task)
-  d = getTaskData(.task, subset = .subset)
-  if (!missing(.weights)) {
-    wcol = ".mlr.weights"
-    d[[wcol]] = .weights
+
+  params$y = getTaskTargetNames(.task)
+  params$x = getTaskFeatureNames(.task)
+  params$training_frame = getTaskData(.task, subset = .subset)
+
+  if (!is.null(.weights)) {
+    params$weights_column = .weights
   }
-  h2of = h2o::as.h2o(d)
-  model = h2o::h2o.gbm(y = y, x = x, training_frame = h2of, weights_column = wcol, ...)
-  h2o::h2o.rm(h2of)
+
+  params$training_frame = h2o::as.h2o(params$training_frame)
+
+  model = do.call(h2o::h2o.gbm, params)
   return(model)
 }
 
@@ -82,6 +85,7 @@ predictLearner.regr.h2o.gbm = function(.learner, .model, .newdata, ...) {
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
+
   h2o::h2o.rm(h2of)
   h2o::h2o.rm(p)
   return(p.df$predict)
