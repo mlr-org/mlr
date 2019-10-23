@@ -1,6 +1,8 @@
 language: r
 dist: bionic
-cache: packages
+cache:
+  - packages
+  - $HOME/.ccache
 latex: true
 env:
   global:
@@ -19,6 +21,7 @@ matrix:
     env:
       - FULL=true
 
+
 addons:
   apt:
     packages:
@@ -34,8 +37,8 @@ addons:
 
 before_install:
   - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
-  #- R -q -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
-  #- R -q -e 'if (!requireNamespace("genefilter", quietly = TRUE)) BiocManager::install("genefilter")'
+  - echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+  - echo -e 'options(Ncpus = parallel::detectCores(), repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
   - R -q -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
   - R -q -e 'if (!requireNamespace("curl", quietly = TRUE)) install.packages("curl")'
   - R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
