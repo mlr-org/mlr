@@ -110,7 +110,7 @@ workflows:
       - "r-3.5.3"
       - deploy:
           requires:
-            "r-3.6.1"
+            - "r-3.6.1"
 # CRON job daily at 3 am in the morning
 # - runs the "build" job on the master branch
   nightly:
