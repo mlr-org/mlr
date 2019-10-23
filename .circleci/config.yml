@@ -36,6 +36,31 @@ jobs:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
           paths:
             - /usr/local/lib/R/site-library
+  deploy:
+    environment:
+      - id_rsa: true
+      - FULL: true
+    docker:
+      - image: rocker/verse:3.6.1
+    steps:
+      - checkout
+      - run: echo "$(date -d "$D" '+%d')3.6.1" > /tmp/_tmp_file
+      - restore_cache:
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
+      # Add your own SSH key fingerprint here, see https://circleci.com/docs/2.0/gh-bb-integration/#creating-a-github-deploy-key
+      # and https://discuss.circleci.com/t/adding-ssh-keys-fails/7747/24 on how to create a valid key
+      #- add_ssh_keys:
+      #    fingerprints:
+      #      - "15:9c:45:50:dc:94:87:6f:a9:ca:e1:fc:6a:b9:7e:62"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
+            R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
+            R -q -e 'tic::before_deploy()'
+            R -q -e 'tic::deploy()'
+            R -q -e 'tic::after_deploy()'
 
   "r-3.5.3":
     docker:
@@ -83,6 +108,9 @@ workflows:
     jobs:
       - "r-3.6.1"
       - "r-3.5.3"
+      - deploy:
+          requires:
+            "r-3.6.1"
 # CRON job daily at 3 am in the morning
 # - runs the "build" job on the master branch
   nightly:
