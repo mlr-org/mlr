@@ -3,9 +3,8 @@ language: r
 dist: bionic
 cache:
   - packages
-  directories:
-   - $HOME/Library/Caches/Homebrew
-   - $HOME/.ccache
+  - $HOME/Library/Caches/Homebrew
+  - $HOME/.ccache
 latex: true
 env:
   global:
