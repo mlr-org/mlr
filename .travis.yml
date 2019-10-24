@@ -14,6 +14,8 @@ env:
 
 addons:
   homebrew:
+    casks:
+    - java11
     taps: osgeo/osgeo4mac
     packages:
     - ccache
@@ -24,7 +26,6 @@ addons:
     - jags
     - gsl
     - gmp
-    - java11
 
 before_install:
   - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
