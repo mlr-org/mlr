@@ -16,7 +16,9 @@ addons:
   homebrew:
     casks:
     - java11
-    taps: osgeo/osgeo4mac
+    taps:
+    - osgeo/osgeo4mac
+    - homebrew/cask-versions
     packages:
     - ccache
     - gdal
