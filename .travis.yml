@@ -31,6 +31,7 @@ before_install:
   - mkdir $HOME/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
   - echo -e 'options(Ncpus = parallel::detectCores(), repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
   - R -q -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
+  - R -q -e 'if (!requireNamespace("devtools", quietly = TRUE)) install.packages("remotes")'
   - R -q -e 'if (!requireNamespace("curl", quietly = TRUE)) install.packages("curl")'
   - R CMD javareconf
   - R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
