@@ -3,7 +3,9 @@ language: r
 dist: bionic
 cache:
   - packages
-  - $HOME/.ccache
+  directories:
+   - $HOME/Library/Caches/Homebrew
+   - $HOME/.ccache
 latex: true
 env:
   global:
@@ -13,12 +15,8 @@ env:
     - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
 
 addons:
-  homebrew:
-    casks:
-    - java11
     taps:
     - osgeo/osgeo4mac
-    - homebrew/cask-versions
     packages:
     - ccache
     - gdal
@@ -35,6 +33,7 @@ before_install:
   - echo -e 'options(Ncpus = parallel::detectCores(), repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
   - R -q -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
   - R -q -e 'if (!requireNamespace("curl", quietly = TRUE)) install.packages("curl")'
+  - R CMD javareconf
   - R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
 install: R -q -e 'tic::install()'
 before_script: R -q -e 'tic::before_script()'
