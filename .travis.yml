@@ -4,7 +4,7 @@ cache:
   - packages
   - ccache
   directories:
-    - $HOME/Library/Caches/Homebrew
+  - $HOME/Library/Caches/Homebrew
 latex: true
 env:
   global:
