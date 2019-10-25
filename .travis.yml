@@ -1,10 +1,10 @@
 os: osx
 language: r
-dist: bionic
 cache:
   - packages
-  - $HOME/Library/Caches/Homebrew
-  - $HOME/.ccache
+  - ccache
+  directories:
+    - $HOME/Library/Caches/Homebrew
 latex: true
 env:
   global:
