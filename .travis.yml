@@ -1,10 +1,10 @@
 os: osx
 language: r
 cache:
-  - packages
-  - ccache
   directories:
   - $HOME/Library/Caches/Homebrew
+  - /Users/travis/R/Library
+  - $HOME/.ccache
 latex: true
 env:
   global:
