@@ -29,7 +29,7 @@ addons:
     - gmp
 
 before_install:
-  - brew cleanup; fi
+  - brew cleanup
   # Credit https://discourse.brew.sh/t/best-practice-for-homebrew-on-travis-brew-update-is-5min-to-build-time/5215/9
   # Cache only .git files under "/usr/local/Homebrew" so "brew update" does not take 5min every build
   - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
