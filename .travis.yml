@@ -3,6 +3,7 @@ language: r
 cache:
   directories:
   - $HOME/Library/Caches/Homebrew
+  - /usr/local/Homebrew
   - /Users/travis/R/Library
   - $HOME/.ccache
 latex: true
