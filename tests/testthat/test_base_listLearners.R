@@ -1,7 +1,7 @@
 context("listLearners")
 
 test_that("listLearners", {
-  x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
+  x1 = listLearners(create = FALSE, warn.missing.packages = FALSE) # nocov start
   expect_data_frame(x1, min.rows = 1L, min.cols = 10)
   expect_set_equal(x1$type, c("classif", "regr", "cluster", "surv", "multilabel"))
   expect_subset(listLearnerProperties(), names(x1))
@@ -30,8 +30,8 @@ test_that("listLearners printer (#1336)", {
   width = getOption("width")
   options(width = 1000)
   out = capture.output(print(x1), file = NULL)
-  expect_equal(length(stri_match_all(out, regex = "\n")), 8)
-  out = capture.output(print(x1, n = 10), file = NULL)
-  expect_equal(length(stri_match_all(out, regex = "\n")), 12)
-  options(width = width)
+  expect_equal(length(stri_match_all(out, regex = "\n")), 334)
+  out = capture.output(head(x1, n = 10), file = NULL)
+  expect_equal(length(stri_match_all(out, regex = "\n")), 11)
+  options(width = width) # nocov end
 })
