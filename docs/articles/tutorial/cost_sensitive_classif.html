@@ -417,7 +417,7 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4">## Prediction: 1000 observations</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">## predict.type: prob</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">## threshold: Bad=0.17,Good=0.83</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## time: 0.01</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">## time: 0.02</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">##   id truth   prob.Bad prob.Good response</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">## 1  1  Good 0.03525092 0.9647491     Good</a>
 <a class="sourceLine" id="cb4-10" data-line-number="10">## 2  2   Bad 0.63222363 0.3677764      Bad</a>
@@ -502,25 +502,54 @@
 <p>In order to minimize the average costs, observations from the less costly class should be given higher importance during training. This can be achieved by <em>weighting</em> the classes, provided that the learner under consideration has a ‘class weights’ or an ‘observation weights’ argument. To find out which learning methods support either type of weights have a look at the list of <a href="integrated_learners.html" target="_blank">integrated learners</a> in the Appendix or use <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Learners that accept observation weights</span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"weights"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">##              class     package</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">## 1 classif.binomial       stats</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">## 2      classif.C50         C50</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">## 3  classif.cforest       party</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">## 4    classif.ctree       party</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">## 5 classif.cvglmnet      glmnet</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">## 6    classif.earth earth,stats</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">## ... (#rows: 24, #cols: 2)</a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co"># Learners that can deal with class weights</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"class.weights"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
-<a class="sourceLine" id="cb11-14" data-line-number="14">##                       class   package</a>
-<a class="sourceLine" id="cb11-15" data-line-number="15">## 1              classif.ksvm   kernlab</a>
-<a class="sourceLine" id="cb11-16" data-line-number="16">## 2  classif.LiblineaRL1L2SVC LiblineaR</a>
-<a class="sourceLine" id="cb11-17" data-line-number="17">## 3 classif.LiblineaRL1LogReg LiblineaR</a>
-<a class="sourceLine" id="cb11-18" data-line-number="18">## 4  classif.LiblineaRL2L1SVC LiblineaR</a>
-<a class="sourceLine" id="cb11-19" data-line-number="19">## 5 classif.LiblineaRL2LogReg LiblineaR</a>
-<a class="sourceLine" id="cb11-20" data-line-number="20">## 6    classif.LiblineaRL2SVC LiblineaR</a>
-<a class="sourceLine" id="cb11-21" data-line-number="21">## ... (#rows: 9, #cols: 2)</a></code></pre></div>
+<a class="sourceLine" id="cb11-3" data-line-number="3">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">## ParamHelpers uses NA as a special value for dependent parameters.</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">## ParamHelpers uses NA as a special value for dependent parameters.</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">##                       class         package</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">## 1          classif.binomial           stats</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">## 2               classif.C50             C50</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">## 3           classif.cforest           party</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">## 4             classif.ctree           party</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">## 5          classif.cvglmnet          glmnet</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">## 6             classif.earth     earth,stats</a>
+<a class="sourceLine" id="cb11-15" data-line-number="15">## 7            classif.evtree          evtree</a>
+<a class="sourceLine" id="cb11-16" data-line-number="16">## 8        classif.extraTrees      extraTrees</a>
+<a class="sourceLine" id="cb11-17" data-line-number="17">## 9        classif.fdausc.knn         fda.usc</a>
+<a class="sourceLine" id="cb11-18" data-line-number="18">## 10         classif.gamboost          mboost</a>
+<a class="sourceLine" id="cb11-19" data-line-number="19">## 11              classif.gbm             gbm</a>
+<a class="sourceLine" id="cb11-20" data-line-number="20">## 12         classif.glmboost          mboost</a>
+<a class="sourceLine" id="cb11-21" data-line-number="21">## 13           classif.glmnet          glmnet</a>
+<a class="sourceLine" id="cb11-22" data-line-number="22">## 14 classif.h2o.deeplearning             h2o</a>
+<a class="sourceLine" id="cb11-23" data-line-number="23">## 15          classif.h2o.glm             h2o</a>
+<a class="sourceLine" id="cb11-24" data-line-number="24">## 16           classif.logreg           stats</a>
+<a class="sourceLine" id="cb11-25" data-line-number="25">## 17         classif.multinom            nnet</a>
+<a class="sourceLine" id="cb11-26" data-line-number="26">## 18             classif.nnet            nnet</a>
+<a class="sourceLine" id="cb11-27" data-line-number="27">## 19              classif.plr         stepPlr</a>
+<a class="sourceLine" id="cb11-28" data-line-number="28">## 20           classif.probit           stats</a>
+<a class="sourceLine" id="cb11-29" data-line-number="29">## 21  classif.randomForestSRC randomForestSRC</a>
+<a class="sourceLine" id="cb11-30" data-line-number="30">## 22           classif.ranger          ranger</a>
+<a class="sourceLine" id="cb11-31" data-line-number="31">## 23            classif.rpart           rpart</a>
+<a class="sourceLine" id="cb11-32" data-line-number="32">## 24          classif.xgboost         xgboost</a>
+<a class="sourceLine" id="cb11-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb11-34" data-line-number="34"><span class="co"># Learners that can deal with class weights</span></a>
+<a class="sourceLine" id="cb11-35" data-line-number="35"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"class.weights"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
+<a class="sourceLine" id="cb11-36" data-line-number="36">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</a>
+<a class="sourceLine" id="cb11-37" data-line-number="37">## ParamHelpers uses NA as a special value for dependent parameters.</a>
+<a class="sourceLine" id="cb11-38" data-line-number="38"></a>
+<a class="sourceLine" id="cb11-39" data-line-number="39">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</a>
+<a class="sourceLine" id="cb11-40" data-line-number="40">## ParamHelpers uses NA as a special value for dependent parameters.</a>
+<a class="sourceLine" id="cb11-41" data-line-number="41">##                            class      package</a>
+<a class="sourceLine" id="cb11-42" data-line-number="42">## 1                   classif.ksvm      kernlab</a>
+<a class="sourceLine" id="cb11-43" data-line-number="43">## 2       classif.LiblineaRL1L2SVC    LiblineaR</a>
+<a class="sourceLine" id="cb11-44" data-line-number="44">## 3      classif.LiblineaRL1LogReg    LiblineaR</a>
+<a class="sourceLine" id="cb11-45" data-line-number="45">## 4       classif.LiblineaRL2L1SVC    LiblineaR</a>
+<a class="sourceLine" id="cb11-46" data-line-number="46">## 5      classif.LiblineaRL2LogReg    LiblineaR</a>
+<a class="sourceLine" id="cb11-47" data-line-number="47">## 6         classif.LiblineaRL2SVC    LiblineaR</a>
+<a class="sourceLine" id="cb11-48" data-line-number="48">## 7 classif.LiblineaRMultiClassSVC    LiblineaR</a>
+<a class="sourceLine" id="cb11-49" data-line-number="49">## 8           classif.randomForest randomForest</a>
+<a class="sourceLine" id="cb11-50" data-line-number="50">## 9                    classif.svm        e1071</a></code></pre></div>
 <p>Alternatively, <em>over- and undersampling</em> techniques can be used.</p>
 <div id="i--weighting" class="section level4">
 <h4 class="hasAnchor">
@@ -602,7 +631,7 @@
 <a class="sourceLine" id="cb17-4" data-line-number="4">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> credit.task)</a>
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(credit.costs, mmce))</a>
 <a class="sourceLine" id="cb17-6" data-line-number="6">## credit.costs         mmce </a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">##        0.439        0.335</a></code></pre></div>
+<a class="sourceLine" id="cb17-7" data-line-number="7">##        0.441        0.337</a></code></pre></div>
 <p>Note that in the above example the learner was trained on the oversampled task <code>credit.task.over</code>. In order to get the training performance on the original task predictions were calculated for <code>credit.task</code>.</p>
 <p>We usually prefer resampled performance values, but simply calling <code><a href="../../reference/resample.html">resample()</a></code> on the oversampled task does not work since predictions have to be based on the original task. The solution is to create a wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) via function <code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>. Internally, <code><a href="../../reference/oversample.html">oversample()</a></code> is called before training, but predictions are done on the original data.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.multinom"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>)</a>
@@ -635,7 +664,7 @@
 <a class="sourceLine" id="cb19-7" data-line-number="7">tune.res</a>
 <a class="sourceLine" id="cb19-8" data-line-number="8">## Tune result:</a>
 <a class="sourceLine" id="cb19-9" data-line-number="9">## Op. pars: osw.rate=7</a>
-<a class="sourceLine" id="cb19-10" data-line-number="10">## credit.costs.test.mean=0.5229181,mmce.test.mean=0.3829938</a></code></pre></div>
+<a class="sourceLine" id="cb19-10" data-line-number="10">## credit.costs.test.mean=0.5219171,mmce.test.mean=0.3819928</a></code></pre></div>
 </div>
 </div>
 </div>
@@ -720,10 +749,10 @@
 <a class="sourceLine" id="cb22-2" data-line-number="2">tune.res</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">## $th</a>
 <a class="sourceLine" id="cb22-4" data-line-number="4">##          1          2          3 </a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">## 0.03511152 0.42185048 0.54303801 </a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">## 0.04206368 0.47912405 0.47881227 </a>
 <a class="sourceLine" id="cb22-6" data-line-number="6">## </a>
 <a class="sourceLine" id="cb22-7" data-line-number="7">## $perf</a>
-<a class="sourceLine" id="cb22-8" data-line-number="8">## [1] 4.178</a></code></pre></div>
+<a class="sourceLine" id="cb22-8" data-line-number="8">## [1] 4.594</a></code></pre></div>
 <p>For comparison we show the standardized version of the theoretically motivated threshold vector chosen above.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">th<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(th)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">##          1          2          3 </a>
@@ -747,8 +776,8 @@
 <a class="sourceLine" id="cb24-8" data-line-number="8">  <span class="dt">measures =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(wf.costs, mmce), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb24-9" data-line-number="9">tune.res</a>
 <a class="sourceLine" id="cb24-10" data-line-number="10">## Tune result:</a>
-<a class="sourceLine" id="cb24-11" data-line-number="11">## Op. pars: wcw.weight=0.957,0.0099...</a>
-<a class="sourceLine" id="cb24-12" data-line-number="12">## wf.costs.test.mean=2.9510377,mmce.test.mean=0.2400260</a></code></pre></div>
+<a class="sourceLine" id="cb24-11" data-line-number="11">## Op. pars: wcw.weight=0.544,0.0852...</a>
+<a class="sourceLine" id="cb24-12" data-line-number="12">## wf.costs.test.mean=2.5099079,mmce.test.mean=0.2340379</a></code></pre></div>
 </div>
 </div>
 </div>
