@@ -288,13 +288,13 @@ test_that("benchmark works with ensemble filters", {
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   rin = makeResampleDesc("CV", iters = 2L)
-  tune_ctrl = makeTuneControlRandom(maxit = 3)
+  tune.ctrl = makeTuneControlRandom(maxit = 3)
 
-  tune_wrapper_svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
-    control = tune_ctrl, show.info = FALSE,
+  tune.wrapper.svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
+    control = tune.ctrl, show.info = FALSE,
     measures = list(acc))
 
-  expect_class(benchmark(learners = tune_wrapper_svm, task = tasks,
+  expect_class(benchmark(learners = tune.wrapper.svm, task = tasks,
     resampling = rin, measures = list(acc)), "BenchmarkResult"
   )
 })
@@ -304,7 +304,7 @@ test_that("benchmark handles failure models correctly", {
   task = binaryclass.task
 
   # Define filter parameter set
-  filter_ps = makeParamSet(makeIntegerParam("fw.abs", lower = 1,
+  filter.ps = makeParamSet(makeIntegerParam("fw.abs", lower = 1,
     upper = getTaskNFeats(task)))
 
   # Define tuning control
@@ -315,44 +315,44 @@ test_that("benchmark handles failure models correctly", {
   outer = mlr::makeResampleDesc("CV", stratify = FALSE, iters = 2L)
 
   # Define learner
-  quiet_learner = makeLearner("classif.__mlrmocklearners__3",
+  quiet.learner = makeLearner("classif.__mlrmocklearners__3",
     config = list("on.learner.error" = "quiet"))
-  quiet_learner = makeFilterWrapper(quiet_learner, fw.method = "FSelector_chi.squared")
+  quiet.learner = makeFilterWrapper(quiet.learner, fw.method = "FSelector_chi.squared")
 
-  quiet_learner = makeTuneWrapper(quiet_learner, resampling = inner, control = ctrl,
-    par.set = filter_ps, show.info = TRUE)
+  quiet.learner = makeTuneWrapper(quiet.learner, resampling = inner, control = ctrl,
+    par.set = filter.ps, show.info = TRUE)
 
-  stop_learner = makeLearner("classif.__mlrmocklearners__3",
+  stop.learner = makeLearner("classif.__mlrmocklearners__3",
     config = list("on.learner.error" = "stop"))
-  stop_learner = makeFilterWrapper(stop_learner, fw.method = "FSelector_chi.squared")
+  stop.learner = makeFilterWrapper(stop.learner, fw.method = "FSelector_chi.squared")
 
-  stop_learner = makeTuneWrapper(stop_learner, resampling = inner, control = ctrl,
-    par.set = filter_ps, show.info = TRUE)
+  stop.learner = makeTuneWrapper(stop.learner, resampling = inner, control = ctrl,
+    par.set = filter.ps, show.info = TRUE)
 
-  warn_learner = makeLearner("classif.__mlrmocklearners__3",
+  warn.learner = makeLearner("classif.__mlrmocklearners__3",
     config = list("on.learner.error" = "warn"))
-  warn_learner = makeFilterWrapper(warn_learner, fw.method = "FSelector_chi.squared")
+  warn.learner = makeFilterWrapper(warn.learner, fw.method = "FSelector_chi.squared")
 
-  warn_learner = makeTuneWrapper(warn_learner, resampling = inner, control = ctrl,
-    par.set = filter_ps, show.info = TRUE)
+  warn.learner = makeTuneWrapper(warn.learner, resampling = inner, control = ctrl,
+    par.set = filter.ps, show.info = TRUE)
 
   # Tests
   # Expect benchmark failing
-  expect_error(benchmark(learners = stop_learner, tasks = task, resamplings = outer,
+  expect_error(benchmark(learners = stop.learner, tasks = task, resamplings = outer,
     keep.pred = FALSE, models = FALSE, show.info = TRUE))
 
   # Expect benchmark warning
-  expect_warning(benchmark(learners = warn_learner, tasks = task, resamplings = outer,
+  expect_warning(benchmark(learners = warn.learner, tasks = task, resamplings = outer,
     keep.pred = FALSE, models = FALSE, show.info = TRUE))
 
   # Expect benchmark messages
   expect_message({
-    bmr = benchmark(learners = quiet_learner, tasks = task,
+    bmr = benchmark(learners = quiet.learner, tasks = task,
       resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)
   })
-  aggr_perf = getBMRAggrPerformances(bmr = bmr)
+  aggr.perf = getBMRAggrPerformances(bmr = bmr)
 
   # Check result
   expect_class(x = bmr, classes = "BenchmarkResult")
-  expect_true(object = is.na(aggr_perf[[1]][[1]]))
+  expect_true(object = is.na(aggr.perf[[1]][[1]]))
 })

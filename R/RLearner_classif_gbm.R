@@ -4,22 +4,24 @@ makeRLearner.classif.gbm = function() {
     cl = "classif.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "huberized", "multinomial")),
+      makeDiscreteLearnerParam(id = "distribution", default = "bernoulli", values = c("gaussian", "bernoulli", "huberized", "adaboost", "coxph", "pairwise", "laplace", "poisson", "tdist", "quantile", "multinomial")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "n.minobsinnode", default = 10L, lower = 1L),
-      makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
+      makeNumericLearnerParam(id = "shrinkage", default = 0.1, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
-      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "n.cores", default = 1, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights", "featimp"),
     par.vals = list(keep.data = FALSE),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = "`keep.data` is set to FALSE to reduce memory requirements. Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for multiclass problems. The latter is the only setting that works for > 2 classes. It is recommended to NOT use the 'multinomial' setting, see https://github.com/mlr-org/mlr/issues/2612",
+    note = paste0(collapse = "", c("`keep.data` is set to FALSE to reduce memory requirements.\n",
+      "Param 'n.cores' has been to set to '1' by default to suppress parallelization by the package.")),
     callees = "gbm"
   )
 }

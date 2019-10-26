@@ -30,14 +30,14 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
       warningf("Adjusting levels to match number of blocking levels.")
     }
     levs = levels(task$blocking)
-    n_levels = length(levs)
+    n.levels = length(levs)
 
     # Why do we need the helper desc? If we would call 'instantiateResampleInstance()' here,
     # we would call the function within itself and will receive an 'error-c-stack-usage-is-too-close-to-the-limit' error
     # So we simply change the class name to mimic a new function..
     attr(desc, "class")[1] = "CVHelperDesc"
     # create fake ResampleInstance
-    inst = instantiateResampleInstance(desc, n_levels, task)
+    inst = instantiateResampleInstance(desc, n.levels, task)
     attr(desc, "class")[1] = "CVDesc"
 
     # now exchange block indices with indices of elements of this block and shuffle

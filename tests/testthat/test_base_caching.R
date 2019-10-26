@@ -12,7 +12,7 @@ test_that("caching works with most filters", {
   # tune over various filters using all possible caching options
   # TRUE is not tested, as we are not allowed to write in the user's home dir
   out = lapply(list(FALSE, tempdir()), function(i) {
-    tune_out = lapply(filter.list.regr, function(.x) {
+    tune.out = lapply(filter.list.regr, function(.x) {
       lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = .x, cache = i)
       ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
         makeNumericParam("C", lower = -10, upper = 10,
