@@ -136,7 +136,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
     colnames(p) = colnames(old.probs) = NULL
     rownames(p) = rownames(old.probs) = NULL
     class(old.probs) = NULL
-    expect_equal(p, old.probs)
+    expect_equal(p, old.probs, tolerance = 0.000001)
   }
 }
 
