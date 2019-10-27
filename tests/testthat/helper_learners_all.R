@@ -37,7 +37,7 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
   expect_true(!is.na(perf3), info = lrn$id)
   # FIXME: "tolerance" was previously set to 0.0001 -> seems fine with this value on Travis
   # but locally I do not achieve more than 0.1 tolerance (Patrick)
-  expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id, tolerance = 0.1, scale = 1)
+  expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id, tolerance = 0.5, scale = 1)
   expect_false(isTRUE(all.equal(get.pred.fun(p1), get.pred.fun(p3))), info = lrn$id)
 }
 
