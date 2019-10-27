@@ -74,8 +74,7 @@ jobs:
           no_output_timeout: 60m
           command: |
             R -q -e 'tic::before_script()'
-            R -q -e 'RWeka::WPM("refresh-cache");RWeka::WPM("install-package", "XMeans")'
-            R -q -e 'covr::codecov()'
+            R -q -e 'RWeka::WPM("refresh-cache");RWeka::WPM("install-package", "XMeans");covr::codecov()'
 
       # save R pkg cache -------------------------------------------------------
       - save_cache:
