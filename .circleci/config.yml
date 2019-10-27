@@ -88,6 +88,7 @@ workflows:
   build:
     jobs:
       - build
+      - codecov
 # CRON job daily at 3 am in the morning
 # - runs the "build" job on the master branch
   nightly:
