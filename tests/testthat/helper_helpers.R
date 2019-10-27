@@ -285,7 +285,7 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 }
 
 
-mylist = function(..., create = FALSE) {
+listLearnersCustom = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
     ids = BBmisc::extractSubList(lrns, "id")
