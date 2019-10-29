@@ -219,11 +219,11 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE),
       makeNumericLearnerParam("max_runtime_secs", default = 0, lower = 0),
-      makeNumericLearnerParam("stopping_rounds", default = 5, lower = 0),
+      makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
       makeDiscreteLearnerParam("stopping_metric", values = c("AUTO", "deviance", "logloss", "MSE", "RMSE", "MAE", "RMSLE", "AUC",
                                                              "lift_top_group", "misclassification", "AUCPR", "mean_per_class_error",
                                                              "custom", "custom_increasing"),
-                               default = "AUTO"),
+                               default = "AUTO", requires = quote(stopping_rounds > 0L)),
       makeNumericLearnerParam("stopping_tolerance", default = 0, lower = 0)
       ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
