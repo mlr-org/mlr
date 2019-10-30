@@ -36,7 +36,7 @@ makeRLearner.classif.ranger = function() {
 #' @export
 trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
   tn = getTaskTargetNames(.task)
-  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
+  ranger::ranger(formula = NULL, dependent.variable.name = tn, data = getTaskData(.task, .subset),
     probability = (.learner$predict.type == "prob"), case.weights = .weights, ...)
 }
 
