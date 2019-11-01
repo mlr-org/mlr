@@ -245,6 +245,7 @@ Suggests:
     rrlda,
     rsm,
     RSNNS,
+    Rmpi,
     RWeka,
     sda,
     sf,
