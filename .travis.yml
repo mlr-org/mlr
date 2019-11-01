@@ -1,3 +1,4 @@
+os: linux
 language: r
 dist: bionic
 cache:
@@ -11,7 +12,7 @@ env:
     # for RWeka http://weka.8497.n7.nabble.com/warnings-td42935.htm
     - _JAVA_OPTIONS='--add-opens=java.base/java.lang=ALL-UNNAMED'
 
-matrix:
+jobs:
   allow_failures:
   - r: oldrel
   include:
@@ -35,6 +36,7 @@ addons:
      - libudunits2-dev # for sf
      - jags # for rjags
      - libopenmpi-dev
+     - openmpi-bin
 
 before_install:
   - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
