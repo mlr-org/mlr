@@ -246,6 +246,7 @@ Suggests:
     rsm,
     RSNNS,
     Rmpi,
+    snow,
     RWeka,
     sda,
     sf,
