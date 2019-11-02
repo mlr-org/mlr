@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## learners - general
+
+- fixed a bug in `classif.xgboost` which prevented passing a watchlist for binary tasks. This was caused by a suboptimal internal label inversion approach. Thanks to @001ben for reporting (#32) (@mllg)
+
 ## misc
 
 - Add `configureMlr()` to `.onLoad()`, possibly fixing some edge cases (#2585) (@pat-s, #2637)
@@ -7,6 +11,10 @@
 ## learners - general
 
 - Updated ParamSet for learners `classif.gbm` and `regr.gbm`. Specifically, param `shrinkage` now defaults to 0.1 instead of 0.001. Also more choices for param `distribution` have been added. Internal parallelization by the package is now suppressed (param `n.cores`). (@pat-s, #2651)
+
+## learners - bugfixes
+
+- `h2o.gbm` learners were not running until `wcol` was passed somehow due to an internal bug. In addition, this bug caused another issue during prediction where the prediction `data.frame` was somehow formatted as a character rather a numeric. Thanks to @nagdevAmruthnath for bringing this up in #2630.
 
 ## filters - general
 

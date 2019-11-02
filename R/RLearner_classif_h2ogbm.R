@@ -30,12 +30,20 @@ trainLearner.classif.h2o.gbm = function(.learner, .task, .subset, .weights = NUL
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
   }
-  y = getTaskTargetNames(.task)
-  x = getTaskFeatureNames(.task)
-  d = getTaskData(.task, subset = .subset)
-  h2of = h2o::as.h2o(d)
-  distribution = ifelse(length(getTaskDesc(.task)$class.levels) == 2L, "bernoulli", "multinomial")
-  h2o::h2o.gbm(y = y, x = x, training_frame = h2of, distribution = distribution, ...)
+
+  params$y = getTaskTargetNames(.task)
+  params$x = getTaskFeatureNames(.task)
+  params$training_frame = getTaskData(.task, subset = .subset)
+
+  if (!is.null(.weights)) {
+    params$weights_column = .weights
+  }
+
+  params$training_frame = h2o::as.h2o(params$training_frame)
+  param$distribution = ifelse(length(getTaskDesc(.task)$class.levels) == 2L, "bernoulli", "multinomial")
+
+  model = do.call(h2o::h2o.gbm, params)
+  return(model)
 }
 
 #' @export
