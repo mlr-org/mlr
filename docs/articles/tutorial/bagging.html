@@ -308,14 +308,14 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">r<span class="op">$</span>aggr</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">## mmce.test.mean </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">##       0.302619</a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## mmce.test.mean </span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">##       0.302619</span></a></code></pre></div>
 <p>And now with bagging:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">result =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> bag.lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">result<span class="op">$</span>aggr</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## mmce.test.mean </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">##      0.2161905</a></code></pre></div>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## mmce.test.mean </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">##      0.2161905</span></a></code></pre></div>
 <p>Training more learners takes more time, but can outperform pure learners on noisy data with many features.</p>
 <div id="changing-the-type-of-prediction" class="section level1">
 <h1 class="hasAnchor">
@@ -333,25 +333,25 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(<span class="dt">learner =</span> bag.lrn, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> train.inds)</a></code></pre></div>
 <p>With function <code><a href="../../reference/getLearnerModel.html">getLearnerModel()</a></code>, you can access the models fitted in the individual iterations.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">## [[1]]</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">## Model for learner.id=regr.rpart; learner.class=regr.rpart</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">## Trained on: task.id = BostonHousing-example; obs = 169; features = 13</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">## Hyperparameters: xval=0</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">## </a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">## [[2]]</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">## Model for learner.id=regr.rpart; learner.class=regr.rpart</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">## Trained on: task.id = BostonHousing-example; obs = 169; features = 13</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">## Hyperparameters: xval=0</a></code></pre></div>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## [[1]]</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">## Model for learner.id=regr.rpart; learner.class=regr.rpart</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">## Trained on: task.id = BostonHousing-example; obs = 169; features = 13</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## Hyperparameters: xval=0</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">## [[2]]</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">## Model for learner.id=regr.rpart; learner.class=regr.rpart</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">## Trained on: task.id = BostonHousing-example; obs = 169; features = 13</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">## Hyperparameters: xval=0</span></a></code></pre></div>
 <p>Predict the response and calculate the standard deviation:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.inds)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(pred))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">##   id truth response       se</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">## 2  2  21.6 21.53997 2.727530</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">## 3  3  34.7 34.54394 3.524780</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## 5  5  36.2 33.47336 1.704140</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## 6  6  28.7 23.79443 1.282300</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 8  8  27.1 14.60342 2.269138</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## 9  9  16.5 13.67014 3.147195</a></code></pre></div>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">##   id truth response       se</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">## 2  2  21.6 21.53997 2.727530</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## 3  3  34.7 34.54394 3.524780</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## 5  5  36.2 33.47336 1.704140</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## 6  6  28.7 23.79443 1.282300</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## 8  8  27.1 14.60342 2.269138</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## 9  9  16.5 13.67014 3.147195</span></a></code></pre></div>
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>
 <p>Let’s visualise this a bit using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html">ggplot2::ggplot2()</a></code>. Here we plot the percentage of lower status of the population (<code>lstat</code>) against the prediction.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggplot2"</span>)</a>
