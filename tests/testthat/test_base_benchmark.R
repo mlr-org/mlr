@@ -144,7 +144,7 @@ test_that("benchmark", {
   tfd = getBMRFeatSelResults(res, as.df = TRUE)
   expect_is(tfd, "data.frame")
   expect_equal(ncol(tfd), 4)
-  expect_equal(nrow(tfd), 61)
+  expect_equal(nrow(tfd), 57)
   expect_equal(unique(tfd$task.id), factor(task.names))
   expect_equal(unique(tfd$learner.id), factor("classif.lda.featsel"))
   expect_equal(unique(tfd$iter), 1:2)
