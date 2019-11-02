@@ -396,19 +396,29 @@
 <p><strong>Either use a <a href="learner.html">learner</a> suitable for functional data:</strong></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># The following learners can be used for tsk1 (a regression task).</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(tsk1, <span class="dt">properties =</span> <span class="st">"functionals"</span>, <span class="dt">warn.missing.packages =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">##              class                                        name  short.name</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">## 1     regr.FDboost Functional linear array regression boosting     FDboost</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">## 2 regr.featureless                      Featureless regression featureless</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">##          package type installed numerics factors ordered missings weights</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## 1 FDboost,mboost regr      TRUE     TRUE   FALSE   FALSE    FALSE   FALSE</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## 2            mlr regr      TRUE     TRUE    TRUE    TRUE     TRUE   FALSE</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">##    prob oneclass twoclass multiclass class.weights featimp oobpreds</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## 1 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">## 2 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">##   functionals single.functional    se lcens rcens icens</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">## 1        TRUE             FALSE FALSE FALSE FALSE FALSE</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">## 2        TRUE             FALSE FALSE FALSE FALSE FALSE</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">## ... (#elements: 24)</a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">## ParamHelpers uses NA as a special value for dependent parameters.</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">## ParamHelpers uses NA as a special value for dependent parameters.</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">##              class                                        name  short.name</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## 1     regr.FDboost Functional linear array regression boosting     FDboost</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## 2 regr.featureless                      Featureless regression featureless</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">##          package</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">## 1 FDboost,mboost</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">## 2            mlr</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">##                                                                                                                                                                                                                          note</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">## 1 Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">## 2                                                                                                                                                                                                                            </a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">##   type installed numerics factors ordered missings weights  prob oneclass</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">## 1 regr      TRUE     TRUE   FALSE   FALSE    FALSE   FALSE FALSE    FALSE</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">## 2 regr      TRUE     TRUE    TRUE    TRUE     TRUE   FALSE FALSE    FALSE</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">##   twoclass multiclass class.weights featimp oobpreds functionals</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">## 1    FALSE      FALSE         FALSE   FALSE    FALSE        TRUE</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">## 2    FALSE      FALSE         FALSE   FALSE    FALSE        TRUE</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">##   single.functional    se lcens rcens icens</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">## 1             FALSE FALSE FALSE FALSE FALSE</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">## 2             FALSE FALSE FALSE FALSE FALSE</a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Create an FDboost learner for regression</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">fdalrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.FDboost"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Or alternatively, use knn for classification:</span></a>
