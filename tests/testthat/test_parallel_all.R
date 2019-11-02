@@ -10,12 +10,12 @@ test_that("parallel resampling", {
     expect_true(!is.na(r$aggr[1]))
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", as.character(NA))
-    doit("multicore", "mlr.resample")
-    doit("multicore", "mlr.tuneParams")
-    doit("mpi", as.character(NA))
-    doit("mpi", "mlr.resample")
-    doit("mpi", "mlr.tuneParams")
+    # doit("multicore", as.character(NA))
+    # doit("multicore", "mlr.resample")
+    # doit("multicore", "mlr.tuneParams")
+    # doit("mpi", as.character(NA))
+    # doit("mpi", "mlr.resample")
+    # doit("mpi", "mlr.tuneParams")
   }
   doit("socket", as.character(NA))
   doit("socket", "mlr.resample")
@@ -34,12 +34,12 @@ test_that("parallel tuning", {
     expect_true(!is.na(res$y))
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", as.character(NA))
-    doit("multicore", "mlr.resample")
-    doit("multicore", "mlr.tuneParams")
-    doit("mpi", as.character(NA))
-    doit("mpi", "mlr.resample")
-    doit("mpi", "mlr.tuneParams")
+    # doit("multicore", as.character(NA))
+    # doit("multicore", "mlr.resample")
+    # doit("multicore", "mlr.tuneParams")
+    # doit("mpi", as.character(NA))
+    # doit("mpi", "mlr.resample")
+    # doit("mpi", "mlr.tuneParams")
   }
   doit("socket", as.character(NA))
   doit("socket", "mlr.resample")
@@ -57,12 +57,12 @@ test_that("parallel featsel", {
     expect_true(!is.na(res$y))
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", as.character(NA))
-    doit("multicore", "mlr.resample")
-    doit("multicore", "mlr.tuneParams")
-    doit("mpi", as.character(NA))
-    doit("mpi", "mlr.resample")
-    doit("mpi", "mlr.tuneParams")
+    # doit("multicore", as.character(NA))
+    # doit("multicore", "mlr.resample")
+    # doit("multicore", "mlr.tuneParams")
+    # doit("mpi", as.character(NA))
+    # doit("mpi", "mlr.resample")
+    # doit("mpi", "mlr.tuneParams")
   }
   doit("socket", as.character(NA))
   doit("socket", "mlr.resample")
@@ -99,8 +99,8 @@ test_that("parallel partial dependence", {
     expect_true(nrow(pd$data) == 2L)
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore")
-    doit("mpi")
+    # doit("multicore")
+    # doit("mpi")
   }
   doit("socket")
 })
@@ -152,8 +152,8 @@ test_that("parallel ensembles", {
 
   ## CostSensWeightedPairsWrapper
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", "mlr.ensemble")
-    doit("mpi", "mlr.ensemble")
+    # doit("multicore", "mlr.ensemble")
+    # doit("mpi", "mlr.ensemble")
   }
   doit("socket", "mlr.ensemble")
 })
