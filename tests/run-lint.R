@@ -1,4 +1,5 @@
 library(testthat)
+
 if (getRversion() > "3.5.3") {
   # set old seed
   suppressWarnings(RNGversion("3.5.0"))
@@ -7,4 +8,4 @@ if (getRversion() > "3.5.3") {
 }
 set.seed(getOption("mlr.debug.seed"))
 
-test_check("mlr", "_parallel_")
+test_check("mlr", filter = "lint")
