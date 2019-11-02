@@ -95,8 +95,8 @@ test_that("parallel partial dependence", {
     fit = train(lrn, regr.task)
     on.exit(parallelStop())
     parallelStart(mode = mode, cpus = 2L, show.info = FALSE)
-    pd = generatePartialDependenceData(fit, regr.task, "lstat", gridsize = 2L)
-    expect_true(nrow(pd$data) == 2L)
+    pd = generatePartialDependenceData(fit, regr.task, "lstat")
+    expect_true(ncol(pd$data) == 2L)
   }
   if (Sys.info()["sysname"] != "Windows") {
     # doit("multicore")
