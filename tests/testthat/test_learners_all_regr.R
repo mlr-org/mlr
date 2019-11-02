@@ -20,44 +20,44 @@ test_that("learners work: regr ", {
   task = subsetTask(regr.task, subset = c(1:70), features = getTaskFeatureNames(regr.task)[c(1, 3)])
 
   # normal regr
-  lrns = mylist(task, create = TRUE)
+  lrns = listLearnersCustom(task, create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # regr with factors
-  lrns = mylist(task, properties = "factors", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
 
   # regr with ordered factors
-  lrns = mylist(task, properties = "ordered", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # regr with se
-  lrns = mylist(task, properties = "se", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "se", create = TRUE)
   lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars,
     pred.type = "se")
 
   # regr with weights
-  lrns = mylist(task, properties = "weights", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = task, train.inds = 1:70, test.inds = 1:70, weights = rep(c(1, 5), length.out = 70),
     pred.type = "response", get.pred.fun = getPredictionResponse)
 
   # regr with missing
-  lrns = mylist(task, properties = "missings", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
 
   # regr variable importance
-  lrns = mylist(task, properties = "featimp", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 
   # regr with oobpreds
-  lrns = mylist(task, properties = "oobpreds", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # regr with only one feature
   min.task = makeRegrTask("oneCol", data.frame(x = 1:10, y = 1:10), target = "y")
-  lrns = mylist(min.task, create = TRUE)
+  lrns = listLearnersCustom(min.task, create = TRUE)
   # regr.gbm: Meaningfull error about too small dataset
   # regr.cforest: Error in model@fit(data, ...) : fraction of 0.000000 is too small
   # regr.nodeHarvest: Error in ZRULES[[1]] : subscript out of bounds
