@@ -40,7 +40,6 @@ jobs:
             - /usr/local/lib/R/site-library
   deploy:
     environment:
-      - id_rsa: true
       - FULL: true
     docker:
       - image: rocker/verse:3.6.1
