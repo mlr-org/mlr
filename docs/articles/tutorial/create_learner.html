@@ -299,20 +299,20 @@
 <a href="#classes-constructors-and-naming-schemes" class="anchor"></a>Classes, constructors, and naming schemes</h1>
 <p>As you already know <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> generates an object of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"classif.lda"</span>))</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"regr.lm"</span>))</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</span></a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"surv.coxph"</span>))</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"cluster.kmeans"</span>))</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="dt">cl =</span> <span class="st">"multilabel.rFerns"</span>))</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">## [4] "Learner"</a></code></pre></div>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## [4] "Learner"</span></a></code></pre></div>
 <p>The first element of each class attribute vector is the name of the learner class passed to the <code>cl</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Obviously, this adheres to the naming conventions</p>
 <ul>
 <li>
@@ -378,8 +378,8 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) { }</a></code></pre></div>
 <p>This function must fit a model on the data of the task <code>.task</code> with regard to the subset defined in the integer vector <code>.subset</code> and the parameters passed in the <code>...</code> arguments. Usually, the data should be extracted from the task using <code><a href="../../reference/getTaskData.html">getTaskData()</a></code>. This will take care of any subsetting as well. It must return the fitted model. <code>mlr</code> assumes no special data type for the return value – it will be passed to the predict function we are going to define below, so any special code the learner may need can be encapsulated there.</p>
 <p>For our example, the definition of the function looks like this. In addition to the data of the task, we also need the formula that describes what to predict. We use the function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> to extract this from the task.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">trainLearner.classif.lda =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">{</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">trainLearner.classif.lda =<span class="st"> </span><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    ...) {</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">    MASS<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span>(f, <span class="dt">data =</span> <span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), ...)</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">}</a></code></pre></div>
@@ -392,18 +392,14 @@
 <p>It must predict for the new observations in the <code>data.frame</code> <code>.newdata</code> with the wrapped model <code>.model</code>, which is returned from the training function. The actual model the learner built is stored in the <code>$learner.model</code> member and can be accessed simply through <code>.model$learner.model</code>.</p>
 <p>For classification, you have to return a factor of predicted classes if <code>.learner$predict.type</code> is <code>"response"</code>, or a matrix of predicted probabilities if <code>.learner$predict.type</code> is <code>"prob"</code> and this type of prediction is supported by the learner. In the latter case the matrix must have the same number of columns as there are classes in the task and the columns have to be named by the class names.</p>
 <p>The definition for LDA looks like this. It is pretty much just a straight pass-through of the arguments to the <code>base::predict()</code> function and some extraction of prediction data depending on the type of prediction requested.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">predictLearner.classif.lda =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, <span class="dt">predict.method =</span> <span class="st">"plug-in"</span>, </a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">    ...) </a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">{</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">    p =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">method =</span> predict.method, </a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">        ...)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(p<span class="op">$</span>class)</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">    }</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(p<span class="op">$</span>posterior)</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">    }</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">predictLearner.classif.lda =<span class="st"> </span><span class="cf">function</span>(.learner, .model, .newdata, <span class="dt">predict.method =</span> <span class="st">"plug-in"</span>, ...) {</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">  p =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">method =</span> predict.method, ...)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(p<span class="op">$</span>class)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(p<span class="op">$</span>posterior)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">}</a></code></pre></div>
 </div>
 </div>
 <div id="regression" class="section level1">
@@ -437,15 +433,14 @@
 <a class="sourceLine" id="cb8-24" data-line-number="24">    <span class="dt">note =</span> <span class="st">""</span></a>
 <a class="sourceLine" id="cb8-25" data-line-number="25">  )</a>
 <a class="sourceLine" id="cb8-26" data-line-number="26">}</a></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">trainLearner.regr.earth =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">{</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">trainLearner.regr.earth =<span class="st"> </span><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">    ...) {</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">    earth<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/earth/man/earth.html">earth</a></span>(f, <span class="dt">data =</span> <span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), ...)</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">predictLearner.regr.earth =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata)[, 1L]</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">predictLearner.regr.earth =<span class="st"> </span><span class="cf">function</span>(.learner, .model, .newdata, ...) {</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata)[, 1L]</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">}</a></code></pre></div>
 <p>Again most of the data is passed straight through to/from the train/predict functions of the learner.</p>
 </div>
 <div id="survival-analysis" class="section level1">
@@ -479,23 +474,18 @@
 <a class="sourceLine" id="cb11-23" data-line-number="23">    <span class="dt">note =</span> <span class="st">""</span></a>
 <a class="sourceLine" id="cb11-24" data-line-number="24">  )</a>
 <a class="sourceLine" id="cb11-25" data-line-number="25">}</a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">trainLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">    f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">    data =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, <span class="dt">subset =</span> .subset)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(.weights)) {</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">        survival<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, ...)</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">    }</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">        survival<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, <span class="dt">weights =</span> .weights, </a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">            ...)</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">    }</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">}</a></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">predictLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">type =</span> <span class="st">"lp"</span>, </a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">        ...)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">trainLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) {</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">  f =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span>(.task)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">  data =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, <span class="dt">subset =</span> .subset)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">  <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(.weights)) {</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">    survival<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, ...)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">    survival<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span>(<span class="dt">formula =</span> f, <span class="dt">data =</span> data, <span class="dt">weights =</span> .weights, ...)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">}</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">predictLearner.surv.coxph =<span class="st"> </span><span class="cf">function</span>(.learner, .model, .newdata, ...) {</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, <span class="dt">newdata =</span> .newdata, <span class="dt">type =</span> <span class="st">"lp"</span>, ...)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">}</a></code></pre></div>
 </div>
 <div id="clustering" class="section level1">
 <h1 class="hasAnchor">
@@ -517,16 +507,13 @@
 <a class="sourceLine" id="cb14-13" data-line-number="13">    <span class="dt">short.name =</span> <span class="st">"farthestfirst"</span></a>
 <a class="sourceLine" id="cb14-14" data-line-number="14">  )</a>
 <a class="sourceLine" id="cb14-15" data-line-number="15">}</a></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">trainLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">    ctrl =<span class="st"> </span>RWeka<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/RWeka/man/Weka_control.html">Weka_control</a></span>(...)</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">    RWeka<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/RWeka/man/Weka_clusterers.html">FarthestFirst</a></span>(<span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), <span class="dt">control =</span> ctrl)</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">predictLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, .newdata, ...)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">        </span>1L</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">trainLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) {</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">  ctrl =<span class="st"> </span>RWeka<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/RWeka/man/Weka_control.html">Weka_control</a></span>(...)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">  RWeka<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/RWeka/man/Weka_clusterers.html">FarthestFirst</a></span>(<span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset), <span class="dt">control =</span> ctrl)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">predictLearner.cluster.FarthestFirst =<span class="st"> </span><span class="cf">function</span>(.learner, .model, .newdata, ...) {</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, .newdata, ...)) <span class="op">+</span><span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">}</a></code></pre></div>
 </div>
 <div id="multilabel-classification" class="section level1">
 <h1 class="hasAnchor">
@@ -549,15 +536,13 @@
 <a class="sourceLine" id="cb17-12" data-line-number="12">    <span class="dt">note =</span> <span class="st">""</span></a>
 <a class="sourceLine" id="cb17-13" data-line-number="13">  )</a>
 <a class="sourceLine" id="cb17-14" data-line-number="14">}</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">trainLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span> (.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) </a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">    d =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset, <span class="dt">target.extra =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">    rFerns<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rFerns/man/rFerns.html">rFerns</a></span>(<span class="dt">x =</span> d<span class="op">$</span>data, <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(d<span class="op">$</span>target), ...)</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">predictLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span> (.learner, .model, .newdata, ...) </a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, .newdata, ...))</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">trainLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span>(.learner, .task, .subset, <span class="dt">.weights =</span> <span class="ot">NULL</span>, ...) {</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">  d =<span class="st"> </span><span class="kw"><a href="../../reference/getTaskData.html">getTaskData</a></span>(.task, .subset, <span class="dt">target.extra =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">  rFerns<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rFerns/man/rFerns.html">rFerns</a></span>(<span class="dt">x =</span> d<span class="op">$</span>data, <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(d<span class="op">$</span>target), ...)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">predictLearner.multilabel.rFerns =<span class="st"> </span><span class="cf">function</span>(.learner, .model, .newdata, ...) {</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">    <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(.model<span class="op">$</span>learner.model, .newdata, ...))</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">}</a></code></pre></div>
 </div>
 <div id="creating-a-new-method-for-extracting-feature-importance-values" class="section level1">
 <h1 class="hasAnchor">
@@ -570,17 +555,15 @@
 </ul>
 <p>This method takes the <code><a href="../../reference/makeLearner.html">Learner()</a></code> <code>.learner</code>, the WrappedModel (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) <code>.model</code> and potential further arguments and calculates or extracts the feature importance. It must return a named vector of importance values.</p>
 <p>Below are two simple examples. In case of <code>"classif.rpart"</code> the feature importance values can be easily extracted from the fitted model.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">getFeatureImportanceLearner.classif.rpart =<span class="st"> </span><span class="cf">function</span> (.learner, .model, ...) </a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">    mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">    mod<span class="op">$</span>variable.importance</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">getFeatureImportanceLearner.classif.rpart =<span class="st"> </span><span class="cf">function</span>(.learner, .model, ...) {</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">  mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">  mod<span class="op">$</span>variable.importance</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">}</a></code></pre></div>
 <p>For the <code><a href="https://rdrr.io/pkg/randomForestSRC/man/rfsrc.html">randomForestSRC::rfsrc()</a></code> from package <code>randomForestSRC</code> function <code><a href="https://rdrr.io/pkg/randomForestSRC/man/vimp.rfsrc.html">randomForestSRC::vimp()</a></code> is called.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">getFeatureImportanceLearner.classif.randomForestSRC =<span class="st"> </span><span class="cf">function</span> (.learner, .model, ...) </a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">    mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">    randomForestSRC<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/randomForestSRC/man/vimp.rfsrc.html">vimp</a></span>(mod, ...)<span class="op">$</span>importance[, <span class="st">"all"</span>]</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">getFeatureImportanceLearner.classif.randomForestSRC =<span class="st"> </span><span class="cf">function</span>(.learner, .model, ...) {</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">  mod =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">  randomForestSRC<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/randomForestSRC/man/vimp.rfsrc.html">vimp</a></span>(mod, ...)<span class="op">$</span>importance[, <span class="st">"all"</span>]</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">}</a></code></pre></div>
 </div>
 <div id="creating-a-new-method-for-extracting-out-of-bag-predictions" class="section level1">
 <h1 class="hasAnchor">
@@ -592,16 +575,14 @@
 <li>implement a new S3 method for function <code><a href="../../reference/getOOBPredsLearner.html">getOOBPredsLearner()</a></code> (which later is called internally by <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code>).</li>
 </ul>
 <p>This method takes the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) <code>.learner</code> and the WrappedModel (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) <code>.model</code> and extracts the OOB predictions. It must return the predictions in the same format as the <code><a href="../../reference/predictLearner.html">predictLearner()</a></code> function.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">getOOBPredsLearner.classif.randomForest =<span class="st"> </span><span class="cf">function</span> (.learner, .model) </a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">        m =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">        <span class="kw"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(m<span class="op">$</span>predicted)</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">    }</a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb22-8" data-line-number="8">        <span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)<span class="op">$</span>votes</a>
-<a class="sourceLine" id="cb22-9" data-line-number="9">    }</a>
-<a class="sourceLine" id="cb22-10" data-line-number="10">}</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">getOOBPredsLearner.classif.randomForest =<span class="st"> </span><span class="cf">function</span>(.learner, .model) {</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">  <span class="cf">if</span> (.learner<span class="op">$</span>predict.type <span class="op">==</span><span class="st"> "response"</span>) {</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">    m =<span class="st"> </span><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(m<span class="op">$</span>predicted)</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">    <span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(.model, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)<span class="op">$</span>votes</a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">}</a></code></pre></div>
 </div>
 <div id="registering-your-learner" class="section level1">
 <h1 class="hasAnchor">

@@ -3,15 +3,13 @@ get_stage("script") %>%
   add_code_step(RWeka::WPM('install-package', 'XMeans'))
 
 # R CMD Check
-do_package_checks(args = "--as-cran", error_on = "error",
-  repos = c(getOption("repos"), remotes::bioc_install_repos()),
-  codecov = FALSE)
+do_package_checks(args = "--as-cran", error_on = "error", codecov = FALSE)
 
 # pkgdown
 if (ci_is_env("FULL", "true")) {
   get_stage("before_deploy") %>%
     add_step(step_install_github("mlr-org/mlr3pkgdowntemplate"))
-  do_pkgdown(document = FALSE, branch = NULL, commit_paths = "docs", path = ".")
+  do_pkgdown(branch = NULL, commit_paths = "docs", path = ".")
 }
 
 # only deploy man files in in master branch

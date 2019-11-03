@@ -294,30 +294,30 @@
 <p>In <code>mlr</code> all filter methods are objects of class Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) and are registered in an environment called <code>.FilterRegister</code> (where <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code> looks them up to compile the list of available methods). To get to know their structure let’s have a closer look at the <code>"rank.correlation"</code> filter.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">filters =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mlr<span class="op">:::</span>.FilterRegister)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">filters<span class="op">$</span>rank.correlation</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">## Filter: 'rank.correlation'</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">## Packages: ''</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">## Supported tasks: regr</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">## Supported features: numerics</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## Filter: 'rank.correlation'</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Packages: ''</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## Supported tasks: regr</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## Supported features: numerics</span></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(filters<span class="op">$</span>rank.correlation)</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">## List of 6</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">##  $ name              : chr "rank.correlation"</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">##  $ desc              : chr "Spearman's correlation between feature and target"</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">##  $ pkg               : chr(0) </a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">##  $ supported.tasks   : chr "regr"</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">##  $ supported.features: chr "numerics"</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">##  $ fun               :function (task, nselect, ...)  </a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt; </a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">##  - attr(*, "class")= chr "Filter"</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## List of 6</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">##  $ name              : chr "rank.correlation"</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##  $ desc              : chr "Spearman's correlation between feature and target"</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  $ pkg               : chr(0) </span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">##  $ supported.tasks   : chr "regr"</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">##  $ supported.features: chr "numerics"</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">##  $ fun               :function (task, nselect, ...)  </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt; </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">##  - attr(*, "class")= chr "Filter"</span></a>
 <a class="sourceLine" id="cb1-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20">filters<span class="op">$</span>rank.correlation<span class="op">$</span>fun</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">## function(task, nselect, ...) {</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">##     data = getTaskData(task, target.extra = TRUE)</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">##   }</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">## &lt;bytecode: 0x55db8dc9fe00&gt;</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">## function(task, nselect, ...) {</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">##     data = getTaskData(task, target.extra = TRUE)</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">##   }</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">## &lt;bytecode: 0x55db8dc9fe00&gt;</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a></code></pre></div>
 <p>The core element is <code>$fun</code> which calculates the feature importance. For the <code>"rank.correlation"</code> filter it just extracts the data and formula from the <code>task</code> and passes them on to the <code>base::cor()</code> function.</p>
 <p>Additionally, each Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object has a <code>$name</code>, which should be short and is for example used to annotate graphics (cp. <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>), and a slightly more detailed description in slot <code>$desc</code>. If the filter method is implemented by another package its name is given in the <code>$pkg</code> member. Moreover, the supported task types and feature types are listed.</p>
 </div>
@@ -352,83 +352,83 @@
 <a class="sourceLine" id="cb2-11" data-line-number="11">    imp</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">  }</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13">)</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## Filter: 'nonsense.filter'</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## Packages: ''</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">## Supported tasks: classif,regr,surv</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">## Supported features: numerics,factors,ordered</a></code></pre></div>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">## Filter: 'nonsense.filter'</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">## Packages: ''</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">## Supported tasks: classif,regr,surv</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## Supported features: numerics,factors,ordered</span></a></code></pre></div>
 <p>The <code>nonsense.filter</code> is now registered in <code>mlr</code> and shown by <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/listFilterMethods.html">listFilterMethods</a></span>()<span class="op">$</span>id</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">##  [1] anova.test                           </a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">##  [2] auc                                  </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">##  [3] carscore                             </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">##  [4] FSelector_chi.squared                </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">##  [5] FSelector_gain.ratio                 </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##  [6] FSelector_information.gain           </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">##  [7] FSelector_oneR                       </a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">##  [8] FSelector_relief                     </a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">##  [9] FSelector_symmetrical.uncertainty    </a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## [10] FSelectorRcpp_gain.ratio             </a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## [11] FSelectorRcpp_information.gain       </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## [12] FSelectorRcpp_symmetrical.uncertainty</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">## [13] kruskal.test                         </a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">## [14] linear.correlation                   </a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">## [15] mrmr                                 </a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">## [16] nonsense.filter                      </a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">## [17] party_cforest.importance             </a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">## [18] permutation.importance               </a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">## [19] praznik_CMIM                         </a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">## [20] praznik_DISR                         </a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">## [21] praznik_JMI                          </a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">## [22] praznik_JMIM                         </a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">## [23] praznik_MIM                          </a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">## [24] praznik_MRMR                         </a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">## [25] praznik_NJMIM                        </a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">## [26] randomForest_importance              </a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">## [27] randomForestSRC_importance           </a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">## [28] randomForestSRC_var.select           </a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">## [29] ranger_impurity                      </a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">## [30] ranger_permutation                   </a>
-<a class="sourceLine" id="cb3-32" data-line-number="32">## [31] rank.correlation                     </a>
-<a class="sourceLine" id="cb3-33" data-line-number="33">## [32] univariate.model.score               </a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">## [33] variance                             </a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">## 48 Levels: anova.test auc carscore cforest.importance ... variance</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">##  [1] anova.test                           </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">##  [2] auc                                  </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">##  [3] carscore                             </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">##  [4] FSelector_chi.squared                </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">##  [5] FSelector_gain.ratio                 </span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##  [6] FSelector_information.gain           </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##  [7] FSelector_oneR                       </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">##  [8] FSelector_relief                     </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">##  [9] FSelector_symmetrical.uncertainty    </span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## [10] FSelectorRcpp_gain.ratio             </span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## [11] FSelectorRcpp_information.gain       </span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## [12] FSelectorRcpp_symmetrical.uncertainty</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">## [13] kruskal.test                         </span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">## [14] linear.correlation                   </span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">## [15] mrmr                                 </span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">## [16] nonsense.filter                      </span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">## [17] party_cforest.importance             </span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">## [18] permutation.importance               </span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">## [19] praznik_CMIM                         </span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">## [20] praznik_DISR                         </span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">## [21] praznik_JMI                          </span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">## [22] praznik_JMIM                         </span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">## [23] praznik_MIM                          </span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">## [24] praznik_MRMR                         </span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">## [25] praznik_NJMIM                        </span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">## [26] randomForest_importance              </span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">## [27] randomForestSRC_importance           </span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">## [28] randomForestSRC_var.select           </span></a>
+<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">## [29] ranger_impurity                      </span></a>
+<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">## [30] ranger_permutation                   </span></a>
+<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="co">## [31] rank.correlation                     </span></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">## [32] univariate.model.score               </span></a>
+<a class="sourceLine" id="cb3-34" data-line-number="34"><span class="co">## [33] variance                             </span></a>
+<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">## 48 Levels: anova.test auc carscore cforest.importance ... variance</span></a></code></pre></div>
 <p>You can use it like any other filter method already integrated in <code>mlr</code> (i.e., via the <code>method</code> argument of <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> or the <code>fw.method</code> argument of <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code>; see also the page on <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">d =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, <span class="dt">method =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"nonsense.filter"</span>, <span class="st">"anova.test"</span>))</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">d</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## FilterValues:</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## Task: iris-example</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">##            name    type          method      value</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## 1: Petal.Length numeric nonsense.filter    4.00000</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## 2:  Petal.Width numeric nonsense.filter    3.00000</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## 3: Sepal.Length numeric nonsense.filter    2.00000</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## 4:  Sepal.Width numeric nonsense.filter    1.00000</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## 5: Petal.Length numeric      anova.test 1180.16118</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## 6:  Petal.Width numeric      anova.test  960.00715</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## 7: Sepal.Length numeric      anova.test  119.26450</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## 8:  Sepal.Width numeric      anova.test   49.16004</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## FilterValues:</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Task: iris-example</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##            name    type          method      value</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## 1: Petal.Length numeric nonsense.filter    4.00000</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## 2:  Petal.Width numeric nonsense.filter    3.00000</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## 3: Sepal.Length numeric nonsense.filter    2.00000</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## 4:  Sepal.Width numeric nonsense.filter    1.00000</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">## 5: Petal.Length numeric      anova.test 1180.16118</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">## 6:  Petal.Width numeric      anova.test  960.00715</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">## 7: Sepal.Length numeric      anova.test  119.26450</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">## 8:  Sepal.Width numeric      anova.test   49.16004</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d)</a></code></pre></div>
 <p><img src="create_filter_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris.task.filtered =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"nonsense.filter"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">iris.task.filtered</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## Supervised task: iris-example</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## Type: classif</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## Target: Species</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">## Observations: 150</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">## Features:</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">##    numerics     factors     ordered functionals </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">##           2           0           0           0 </a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">## Missings: FALSE</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## Has weights: FALSE</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## Has blocking: FALSE</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## Has coordinates: FALSE</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## Classes: 3</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">##     setosa versicolor  virginica </a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">##         50         50         50 </a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">## Positive class: NA</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## Supervised task: iris-example</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## Type: classif</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## Target: Species</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## Observations: 150</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## Features:</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">##    numerics     factors     ordered functionals </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">##           2           0           0           0 </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## Missings: FALSE</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## Has weights: FALSE</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## Has blocking: FALSE</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## Has coordinates: FALSE</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## Classes: 3</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">##     setosa versicolor  virginica </span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">##         50         50         50 </span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## Positive class: NA</span></a>
 <a class="sourceLine" id="cb5-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb5-19" data-line-number="19"><span class="kw"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span>(iris.task.filtered)</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">## [1] "Petal.Length" "Petal.Width"</a></code></pre></div>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## [1] "Petal.Length" "Petal.Width"</span></a></code></pre></div>
 <p>You might also want to have a look at the <a href="https://github.com/mlr-org/mlr/blob/master/R/Filter.R#L95">source code</a> of the filter methods already integrated in <code>mlr</code> for some more complex and meaningful examples.</p>
 </div>
   </div>
