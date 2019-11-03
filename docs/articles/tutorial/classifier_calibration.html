@@ -294,22 +294,22 @@
 <a class="sourceLine" id="cb1-3" data-line-number="3">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> sonar.task)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">cal<span class="op">$</span>proportion</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">##      Learner       bin Class Proportion</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">## 1 prediction (0.1,0.2]     M  0.1060606</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">## 2 prediction (0.7,0.8]     M  0.7333333</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">## 3 prediction   [0,0.1]     M  0.0000000</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">## 4 prediction   (0.9,1]     M  0.9333333</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">## 5 prediction (0.2,0.3]     M  0.2727273</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">## 6 prediction (0.4,0.5]     M  0.4615385</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">## 7 prediction (0.8,0.9]     M  0.0000000</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">## 8 prediction (0.5,0.6]     M  0.0000000</a></code></pre></div>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">##      Learner       bin Class Proportion</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 1 prediction (0.1,0.2]     M  0.1060606</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 2 prediction (0.7,0.8]     M  0.7333333</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## 3 prediction   [0,0.1]     M  0.0000000</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">## 4 prediction   (0.9,1]     M  0.9333333</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## 5 prediction (0.2,0.3]     M  0.2727273</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">## 6 prediction (0.4,0.5]     M  0.4615385</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">## 7 prediction (0.8,0.9]     M  0.0000000</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## 8 prediction (0.5,0.6]     M  0.0000000</span></a></code></pre></div>
 <p>The manner in which the predicted probabilities are discretized is controlled by two arguments: <code>breaks</code> and <code>groups</code>. By default <code>breaks = "Sturges"</code> which uses the Sturges algorithm in <code><a href="https://rdrr.io/r/graphics/hist.html">graphics::hist()</a></code>. This argument can specify other algorithms available in <code><a href="https://rdrr.io/r/graphics/hist.html">graphics::hist()</a></code>, it can be a numeric vector specifying breakpoints for <code><a href="https://rdrr.io/r/base/cut.html">base::cut()</a></code>, or a single integer specifying the number of bins to create (which are evenly spaced). Alternatively, <code>groups</code> can be set to a positive integer value (by default <code>groups = NULL</code>) in which case <code><a href="https://rdrr.io/pkg/Hmisc/man/cut2.html">Hmisc::cut2()</a></code> is used to create bins with an approximately equal number of observations in each bin.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred, <span class="dt">groups =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">cal<span class="op">$</span>proportion</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">##      Learner           bin Class Proportion</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">## 1 prediction [0.000,0.267)     M 0.08860759</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## 2 prediction [0.267,0.925)     M 0.51282051</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">## 3 prediction [0.925,1.000]     M 0.93333333</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">##      Learner           bin Class Proportion</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## 1 prediction [0.000,0.267)     M 0.08860759</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## 2 prediction [0.267,0.925)     M 0.51282051</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## 3 prediction [0.925,1.000]     M 0.93333333</span></a></code></pre></div>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> objects can be plotted using <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>. <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code> by default plots a reference line which shows perfect calibration and a “rag” plot, which is a rug plot on the top and bottom of the graph, where the top pertains to “positive” cases, where the predicted class matches the observed class, and the bottom pertains to “negative” cases, where the predicted class does not match the observed class. Perfect classifier performance would result in all the positive cases clustering in the top right (i.e., the correct classes are predicted with high probability) and the negative cases clustering in the bottom left.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal)</a></code></pre></div>
 <p><img src="../../reference/figures/classifier-calibration-4-1.png"><!-- --></p>

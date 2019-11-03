@@ -317,22 +317,22 @@
 <p>Occasionally, <code>factor</code> features may cause problems when fewer levels are present in the test data set than in the training data. By setting <code>fix.factors.prediction = TRUE</code> these are avoided by adding a factor level for missing data in the test data set.</p>
 <p>Let’s have a look at two of the learners created above.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">classif.lrn</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">## Learner classif.randomForest from package randomForest</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">## Type: classif</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">## Name: Random Forest; Short name: rf</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## Class: classif.randomForest</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">## Properties: twoclass,multiclass,numerics,factors,ordered,prob,class.weights,oobpreds,featimp</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">## Predict-Type: prob</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">## Hyperparameters:</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">## Learner classif.randomForest from package randomForest</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">## Type: classif</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Name: Random Forest; Short name: rf</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Class: classif.randomForest</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## Properties: twoclass,multiclass,numerics,factors,ordered,prob,class.weights,oobpreds,featimp</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Predict-Type: prob</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">## Hyperparameters:</span></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">surv.lrn</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">## Learner cph from package survival</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">## Type: surv</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">## Name: Cox Proportional Hazard Model; Short name: coxph</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">## Class: surv.coxph</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">## Properties: numerics,factors,weights</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">## Predict-Type: response</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">## Hyperparameters:</a></code></pre></div>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">## Learner cph from package survival</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">## Type: surv</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">## Name: Cox Proportional Hazard Model; Short name: coxph</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">## Class: surv.coxph</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">## Properties: numerics,factors,weights</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## Hyperparameters:</span></a></code></pre></div>
 <p>All generated learners are objects of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>). This class contains the properties of the method, e.g., which types of features it can handle, what kind of output is possible during prediction, and whether multi-class problems, observations weights or missing values are supported.</p>
 <p>As you might have noticed, there is currently no special learner class for cost-sensitive classification. For ordinary misclassification costs you can use standard classification methods. For example-dependent costs there are several ways to generate cost-sensitive learners from ordinary regression and classification learners. This is explained in greater detail in the section about <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a>.</p>
 </div>
@@ -342,96 +342,96 @@
 <p>The Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) object is a <code>list</code> and the following elements contain information regarding the hyperparameters and the type of prediction.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Get the configured hyperparameter settings that deviate from the defaults</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">cluster.lrn<span class="op">$</span>par.vals</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">## $centers</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## [1] 5</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## $centers</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## [1] 5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># Get the set of hyperparameters</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">classif.lrn<span class="op">$</span>par.set</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">##                      Type  len   Def   Constr Req Tunable Trafo</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## ntree             integer    -   500 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">## mtry              integer    -     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## replace           logical    -  TRUE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## classwt     numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## cutoff      numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">## strata            untyped    -     -        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">## sampsize    integervector &lt;NA&gt;     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">## nodesize          integer    -     1 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">## maxnodes          integer    -     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">## importance        logical    - FALSE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">## localImp          logical    - FALSE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">## proximity         logical    - FALSE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">## oob.prox          logical    -     -        -   Y   FALSE     -</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">## norm.votes        logical    -  TRUE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">## do.trace          logical    - FALSE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">## keep.forest       logical    -  TRUE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">## keep.inbag        logical    - FALSE        -   -   FALSE     -</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## mtry              integer    -     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## replace           logical    -  TRUE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## classwt     numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## cutoff      numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">## strata            untyped    -     -        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">## sampsize    integervector &lt;NA&gt;     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">## nodesize          integer    -     1 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">## maxnodes          integer    -     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">## importance        logical    - FALSE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">## localImp          logical    - FALSE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">## proximity         logical    - FALSE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">## oob.prox          logical    -     -        -   Y   FALSE     -</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">## norm.votes        logical    -  TRUE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">## do.trace          logical    - FALSE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></a>
 <a class="sourceLine" id="cb3-26" data-line-number="26"></a>
 <a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co"># Get the type of prediction</span></a>
 <a class="sourceLine" id="cb3-28" data-line-number="28">regr.lrn<span class="op">$</span>predict.type</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">## [1] "response"</a></code></pre></div>
+<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">## [1] "response"</span></a></code></pre></div>
 <p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
 <p>Moreover, <code>mlr</code> provides function <code><a href="../../reference/getHyperPars.html">getHyperPars()</a></code> or its alternative <code><a href="../../reference/getLearnerParVals.html">getLearnerParVals()</a></code> to access the current hyperparameter setting of a Learner, (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> to get a description of all possible settings. These are particularly useful in case of wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, for example if a learner is fused with a feature selection strategy, and both, the learner as well the feature selection method, have hyperparameters. For details see the section on <a href="wrapper.html">wrapped learners</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Get current hyperparameter settings</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../../reference/getHyperPars.html">getHyperPars</a></span>(cluster.lrn)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## $centers</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## [1] 5</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## $centers</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## [1] 5</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># Get a description of all possible hyperparameter settings</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(classif.lrn)</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">##                      Type  len   Def   Constr Req Tunable Trafo</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## ntree             integer    -   500 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## mtry              integer    -     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## replace           logical    -  TRUE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## classwt     numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## cutoff      numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## strata            untyped    -     -        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## sampsize    integervector &lt;NA&gt;     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">## nodesize          integer    -     1 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## maxnodes          integer    -     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">## importance        logical    - FALSE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">## localImp          logical    - FALSE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">## proximity         logical    - FALSE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## oob.prox          logical    -     -        -   Y   FALSE     -</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">## norm.votes        logical    -  TRUE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">## do.trace          logical    - FALSE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">## keep.forest       logical    -  TRUE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">## keep.inbag        logical    - FALSE        -   -   FALSE     -</a></code></pre></div>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">## mtry              integer    -     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">## replace           logical    -  TRUE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">## classwt     numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">## cutoff      numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">## strata            untyped    -     -        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">## sampsize    integervector &lt;NA&gt;     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">## nodesize          integer    -     1 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## maxnodes          integer    -     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">## importance        logical    - FALSE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">## localImp          logical    - FALSE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">## proximity         logical    - FALSE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">## oob.prox          logical    -     -        -   Y   FALSE     -</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">## norm.votes        logical    -  TRUE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">## do.trace          logical    - FALSE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></a></code></pre></div>
 <p>We can also use <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> or its alias <code><a href="../../reference/getLearnerParamSet.html">getLearnerParamSet()</a></code> to get a quick overview about the available hyperparameters and defaults of a learning method without explicitly constructing it (by calling <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="st">"classif.randomForest"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">##                      Type  len   Def   Constr Req Tunable Trafo</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## ntree             integer    -   500 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## mtry              integer    -     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## replace           logical    -  TRUE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">## classwt     numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">## cutoff      numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## strata            untyped    -     -        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## sampsize    integervector &lt;NA&gt;     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">## nodesize          integer    -     1 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## maxnodes          integer    -     - 1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## importance        logical    - FALSE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## localImp          logical    - FALSE        -   -    TRUE     -</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## proximity         logical    - FALSE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## oob.prox          logical    -     -        -   Y   FALSE     -</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">## norm.votes        logical    -  TRUE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">## do.trace          logical    - FALSE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">## keep.forest       logical    -  TRUE        -   -   FALSE     -</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## keep.inbag        logical    - FALSE        -   -   FALSE     -</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## mtry              integer    -     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## replace           logical    -  TRUE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## classwt     numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## cutoff      numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## strata            untyped    -     -        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## sampsize    integervector &lt;NA&gt;     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## nodesize          integer    -     1 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## maxnodes          integer    -     - 1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## importance        logical    - FALSE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## localImp          logical    - FALSE        -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## proximity         logical    - FALSE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## oob.prox          logical    -     -        -   Y   FALSE     -</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## norm.votes        logical    -  TRUE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## do.trace          logical    - FALSE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></a></code></pre></div>
 <p>Functions for accessing a Learner’s meta information are available in <code>mlr</code>. We can use <code><a href="../../reference/getLearnerId.html">getLearnerId()</a></code>, <code><a href="../../reference/getLearnerShortName.html">getLearnerShortName()</a></code> and <code><a href="../../reference/getLearnerType.html">getLearnerType()</a></code> to get Learner’s ID, short name and type, respectively. Moreover, in order to show the required packages for the Learner, one can call <code><a href="../../reference/getLearnerPackages.html">getLearnerPackages()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Get object's id</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../../reference/getLearnerId.html">getLearnerId</a></span>(surv.lrn)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">## [1] "cph"</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">## [1] "cph"</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># Get the short name</span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw"><a href="../../reference/getLearnerShortName.html">getLearnerShortName</a></span>(classif.lrn)</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">## [1] "rf"</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">## [1] "rf"</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co"># Get the type of the learner</span></a>
 <a class="sourceLine" id="cb6-10" data-line-number="10"><span class="kw"><a href="../../reference/getLearnerType.html">getLearnerType</a></span>(multilabel.lrn)</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">## [1] "multilabel"</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">## [1] "multilabel"</span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co"># Get required packages</span></a>
 <a class="sourceLine" id="cb6-14" data-line-number="14"><span class="kw"><a href="../../reference/getLearnerPackages.html">getLearnerPackages</a></span>(cluster.lrn)</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">## [1] "stats" "clue"</a></code></pre></div>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">## [1] "stats" "clue"</span></a></code></pre></div>
 </div>
 <div id="modifying-a-learner" class="section level1">
 <h1 class="hasAnchor">
@@ -440,13 +440,13 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Change the ID</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">surv.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setLearnerId.html">setLearnerId</a></span>(surv.lrn, <span class="st">"CoxModel"</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">surv.lrn</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">## Learner CoxModel from package survival</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">## Type: surv</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## Name: Cox Proportional Hazard Model; Short name: coxph</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## Class: surv.coxph</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## Properties: numerics,factors,weights</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## Predict-Type: response</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## Hyperparameters:</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">## Learner CoxModel from package survival</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## Type: surv</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## Name: Cox Proportional Hazard Model; Short name: coxph</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Class: surv.coxph</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Properties: numerics,factors,weights</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">## Hyperparameters:</span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co"># Change the prediction type, predict a factor with class labels instead of probabilities</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">classif.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/setPredictType.html">setPredictType</a></span>(classif.lrn, <span class="st">"response"</span>)</a>
@@ -465,56 +465,56 @@
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># List everything in mlr</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">lrns =<span class="st"> </span><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>()</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lrns[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">##                 class      package</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">## 1         classif.ada    ada,rpart</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">## 2  classif.adaboostm1        RWeka</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## 3 classif.bartMachine  bartMachine</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## 4    classif.binomial        stats</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## 5    classif.boosting adabag,rpart</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## 6         classif.bst    bst,rpart</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">##                 class      package</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">## 1         classif.ada    ada,rpart</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">## 2  classif.adaboostm1        RWeka</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">## 3 classif.bartMachine  bartMachine</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## 4    classif.binomial        stats</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">## 5    classif.boosting adabag,rpart</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">## 6         classif.bst    bst,rpart</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co"># List classifiers that can output probabilities</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">lrns =<span class="st"> </span><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, <span class="dt">properties =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lrns[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">##                 class      package</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">## 1         classif.ada    ada,rpart</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">## 2  classif.adaboostm1        RWeka</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">## 3 classif.bartMachine  bartMachine</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">## 4    classif.binomial        stats</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">## 5    classif.boosting adabag,rpart</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">## 6         classif.C50          C50</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">##                 class      package</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">## 1         classif.ada    ada,rpart</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">## 2  classif.adaboostm1        RWeka</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">## 3 classif.bartMachine  bartMachine</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">## 4    classif.binomial        stats</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">## 5    classif.boosting adabag,rpart</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">## 6         classif.C50          C50</span></a>
 <a class="sourceLine" id="cb8-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co"># List classifiers that can be applied to iris (i.e., multiclass) and output probabilities</span></a>
 <a class="sourceLine" id="cb8-24" data-line-number="24">lrns =<span class="st"> </span><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(iris.task, <span class="dt">properties =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-25" data-line-number="25"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lrns[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])</a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">##                class      package</a>
-<a class="sourceLine" id="cb8-27" data-line-number="27">## 1 classif.adaboostm1        RWeka</a>
-<a class="sourceLine" id="cb8-28" data-line-number="28">## 2   classif.boosting adabag,rpart</a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">## 3        classif.C50          C50</a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">## 4    classif.cforest        party</a>
-<a class="sourceLine" id="cb8-31" data-line-number="31">## 5      classif.ctree        party</a>
-<a class="sourceLine" id="cb8-32" data-line-number="32">## 6   classif.cvglmnet       glmnet</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">##                class      package</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">## 1 classif.adaboostm1        RWeka</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">## 2   classif.boosting adabag,rpart</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">## 3        classif.C50          C50</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">## 4    classif.cforest        party</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">## 5      classif.ctree        party</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">## 6   classif.cvglmnet       glmnet</span></a>
 <a class="sourceLine" id="cb8-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co"># The calls above return character vectors, but you can also create learner objects</span></a>
 <a class="sourceLine" id="cb8-35" data-line-number="35"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"cluster"</span>, <span class="dt">create =</span> <span class="ot">TRUE</span>), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb8-36" data-line-number="36">## [[1]]</a>
-<a class="sourceLine" id="cb8-37" data-line-number="37">## Learner cluster.cmeans from package e1071,clue</a>
-<a class="sourceLine" id="cb8-38" data-line-number="38">## Type: cluster</a>
-<a class="sourceLine" id="cb8-39" data-line-number="39">## Name: Fuzzy C-Means Clustering; Short name: cmeans</a>
-<a class="sourceLine" id="cb8-40" data-line-number="40">## Class: cluster.cmeans</a>
-<a class="sourceLine" id="cb8-41" data-line-number="41">## Properties: numerics,prob</a>
-<a class="sourceLine" id="cb8-42" data-line-number="42">## Predict-Type: response</a>
-<a class="sourceLine" id="cb8-43" data-line-number="43">## Hyperparameters: centers=2</a>
-<a class="sourceLine" id="cb8-44" data-line-number="44">## </a>
-<a class="sourceLine" id="cb8-45" data-line-number="45">## </a>
-<a class="sourceLine" id="cb8-46" data-line-number="46">## [[2]]</a>
-<a class="sourceLine" id="cb8-47" data-line-number="47">## Learner cluster.Cobweb from package RWeka</a>
-<a class="sourceLine" id="cb8-48" data-line-number="48">## Type: cluster</a>
-<a class="sourceLine" id="cb8-49" data-line-number="49">## Name: Cobweb Clustering Algorithm; Short name: cobweb</a>
-<a class="sourceLine" id="cb8-50" data-line-number="50">## Class: cluster.Cobweb</a>
-<a class="sourceLine" id="cb8-51" data-line-number="51">## Properties: numerics</a>
-<a class="sourceLine" id="cb8-52" data-line-number="52">## Predict-Type: response</a>
-<a class="sourceLine" id="cb8-53" data-line-number="53">## Hyperparameters:</a></code></pre></div>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">## [[1]]</span></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">## Learner cluster.cmeans from package e1071,clue</span></a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">## Type: cluster</span></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">## Name: Fuzzy C-Means Clustering; Short name: cmeans</span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">## Class: cluster.cmeans</span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">## Properties: numerics,prob</span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">## Hyperparameters: centers=2</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">## </span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">## </span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">## [[2]]</span></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">## Learner cluster.Cobweb from package RWeka</span></a>
+<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">## Type: cluster</span></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">## Name: Cobweb Clustering Algorithm; Short name: cobweb</span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">## Class: cluster.Cobweb</span></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">## Properties: numerics</span></a>
+<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">## Hyperparameters:</span></a></code></pre></div>
 </div>
   </div>
 

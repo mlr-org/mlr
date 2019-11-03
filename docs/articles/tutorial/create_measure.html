@@ -293,65 +293,65 @@
 <a href="#performance-measures-and-aggregation-schemes" class="anchor"></a>Performance measures and aggregation schemes</h1>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). For example the <a href="measures.html" target="_blank">mse</a> (mean squared error) looks as follows.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(mse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">## List of 10</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">##  $ id        : chr "mse"</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">##  $ minimize  : logi TRUE</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">##  $ fun       :function (task, model, pred, feats, extra.args)  </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x5596902b5300&gt; </a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">##  $ extra.args: list()</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">##  $ best      : num 0</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">##  $ worst     : num Inf</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">##  $ name      : chr "Mean of squared errors"</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">##  $ note      : chr "Defined as: mean((response - truth)^2)"</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">##  $ aggr      :List of 4</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">##   ..$ id        : chr "test.mean"</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">##   ..$ name      : chr "Test mean"</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  </a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55969028dc98&gt; </a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">##   ..$ properties: chr "req.test"</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">##   ..- attr(*, "class")= chr "Aggregation"</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">##  - attr(*, "class")= chr "Measure"</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">## List of 10</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">##  $ id        : chr "mse"</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">##  $ minimize  : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">##  $ fun       :function (task, model, pred, feats, extra.args)  </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x5596902b5300&gt; </span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">##  $ extra.args: list()</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">##  $ best      : num 0</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##  $ worst     : num Inf</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  $ name      : chr "Mean of squared errors"</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">##  $ note      : chr "Defined as: mean((response - truth)^2)"</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">##  $ aggr      :List of 4</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">##   ..$ id        : chr "test.mean"</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##   ..$ name      : chr "Test mean"</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)  </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55969028dc98&gt; </span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">##   ..$ properties: chr "req.test"</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">##  - attr(*, "class")= chr "Measure"</span></a>
 <a class="sourceLine" id="cb1-23" data-line-number="23"></a>
 <a class="sourceLine" id="cb1-24" data-line-number="24">mse<span class="op">$</span>fun</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">## function(task, model, pred, feats, extra.args) {</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">##     measureMSE(pred$data$truth, pred$data$response)</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">##   }</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">## &lt;bytecode: 0x55968f621870&gt;</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">## &lt;environment: namespace:mlr&gt;</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">## function(task, model, pred, feats, extra.args) {</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">##     measureMSE(pred$data$truth, pred$data$response)</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">##   }</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">## &lt;bytecode: 0x55968f621870&gt;</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a>
 <a class="sourceLine" id="cb1-30" data-line-number="30"></a>
 <a class="sourceLine" id="cb1-31" data-line-number="31">measureMSE</a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">## function(truth, response) {</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">##   mean((response - truth)^2)</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">## }</a>
-<a class="sourceLine" id="cb1-35" data-line-number="35">## &lt;bytecode: 0x559691533288&gt;</a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">## function(truth, response) {</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="co">##   mean((response - truth)^2)</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="co">## }</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="co">## &lt;bytecode: 0x559691533288&gt;</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a></code></pre></div>
 <p>See the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) documentation page for a detailed description of the object slots.</p>
 <p>At the core is slot <code>$fun</code> which contains the function that calculates the performance value. The actual work is done by function <code>measureMSE</code> (<code><a href="../../reference/measures.html">measures()</a></code>). Similar functions, generally adhering to the naming scheme <code>measure</code> followed by the capitalized measure ID, exist for most performance measures. See the [<code><a href="../../reference/measures.html">measures()</a></code>] help page for a complete list.</p>
 <p>Just as <code><a href="../../reference/Task.html">Task()</a></code> and Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) has an identifier <code>$id</code> which is for example used to annotate results and plots. For plots there is also the option to use the longer measure <code>$name</code> instead. See the tutorial page on <a href="visualization.html" target="_blank">visualization</a> for more information.</p>
 <p>Moreover, a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) includes a number of <code>$properties</code> that indicate for which types of learning problems it is suitable and what information is required to calculate it. Obviously, most measures need the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (<code>"req.pred"</code>) and, for supervised problems, the true values of the target variable(s) (<code>"req.truth"</code>). You can use functions <code>getMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) and <code>hasMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) to determine the properties of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). Moreover, <code><a href="../../reference/listMeasureProperties.html">listMeasureProperties()</a></code> shows all measure properties currently available in <code>mlr</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../../reference/listMeasureProperties.html">listMeasureProperties</a></span>()</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">##  [9] "req.truth"     "req.task"      "req.feats"     "req.model"    </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">## [13] "req.prob"</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">##  [9] "req.truth"     "req.task"      "req.feats"     "req.model"    </span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## [13] "req.prob"</span></a></code></pre></div>
 <p>Additional to its properties, each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) knows its extreme values <code>$best</code> and <code>$worst</code> and if it wants to be minimized or maximized (<code>$minimize</code>) during <a href="tune.html" target="_blank">tuning</a> or <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <p>For resampling slot <code>$aggr</code> specifies how the overall performance across all resampling iterations is calculated. Typically, this is just a matter of aggregating the performance values obtained on the test sets <code>perf.test</code> or the training sets <code>perf.train</code> by a simple function. The by far most common scheme is <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), i.e., the unweighted mean of the performances on the test sets.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(test.mean)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">## List of 4</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">##  $ id        : chr "test.mean"</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">##  $ name      : chr "Test mean"</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)  </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">##  $ properties: chr "req.test"</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##  - attr(*, "class")= chr "Aggregation"</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## List of 4</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">##  $ id        : chr "test.mean"</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">##  $ name      : chr "Test mean"</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)  </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">##  $ properties: chr "req.test"</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##  - attr(*, "class")= chr "Aggregation"</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">test.mean<span class="op">$</span>fun</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">## function (task, perf.test, perf.train, measure, group, pred) </a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## mean(perf.test)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## &lt;bytecode: 0xc0a82e8&gt;</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## &lt;environment: namespace:mlr&gt;</a></code></pre></div>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## mean(perf.test)</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## &lt;bytecode: 0xc0a82e8&gt;</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## &lt;environment: namespace:mlr&gt;</span></a></code></pre></div>
 <p>All aggregation schemes are objects of class <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> with the function in slot <code>$fun</code> doing the actual work. The <code>$properties</code> member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.</p>
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>
 <p>You can construct your own <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) and <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> objects via functions <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>, <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>, <code><a href="../../reference/makeCustomResampledMeasure.html">makeCustomResampledMeasure()</a></code> and <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Some examples are shown in the following.</p>
@@ -382,13 +382,13 @@
 <a class="sourceLine" id="cb4-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co"># Calculate the performance using the new measure</span></a>
 <a class="sourceLine" id="cb4-20" data-line-number="20"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.mmce)</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">## my.mmce </a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">##    0.02</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">## my.mmce </span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">##    0.02</span></a>
 <a class="sourceLine" id="cb4-23" data-line-number="23"></a>
 <a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co"># Apparently the result coincides with the mlr implementation</span></a>
 <a class="sourceLine" id="cb4-25" data-line-number="25"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> mmce)</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">## mmce </a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">## 0.02</a></code></pre></div>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">## mmce </span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">## 0.02</span></a></code></pre></div>
 </div>
 <div id="constructing-a-measure-for-ordinary-misclassification-costs" class="section level1">
 <h1 class="hasAnchor">
@@ -413,8 +413,8 @@
 <a class="sourceLine" id="cb5-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co"># Calculate the average costs</span></a>
 <a class="sourceLine" id="cb5-17" data-line-number="17"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> my.costs)</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">##   my.costs </a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## 0.02666667</a></code></pre></div>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">##   my.costs </span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## 0.02666667</span></a></code></pre></div>
 </div>
 <div id="creating-an-aggregation-scheme" class="section level1">
 <h1 class="hasAnchor">
@@ -452,20 +452,20 @@
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co"># Optimization path, i.e., performances for the 16 possible feature subsets</span></a>
 <a class="sourceLine" id="cb7-17" data-line-number="17">perf.data =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(perf.data[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## 1            0           0            0           0     0.68000000</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## 2            1           0            0           0     0.34000000</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## 3            0           1            0           0     0.48666667</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## 4            0           0            1           0     0.06666667</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">## 5            0           0            0           1     0.04666667</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## 6            1           1            0           0     0.36000000</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">##   mmce.test.range mmce.test.min mmce.test.max</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## 1            0.20          0.56          0.76</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## 2            0.32          0.18          0.50</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## 3            0.18          0.42          0.60</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## 4            0.06          0.04          0.10</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">## 5            0.06          0.02          0.08</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## 6            0.22          0.28          0.50</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">## 1            0           0            0           0     0.68000000</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">## 2            1           0            0           0     0.34000000</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">## 3            0           1            0           0     0.48666667</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">## 4            0           0            1           0     0.06666667</span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">## 5            0           0            0           1     0.04666667</span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">## 6            1           1            0           0     0.36000000</span></a>
+<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">##   mmce.test.range mmce.test.min mmce.test.max</span></a>
+<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">## 1            0.20          0.56          0.76</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">## 2            0.32          0.18          0.50</span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">## 3            0.18          0.42          0.60</span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">## 4            0.06          0.04          0.10</span></a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">## 5            0.06          0.02          0.08</span></a>
+<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">## 6            0.22          0.28          0.50</span></a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb7-34" data-line-number="34">pd =<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.005</span>, <span class="dt">height =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb7-35" data-line-number="35">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mmce.test.range, <span class="dt">y =</span> mmce.test.mean, <span class="dt">ymax =</span> mmce.test.max, <span class="dt">ymin =</span> mmce.test.min,</a>
