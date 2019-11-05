@@ -300,27 +300,25 @@
 <h1 class="hasAnchor">
 <a href="#example-imputation-using-the-mean" class="anchor"></a>Example: Imputation using the mean</h1>
 <p>Let’s have a look at function imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">imputeMean =<span class="st"> </span><span class="cf">function</span> () </a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span>(<span class="dt">learn =</span> <span class="cf">function</span>(data, target, col) <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(data[[col]], </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">impute =</span> simpleImpute)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">imputeMean =<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span>(<span class="dt">learn =</span> <span class="cf">function</span>(data, target, col) <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(data[[col]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        <span class="dt">impute =</span> simpleImpute)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">}</a></code></pre></div>
 <p>imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>) calls the unexported <code>mlr</code> function <code>simpleImpute</code> which is defined as follows.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">simpleImpute =<span class="st"> </span><span class="cf">function</span> (data, target, col, const) </a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(const)) {</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">        <span class="kw">stopf</span>(<span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">            col)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    }</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    x =<span class="st"> </span>data[[col]]</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(const)) {</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        x =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(x)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    }</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/factor.html">is.factor</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>const <span class="op">%nin%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(x)) {</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">        <span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(x) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(x), <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(const))</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    }</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="kw"><a href="https://rdrr.io/r/base/replace.html">replace</a></span>(x, <span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(x), const)</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">}</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">simpleImpute =<span class="st"> </span><span class="cf">function</span>(data, target, col, const) {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(const)) {</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">        <span class="kw">stopf</span>(<span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, </a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">            col)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    }</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    x =<span class="st"> </span>data[[col]]</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(const)) {</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">        x =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(x)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/factor.html">is.factor</a></span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>const <span class="op">%nin%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(x)) {</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">        <span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(x) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(x), <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(const))</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    }</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="kw"><a href="https://rdrr.io/r/base/replace.html">replace</a></span>(x, <span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(x), const)</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">}</a></code></pre></div>
 <p>The <em>learn</em> function calculates the mean of the non-missing observations in column <code>col</code>. The mean is passed via argument <code>const</code> to the <em>impute</em> function that replaces all missing values in feature <code>col</code>.</p>
 </div>
 <div id="writing-your-own-imputation-method" class="section level1">
@@ -351,17 +349,17 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">imp =<span class="st"> </span><span class="kw"><a href="../../reference/impute.html">impute</a></span>(airquality, <span class="dt">cols =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">Ozone =</span> <span class="kw">imputeLOCF</span>(), <span class="dt">Solar.R =</span> <span class="kw">imputeLOCF</span>()),</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">dummy.cols =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Ozone"</span>, <span class="st">"Solar.R"</span>))</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(imp<span class="op">$</span>data, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">##    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## 1     41     190  7.4   67     5   1       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## 2     36     118  8.0   72     5   2       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## 3     12     149 12.6   74     5   3       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## 4     18     313 11.5   62     5   4       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">## 5     18     313 14.3   56     5   5        TRUE          TRUE</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## 6     28     313 14.9   66     5   6       FALSE          TRUE</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## 7     23     299  8.6   65     5   7       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## 8     19      99 13.8   59     5   8       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## 9      8      19 20.1   61     5   9       FALSE         FALSE</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## 10     8     194  8.6   69     5  10        TRUE         FALSE</a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## 1     41     190  7.4   67     5   1       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## 2     36     118  8.0   72     5   2       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## 3     12     149 12.6   74     5   3       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## 4     18     313 11.5   62     5   4       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">## 5     18     313 14.3   56     5   5        TRUE          TRUE</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">## 6     28     313 14.9   66     5   6       FALSE          TRUE</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">## 7     23     299  8.6   65     5   7       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">## 8     19      99 13.8   59     5   8       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">## 9      8      19 20.1   61     5   9       FALSE         FALSE</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">## 10     8     194  8.6   69     5  10        TRUE         FALSE</span></a></code></pre></div>
 </div>
   </div>
 

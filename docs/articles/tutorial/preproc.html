@@ -356,71 +356,71 @@
 <p>In the following we show an example where principal components analysis (PCA) is used for dimensionality reduction. This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.</p>
 <p>We consider the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>, which poses a binary classification problem with 208 observations and 60 features.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sonar.task</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">## Supervised task: Sonar-example</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">## Type: classif</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## Target: Class</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">## Observations: 208</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">## Features:</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">##    numerics     factors     ordered functionals </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">##          60           0           0           0 </a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## Missings: FALSE</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">## Has weights: FALSE</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## Has blocking: FALSE</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## Has coordinates: FALSE</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## Classes: 2</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">##   M   R </a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">## 111  97 </a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">## Positive class: M</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## Supervised task: Sonar-example</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## Type: classif</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## Target: Class</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## Observations: 208</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">## Features:</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##    numerics     factors     ordered functionals </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##          60           0           0           0 </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## Missings: FALSE</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## Has weights: FALSE</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## Has blocking: FALSE</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## Has coordinates: FALSE</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## Classes: 2</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">##   M   R </span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">## 111  97 </span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">## Positive class: M</span></a></code></pre></div>
 <p>Below we fuse quadratic discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="st">"classif.qda"</span>, <span class="dt">ppc.pca =</span> <span class="ot">TRUE</span>, <span class="dt">ppc.thresh =</span> <span class="fl">0.9</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">lrn</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">## Learner classif.qda.preproc from package MASS</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">## Type: classif</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">## Name: ; Short name: </a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">## Class: PreprocWrapperCaret</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## Properties: twoclass,multiclass,numerics,factors,prob</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## Predict-Type: response</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## Learner classif.qda.preproc from package MASS</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Type: classif</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">## Name: ; Short name: </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## Class: PreprocWrapperCaret</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></a></code></pre></div>
 <p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, sonar.task)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">mod</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## Trained on: task.id = Sonar-example; obs = 208; features = 60</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## Model for learner.id=classif.qda; learner.class=classif.qda</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## Trained on: task.id = Sonar-example; obs = 208; features = 22</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">## Hyperparameters:</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## Hyperparameters:</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="kw"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(mod, <span class="dt">more.unwrap =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## Call:</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">## </a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">## Prior probabilities of groups:</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">##         M         R </a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">## 0.5336538 0.4663462 </a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">## </a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">## Group means:</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21">##          PC1        PC2        PC3         PC4         PC5         PC6</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">## M  0.5976122 -0.8058235  0.9773518  0.03794232 -0.04568166 -0.06721702</a>
-<a class="sourceLine" id="cb5-23" data-line-number="23">## R -0.6838655  0.9221279 -1.1184128 -0.04341853  0.05227489  0.07691845</a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">##          PC7         PC8        PC9       PC10        PC11          PC12</a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">## M  0.2278162 -0.01034406 -0.2530606 -0.1793157 -0.04084466 -0.0004789888</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">## R -0.2606969  0.01183702  0.2895848  0.2051963  0.04673977  0.0005481212</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27">##          PC13       PC14        PC15        PC16        PC17        PC18</a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">## M -0.06138758 -0.1057137  0.02808048  0.05215865 -0.07453265  0.03869042</a>
-<a class="sourceLine" id="cb5-29" data-line-number="29">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</a>
-<a class="sourceLine" id="cb5-30" data-line-number="30">##          PC19         PC20        PC21         PC22</a>
-<a class="sourceLine" id="cb5-31" data-line-number="31">## M -0.01192247  0.006098658  0.01263492 -0.001224809</a>
-<a class="sourceLine" id="cb5-32" data-line-number="32">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</a></code></pre></div>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## Call:</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## </span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## Prior probabilities of groups:</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">##         M         R </span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## 0.5336538 0.4663462 </span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## </span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## Group means:</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">##          PC1        PC2        PC3         PC4         PC5         PC6</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## M  0.5976122 -0.8058235  0.9773518  0.03794232 -0.04568166 -0.06721702</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">## R -0.6838655  0.9221279 -1.1184128 -0.04341853  0.05227489  0.07691845</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">##          PC7         PC8        PC9       PC10        PC11          PC12</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## M  0.2278162 -0.01034406 -0.2530606 -0.1793157 -0.04084466 -0.0004789888</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## R -0.2606969  0.01183702  0.2895848  0.2051963  0.04673977  0.0005481212</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">##          PC13       PC14        PC15        PC16        PC17        PC18</span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## M -0.06138758 -0.1057137  0.02808048  0.05215865 -0.07453265  0.03869042</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</span></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">##          PC19         PC20        PC21         PC22</span></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></a></code></pre></div>
 <p>Below the performances of <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">rin =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">stratify =</span> <span class="ot">TRUE</span>, <span class="dt">task =</span> sonar.task)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">res =<span class="st"> </span><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"classif.qda"</span>, lrn), sonar.task, rin, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">res</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">##         task.id          learner.id mmce.test.mean</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">## 1 Sonar-example         classif.qda      0.2932367</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">## 2 Sonar-example classif.qda.preproc      0.1779848</a></code></pre></div>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">##         task.id          learner.id mmce.test.mean</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## 1 Sonar-example         classif.qda      0.2932367</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span></a></code></pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
 <div id="joint-tuning-of-preprocessing-options-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -428,64 +428,64 @@
 <p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(lrn)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">##                      Type len     Def                      Constr Req</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">## ppc.BoxCox        logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">## ppc.YeoJohnson    logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">## ppc.expoTrans     logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">## ppc.center        logical   -    TRUE                           -   -</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## ppc.scale         logical   -    TRUE                           -   -</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## ppc.range         logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## ppc.knnImpute     logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## ppc.bagImpute     logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">## ppc.medianImpute  logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">## ppc.pca           logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">## ppc.ica           logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">## ppc.spatialSign   logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">## ppc.corr          logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">## ppc.zv            logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">## ppc.nzv           logical   -   FALSE                           -   -</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">## ppc.thresh        numeric   -    0.95                    0 to Inf   -</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">## ppc.pcaComp       integer   -       -                    1 to Inf   -</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">## ppc.na.remove     logical   -    TRUE                           -   -</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">## ppc.k             integer   -       5                    1 to Inf   -</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">## ppc.fudge         numeric   -     0.2                    0 to Inf   -</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">## ppc.numUnique     integer   -       3                    1 to Inf   -</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">## ppc.n.comp        integer   -       -                    1 to Inf   -</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">## ppc.cutoff        numeric   -     0.9                      0 to 1   -</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">## ppc.freqCut       numeric   -      19                    1 to Inf   -</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">## ppc.uniqueCut     numeric   -      10                    0 to Inf   -</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">## method           discrete   -  moment            moment,mle,mve,t   -</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">## nu                numeric   -       5                    2 to Inf   Y</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">## predict.method   discrete   - plug-in plug-in,predictive,debiased   -</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">##                  Tunable Trafo</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">## ppc.BoxCox          TRUE     -</a>
-<a class="sourceLine" id="cb7-33" data-line-number="33">## ppc.YeoJohnson      TRUE     -</a>
-<a class="sourceLine" id="cb7-34" data-line-number="34">## ppc.expoTrans       TRUE     -</a>
-<a class="sourceLine" id="cb7-35" data-line-number="35">## ppc.center          TRUE     -</a>
-<a class="sourceLine" id="cb7-36" data-line-number="36">## ppc.scale           TRUE     -</a>
-<a class="sourceLine" id="cb7-37" data-line-number="37">## ppc.range           TRUE     -</a>
-<a class="sourceLine" id="cb7-38" data-line-number="38">## ppc.knnImpute       TRUE     -</a>
-<a class="sourceLine" id="cb7-39" data-line-number="39">## ppc.bagImpute       TRUE     -</a>
-<a class="sourceLine" id="cb7-40" data-line-number="40">## ppc.medianImpute    TRUE     -</a>
-<a class="sourceLine" id="cb7-41" data-line-number="41">## ppc.pca             TRUE     -</a>
-<a class="sourceLine" id="cb7-42" data-line-number="42">## ppc.ica             TRUE     -</a>
-<a class="sourceLine" id="cb7-43" data-line-number="43">## ppc.spatialSign     TRUE     -</a>
-<a class="sourceLine" id="cb7-44" data-line-number="44">## ppc.corr            TRUE     -</a>
-<a class="sourceLine" id="cb7-45" data-line-number="45">## ppc.zv              TRUE     -</a>
-<a class="sourceLine" id="cb7-46" data-line-number="46">## ppc.nzv             TRUE     -</a>
-<a class="sourceLine" id="cb7-47" data-line-number="47">## ppc.thresh          TRUE     -</a>
-<a class="sourceLine" id="cb7-48" data-line-number="48">## ppc.pcaComp         TRUE     -</a>
-<a class="sourceLine" id="cb7-49" data-line-number="49">## ppc.na.remove       TRUE     -</a>
-<a class="sourceLine" id="cb7-50" data-line-number="50">## ppc.k               TRUE     -</a>
-<a class="sourceLine" id="cb7-51" data-line-number="51">## ppc.fudge           TRUE     -</a>
-<a class="sourceLine" id="cb7-52" data-line-number="52">## ppc.numUnique       TRUE     -</a>
-<a class="sourceLine" id="cb7-53" data-line-number="53">## ppc.n.comp          TRUE     -</a>
-<a class="sourceLine" id="cb7-54" data-line-number="54">## ppc.cutoff          TRUE     -</a>
-<a class="sourceLine" id="cb7-55" data-line-number="55">## ppc.freqCut         TRUE     -</a>
-<a class="sourceLine" id="cb7-56" data-line-number="56">## ppc.uniqueCut       TRUE     -</a>
-<a class="sourceLine" id="cb7-57" data-line-number="57">## method              TRUE     -</a>
-<a class="sourceLine" id="cb7-58" data-line-number="58">## nu                  TRUE     -</a>
-<a class="sourceLine" id="cb7-59" data-line-number="59">## predict.method      TRUE     -</a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">##                      Type len     Def                      Constr Req</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">## ppc.YeoJohnson    logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">## ppc.expoTrans     logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## ppc.center        logical   -    TRUE                           -   -</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## ppc.scale         logical   -    TRUE                           -   -</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## ppc.range         logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">## ppc.knnImpute     logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">## ppc.bagImpute     logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">## ppc.medianImpute  logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">## ppc.pca           logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">## ppc.ica           logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## ppc.spatialSign   logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">## ppc.corr          logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">## ppc.zv            logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">## ppc.nzv           logical   -   FALSE                           -   -</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">## ppc.thresh        numeric   -    0.95                    0 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">## ppc.pcaComp       integer   -       -                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">## ppc.na.remove     logical   -    TRUE                           -   -</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">## ppc.k             integer   -       5                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">## ppc.fudge         numeric   -     0.2                    0 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">## ppc.numUnique     integer   -       3                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">## ppc.n.comp        integer   -       -                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">## ppc.cutoff        numeric   -     0.9                      0 to 1   -</span></a>
+<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">## ppc.freqCut       numeric   -      19                    1 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">## ppc.uniqueCut     numeric   -      10                    0 to Inf   -</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">## method           discrete   -  moment            moment,mle,mve,t   -</span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">## nu                numeric   -       5                    2 to Inf   Y</span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">## predict.method   discrete   - plug-in plug-in,predictive,debiased   -</span></a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">##                  Tunable Trafo</span></a>
+<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">## ppc.BoxCox          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">## ppc.YeoJohnson      TRUE     -</span></a>
+<a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">## ppc.expoTrans       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-35" data-line-number="35"><span class="co">## ppc.center          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-36" data-line-number="36"><span class="co">## ppc.scale           TRUE     -</span></a>
+<a class="sourceLine" id="cb7-37" data-line-number="37"><span class="co">## ppc.range           TRUE     -</span></a>
+<a class="sourceLine" id="cb7-38" data-line-number="38"><span class="co">## ppc.knnImpute       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-39" data-line-number="39"><span class="co">## ppc.bagImpute       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-40" data-line-number="40"><span class="co">## ppc.medianImpute    TRUE     -</span></a>
+<a class="sourceLine" id="cb7-41" data-line-number="41"><span class="co">## ppc.pca             TRUE     -</span></a>
+<a class="sourceLine" id="cb7-42" data-line-number="42"><span class="co">## ppc.ica             TRUE     -</span></a>
+<a class="sourceLine" id="cb7-43" data-line-number="43"><span class="co">## ppc.spatialSign     TRUE     -</span></a>
+<a class="sourceLine" id="cb7-44" data-line-number="44"><span class="co">## ppc.corr            TRUE     -</span></a>
+<a class="sourceLine" id="cb7-45" data-line-number="45"><span class="co">## ppc.zv              TRUE     -</span></a>
+<a class="sourceLine" id="cb7-46" data-line-number="46"><span class="co">## ppc.nzv             TRUE     -</span></a>
+<a class="sourceLine" id="cb7-47" data-line-number="47"><span class="co">## ppc.thresh          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-48" data-line-number="48"><span class="co">## ppc.pcaComp         TRUE     -</span></a>
+<a class="sourceLine" id="cb7-49" data-line-number="49"><span class="co">## ppc.na.remove       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-50" data-line-number="50"><span class="co">## ppc.k               TRUE     -</span></a>
+<a class="sourceLine" id="cb7-51" data-line-number="51"><span class="co">## ppc.fudge           TRUE     -</span></a>
+<a class="sourceLine" id="cb7-52" data-line-number="52"><span class="co">## ppc.numUnique       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-53" data-line-number="53"><span class="co">## ppc.n.comp          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-54" data-line-number="54"><span class="co">## ppc.cutoff          TRUE     -</span></a>
+<a class="sourceLine" id="cb7-55" data-line-number="55"><span class="co">## ppc.freqCut         TRUE     -</span></a>
+<a class="sourceLine" id="cb7-56" data-line-number="56"><span class="co">## ppc.uniqueCut       TRUE     -</span></a>
+<a class="sourceLine" id="cb7-57" data-line-number="57"><span class="co">## method              TRUE     -</span></a>
+<a class="sourceLine" id="cb7-58" data-line-number="58"><span class="co">## nu                  TRUE     -</span></a>
+<a class="sourceLine" id="cb7-59" data-line-number="59"><span class="co">## predict.method      TRUE     -</span></a></code></pre></div>
 <p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> parameters.</p>
 <p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
@@ -496,32 +496,32 @@
 <a class="sourceLine" id="cb8-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>(<span class="dt">resolution =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, sonar.task, rin, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">res</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## Tune result:</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">## mmce.test.mean=0.1779848</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">## mmce.test.mean=0.1779848</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">##    ppc.pcaComp predict.method mmce.test.mean</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">## 1            1        plug-in      0.5052450</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">## 2            8        plug-in      0.2449275</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">## 3           14        plug-in      0.2021394</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">## 4           21        plug-in      0.1779848</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">## 5           27        plug-in      0.2212560</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">## 6           34        plug-in      0.2452726</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">## 7           40        plug-in      0.2500345</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">## 8           47        plug-in      0.2452726</a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">## 9           53        plug-in      0.2549344</a>
-<a class="sourceLine" id="cb8-23" data-line-number="23">## 10          60        plug-in      0.2932367</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">## 11           1       debiased      0.5000000</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">## 12           8       debiased      0.2833678</a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">## 13          14       debiased      0.2453416</a>
-<a class="sourceLine" id="cb8-27" data-line-number="27">## 14          21       debiased      0.2837129</a>
-<a class="sourceLine" id="cb8-28" data-line-number="28">## 15          27       debiased      0.2547274</a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">## 16          34       debiased      0.2886128</a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">## 17          40       debiased      0.2741891</a>
-<a class="sourceLine" id="cb8-31" data-line-number="31">## 18          47       debiased      0.3075914</a>
-<a class="sourceLine" id="cb8-32" data-line-number="32">## 19          53       debiased      0.2642512</a>
-<a class="sourceLine" id="cb8-33" data-line-number="33">## 20          60       debiased      0.2830918</a></code></pre></div>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">## 1            1        plug-in      0.5052450</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## 2            8        plug-in      0.2449275</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">## 3           14        plug-in      0.2021394</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">## 4           21        plug-in      0.1779848</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">## 5           27        plug-in      0.2212560</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">## 6           34        plug-in      0.2452726</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">## 7           40        plug-in      0.2500345</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">## 8           47        plug-in      0.2452726</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">## 9           53        plug-in      0.2549344</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">## 10          60        plug-in      0.2932367</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">## 11           1       debiased      0.5000000</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">## 12           8       debiased      0.2833678</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">## 13          14       debiased      0.2453416</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">## 14          21       debiased      0.2837129</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">## 15          27       debiased      0.2547274</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">## 16          34       debiased      0.2886128</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">## 17          40       debiased      0.2741891</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">## 18          47       debiased      0.3075914</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">## 19          53       debiased      0.2642512</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">## 20          60       debiased      0.2830918</span></a></code></pre></div>
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
@@ -606,34 +606,34 @@
 <a class="sourceLine" id="cb11-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(lrn, <span class="dt">train =</span> trainfun, <span class="dt">predict =</span> predictfun,</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="dt">par.vals =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4">lrn</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">## Learner regr.nnet.preproc from package nnet</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">## Type: regr</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">## Name: ; Short name: </a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">## Class: PreprocWrapper</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">## Properties: numerics,factors,weights</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">## Predict-Type: response</a>
-<a class="sourceLine" id="cb11-11" data-line-number="11">## Hyperparameters: size=3,trace=FALSE,decay=0.01</a></code></pre></div>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">## Learner regr.nnet.preproc from package nnet</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">## Type: regr</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">## Name: ; Short name: </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">## Class: PreprocWrapper</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">## Properties: numerics,factors,weights</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></a></code></pre></div>
 <p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">r</a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">## Resample Result</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">## Task: BostonHousing-example</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">## Learner: regr.nnet.preproc</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">## Aggr perf: mse.test.mean=26.6997095</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">## Runtime: 0.083282</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">## Learner: regr.nnet.preproc</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">## Aggr perf: mse.test.mean=26.6997095</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">## Runtime: 0.083282</span></a>
 <a class="sourceLine" id="cb12-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb12-12" data-line-number="12">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, <span class="dt">decay =</span> <span class="fl">1e-02</span>)</a>
 <a class="sourceLine" id="cb12-13" data-line-number="13">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb12-14" data-line-number="14">r</a>
 <a class="sourceLine" id="cb12-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16">## Resample Result</a>
-<a class="sourceLine" id="cb12-17" data-line-number="17">## Task: BostonHousing-example</a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">## Learner: regr.nnet</a>
-<a class="sourceLine" id="cb12-19" data-line-number="19">## Aggr perf: mse.test.mean=56.8645496</a>
-<a class="sourceLine" id="cb12-20" data-line-number="20">## Runtime: 0.0463462</a></code></pre></div>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">## Resample Result</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">## Learner: regr.nnet</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">## Aggr perf: mse.test.mean=56.8645496</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">## Runtime: 0.0463462</span></a></code></pre></div>
 </div>
 <div id="joint-tuning-of-preprocessing-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -650,28 +650,28 @@
 <a class="sourceLine" id="cb13-7" data-line-number="7">  <span class="dt">par.vals =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9">lrn</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10">## Learner regr.nnet.preproc from package nnet</a>
-<a class="sourceLine" id="cb13-11" data-line-number="11">## Type: regr</a>
-<a class="sourceLine" id="cb13-12" data-line-number="12">## Name: ; Short name: </a>
-<a class="sourceLine" id="cb13-13" data-line-number="13">## Class: PreprocWrapper</a>
-<a class="sourceLine" id="cb13-14" data-line-number="14">## Properties: numerics,factors,weights</a>
-<a class="sourceLine" id="cb13-15" data-line-number="15">## Predict-Type: response</a>
-<a class="sourceLine" id="cb13-16" data-line-number="16">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">## Learner regr.nnet.preproc from package nnet</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">## Type: regr</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">## Name: ; Short name: </span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">## Class: PreprocWrapper</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">## Properties: numerics,factors,weights</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">## Predict-Type: response</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span></a>
 <a class="sourceLine" id="cb13-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb13-18" data-line-number="18"><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(lrn)</a>
-<a class="sourceLine" id="cb13-19" data-line-number="19">##            Type len    Def      Constr Req Tunable Trafo</a>
-<a class="sourceLine" id="cb13-20" data-line-number="20">## center  logical   -      -           -   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-21" data-line-number="21">## scale   logical   -      -           -   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-22" data-line-number="22">## size    integer   -      3    0 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-23" data-line-number="23">## maxit   integer   -    100    1 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-24" data-line-number="24">## skip    logical   -  FALSE           -   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-25" data-line-number="25">## rang    numeric   -    0.7 -Inf to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-26" data-line-number="26">## decay   numeric   -      0    0 to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-27" data-line-number="27">## Hess    logical   -  FALSE           -   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-28" data-line-number="28">## trace   logical   -   TRUE           -   -   FALSE     -</a>
-<a class="sourceLine" id="cb13-29" data-line-number="29">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</a>
-<a class="sourceLine" id="cb13-30" data-line-number="30">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</a>
-<a class="sourceLine" id="cb13-31" data-line-number="31">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</a></code></pre></div>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">##            Type len    Def      Constr Req Tunable Trafo</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">## center  logical   -      -           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">## scale   logical   -      -           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">## size    integer   -      3    0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-23" data-line-number="23"><span class="co">## maxit   integer   -    100    1 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-24" data-line-number="24"><span class="co">## skip    logical   -  FALSE           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-25" data-line-number="25"><span class="co">## rang    numeric   -    0.7 -Inf to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-26" data-line-number="26"><span class="co">## decay   numeric   -      0    0 to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-27" data-line-number="27"><span class="co">## Hess    logical   -  FALSE           -   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-28" data-line-number="28"><span class="co">## trace   logical   -   TRUE           -   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb13-29" data-line-number="29"><span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span></a>
+<a class="sourceLine" id="cb13-30" data-line-number="30"><span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span></a>
+<a class="sourceLine" id="cb13-31" data-line-number="31"><span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></a></code></pre></div>
 <p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(</a>
@@ -683,25 +683,25 @@
 <a class="sourceLine" id="cb14-8" data-line-number="8">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, bh.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb14-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10">res</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">## Tune result:</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">## Op. pars: decay=0.1; center=FALSE; scale=TRUE</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">## mse.test.mean=14.0485583</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">## Tune result:</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">## Op. pars: decay=0.1; center=FALSE; scale=TRUE</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">## mse.test.mean=14.0485583</span></a>
 <a class="sourceLine" id="cb14-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb14-15" data-line-number="15">df =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(res<span class="op">$</span>opt.path)</a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">df[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(df)]</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">##    decay center scale mse.test.mean dob eol error.message</a>
-<a class="sourceLine" id="cb14-18" data-line-number="18">## 1      0   TRUE  TRUE      18.90372   1  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-19" data-line-number="19">## 2   0.05   TRUE  TRUE      21.99600   2  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-20" data-line-number="20">## 3    0.1   TRUE  TRUE      20.75765   3  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-21" data-line-number="21">## 4      0  FALSE  TRUE      17.62376   4  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-22" data-line-number="22">## 5   0.05  FALSE  TRUE      17.12807   5  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-23" data-line-number="23">## 6    0.1  FALSE  TRUE      14.04856   6  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-24" data-line-number="24">## 7      0   TRUE FALSE      78.98051   7  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-25" data-line-number="25">## 8   0.05   TRUE FALSE      34.31914   8  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-26" data-line-number="26">## 9    0.1   TRUE FALSE      56.35357   9  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-27" data-line-number="27">## 10     0  FALSE FALSE      90.20231  10  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-28" data-line-number="28">## 11  0.05  FALSE FALSE      90.20117  11  NA          &lt;NA&gt;</a>
-<a class="sourceLine" id="cb14-29" data-line-number="29">## 12   0.1  FALSE FALSE      30.99275  12  NA          &lt;NA&gt;</a></code></pre></div>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">##    decay center scale mse.test.mean dob eol error.message</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">## 1      0   TRUE  TRUE      18.90372   1  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">## 2   0.05   TRUE  TRUE      21.99600   2  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">## 3    0.1   TRUE  TRUE      20.75765   3  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">## 4      0  FALSE  TRUE      17.62376   4  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">## 5   0.05  FALSE  TRUE      17.12807   5  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">## 6    0.1  FALSE  TRUE      14.04856   6  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">## 7      0   TRUE FALSE      78.98051   7  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">## 8   0.05   TRUE FALSE      34.31914   8  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">## 9    0.1   TRUE FALSE      56.35357   9  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">## 10     0  FALSE FALSE      90.20231  10  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">## 11  0.05  FALSE FALSE      90.20117  11  NA          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">## 12   0.1  FALSE FALSE      30.99275  12  NA          &lt;NA&gt;</span></a></code></pre></div>
 </div>
 <div id="preprocessing-wrapper-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -745,9 +745,9 @@
 <a class="sourceLine" id="cb15-36" data-line-number="36"></a>
 <a class="sourceLine" id="cb15-37" data-line-number="37">lrn =<span class="st"> </span><span class="kw">makePreprocWrapperScale</span>(<span class="st">"classif.lda"</span>)</a>
 <a class="sourceLine" id="cb15-38" data-line-number="38"><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, iris.task)</a>
-<a class="sourceLine" id="cb15-39" data-line-number="39">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</a>
-<a class="sourceLine" id="cb15-40" data-line-number="40">## Trained on: task.id = iris-example; obs = 150; features = 4</a>
-<a class="sourceLine" id="cb15-41" data-line-number="41">## Hyperparameters: center=TRUE,scale=TRUE</a></code></pre></div>
+<a class="sourceLine" id="cb15-39" data-line-number="39"><span class="co">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</span></a>
+<a class="sourceLine" id="cb15-40" data-line-number="40"><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></a>
+<a class="sourceLine" id="cb15-41" data-line-number="41"><span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span></a></code></pre></div>
 </div>
 </div>
   </div>

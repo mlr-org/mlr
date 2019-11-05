@@ -40,7 +40,7 @@ makeRLearner.regr.ranger = function() {
 trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, ...) {
   tn = getTaskTargetNames(.task)
   if (is.null(keep.inbag)) keep.inbag = (.learner$predict.type == "se") # needed for jacknife and infjack!
-  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
+  ranger::ranger(formula = NULL, dependent.variable.name = tn, data = getTaskData(.task, .subset),
     case.weights = .weights, keep.inbag = keep.inbag, ...)
 }
 
