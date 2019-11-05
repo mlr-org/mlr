@@ -18,7 +18,6 @@ toc:
   depth: 3
 
 home:
-  strip_header: true
   links:
   - text: Cheatsheet
     href: https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf
@@ -123,7 +122,7 @@ navbar:
     - text: mlr Publications
       href: articles/tutorial/mlr_publications.html
     - text: Talks, Videos and Workshops
-      href: articles/tutorial/talks_videos_workshops.html
+      href: https://github.com/mlr-org/mlr-outreach
     - text: mlrMBO
       href: https://mlrmbo.mlr-org.com
     - text: mlrCPO
@@ -132,6 +131,8 @@ navbar:
       href: https://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
       href: http://openml.github.io/openml-r/
+  - text: Changelog
+    href: news/index.html
 
   right:
   - icon: fa-github fa-lg
@@ -142,3 +143,152 @@ navbar:
     href: https://stackoverflow.com/questions/tagged/mlr
   - icon: fa-rss
     href: https://mlr-org.com/
+
+reference:
+  - title: Task
+    contents:
+      - ends_with("task")
+      - Task
+      - ends_with("Task")
+      - TaskDesc
+      - listTaskTypes
+  - title: Training
+    contents:
+      - train
+      - trainLearner
+  - title: Tuning
+    contents:
+      - starts_with("Tune")
+      - starts_with("tune")
+      - contains("tune")
+      - removeHyperPars
+  - title: Prediction
+    contents:
+      - predict.WrappedModel
+      - asROCRPrediction
+      - predictLearner
+  - title: Learner
+    contents:
+      - starts_with("RLearner")
+      - starts_with("regr.")
+      - starts_with("classif.")
+      - listLearners
+      - learners
+      - makeLearner
+      - listLearnerProperties
+      - makeLearners
+      - learnerArgsToControl
+      - contains(".classif.")
+      - makeStackedLearner
+  - title: Resampling
+    contents:
+      - contains("resamp")
+      - contains("Resample")
+      - makeFixedHoldoutInstance
+  - title: Parallelization
+    contents:
+      - batchmark
+      - parallelization
+  - title: Preprocessing
+    contents:
+      - createDummyFeatures
+      - downsample
+      - dropFeatures
+      - generateCalibrationData
+      - capLargeValues
+      - crossover
+      - joinClassLevels
+      - mergeSmallFactorLevels
+      - normalizeFeatures
+      - oversample
+      - removeConstantFeatures
+      - summarizeColumns
+      - summarizeLevels
+      - smote
+  - title: Benchmark
+    contents:
+      - benchmark
+      - BenchmarkResult
+      - makeModelMultiplexer
+      - makeModelMultiplexerParamSet
+      - mergeBenchmarkResults
+      - reduceBatchmarkResults
+      - contains("BMR")
+  - title: Feature selection
+    contents:
+      - starts_with("FeatSel")
+      - contains("filter")
+      - contains("Filter")
+      - generateFeatureImportanceData
+      - analyzeFeatSelResult
+      - selectFeatures
+  - title: Model evaluation
+    contents:
+      - calculateConfusionMatrix
+      - estimateRelativeOverfitting
+      - estimateResidualVariance
+      - generateHyperParsEffectData
+      - generateLearningCurveData
+      - generatePartialDependenceData
+      - generateThreshVsPerfData
+      - generateCritDifferencesData
+      - performance
+  - title: Measures
+    contents:
+      - starts_with("measure")
+      - Aggregation
+      - ConfusionMatrix
+      - addRRMeasure
+      - aggregations
+      - calculateROCMeasures
+      - makeAggregation
+      - makeMeasure
+      - makeCostMeasure
+      - listMeasureProperties
+      - setAggregation
+      - simplifyMeasureNames
+  - title: Imputation
+    contents:
+      - starts_with("impute")
+      - makeImputeMethod
+      - reimpute
+  - title: Spatial
+    contents:
+      - contains("Spatial")
+  - title: Functional data analysis
+    contents:
+      - contains("FDA")
+      - contains("Functional")
+  - title: mlr configuration
+    contents:
+      - configureMlr
+      - mlr-package
+      - mlrFamilies
+      - getMlrOptions
+  - title: Visualization
+    contents:
+      - starts_with("plot")
+  - title: Cost-sensitive classification
+    contents:
+      - starts_with("CostSens")
+  - title: Extract functions
+    contents:
+      - starts_with("extract")
+  - title: Helpers
+    contents:
+      - contains("help")
+      - FailureModel
+      - hasProperties
+      - isFailureModel
+  - title: Wrappers
+    contents:
+      - contains("Wrapper")
+      - makeWrappedModel
+  - title: Getter functions
+    contents:
+      - starts_with("get")
+  - title: Setter functions
+    contents:
+      - starts_with("set")
+
+
