@@ -1,5 +1,10 @@
 # mlr (development version)
 
+## package infrastructure
+
+- There is now a reference grouping for all functions on the pkgdown site (https://mlr.mlr-org.com/reference/index.html)
+- CI testing now only on Circle CI (previously Travis CI)
+
 ## learners - general
 
 - fixed a bug in `classif.xgboost` which prevented passing a watchlist for binary tasks. This was caused by a suboptimal internal label inversion approach. Thanks to @001ben for reporting (#32) (@mllg)
