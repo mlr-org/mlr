@@ -44,3 +44,10 @@ test_that("classif_gbm keep.data is passed correctly", {
   train(makeLearner("classif.gbm", keep.data = FALSE), binaryclass.task)
   train(makeLearner("classif.gbm", keep.data = TRUE), binaryclass.task)
 })
+
+# issue https://github.com/mlr-org/mlr/issues/2673
+test_that("prediction values of newdata with only one row are handled correctly", {
+  lrn <- makeLearner("classif.gbm", predict.type = "prob")
+  model <- train(lrn, iris.task)
+  predict(model, newdata = iris[1, ])
+})
