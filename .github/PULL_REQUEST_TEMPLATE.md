@@ -1,14 +1,19 @@
 We are always happy to receive pull requests.
 
-Please make sure you have read our coding guidelines: 
-https://www.notion.so/mlrorg/Style-Guide-740bc663207a4bbb9a457987bda6fd91
+Please make sure you have read our [coding guidelines](https://github.com/mlr-org/mlr3/wiki/style-guide).
 
-This especially means that you have understood:
+This means in particular that you have understood:
 
-* The style guide - our lintr will provide you feedback on this
-* How to run tests locally. Yes, travis will also run them for you, bad it is annoying to wait for this.
-* How to run R CMD CHECK locally. See point before. 
+* The [style guide&(https://github.com/mlr-org/mlr3/wiki/style-guide) - our lintr will provide you feedback on this
+* Circle CI will run the tests for you - no need to punch your machine with it (they take about 30 mins)
+* You can run `devtools::test()` locally in RStudio and tests will be skipped
 
-Also it's helpful to get into direct contact with the suggested reviewers to get help, getting your PR merged.
+Please request a review from the following people on your PR:
+
+- pat-s
+- larskotthoff
+- mllg
+- berndbischl
+
 You might want to join our slack at: 
 https://mlr-org.slack.com
