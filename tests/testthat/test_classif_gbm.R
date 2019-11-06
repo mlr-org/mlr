@@ -35,14 +35,14 @@ test_that("classif_gbm", {
   set.seed(getOption("mlr.debug.seed"))
   m = gbm::gbm(multiclass.formula, data = multiclass.train, n.trees = 300, interaction.depth = 2, distribution = "multinomial")
   p = gbm::predict.gbm(m, newdata = multiclass.test, n.trees = 300)
-  y = factor(apply(p = array(c(p), dim(p)[-3], dimnames = dimnames(p)[1:2]), 1, function(r) colnames(p)[which.max(r)]))
+  y = factor(apply(array(c(p), dim(p)[-3], dimnames = dimnames(p)[1:2]), 1, function(r) colnames(p)[which.max(r)]))
   testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,
     parset = list(n.trees = 300, interaction.depth = 2, distribution = "multinomial"))
 })
 
 test_that("classif_gbm keep.data is passed correctly", {
-  train(makeLearner("classif.gbm", keep.data = FALSE), binaryclass.task)
-  train(makeLearner("classif.gbm", keep.data = TRUE), binaryclass.task)
+  expect_silent(train(makeLearner("classif.gbm", keep.data = FALSE), binaryclass.task))
+  expect_silent(train(makeLearner("classif.gbm", keep.data = TRUE), binaryclass.task))
 })
 
 # issue https://github.com/mlr-org/mlr/issues/2673
