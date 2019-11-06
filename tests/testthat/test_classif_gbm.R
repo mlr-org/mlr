@@ -49,5 +49,5 @@ test_that("classif_gbm keep.data is passed correctly", {
 test_that("prediction values of newdata with only one row are handled correctly", {
   lrn <- makeLearner("classif.gbm", predict.type = "prob")
   model <- train(lrn, iris.task)
-  predict(model, newdata = iris[1, ])
+  expect_s3_class(predict(model, newdata = iris[1, ]), "Prediction")
 })
