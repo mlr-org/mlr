@@ -9,7 +9,7 @@ do_package_checks(args = "--as-cran", error_on = "error", codecov = FALSE)
 if (ci_is_env("FULL", "true")) {
   get_stage("before_deploy") %>%
     add_step(step_install_github("mlr-org/mlr3pkgdowntemplate"))
-  do_pkgdown(branch = NULL, commit_paths = "docs", path = ".")
+  do_pkgdown(orphan = TRUE)
 }
 
 # only deploy man files in in master branch
