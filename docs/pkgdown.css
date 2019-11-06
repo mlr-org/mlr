@@ -21,8 +21,6 @@ body > .container {
   display: flex;
   height: 100%;
   flex-direction: column;
-
-  padding-top: 60px;
 }
 
 body > .container .row {
@@ -58,9 +56,14 @@ img {
   max-width: 100%;
 }
 
+/* Fix bug in bootstrap (only seen in firefox) */
+summary {
+  display: list-item;
+}
+
 /* Typographic tweaking ---------------------------------*/
 
-.contents h1.page-header {
+.contents .page-header {
   margin-top: calc(-60px + 1em);
 }
 
@@ -97,21 +100,13 @@ a.anchor {
   margin-top: -40px;
 }
 
-/* Static header placement on mobile devices */
-@media (max-width: 767px) {
-  .navbar-fixed-top {
-    position: absolute;
-  }
-  .navbar {
-    padding: 0;
-  }
-}
-
-
 /* Sidebar --------------------------*/
 
 #sidebar {
   margin-top: 30px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
 }
 #sidebar h2 {
   font-size: 1.5em;
@@ -128,6 +123,11 @@ a.anchor {
 
 .orcid {
   height: 16px;
+  font-size: 16px;
+  color: #A6CE39;
+  /* margins are required by official ORCID trademark and display guidelines */
+  margin-left:4px;
+  margin-right:4px;
   vertical-align: middle;
 }
 
@@ -136,10 +136,9 @@ a.anchor {
 .ref-index th {font-weight: normal;}
 
 .ref-index td {vertical-align: top;}
+.ref-index .icon {width: 40px;}
 .ref-index .alias {width: 40%;}
-.ref-index .title {width: 60%;}
-
-.ref-index .alias {width: 40%;}
+.ref-index-icons .alias {width: calc(40% - 40px);}
 .ref-index .title {width: 60%;}
 
 .ref-arguments th {text-align: right; padding-right: 10px;}
@@ -216,4 +215,44 @@ a.sourceLine:hover {
 
 .hasCopyButton:hover button.btn-copy-ex {
   visibility: visible;
+}
+
+/* headroom.js ------------------------ */
+
+.headroom {
+  will-change: transform;
+  transition: transform 200ms linear;
+}
+.headroom--pinned {
+  transform: translateY(0%);
+}
+.headroom--unpinned {
+  transform: translateY(-100%);
+}
+
+/* mark.js ----------------------------*/
+
+mark {
+  background-color: rgba(255, 255, 51, 0.5);
+  border-bottom: 2px solid rgba(255, 153, 51, 0.3);
+  padding: 1px;
+}
+
+/* vertical spacing after htmlwidgets */
+.html-widget {
+  margin-bottom: 10px;
+}
+
+/* fontawesome ------------------------ */
+
+.fab {
+    font-family: "Font Awesome 5 Brands" !important;
+}
+
+/* don't display links in code chunks when printing */
+/* source: https://stackoverflow.com/a/10781533 */
+@media print {
+  code a:link:after, code a:visited:after {
+    content: "";
+  }
 }
