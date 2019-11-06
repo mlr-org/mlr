@@ -72,7 +72,3 @@ body {
     vertical-align: baseline;
     border-radius: .8em; /* default: .25*/
 }
-
-.contents .page-header {
-    margin-top: calc(50px + 1em);
-}
