@@ -47,7 +47,7 @@ test_that("classif_gbm keep.data is passed correctly", {
 
 # issue https://github.com/mlr-org/mlr/issues/2673
 test_that("prediction values of newdata with only one row are handled correctly", {
-  lrn <- makeLearner("classif.gbm", predict.type = "prob")
-  model <- train(lrn, iris.task)
+  lrn = makeLearner("classif.gbm", predict.type = "prob")
+  model = train(lrn, iris.task)
   expect_s3_class(predict(model, newdata = iris[1, ]), "Prediction")
 })
