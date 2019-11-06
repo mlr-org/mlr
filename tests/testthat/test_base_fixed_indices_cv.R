@@ -14,8 +14,13 @@ test_that("fixed in single resampling", {
 
   # check if all test.inds are unique
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
+
   # check if correct indices are together (one fold is enough)
-  expect_equal(p$instance$test.inds[[1]], c(22, 52, 82, 112, 142))
+  # (to make this seed-agnostic, we just check for a numerical diff of 30 between the vector values)
+  # this is somewhat ugly but I see no easier way right now (Patrick)
+  ind = p$instance$test.inds[[1]]
+  ind_diff = viapply(seq_along(ind), function(x) ind[x] - ind[x + 1])[-length(ind)]
+  expect_equal(ind_diff, rep(-30, 4))
 })
 
 test_that("fixed in nested resampling", {
