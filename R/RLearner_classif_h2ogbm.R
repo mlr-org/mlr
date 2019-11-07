@@ -25,12 +25,12 @@ makeRLearner.classif.h2o.gbm = function() {
 #' @export
 trainLearner.classif.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, ...) {
 
+  params = list(...)
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
   }
-
   params$y = getTaskTargetNames(.task)
   params$x = getTaskFeatureNames(.task)
   params$training_frame = getTaskData(.task, subset = .subset)
@@ -40,7 +40,7 @@ trainLearner.classif.h2o.gbm = function(.learner, .task, .subset, .weights = NUL
   }
 
   params$training_frame = h2o::as.h2o(params$training_frame)
-  param$distribution = ifelse(length(getTaskDesc(.task)$class.levels) == 2L, "bernoulli", "multinomial")
+  params$distribution = ifelse(length(getTaskDesc(.task)$class.levels) == 2L, "bernoulli", "multinomial")
 
   model = do.call(h2o::h2o.gbm, params)
   return(model)

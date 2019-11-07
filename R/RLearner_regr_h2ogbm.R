@@ -64,7 +64,6 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
     h2o::h2o.init()
     options("h2o.use.data.table" = TRUE)
   }
-
   params$y = getTaskTargetNames(.task)
   params$x = getTaskFeatureNames(.task)
   params$training_frame = getTaskData(.task, subset = .subset)

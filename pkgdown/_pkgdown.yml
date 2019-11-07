@@ -18,7 +18,6 @@ toc:
   depth: 3
 
 home:
-  strip_header: true
   links:
   - text: Cheatsheet
     href: https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf
