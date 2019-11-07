@@ -50,6 +50,79 @@
 #'   encourage you to use `...` for passing hyperparameters.
 #' @param config (named [list])\cr Named list of config option to overwrite
 #'   global settings set via [configureMlr] for this specific learner.
+#'
+#' @section regr.randomForest:
+#'
+#' For this learner we added additional uncertainty estimation functionality
+#' (`predict.type = "se"`) for the randomForest, which is not provided by the
+#' underlying package.
+#'
+#' Currently implemented methods are:
+#'
+#' \itemize{
+#' \item If `se.method = "jackknife"` the standard error of a prediction is
+#' estimated by computing the jackknife-after-bootstrap, the mean-squared
+#' difference between the prediction made by only using trees which did not
+#' contain said observation and the ensemble prediction.
+#' \item If `se.method = "bootstrap"` the standard error of a prediction is
+#' estimated by bootstrapping the random forest, where the number of bootstrap
+#' replicates and the number of trees in the ensemble are controlled by
+#' `se.boot` and `se.ntree` respectively, and then taking the standard deviation
+#' of the bootstrap predictions. The "brute force" bootstrap is executed when
+#' `ntree = se.ntree`, the latter of which controls the number of trees in the
+#' individual random forests which are bootstrapped. The "noisy bootstrap" is
+#' executed when `se.ntree < ntree` which is less computationally expensive. A
+#' Monte-Carlo bias correction may make the latter option prefarable in many
+#' cases. Defaults are `se.boot = 50` and `se.ntree = 100`.
+#'
+#' \item If `se.method = "sd"`, the default, the standard deviation of the
+#' predictions across trees is returned as the variance estimate. This can be
+#' computed quickly but is also a very naive estimator. }
+#'
+#' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias
+#' correction is applied and, in the case that this results in a negative
+#' variance estimate, the values are truncated at 0.
+#'
+#' Note that when using the \dQuote{jackknife} procedure for se estimation,
+#' using a small number of trees can lead to training data observations that are
+#' never out-of-bag. The current implementation ignores these observations, but
+#' in the original definition, the resulting se estimation would be undefined.
+#'
+#' Please note that all of the mentioned `se.method` variants do not affect the
+#' computation of the posterior mean \dQuote{response} value. This is always the
+#' same as from the underlying randomForest.
+#'
+#' @section regr.featureless:
+#'
+#' A very basic baseline method which is useful for model comparisons (if you
+#' don't beat this, you very likely have a problem).
+#' Does not consider any features of the task and only uses the target feature
+#' of the training data to make predictions.
+#' Using observation weights is currently not supported.
+#'
+#' Methods \dQuote{mean} and \dQuote{median} always predict a constant value
+#' for each new observation which corresponds to the observed mean or median of
+#' the target feature in training data, respectively.
+#'
+#' The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
+#' from WEKA, see <https://weka.wikispaces.com/ZeroR>.
+#'
+#' @section classif.featureless:
+#'
+#' Method \dQuote{majority} predicts always the majority class for each new
+#' observation. In the case of ties, one randomly sampled, constant class is predicted
+#' for all observations in the test set.
+#' This method is used as the default. It is very similar to the ZeroR classifier
+#' from WEKA (see <https://weka.wikispaces.com/ZeroR>). The only difference is
+#' that ZeroR always predicts the first class of the tied class values instead
+#' of sampling them randomly.
+#'
+#' Method \dQuote{sample-prior} always samples a random class for each individual test
+#' observation according to the prior probabilities observed in the training data.
+#'
+#' If you opt to predict probabilities, the class probabilities always
+#' correspond to the prior probabilities observed in the training data.
+#'
 #' @return ([Learner]).
 #' @family learner
 #' @export
