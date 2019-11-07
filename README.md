@@ -1,4 +1,4 @@
-# mlr <img src="man/figures/logo_navbar.png" align="right" />
+# mlr <img src="man/figures/logo.png" align="right" />
 
 Machine learning in R.
 
