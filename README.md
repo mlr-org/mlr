@@ -6,8 +6,10 @@ Machine learning in R.
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)
 [![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
+
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 [![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/#retired)
+[![Coverage Status](https://img.shields.io/codecov/c/github/mlr-org/mlr/master.svg)](https://codecov.io/github/mlr-org/mlr?branch=master)
 [![Dependencies](https://tinyverse.netlify.com/badge/mlr)](https://cran.r-project.org/package=mlr)
 
 * [CRAN release site](https://CRAN.R-project.org/package=mlr)
