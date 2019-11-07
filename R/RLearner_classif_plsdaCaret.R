@@ -26,7 +26,7 @@ predictLearner.classif.plsdaCaret = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "prob")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (type == "prob") {
-    p = p[, , 1]
+    p = array(c(p), dim(p)[-3], dimnames = dimnames(p)[1:2])
   }
   return(p)
 }
