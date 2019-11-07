@@ -99,6 +99,47 @@ jobs:
           paths:
             - /usr/local/lib/R/site-library
             - $HOME/.ccache
+  codecov:
+    docker:
+      - image: rocker/verse
+    steps:
+      - checkout
+
+      # create a unique env var for the cache. Unfortunately normal env vars
+      # are not picked up by the cache, therefore this workaround is needed.
+      # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
+      - run: echo "$(date -d "$D" '+%d')" > /tmp/_tmp_file
+      - restore_cache:
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
+
+      # install deps and check pkg ---------------------------------------------
+      - run:
+          name: Install package dependencies
+          command: |
+            sudo apt update
+            sudo apt install -y libopenmpi-dev openmpi-bin ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+            mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+            mkdir $HOME/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+            echo -e 'options(Ncpus = 6, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+            R -q -e 'print(parallel::detectCores())'
+            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
+            R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
+            R -q -e 'tic::before_install()'
+            R -q -e 'tic::install()'
+      - run:
+          name: Run codecov
+          no_output_timeout: 60m
+          command: |
+            R -q -e 'tic::before_script()'
+            R -q -e 'RWeka::WPM("refresh-cache");RWeka::WPM("install-package", "XMeans");covr::codecov()'
+
+      # save R pkg cache -------------------------------------------------------
+      - save_cache:
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
+          paths:
+            - /usr/local/lib/R/site-library
+            - $HOME/.ccache
 
 workflows:
   version: 2
@@ -106,6 +147,7 @@ workflows:
     jobs:
       - "r-3.6.1"
       - "r-3.5.3"
+      - "codecov"
       - deploy:
           requires:
             - "r-3.6.1"
