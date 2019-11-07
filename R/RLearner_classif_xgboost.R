@@ -63,9 +63,10 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
   td = getTaskDesc(.task)
   parlist = list(...)
   nc = length(td$class.levels)
+  nlvls = length(td$class.levels)
 
   if (is.null(parlist$objective)) {
-    parlist$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
+    parlist$objective = if (nlvls == 2L) "binary:logistic" else "multi:softprob"
   }
 
   if (.learner$predict.type == "prob" && parlist$objective == "multi:softmax") {
@@ -79,6 +80,10 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
 
   task.data = getTaskData(.task, .subset, target.extra = TRUE)
   label = match(as.character(task.data$target), td$class.levels) - 1
+
+  # recode to 0:1 to that for the binary case the positive class translates to 1 (https://github.com/mlr-org/mlr3learners/issues/32)
+  # task.data$target is guaranteed to have the factor levels in the right order
+  label = nlvls - as.integer(task.data$target)
   parlist$data = xgboost::xgb.DMatrix(data = data.matrix(task.data$data), label = label)
 
   if (!is.null(.weights)) {
@@ -97,12 +102,13 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
 
   td = .model$task.desc
   m = .model$learner.model
-  cls = td$class.levels
+  cls = rev(td$class.levels)
   nc = length(cls)
   obj = .learner$par.vals$objective
+  nlvls = length(cls)
 
   if (is.null(obj)) {
-    .learner$par.vals$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
+    .learner$par.vals$objective = if (nlvls == 2L) "binary:logistic" else "multi:softprob"
   }
 
   p = predict(m, newdata = data.matrix(.newdata), ...)

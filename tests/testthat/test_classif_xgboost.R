@@ -74,3 +74,19 @@ test_that("multiclass xgboost with 'multi:softmax' does not produce NA predictio
   pred = predict(mod, multiclass.task)
   expect_false(any(is.na(pred$data$response)))
 })
+
+# from https://github.com/mlr-org/mlr3learners/issues/32
+test_that("xgboost with multi:softprob", {
+  learner = makeLearner("classif.xgboost", nrounds = 5L, objective = "multi:softprob")
+  mod = train(learner, sonar.task)
+  pred = predict(mod, sonar.task)
+  expect_equal(unname(performance(pred, measures = getDefaultMeasure(sonar.task))), 0)
+})
+
+# from https://github.com/mlr-org/mlr3learners/issues/32
+test_that("xgboost with binary:logistic", {
+  learner = makeLearner("classif.xgboost", nrounds = 5L)
+  mod = train(learner, sonar.task)
+  pred = predict(mod, sonar.task)
+  expect_equal(unname(performance(pred, measures = getDefaultMeasure(sonar.task))), 0)
+})
