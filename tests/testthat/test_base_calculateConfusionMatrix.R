@@ -1,40 +1,6 @@
 context("calculateConfusionMatrix")
 
 test_that("calculateConfusionMatrix", {
-  test.confMatrix = function(p) {
-
-    lvls = getTaskClassLevels(p$task.desc)
-    n = getTaskSize(p$task.desc)
-    l = length(lvls)
-
-    # test absolute
-    cm = calculateConfusionMatrix(p, relative = FALSE)
-    expect_true(is.matrix(cm$result) && nrow(cm$result) == l + 1 && ncol(cm$result) == l + 1)
-    expect_set_equal(cm$result[1:l, l + 1], cm$result[l + 1, 1:l])
-    # test absolute number of errors
-    d = cm$result[1:l, 1:l]
-    diag(d) = 0
-    expect_true(sum(unlist(d)) == cm$result[l + 1, l + 1])
-
-    # test absolute with sums
-    cm = calculateConfusionMatrix(p, sums = TRUE)
-    expect_true(is.matrix(cm$result) && nrow(cm$result) == l + 2 && ncol(cm$result) == l + 2)
-    expect_set_equal(cm$result[1:l, l + 1], cm$result[l + 1, 1:l])
-    # test absolute number of errors
-    d = cm$result[1:l, 1:l]
-    diag(d) = 0
-    expect_true(sum(unlist(d)) == cm$result[l + 1, l + 1])
-
-    # test relative
-    cm = calculateConfusionMatrix(p, relative = TRUE)
-
-    # sums have to be 1 or 0 (if no observation in that group)
-    expect_true(all(rowSums(cm$relative.row[, 1:l]) == 1 |
-      rowSums(cm$relative.row[, 1:l]) == 0))
-    expect_true(all(colSums(cm$relative.col[1:l, ]) == 1 |
-      colSums(cm$relative.col[1:l, ]) == 0))
-  }
-
 
   rdesc = makeResampleDesc("CV", iters = 3)
   r = resample(makeLearner("classif.rpart"), iris.task, rdesc)
@@ -42,7 +8,6 @@ test_that("calculateConfusionMatrix", {
 
   r = resample(makeLearner("classif.rpart"), binaryclass.task, rdesc)
   test.confMatrix(r$pred)
-
 
   # dropped class lvls
   newdata = droplevels(multiclass.df[1L, ])
@@ -60,8 +25,9 @@ test_that("calculateConfusionMatrix", {
 })
 
 test_that("calculateConfusionMatrix elements are consistent with implemented measures", {
+
   # check values itself
-  task = subsetTask(sonar.task, 1:32)
+  task = subsetTask(sonar.task, 1:32, features = getTaskNFeats(sonar.task))
   pred = holdout(makeLearner("classif.rpart"), task, split = 1 / 2)$pred
   truth = factor(rep(c("M", "R"), c(4, 12)))
   predicted = factor(rep(c("M", "R", "M"), c(1, 10, 5)))
@@ -109,6 +75,7 @@ test_that("calculateConfusionMatrix elements are consistent with implemented mea
 })
 
 test_that("calculateConfusionMatrix with different factor levels (#2030)", {
+
   lrn = makeLearner("classif.rpart")
   m = train(lrn, iris.task)
   nd = iris[101:150, ]
@@ -122,6 +89,7 @@ test_that("calculateConfusionMatrix with different factor levels (#2030)", {
 
 
 test_that("calculateConfusionMatrix set argument works", {
+
   mod = train("classif.lda", iris.task)
   pred1 = predict(mod, iris.task)
   rdesc = makeResampleDesc("CV", iters = 10, predict = "both")
@@ -140,6 +108,7 @@ test_that("calculateConfusionMatrix set argument works", {
 })
 
 test_that("calculateConfusionMatrix raises error when set argument is 'wrong'", {
+
   # if a resampled prediction was computed with predict = "train" and is passed
   # with set = "test" (and vice-versa), calculateConfusionMatrix should raise
   # an error

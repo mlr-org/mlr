@@ -1,6 +1,7 @@
 context("caching")
 
 test_that("caching works with most filters", {
+
   filters = as.character(listFilterMethods()$id)
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
@@ -14,19 +15,17 @@ test_that("caching works with most filters", {
   out = lapply(list(FALSE, tempdir()), function(i) {
     tune.out = lapply(filter.list.regr, function(.x) {
       lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = .x, cache = i)
-      ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
-        makeNumericParam("C", lower = -10, upper = 10,
-          trafo = function(x) 2^x),
-        makeNumericParam("sigma", lower = -10, upper = 10,
-          trafo = function(x) 2^x)
+      ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1, default = 0),
+        makeNumericParam("C", lower = -1, upper = 1,
+          trafo = function(x) 2^x, default = 0),
+        makeNumericParam("sigma", lower = -1, upper = 1,
+          trafo = function(x) 2^x, default = 0)
       )
-      rdesc = makeResampleDesc("CV", iters = 3)
-
-      # print(.x)
+      rdesc = makeResampleDesc("CV", iters = 2)
 
       tuneParams(lrn, task = regr.num.task, resampling = rdesc, par.set = ps,
-        control = makeTuneControlRandom(maxit = 5),
-        show.info = FALSE)
+        control = makeTuneControlRandom(maxit = 2),
+        show.info = FALSE, measures = getDefaultMeasure(regr.num.task))
     })
 
   })
