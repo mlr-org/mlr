@@ -25,7 +25,7 @@ test_that("filterFeatures", {
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
-  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "value", asc = FALSE), 5L)$name))
+  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(as.data.frame(feat.imp.old$data), "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
   ff = filterFeatures(binaryclass.task, fval = feat.imp.old, abs = 5L)
@@ -38,7 +38,7 @@ test_that("filterFeatures", {
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
-    head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
+    head(sortByCol(as.data.frame(feat.imp.new$data), "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
