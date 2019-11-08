@@ -6,13 +6,11 @@ test_that("Wavelet method are equal to package", {
 
   # Extractor
   extr = extractFDAWavelets()
-  set.seed(getOption("mlr.debug.seed"))
   wav.vals = extr$learn(data = gp$data, target = "X1", col = "fd", filter = "la8", boundary = "reflection")
   wavelets.gp = extr$reextract(data = gp$data, target = "X1", col = "fd", vals = wav.vals, args = NULL)
 
   # Reference
   df = BBmisc::convertRowsToList(gp$data[, "fd", drop = FALSE])
-  set.seed(getOption("mlr.debug.seed"))
   wtdata = t(BBmisc::dapply(df, fun = function(x) {
     wt = wavelets::dwt(as.numeric(x), filter = "la8", boundary = "reflection")
     unlist(c(wt@W, wt@V[[wt@level]]))
@@ -104,7 +102,6 @@ test_that("extractFPCAFeatures is equivalent to prcomp", {
   expect_match(names(fpca.df), regexp = "[FPCA]")
 
   # Is it equivalent to the mlr version?
-  set.seed(getOption("mlr.debug.seed"))
   gp.mat = gp$data$fd
   fpca.df2 = predict(prcomp(gp.mat, rank. = 5L), gp.mat)
   expect_true((nrow(gp.mat) == nrow(fpca.df2)))

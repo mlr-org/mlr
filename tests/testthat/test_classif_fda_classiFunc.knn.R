@@ -8,7 +8,6 @@ test_that("classif_classiFunc.knn behaves like original api", {
   classes = arrow.head[, "target"]
   arrow.head = arrow.head[, colnames(arrow.head) != "target"]
 
-  set.seed(getOption("mlr.debug.seed"))
   train.inds = sample(1:nrow(arrow.head), size = 0.8 * nrow(arrow.head), replace = FALSE)
   test.inds = (1:nrow(arrow.head))[!(1:nrow(arrow.head)) %in% train.inds]
 
@@ -19,7 +18,6 @@ test_that("classif_classiFunc.knn behaves like original api", {
   gtest = classes[test.inds]
 
   # classiFunc implementation
-  set.seed(getOption("mlr.debug.seed"))
   a1 = classiFunc::classiKnn(glearn, mlearn, knn = 1L)
 
   p1 = predict(a1, mtest)
@@ -42,7 +40,6 @@ test_that("classif_classiFunc.knn behaves like original api", {
   ftest = makeFunctionalData(phtst, fd.features = NULL, exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
 
-  set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
   cp = predict(m, newdata = ftest)
   cp = unlist(cp$data$response, use.names = FALSE)
@@ -56,7 +53,6 @@ test_that("classif_classiFunc.knn behaves like original api", {
 
 
   # test that predict.type = "prob" works
-  set.seed(getOption("mlr.debug.seed"))
   lrn.prob = makeLearner("classif.classiFunc.knn",
     predict.type = "prob")
   m.prob = train(lrn.prob, task)
@@ -73,7 +69,6 @@ test_that("resampling classiFunc.knn", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
   lrn = makeLearner("classif.classiFunc.knn", predict.type = "prob")
 
-  set.seed(getOption("mlr.debug.seed"))
   r = resample(lrn, fda.binary.gp.task.small, cv2)
   expect_class(r, "ResampleResult")
 })
@@ -92,7 +87,6 @@ test_that("classiFunc.knn can be predicted in parallel", {
   task = makeClassifTask(data = fdata, target = "target")
 
   # train model
-  set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
   cp = predict(m, task = task)
 
@@ -126,7 +120,6 @@ test_that("rucrdtw can be used as distance measure in classiFunc.knn", {
   task = makeClassifTask(data = fdata, target = "target")
 
   # train model
-  set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
   cp = predict(m, task = task)
   expect_class(cp, "PredictionClassif")
