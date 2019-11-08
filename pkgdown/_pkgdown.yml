@@ -1,0 +1,143 @@
+url: https://mlr.mlr-org.com
+
+template:
+  package: mlr3pkgdowntemplate
+  params:
+    bootswatch: journal
+    docsearch:
+      api_key: e300ecafdf04fe1199e3339c825ce7d0
+      index_name: mlr
+  default_assets: false
+
+development:
+  destination: dev
+  version_label: default
+  version_tooltip: "Development version"
+
+toc:
+  depth: 3
+
+home:
+  links:
+  - text: Cheatsheet
+    href: https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf
+
+navbar:
+  title:
+  type: default
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Basics
+    menu:
+    - text: Tasks
+      href: articles/tutorial/task.html
+    - text: Learners
+      href: articles/tutorial/learner.html
+    - text: Train
+      href: articles/tutorial/train.html
+    - text: Predict
+      href: articles/tutorial/predict.html
+    - text: Preprocessing
+      href: articles/tutorial/preproc.html
+    - text: Performance
+      href: articles/tutorial/performance.html
+    - text: Resampling
+      href: articles/tutorial/resample.html
+    - text: Tuning
+      href: articles/tutorial/tune.html
+    - text: Benchmark Experiments
+      href: articles/tutorial/benchmark_experiments.html
+    - text: Parallelization
+      href: articles/tutorial/parallelization.html
+    - text: Visualization
+      href: articles/tutorial/visualization.html
+    - text: Use case - Regression
+      href: articles/tutorial/usecase_regression.html
+
+  - text: Advanced
+    menu:
+    - text: Configuration
+      href: articles/tutorial/configureMlr.html
+    - text: Wrapped Learners
+      href: articles/tutorial/wrapper.html
+    - text: Imputation
+      href: articles/tutorial/impute.html
+    - text: Generic Bagging
+      href: articles/tutorial/bagging.html
+    - text: Advanced Tuning
+      href: articles/tutorial/advanced_tune.html
+    - text: Feature Selection/Filtering
+      href: articles/tutorial/feature_selection.html
+    - text: Nested Resampling
+      href: articles/tutorial/nested_resampling.html
+    - text: Cost-Sensitive Classification
+      href: articles/tutorial/cost_sensitive_classif.html
+    - text: Imbalanced Classification Problems
+      href: articles/tutorial/over_and_undersampling.html
+    - text: ROC Analysis and Performance Curves
+      href: articles/tutorial/roc_analysis.html
+    - text: Multilabel Classification
+      href: articles/tutorial/multilabel.html
+    - text: Learning Curve Analysis
+      href: articles/tutorial/learning_curve.html
+    - text: Partial Dependence Plots
+      href: articles/tutorial/partial_dependence.html
+    - text: Classifier Calibration
+      href: articles/tutorial/classifier_calibration.html
+    - text: Hyperparameter Tuning Effects
+      href: articles/tutorial/hyperpar_tuning_effects.html
+    - text: Out-of-Bag Predictions
+      href: articles/tutorial/out_of_bag_predictions.html
+    - text: Handling of Spatial Data
+      href: articles/tutorial/handling_of_spatial_data.html
+    - text: Functional Data
+      href: articles/tutorial/functional_data.html
+
+  - text: Extending
+    menu:
+    - text: Create Custom Learners
+      href: articles/tutorial/create_learner.html
+    - text: Create Custom Measures
+      href: articles/tutorial/create_measure.html
+    - text: Create Imputation Methods
+      href: articles/tutorial/create_imputation.html
+    - text: Create Custom Filters
+      href: articles/tutorial/create_filter.html
+
+  - text: Appendix
+    menu:
+    - text: Function Reference
+      href: reference/index.html
+    - text: News
+      href: news/index.html
+    - text: Example Tasks
+      href: articles/tutorial/example_tasks.html
+    - text: Integrated Learners
+      href: articles/tutorial/integrated_learners.html
+    - text: Implemented Measures
+      href: articles/tutorial/measures.html
+    - text: Integrated Filter Methods
+      href: articles/tutorial/filter_methods.html
+    - text: mlr Publications
+      href: articles/tutorial/mlr_publications.html
+    - text: Talks, Videos and Workshops
+      href: articles/tutorial/talks_videos_workshops.html
+    - text: mlrMBO
+      href: https://mlrmbo.mlr-org.com
+    - text: mlrCPO
+      href: https://https://mlrcpo.mlr-org.com
+    - text: mlrHyperopt
+      href: https://jakob-r.de/mlrHyperopt/index.html
+    - text: OpenML
+      href: http://openml.github.io/openml-r/
+
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/mlr-org/mlr
+  - icon: fa-slack
+    href: https://mlr-org.slack.com
+  - icon: fa-stack-overflow
+    href: https://stackoverflow.com/questions/tagged/mlr
+  - icon: fa-rss
+    href: https://mlr-org.com/

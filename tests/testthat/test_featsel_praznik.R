@@ -3,10 +3,10 @@ context("filterFeatures_praznik")
 test_that("filterFeatures_praznik", {
   a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1) # numeric vector
   b = c("one", "two", "three") # character vector
-  # c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE) # logical vector
+  c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE) # logical vector
   d = c(1L, 3L, 5L, 7L, 9L, 17L)
   f = rep(c("c1", "c2"), 9)
-  df = data.frame(a = a, b = b, d = d, target = f)
+  df = data.frame(a = a, b = b, c = c, d = d, target = f)
   df = convertDataFrameCols(df, logicals.as.factor = TRUE) # makeClassifTask does not support logicals
   task = makeClassifTask(data = df, target = "target")
 
@@ -15,14 +15,15 @@ test_that("filterFeatures_praznik", {
   for (candidate in candidates) {
     fv = generateFilterValuesData(task, method = candidate, nselect = 2L)
     expect_class(fv, "FilterValues")
-    # FIXME: CMIM and MIM return NA for factors for praznik >= v7.0.0
-    # upstream issue: https://gitlab.com/mbq/praznik/issues/19
-    if (candidate == "praznik_CMIM" || candidate == "praznik_MIM") {
-      expect_equal(sum(!is.na(fv$data$value)), 1)
+    # New CMIM engine since praznik v7.0.0
+    # a return value for 'c' was actually a bug for <= 7.0.0
+    # see https://gitlab.com/mbq/praznik/issues/19
+    if (candidate == "praznik_CMIM") {
+      expect_equal(sum(!is.na(fv$data$value)), 1, info = candidate)
     } else {
-      expect_equal(sum(!is.na(fv$data$value)), 2)
+      expect_equal(sum(!is.na(fv$data$value)), 2, info = candidate)
     }
-    expect_data_frame(fv$data, nrow = getTaskNFeats(task))
+    expect_data_frame(fv$data, nrows = getTaskNFeats(task))
     expect_set_equal(fv$data$name, getTaskFeatureNames(task))
     expect_numeric(fv$data$value, lower = 0, upper = 1, all.missing = FALSE)
 

@@ -64,7 +64,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   } else {
     stop("Should not happen!")
   }
-  m = try(train(lrn, task, subset = inds))
+  m = train(lrn, task, subset = inds)
 
   if (inherits(m, "FailureModel")) {
     expect_is(old.predicts, "try-error")
@@ -136,7 +136,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
     colnames(p) = colnames(old.probs) = NULL
     rownames(p) = rownames(old.probs) = NULL
     class(old.probs) = NULL
-    expect_equal(p, old.probs)
+    expect_equal(p, old.probs, tolerance = 0.000001)
   }
 }
 
@@ -285,7 +285,7 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 }
 
 
-mylist = function(..., create = FALSE) {
+listLearnersCustom = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
     ids = BBmisc::extractSubList(lrns, "id")
