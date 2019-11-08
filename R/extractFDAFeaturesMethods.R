@@ -50,6 +50,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
 #'   representation should be calculated as a feature representation.
 #'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
 #'   Default is \dQuote{phase}.
+#'   The phase shift is returned in Rad, i.e. values lie in [-180, 180].
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
@@ -68,13 +69,17 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     data = checkFDCols(data, col)
 
     # Calculate fourier coefficients (row wise) which are complex numbers
-    fft.trafo = t(apply(data, 1, fft))
+    fft.trafo = 1 / ncol(data) * t(apply(data, 1, fft))
 
     # Extract amplitude or phase of fourier coefficients which are real numbers
     fft.pa = switch(vals$trafo.coeff,
-      amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
+      amplitude = signif(apply(fft.trafo, 2, Mod) * 2, 4),
       # In some cases the fft values are very small and rounded to 0.
-      phase = apply(fft.trafo, 2, function(x) atan(Im(x) / ifelse(abs(Re(x)) < .Machine$double.eps, .Machine$double.eps, Re(x))))
+      phase = apply(fft.trafo, 2, function(z) {
+        phase = signif(Arg(z), 6) * 180 / pi # rad to degree
+        phase[Re(z) < 0.1 / (length(z) + 1)] = 0  # Set numeric (machine) errors to 0
+        return(phase)
+      })
     )
 
     # If there is only one row in data, fft returns an array

@@ -125,38 +125,35 @@ test_that("extract and reextract FPCA", {
 
 
 
-test_that("Fourier equal to package", {
-  gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
+test_that("Fourier equal to expected", {
+  t = seq(from = 0, to = 1, length.out = 501)
+  data = data.frame(a = 1:2)
+  data$fd = matrix(c(
+    .6 * cos(2*pi*t) + .3 * cos(4*2*pi*t + pi/4),
+    .8 * cos(2*pi*t) + .1 * cos(4*2*pi*t + pi/4)
+    ), nrow = 2, byrow = TRUE
+  )
+  data$a = NULL
+
   extr = extractFDAFourier()
-  fourier.vals = extr$learn(data = gp$data, col = "fd", trafo.coeff = "phase")
-  fourier.gp = extr$reextract(data = gp$data, col = "fd", vals = fourier.vals)
-  expect_equal(nrow(fourier.gp), nrow(gp$data))
+  fourier.vals = extr$learn(data = data, col = "fd", trafo.coeff = "phase")
+  fourier.gp = extr$reextract(data = data, col = "fd", vals = fourier.vals)
 
-  # Phase (arctan(...) in range(-pi/2, pi/2) )
-  expect_true(all(fourier.gp < pi / 2 & fourier.gp > -pi / 2))
+  # Phase in range [-180; 180]
+  expect_true(all(fourier.gp >= -180 & fourier.gp <= 180))
+  # ~ pi/4 shift for 4th component
+  expect_true(all(abs(fourier.gp[, 5]  - 45) < 10))
+  expect_true(all(abs(fourier.gp[, 2]) < 10))
+  expect_true(all(dim(fourier.gp) == c(2, 501)))
 
-  fourier.vals = extr$learn(data = gp$data, col = "fd", trafo.coeff = "amplitude")
-  fourier.gp = extr$reextract(data = gp$data, col = "fd", vals = fourier.vals)
+  fourier.vals = extr$learn(data = data, col = "fd", trafo.coeff = "amplitude")
+  fourier.gp = extr$reextract(data = data, col = "fd", vals = fourier.vals)
+
   # Amplitude sqrt(Re^2 + Im^2) >= 0
   expect_true(all(fourier.gp >= 0))
-
-  # Calculate fourier coefficients (row wise) which are complex numbers
-  fft.trafo = t(apply(gp$data, 1, fft))
-  # Extract amplitude or phase of fourier coefficients which are real numbers
-  fft.pa = switch("amplitude",
-    amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
-    phase = apply(fft.trafo, 2, function(x) atan(Im(x) / Re(x)))
-  )
-
-  # If there is only one row in data, fft returns an array
-  if (!inherits(fft.pa, "matrix")) {
-    fft.pa = as.data.frame(matrix(fft.pa, nrow = 1))
-  }
-  # Add more legible column names to the output
-  df = as.data.frame(fft.pa)
-  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)), sep = ".")
-
-  expect_equal(df, fourier.gp)
+  expect_true(all(abs(fourier.gp[, 2]  - c(0.6, 0.8)) < 0.01))
+  expect_true(all(abs(fourier.gp[, 5]  - c(0.3, 0.1)) < 0.01))
+  expect_true(all(dim(fourier.gp) == c(2, 501)))
 
   # Can not have factors
   gp2 = data.frame(v1 = t(1:4), X1 = as.factor(1))
