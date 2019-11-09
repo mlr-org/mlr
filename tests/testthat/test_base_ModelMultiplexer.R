@@ -1,6 +1,5 @@
 context("ModelMultiplexer")
 
-
 test_that("ModelMultiplexer inherits properties", {
   bls = list(
     makeLearner("classif.lda"),

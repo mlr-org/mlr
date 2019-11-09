@@ -29,15 +29,16 @@ test_that("getFeatureImportance", {
   expect_equal(colnames(feat.imp), mod$features)
 
   # wrapped learner
-  lrn = makeFilterWrapper(makeLearner("regr.gbm"), fw.method = "FSelectorRcpp_information.gain", fw.abs = 2)
+  lrn = makeFilterWrapper(makeLearner("regr.gbm"), fw.method = "FSelectorRcpp_information.gain", fw.abs = 2,
+    equal = TRUE)
   mod = train(lrn, regr.task)
   feat.imp = getFeatureImportance(mod)$res
   expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(regr.task)),
     any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(regr.task))
   expect_equal(colnames(feat.imp), mod$features)
 
-  # For learners without the possibility to calculate feature importance a meaningfull error should
-  # be returned
+  # For learners without the possibility to calculate feature importance a
+  # meaningful error should be returned
   lrn = makeLearner("classif.qda")
   mod = train(lrn, binaryclass.task)
   expect_error(getFeatureImportance(mod), regexp = "does not support 'featimp'")

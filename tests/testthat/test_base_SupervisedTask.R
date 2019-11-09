@@ -28,7 +28,7 @@ test_that("SupervisedTask", {
   expect_error(makeRegrTask(data = multiclass.df, target = multiclass.target), "'numeric'")
 
   # wrong vars
-  expect_error(subsetTask(multiclass.task, vars = c("Sepal.Length", "x", "y")))
+  expect_error(subsetTask(multiclass.task, features = c("Sepal.Length", "x", "y")))
 
   # check missing accessors
   df = multiclass.df
@@ -38,7 +38,8 @@ test_that("SupervisedTask", {
   expect_true(getTaskDesc(ct)$has.missings)
 
   # check that blocking is still there after subsetting
-  ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target, blocking = as.factor(seq_len(nrow(multiclass.df))))
+  ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target,
+    blocking = as.factor(seq_len(nrow(multiclass.df))))
   expect_true(getTaskDesc(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
   expect_true(getTaskDesc(ct2)$has.blocking)

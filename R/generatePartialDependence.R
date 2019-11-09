@@ -232,13 +232,13 @@ generatePartialDependenceData = function(obj, input, features = NULL,
       setcolorder(out, c(target, "n", features))
     } else {
       setnames(out, names(out), stri_replace_all_fixed(names(out), "preds", ""))
-      out = melt(out, id.vars = features, variable.name = "Function",
+      out = melt(as.data.table(out), id.vars = features, variable.name = "Function",
         value.name = target)
       setcolorder(out, c(target, "Function", features))
     }
   } else {
     if (!multi.fun) {
-      out = melt(out, measure.vars = target,
+      out = melt(as.data.table(out), measure.vars = target,
         variable.name = if (td$type == "classif") "Class" else "Function",
         value.name = if (td$type == "classif") "Probability" else "Prediction")
       if (td$type == "classif") {
@@ -252,16 +252,16 @@ generatePartialDependenceData = function(obj, input, features = NULL,
       }
     } else if (individual) {
       if (!derivative) {
-        out = melt(out, measure = patterns(target), variable.name = "n",
+        out = melt(as.data.table(out), measure = patterns(target), variable.name = "n",
           value.name = target)
       }
-      out = melt(out, measure.vars = target,
+      out = melt(as.data.table(out), measure.vars = target,
         variable.name = if (td$type == "classif") "Class" else "Target",
         value.name = if (td$type == "classif") "Probability" else "Prediction")
       setcolorder(out, c(if (td$type == "classif") "Class" else "Target",
         if (td$type == "classif") "Probability" else "Prediction", "n", features))
     } else {
-      out = melt(out, id.vars = c(features, if (individual) "n"),
+      out = melt(as.data.table(out), id.vars = c(features, if (individual) "n"),
         variable.name = if (td$type == "classif") "Class" else "Function",
         value.name = if (td$type == "classif") "Probability" else "Prediction")
       if (td$type == "classif") {
@@ -572,7 +572,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       fun.facet = facet[!facet %in% feature.facet]
 
       if (length(fun.facet) > 0L && (fun.facet == "Feature" || !feature.facet %in% obj$features)) {
-        data = melt(data, id.vars = c(obj$task.desc$target, feature.facet),
+        data = melt(as.data.table(data), id.vars = c(obj$task.desc$target, feature.facet),
           variable = "Feature", value.name = "Value", na.rm = TRUE, variable.factor = TRUE)
       }
 

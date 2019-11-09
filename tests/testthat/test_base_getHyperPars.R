@@ -1,6 +1,5 @@
 context("getHyperPars")
 
-
 test_that("getHyperPars", {
   lrn = makeLearner("classif.rpart")
   expect_equal(getHyperPars(lrn), list(xval = 0))

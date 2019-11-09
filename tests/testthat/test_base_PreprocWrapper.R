@@ -10,8 +10,8 @@ test_that("PreprocWrapper", {
     return(data)
   }
   ps = makeParamSet(
-    makeNumericLearnerParam(id = "x"),
-    makeNumericLearnerParam(id = "y")
+    makeNumericLearnerParam(id = "x", default = 0),
+    makeNumericLearnerParam(id = "y", default = 0)
   )
   lrn1 = makeLearner("classif.rpart", minsplit = 10)
   lrn2 = makePreprocWrapper(lrn1, train = f1, predict = f2, par.set = ps, par.vals = list(x = 1, y = 2))
@@ -41,8 +41,13 @@ test_that("getLearnerModel on nested PreprocWrapper", {
 
 test_that("PreprocWrapper with glmnet (#958)", {
   lrn = makeLearner("classif.glmnet", predict.type = "response")
-  lrn2 = makePreprocWrapper(lrn, train = function(data, target, args) return(list(data = data, control = list())),
-    predict = function(data, target, args, control) return(data))
+  lrn2 = makePreprocWrapper(lrn,
+    train = function(data, target, args) {
+      return(list(data = data, control = list()))
+    },
+    predict = function(data, target, args, control) {
+      return(data)
+    })
   mod = train(lrn2, multiclass.task)
   pred = predict(mod, multiclass.task)
   expect_error(pred, NA)

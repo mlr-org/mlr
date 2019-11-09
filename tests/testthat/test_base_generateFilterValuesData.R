@@ -6,39 +6,51 @@ context("filterFeatures")
 
 test_that("filterFeatures", {
   ns = getTaskFeatureNames(binaryclass.task)
-  f = filterFeatures(binaryclass.task, method = "variance", select = "threshold", threshold = -Inf)
+  f = filterFeatures(binaryclass.task, method = "variance", select = "threshold",
+    threshold = -Inf)
   expect_equal(f, binaryclass.task)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task))
-  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"),
+    nrows = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
 
   feat.imp.new = suppressWarnings(generateFilterValuesData(binaryclass.task))
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"),
+    nrows = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(names(feat.imp.new$data), c("name", "type", "method", "value"))
   expect_equal(ns, feat.imp.new$data$name)
 
-  feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
-  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
+  feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task,
+    method = "variance"))
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric", "factor"),
+    nrows = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
+
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
-  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "value", asc = FALSE), 5L)$name))
+  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "value",
+    asc = FALSE), 5L)$name))
+
   # now check that we get the same result by operating on generateFilterValuesData
-  feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
+  feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task,
+    method = "variance"))
   ff = filterFeatures(binaryclass.task, fval = feat.imp.old, abs = 5L)
   expect_equal(f, ff)
 
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"), nrow = length(ns), ncols = 4,
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"),
+    nrow = length(ns), ncols = 4,
     col.names = "named")
   expect_equal(names(feat.imp.new$data), c("name", "type", "method", "value"))
   expect_equal(ns, feat.imp.new$data$name)
+
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
     head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
+
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
@@ -68,13 +80,15 @@ test_that("plotFilterValues", {
   fv = generateFilterValuesData(binaryclass.task, method = filter.classif)
   plotFilterValues(fv)
 
-  filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE & filter.methods$task.classif == FALSE, "id"])
+  filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE &
+    filter.methods$task.classif == FALSE, "id"])
 
   fv = generateFilterValuesData(regr.num.task, method = filter.regr)
   plotFilterValues(fv)
 
   path = file.path(tempdir(), "test.svg")
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC_importance"))
+  fv2 = generateFilterValuesData(binaryclass.task,
+    method = c("variance", "randomForestSRC_importance"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
@@ -84,13 +98,15 @@ test_that("plotFilterValues", {
   # facetting works:
   q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
   testFacetting(q, 2L)
+
   q = plotFilterValues(fv2, facet.wrap.ncol = 2L)
   testFacetting(q, ncol = 2L)
 })
 
 test_that("args are passed down to filter methods", { # we had an issue here, see #941
 
-  expect_error(generateFilterValuesData(regr.num.task, method = c("mrmr", "univariate.model.score"),
+  expect_error(generateFilterValuesData(regr.num.task,
+    method = c("mrmr", "univariate.model.score"),
     nselect = 3, perf.learner = "regr.lm"), "Please pass extra arguments")
 
   # check that we can pass down perf.learner to univariate.model.score, and get no error from mrmr call
@@ -104,8 +120,10 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
 
   f1 = generateFilterValuesData(task, method = "variance", na.rm = FALSE)
   f2 = generateFilterValuesData(task, method = "variance", na.rm = TRUE)
-  f3 = generateFilterValuesData(task, method = "variance", more.args = list(variance = list(na.rm = TRUE)))
-  f4 = generateFilterValuesData(task, method = c("univariate.model.score", "variance"), more.args = list(variance = list(na.rm = TRUE)))
+  f3 = generateFilterValuesData(task, method = "variance",
+    more.args = list(variance = list(na.rm = TRUE)))
+  f4 = generateFilterValuesData(task, method = c("univariate.model.score", "variance"),
+    more.args = list(variance = list(na.rm = TRUE)))
 
   expect_true(is.na(f1$data$value[1L]))
   expect_false(is.na(f2$data$value[1L]))
@@ -114,9 +132,15 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
 })
 
 test_that("errors for unsupported task and feature types", {
-  expect_error(generateFilterValuesData(multiclass.task, method = c("mrmr", "variance", "linear.correlation")), "Filter(s) 'mrmr', 'linear.correlation' not compatible with task of type 'classif'", fixed = TRUE)
-  expect_error(generateFilterValuesData(regr.task, method = c("mrmr", "carscore")), "Filter(s) 'mrmr', 'carscore' not compatible with features of type 'factors', and 'factors' respectively", fixed = TRUE)
-  expect_error(generateFilterValuesData(regr.task, method = "carscore"), "Filter(s) 'carscore' not compatible with features of type 'factors' respectively", fixed = TRUE)
+  expect_error(generateFilterValuesData(multiclass.task,
+    method = c("mrmr", "variance", "linear.correlation")),
+  "Filter(s) 'mrmr', 'linear.correlation' not compatible with task of type 'classif'", fixed = TRUE)
+  expect_error(generateFilterValuesData(regr.task,
+    method = c("mrmr", "carscore")),
+  "Filter(s) 'mrmr', 'carscore' not compatible with features of type 'factors', and 'factors' respectively", fixed = TRUE)
+  expect_error(generateFilterValuesData(regr.task,
+    method = "carscore"),
+  "Filter(s) 'carscore' not compatible with features of type 'factors' respectively", fixed = TRUE)
 })
 
 test_that("filter values are named and ordered correctly", { # we had an issue here, see #940

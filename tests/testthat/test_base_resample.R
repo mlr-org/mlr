@@ -29,7 +29,6 @@ test_that("resample", {
   # test printer
   expect_output(print(r1), "Resample Result")
 
-
   cv.i = makeResampleInstance(makeResampleDesc("CV", iters = 3), binaryclass.task)
 
   lrn1 = makeLearner("classif.lda")
@@ -82,7 +81,6 @@ test_that("resampling, predicting train set works", {
   expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
 })
-
 
 test_that("ResampleInstance can bew created from string", {
   rin = makeResampleInstance("CV", size = 100)
@@ -144,13 +142,11 @@ test_that("resample has error messages when prediction fails", {
   configureMlr(on.learner.warning = on.learner.warning.saved)
 })
 
-
 test_that("resample is extended by an additional measure", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
 
-  # check if it works with test, both
-  # FIXME: add "train" after https://github.com/mlr-org/mlr/issues/1284 has been fixed
-  predict = c("test", "both")
+  # check if it works with test, both and train
+  predict = c("train", "test", "both")
   # check if it works with different aggregation methods
   aggr = list(test.mean, test.median, test.sd, test.range, test.join)
   for (a in aggr) {
@@ -159,7 +155,7 @@ test_that("resample is extended by an additional measure", {
       measures = list(mmce, ber, auc, brier)
       # set aggregation method
       measures = lapply(measures, setAggregation, a)
-      # if (p == "train") measures = lapply(measures, setAggregation, train.mean)
+      if (p == "train") measures = lapply(measures, setAggregation, train.mean)
       # create ResampleResult with all measures
       res.all = resample(lrn, binaryclass.task, rdesc, measures)
       # create ResampleResult with one measure and add the other ones afterwards
@@ -201,7 +197,7 @@ test_that("resample drops unseen factors in predict data set", {
   resinst$test.inds[[1]] = 5:6
 
   lrn = makeLearner("classif.logreg", fix.factors.prediction = FALSE)
-  model = train(lrn, subsetTask(task, 1:4))
+  model = train(lrn, subsetTask(task, 1:4, features = getTaskFeatureNames(task)))
   expect_error(predict(model, subsetTask(task, 5:6)), "factor a has new levels c")
   expect_error(resample(lrn, task, resinst), "factor a has new levels c")
 

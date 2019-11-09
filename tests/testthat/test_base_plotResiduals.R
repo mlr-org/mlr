@@ -15,6 +15,7 @@ test_that("plotResiduals with prediction object", {
   expect_equal(length(XML::getNodeSet(doc, mediumblue.line.xpath, ns.svg)), 1L)
   # rug
   expect_equal(length(XML::getNodeSet(doc, red.rug.line.xpath, ns.svg)), getTaskSize(regr.task) * 2L)
+
   # histogram
   plotResiduals(preds, type = "hist")
   dir = tempdir()
@@ -38,7 +39,7 @@ test_that("plotResiduals with prediction object", {
 test_that("plotResiduals with BenchmarkResult", {
   lrns = list(makeLearner("classif.ksvm"), makeLearner("classif.rpart"))
   tasks = list(multiclass.task, binaryclass.task)
-  bmr = benchmark(lrns, tasks, hout)
+  bmr = benchmark(lrns, tasks, hout, measures = getDefaultMeasure(multiclass.task))
   plotResiduals(bmr, type = "scatterplot")
   dir = tempdir()
   path = file.path(dir, "test.svg")

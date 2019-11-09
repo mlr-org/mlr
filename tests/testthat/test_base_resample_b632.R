@@ -3,7 +3,8 @@ context("resample_b632")
 test_that("b632", {
   res = makeResampleDesc("Bootstrap", iters = 2, predict = "both")
   m = setAggregation(mmce, b632)
-  r = resample(makeLearner("classif.rpart"), task = binaryclass.task, resampling = res, measure = m)
+  r = resample(makeLearner("classif.rpart"), task = binaryclass.task,
+    resampling = res, measure = m)
   m1 = r$measures.train
   m2 = r$measures.test
   p = as.data.frame(r$pred)

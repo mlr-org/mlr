@@ -8,6 +8,7 @@ test_that("generateCalibrationData", {
   cd = generateCalibrationData(pred)
   expect_that(cd$proportion, is_a("data.frame"))
   expect_that(cd$data, is_a("data.frame"))
+
   plotCalibration(cd)
   dir = tempdir()
   path = file.path(dir, "test.svg")
@@ -22,6 +23,7 @@ test_that("generateCalibrationData", {
   cd = generateCalibrationData(r)
   expect_that(cd$proportion, is_a("data.frame"))
   expect_that(cd$data, is_a("data.frame"))
+
   plotCalibration(cd)
   dir = tempdir()
   path = file.path(dir, "test.svg")
@@ -53,6 +55,7 @@ test_that("generateCalibrationData", {
   # facetting works:
   q = q = plotCalibration(cd, facet.wrap.nrow = 2L)
   testFacetting(q, 2L)
+
   q = q = plotCalibration(cd, facet.wrap.ncol = 2L)
   testFacetting(q, ncol = 2L)
 })

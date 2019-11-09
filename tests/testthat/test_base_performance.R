@@ -9,13 +9,15 @@ test_that("performance", {
   res = makeResampleDesc("Bootstrap", iters = 3L)
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc))
   expect_true(all(rf$aggr > 0))
+
   m = setAggregation(acc, test.median)
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = m)
   expect_true(all(rf$aggr > 0))
 
   # custom measure
   res = makeResampleDesc("CV", iters = 3)
-  mymeasure = makeMeasure(id = "mym", minimize = TRUE, properties = c("classif", "classif.multi", "predtype.response"),
+  mymeasure = makeMeasure(id = "mym", minimize = TRUE,
+    properties = c("classif", "classif.multi", "predtype.response"),
     fun = function(task, model, pred, feats, extra.args) {
       # normal test error
       e1 = mean(pred$data$truth != pred$data$response)
@@ -60,21 +62,22 @@ test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
     if (i == "quiet") {
       expect_equal(unname(performance(pred, auc)), NA_real_)
       # does this also work with benchmark?
-      b = benchmark(lrn, binaryclass.task, measures = list(acc, auc))
+      b = benchmark(lrn, binaryclass.task, measures = list(acc, auc), resamplings = cv3)
       expect_true(any(is.na(as.data.frame(b)$auc)))
       expect_false(any(is.na(as.data.frame(b)$acc)))
     } else if (i == "warn") {
       expect_warning(expect_equal(unname(performance(pred, auc)), NA_real_))
       # does this also work with benchmark?
       expect_warning({
-        b = benchmark(lrn, binaryclass.task, measures = list(acc, auc))
+        b = benchmark(lrn, binaryclass.task, measures = list(acc, auc), resamplings = cv3)
       })
       expect_true(any(is.na(as.data.frame(b)$auc)))
       expect_false(any(is.na(as.data.frame(b)$acc)))
     } else {
       expect_error(performance(pred, auc))
       # does this also work with benchmark?
-      expect_error(benchmark(lrn.list, binaryclass.task, measures = list(acc, auc)))
+      expect_error(benchmark(lrn.list, binaryclass.task, measures = list(acc, auc),
+        resamplings = cv3))
     }
   }
   configureMlr(on.measure.not.applicable = default)
@@ -86,7 +89,7 @@ test_that("performance checks for missing truth col", {
   test.x = getTaskData(binaryclass.task, target.extra = TRUE)$data
   pred = predict(m, newdata = test.x)
 
-  expect_error(performance(pred, measure = mmce), "need to have a 'truth' col")
+  expect_error(performance(pred, measures = mmce), "need to have a 'truth' col")
 })
 
 test_that("performance checks for req prob type", {
@@ -100,11 +103,13 @@ test_that("performance works with ResamplePrediction", {
   rf = resample(lrn, task = binaryclass.task, resampling = res, mmce)
   expect_true(rf$aggr > 0)
   expect_true(rf$aggr < 1)
+
   perf = performance(rf$pred)
   expect_true(perf > 0)
   expect_true(perf < 1)
 
-  # FIXME: names for measures are different for aggregated measures, which we currently don't do because it breaks other stuff
+  # FIXME: names for measures are different for aggregated measures, which we
+  # currently don't do because it breaks other stuff
   rf$aggr = setNames(rf$aggr, names(perf))
   expect_equal(rf$aggr, perf)
 })

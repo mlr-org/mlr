@@ -14,6 +14,7 @@ test_that("Learner", {
 
   expect_error(makeLearner("classif.lvq1", predict.type = "prob"), "Trying to predict probs, but")
   expect_error(makeLearner("regr.lm", predict.type = "prob"), "'predict.type'")
+
   wl = makeLearner("classif.lvq1")
   expect_error(setPredictType(wl, "prob"), "Trying to predict probs, but")
 
@@ -29,6 +30,7 @@ test_that("Learner operators work", {
   expect_equal(getLearnerId(lrn), "classif.lda")
   expect_equal(getLearnerPredictType(lrn), "response")
   expect_equal(getLearnerPackages(lrn), "MASS")
+
   # getLearnerParVals is simply a synonym for getHyperPars and that has its own test file
   expect_equal(getLearnerParVals(lrn), list(nu = 3))
   # getLearnerParamSet is simply a synonym for getParamSet, which is also tested elsewhere
