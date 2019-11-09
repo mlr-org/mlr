@@ -1,5 +1,0 @@
-library(testthat)
-
-set.seed(getOption("mlr.debug.seed"))
-
-test_check("mlr", filter = "basenocran_")
