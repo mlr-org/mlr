@@ -11,6 +11,7 @@
 ## learners - general
 
 - Updated ParamSet for learners `classif.gbm` and `regr.gbm`. Specifically, param `shrinkage` now defaults to 0.1 instead of 0.001. Also more choices for param `distribution` have been added. Internal parallelization by the package is now suppressed (param `n.cores`). (@pat-s, #2651)
+- Update parameters for `h2o.deeplearning` learners (@albersonmiranda, #2668)
 
 ## learners - bugfixes
 
