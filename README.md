@@ -37,15 +37,6 @@ install.packages("mlr")
 remotes::install_github("mlr-org/mlr")
 ```
 
-# Reproducibility between R <= v3.5.x and R >= v3.6.x
-
-Due to a [bugfix](https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494) of the RNGkind affecting the `sample()` function in R 3.6.0, all `resample()` and `benchmark()` experiments of `mlr` which use a resampling strategy depending on the `sample()` function (e.g. random partitioning) **cannot be reproduced** without taking user action.
-If the experiments were initially run using R 3.5.x and should be reproduced with R 3.6.x, `RNGversion("3.5.3")` needs to be added before setting the seed.
-This ensures that the old RNGkind behavior of R 3.5.x will be used even when running R 3.6.x.
-
-This issue is not specific to _mlr_ but applies to R in general.
-You might want to check on other packages in your workflow which might be affected by this change.
-
 # Citing _mlr_ in publications
 Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](http://www.jmlr.org/papers/v17/15-066.bib)].
 
