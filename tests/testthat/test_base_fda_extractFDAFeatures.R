@@ -36,7 +36,8 @@ test_that("extractFeatures multiple times", {
 
 test_that("extractFDAFeatures colnames work", {
   methods = list("NIR" = extractFDAFourier())
-  t = subsetTask(fuelsubset.task, subset = 1:30)
+  t = subsetTask(fuelsubset.task, subset = 1:30,
+                 features = getTaskFeatureNames(fuelsubset.task))
   t2 = extractFDAFeatures(t, feat.methods = methods)
   cn = getTaskFeatureNames(t2$task)
   expect_match(setdiff(cn, "h2o"), regexp = "[NIR.phase]", all = TRUE)
@@ -44,7 +45,8 @@ test_that("extractFDAFeatures colnames work", {
 
 
 test_that("Wrong methods yield errors", {
-  t = subsetTask(fuelsubset.task, subset = 1:2)
+  t = subsetTask(fuelsubset.task, subset = 1:2,
+                 features = getTaskFeatureNames(fuelsubset.task))
 
   wrng1 = function() {
     lrn = function(data, target, col, vals = NULL) {
@@ -54,7 +56,6 @@ test_that("Wrong methods yield errors", {
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
     "feat.method needs to return")
-
 
   wrng2 = function() {
     lrn = function(data) {
@@ -77,7 +78,7 @@ test_that("Wrong methods yield errors", {
 
 test_that("extractFDAFeatures colnames work", {
   methods = list("NIR" = extractFDAFourier())
-  t = subsetTask(fuelsubset.task, subset = 1)
+  t = subsetTask(fuelsubset.task, subset = 1, features = getTaskFeatureNames(fuelsubset.task))
   t2 = extractFDAFeatures(t, feat.methods = methods)
   cn = getTaskFeatureNames(t2$task)
   expect_match(setdiff(cn, "h2o"), regexp = "[NIR.phase]", all = TRUE)
@@ -133,8 +134,6 @@ test_that("extract reextract feat.methods all", {
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
 })
 
-
-
 test_that("Wavelet method are equal to package", {
   requirePackagesOrSkip("wavelets", default.method = "load")
   lrn = extractFDAWavelets()$learn
@@ -144,14 +143,14 @@ test_that("Wavelet method are equal to package", {
   wavelets.gp = lrn(data = gp$data, target = "X1", col = "fd", filter = "haar", boundary = "reflection")
 
   # Reference
-  df = BBmisc::convertRowsToList(gp$data[, "fd", drop = FALSE])
+  df = convertRowsToList(gp$data[, "fd", drop = FALSE])
   set.seed(getOption("mlr.debug.seed"))
-  wtdata = t(BBmisc::dapply(df, fun = function(x) {
+  wtdata = t(dapply(df, fun = function(x) {
     wt = wavelets::dwt(as.numeric(x), filter = "haar", boundary = "reflection")
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
   df = as.data.frame(wtdata)
-  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)), sep = ".")
+  colnames(df) = stri_paste("wav", "haar", seq_len(ncol(wtdata)), sep = ".")
 
   expect_equal(nrow(wavelets.gp), nrow(gp$data))
   expect_equal(wavelets.gp, df)
@@ -169,8 +168,6 @@ test_that("extract and reextract Wavelets", {
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
 })
-
-
 
 test_that("getUniFDAMultiResFeatures works on data.frame", {
   i = 100 # number of instances
@@ -219,11 +216,8 @@ test_that("extract and reextract MultiRes", {
   expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 12L))
 })
 
-
-
 test_that("extractFPCAFeatures is equivalent to package", {
   requirePackagesOrSkip(c("mboost", "refund"), default.method = "load")
-  set.seed(getOption("mlr.debug.seed"))
   lrn = extractFDAFPCA()$learn
   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
   fpca.df = lrn(data = gp$data, target = "X1", col = "fd", pve = 0.99, npc = NULL)
@@ -232,13 +226,11 @@ test_that("extractFPCAFeatures is equivalent to package", {
   expect_match(names(fpca.df), regexp = "[FPCA]")
 
   # Is it equivalent to the mlr version?
-  set.seed(getOption("mlr.debug.seed"))
   fpca.df2 = data.frame(refund::fpca.sc(Y = as.matrix(gp$data$fd))$scores)
   expect_true((nrow(gp$data) == nrow(fpca.df2)))
   expect_true((ncol(fpca.df2) == 5L))
   expect_equivalent(fpca.df, fpca.df2)
 
-  set.seed(getOption("mlr.debug.seed"))
   gp = getTaskData(gunpoint.task, subset = 1:20, target.extra = TRUE, functionals.as = "matrix")
   fpca.df = lrn(data = gp$data, target = "X1", col = "fd", npc = 12L)
   expect_true((nrow(gp$data) == nrow(fpca.df)))
@@ -257,8 +249,6 @@ test_that("extract and reextract FPCA", {
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
   expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 10L))
 })
-
-
 
 test_that("Fourier equal to package", {
   gp1 = data.frame(v1 = 1:5, v2 = 2:6, v3 = 3:7, v4 = 4:8)
