@@ -1,6 +1,7 @@
 context("parallel_all")
 
 test_that("parallel resampling", {
+  skip_on_ci()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
@@ -10,19 +11,14 @@ test_that("parallel resampling", {
     expect_true(!is.na(r$aggr[1]))
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", as.character(NA))
-    doit("multicore", "mlr.resample")
-    doit("multicore", "mlr.tuneParams")
     doit("mpi", as.character(NA))
     doit("mpi", "mlr.resample")
     doit("mpi", "mlr.tuneParams")
   }
-  doit("socket", as.character(NA))
-  doit("socket", "mlr.resample")
-  doit("socket", "mlr.tuneParams")
 })
 
 test_that("parallel tuning", {
+  skip_on_ci()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
@@ -34,19 +30,14 @@ test_that("parallel tuning", {
     expect_true(!is.na(res$y))
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", as.character(NA))
-    doit("multicore", "mlr.resample")
-    doit("multicore", "mlr.tuneParams")
     doit("mpi", as.character(NA))
     doit("mpi", "mlr.resample")
     doit("mpi", "mlr.tuneParams")
   }
-  doit("socket", as.character(NA))
-  doit("socket", "mlr.resample")
-  doit("socket", "mlr.tuneParams")
 })
 
 test_that("parallel featsel", {
+  skip_on_ci()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
@@ -57,21 +48,15 @@ test_that("parallel featsel", {
     expect_true(!is.na(res$y))
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", as.character(NA))
-    doit("multicore", "mlr.resample")
-    doit("multicore", "mlr.tuneParams")
     doit("mpi", as.character(NA))
     doit("mpi", "mlr.resample")
     doit("mpi", "mlr.tuneParams")
   }
-  doit("socket", as.character(NA))
-  doit("socket", "mlr.resample")
-  doit("socket", "mlr.tuneParams")
 })
 
 test_that("parallel exporting of options works", {
+  skip_on_ci()
   doit = function(mode, level) {
-
     data = iris
     data[, 1] = 1 # this is going to crash lda
     task = makeClassifTask(data = data, target = "Species")
@@ -90,22 +75,22 @@ test_that("parallel exporting of options works", {
 })
 
 test_that("parallel partial dependence", {
+  skip_on_ci()
   doit = function(mode) {
     lrn = makeLearner("regr.rpart")
     fit = train(lrn, regr.task)
     on.exit(parallelStop())
     parallelStart(mode = mode, cpus = 2L, show.info = FALSE)
-    pd = generatePartialDependenceData(fit, regr.task, "lstat", gridsize = 2L)
-    expect_true(nrow(pd$data) == 2L)
+    pd = generatePartialDependenceData(fit, regr.task, "lstat")
+    expect_true(ncol(pd$data) == 2L)
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore")
     doit("mpi")
   }
-  doit("socket")
 })
 
 test_that("parallel ensembles", {
+  skip_on_ci()
   doit = function(mode, level) {
 
     on.exit(parallelStop())
@@ -152,8 +137,6 @@ test_that("parallel ensembles", {
 
   ## CostSensWeightedPairsWrapper
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore", "mlr.ensemble")
     doit("mpi", "mlr.ensemble")
   }
-  doit("socket", "mlr.ensemble")
 })

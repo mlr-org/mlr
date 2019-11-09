@@ -19,50 +19,50 @@ test_that("learners work: classif", {
   # binary classif
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
-  lrns = mylist(task, create = TRUE)
+  lrns = listLearnersCustom(task, create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
-  lrns = mylist(task, properties = "factors", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with ordered factors
-  lrns = mylist(task, properties = "ordered", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with prob
-  lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
+  lrns = listLearnersCustom(binaryclass.task, properties = "prob", create = TRUE)
   lapply(lrns, testBasicLearnerProperties, task = binaryclass.task,
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
-  lrns = mylist(binaryclass.task, properties = "weights", create = TRUE)
+  lrns = listLearnersCustom(binaryclass.task, properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = binaryclass.task, train.inds = binaryclass.train.inds, test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
   # classif with missing
-  lrns = mylist(task, properties = "missings", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
 
   # classif with oobpreds
-  lrns = mylist(task, properties = "oobpreds", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with oobpreds and probability
-  lrns = mylist(task, properties = c("oobpreds", "prob"), create = TRUE)
+  lrns = listLearnersCustom(task, properties = c("oobpreds", "prob"), create = TRUE)
   lrns = lapply(lrns, setPredictType, predict.type = "prob")
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with variable importance
-  lrns = mylist(task, properties = "featimp", create = TRUE)
+  lrns = listLearnersCustom(task, properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 
   # classif with only one feature
   min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
-  lrns = mylist(min.task, create = TRUE)
+  lrns = listLearnersCustom(min.task, create = TRUE)
   # FIXME: classif.boosting: Remove if bug is removed in adabag!
   # FIXME: classif.quaDA: Remove if bug is removed in DiscriMiner::quaDA!
   # FIXME: classif.rknn: Remove if bug is removed in rknn::rknn!

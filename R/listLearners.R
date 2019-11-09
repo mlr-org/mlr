@@ -1,13 +1,20 @@
-getLearnerTable = function() {
+  getLearnerTable = function() {
 
   ids = as.character(methods("makeRLearner"))
   ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
   ids = stri_replace_first_fixed(ids, "makeRLearner.", "")
   slots = c("cl", "name", "short.name", "package", "properties", "note")
-  ee = asNamespace("mlr")
   tab = rbindlist(lapply(ids, function(id) {
+    makefuns = c("makeRLearnerClassif", "makeRLearnerMulticlass",
+                 "makeRLearnerCluster", "makeRLearnerCostSens",
+                 "makeRLearnerMultilabel", "makeRLearnerRegr",
+                 "makeRLearnerSurv")  # I hope I didn't forget any...
     fun = getS3method("makeRLearner", id)
-    row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
+    environment(fun) = new.env(parent = environment(fun))
+    for (mf in makefuns) {
+      environment(fun)[[mf]] = list
+    }
+    row = fun()
     data.table(
       id = row$cl,
       name = row$name,
@@ -105,7 +112,7 @@ listLearners = function(obj = NA_character_, properties = character(0L),
   assertFlag(warn.missing.packages)
   assertFlag(check.packages)
   assertFlag(create)
-  UseMethod("listLearners")
+  UseMethod("listLearners", obj)
 }
 
 
@@ -142,6 +149,7 @@ listLearners.character = function(obj = NA_character_, properties = character(0L
   setnames(tab, "id", "class")
   setDF(tab)
   addClasses(tab, "ListLearners")
+  return(tab)
 }
 
 #' @export
