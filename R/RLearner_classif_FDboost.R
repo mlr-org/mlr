@@ -54,7 +54,7 @@ predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
 
   if (.learner$predict.type == "prob") {
-    if (!is.matrix(p) && is.na(p)) {
+    if (!is.matrix(p) && any(is.na(p))) {
       stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc
