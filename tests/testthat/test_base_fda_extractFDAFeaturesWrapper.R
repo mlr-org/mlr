@@ -50,7 +50,7 @@ test_that("extractFDAFeaturesWrapper ParSet Works II", {
 })
 
 
-test_that("extractFDAFeaturesWrapper ParSet Works", {
+test_that("extractFDAFeaturesWrapper ParSet Works III", {
   methods = list("fd" = extractFDAWavelets())
   lrn = makeExtractFDAFeatsWrapper("classif.rpart", feat.methods = methods)
   ps = makeParamSet(

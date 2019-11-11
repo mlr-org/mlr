@@ -12,7 +12,7 @@ Specifies which transformation of the complex frequency domain
 representation should be calculated as a feature representation.
 Must be one of \dQuote{amplitude} or \dQuote{phase}.
 Default is \dQuote{phase}.
-The phase shift is returned in Rad, i.e. values lie in \link{-180, 180}.}
+The phase shift is returned in Rad, i.e. values lie in [-180, 180].}
 }
 \value{
 (\link{data.frame}).

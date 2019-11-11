@@ -199,6 +199,7 @@ test_that("dtw extract works", {
 
 
 test_that("extractBsignal features", {
+  requirePackagesOrSkip("FDboost")
   methods = list("UVVIS" = extractFDABsignal(), "NIR" = extractFDABsignal())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   t2 = reextractFDAFeatures(fuelsubset.task, t$desc)

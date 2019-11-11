@@ -50,7 +50,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
 #'   representation should be calculated as a feature representation.
 #'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
 #'   Default is \dQuote{phase}.
-#'   The phase shift is returned in Rad, i.e. values lie in [-180, 180].
+#'   The phase shift is returned in Rad, i.e. values lie in \[-180, 180\].
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
