@@ -6,6 +6,8 @@
 \alias{mlr-package}
 \title{mlr: Machine Learning in R}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 Interface to a large number of classification and
     regression techniques, including machine-readable parameter
     descriptions. There is also an experimental extension for survival
