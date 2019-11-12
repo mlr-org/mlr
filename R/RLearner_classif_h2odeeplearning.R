@@ -217,8 +217,15 @@ makeRLearner.classif.h2o.deeplearning = function() {
       makeLogicalLearnerParam("average_activation", tunable = FALSE),
       # makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
-      makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
-    ),
+      makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE),
+      makeNumericLearnerParam("max_runtime_secs", default = 0, lower = 0),
+      makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
+      makeDiscreteLearnerParam("stopping_metric", values = c("AUTO", "logloss", "AUC", "lift_top_group", "misclassification",
+                                                             "AUCPR", "mean_per_class_error", "custom", "custom_increasing"),
+                               default = "AUTO", requires = quote(stopping_rounds > 0L)),
+      makeNumericLearnerParam("stopping_tolerance", default = 0, lower = 0),
+      makeDiscreteLearnerParam("distribution", values = c("AUTO", "bernoulli", "multinomial"), default = "AUTO")
+      ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
     name = "h2o.deeplearning",
     short.name = "h2o.dl",
