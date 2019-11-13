@@ -1,29 +1,3 @@
-#' @title Featureless classification learner.
-#'
-#' @description
-#' A very basic baseline method which is useful for model comparisons (if you
-#' don't beat this, you very likely have a problem).
-#' Does not consider any features of the task and only uses the target feature
-#' of the training data to make predictions.
-#' Using observation weights is currently not supported.
-#'
-#' Method \dQuote{majority} predicts always the majority class for each new
-#' observation. In the case of ties, one randomly sampled, constant class is predicted
-#' for all observations in the test set.
-#' This method is used as the default. It is very similar to the ZeroR classifier
-#' from WEKA (see <https://weka.wikispaces.com/ZeroR>). The only difference is
-#' that ZeroR always predicts the first class of the tied class values instead
-#' of sampling them randomly.
-#'
-#' Method \dQuote{sample-prior} always samples a random class for each individual test
-#' observation according to the prior probabilities observed in the training data.
-#'
-#' If you opt to predict probabilities, the class probabilities always
-#' correspond to the prior probabilities observed in the training data.
-#'
-#' @name classif.featureless
-NULL
-
 #' @export
 makeRLearner.classif.featureless = function() {
   makeRLearnerClassif(
