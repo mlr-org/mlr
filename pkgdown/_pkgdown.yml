@@ -24,47 +24,50 @@ toc:
 
 navbar:
   structure:
-    left:  [articles, advanced, extending, appendix, news]
+    left:  [articles, advanced, extending, appendix, reference, news]
     right: [github, slack, stackoverflow, rss]
 
   components:
     home: ~
-    reference: ~
     intro: ~
     articles:
       text: Basics
       menu:
-      - text: Tasks
+      - text: Task
         href: articles/tutorial/task.html
-      - text: Learners
+      - text: Learner
         href: articles/tutorial/learner.html
       - text: Train
         href: articles/tutorial/train.html
       - text: Predict
         href: articles/tutorial/predict.html
+      - text: ---
       - text: Preprocessing
         href: articles/tutorial/preproc.html
-      - text: Performance
-        href: articles/tutorial/performance.html
-      - text: Resampling
-        href: articles/tutorial/resample.html
       - text: Tuning
         href: articles/tutorial/tune.html
-      - text: Benchmark Experiments
+      - text: Resampling
+        href: articles/tutorial/resample.html
+      - text: Benchmarking
         href: articles/tutorial/benchmark_experiments.html
+      - text: ---
       - text: Parallelization
         href: articles/tutorial/parallelization.html
+      - text: Performance
+        href: articles/tutorial/performance.html
       - text: Visualization
         href: articles/tutorial/visualization.html
+      - text: ---
       - text: Use case - Regression
         href: articles/tutorial/usecase_regression.html
     advanced:
       text: Advanced
       menu:
-      - text: Configuration
+      - text: mlr Configuration
         href: articles/tutorial/configureMlr.html
       - text: Wrapped Learners
         href: articles/tutorial/wrapper.html
+      - text: ---
       - text: Imputation
         href: articles/tutorial/impute.html
       - text: Generic Bagging
@@ -75,14 +78,10 @@ navbar:
         href: articles/tutorial/feature_selection.html
       - text: Nested Resampling
         href: articles/tutorial/nested_resampling.html
-      - text: Cost-Sensitive Classification
-        href: articles/tutorial/cost_sensitive_classif.html
       - text: Imbalanced Classification Problems
         href: articles/tutorial/over_and_undersampling.html
       - text: ROC Analysis and Performance Curves
         href: articles/tutorial/roc_analysis.html
-      - text: Multilabel Classification
-        href: articles/tutorial/multilabel.html
       - text: Learning Curve Analysis
         href: articles/tutorial/learning_curve.html
       - text: Partial Dependence Plots
@@ -93,7 +92,12 @@ navbar:
         href: articles/tutorial/hyperpar_tuning_effects.html
       - text: Out-of-Bag Predictions
         href: articles/tutorial/out_of_bag_predictions.html
-      - text: Handling of Spatial Data
+      - text: ---
+      - text: Multilabel Classification
+        href: articles/tutorial/multilabel.html
+      - text: Cost-Sensitive Classification
+        href: articles/tutorial/cost_sensitive_classif.html
+      - text: Spatial Data
         href: articles/tutorial/handling_of_spatial_data.html
       - text: Functional Data
         href: articles/tutorial/functional_data.html
@@ -104,27 +108,27 @@ navbar:
         href: articles/tutorial/create_learner.html
       - text: Create Custom Measures
         href: articles/tutorial/create_measure.html
-      - text: Create Imputation Methods
+      - text: Create Custom Imputation Methods
         href: articles/tutorial/create_imputation.html
       - text: Create Custom Filters
         href: articles/tutorial/create_filter.html
     appendix:
       text: Appendix
       menu:
-      - text: Function Reference
-        href: reference/index.html
-      - text: Example Tasks
+      - text: Integrated Tasks
         href: articles/tutorial/example_tasks.html
       - text: Integrated Learners
         href: articles/tutorial/integrated_learners.html
-      - text: Implemented Measures
+      - text: Integrated Measures
         href: articles/tutorial/measures.html
       - text: Integrated Filter Methods
         href: articles/tutorial/filter_methods.html
+      - text: ---
       - text: mlr Publications
         href: articles/tutorial/mlr_publications.html
       - text: Talks, Videos and Workshops
         href: https://github.com/mlr-org/mlr-outreach
+      - text: ---
       - text: mlrMBO
         href: https://mlrmbo.mlr-org.com
       - text: mlrCPO
