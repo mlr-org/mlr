@@ -10,7 +10,6 @@ test_that("classif_adaboostm1", {
     list(P = 100),
     list(I = 10, S = 1),
     list(I = 5, Q = FALSE)
-
   )
 
   old.predicts.list = list()
@@ -25,9 +24,7 @@ test_that("classif_adaboostm1", {
     p = predict(m, newdata = binaryclass.test, type = "probability")
     old.probs.list[[i]] = p[, 1]
     old.predicts.list[[i]] = as.factor(binaryclass.class.levs[ifelse(p[, 2] > 0.5, 2, 1)])
-
   }
-
 
   testSimpleParsets("classif.adaboostm1", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
@@ -61,5 +58,6 @@ test_that("classif_adaboostm1", {
 
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
-  testCVParsets("classif.adaboostm1", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("classif.adaboostm1", multiclass.df, multiclass.target, #
+    tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })

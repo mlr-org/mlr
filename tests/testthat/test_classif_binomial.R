@@ -28,8 +28,10 @@ test_that("classif_binomial", {
     old.probs.list[[i]] = p
   }
 
-  testSimpleParsets("classif.binomial", binaryclass.df[, -nof], binaryclass.target, binaryclass.train.inds,
+  testSimpleParsets("classif.binomial", binaryclass.df[, -nof],
+    binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets("classif.binomial", binaryclass.df[, -nof], binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.binomial", binaryclass.df[, -nof],
+    binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list2)
 })
