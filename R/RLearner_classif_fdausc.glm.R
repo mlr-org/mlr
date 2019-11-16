@@ -32,9 +32,7 @@ trainLearner.classif.fdausc.glm = function(.learner, .task, .subset, .weights = 
   # transform the data into fda.usc:fdata class type and save in a list
   dat = list(df = data.frame(d$target), x = data.fdclass)
 
-  model = fda.usc::classif.glm(d.target ~ x, data = dat)
-  # Fix bug in package
-  model$C[[1]] = quote(classif.glm)
+  model = classif.glm(d.target ~ x, data = dat)
   return(model)
 }
 
@@ -46,8 +44,8 @@ predictLearner.classif.fdausc.glm = function(.learner, .model, .newdata, ...) {
   # predict according to predict.type
   type = ifelse(.learner$predict.type == "prob", "probs", "class")
   if (type == "probs") {
-    fda.usc::predict.classif(object = .model$learner.model, new.fdataobj = nd, type = type)$prob.group
+    predict(object = .model$learner.model, new.fdataobj = nd, type = type)$prob.group
   } else {
-    fda.usc::predict.classif(object = .model$learner.model, new.fdataobj = nd, type = type)
+    predict(object = .model$learner.model, new.fdataobj = nd, type = type)
   }
 }

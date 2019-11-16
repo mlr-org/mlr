@@ -162,7 +162,7 @@ costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
-ns.svg = c(svg = "http://www.w3.org/2000/svg")
+ns.svg = c(svg = "https://www.w3.org/2000/svg")
 black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
 grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"
 red.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #F8766D')]"

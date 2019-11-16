@@ -8,6 +8,7 @@
 ## learners - general
 
 - fixed a bug in `classif.xgboost` which prevented passing a watchlist for binary tasks. This was caused by a suboptimal internal label inversion approach. Thanks to @001ben for reporting (#32) (@mllg)
+- update `fda.usc` learners to work with package version >=2.0
 
 ## misc
 
