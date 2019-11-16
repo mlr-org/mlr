@@ -2,7 +2,7 @@ context("RLearner_classif_fdausc.glm")
 
 test_that("classif_fdausc.glm behaves like original api", {
 
-  requirePackagesOrSkip("fda.usc", default.method = "attach")
+  requirePackagesOrSkip("fda.usc", default.method = "load")
 
   data(phoneme, package = "fda.usc")
   # Use only 10 obs. for 5 classes, as knn training is really slow
@@ -16,7 +16,11 @@ test_that("classif_fdausc.glm behaves like original api", {
   dataf = data.frame(glearn)
   dat = list("df" = dataf, "x" = mlearn)
   # glm sometimes does not converge, we dont want to see that
-  a1 = suppressWarnings(classif.glm(glearn ~ x, data = dat))
+  a1 = suppressWarnings(fda.usc::classif.glm(glearn ~ x, data = dat))
+
+  # Fix bug in package. The changed slot looks different when called with
+  # `fda.usc::lassif.glm()` than just `classif.glm()`
+  a1$C[[1]] = quote(classif.glm)
 
   p1 = predict(a1, list("x" = mtest))
   p2 = predict(a1, list("x" = mlearn))

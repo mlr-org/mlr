@@ -32,11 +32,16 @@ trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = N
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
   # transform the data into fda.usc:fdata class type.
-  data.fdclass = fdata(mdata = as.matrix(fd))
+  data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
 
   par.cv = learnerArgsToControl(list, trim, draw)
-  mod = classif.np(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
+  mod = fda.usc::classif.np(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
+
+  # Fix bug in package. The changed slot looks different when called with
+  # `fda.usc::lassif.np()` than just `classif.np()`
+  mod$C[[1]] = quote(classif.np)
+
   return(mod)
 }
 
@@ -44,7 +49,7 @@ trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = N
 predictLearner.classif.fdausc.np = function(.learner, .model, .newdata, ...) {
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)
-  nd = fdata(mdata = as.matrix(fd))
+  nd = fda.usc::fdata(mdata = as.matrix(fd))
 
   # predict according to predict.type
   type = ifelse(.learner$predict.type == "prob", "probs", "class")

@@ -1,7 +1,7 @@
 context("RLearner_classif_fdausc.np")
 
 test_that("classif_fdausc.np behaves like original api", {
-  requirePackagesOrSkip("fda.usc", default.method = "attach")
+  requirePackagesOrSkip("fda.usc", default.method = "load")
 
   data(phoneme, package = "fda.usc")
   mlearn = phoneme[["learn"]]
@@ -12,7 +12,13 @@ test_that("classif_fdausc.np behaves like original api", {
   mtest = phoneme[["test"]]
   gtest = phoneme[["classtest"]]
 
-  a1 = classif.np(glearn, mlearn)
+  # suppressing "executing %dopar% sequentially: no parallel backend registered"
+  a1 = suppressWarnings(fda.usc::classif.np(glearn, mlearn))
+
+  # Fix bug in package. The changed slot looks different when called with
+  # `fda.usc::classif.np()` than just `classif.np()`
+  a1$C[[1]] = quote(classif.np)
+
   # newdat = list("x"=mtest)
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
@@ -26,7 +32,8 @@ test_that("classif_fdausc.np behaves like original api", {
   fdata = makeFunctionalData(ph, fd.features = NULL, exclude.cols = "label")
   ftest = makeFunctionalData(phtst, fd.features = NULL, exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
-  m = train(lrn, task)
+  # suppressing "executing %dopar% sequentially: no parallel backend registered"
+  m = suppressWarnings(train(lrn, task))
   cp = predict(m, newdata = ftest)
   cp = unlist(cp$data$response, use.names = FALSE)
 
