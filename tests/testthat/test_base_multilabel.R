@@ -53,6 +53,7 @@ test_that("multilabel learning", {
 })
 
 test_that("MultilabelBinaryRelevanceWrapper with glmnet (#958)", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   # multilabelBinaryRelevanceWrapper was not working properly for classif.glmnet, we had a bug here
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn)
