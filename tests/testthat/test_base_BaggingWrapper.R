@@ -65,6 +65,7 @@ test_that("BaggingWrapper works with 1 obs in newdata", {
 })
 
 test_that("BaggingWrapper with glmnet (#958)", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makeBaggingWrapper(lrn)
   mod = train(lrn2, multiclass.task)

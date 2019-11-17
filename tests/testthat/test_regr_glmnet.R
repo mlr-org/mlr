@@ -43,6 +43,7 @@ test_that("regr_glmnet", {
 
 
 test_that("regr_glmnet works with poisson", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   # set some dummy counts
   d = regr.df
   d[, regr.target] = sample(1:100, getTaskSize(regr.task), replace = TRUE)
