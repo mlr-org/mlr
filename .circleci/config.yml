@@ -142,7 +142,7 @@ jobs:
             - $HOME/.ccache
 
 workflows:
-  version: 2
+  version: 2.1
   build:
     jobs:
       - "r-3.6.1"
