@@ -4,8 +4,13 @@
 \alias{generateCritDifferencesData}
 \title{Generate data for critical-differences plot.}
 \usage{
-generateCritDifferencesData(bmr, measure = NULL, p.value = 0.05,
-  baseline = NULL, test = "bd")
+generateCritDifferencesData(
+  bmr,
+  measure = NULL,
+  p.value = 0.05,
+  baseline = NULL,
+  test = "bd"
+)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -71,37 +76,41 @@ Where \eqn{q_\alpha} is based on the studentized range statistic.
 See references for details.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
-  \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotFilterValues}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateFeatureImportanceData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generatePartialDependenceData}()},
+\code{\link{generateThreshVsPerfData}()},
+\code{\link{plotFilterValues}()}
 
-Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{batchmark}}, \code{\link{benchmark}},
-  \code{\link{convertBMRToRankMatrix}},
-  \code{\link{friedmanPostHocTestBMR}},
-  \code{\link{friedmanTestBMR}},
-  \code{\link{getBMRAggrPerformances}},
-  \code{\link{getBMRFeatSelResults}},
-  \code{\link{getBMRFilteredFeatures}},
-  \code{\link{getBMRLearnerIds}},
-  \code{\link{getBMRLearnerShortNames}},
-  \code{\link{getBMRLearners}},
-  \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
-  \code{\link{getBMRPerformances}},
-  \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescs}},
-  \code{\link{getBMRTaskIds}},
-  \code{\link{getBMRTuneResults}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{reduceBatchmarkResults}}
+Other benchmark: 
+\code{\link{BenchmarkResult}},
+\code{\link{batchmark}()},
+\code{\link{benchmark}()},
+\code{\link{convertBMRToRankMatrix}()},
+\code{\link{friedmanPostHocTestBMR}()},
+\code{\link{friedmanTestBMR}()},
+\code{\link{getBMRAggrPerformances}()},
+\code{\link{getBMRFeatSelResults}()},
+\code{\link{getBMRFilteredFeatures}()},
+\code{\link{getBMRLearnerIds}()},
+\code{\link{getBMRLearnerShortNames}()},
+\code{\link{getBMRLearners}()},
+\code{\link{getBMRMeasureIds}()},
+\code{\link{getBMRMeasures}()},
+\code{\link{getBMRModels}()},
+\code{\link{getBMRPerformances}()},
+\code{\link{getBMRPredictions}()},
+\code{\link{getBMRTaskDescs}()},
+\code{\link{getBMRTaskIds}()},
+\code{\link{getBMRTuneResults}()},
+\code{\link{plotBMRBoxplots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{reduceBatchmarkResults}()}
 }
 \concept{benchmark}
 \concept{generate_plot_data}

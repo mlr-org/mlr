@@ -17,9 +17,10 @@ Trained Model created with \link{makeFeatSelWrapper}.}
 Returns the selected feature set and optimization path after training.
 }
 \seealso{
-Other featsel: \code{\link{FeatSelControl}},
-  \code{\link{analyzeFeatSelResult}},
-  \code{\link{makeFeatSelWrapper}},
-  \code{\link{selectFeatures}}
+Other featsel: 
+\code{\link{FeatSelControl}},
+\code{\link{analyzeFeatSelResult}()},
+\code{\link{makeFeatSelWrapper}()},
+\code{\link{selectFeatures}()}
 }
 \concept{featsel}

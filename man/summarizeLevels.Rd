@@ -24,12 +24,13 @@ Characters and logicals will be treated as factors.
 summarizeLevels(iris)
 }
 \seealso{
-Other eda_and_preprocess: \code{\link{capLargeValues}},
-  \code{\link{createDummyFeatures}},
-  \code{\link{dropFeatures}},
-  \code{\link{mergeSmallFactorLevels}},
-  \code{\link{normalizeFeatures}},
-  \code{\link{removeConstantFeatures}},
-  \code{\link{summarizeColumns}}
+Other eda_and_preprocess: 
+\code{\link{capLargeValues}()},
+\code{\link{createDummyFeatures}()},
+\code{\link{dropFeatures}()},
+\code{\link{mergeSmallFactorLevels}()},
+\code{\link{normalizeFeatures}()},
+\code{\link{removeConstantFeatures}()},
+\code{\link{summarizeColumns}()}
 }
 \concept{eda_and_preprocess}
