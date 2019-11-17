@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   "r-3.6.1":
     docker:
