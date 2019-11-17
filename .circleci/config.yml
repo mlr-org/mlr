@@ -148,9 +148,10 @@ workflows:
       - "r-3.6.1"
       - "r-3.5.3"
       - "codecov"
-          branches:
-            only:
-             - master
+          filters:
+            branches:
+              only:
+               - master
       - deploy:
           requires:
             - "r-3.6.1"
@@ -166,13 +167,14 @@ workflows:
           filters:
             branches:
               only:
-                - master
+               - master
     jobs:
       - "r-3.6.1"
       - "r-3.5.3"
       - deploy:
           requires:
             - "r-3.6.1"
-          branches:
-            only:
-             - master
+          filters:
+            branches:
+              only:
+               - master
