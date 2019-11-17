@@ -13,7 +13,7 @@ if (ci_is_env("FULL", "true")) {
 }
 
 # only deploy man files in in master branch
-if (ci_get_branch() == "master" && ci_is_env("FULL", "true")) {
+if (ci_is_env("FULL", "true")) {
 
   get_stage("deploy") %>%
     add_code_step(pkgbuild::compile_dll()) %>%
