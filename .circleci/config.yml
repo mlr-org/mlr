@@ -147,7 +147,7 @@ workflows:
     jobs:
       - "r-3.6.1"
       - "r-3.5.3"
-      - "codecov"
+      - "codecov":
           filters:
             branches:
               only:
