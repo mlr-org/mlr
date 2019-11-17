@@ -131,6 +131,7 @@ test_that("ModelMultiplexer inherits predict.type from base learners", {
 
 # we had bug here, see issue #647
 test_that("ModelMultiplexer passes on hyper pars in predict", {
+  requirePackagesOrSkip("glmnet")
   base.learners = list(
     makeLearner("regr.glmnet"),
     makeLearner("regr.rpart")
@@ -142,6 +143,7 @@ test_that("ModelMultiplexer passes on hyper pars in predict", {
 
 # issue #707
 test_that("ModelMultiplexer handles tasks with no features", {
+  requirePackagesOrSkip("glmnet")
   base.learners = list(
     makeLearner("regr.glmnet"),
     makeLearner("regr.rpart")

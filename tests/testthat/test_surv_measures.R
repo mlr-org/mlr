@@ -1,6 +1,7 @@
 context("survival measures")
 
 test_that("survival measures do not do stupid things", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   set.seed(1)
   n = 100
   time = sort(rexp(n, 0.1)) + 1

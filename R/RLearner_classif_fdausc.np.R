@@ -46,8 +46,10 @@ trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = N
       list(Ker = par.funs$Ker)[which(names(par.funs) == "Ker")],
       ...))
 
-  # Fix a bug in the package
+  # Fix bug in package. The changed slot looks different when called with
+  # `fda.usc::lassif.np()` than just `classif.np()`
   mod$C[[1]] = quote(classif.np)
+
   return(mod)
 }
 

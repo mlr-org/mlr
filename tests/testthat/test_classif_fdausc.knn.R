@@ -13,7 +13,8 @@ test_that("classif_fdausc.knn behaves like original api", {
 
   mtest = phoneme[["test"]]
   gtest = phoneme[["classtest"]]
-  a1 = fda.usc::classif.knn(glearn, mlearn, par.CV = list(trim = 0.5))
+  # suppressing "executing %dopar% sequentially: no parallel backend registered"
+  a1 = suppressWarnings(fda.usc::classif.knn(glearn, mlearn, par.CV = list(trim = 0.5)))
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
 
@@ -33,6 +34,7 @@ test_that("classif_fdausc.knn behaves like original api", {
 
   cp2 = predict(m, newdata = fdata)
   cp2 = unlist(cp2$data$response, use.names = FALSE)
+
   # check if the output from the original API matches the mlr learner's output
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
