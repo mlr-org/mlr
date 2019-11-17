@@ -23,6 +23,7 @@ test_that("learnerArgsToControl with list returns the input", {
 
 
 test_that("learnerArgsToControl works with a control object", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   checkLearnerArgsToControlWithControl = function(fdev, devmax, ...) {
     learnerArgsToControl(control = glmnet::glmnet.control, fdev, devmax, ...)
   }
