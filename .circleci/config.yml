@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  "r-3.6.1":
+  release:
     docker:
       - image: rocker/verse:3.6.1
     steps:
@@ -60,7 +60,7 @@ jobs:
             R -q -e 'tic::deploy()'
             R -q -e 'tic::after_deploy()'
 
-  "r-3.5.3":
+  oldrelease:
     docker:
       - image: rocker/verse:3.5.3
     steps:
@@ -142,19 +142,18 @@ jobs:
             - $HOME/.ccache
 
 workflows:
-  version: 2.1
-  build:
+  main:
     jobs:
-      - "r-3.6.1"
-      - "r-3.5.3"
-      - "codecov":
+      - release
+      - oldrelease
+      - codecov:
           filters:
             branches:
               only:
                - master
       - deploy:
           requires:
-            - "r-3.6.1"
+            - release
           filters:
             branches:
               only:
@@ -170,11 +169,11 @@ workflows:
               only:
                - master
     jobs:
-      - "r-3.6.1"
-      - "r-3.5.3"
+      - release
+      - oldrelease
       - deploy:
           requires:
-            - "r-3.6.1"
+            - release
           filters:
             branches:
               only:
