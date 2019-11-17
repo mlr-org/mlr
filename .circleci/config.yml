@@ -155,9 +155,10 @@ workflows:
       - deploy:
           requires:
             - "r-3.6.1"
-          branches:
-            only:
-             - master
+          filters:
+            branches:
+              only:
+               - master
 # CRON job daily at 3 am in the morning
 # - runs the "build" job on the master branch
   nightly:
