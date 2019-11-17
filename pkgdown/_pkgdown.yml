@@ -22,6 +22,9 @@ home:
 toc:
   depth: 3
 
+news:
+  - one_page: false
+
 navbar:
   structure:
     left:  [articles, advanced, extending, appendix, reference, news]
@@ -137,9 +140,6 @@ navbar:
         href: https://jakob-r.de/mlrHyperopt/index.html
       - text: OpenML
         href: http://openml.github.io/openml-r/
-    news:
-      text: Changelog
-      href: news/index.html
     slack:
       icon: fab fa-slack
       href: https://mlr-org.slack.com
