@@ -279,6 +279,12 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #'   This only speeds things up when there are a large number of time series.
 #' @param na.action (`logical(1)`)\cr
 #'   A function to handle missing values. Use `na.interp` to estimate missing values
+#' @param feats (`character`)\cr
+#'   A character vector of function names to apply to each time-series in order to extract features.\cr
+#'   Default:\cr 
+#'   feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
+#'      "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
+#'      "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
 #' @param ... (any)\cr
 #'   Further arguments passed on to the respective tsfeatures functions.
 #' @return ([data.frame])

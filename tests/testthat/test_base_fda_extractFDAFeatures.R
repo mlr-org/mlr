@@ -37,7 +37,6 @@ test_that("extractFeatures multiple times", {
       paste0("UVVIS.phase.", seq_len(134)), paste0("NIR.phase.", seq_len(231))))
 })
 
-
 test_that("extractFDAFeatures colnames work", {
   methods = list("NIR" = extractFDAFourier())
   t = subsetTask(fuelsubset.task, subset = 1:30)
@@ -45,7 +44,6 @@ test_that("extractFDAFeatures colnames work", {
   cn = getTaskFeatureNames(t2$task)
   expect_match(setdiff(cn, "h2o"), regexp = "[NIR.phase]", all = TRUE)
 })
-
 
 test_that("Wrong methods yield errors", {
   t = subsetTask(fuelsubset.task, subset = 1:2)

@@ -34,9 +34,7 @@ predictLearner.classif.fgam = function(.learner, .model, .newdata, ...) {
 
   pred = predict(.model$learner.model, newdata = nl, type = "response")
   if (.learner$predict.type == "prob") {
-    pred = cbind(as.vector(pred), 1-as.vector(pred))
-    colnames(pred) = .model$task.desc$class.levels
-    return(pred)
+    return(propVectorToMatrix(pred, c(.model$task.desc$negative, .model$task.desc$positive)))
   } else {
     return(factor(round(pred), labels = .model$learner.model$uvt))
   }

@@ -61,13 +61,12 @@ predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response") # additional parameters passed to mboost::predict()
 
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
-
+  
   if (.learner$predict.type == "prob") {
     if (!is.matrix(p) && any(is.na(p))) {
       stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc
-      if (nrow(.newdata) == 1 && is.vector(p)) browser(); dim(p) = c(1,2)
       if (!is.null(dim(p))) {
         p = p[, 1L]
       }
