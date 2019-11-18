@@ -4,10 +4,7 @@ makeRLearner.classif.classiFunc.knn = function() {
     cl = "classif.classiFunc.knn",
     package = "classiFunc",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "knn",
-        lower = 1L,
-        # upper = expression(0.5 * nrow(getTaskData(task))),
-        default = 1L),
+      makeIntegerLearnerParam(id = "knn", lower = 1L, default = 1L),
       # Using metricChoices since there are so many options and this 
       # keeps stuff flexible.
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
