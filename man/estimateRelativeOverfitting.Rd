@@ -4,8 +4,14 @@
 \alias{estimateRelativeOverfitting}
 \title{Estimate relative overfitting.}
 \usage{
-estimateRelativeOverfitting(predish, measures, task, learner = NULL,
-  pred.train = NULL, iter = 1)
+estimateRelativeOverfitting(
+  predish,
+  measures,
+  task,
+  learner = NULL,
+  pred.train = NULL,
+  iter = 1
+)
 }
 \arguments{
 \item{predish}{(\link{ResampleDesc} | \link{ResamplePrediction} | \link{Prediction})\cr
@@ -50,13 +56,16 @@ estimateRelativeOverfitting(rpred, acc, task)
 Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.
 }
 \seealso{
-Other performance: \code{\link{ConfusionMatrix}},
-  \code{\link{calculateConfusionMatrix}},
-  \code{\link{calculateROCMeasures}},
-  \code{\link{makeCostMeasure}},
-  \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}, \code{\link{setAggregation}},
-  \code{\link{setMeasurePars}}
+Other performance: 
+\code{\link{ConfusionMatrix}},
+\code{\link{calculateConfusionMatrix}()},
+\code{\link{calculateROCMeasures}()},
+\code{\link{makeCostMeasure}()},
+\code{\link{makeCustomResampledMeasure}()},
+\code{\link{makeMeasure}()},
+\code{\link{measures}},
+\code{\link{performance}()},
+\code{\link{setAggregation}()},
+\code{\link{setMeasurePars}()}
 }
 \concept{performance}

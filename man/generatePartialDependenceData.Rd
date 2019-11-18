@@ -5,10 +5,19 @@
 \alias{PartialDependenceData}
 \title{Generate partial dependence.}
 \usage{
-generatePartialDependenceData(obj, input, features = NULL,
-  interaction = FALSE, derivative = FALSE, individual = FALSE,
-  fun = mean, bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE,
-  n = c(10, NA), ...)
+generatePartialDependenceData(
+  obj,
+  input,
+  features = NULL,
+  interaction = FALSE,
+  derivative = FALSE,
+  individual = FALSE,
+  fun = mean,
+  bounds = c(qnorm(0.025), qnorm(0.975)),
+  uniform = TRUE,
+  n = c(10, NA),
+  ...
+)
 }
 \arguments{
 \item{obj}{(\link{WrappedModel})\cr
@@ -48,7 +57,7 @@ partial dependences of all observations in \code{data} across all values of the 
 The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 Default is \code{FALSE}.}
 
-\item{fun}{\code{function}\cr
+\item{fun}{\verb{function}\cr
 
 A function which operates on the output on the predictions made on the \code{input} data. For regression
 this means a numeric vector, and, e.g., for a multiclass classification problem, this migh instead be probabilities
@@ -124,15 +133,17 @@ Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking 
 Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 }
 \seealso{
-Other partial_dependence: \code{\link{plotPartialDependence}}
+Other partial_dependence: 
+\code{\link{plotPartialDependence}()}
 
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotFilterValues}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{generateFeatureImportanceData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generateThreshVsPerfData}()},
+\code{\link{plotFilterValues}()}
 }
 \concept{generate_plot_data}
 \concept{partial_dependence}

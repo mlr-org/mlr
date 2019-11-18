@@ -13,45 +13,130 @@
 \alias{fixedcv}
 \title{Fit models according to a resampling strategy.}
 \usage{
-resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+resample(
+  learner,
+  task,
+  resampling,
+  measures,
+  weights = NULL,
+  models = FALSE,
+  extract,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-crossval(learner, task, iters = 10L, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+crossval(
+  learner,
+  task,
+  iters = 10L,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE,
-  measures, models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+repcv(
+  learner,
+  task,
+  folds = 10L,
+  reps = 10L,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-holdout(learner, task, split = 2/3, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+holdout(
+  learner,
+  task,
+  split = 2/3,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-subsample(learner, task, iters = 30, split = 2/3, stratify = FALSE,
-  measures, models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+subsample(
+  learner,
+  task,
+  iters = 30,
+  split = 2/3,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-bootstrapOOB(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+bootstrapOOB(
+  learner,
+  task,
+  iters = 30,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+bootstrapB632(
+  learner,
+  task,
+  iters = 30,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-bootstrapB632plus(learner, task, iters = 30, stratify = FALSE,
-  measures, models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+bootstrapB632plus(
+  learner,
+  task,
+  iters = 30,
+  stratify = FALSE,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-growingcv(learner, task, horizon = 1, initial.window = 0.5, skip = 0,
-  measures, models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+growingcv(
+  learner,
+  task,
+  horizon = 1,
+  initial.window = 0.5,
+  skip = 0,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 
-fixedcv(learner, task, horizon = 1L, initial.window = 0.5, skip = 0,
-  measures, models = FALSE, keep.pred = TRUE, ...,
-  show.info = getMlrOption("show.info"))
+fixedcv(
+  learner,
+  task,
+  horizon = 1L,
+  initial.window = 0.5,
+  skip = 0,
+  measures,
+  models = FALSE,
+  keep.pred = TRUE,
+  ...,
+  show.info = getMlrOption("show.info")
+)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -79,7 +164,7 @@ By default \code{NULL} which means no weights are used unless specified in the t
 Should all fitted models be returned?
 Default is \code{FALSE}.}
 
-\item{extract}{(\code{function})\cr
+\item{extract}{(\verb{function})\cr
 Function used to extract information from a fitted model during resampling.
 Is applied to every \link{WrappedModel} resulting from calls to \link{train}
 during resampling.
@@ -159,13 +244,15 @@ r = resample(makeLearner("classif.qda"), task, rdesc,
 print(r$aggr)
 }
 \seealso{
-Other resample: \code{\link{ResamplePrediction}},
-  \code{\link{ResampleResult}}, \code{\link{addRRMeasure}},
-  \code{\link{getRRPredictionList}},
-  \code{\link{getRRPredictions}},
-  \code{\link{getRRTaskDescription}},
-  \code{\link{getRRTaskDesc}},
-  \code{\link{makeResampleDesc}},
-  \code{\link{makeResampleInstance}}
+Other resample: 
+\code{\link{ResamplePrediction}},
+\code{\link{ResampleResult}},
+\code{\link{addRRMeasure}()},
+\code{\link{getRRPredictionList}()},
+\code{\link{getRRPredictions}()},
+\code{\link{getRRTaskDescription}()},
+\code{\link{getRRTaskDesc}()},
+\code{\link{makeResampleDesc}()},
+\code{\link{makeResampleInstance}()}
 }
 \concept{resample}

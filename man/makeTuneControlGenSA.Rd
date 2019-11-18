@@ -5,10 +5,17 @@
 \alias{TuneControlGenSA}
 \title{Create control object for hyperparameter tuning with GenSA.}
 \usage{
-makeTuneControlGenSA(same.resampling.instance = TRUE,
-  impute.val = NULL, start = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = "default",
-  final.dw.perc = NULL, budget = NULL, ...)
+makeTuneControlGenSA(
+  same.resampling.instance = TRUE,
+  impute.val = NULL,
+  start = NULL,
+  tune.threshold = FALSE,
+  tune.threshold.args = list(),
+  log.fun = "default",
+  final.dw.perc = NULL,
+  budget = NULL,
+  ...
+)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -40,7 +47,7 @@ Default is \code{FALSE}.}
 Further arguments for threshold tuning that are passed down to \link{tuneThreshold}.
 Default is none.}
 
-\item{log.fun}{(\code{function} | \code{character(1)})\cr
+\item{log.fun}{(\verb{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
 If set to \dQuote{memory} the memory usage for each evaluation will also be displayed, with \code{character(1)} small increase
@@ -78,20 +85,22 @@ Can handle numeric(vector) and integer(vector) hyperparameters, but no dependenc
 For integers the internally proposed numeric values are automatically rounded.
 }
 \seealso{
-Other tune: \code{\link{TuneControl}},
-  \code{\link{getNestedTuneResultsOptPathDf}},
-  \code{\link{getNestedTuneResultsX}},
-  \code{\link{getResamplingIndices}},
-  \code{\link{getTuneResult}},
-  \code{\link{makeModelMultiplexerParamSet}},
-  \code{\link{makeModelMultiplexer}},
-  \code{\link{makeTuneControlCMAES}},
-  \code{\link{makeTuneControlDesign}},
-  \code{\link{makeTuneControlGrid}},
-  \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlMBO}},
-  \code{\link{makeTuneControlRandom}},
-  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
-  \code{\link{tuneThreshold}}
+Other tune: 
+\code{\link{TuneControl}},
+\code{\link{getNestedTuneResultsOptPathDf}()},
+\code{\link{getNestedTuneResultsX}()},
+\code{\link{getResamplingIndices}()},
+\code{\link{getTuneResult}()},
+\code{\link{makeModelMultiplexerParamSet}()},
+\code{\link{makeModelMultiplexer}()},
+\code{\link{makeTuneControlCMAES}()},
+\code{\link{makeTuneControlDesign}()},
+\code{\link{makeTuneControlGrid}()},
+\code{\link{makeTuneControlIrace}()},
+\code{\link{makeTuneControlMBO}()},
+\code{\link{makeTuneControlRandom}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{tuneParams}()},
+\code{\link{tuneThreshold}()}
 }
 \concept{tune}

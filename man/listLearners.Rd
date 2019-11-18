@@ -7,24 +7,41 @@
 \alias{listLearners.Task}
 \title{Find matching learning algorithms.}
 \usage{
-listLearners(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE,
-  create = FALSE)
+listLearners(
+  obj = NA_character_,
+  properties = character(0L),
+  quiet = TRUE,
+  warn.missing.packages = TRUE,
+  check.packages = FALSE,
+  create = FALSE
+)
 
-\method{listLearners}{default}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE, check.packages = FALSE,
-  create = FALSE)
+\method{listLearners}{default}(
+  obj = NA_character_,
+  properties = character(0L),
+  quiet = TRUE,
+  warn.missing.packages = TRUE,
+  check.packages = FALSE,
+  create = FALSE
+)
 
-\method{listLearners}{character}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE, check.packages = FALSE,
-  create = FALSE)
+\method{listLearners}{character}(
+  obj = NA_character_,
+  properties = character(0L),
+  quiet = TRUE,
+  warn.missing.packages = TRUE,
+  check.packages = FALSE,
+  create = FALSE
+)
 
-\method{listLearners}{Task}(obj = NA_character_,
-  properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE, check.packages = TRUE,
-  create = FALSE)
+\method{listLearners}{Task}(
+  obj = NA_character_,
+  properties = character(0L),
+  quiet = TRUE,
+  warn.missing.packages = TRUE,
+  check.packages = TRUE,
+  create = FALSE
+)
 }
 \arguments{
 \item{obj}{(\code{character(1)} | \link{Task})\cr
@@ -60,7 +77,7 @@ Packages are loaded if and only if this option is \code{TRUE}.
 Default is \code{FALSE}.}
 }
 \value{
-([data.frame\code{|}list` of \link{Learner}).
+([data.frame\verb{|}list` of \link{Learner}).
 Either a descriptive data.frame that allows access to all properties of the learners
 or a list of created learner objects (named by ids of listed learners).
 }
