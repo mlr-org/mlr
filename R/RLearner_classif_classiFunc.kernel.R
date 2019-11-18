@@ -51,7 +51,7 @@ makeRLearner.classif.classiFunc.kernel = function() {
       makeNumericLearnerParam(id = "lambda", lower = 0, default = 0),
       makeDiscreteLearnerParam(id = "method", default = "chol", values = c("chol", "qr")),
       makeNumericLearnerParam(id = "dfscale", lower = 0, upper = Inf, default = 1),
-      makeUntypedLearnerParam(id = "custom.metric.args", default = list())
+      makeUntypedLearnerParam(id = "custom.metric.args", default = list()),
       keys = "task",
       forbidden = expression(dmin > dmax,
         knn %% 2 == 0)

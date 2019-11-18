@@ -35,20 +35,18 @@ makeRLearner.classif.classiFunc.knn = function() {
         lower = 0, upper = 1),
       makeNumericLearnerParam(id = "t2", default = 1,
         lower = 0, upper = 1),
-      makeNumericVectorLearnerParam(id = ".poi", # default = expression(seq(0, 1, ncol(task))),
+      makeNumericVectorLearnerParam(id = ".poi", default = expression(seq(0, 1, ncol(task))),
         lower = 0, upper = 1),
       makeNumericLearnerParam(id = "p", default = 2),
-      makeNumericLearnerParam(id = "dtwwindow", lower = 0, upper = 1, requires = quote(metric == "rucrdtw"),
+      makeNumericLearnerParam(id = "dtwwindow", lower = 0, upper = 1, requires = quote(metric == "rucrdtw")),
       makeNumericLearnerParam(id = "lambda", lower = 0, default = 0),
       makeDiscreteLearnerParam(id = "method", default = "chol", values = c("chol", "qr")),
       makeNumericLearnerParam(id = "dfscale", lower = 0, upper = Inf, default = 1),
-      makeUntypedLearnerParam(id = "custom.metric.args", default = list())
-
+      makeUntypedLearnerParam(id = "custom.metric.args", default = list()),
       keys = "task",
-      forbidden = expression(dmin >= dmax,
-        dmin1 >= dmax1 |
-          # dmax1 > dmin2 |
-          dmin2 >= dmax2,
+      forbidden = expression(
+        dmin >= dmax,
+        dmin1 >= dmax1 | dmin2 >= dmax2,
         knn %% 2 == 0)
     ),
     properties = c("twoclass", "multiclass", "prob", "single.functional"),
