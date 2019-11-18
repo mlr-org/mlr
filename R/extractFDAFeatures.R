@@ -17,7 +17,7 @@
 #'   * coln [`character`]: Colum names of data.
 #'   * fd.cols [`character`]: Functional feature names.
 #'   * extractFDAFeat [`list`]: Contains `feature.methods` and relevant
-#'     parameters for reextraction}.
+#'     parameters for reextraction.
 #'
 #' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from.

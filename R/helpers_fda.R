@@ -33,7 +33,7 @@ functionalToNormalData = function(df) {
 }
 
 
-# Helper function that checks functional data columns for consitency
+# Helper function that checks functional data columns for consistency
 # Takes a data.frame and a functional data column
 # Returns the functional matrix-column
 checkFDCols = function(data, col) {

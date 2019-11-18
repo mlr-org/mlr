@@ -2,7 +2,22 @@
 # @title Regression of functional data by Functional Generalized Additive Models.
 #
 # @description
-# FGAM estimate a smooth function for scalar on functional regression. Where the target is a scalar and the covarite is functional covariate, and the regression is an integration with respect to a link function upon the conditional expectation. $g\{E(Y_i|X_i)\} = \theta_0 +\int_{\tau} F\{X_i(\tau), \tau \}d{\tau}$, where the smooth function $F\{X(t), t\}$(estimation surface which is fitted againt all X(t), t pair) is not binded to be linear with the functional predictor $X(t)$ and takes an additive form which could quantify how important each functional point is to the response. The basic form for the smooth function is penalized splines. Typical application for FGAM is Diffusion tensor imaging(DTI) parallel diffusivity on Corpus Callosum where signal is higher for voxels where diffusion is hindered for multiple sclerosis patient PASAT score( A cognitive measure). For each pixel, there could be a tensor of 3*3 symmetric matrix which results from applying gradient from several non-collinear directions. In FGAM, X(t) is transformed to be in the interval of [0,1] by cdf tranform to let the limited observation data to fill all space of the surface and invariant to tranformation of functional predictors. FGAM support multiple functional covariate. Currently, only splines are used as base learner.
+# FGAM estimates a smooth function for scalar on functional regression.
+# Where the target is a scalar and the covarite is functional covariate,
+# and the regression is an integration with respect to a link function upon the conditional
+# expectation. $g\{E(Y_i|X_i)\} = \theta_0 +\int_{\tau} F\{X_i(\tau), \tau \}d{\tau}$,
+# where the smooth function $F\{X(t), t\}$(estimation surface which is fitted againt 
+# all X(t), t pair) is not binded to be linear with the functional predictor $X(t)$ and
+# takes an additive form which could quantify how important each functional point is to the
+# response. The basic form for the smooth function is penalized splines. Typical application 
+# for FGAM is Diffusion tensor imaging(DTI) parallel diffusivity on Corpus 
+# Callosum where signal is higher for voxels where diffusion is hindered for
+# multiple sclerosis patient PASAT score( A cognitive measure). For each pixel, 
+# there could be a tensor of 3*3 symmetric matrix which results from applying gradient 
+# from several non-collinear directions. In FGAM, X(t) is transformed to be in the interval of 
+# [0,1] by cdf tranform to let the limited observation data to fill all space of the surface
+# and invariant to tranformation of functional predictors. FGAM support multiple functional 
+# covariate. Currently, only splines are used as base learner.
 
 fgam.ps = makeParamSet(
   makeDiscreteLearnerParam(id = "basistype", values = c("te", "ti"), default = "te"),
@@ -14,13 +29,10 @@ fgam.ps = makeParamSet(
   # skipped: argvals(indices of evaluation of ?X?)
   makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
   # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
-  # FIXME: currently not used in train
-  # FIXME: skipped args: presmooth.opts, Xrange
   makeLogicalLearnerParam(id = "Qtransform", default = TRUE) # c.d.f transform
 )
 
 fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA)
-
 
 getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
   formula.terms = namedList()
@@ -34,7 +46,7 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
     names(fd.grids) = fdns
     fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
-    # also setup charvec of formula terms for func covars
+    # also setup character vector of formula terms for functional covariates
     mat.list = namedList(fdns)
     formula.terms = namedList(fdns)
     # for each functional covariate
@@ -44,7 +56,8 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
       # ... extract the corresponding original data into a list of matrices
       mat.list[[fdn]] = mdata[, fdn]
       # ... create a formula item
-      # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), while refund::lf means linear Model (FLM)
+      # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), 
+      # while refund::lf means linear Model (FLM)
       fkm = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
         fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$mgcv.te_ti.m, parlist$integration)
       fk = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, integration = '%s')",
@@ -84,7 +97,6 @@ getBinomialTarget = function(.task) {
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
-
 getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, differences) {
 
   tdata = getTaskData(.task, functionals.as = "matrix")
@@ -100,9 +112,8 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
     names(fd.grids) = fdns
     fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
-    # also setup charvec of formula terms for func covars
+        # also setup character vector of formula terms for functional covariates
     mat.list = namedList(fdns)
-    # formula.terms = setNames(character(length = fdns))
     formula.terms = namedList(fdns)
     # for each functional covariate
     for (fdn in fdns) {
@@ -134,16 +145,4 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
   # Create the formula and train the model
   form = as.formula(sprintf("%s ~ %s", tn, collapse(unlist(formula.terms), "+")))
   return(list(mat.list = mat.list, form = form))
-}
-
-# Code below will be used in future, do not delete
-getPfrFormulaMat = function(mdata, target, fns, parlist) {
-  # pfr.ps =
-  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
-  # makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
-  # mgcv::s:bs "tp" for thin plate regression spline, "cr" for cubic regression spline
-  # makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
-  # mgcv::s:m The order of the penalty for this term, default: let mgcv choose. The original default is NA but mlr will generate warnings for this.
-  # makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, special.vals = list(NA)),
-  # "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
 }

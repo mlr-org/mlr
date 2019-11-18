@@ -13,7 +13,6 @@ test_that("extractFDAFeaturesWrapper", {
   expect_class(res, "ResampleResult")
 })
 
-
 test_that("extractFDAFeaturesWrapper ParSet Works", {
   methods = list("NIR" = extractFDAFourier())
   lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = methods)
@@ -30,15 +29,13 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   mod = tuneParams(lrn, subsetTask(fuelsubset.task, features = 3), cv2, mse, ps2, makeTuneControlRandom(maxit = 2))
 })
 
-
 test_that("extractFDAFeaturesWrapper ParSet Works II", {
   methods = list("fd1" = extractFDAFourier())
-  # Suppress missing=NA arg from xgboost param set
-  lrn = suppressWarnings(makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods))
+  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
   ps = getLearnerParamSet(lrn)
 
   # Check whether all Ids are contained in the resulting param set
-  ps.xgboost = suppressWarnings(getLearnerParamSet(makeLearner("classif.xgboost")))
+  ps.xgboost = getLearnerParamSet(makeLearner("classif.xgboost"))
   expect_subset(getParamIds(ps.xgboost), getParamIds(ps))
   expect_subset(getParamIds(methods$fd1$par.set), getParamIds(ps))
 
@@ -48,7 +45,6 @@ test_that("extractFDAFeaturesWrapper ParSet Works II", {
   df$target = as.factor(round(df$target / 10, 0))
   mod = tuneParams(lrn, makeClassifTask(data = df, target = "target"), cv2, acc, ps2, makeTuneControlGrid(resolution = 2L))
 })
-
 
 test_that("extractFDAFeaturesWrapper ParSet Works III", {
   methods = list("fd" = extractFDAWavelets())

@@ -90,7 +90,6 @@ test_that("extract and reextract MultiRes", {
   expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 12L))
 })
 
-
 test_that("extractFPCAFeatures is equivalent to prcomp", {
   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
 
@@ -119,8 +118,6 @@ test_that("extract and reextract FPCA", {
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
   expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 5L))
 })
-
-
 
 test_that("Fourier equal to expected", {
   t = seq(from = 0, to = 1, length.out = 501)
@@ -157,7 +154,6 @@ test_that("Fourier equal to expected", {
   expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
 })
 
-
 test_that("tsfeatures works", {
   requirePackagesOrSkip("tsfeatures")
   gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30, ]
@@ -166,7 +162,8 @@ test_that("tsfeatures works", {
   gpfeats = extractFDATsfeatures()$reextract(data = gp1, col = "UVVIS", vals = gpvals)
   expect_equal(nrow(gpfeats), nrow(gp1))
 
-  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), 
+    feat.methods = list("UVVIS" = extractFDATsfeatures()))
   expect_true(ncol(getTaskData(extr$task)) == 32L)
 
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35, features = 2), extr$desc)
@@ -175,13 +172,13 @@ test_that("tsfeatures works", {
 
 test_that("extraction returns correct cols", {
   requirePackagesOrSkip("tsfeatures")
-  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:7), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:7), 
+    feat.methods = list("UVVIS" = extractFDATsfeatures()))
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 8:14), extr$desc)
   expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
   expect_equal(colnames(getTaskData(extr$task, functionals.as = "matrix")),
     colnames(getTaskData(reextr, functionals.as = "matrix")))
 })
-
 
 test_that("dtw extract works", {
   requirePackagesOrSkip("rucrdtw")
@@ -196,7 +193,6 @@ test_that("dtw extract works", {
   expect_equal(nrow(df), 129)
   expect_equal(ncol(df), 9)
 })
-
 
 test_that("extractBsignal features", {
   requirePackagesOrSkip("FDboost")

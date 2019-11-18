@@ -23,7 +23,6 @@ test_that("test if classif_FDboost train works", {
   true.mod = FDboost::FDboost(frm, data = mat.list,
     timeformula = ~ bols(1), control = ctrl, family = mboost::Binomial())
 
-
   prd = predict(mlr.mod, newdata = getTaskData(fda.binary.gp.task,
     functionals.as = "matrix"))
   prd2 = predict(true.mod, as.list(getTaskData(fda.binary.gp.task,

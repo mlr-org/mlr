@@ -27,7 +27,7 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   p1.prob = predict(a1, mtest, predict.type = "prob")
   p2.prob = predict(a1, mlearn, predict.type = "prob")
 
-  ##############################################################################
+  #------------------------------------------------------------------------------
 
   # getting the data ready for mlr
   ph = as.data.frame(mlearn)
@@ -53,7 +53,7 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
 
-  ##############################################################################
+  #------------------------------------------------------------------------------
   # test that predict.type = "prob" works
   lrn.prob = makeLearner("classif.classiFunc.kernel",
     h = 1,

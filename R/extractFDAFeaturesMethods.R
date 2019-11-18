@@ -24,7 +24,7 @@
 #' @param args ([list])\cr
 #'   Named list of arguments to pass to `learn` via `...`.
 #' @param par.set ([ParamSet])\cr
-#'   Paramset added to the learner if used in conjunction with a `makeExtractFDAFeatsWrapper`.
+#'   Paramset added to the learner if used in conjunction with a [makeExtractFDAFeatsWrapper].
 #'   Can be `NULL`.`
 #' @export
 #' @family fda
@@ -113,7 +113,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   Must be one of `d`|`la`|`bl`|`c` followed by an even
 #'   number for the level of the filter.
 #'   The level of the filter needs to be smaller or equal then the time-series length.
-#'   For more information and acceptable filters see \code{help(wt.filter)}.
+#'   For more information and acceptable filters see `help(wt.filter)`.
 #'   Defaults to `la8`.
 #' @param boundary (`character(1)`)\cr
 #'   Boundary to be used.
@@ -166,7 +166,8 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     makeDiscreteParam("boundary", values = c("periodic", "reflection"))
   )
 
-  makeExtractFDAFeatMethod(learn = lrn, reextract = reextract, args = list(filter = filter, boundary = boundary), par.set = ps)
+  makeExtractFDAFeatMethod(learn = lrn, reextract = reextract,
+    args = list(filter = filter, boundary = boundary), par.set = ps)
 }
 
 
@@ -174,15 +175,15 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'
 #' @description
 #' The function extracts the functional principal components from a data.frame
-#' containing functional features. Currently uses `stats::prcomp`.
+#' containing functional features. Uses `stats::prcomp`.
 #'
 #' @param rank. (`integer(1)`)\cr
 #'   Number of principal components to extract.
 #'   Default is `NULL`
 #' @param center (`logical(1)`) \cr
-#'   Should data be centered before applying pca?
+#'   Should data be centered before applying PCA?
 #' @param scale. (`logical(1)`) \cr
-#'   Should data be scaled before applying pca?
+#'   Should data be scaled before applying PCA?
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
@@ -216,7 +217,7 @@ extractFDAFPCA = function(rank. = NULL, center = TRUE, scale. = FALSE) {
 #'
 #' @description
 #' The function extracts features from functional data based on the Bspline fit.
-#' For more details refer to \code{\link[FDboost]{bsignal}}.
+#' For more details refer to [FDboost::bsignal()].
 #'
 #' @param bsignal.knots (`integer(1)`)\cr
 #'   The number of knots for bspline.
@@ -257,38 +258,51 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #'
 #' @description
 #' The function extracts features from functional data based on known Heuristics.
-#' For more details refer to \code{\link[tsfeatures]{tsfeatures}}.
-#' Under the hood this function uses the package \code{\link[tsfeatures]{tsfeatures}}
+#' For more details refer to [tsfeatures::tsfeatures()].
+#' Under the hood this function uses the package [tsfeatures::tsfeatures()].
 #' For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
+#' 
+#' Note: Currently computes the following features:\cr
+#'   "frequency", "stl_features", "entropy", "acf_features", "arch_stat",
+#'   "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
+#'   "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity"
 #'
 #' @param scale (`logical(1)`)\cr
 #'   If TRUE, time series are scaled to mean 0 and sd 1 before features are computed.
 #' @param trim (`logical(1)`)\cr
-#'   If TRUE, time series are trimmed by \code{trim_amount} before features are computed.
+#'   If TRUE, time series are trimmed by `trim_amount` before features are computed.
 #'   Values larger than trim_amount in absolute value are set to NA.
 #' @param trim_amount (`numeric(1)`)\cr
-#'   Default level of trimming if trim==TRUE.
+#'   Default level of trimming if `trim==TRUE`.
 #' @param parallel (`logical(1)`)\cr
-#'   If TRUE, multiple cores (or multiple sessions) will be used.
+#'   If `TRUE`, multiple cores (or multiple sessions) will be used.
 #'   This only speeds things up when there are a large number of time series.
 #' @param na.action (`logical(1)`)\cr
-#'   A function to handle missing values. Use na.interp to estimate missing values
+#'   A function to handle missing values. Use `na.interp` to estimate missing values
 #' @param ... (any)\cr
 #'   Further arguments passed on to the respective tsfeatures functions.
 #' @return ([data.frame])
 #' @references Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #' @export
 #' @family fda_featextractor
-extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
+extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE,
+  na.action = na.pass, feats = NULL, ...) {
+  
+  if (is.null(feats))
+    feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
+      "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
+      "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
+
   lrn = function(data, target, col, ...) {
     assertLogical(scale)
     assertLogical(trim)
     assertLogical(parallel)
     assertNumeric(trim_amount)
     assertFunction(na.action)
+    assertCharacter(feats)
     lst = learnerArgsToControl("list", ...)
     # Simply pass on parameters
-    return(c(list(scale = scale, trim = trim, parallel = parallel, trim_amount = trim_amount,
+    return(c(list(feats = feats, scale = scale, trim = trim, parallel = parallel, trim_amount = trim_amount,
       na.action = na.action), lst))
   }
 
@@ -299,13 +313,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     rowlst = convertRowsToList(data)
 
     requirePackages("tsfeatures", default.method = "attach")
-    # We do not compute some features as they are very unstable.
-    # Examples: heterogeneity, hw_parameters
-    feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
-      "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
-      "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
-
-    tsfeats = tsfeatures::tsfeatures(tslist = rowlst, features = feats, scale = vals$scale,
+    tsfeats = tsfeatures::tsfeatures(tslist = rowlst, features = vals$feats, scale = vals$scale,
       trim = vals$trim, parallel = vals$parallel, trim_amount = vals$trim_amount, na.action = vals$na.action)
 
     # Get rid of series and type columns
@@ -318,12 +326,13 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     makeLogicalParam("trim", default = FALSE),
     makeNumericParam("trim_amount", lower = 0L, upper = 1L, default = 0.1),
     makeLogicalParam("parallel", default = FALSE),
-    makeFunctionParam("na.action", default = na.pass)
-  )
+    makeFunctionParam("na.action", default = na.pass),
+    makeUntypedParam("feats", default = feats))
+
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = reextract,
-    args = list(scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
+    args = list(feats = feats, scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
     par.set = ps
   )
 }
@@ -465,14 +474,11 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
     for (rl in seq_len(res.level)) {
       # ssize is divided by 2 at the end of the loop
       soffset = ceiling(shift * ssize) # overlap distance
-      # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
       sstart = 1L
       send = sstart + ssize - 1L # end position
       while (send <= m) {
         # until the segment reach the end
-        # messagef("start, end: %i, %i", sstart, send)
         f = getSegmentFeatures(x[sstart:send])
-        # print(f)
         feats = c(feats, f) # append the feats from the last resolution hierachy
         sstart = sstart + soffset
         send = send + soffset

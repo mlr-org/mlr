@@ -73,7 +73,6 @@ test_that("resampling classiFunc.knn", {
   expect_class(r, "ResampleResult")
 })
 
-
 test_that("classiFunc.knn can be predicted in parallel", {
   requirePackagesOrSkip(c("classiFunc", "parallelMap"), default.method = "load")
 
