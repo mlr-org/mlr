@@ -12,7 +12,6 @@ makeRLearner.regr.fgam = function() {
 }
 
 #' @export
-# trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
 trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, ...) {
   requirePackages("refund")
   parlist = list(...)
@@ -28,6 +27,5 @@ trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, ...
 predictLearner.regr.fgam = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
-  pred = predict(.model$learner.model, newdata = nl, type = "response") # predict.fgam, predict.gam, predict.pfr
-  return(as.vector(pred))
+  pred = predict(.model$learner.model, newdata = nl, type = "response")
 }

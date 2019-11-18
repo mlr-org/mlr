@@ -31,10 +31,13 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
 predictLearner.classif.fgam = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
-  pred = predict(.model$learner.model, newdata = nl, type = "response") # predict.fgam, predict.gam, predict.pfr
+
+  pred = predict(.model$learner.model, newdata = nl, type = "response")
   if (.learner$predict.type == "prob") {
-    pred
+    pred = cbind(as.vector(pred), 1-as.vector(pred))
+    colnames(pred) = .model$task.desc$class.levels
+    return(pred)
   } else {
-    factor(round(pred), labels = .model$learner.model$uvt)
+    return(factor(round(pred), labels = .model$learner.model$uvt))
   }
 }

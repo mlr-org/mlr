@@ -3,7 +3,7 @@
 #' @description
 #' Extract non-functional features from functional features using various methods.
 #'
-#' The function \code{extractFDAFeatures} performs the extraction for all functional features
+#' The function [extractFDAFeatures] performs the extraction for all functional features
 #' via the methods specified in `feat.methods` and transforms all mentioned functional
 #' (matrix) features into regular data.frame columns.
 #' Additionally, a \dQuote{`extractFDAFeatDesc`} object
@@ -12,14 +12,12 @@
 #' [reextractFDAFeatures] in order to extract features during the prediction phase.
 #'
 #' @details
-#' The description object contains these slots
-#' \describe{
-#'   \item{target [character]}{See argument.}
-#'   \item{coln [character]}{colum names of data.}
-#'   \item{fd.cols [character]}{Functional feature names.}
-#'   \item{extractFDAFeat [list]}{Contains `feature.methods` and relevant
-#'   parameters for reextraction}.
-#' }
+#' The description object contains these slots:
+#'   * target [`character`]: See argument.
+#'   * coln [`character`]: Colum names of data.
+#'   * fd.cols [`character`]: Functional feature names.
+#'   * extractFDAFeat [`list`]: Contains `feature.methods` and relevant
+#'     parameters for reextraction}.
 #'
 #' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from.
@@ -37,7 +35,7 @@
 #'   for the extraction of different features from the same functional.
 #'   Default is [list()] which does nothing.
 #' @param ... (any)\cr
-#'   Further hyperparameters passed to methods.
+#'   Further hyperparameters passed on to the `feat.methods` specified above.
 #' @return ([list])
 #'   \item{data|task ([data.frame] | [Task])}{Extracted features, same type as obj.}
 #'   \item{desc (`extracFDAFeatDesc`)}{Description object. See description for details.}

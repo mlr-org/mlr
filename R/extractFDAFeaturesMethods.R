@@ -2,24 +2,22 @@
 #'
 #' @description
 #' This can be used to implement custom FDA feature extraction.
-#' Takes a \code{learn} and a \code{reextract} function along with some optional
+#' Takes a `learn` and a `reextract` function along with some optional
 #' parameters to those as argument.
 #'
 #' @param learn (`function(data, target, col, ...)`)\cr
 #'   Function to learn and extract information on functional column `col`.
 #'   Arguments are:
-#'   \itemize{
-#'   \item data [data.frame]\cr
-#'     Data.frame containing matricies with one row per observation of a single functional
-#'     or time series and one column per meahttps://github.com/mlr-org/mlr/pull/2005/conflict?name=R%252FextractFDAFeatures.R&ancestor_oid=bdc5d882cc86adac456842bebf1a2cf9bb0eb648&base_oid=55d472e23f5c3eb8099607bd9f539034d93e82a4&head_oid=4076800589c60b20acc926e5a545df9f73193b65surement time point.
-#'     All entries need to be numeric.
-#'   \item target (`character(1)`)\cr
-#'     Name of the target variable. Default: \dQuote{NULL}.
-#'     The variable is only set to be consistent with the API.
-#'   \item col (`character(1)` | `numeric(1)`)\cr
-#'     column names or indices, the extraction should be performed on.
-#'     The function has to return a named list of values.
-#'   }
+#' * data [data.frame]\cr
+#'   Data.frame containing matricies with one row per observation of a single functional
+#'   or time series and one column per meahttps://github.com/mlr-org/mlr/pull/2005/conflict?name=R%252FextractFDAFeatures.R&ancestor_oid=bdc5d882cc86adac456842bebf1a2cf9bb0eb648&base_oid=55d472e23f5c3eb8099607bd9f539034d93e82a4&head_oid=4076800589c60b20acc926e5a545df9f73193b65surement time point.
+#'   All entries need to be numeric.
+#' * target (`character(1)`)\cr
+#'   Name of the target variable. Default: \dQuote{NULL}.
+#'   The variable is only set to be consistent with the API.
+#' * col (`character(1)` | `numeric(1)`)\cr
+#'   column names or indices, the extraction should be performed on.
+#'   The function has to return a named list of values.
 #' @param reextract (`function(data, target, col, ...)`)\cr
 #'   Function used for reextracting data in predict phase.
 #'   Can be equal to `learn`.
