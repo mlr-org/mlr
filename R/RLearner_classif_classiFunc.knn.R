@@ -8,11 +8,11 @@ makeRLearner.classif.classiFunc.knn = function() {
         lower = 1L,
         # upper = expression(0.5 * nrow(getTaskData(task))),
         default = 1L),
-      # FIXME: is it ok to hand over the values with this function
-      # from the original package?
+      # Using metricChoices since there are so many options and this 
+      # keeps stuff flexible.
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
         values = classiFunc::metricChoices()),
-      makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L),
+      makeIntegerLearnerParam(id = "q?", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "deriv.method", default = "base.diff",
         values = c("base.diff", "fda.deriv.fd")),
@@ -22,7 +22,6 @@ makeRLearner.classif.classiFunc.knn = function() {
         },
         requires = quote(metric == "custom.metric"),
         tunable = FALSE),
-      # additional arguments to computeDistMat
       makeNumericLearnerParam(id = "dmin", default = 0,
         lower = 0, upper = 1),
       makeNumericLearnerParam(id = "dmax", default = 1,
@@ -41,11 +40,13 @@ makeRLearner.classif.classiFunc.knn = function() {
         lower = 0, upper = 1),
       makeNumericVectorLearnerParam(id = ".poi", # default = expression(seq(0, 1, ncol(task))),
         lower = 0, upper = 1),
-      # additional arguments to metrics in computeDistMat
       makeNumericLearnerParam(id = "p", default = 2),
-      makeNumericLearnerParam(id = "dtwwindow", lower = 0, upper = 1, requires = quote(metric == "rucrdtw")),
-      # TODO additional arguments to Data2fd
-      # TODO additional arguments to custom metric
+      makeNumericLearnerParam(id = "dtwwindow", lower = 0, upper = 1, requires = quote(metric == "rucrdtw"),
+      makeNumericLearnerParam(id = "lambda", lower = 0, default = 0),
+      makeDiscreteLearnerParam(id = "method", default = "chol", values = c("chol", "qr")),
+      makeNumericLearnerParam(id = "dfscale", lower = 0, upper = Inf, default = 1),
+      makeUntypedLearnerParam(id = "custom.metric.args", default = list())
+
       keys = "task",
       forbidden = expression(dmin >= dmax,
         dmin1 >= dmax1 |
@@ -53,11 +54,10 @@ makeRLearner.classif.classiFunc.knn = function() {
           dmin2 >= dmax2,
         knn %% 2 == 0)
     ),
-    # par.vals = list(metric = "Euclidean", knn = 1L),
     properties = c("twoclass", "multiclass", "prob", "single.functional"),
     name = "classiFunc.knn",
     short.name = "classiFunc.knn",
-    note = ""
+    note = "Default for lambda (Data2fd parameter) is 3e-8/diff(as.numeric(range(argvals)))."
   )
 }
 
@@ -68,6 +68,10 @@ trainLearner.classif.classiFunc.knn = function(.learner, .task, .subset, ...) {
   fd = getFunctionalFeatures(d$data)
 
   args = learnerArgsToControl("list", ...)
+  if (length(args$custom.metric.args) > 0) {
+    args = c(args, args$custom.metric.args)
+    args$custom.metric.args = NULL
+  }
   do.call(classiFunc::classiKnn, c(list(classes = d$target, fdata = fd), args))
 }
 
