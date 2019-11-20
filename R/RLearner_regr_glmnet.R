@@ -34,7 +34,7 @@ makeRLearner.regr.glmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L),
       makeUntypedLearnerParam(id = "offset", default = NULL),
       makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive"), requires = quote(family == "gaussian")),
-      makeLogicalLearnerParam("relax", default = FALSE),
+      makeLogicalLearnerParam(id = "relax", default = FALSE),
     ),
     properties = c("numerics", "factors", "ordered", "weights"),
     par.vals = list(s = 0.01),
