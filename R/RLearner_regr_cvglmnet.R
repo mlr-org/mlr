@@ -35,7 +35,7 @@ makeRLearner.regr.cvglmnet = function() {
       makeUntypedLearnerParam(id = "offset", default = NULL),
       makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive"), requires = quote(family == "gaussian")),
       makeNumericVectorLearnerParam(id = "gamma", lower = 0, upper = 1, requires = quote(relax == TRUE)),
-      makeLogicalLearnerParam("relax", default = FALSE)
+      makeLogicalLearnerParam("relax", default = FALSE)a
     ),
     properties = c("numerics", "factors", "weights"),
     name = "GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)",
