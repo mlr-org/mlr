@@ -37,7 +37,7 @@ makeRLearner.regr.xgboost = function() {
       makeDiscreteLearnerParam(id = "sample_type", default = "uniform", values = c("uniform", "weighted"), requires = quote(booster == "dart")),
       makeDiscreteLearnerParam(id = "normalize_type", default = "tree", values = c("tree", "forest"), requires = quote(booster == "dart")),
       makeNumericLearnerParam(id = "rate_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
-      makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),s
+      makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
       makeNumericLearnerParam(id = "scale_pos_weight", default = 1),
       makeLogicalLearnerParam(id = "refresh_leaf", default = TRUE),
       makeDiscreteLearnerParam(id = "feature_selector", default = "cyclic", values = c("cyclic", "shuffle", "random", "greedy", "thrifty")),
