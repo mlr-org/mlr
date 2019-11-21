@@ -9,6 +9,7 @@
 
 - fixed a bug in `classif.xgboost` which prevented passing a watchlist for binary tasks. This was caused by a suboptimal internal label inversion approach. Thanks to @001ben for reporting (#32) (@mllg)
 - update `fda.usc` learners to work with package version >=2.0
+- update `glmnet` learners to upstream package version 3.0.0
 - update `xgboost` learners to upstream version 0.90.2 (@pat-s & @be-marc, #2681)
 - Updated ParamSet for learners `classif.gbm` and `regr.gbm`. Specifically, param `shrinkage` now defaults to 0.1 instead of 0.001. Also more choices for param `distribution` have been added. Internal parallelization by the package is now suppressed (param `n.cores`). (@pat-s, #2651)
 - Update parameters for `h2o.deeplearning` learners (@albersonmiranda, #2668)
