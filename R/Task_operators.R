@@ -157,8 +157,8 @@ getTaskSize = function(x) {
 #' @title Get formula of a task.
 #'
 #' @description
-#' This is usually simply \dQuote{<target> ~ .}.
-#' For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
+#' This is usually simply `<target> ~ `.
+#' For multilabel it is `<target_1> + ... + <target_k> ~`.
 #'
 #' @template arg_task_or_desc
 #' @param target (`character(1)`)\cr

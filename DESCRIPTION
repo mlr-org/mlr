@@ -264,5 +264,5 @@ VignetteBuilder:
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes
-Roxygen: list(wrap = FALSE, markdown = TRUE)
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.0

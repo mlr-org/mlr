@@ -4,7 +4,12 @@
 \alias{ResampleResult}
 \title{ResampleResult object.}
 \description{
-A resample result is created by \link{resample} and
+A container for resample results.
+}
+\details{
+Resample Result:
+
+A resample result is created by resample and
 contains the following object members:
 \describe{
 \item{task.id (\code{character(1)}):}{
@@ -26,11 +31,11 @@ see general description above.
 }
 \item{aggr (\link{numeric}):}{
 Named vector of aggregated performance values. Names are coded like
-this <measure>.<aggregation>.
+this \verb{<measure>.<aggregation>}.
 }
 \item{err.msgs (\link{data.frame}):}{
 Number of rows equals resampling iterations
-and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
+and columns are: \code{iter}, \code{train}, \code{predict}.
 Stores error messages generated during train or predict, if these were caught
 via \link{configureMlr}.
 }

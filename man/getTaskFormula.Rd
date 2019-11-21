@@ -31,8 +31,8 @@ Default is \code{parent.frame()}.}
 (\link{formula}).
 }
 \description{
-This is usually simply \dQuote{<target> ~ .}.
-For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
+This is usually simply \verb{<target> ~ }.
+For multilabel it is \verb{<target_1> + ... + <target_k> ~}.
 }
 \seealso{
 Other task: 
