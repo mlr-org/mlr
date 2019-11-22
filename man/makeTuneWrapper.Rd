@@ -4,14 +4,8 @@
 \alias{makeTuneWrapper}
 \title{Fuse learner with tuning.}
 \usage{
-makeTuneWrapper(
-  learner,
-  resampling,
-  measures,
-  par.set,
-  control,
-  show.info = getMlrOption("show.info")
-)
+makeTuneWrapper(learner, resampling, measures, par.set, control,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -81,49 +75,46 @@ getNestedTuneResultsX(r)
 }
 }
 \seealso{
-Other tune: 
-\code{\link{TuneControl}},
-\code{\link{getNestedTuneResultsOptPathDf}()},
-\code{\link{getNestedTuneResultsX}()},
-\code{\link{getResamplingIndices}()},
-\code{\link{getTuneResult}()},
-\code{\link{makeModelMultiplexerParamSet}()},
-\code{\link{makeModelMultiplexer}()},
-\code{\link{makeTuneControlCMAES}()},
-\code{\link{makeTuneControlDesign}()},
-\code{\link{makeTuneControlGenSA}()},
-\code{\link{makeTuneControlGrid}()},
-\code{\link{makeTuneControlIrace}()},
-\code{\link{makeTuneControlMBO}()},
-\code{\link{makeTuneControlRandom}()},
-\code{\link{tuneParams}()},
-\code{\link{tuneThreshold}()}
+Other tune: \code{\link{TuneControl}},
+  \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
+  \code{\link{getTuneResult}},
+  \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
+  \code{\link{tuneParams}}, \code{\link{tuneThreshold}}
 
-Other wrapper: 
-\code{\link{makeBaggingWrapper}()},
-\code{\link{makeClassificationViaRegressionWrapper}()},
-\code{\link{makeConstantClassWrapper}()},
-\code{\link{makeCostSensClassifWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeDownsampleWrapper}()},
-\code{\link{makeDummyFeaturesWrapper}()},
-\code{\link{makeExtractFDAFeatsWrapper}()},
-\code{\link{makeFeatSelWrapper}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeImputeWrapper}()},
-\code{\link{makeMulticlassWrapper}()},
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelNestedStackingWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()},
-\code{\link{makeOverBaggingWrapper}()},
-\code{\link{makePreprocWrapperCaret}()},
-\code{\link{makePreprocWrapper}()},
-\code{\link{makeRemoveConstantFeaturesWrapper}()},
-\code{\link{makeSMOTEWrapper}()},
-\code{\link{makeUndersampleWrapper}()},
-\code{\link{makeWeightedClassesWrapper}()}
+Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeImputeWrapper}},
+  \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
+  \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
+  \code{\link{makeSMOTEWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{makeWeightedClassesWrapper}}
 }
 \concept{tune}
 \concept{wrapper}

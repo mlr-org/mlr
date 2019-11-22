@@ -5,20 +5,10 @@
 \alias{FeatureImportanceData}
 \title{Generate feature importance.}
 \usage{
-generateFeatureImportanceData(
-  task,
-  method = "permutation.importance",
-  learner,
-  features = getTaskFeatureNames(task),
-  interaction = FALSE,
-  measure,
-  contrast = function(x, y) x - y,
-  aggregation = mean,
-  nmc = 50L,
-  replace = TRUE,
-  local = FALSE,
-  show.info = FALSE
-)
+generateFeatureImportanceData(task, method = "permutation.importance",
+  learner, features = getTaskFeatureNames(task), interaction = FALSE,
+  measure, contrast = function(x, y) x - y, aggregation = mean,
+  nmc = 50L, replace = TRUE, local = FALSE, show.info = FALSE)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -48,12 +38,12 @@ The default is \code{FALSE}.}
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{contrast}{(\verb{function})\cr
+\item{contrast}{(\code{function})\cr
 A difference function that takes a numeric vector and returns a numeric vector
 of the same length.
 The default is element-wise difference between the vectors.}
 
-\item{aggregation}{(\verb{function})\cr
+\item{aggregation}{(\code{function})\cr
 A function which aggregates the differences.
 This function must take a numeric vector and return a numeric vector of length 1.
 The default is \code{mean}.}
@@ -88,10 +78,10 @@ Whether or not the importance of the \code{features} was computed jointly rather
 }
 \item{measure}{(\link{Measure})}\cr
 The measure used to compute performance.
-\item{contrast}{(\verb{function})\cr
+\item{contrast}{(\code{function})\cr
 The function used to compare the performance of predictions.
 }
-\item{aggregation}{(\verb{function})\cr
+\item{aggregation}{(\code{function})\cr
 The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.
 }
 \item{replace}{(\code{logical(1)})\cr
@@ -120,13 +110,12 @@ imp = generateFeatureImportanceData(iris.task, "permutation.importance",
 Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.
 }
 \seealso{
-Other generate_plot_data: 
-\code{\link{generateCalibrationData}()},
-\code{\link{generateCritDifferencesData}()},
-\code{\link{generateFilterValuesData}()},
-\code{\link{generateLearningCurveData}()},
-\code{\link{generatePartialDependenceData}()},
-\code{\link{generateThreshVsPerfData}()},
-\code{\link{plotFilterValues}()}
+Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generateLearningCurveData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{plotFilterValues}}
 }
 \concept{generate_plot_data}

@@ -13,15 +13,14 @@ was from an observation in the \dQuote{train} or \dQuote{test} set. (b) The pred
 a numeric vector, its length equals the number of iterations.
 }
 \seealso{
-Other resample: 
-\code{\link{ResampleResult}},
-\code{\link{addRRMeasure}()},
-\code{\link{getRRPredictionList}()},
-\code{\link{getRRPredictions}()},
-\code{\link{getRRTaskDescription}()},
-\code{\link{getRRTaskDesc}()},
-\code{\link{makeResampleDesc}()},
-\code{\link{makeResampleInstance}()},
-\code{\link{resample}()}
+Other resample: \code{\link{ResampleResult}},
+  \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
+  \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
+  \code{\link{getRRTaskDesc}},
+  \code{\link{makeResampleDesc}},
+  \code{\link{makeResampleInstance}},
+  \code{\link{resample}}
 }
 \concept{resample}

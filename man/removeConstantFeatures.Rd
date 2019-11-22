@@ -4,14 +4,9 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(
-  obj,
-  perc = 0,
-  dont.rm = character(0L),
-  na.ignore = FALSE,
-  tol = .Machine$double.eps^0.5,
-  show.info = getMlrOption("show.info")
-)
+removeConstantFeatures(obj, perc = 0, dont.rm = character(0L),
+  na.ignore = FALSE, tol = .Machine$double.eps^0.5,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{obj}{(\link{data.frame} | \link{Task})\cr
@@ -51,13 +46,12 @@ features for which less than \dQuote{perc} percent of the observations
 differ from the mode value.
 }
 \seealso{
-Other eda_and_preprocess: 
-\code{\link{capLargeValues}()},
-\code{\link{createDummyFeatures}()},
-\code{\link{dropFeatures}()},
-\code{\link{mergeSmallFactorLevels}()},
-\code{\link{normalizeFeatures}()},
-\code{\link{summarizeColumns}()},
-\code{\link{summarizeLevels}()}
+Other eda_and_preprocess: \code{\link{capLargeValues}},
+  \code{\link{createDummyFeatures}},
+  \code{\link{dropFeatures}},
+  \code{\link{mergeSmallFactorLevels}},
+  \code{\link{normalizeFeatures}},
+  \code{\link{summarizeColumns}},
+  \code{\link{summarizeLevels}}
 }
 \concept{eda_and_preprocess}

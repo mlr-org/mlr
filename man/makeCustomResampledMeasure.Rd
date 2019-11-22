@@ -4,19 +4,10 @@
 \alias{makeCustomResampledMeasure}
 \title{Construct your own resampled performance measure.}
 \usage{
-makeCustomResampledMeasure(
-  measure.id,
-  aggregation.id,
-  minimize = TRUE,
-  properties = character(0L),
-  fun,
-  extra.args = list(),
-  best = NULL,
-  worst = NULL,
-  measure.name = measure.id,
-  aggregation.name = aggregation.id,
-  note = ""
-)
+makeCustomResampledMeasure(measure.id, aggregation.id, minimize = TRUE,
+  properties = character(0L), fun, extra.args = list(), best = NULL,
+  worst = NULL, measure.name = measure.id,
+  aggregation.name = aggregation.id, note = "")
 }
 \arguments{
 \item{measure.id}{(`character(1)`)\cr
@@ -81,16 +72,13 @@ only calculate an aggregated value. If you can define a function that makes sens
 for every single training / test set, implement your own [Measure].
 }
 \seealso{
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateConfusionMatrix}()},
-\code{\link{calculateROCMeasures}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCostMeasure}()},
-\code{\link{makeMeasure}()},
-\code{\link{measures}},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
+  \code{\link{measures}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}

@@ -4,15 +4,9 @@
 \alias{plotPartialDependence}
 \title{Plot a partial dependence with ggplot2.}
 \usage{
-plotPartialDependence(
-  obj,
-  geom = "line",
-  facet = NULL,
-  facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL,
-  p = 1,
-  data = NULL
-)
+plotPartialDependence(obj, geom = "line", facet = NULL,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL, p = 1,
+  data = NULL)
 }
 \arguments{
 \item{obj}{\link{PartialDependenceData}\cr
@@ -60,20 +54,17 @@ ggplot2 plot object.
 Plot a partial dependence from \link{generatePartialDependenceData} using ggplot2.
 }
 \seealso{
-Other partial_dependence: 
-\code{\link{generatePartialDependenceData}()}
+Other partial_dependence: \code{\link{generatePartialDependenceData}}
 
-Other plot: 
-\code{\link{createSpatialResamplingPlots}()},
-\code{\link{plotBMRBoxplots}()},
-\code{\link{plotBMRRanksAsBarChart}()},
-\code{\link{plotBMRSummary}()},
-\code{\link{plotCalibration}()},
-\code{\link{plotCritDifferences}()},
-\code{\link{plotLearningCurve}()},
-\code{\link{plotROCCurves}()},
-\code{\link{plotResiduals}()},
-\code{\link{plotThreshVsPerf}()}
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerf}}
 }
 \concept{partial_dependence}
 \concept{plot}

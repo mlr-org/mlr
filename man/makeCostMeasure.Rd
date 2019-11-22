@@ -4,16 +4,8 @@
 \alias{makeCostMeasure}
 \title{Creates a measure for non-standard misclassification costs.}
 \usage{
-makeCostMeasure(
-  id = "costs",
-  minimize = TRUE,
-  costs,
-  combine = mean,
-  best = NULL,
-  worst = NULL,
-  name = id,
-  note = ""
-)
+makeCostMeasure(id = "costs", minimize = TRUE, costs, combine = mean,
+  best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
@@ -29,7 +21,7 @@ Default is \code{TRUE}.}
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.}
 
-\item{combine}{(\verb{function})\cr
+\item{combine}{(\code{function})\cr
 How to combine costs over all cases for a SINGLE test set?
 Note this is not the same as the \code{aggregate} argument in \link{makeMeasure}
 You can set this as well via \link{setAggregation}, as for any measure.
@@ -56,16 +48,13 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 Creates a cost measure for non-standard classification error costs.
 }
 \seealso{
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateConfusionMatrix}()},
-\code{\link{calculateROCMeasures}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCustomResampledMeasure}()},
-\code{\link{makeMeasure}()},
-\code{\link{measures}},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}

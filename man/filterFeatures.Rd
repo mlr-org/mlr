@@ -4,19 +4,10 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding filter values.}
 \usage{
-filterFeatures(
-  task,
-  method = "randomForestSRC_importance",
-  fval = NULL,
-  perc = NULL,
-  abs = NULL,
-  threshold = NULL,
-  mandatory.feat = NULL,
-  select.method = NULL,
-  base.methods = NULL,
-  cache = FALSE,
-  ...
-)
+filterFeatures(task, method = "randomForestSRC_importance",
+  fval = NULL, perc = NULL, abs = NULL, threshold = NULL,
+  mandatory.feat = NULL, select.method = NULL, base.methods = NULL,
+  cache = FALSE, ...)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -34,7 +25,7 @@ Default is \code{NULL} and not used.}
 
 \item{perc}{(\code{numeric(1)})\cr
 If set, select \code{perc}*100 top scoring features.
-\code{perc = 1} means to select all features.\verb{Mutually exclusive with arguments}abs\code{and}threshold`.}
+\code{perc = 1} means to select all features.\code{Mutually exclusive with arguments}abs\code{and}threshold`.}
 
 \item{abs}{(\code{numeric(1)})\cr
 If set, select \code{abs} top scoring features.
@@ -94,14 +85,12 @@ filterFeatures(iris.task, method = "E-min",
   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
 }
 \seealso{
-Other filter: 
-\code{\link{generateFilterValuesData}()},
-\code{\link{getFilteredFeatures}()},
-\code{\link{listFilterEnsembleMethods}()},
-\code{\link{listFilterMethods}()},
-\code{\link{makeFilterEnsemble}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeFilter}()},
-\code{\link{plotFilterValues}()}
+Other filter: \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
 \concept{filter}
