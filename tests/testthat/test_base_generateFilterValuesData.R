@@ -150,3 +150,31 @@ test_that("ensemble methods work", {
   fi = generateFilterValuesData(multiclass.task, method = list("E-min", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
   expect_true(all(!is.na(fi$data$value) == TRUE))
 })
+
+test_that("Ensemble filters select the top features", {
+library(survival)
+
+data(veteran)
+vet.task <- makeSurvTask(id = "VET", data = veteran, target = c("time", "status"))
+vet.task <- createDummyFeatures(vet.task)
+
+set.seed(24601)
+filt = mlr:::.FilterEnsembleRegister[["E-mean"]]
+cox.lrn <- makeLearner(cl="surv.coxph", id = "coxph", predict.type="response")
+dat = filt$fun(vet.task, 
+               base.methods = c("univariate.model.score", "randomForestSRC_importance"),
+               nselect = 5,
+               more.args = list("univariate.model.score"=list(perf.learner=cox.lrn))
+)
+ordered_dat = dat[with(dat, order(method, -value))]
+top_features1 = ordered_dat[ordered_dat$method == "E-mean"]$name[1:5]
+
+set.seed(24601)
+new.task = filterFeatures(vet.task,
+                          method="E-mean",
+                          abs = 5,
+                          base.methods = c("univariate.model.score", "randomForestSRC_importance"))
+top_features2 = getTaskFeatureNames(new.task)
+expect_equal(sort(top_features1), sort(top_features2))
+})
+
