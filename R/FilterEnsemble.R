@@ -272,9 +272,9 @@ calcBaseFilters = function(task, method = method,
     nselect = nselect, more.args = more.args)
 
   # rank base filters by method
-  fval.all.calced.simple = transform(fval.calc$data,
-    rank = ave(1:nrow(fval.calc$data), method,
-      FUN = function(x) order(fval.calc$data$value[x])))
+  fval.all.calced.simple = transform(fval.calc$data, 
+                  rank = ave(value, method, 
+                            FUN = function(x) rank(x, ties.method = "first")))
 
   fval.all.calced.simple = fval.all.calced.simple[with(fval.all.calced.simple,
     order(value, rank)), ]
