@@ -31,29 +31,36 @@ For complex wrappers the predict type is usually also passed down the
 encapsulated learner in a recursive fashion.
 }
 \seealso{
-Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{getPredictionProbabilities}},
-  \code{\link{getPredictionResponse}},
-  \code{\link{getPredictionTaskDesc}},
-  \code{\link{predict.WrappedModel}},
-  \code{\link{setPredictThreshold}}
+Other predict: 
+\code{\link{asROCRPrediction}()},
+\code{\link{getPredictionProbabilities}()},
+\code{\link{getPredictionResponse}()},
+\code{\link{getPredictionTaskDesc}()},
+\code{\link{predict.WrappedModel}()},
+\code{\link{setPredictThreshold}()}
 
-Other learner: \code{\link{LearnerProperties}},
-  \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
-  \code{\link{getLearnerNote}},
-  \code{\link{getLearnerPackages}},
-  \code{\link{getLearnerParVals}},
-  \code{\link{getLearnerParamSet}},
-  \code{\link{getLearnerPredictType}},
-  \code{\link{getLearnerShortName}},
-  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{helpLearnerParam}},
-  \code{\link{helpLearner}}, \code{\link{makeLearners}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
-  \code{\link{setHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
-  \code{\link{setPredictThreshold}}
+Other learner: 
+\code{\link{LearnerProperties}},
+\code{\link{getClassWeightParam}()},
+\code{\link{getHyperPars}()},
+\code{\link{getLearnerId}()},
+\code{\link{getLearnerNote}()},
+\code{\link{getLearnerPackages}()},
+\code{\link{getLearnerParVals}()},
+\code{\link{getLearnerParamSet}()},
+\code{\link{getLearnerPredictType}()},
+\code{\link{getLearnerShortName}()},
+\code{\link{getLearnerType}()},
+\code{\link{getParamSet}()},
+\code{\link{helpLearnerParam}()},
+\code{\link{helpLearner}()},
+\code{\link{makeLearners}()},
+\code{\link{makeLearner}()},
+\code{\link{removeHyperPars}()},
+\code{\link{setHyperPars}()},
+\code{\link{setId}()},
+\code{\link{setLearnerId}()},
+\code{\link{setPredictThreshold}()}
 }
 \concept{learner}
 \concept{predict}

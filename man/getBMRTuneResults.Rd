@@ -4,8 +4,13 @@
 \alias{getBMRTuneResults}
 \title{Extract the tuning results from a benchmark result.}
 \usage{
-getBMRTuneResults(bmr, task.ids = NULL, learner.ids = NULL,
-  as.df = FALSE, drop = FALSE)
+getBMRTuneResults(
+  bmr,
+  task.ids = NULL,
+  learner.ids = NULL,
+  as.df = FALSE,
+  drop = FALSE
+)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -45,28 +50,31 @@ task/learner will be dropped from the return object.}
 Returns a nested list of \link{TuneResult}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with the \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
 }
 \seealso{
-Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{batchmark}}, \code{\link{benchmark}},
-  \code{\link{convertBMRToRankMatrix}},
-  \code{\link{friedmanPostHocTestBMR}},
-  \code{\link{friedmanTestBMR}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{getBMRAggrPerformances}},
-  \code{\link{getBMRFeatSelResults}},
-  \code{\link{getBMRFilteredFeatures}},
-  \code{\link{getBMRLearnerIds}},
-  \code{\link{getBMRLearnerShortNames}},
-  \code{\link{getBMRLearners}},
-  \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
-  \code{\link{getBMRPerformances}},
-  \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescs}},
-  \code{\link{getBMRTaskIds}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{reduceBatchmarkResults}}
+Other benchmark: 
+\code{\link{BenchmarkResult}},
+\code{\link{batchmark}()},
+\code{\link{benchmark}()},
+\code{\link{convertBMRToRankMatrix}()},
+\code{\link{friedmanPostHocTestBMR}()},
+\code{\link{friedmanTestBMR}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{getBMRAggrPerformances}()},
+\code{\link{getBMRFeatSelResults}()},
+\code{\link{getBMRFilteredFeatures}()},
+\code{\link{getBMRLearnerIds}()},
+\code{\link{getBMRLearnerShortNames}()},
+\code{\link{getBMRLearners}()},
+\code{\link{getBMRMeasureIds}()},
+\code{\link{getBMRMeasures}()},
+\code{\link{getBMRModels}()},
+\code{\link{getBMRPerformances}()},
+\code{\link{getBMRPredictions}()},
+\code{\link{getBMRTaskDescs}()},
+\code{\link{getBMRTaskIds}()},
+\code{\link{plotBMRBoxplots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{reduceBatchmarkResults}()}
 }
 \concept{benchmark}

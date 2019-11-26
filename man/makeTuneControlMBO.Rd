@@ -5,11 +5,19 @@
 \alias{TuneControlMBO}
 \title{Create control object for hyperparameter tuning with MBO.}
 \usage{
-makeTuneControlMBO(same.resampling.instance = TRUE, impute.val = NULL,
-  learner = NULL, mbo.control = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), continue = FALSE,
-  log.fun = "default", final.dw.perc = NULL, budget = NULL,
-  mbo.design = NULL)
+makeTuneControlMBO(
+  same.resampling.instance = TRUE,
+  impute.val = NULL,
+  learner = NULL,
+  mbo.control = NULL,
+  tune.threshold = FALSE,
+  tune.threshold.args = list(),
+  continue = FALSE,
+  log.fun = "default",
+  final.dw.perc = NULL,
+  budget = NULL,
+  mbo.design = NULL
+)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -51,7 +59,7 @@ Resume calculation from previous run using \link[mlrMBO:mboContinue]{mlrMBO::mbo
 Requires \dQuote{save.file.path} to be set.
 Note that the \link[ParamHelpers:OptPath]{ParamHelpers::OptPath} in the \link[mlrMBO:OptResult]{mlrMBO::OptResult}
 will only include the evaluations after the continuation.
-The complete \link{OptPath} will be found in the slot \code{$mbo.result$opt.path}.}
+The complete \link{OptPath} will be found in the slot \verb{$mbo.result$opt.path}.}
 
 \item{log.fun}{(\code{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
@@ -91,20 +99,22 @@ Please refer to \url{https://github.com/mlr-org/mlrMBO} for further info.
 Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel Lang; mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions, Preprint: \url{https://arxiv.org/abs/1703.03373} (2017).
 }
 \seealso{
-Other tune: \code{\link{TuneControl}},
-  \code{\link{getNestedTuneResultsOptPathDf}},
-  \code{\link{getNestedTuneResultsX}},
-  \code{\link{getResamplingIndices}},
-  \code{\link{getTuneResult}},
-  \code{\link{makeModelMultiplexerParamSet}},
-  \code{\link{makeModelMultiplexer}},
-  \code{\link{makeTuneControlCMAES}},
-  \code{\link{makeTuneControlDesign}},
-  \code{\link{makeTuneControlGenSA}},
-  \code{\link{makeTuneControlGrid}},
-  \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlRandom}},
-  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
-  \code{\link{tuneThreshold}}
+Other tune: 
+\code{\link{TuneControl}},
+\code{\link{getNestedTuneResultsOptPathDf}()},
+\code{\link{getNestedTuneResultsX}()},
+\code{\link{getResamplingIndices}()},
+\code{\link{getTuneResult}()},
+\code{\link{makeModelMultiplexerParamSet}()},
+\code{\link{makeModelMultiplexer}()},
+\code{\link{makeTuneControlCMAES}()},
+\code{\link{makeTuneControlDesign}()},
+\code{\link{makeTuneControlGenSA}()},
+\code{\link{makeTuneControlGrid}()},
+\code{\link{makeTuneControlIrace}()},
+\code{\link{makeTuneControlRandom}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{tuneParams}()},
+\code{\link{tuneThreshold}()}
 }
 \concept{tune}

@@ -55,12 +55,15 @@ rin = makeResampleInstance(rdesc, size = nrow(iris))
 rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 }
 \seealso{
-Other resample: \code{\link{ResamplePrediction}},
-  \code{\link{ResampleResult}}, \code{\link{addRRMeasure}},
-  \code{\link{getRRPredictionList}},
-  \code{\link{getRRPredictions}},
-  \code{\link{getRRTaskDescription}},
-  \code{\link{getRRTaskDesc}},
-  \code{\link{makeResampleDesc}}, \code{\link{resample}}
+Other resample: 
+\code{\link{ResamplePrediction}},
+\code{\link{ResampleResult}},
+\code{\link{addRRMeasure}()},
+\code{\link{getRRPredictionList}()},
+\code{\link{getRRPredictions}()},
+\code{\link{getRRTaskDescription}()},
+\code{\link{getRRTaskDesc}()},
+\code{\link{makeResampleDesc}()},
+\code{\link{resample}()}
 }
 \concept{resample}

@@ -4,8 +4,16 @@
 \alias{tuneParamsMultiCrit}
 \title{Hyperparameter tuning for multiple measures at once.}
 \usage{
-tuneParamsMultiCrit(learner, task, resampling, measures, par.set, control,
-  show.info = getMlrOption("show.info"), resample.fun = resample)
+tuneParamsMultiCrit(
+  learner,
+  task,
+  resampling,
+  measures,
+  par.set,
+  control,
+  show.info = getMlrOption("show.info"),
+  resample.fun = resample
+)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -66,7 +74,8 @@ plotTuneMultiCritResult(res, path = TRUE)
 }
 }
 \seealso{
-Other tune_multicrit: \code{\link{TuneMultiCritControl}},
-  \code{\link{plotTuneMultiCritResult}}
+Other tune_multicrit: 
+\code{\link{TuneMultiCritControl}},
+\code{\link{plotTuneMultiCritResult}()}
 }
 \concept{tune_multicrit}

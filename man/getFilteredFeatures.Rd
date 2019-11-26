@@ -17,12 +17,14 @@ Trained Model created with \link{makeFilterWrapper}.}
 Returns the filtered features.
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{listFilterEnsembleMethods}},
-  \code{\link{listFilterMethods}},
-  \code{\link{makeFilterEnsemble}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+Other filter: 
+\code{\link{filterFeatures}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{listFilterEnsembleMethods}()},
+\code{\link{listFilterMethods}()},
+\code{\link{makeFilterEnsemble}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeFilter}()},
+\code{\link{plotFilterValues}()}
 }
 \concept{filter}

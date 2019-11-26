@@ -26,13 +26,15 @@ and in case that \code{predict = "test"} was used, the slot \code{train} will be
 \code{NULL}.
 }
 \seealso{
-Other resample: \code{\link{ResamplePrediction}},
-  \code{\link{ResampleResult}}, \code{\link{addRRMeasure}},
-  \code{\link{getRRPredictions}},
-  \code{\link{getRRTaskDescription}},
-  \code{\link{getRRTaskDesc}},
-  \code{\link{makeResampleDesc}},
-  \code{\link{makeResampleInstance}},
-  \code{\link{resample}}
+Other resample: 
+\code{\link{ResamplePrediction}},
+\code{\link{ResampleResult}},
+\code{\link{addRRMeasure}()},
+\code{\link{getRRPredictions}()},
+\code{\link{getRRTaskDescription}()},
+\code{\link{getRRTaskDesc}()},
+\code{\link{makeResampleDesc}()},
+\code{\link{makeResampleInstance}()},
+\code{\link{resample}()}
 }
 \concept{resample}
