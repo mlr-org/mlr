@@ -22,8 +22,10 @@ test_that("classif_IBk", {
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.IBk", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets("classif.IBk", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testSimpleParsets("classif.IBk", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list, parset.list)
+  testProbParsets("classif.IBk", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
     RWeka::IBk(formula, data = data[subset, ], control = RWeka::Weka_control(...))
@@ -31,5 +33,6 @@ test_that("classif_IBk", {
 
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
-  testCVParsets("classif.IBk", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("classif.IBk", multiclass.df, multiclass.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
 })

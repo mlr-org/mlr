@@ -17,7 +17,6 @@ test_that("classif_kknn", {
     parset = parset.list[[i]]
     pars = list(formula = multiclass.formula, train = multiclass.train, test = multiclass.test)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(kknn::kknn, pars)
     p = predict(m, newdata = multiclass.test)
     old.predicts.list[[i]] = p

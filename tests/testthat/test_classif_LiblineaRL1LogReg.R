@@ -19,7 +19,6 @@ test_that("classif_LiblineaRL1LogReg", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(LiblineaR::LiblineaR, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newx = binaryclass.test[, -binaryclass.class.col], proba = TRUE)
     old.predicts.list[[i]] = as.factor(p$predictions)
     old.probs.list[[i]] = p$probabilities[, 2L]
