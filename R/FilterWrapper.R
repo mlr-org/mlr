@@ -11,12 +11,16 @@
 #'   filters. See [listFilterMethods]. Can only be used in combination with
 #'   ensemble filters. See [listFilterEnsembleMethods].
 #' @param fw.perc (`numeric(1)`)\cr If set, select `fw.perc`*100 top scoring
-#'   features. Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
+#'   features. Mutually exclusive with arguments `fw.abs`, `fw.threshold` and `fw.func.
 #' @param fw.abs (`numeric(1)`)\cr If set, select `fw.abs` top scoring features.
-#'   Mutually exclusive with arguments `fw.perc` and `fw.threshold`.
+#'   Mutually exclusive with arguments `fw.perc`, `fw.threshold` and `fw.func`.
 #' @param fw.threshold (`numeric(1)`)\cr If set, select features whose score
-#'   exceeds `fw.threshold`. Mutually exclusive with arguments `fw.perc` and
-#'   `fw.abs`.
+#'   exceeds `fw.threshold`. Mutually exclusive with arguments `fw.perc`, `fw.abs`
+#'   and `fw.func`.
+#' @param fw.func (`function)`)\cr . If set, select features via a custom thresholding 
+#'   function, which must return the number of top scoring features to select\cr
+#'   Mutually exclusive with arguments `fw.perc`, `fw.abs` and `fw.threshold`.
+#' @param func.args (any)\cr Arguments passed to the custom thresholding function
 #' @param fw.mandatory.feat ([character])\cr Mandatory features which are always
 #'   included regardless of their scores
 #' @param cache (`character(1)` | [logical])\cr Whether to use caching during
@@ -74,7 +78,7 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
-  fw.mandatory.feat = NULL, cache = FALSE, ...) {
+  fw.func = NULL, fw.func.args = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...) {
 
   learner = checkLearner(learner)
 
@@ -115,11 +119,14 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
-      makeUntypedLearnerParam(id = "fw.mandatory.feat")
+	  makeFunctionLearnerParam(id = "fw.func"),
+	  makeDiscreteVectorLearnerParam(id = "fw.func.args", values = fw.func.args),     
+	  makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
     par.vals = filterNull(list(fw.method = fw.method,
       fw.base.methods = fw.base.methods, fw.perc = fw.perc,
-      fw.abs = fw.abs, fw.threshold = fw.threshold,
+      fw.abs = fw.abs, fw.threshold = fw.threshold, 
+	  fw.func = fw.func, fw.func.args = fw.func.args,
       fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel",
     cache = cache)
@@ -130,11 +137,12 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   fw.method = "randomForestSRC_importance", fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL,
-  fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
+  fw.threshold = NULL, fw.func = NULL, fw.func.args = NULL, fw.mandatory.feat = NULL, ...) {
   .task = subsetTask(.task, subset = .subset)
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
     base.methods = fw.base.methods,
     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
+	func = fw.func, func.args = fw.func.args,
     mandatory.feat = fw.mandatory.feat,
     cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
