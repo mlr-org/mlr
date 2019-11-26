@@ -55,15 +55,16 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
   # ensemble
   if (class(method) == "list") {
-    ens.method = method[[1]]
-    method = method[[2]]
-    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
-    if (length(method) == 1) {
-      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+    if (method[[1]] %in% ls(.FilterEnsembleRegister)) {
+	  ens.method = method[[1]]
+	  method = method[[2]]
+	  if (length(method) == 1) {
+		warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+	  }
     }
   }
 
-  assertSubset(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
+  lapply(method, assertSubset, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)  
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg))))) {
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
@@ -91,7 +92,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   }
   assertCount(nselect)
   assertList(more.args, names = "unique", max.len = length(method))
-  assertSubset(names(more.args), method)
   dot.args = list(...)
   if (length(dot.args) > 0L && length(more.args) > 0L) {
     stopf("Do not use both 'more.args' and '...' here!")
@@ -125,15 +125,20 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     }
 
   } else {
-    fval = lapply(filter, function(x) {
-      x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
-      missing.score = setdiff(fn, names(x))
-      x[missing.score] = NA_real_
-      x[match(fn, names(x))]
-    })
+	fval = mapply(function(x, name) {
+			index = name
+			if (is.null(index))
+				index = x$name
+			x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[index]]))
+			missing.score = setdiff(fn, names(x))
+			x[missing.score] = NA_real_
+			x[match(fn, names(x))]
+    }, filter, names(filter), SIMPLIFY=FALSE)    
     fval = do.call(cbind, fval)
     colnames(fval) = method
-    types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
+	if (!is.null(names(method)))
+		colnames(fval) = names(method)
+	types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
     out = data.table(name = row.names(fval),
       type = types, fval, row.names = NULL, stringsAsFactors = FALSE)

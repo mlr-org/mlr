@@ -65,13 +65,6 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   select.method = NULL, base.methods = NULL, cache = FALSE, ...) {
 
   assertClass(task, "SupervisedTask")
-
-  # base.methods arrive here in a list when called from 'tuneParams'.
-  # we need them as a chr vec for further proc, so transforming
-  if (is.list(base.methods)) {
-    base.methods = as.character(base.methods)
-  }
-
   assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
 
   # if an ensemble method is not passed as a list but via 'base.methods' + 'method'
