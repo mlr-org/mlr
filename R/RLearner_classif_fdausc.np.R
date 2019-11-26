@@ -37,8 +37,11 @@ trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = N
   par.cv = learnerArgsToControl(list, trim, draw)
   mod = fda.usc::classif.np(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
-  # Fix a bug in the package
+
+  # Fix bug in package. The changed slot looks different when called with
+  # `fda.usc::lassif.np()` than just `classif.np()`
   mod$C[[1]] = quote(classif.np)
+
   return(mod)
 }
 

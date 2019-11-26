@@ -40,7 +40,7 @@ of \code{dump.frames} objects that can be fed to \code{debugger()} to inspect
 error dumps generated on learner errors. One iteration can generate more than
 one error dump depending on which of training, prediction on training set,
 or prediction on test set, operations fail. Therefore the lists have named
-slots \code{$train}, \code{$predict.train}, or \code{$predict.test} if relevant.
+slots \verb{$train}, \verb{$predict.train}, or \verb{$predict.test} if relevant.
 The error dumps are only saved when option \code{on.error.dump} is \code{TRUE}.
 }
 \item{pred (\link{ResamplePrediction}):}{
@@ -60,18 +60,21 @@ The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling.
 }
 \seealso{
-Other resample: \code{\link{ResamplePrediction}},
-  \code{\link{addRRMeasure}},
-  \code{\link{getRRPredictionList}},
-  \code{\link{getRRPredictions}},
-  \code{\link{getRRTaskDescription}},
-  \code{\link{getRRTaskDesc}},
-  \code{\link{makeResampleDesc}},
-  \code{\link{makeResampleInstance}},
-  \code{\link{resample}}
+Other resample: 
+\code{\link{ResamplePrediction}},
+\code{\link{addRRMeasure}()},
+\code{\link{getRRPredictionList}()},
+\code{\link{getRRPredictions}()},
+\code{\link{getRRTaskDescription}()},
+\code{\link{getRRTaskDesc}()},
+\code{\link{makeResampleDesc}()},
+\code{\link{makeResampleInstance}()},
+\code{\link{resample}()}
 
-Other debug: \code{\link{FailureModel}},
-  \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
+Other debug: 
+\code{\link{FailureModel}},
+\code{\link{getPredictionDump}()},
+\code{\link{getRRDump}()}
 }
 \concept{debug}
 \concept{resample}

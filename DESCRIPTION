@@ -265,4 +265,4 @@ ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(wrap = FALSE, markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0

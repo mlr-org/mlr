@@ -5,9 +5,16 @@
 \alias{Learner}
 \title{Create learner object.}
 \usage{
-makeLearner(cl, id = cl, predict.type = "response",
-  predict.threshold = NULL, fix.factors.prediction = FALSE, ...,
-  par.vals = list(), config = list())
+makeLearner(
+  cl,
+  id = cl,
+  predict.type = "response",
+  predict.threshold = NULL,
+  fix.factors.prediction = FALSE,
+  ...,
+  par.vals = list(),
+  config = list()
+)
 }
 \arguments{
 \item{cl}{(\code{character(1)})\cr
@@ -51,7 +58,7 @@ training) to that feature. Default is \code{FALSE}.}
 \item{...}{(any)\cr Optional named (hyper)parameters. If you want to set
 specific hyperparameters for a learner during model creation, these should
 go here. You can get a list of available hyperparameters using
-\code{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
+\verb{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
 the \code{par.vals} argument but \code{...} should be preferred!}
 
 \item{par.vals}{(\link{list})\cr Optional list of named (hyper)parameters. The
@@ -79,10 +86,88 @@ The former aims at specifying default hyperparameter settings from \code{mlr}
 which differ from the actual defaults in the underlying learner. For
 example, \code{respect.unordered.factors} is set to \code{order} in \code{mlr} while the
 default in \link[ranger:ranger]{ranger::ranger} depends on the argument \code{splitrule}.
-\code{getHyperPars(<learner>)} can be used to query hyperparameter defaults that
+\verb{getHyperPars(<learner>)} can be used to query hyperparameter defaults that
 differ from the underlying learner. This function also shows all
 hyperparameters set by the user during learner creation (if these differ
 from the learner defaults).
+}
+
+\section{regr.randomForest}{
+
+
+For this learner we added additional uncertainty estimation functionality
+(\code{predict.type = "se"}) for the randomForest, which is not provided by the
+underlying package.
+
+Currently implemented methods are:
+
+\itemize{
+\item If \code{se.method = "jackknife"} the standard error of a prediction is
+estimated by computing the jackknife-after-bootstrap, the mean-squared
+difference between the prediction made by only using trees which did not
+contain said observation and the ensemble prediction.
+\item If \code{se.method = "bootstrap"} the standard error of a prediction is
+estimated by bootstrapping the random forest, where the number of bootstrap
+replicates and the number of trees in the ensemble are controlled by
+\code{se.boot} and \code{se.ntree} respectively, and then taking the standard deviation
+of the bootstrap predictions. The "brute force" bootstrap is executed when
+\code{ntree = se.ntree}, the latter of which controls the number of trees in the
+individual random forests which are bootstrapped. The "noisy bootstrap" is
+executed when \code{se.ntree < ntree} which is less computationally expensive. A
+Monte-Carlo bias correction may make the latter option prefarable in many
+cases. Defaults are \code{se.boot = 50} and \code{se.ntree = 100}.
+
+\item If \code{se.method = "sd"}, the default, the standard deviation of the
+predictions across trees is returned as the variance estimate. This can be
+computed quickly but is also a very naive estimator. }
+
+For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias
+correction is applied and, in the case that this results in a negative
+variance estimate, the values are truncated at 0.
+
+Note that when using the \dQuote{jackknife} procedure for se estimation,
+using a small number of trees can lead to training data observations that are
+never out-of-bag. The current implementation ignores these observations, but
+in the original definition, the resulting se estimation would be undefined.
+
+Please note that all of the mentioned \code{se.method} variants do not affect the
+computation of the posterior mean \dQuote{response} value. This is always the
+same as from the underlying randomForest.
+}
+
+\section{regr.featureless}{
+
+
+A very basic baseline method which is useful for model comparisons (if you
+don't beat this, you very likely have a problem).
+Does not consider any features of the task and only uses the target feature
+of the training data to make predictions.
+Using observation weights is currently not supported.
+
+Methods \dQuote{mean} and \dQuote{median} always predict a constant value
+for each new observation which corresponds to the observed mean or median of
+the target feature in training data, respectively.
+
+The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
+from WEKA, see \url{https://weka.wikispaces.com/ZeroR}.
+}
+
+\section{classif.featureless}{
+
+
+Method \dQuote{majority} predicts always the majority class for each new
+observation. In the case of ties, one randomly sampled, constant class is predicted
+for all observations in the test set.
+This method is used as the default. It is very similar to the ZeroR classifier
+from WEKA (see \url{https://weka.wikispaces.com/ZeroR}). The only difference is
+that ZeroR always predicts the first class of the tied class values instead
+of sampling them randomly.
+
+Method \dQuote{sample-prior} always samples a random class for each individual test
+observation according to the prior probabilities observed in the training data.
+
+If you opt to predict probabilities, the class probabilities always
+correspond to the prior probabilities observed in the training data.
 }
 
 \examples{
@@ -92,22 +177,27 @@ lrn = makeLearner("classif.lda", method = "t", nu = 10)
 getHyperPars(lrn)
 }
 \seealso{
-Other learner: \code{\link{LearnerProperties}},
-  \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
-  \code{\link{getLearnerNote}},
-  \code{\link{getLearnerPackages}},
-  \code{\link{getLearnerParVals}},
-  \code{\link{getLearnerParamSet}},
-  \code{\link{getLearnerPredictType}},
-  \code{\link{getLearnerShortName}},
-  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{helpLearnerParam}},
-  \code{\link{helpLearner}}, \code{\link{makeLearners}},
-  \code{\link{removeHyperPars}},
-  \code{\link{setHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
-  \code{\link{setPredictThreshold}},
-  \code{\link{setPredictType}}
+Other learner: 
+\code{\link{LearnerProperties}},
+\code{\link{getClassWeightParam}()},
+\code{\link{getHyperPars}()},
+\code{\link{getLearnerId}()},
+\code{\link{getLearnerNote}()},
+\code{\link{getLearnerPackages}()},
+\code{\link{getLearnerParVals}()},
+\code{\link{getLearnerParamSet}()},
+\code{\link{getLearnerPredictType}()},
+\code{\link{getLearnerShortName}()},
+\code{\link{getLearnerType}()},
+\code{\link{getParamSet}()},
+\code{\link{helpLearnerParam}()},
+\code{\link{helpLearner}()},
+\code{\link{makeLearners}()},
+\code{\link{removeHyperPars}()},
+\code{\link{setHyperPars}()},
+\code{\link{setId}()},
+\code{\link{setLearnerId}()},
+\code{\link{setPredictThreshold}()},
+\code{\link{setPredictType}()}
 }
 \concept{learner}

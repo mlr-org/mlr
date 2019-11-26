@@ -43,6 +43,7 @@ test_that("TuneWrapper", {
 
 # see bug in issue 205
 test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   lrn = makeLearner("classif.glmnet", predict.type = "prob")
   rdesc = makeResampleDesc("Holdout", split = 0.3)
   ctrl = makeTuneControlRandom(maxit = 1L)
@@ -113,6 +114,7 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
 })
 
 test_that("TuneWrapper with glmnet (#958)", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
     par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),

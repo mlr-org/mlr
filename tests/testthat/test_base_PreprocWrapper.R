@@ -40,6 +40,7 @@ test_that("getLearnerModel on nested PreprocWrapper", {
 })
 
 test_that("PreprocWrapper with glmnet (#958)", {
+  requirePackagesOrSkip("glmnet", default.method = "load")
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makePreprocWrapper(lrn,
     train = function(data, target, args) {

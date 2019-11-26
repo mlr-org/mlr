@@ -23,33 +23,35 @@ The print method of this object shows aggregated performance values
 for all tasks and learners.
 
 It is recommended to
-retrieve required information via the \code{getBMR*} getter functions.
+retrieve required information via the \verb{getBMR*} getter functions.
 You can also convert the object using \link{as.data.frame}.
 }
 \seealso{
-Other benchmark: \code{\link{batchmark}},
-  \code{\link{benchmark}},
-  \code{\link{convertBMRToRankMatrix}},
-  \code{\link{friedmanPostHocTestBMR}},
-  \code{\link{friedmanTestBMR}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{getBMRAggrPerformances}},
-  \code{\link{getBMRFeatSelResults}},
-  \code{\link{getBMRFilteredFeatures}},
-  \code{\link{getBMRLearnerIds}},
-  \code{\link{getBMRLearnerShortNames}},
-  \code{\link{getBMRLearners}},
-  \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
-  \code{\link{getBMRPerformances}},
-  \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescs}},
-  \code{\link{getBMRTaskIds}},
-  \code{\link{getBMRTuneResults}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{reduceBatchmarkResults}}
+Other benchmark: 
+\code{\link{batchmark}()},
+\code{\link{benchmark}()},
+\code{\link{convertBMRToRankMatrix}()},
+\code{\link{friedmanPostHocTestBMR}()},
+\code{\link{friedmanTestBMR}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{getBMRAggrPerformances}()},
+\code{\link{getBMRFeatSelResults}()},
+\code{\link{getBMRFilteredFeatures}()},
+\code{\link{getBMRLearnerIds}()},
+\code{\link{getBMRLearnerShortNames}()},
+\code{\link{getBMRLearners}()},
+\code{\link{getBMRMeasureIds}()},
+\code{\link{getBMRMeasures}()},
+\code{\link{getBMRModels}()},
+\code{\link{getBMRPerformances}()},
+\code{\link{getBMRPredictions}()},
+\code{\link{getBMRTaskDescs}()},
+\code{\link{getBMRTaskIds}()},
+\code{\link{getBMRTuneResults}()},
+\code{\link{plotBMRBoxplots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{reduceBatchmarkResults}()}
 }
 \concept{benchmark}

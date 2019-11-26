@@ -21,7 +21,7 @@ Default is \code{NULL}, i.e., this is not used.}
 \item{...}{(any)\cr Optional named (hyper)parameters. If you want to set
 specific hyperparameters for a learner during model creation, these should
 go here. You can get a list of available hyperparameters using
-\code{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
+\verb{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
 the \code{par.vals} argument but \code{...} should be preferred!}
 }
 \value{
@@ -35,22 +35,27 @@ Calls \link{makeLearner} multiple times internally.
 makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
 }
 \seealso{
-Other learner: \code{\link{LearnerProperties}},
-  \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
-  \code{\link{getLearnerNote}},
-  \code{\link{getLearnerPackages}},
-  \code{\link{getLearnerParVals}},
-  \code{\link{getLearnerParamSet}},
-  \code{\link{getLearnerPredictType}},
-  \code{\link{getLearnerShortName}},
-  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{helpLearnerParam}},
-  \code{\link{helpLearner}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
-  \code{\link{setHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
-  \code{\link{setPredictThreshold}},
-  \code{\link{setPredictType}}
+Other learner: 
+\code{\link{LearnerProperties}},
+\code{\link{getClassWeightParam}()},
+\code{\link{getHyperPars}()},
+\code{\link{getLearnerId}()},
+\code{\link{getLearnerNote}()},
+\code{\link{getLearnerPackages}()},
+\code{\link{getLearnerParVals}()},
+\code{\link{getLearnerParamSet}()},
+\code{\link{getLearnerPredictType}()},
+\code{\link{getLearnerShortName}()},
+\code{\link{getLearnerType}()},
+\code{\link{getParamSet}()},
+\code{\link{helpLearnerParam}()},
+\code{\link{helpLearner}()},
+\code{\link{makeLearner}()},
+\code{\link{removeHyperPars}()},
+\code{\link{setHyperPars}()},
+\code{\link{setId}()},
+\code{\link{setLearnerId}()},
+\code{\link{setPredictThreshold}()},
+\code{\link{setPredictType}()}
 }
 \concept{learner}
