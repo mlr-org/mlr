@@ -19,9 +19,6 @@ test_that("classif_clusterSVM", {
     parset = parset.list1[[i]]
     pars = list(data.matrix(binaryclass.train[, -61]), y = binaryclass.train[, 61])
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
-    # model = SwarmSVM::clusterSVM(x = data.matrix(binaryclass.train[,-61]), y = binaryclass.train[,61],
-    #                          centers = 3, seed = 0)
     m = do.call(SwarmSVM::clusterSVM, pars)
     old.predicts.list[[i]] = predict(m, data.matrix(binaryclass.test[, -61]))$predictions
   }

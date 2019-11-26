@@ -18,7 +18,7 @@ test_that("classif_ctree", {
     parset = parset.list[[i]]
     ctrl = do.call(party::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = party::ctree(formula = multiclass.formula, data = multiclass.train, control = ctrl)
+    m = party::ctree(formula = multiclass.formula, data = multiclass.train, controls = ctrl)
     p = predict(m, newdata = multiclass.test, type = "response")
     p2 = Reduce(rbind, party::treeresponse(m, newdata = multiclass.test, type = "prob"))
     rownames(p2) = NULL
@@ -27,10 +27,10 @@ test_that("classif_ctree", {
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds,
-    old.predicts.list, parset.list)
-  testProbParsets("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds,
-    old.probs.list, parset.list)
+  testSimpleParsets("classif.ctree", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list, parset.list)
+  testProbParsets("classif.ctree", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.probs.list, parset.list)
 
   df = iris
   df[, 1] = 1:150

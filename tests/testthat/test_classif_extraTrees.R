@@ -28,8 +28,8 @@ test_that("classif_extraTrees", {
     old.probs.list[[i]] = predict(m, x.test, probability = TRUE)[, 1L]
   }
 
-  testSimpleParsets("classif.extraTrees", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-    old.predicts.list, parset.list)
-  testProbParsets("classif.extraTrees", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-    old.probs.list, parset.list)
+  testSimpleParsets("classif.extraTrees", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.predicts.list, parset.list)
+  testProbParsets("classif.extraTrees", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.probs.list, parset.list)
 })

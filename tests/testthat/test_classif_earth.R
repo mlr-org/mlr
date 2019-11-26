@@ -1,4 +1,3 @@
-
 context("classif_earth")
 
 test_that("classif_earth can do binary classification", {
@@ -20,16 +19,23 @@ test_that("classif_earth can do binary classification", {
     parset$glm = list(family = binomial(link = "logit"), maxit = 25)
     pars = list(formula = binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
-    m = do.call(earth::earth, pars)
-    set.seed(getOption("mlr.debug.seed"))
+    # suppressed warnings: "glm.fit: fitted probabilities numerically 0 or 1 occurred"
+    m = suppressWarnings(do.call(earth::earth, pars))
     p = predict(m, newdata = binaryclass.test[, -binaryclass.class.col], type = "response")[, 1]
     old.probs.list[[i]] = 1 - p
     old.predicts.list[[i]] = as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }
 
-  testSimpleParsets("classif.earth", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets("classif.earth", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  # suppressed warnings: "the glm algorithm did not converge for response "R"
+  # glm.fit: algorithm did not converge
+  suppressWarnings(
+    testSimpleParsets("classif.earth", binaryclass.df, binaryclass.target,
+      binaryclass.train.inds, old.predicts.list, parset.list)
+  )
+  suppressWarnings(
+    testProbParsets("classif.earth", binaryclass.df, binaryclass.target,
+      binaryclass.train.inds, old.probs.list, parset.list)
+  )
 })
 
 test_that("classif_earth can do multiclass classification", {
@@ -50,14 +56,22 @@ test_that("classif_earth can do multiclass classification", {
     parset$glm = list(family = binomial(link = "logit"), maxit = 25)
     pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
-    m = do.call(earth::earth, pars)
-    set.seed(getOption("mlr.debug.seed"))
+    # suppressed warnings: "glm.fit: fitted probabilities numerically 0 or 1 occurred"
+    m = suppressWarnings(do.call(earth::earth, pars))
     p = predict(m, newdata = multiclass.test[, -multiclass.class.col], type = "response")
     old.probs.list[[i]] = p
-    old.predicts.list[[i]] = as.factor(predict(m, newdata = multiclass.test[, -multiclass.class.col], type = "class"))
+    old.predicts.list[[i]] = as.factor(predict(m,
+      newdata = multiclass.test[, -multiclass.class.col], type = "class"))
   }
 
-  testSimpleParsets("classif.earth", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets("classif.earth", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  # suppressed warnings: " warning: classif_earth can do multiclass classification
+  # glm.fit: algorithm did not converge"
+  suppressWarnings(
+    testSimpleParsets("classif.earth", multiclass.df, multiclass.target,
+      multiclass.train.inds, old.predicts.list, parset.list)
+  )
+  suppressWarnings(
+    testProbParsets("classif.earth", multiclass.df, multiclass.target,
+      multiclass.train.inds, old.probs.list, parset.list)
+  )
 })
