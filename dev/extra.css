@@ -1,0 +1,82 @@
+/* import fonts font */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
+@import url(https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,400);
+
+/* link coloring */
+a {
+  color: #03638e;
+    text-decoration: none;
+}
+
+/* code font */
+code,
+kbd,
+pre,
+samp {
+  font-family: IBM Plex Mono, monospace;
+  font-size: 0.9em;
+}
+
+/* headers */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Roboto", sans;
+}
+
+/* navbar */
+.navbar {
+    font-weight: 400;
+    font-size: 17px;
+}
+
+/* no uppercase package title */
+.navbar-brand {
+    text-transform: none;
+}
+
+/* body font */
+body {
+  /* font-family: Crimson Text, serif; */
+  font-family: "Roboto" , sans;
+  font-size: 15px;
+  font-weight: 400;
+  color: black;
+  padding-top: 15px; /* a bit of space to the navbar */
+}
+
+
+/* syntax highlighting */
+.sourceCode.r .kw, .fu, .cf,   /* function names */
+    .sourceCode a:link,
+    .sourceCode a:active,
+    .sourceCode a:visited {color:darkred;}
+
+/* reduce paddint-top a bit (default 60px) */
+.contents h2, .contents h3, .contents h4 {
+    padding-top: 50px;
+}
+
+/* color pkg name in "mlr blue" */
+.navbar-default .navbar-link {
+    color: #03638e;
+}
+
+/* reduce size of "version label" padding */
+.label {
+    display: inline;
+    padding: 0em 0em 0em; /* default: .2 - .6 - .3 */
+    font-size: 90%;
+    line-height: 1;
+    color: #03638e;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .8em; /* default: .25*/
+}
+
+.navbar-brand {
+    padding: 19.5px 1px 19.5px 15px;  /* default: 19.5px 15px 19.5px 15px */
+}
+
+.label-default {
+    background-color: transparent;
+}
