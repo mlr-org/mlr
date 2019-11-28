@@ -144,7 +144,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
       type = types, fval, row.names = NULL, stringsAsFactors = FALSE)
 
     # variable.factor = FALSE has no effect
-    out = melt(out, value.name = "value", measure.vars = method,
+    out = melt(out, value.name = "value", measure.vars = colnames(fval),
       variable.name = "method")
   }
 
