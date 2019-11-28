@@ -1,5 +1,7 @@
 # mlr (development version)
 
+# mlr 2.16.0
+
 ## package infrastructure
 
 - There is now a reference grouping for all functions on the pkgdown site (https://mlr.mlr-org.com/reference/index.html)

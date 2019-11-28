@@ -1,5 +1,7 @@
 # mlr <img src="man/figures/logo.png" align="right" />
 
+Package website: [release](https://mlr.mlr-org.com/) | [dev](https://mlr.mlr-org.com/dev)
+
 Machine learning in R.
 
 [![CircleCI](https://img.shields.io/circleci/build/gh/mlr-org/mlr/master?label=Linux&logo=circle&logoColor=green&style=flat-square)](https://circleci.com/gh/mlr-org/mlr)
