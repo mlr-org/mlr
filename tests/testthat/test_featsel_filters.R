@@ -40,8 +40,6 @@ test_that("filterFeatures", {
 
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
-  
-  
 
   # extra test for auc filter (two class dataset)
   toy.data = data.frame(
@@ -82,4 +80,3 @@ test_that("randomForestSRC_var.select minimal depth filter returns NA for featur
                                  more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
   expect_equal(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.width")]), TRUE)
 })
-
