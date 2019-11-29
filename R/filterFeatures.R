@@ -152,6 +152,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   }
   if (select == "threshold") {
     nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
+  }
 
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
