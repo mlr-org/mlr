@@ -4,9 +4,15 @@
 \alias{plotThreshVsPerf}
 \title{Plot threshold vs. performance(s) for 2-class classification using ggplot2.}
 \usage{
-plotThreshVsPerf(obj, measures = obj$measures, facet = "measure",
-  mark.th = NA_real_, pretty.names = TRUE, facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL)
+plotThreshVsPerf(
+  obj,
+  measures = obj$measures,
+  facet = "measure",
+  mark.th = NA_real_,
+  pretty.names = TRUE,
+  facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL
+)
 }
 \arguments{
 \item{obj}{(\link{ThreshVsPerfData})\cr
@@ -50,18 +56,21 @@ pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 plotThreshVsPerf(pvs)
 }
 \seealso{
-Other plot: \code{\link{createSpatialResamplingPlots}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}}
+Other plot: 
+\code{\link{createSpatialResamplingPlots}()},
+\code{\link{plotBMRBoxplots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCalibration}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{plotLearningCurve}()},
+\code{\link{plotPartialDependence}()},
+\code{\link{plotROCCurves}()},
+\code{\link{plotResiduals}()}
 
-Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotROCCurves}}
+Other thresh_vs_perf: 
+\code{\link{generateThreshVsPerfData}()},
+\code{\link{plotROCCurves}()}
 }
 \concept{plot}
 \concept{thresh_vs_perf}
