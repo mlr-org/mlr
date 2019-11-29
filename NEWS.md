@@ -17,6 +17,7 @@
 ## misc
 
 - Add `configureMlr()` to `.onLoad()`, possibly fixing some edge cases (#2585) (@pat-s, #2637)
+- Allow ensemble filters to include multiple base filters of the same type (#2688)
 
 ## learners - bugfixes
 

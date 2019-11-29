@@ -72,3 +72,16 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
     more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
   )
 })
+
+
+test_that("Ensemble filters can accept duplicate base methods", {
+  lda = makeLearner(cl = "classif.lda", id = "lda_class", predict.type = "response")
+  ff = filterFeatures(multiclass.task, 
+                      method = "E-mean", 
+                      base.methods = list("filter1" = "univariate.model.score", "filter2" = "univariate.model.score"),
+                      abs = 2,
+                      more.args = list("filter1" = list(perf.learner = lda), "filter2" = list(perf.learner = lda))
+       )
+  expect_equal(getTaskFeatureNames(ff), c("Petal.Length", "Petal.Width"))
+})
+
