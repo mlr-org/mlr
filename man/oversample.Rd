@@ -36,7 +36,9 @@ Undersampling: For a given class (usually the larger one) the number of observat
 reduced (downsampled) by randomly sampling without replacement from this class.
 }
 \seealso{
-Other imbalancy: \code{\link{makeOverBaggingWrapper}},
-  \code{\link{makeUndersampleWrapper}}, \code{\link{smote}}
+Other imbalancy: 
+\code{\link{makeOverBaggingWrapper}()},
+\code{\link{makeUndersampleWrapper}()},
+\code{\link{smote}()}
 }
 \concept{imbalancy}
