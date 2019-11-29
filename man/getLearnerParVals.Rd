@@ -23,21 +23,27 @@ hyperparameters corresponding to \code{when} the are used (see
 Alias for \link{getHyperPars}.
 }
 \seealso{
-Other learner: \code{\link{LearnerProperties}},
-  \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
-  \code{\link{getLearnerNote}},
-  \code{\link{getLearnerPackages}},
-  \code{\link{getLearnerParamSet}},
-  \code{\link{getLearnerPredictType}},
-  \code{\link{getLearnerShortName}},
-  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{helpLearnerParam}},
-  \code{\link{helpLearner}}, \code{\link{makeLearners}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
-  \code{\link{setHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
-  \code{\link{setPredictThreshold}},
-  \code{\link{setPredictType}}
+Other learner: 
+\code{\link{LearnerProperties}},
+\code{\link{getClassWeightParam}()},
+\code{\link{getHyperPars}()},
+\code{\link{getLearnerId}()},
+\code{\link{getLearnerNote}()},
+\code{\link{getLearnerPackages}()},
+\code{\link{getLearnerParamSet}()},
+\code{\link{getLearnerPredictType}()},
+\code{\link{getLearnerShortName}()},
+\code{\link{getLearnerType}()},
+\code{\link{getParamSet}()},
+\code{\link{helpLearnerParam}()},
+\code{\link{helpLearner}()},
+\code{\link{makeLearners}()},
+\code{\link{makeLearner}()},
+\code{\link{removeHyperPars}()},
+\code{\link{setHyperPars}()},
+\code{\link{setId}()},
+\code{\link{setLearnerId}()},
+\code{\link{setPredictThreshold}()},
+\code{\link{setPredictType}()}
 }
 \concept{learner}

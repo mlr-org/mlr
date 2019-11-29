@@ -5,9 +5,15 @@
 \alias{ClusterTask}
 \title{Create a cluster task.}
 \usage{
-makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
-  blocking = NULL, coordinates = NULL, fixup.data = "warn",
-  check.data = TRUE)
+makeClusterTask(
+  id = deparse(substitute(data)),
+  data,
+  weights = NULL,
+  blocking = NULL,
+  coordinates = NULL,
+  fixup.data = "warn",
+  check.data = TRUE
+)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr

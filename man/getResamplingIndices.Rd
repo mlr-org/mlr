@@ -40,20 +40,22 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 getResamplingIndices(r, inner = TRUE)
 }
 \seealso{
-Other tune: \code{\link{TuneControl}},
-  \code{\link{getNestedTuneResultsOptPathDf}},
-  \code{\link{getNestedTuneResultsX}},
-  \code{\link{getTuneResult}},
-  \code{\link{makeModelMultiplexerParamSet}},
-  \code{\link{makeModelMultiplexer}},
-  \code{\link{makeTuneControlCMAES}},
-  \code{\link{makeTuneControlDesign}},
-  \code{\link{makeTuneControlGenSA}},
-  \code{\link{makeTuneControlGrid}},
-  \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlMBO}},
-  \code{\link{makeTuneControlRandom}},
-  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
-  \code{\link{tuneThreshold}}
+Other tune: 
+\code{\link{TuneControl}},
+\code{\link{getNestedTuneResultsOptPathDf}()},
+\code{\link{getNestedTuneResultsX}()},
+\code{\link{getTuneResult}()},
+\code{\link{makeModelMultiplexerParamSet}()},
+\code{\link{makeModelMultiplexer}()},
+\code{\link{makeTuneControlCMAES}()},
+\code{\link{makeTuneControlDesign}()},
+\code{\link{makeTuneControlGenSA}()},
+\code{\link{makeTuneControlGrid}()},
+\code{\link{makeTuneControlIrace}()},
+\code{\link{makeTuneControlMBO}()},
+\code{\link{makeTuneControlRandom}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{tuneParams}()},
+\code{\link{tuneThreshold}()}
 }
 \concept{tune}
