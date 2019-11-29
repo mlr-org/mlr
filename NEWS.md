@@ -17,6 +17,7 @@
 ## misc
 
 - Add `configureMlr()` to `.onLoad()`, possibly fixing some edge cases (#2585) (@pat-s, #2637)
+- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (#2686)
 
 ## learners - bugfixes
 
