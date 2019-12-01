@@ -327,14 +327,8 @@ In the no-information case the features carry no information with respect to the
 In the no-information case the features carry no information with respect to the prediction. This is simulated by permuting features and predictions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>estimateRelativeOverfitting</span>(
-  <span class='no'>predish</span>,
-  <span class='no'>measures</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pred.train</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+    <pre class="usage"><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>predish</span>, <span class='no'>measures</span>, <span class='no'>task</span>, <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pred.train</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -384,17 +378,14 @@ Iteration number. Default 1, usually you don't need to specify this. Only needed
     <p>Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other performance: 
-<code><a href='ConfusionMatrix.html'>ConfusionMatrix</a></code>,
-<code><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a>()</code>,
-<code><a href='calculateROCMeasures.html'>calculateROCMeasures</a>()</code>,
-<code><a href='makeCostMeasure.html'>makeCostMeasure</a>()</code>,
-<code><a href='makeCustomResampledMeasure.html'>makeCustomResampledMeasure</a>()</code>,
-<code><a href='makeMeasure.html'>makeMeasure</a>()</code>,
-<code><a href='measures.html'>measures</a></code>,
-<code><a href='performance.html'>performance</a>()</code>,
-<code><a href='setAggregation.html'>setAggregation</a>()</code>,
-<code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
+    <div class='dont-index'><p>Other performance: <code><a href='ConfusionMatrix.html'>ConfusionMatrix</a></code>,
+  <code><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></code>,
+  <code><a href='calculateROCMeasures.html'>calculateROCMeasures</a></code>,
+  <code><a href='makeCostMeasure.html'>makeCostMeasure</a></code>,
+  <code><a href='makeCustomResampledMeasure.html'>makeCustomResampledMeasure</a></code>,
+  <code><a href='makeMeasure.html'>makeMeasure</a></code>, <code><a href='measures.html'>measures</a></code>,
+  <code><a href='performance.html'>performance</a></code>, <code><a href='setAggregation.html'>setAggregation</a></code>,
+  <code><a href='setMeasurePars.html'>setMeasurePars</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
