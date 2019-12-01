@@ -7,7 +7,7 @@
 makeExtractFDAFeatMethod(learn, reextract, args = list())
 }
 \arguments{
-\item{learn}{(\verb{function(data, target, col, ...)})\cr
+\item{learn}{(\code{function(data, target, col, ...)})\cr
 Function to learn and extract information on functional column \code{col}.
 Arguments are:
 \itemize{
@@ -26,7 +26,7 @@ column names or indices, the extraction should be performed on.
 The function has to return a named list of values.
 }}
 
-\item{reextract}{(\verb{function(data, target, col, ...)})\cr
+\item{reextract}{(\code{function(data, target, col, ...)})\cr
 Function used for reextracting data in predict phase.
 Can be equal to \code{learn}.}
 
@@ -37,8 +37,7 @@ Named list of arguments to pass to \code{learn} via \code{...}.}
 This can be used to implement custom feature FDA extraction.
 }
 \seealso{
-Other fda: 
-\code{\link{extractFDAFeatures}()},
-\code{\link{makeExtractFDAFeatsWrapper}()}
+Other fda: \code{\link{extractFDAFeatures}},
+  \code{\link{makeExtractFDAFeatsWrapper}}
 }
 \concept{fda}

@@ -39,9 +39,8 @@ JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
 \url{http://www.jmlr.org/proceedings/papers/v39/lin14.pdf}
 }
 \seealso{
-Other costsens: 
-\code{\link{makeCostSensClassifWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeCostSensTask}()}
+Other costsens: \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeCostSensTask}}
 }
 \concept{costsens}

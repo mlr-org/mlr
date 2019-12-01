@@ -22,7 +22,7 @@ Task types supported.}
 \item{supported.features}{(\link{character})\cr
 Feature types supported.}
 
-\item{fun}{(\verb{function(task, nselect, ...})\cr
+\item{fun}{(\code{function(task, nselect, ...})\cr
 Function which takes a task and returns a named numeric vector of scores,
 one score for each feature of \code{task}.
 Higher scores mean higher importance of the feature.
@@ -47,14 +47,13 @@ Kononenko, Igor et al. Overcoming the myopia of inductive learning algorithms
 with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.
 }
 \seealso{
-Other filter: 
-\code{\link{filterFeatures}()},
-\code{\link{generateFilterValuesData}()},
-\code{\link{getFilteredFeatures}()},
-\code{\link{listFilterEnsembleMethods}()},
-\code{\link{listFilterMethods}()},
-\code{\link{makeFilterEnsemble}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{plotFilterValues}()}
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterEnsembleMethods}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{plotFilterValues}}
 }
 \concept{filter}

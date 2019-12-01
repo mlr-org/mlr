@@ -4,17 +4,10 @@
 \alias{makeImputeWrapper}
 \title{Fuse learner with an imputation method.}
 \usage{
-makeImputeWrapper(
-  learner,
-  classes = list(),
-  cols = list(),
-  dummy.classes = character(0L),
-  dummy.cols = character(0L),
-  dummy.type = "factor",
-  force.dummies = FALSE,
-  impute.new.levels = TRUE,
-  recode.factor.levels = TRUE
-)
+makeImputeWrapper(learner, classes = list(), cols = list(),
+  dummy.classes = character(0L), dummy.cols = character(0L),
+  dummy.type = "factor", force.dummies = FALSE,
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -71,37 +64,34 @@ Internally uses \link{impute} before training the learner and \link{reimpute}
 before predicting.
 }
 \seealso{
-Other impute: 
-\code{\link{imputations}},
-\code{\link{impute}()},
-\code{\link{makeImputeMethod}()},
-\code{\link{reimpute}()}
+Other impute: \code{\link{imputations}},
+  \code{\link{impute}}, \code{\link{makeImputeMethod}},
+  \code{\link{reimpute}}
 
-Other wrapper: 
-\code{\link{makeBaggingWrapper}()},
-\code{\link{makeClassificationViaRegressionWrapper}()},
-\code{\link{makeConstantClassWrapper}()},
-\code{\link{makeCostSensClassifWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeDownsampleWrapper}()},
-\code{\link{makeDummyFeaturesWrapper}()},
-\code{\link{makeExtractFDAFeatsWrapper}()},
-\code{\link{makeFeatSelWrapper}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeMulticlassWrapper}()},
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelNestedStackingWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()},
-\code{\link{makeOverBaggingWrapper}()},
-\code{\link{makePreprocWrapperCaret}()},
-\code{\link{makePreprocWrapper}()},
-\code{\link{makeRemoveConstantFeaturesWrapper}()},
-\code{\link{makeSMOTEWrapper}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{makeUndersampleWrapper}()},
-\code{\link{makeWeightedClassesWrapper}()}
+Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
+  \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
+  \code{\link{makeSMOTEWrapper}},
+  \code{\link{makeTuneWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{makeWeightedClassesWrapper}}
 }
 \concept{impute}
 \concept{wrapper}

@@ -6,7 +6,8 @@
 \alias{getFeatureImportanceLearner}
 \title{Calculates feature importance values for a given learner.}
 \usage{
-\method{getFeatureImportanceLearner}{regr.randomForestSRC}(.learner, .model, ...)
+\method{getFeatureImportanceLearner}{regr.randomForestSRC}(.learner,
+  .model, ...)
 
 getFeatureImportanceLearner(.learner, .model, ...)
 }

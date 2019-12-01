@@ -85,26 +85,23 @@ ps = makeParamSet(
 }
 }
 \seealso{
-Other multiplexer: 
-\code{\link{makeModelMultiplexerParamSet}()}
+Other multiplexer: \code{\link{makeModelMultiplexerParamSet}}
 
-Other tune: 
-\code{\link{TuneControl}},
-\code{\link{getNestedTuneResultsOptPathDf}()},
-\code{\link{getNestedTuneResultsX}()},
-\code{\link{getResamplingIndices}()},
-\code{\link{getTuneResult}()},
-\code{\link{makeModelMultiplexerParamSet}()},
-\code{\link{makeTuneControlCMAES}()},
-\code{\link{makeTuneControlDesign}()},
-\code{\link{makeTuneControlGenSA}()},
-\code{\link{makeTuneControlGrid}()},
-\code{\link{makeTuneControlIrace}()},
-\code{\link{makeTuneControlMBO}()},
-\code{\link{makeTuneControlRandom}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{tuneParams}()},
-\code{\link{tuneThreshold}()}
+Other tune: \code{\link{TuneControl}},
+  \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
+  \code{\link{getTuneResult}},
+  \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
+  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
+  \code{\link{tuneThreshold}}
 }
 \concept{multiplexer}
 \concept{tune}

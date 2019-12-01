@@ -20,7 +20,7 @@ Should the downsampled data be stratified according to the target classes?
 Default is \code{FALSE}.}
 }
 \value{
-([data.frame\verb{| [Task] | [ResampleInstance]). Same type as}obj`.
+([data.frame\code{| [Task] | [ResampleInstance]). Same type as}obj`.
 }
 \description{
 Decrease the observations in a \code{task} or a \code{ResampleInstance}
@@ -29,7 +29,6 @@ to a given percentage of observations.
 \seealso{
 \link{makeResampleInstance}
 
-Other downsample: 
-\code{\link{makeDownsampleWrapper}()}
+Other downsample: \code{\link{makeDownsampleWrapper}}
 }
 \concept{downsample}
