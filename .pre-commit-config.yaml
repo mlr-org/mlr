@@ -5,7 +5,7 @@ repos:
     hooks:
     # any R project
     -   id: style-files
-        args: [--style_pkg=styler, --style_fun=tidyverse_style]
+        args: [--style_pkg=styler, --style_fun=mlr_style]
     -   id: lintr
     -   id: parsable-R
     -   id: no-browser-statement
