@@ -4,8 +4,12 @@
 \alias{listFilterMethods}
 \title{List filter methods.}
 \usage{
-listFilterMethods(desc = TRUE, tasks = FALSE, features = FALSE,
-  include.deprecated = FALSE)
+listFilterMethods(
+  desc = TRUE,
+  tasks = FALSE,
+  features = FALSE,
+  include.deprecated = FALSE
+)
 }
 \arguments{
 \item{desc}{(\code{logical(1)})\cr
@@ -31,12 +35,14 @@ Default is \code{FALSE}.}
 Returns a subset-able dataframe with filter information.
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{listFilterEnsembleMethods}},
-  \code{\link{makeFilterEnsemble}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+Other filter: 
+\code{\link{filterFeatures}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{getFilteredFeatures}()},
+\code{\link{listFilterEnsembleMethods}()},
+\code{\link{makeFilterEnsemble}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeFilter}()},
+\code{\link{plotFilterValues}()}
 }
 \concept{filter}

@@ -4,9 +4,16 @@
 \alias{plotBMRBoxplots}
 \title{Create box or violin plots for a BenchmarkResult.}
 \usage{
-plotBMRBoxplots(bmr, measure = NULL, style = "box",
-  order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE,
-  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
+plotBMRBoxplots(
+  bmr,
+  measure = NULL,
+  style = "box",
+  order.lrns = NULL,
+  order.tsks = NULL,
+  pretty.names = TRUE,
+  facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL
+)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -45,39 +52,44 @@ of the resampling strategy, faceted by the \code{task.id}.
 # see benchmark
 }
 \seealso{
-Other plot: \code{\link{createSpatialResamplingPlots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerf}}
+Other plot: 
+\code{\link{createSpatialResamplingPlots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCalibration}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{plotLearningCurve}()},
+\code{\link{plotPartialDependence}()},
+\code{\link{plotROCCurves}()},
+\code{\link{plotResiduals}()},
+\code{\link{plotThreshVsPerf}()}
 
-Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{batchmark}}, \code{\link{benchmark}},
-  \code{\link{convertBMRToRankMatrix}},
-  \code{\link{friedmanPostHocTestBMR}},
-  \code{\link{friedmanTestBMR}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{getBMRAggrPerformances}},
-  \code{\link{getBMRFeatSelResults}},
-  \code{\link{getBMRFilteredFeatures}},
-  \code{\link{getBMRLearnerIds}},
-  \code{\link{getBMRLearnerShortNames}},
-  \code{\link{getBMRLearners}},
-  \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
-  \code{\link{getBMRPerformances}},
-  \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescs}},
-  \code{\link{getBMRTaskIds}},
-  \code{\link{getBMRTuneResults}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{reduceBatchmarkResults}}
+Other benchmark: 
+\code{\link{BenchmarkResult}},
+\code{\link{batchmark}()},
+\code{\link{benchmark}()},
+\code{\link{convertBMRToRankMatrix}()},
+\code{\link{friedmanPostHocTestBMR}()},
+\code{\link{friedmanTestBMR}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{getBMRAggrPerformances}()},
+\code{\link{getBMRFeatSelResults}()},
+\code{\link{getBMRFilteredFeatures}()},
+\code{\link{getBMRLearnerIds}()},
+\code{\link{getBMRLearnerShortNames}()},
+\code{\link{getBMRLearners}()},
+\code{\link{getBMRMeasureIds}()},
+\code{\link{getBMRMeasures}()},
+\code{\link{getBMRModels}()},
+\code{\link{getBMRPerformances}()},
+\code{\link{getBMRPredictions}()},
+\code{\link{getBMRTaskDescs}()},
+\code{\link{getBMRTaskIds}()},
+\code{\link{getBMRTuneResults}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{reduceBatchmarkResults}()}
 }
 \concept{benchmark}
 \concept{plot}

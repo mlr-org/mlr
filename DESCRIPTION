@@ -261,6 +261,8 @@ Suggests:
     xgboost (>= 0.6-2)
 VignetteBuilder:
     knitr
+Remotes:
+    mlr-org/ParamHelpers
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes

@@ -4,8 +4,13 @@
 \alias{plotROCCurves}
 \title{Plots a ROC curve using ggplot2.}
 \usage{
-plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE,
-  facet.learner = FALSE)
+plotROCCurves(
+  obj,
+  measures,
+  diagonal = TRUE,
+  pretty.names = TRUE,
+  facet.learner = FALSE
+)
 }
 \arguments{
 \item{obj}{(\link{ThreshVsPerfData})\cr
@@ -50,19 +55,21 @@ plotROCCurves(roc_l)
 }
 }
 \seealso{
-Other plot: \code{\link{createSpatialResamplingPlots}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerf}}
+Other plot: 
+\code{\link{createSpatialResamplingPlots}()},
+\code{\link{plotBMRBoxplots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCalibration}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{plotLearningCurve}()},
+\code{\link{plotPartialDependence}()},
+\code{\link{plotResiduals}()},
+\code{\link{plotThreshVsPerf}()}
 
-Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotThreshVsPerf}}
+Other thresh_vs_perf: 
+\code{\link{generateThreshVsPerfData}()},
+\code{\link{plotThreshVsPerf}()}
 }
 \concept{plot}
 \concept{thresh_vs_perf}
