@@ -119,7 +119,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
-	  makeFunctionLearnerParam(id = "fw.func", default = NULL),
+	  makeFunctionLearnerParam(id = "fw.func"),
 	  makeDiscreteVectorLearnerParam(id = "fw.func.args", default = NULL, special.vals = list(NULL)),     
 	  makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
