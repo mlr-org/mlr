@@ -125,15 +125,15 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     }
 
   } else {
+    index_names = names(method)
+	if (is.null(index_names))
+		index_names = method
 	fval = mapply(function(x, name) {
-			index = name
-			if (is.null(index))
-				index = x$name
-			x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[index]]))
+			x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[name]]))
 			missing.score = setdiff(fn, names(x))
 			x[missing.score] = NA_real_
 			x[match(fn, names(x))]
-    }, filter, names(filter), SIMPLIFY=FALSE)    
+    }, filter, index_names, SIMPLIFY=FALSE)    
     fval = do.call(cbind, fval)
     colnames(fval) = method
 	if (!is.null(names(method)))
