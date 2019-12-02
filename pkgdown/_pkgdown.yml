@@ -10,9 +10,9 @@ template:
   default_assets: false
 
 development:
-  destination: dev
+  mode: auto
   version_label: default
-  version_tooltip: "Development version"
+  version_tooltip: "Version"
 
 home:
   links:
