@@ -5,10 +5,19 @@
 \alias{PartialDependenceData}
 \title{Generate partial dependence.}
 \usage{
-generatePartialDependenceData(obj, input, features = NULL,
-  interaction = FALSE, derivative = FALSE, individual = FALSE,
-  fun = mean, bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE,
-  n = c(10, NA), ...)
+generatePartialDependenceData(
+  obj,
+  input,
+  features = NULL,
+  interaction = FALSE,
+  derivative = FALSE,
+  individual = FALSE,
+  fun = mean,
+  bounds = c(qnorm(0.025), qnorm(0.975)),
+  uniform = TRUE,
+  n = c(10, NA),
+  ...
+)
 }
 \arguments{
 \item{obj}{(\link{WrappedModel})\cr
@@ -124,15 +133,17 @@ Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking 
 Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 }
 \seealso{
-Other partial_dependence: \code{\link{plotPartialDependence}}
+Other partial_dependence: 
+\code{\link{plotPartialDependence}()}
 
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotFilterValues}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{generateFeatureImportanceData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generateThreshVsPerfData}()},
+\code{\link{plotFilterValues}()}
 }
 \concept{generate_plot_data}
 \concept{partial_dependence}
