@@ -70,7 +70,8 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   select.method = NULL, base.methods = NULL, cache = FALSE, ...) {
 
   assertClass(task, "SupervisedTask")
-  assertFunction(func)
+  if (!is.null(func))
+	assertFunction(func)
 
   # base.methods arrive here in a list when called from 'tuneParams'.
   # we need them as a chr vec for further proc, so transforming
