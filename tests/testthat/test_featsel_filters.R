@@ -37,9 +37,7 @@ test_that("filterFeatures", {
   # extra test for rf.min.depth filter (#1066)
   fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rf.min.depth",
     more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
-
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test for auc filter (two class dataset)
   toy.data = data.frame(
