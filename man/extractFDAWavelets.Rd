@@ -26,9 +26,8 @@ functional data.
 See \link[wavelets:dwt]{wavelets::dwt} for more information.
 }
 \seealso{
-Other fda_featextractor: 
-\code{\link{extractFDAFPCA}()},
-\code{\link{extractFDAFourier}()},
-\code{\link{extractFDAMultiResFeatures}()}
+Other fda_featextractor: \code{\link{extractFDAFPCA}},
+  \code{\link{extractFDAFourier}},
+  \code{\link{extractFDAMultiResFeatures}}
 }
 \concept{fda_featextractor}

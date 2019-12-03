@@ -50,8 +50,7 @@ parameters for reextraction}.
 }
 }
 \seealso{
-Other fda: 
-\code{\link{makeExtractFDAFeatMethod}()},
-\code{\link{makeExtractFDAFeatsWrapper}()}
+Other fda: \code{\link{makeExtractFDAFeatMethod}},
+  \code{\link{makeExtractFDAFeatsWrapper}}
 }
 \concept{fda}

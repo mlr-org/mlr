@@ -30,7 +30,11 @@ makeRLearner.surv.cvglmnet = function() {
       makeNumericLearnerParam(id = "exmx", default = 250.0),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1),
-      makeLogicalLearnerParam(id = "factory", default = FALSE)
+      makeLogicalLearnerParam(id = "factory", default = FALSE),
+      makeUntypedLearnerParam(id = "offset", default = NULL),
+      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive"), requires = quote(family == "gaussian")),
+      makeNumericVectorLearnerParam(id = "gamma", lower = 0, upper = 1, requires = quote(relax == TRUE)),
+      makeLogicalLearnerParam(id = "relax", default = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "weights"),
     name = "GLM with Regularization (Cross Validated Lambda)",

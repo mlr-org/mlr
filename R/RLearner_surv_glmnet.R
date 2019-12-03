@@ -28,19 +28,23 @@ makeRLearner.surv.glmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250.0),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
+      makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1),
+      makeUntypedLearnerParam(id = "offset", default = NULL),
+      makeLogicalLearnerParam(id = "relax", default = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with Regularization",
     short.name = "glmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer.
-      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
-      but needs to be tuned by the user.
-      glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
-      before setting the specified parameters and after training.
-      If you are setting glmnet.control parameters through glmnet.control,
-      you need to save and re-set them after running the glmnet learner.",
+
+    note = paste0("Factors automatically get converted to dummy columns, ordered factors to integer.",
+      "Parameter `s` (value of the regularization parameter used for predictions)",
+      " is set to `0.1` by default, but needs to be tuned by the user.",
+      " glmnet uses a global control object for its parameters. mlr resets all",
+      " control parameters to their defaults before setting the specified parameters",
+      "and after training.",
+      " If you are setting glmnet.control parameters through glmnet.control,",
+      "you need to save and re-set them after running the glmnet learner."),
     callees = c("glmnet", "glmnet.control", "predict.glmnet")
   )
 }
