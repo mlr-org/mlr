@@ -40,23 +40,26 @@ This makes all parameters subordinate to \code{selected.learner}}
 # See makeModelMultiplexer
 }
 \seealso{
-Other multiplexer: \code{\link{makeModelMultiplexer}}
+Other multiplexer: 
+\code{\link{makeModelMultiplexer}()}
 
-Other tune: \code{\link{TuneControl}},
-  \code{\link{getNestedTuneResultsOptPathDf}},
-  \code{\link{getNestedTuneResultsX}},
-  \code{\link{getResamplingIndices}},
-  \code{\link{getTuneResult}},
-  \code{\link{makeModelMultiplexer}},
-  \code{\link{makeTuneControlCMAES}},
-  \code{\link{makeTuneControlDesign}},
-  \code{\link{makeTuneControlGenSA}},
-  \code{\link{makeTuneControlGrid}},
-  \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlMBO}},
-  \code{\link{makeTuneControlRandom}},
-  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
-  \code{\link{tuneThreshold}}
+Other tune: 
+\code{\link{TuneControl}},
+\code{\link{getNestedTuneResultsOptPathDf}()},
+\code{\link{getNestedTuneResultsX}()},
+\code{\link{getResamplingIndices}()},
+\code{\link{getTuneResult}()},
+\code{\link{makeModelMultiplexer}()},
+\code{\link{makeTuneControlCMAES}()},
+\code{\link{makeTuneControlDesign}()},
+\code{\link{makeTuneControlGenSA}()},
+\code{\link{makeTuneControlGrid}()},
+\code{\link{makeTuneControlIrace}()},
+\code{\link{makeTuneControlMBO}()},
+\code{\link{makeTuneControlRandom}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{tuneParams}()},
+\code{\link{tuneThreshold}()}
 }
 \concept{multiplexer}
 \concept{tune}

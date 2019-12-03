@@ -14,14 +14,16 @@ Prediction object.}
 Converts predictions to a format package ROCR can handle.
 }
 \seealso{
-Other roc: \code{\link{calculateROCMeasures}}
+Other roc: 
+\code{\link{calculateROCMeasures}()}
 
-Other predict: \code{\link{getPredictionProbabilities}},
-  \code{\link{getPredictionResponse}},
-  \code{\link{getPredictionTaskDesc}},
-  \code{\link{predict.WrappedModel}},
-  \code{\link{setPredictThreshold}},
-  \code{\link{setPredictType}}
+Other predict: 
+\code{\link{getPredictionProbabilities}()},
+\code{\link{getPredictionResponse}()},
+\code{\link{getPredictionTaskDesc}()},
+\code{\link{predict.WrappedModel}()},
+\code{\link{setPredictThreshold}()},
+\code{\link{setPredictType}()}
 }
 \concept{predict}
 \concept{roc}

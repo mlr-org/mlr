@@ -13,26 +13,52 @@
 \alias{makeFeatSelControlSequential}
 \title{Create control structures for feature selection.}
 \usage{
-makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
-  maxit = NA_integer_, max.features = NA_integer_,
-  tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = "default")
+makeFeatSelControlExhaustive(
+  same.resampling.instance = TRUE,
+  maxit = NA_integer_,
+  max.features = NA_integer_,
+  tune.threshold = FALSE,
+  tune.threshold.args = list(),
+  log.fun = "default"
+)
 
-makeFeatSelControlGA(same.resampling.instance = TRUE,
-  impute.val = NULL, maxit = NA_integer_, max.features = NA_integer_,
-  comma = FALSE, mu = 10L, lambda, crossover.rate = 0.5,
-  mutation.rate = 0.05, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = "default")
+makeFeatSelControlGA(
+  same.resampling.instance = TRUE,
+  impute.val = NULL,
+  maxit = NA_integer_,
+  max.features = NA_integer_,
+  comma = FALSE,
+  mu = 10L,
+  lambda,
+  crossover.rate = 0.5,
+  mutation.rate = 0.05,
+  tune.threshold = FALSE,
+  tune.threshold.args = list(),
+  log.fun = "default"
+)
 
-makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
-  max.features = NA_integer_, prob = 0.5, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = "default")
+makeFeatSelControlRandom(
+  same.resampling.instance = TRUE,
+  maxit = 100L,
+  max.features = NA_integer_,
+  prob = 0.5,
+  tune.threshold = FALSE,
+  tune.threshold.args = list(),
+  log.fun = "default"
+)
 
-makeFeatSelControlSequential(same.resampling.instance = TRUE,
-  impute.val = NULL, method, alpha = 0.01, beta = -0.001,
-  maxit = NA_integer_, max.features = NA_integer_,
-  tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = "default")
+makeFeatSelControlSequential(
+  same.resampling.instance = TRUE,
+  impute.val = NULL,
+  method,
+  alpha = 0.01,
+  beta = -0.001,
+  maxit = NA_integer_,
+  max.features = NA_integer_,
+  tune.threshold = FALSE,
+  tune.threshold.args = list(),
+  log.fun = "default"
+)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -171,9 +197,10 @@ Wrappers for feature subset selection, Artificial Intelligence Volume 97, 1997, 
 \url{http://ai.stanford.edu/~ronnyk/wrappersPrint.pdf}.\cr
 }
 \seealso{
-Other featsel: \code{\link{analyzeFeatSelResult}},
-  \code{\link{getFeatSelResult}},
-  \code{\link{makeFeatSelWrapper}},
-  \code{\link{selectFeatures}}
+Other featsel: 
+\code{\link{analyzeFeatSelResult}()},
+\code{\link{getFeatSelResult}()},
+\code{\link{makeFeatSelWrapper}()},
+\code{\link{selectFeatures}()}
 }
 \concept{featsel}

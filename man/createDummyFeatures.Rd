@@ -4,8 +4,12 @@
 \alias{createDummyFeatures}
 \title{Generate dummy variables for factor features.}
 \usage{
-createDummyFeatures(obj, target = character(0L), method = "1-of-n",
-  cols = NULL)
+createDummyFeatures(
+  obj,
+  target = character(0L),
+  method = "1-of-n",
+  cols = NULL
+)
 }
 \arguments{
 \item{obj}{(\link{data.frame} | \link{Task})\cr
@@ -39,12 +43,13 @@ Replace all factor features with their dummy variables. Internally \link{model.m
 Non factor features will be left untouched and passed to the result.
 }
 \seealso{
-Other eda_and_preprocess: \code{\link{capLargeValues}},
-  \code{\link{dropFeatures}},
-  \code{\link{mergeSmallFactorLevels}},
-  \code{\link{normalizeFeatures}},
-  \code{\link{removeConstantFeatures}},
-  \code{\link{summarizeColumns}},
-  \code{\link{summarizeLevels}}
+Other eda_and_preprocess: 
+\code{\link{capLargeValues}()},
+\code{\link{dropFeatures}()},
+\code{\link{mergeSmallFactorLevels}()},
+\code{\link{normalizeFeatures}()},
+\code{\link{removeConstantFeatures}()},
+\code{\link{summarizeColumns}()},
+\code{\link{summarizeLevels}()}
 }
 \concept{eda_and_preprocess}
