@@ -18,9 +18,13 @@ plotFilterValues(
 Filter values.}
 
 \item{sort}{(\code{character(1)})\cr
-Sort features like this.
-\dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
-Default is decreasing.}
+Available options are:
+\itemize{
+\item \code{"dec"}-> descending
+\item \code{"inc"} -> increasing
+\item \code{"none"} -> no sorting \br
+Default is decreasing.
+}}
 
 \item{n.show}{(\code{integer(1)})\cr
 Number of features (maximal) to show.
