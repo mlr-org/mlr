@@ -4,21 +4,11 @@
 \alias{plotHyperParsEffect}
 \title{Plot the hyperparameter effects data}
 \usage{
-plotHyperParsEffect(
-  hyperpars.effect.data,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  plot.type = "scatter",
-  loess.smooth = FALSE,
-  facet = NULL,
-  global.only = TRUE,
-  interpolate = NULL,
-  show.experiments = FALSE,
-  show.interpolated = FALSE,
-  nested.agg = mean,
-  partial.dep.learn = NULL
-)
+plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL,
+  z = NULL, plot.type = "scatter", loess.smooth = FALSE,
+  facet = NULL, global.only = TRUE, interpolate = NULL,
+  show.experiments = FALSE, show.interpolated = FALSE,
+  nested.agg = mean, partial.dep.learn = NULL)
 }
 \arguments{
 \item{hyperpars.effect.data}{(\code{HyperParsEffectData})\cr
@@ -91,7 +81,7 @@ interpolation so that you can see which points were interpolated. Not used
 with partial dependence.
 Default is \code{FALSE}.}
 
-\item{nested.agg}{(\verb{function})\cr
+\item{nested.agg}{(\code{function})\cr
 The function used to aggregate nested cross validation runs when plotting 2
 hyperparameters. This is also used for nested aggregation in partial
 dependence.

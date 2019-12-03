@@ -21,7 +21,6 @@ makeRLearner.regr.glmnet = function() {
       makeNumericVectorLearnerParam(id = "lower.limits", upper = 0),
       makeNumericVectorLearnerParam(id = "upper.limits", lower = 0),
       makeIntegerLearnerParam(id = "maxit", default = 100000L, lower = 1L),
-      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive")),
       makeLogicalLearnerParam(id = "standardize.response", default = FALSE),
       makeNumericLearnerParam(id = "fdev", default = 1.0e-5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "devmax", default = 0.999, lower = 0, upper = 1),
@@ -31,7 +30,10 @@ makeRLearner.regr.glmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
+      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L),
+      makeUntypedLearnerParam(id = "offset", default = NULL),
+      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive"), requires = quote(family == "gaussian")),
+      makeLogicalLearnerParam(id = "relax", default = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "weights"),
     par.vals = list(s = 0.01),

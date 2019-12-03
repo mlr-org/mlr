@@ -4,12 +4,8 @@
 \alias{friedmanPostHocTestBMR}
 \title{Perform a posthoc Friedman-Nemenyi test.}
 \usage{
-friedmanPostHocTestBMR(
-  bmr,
-  measure = NULL,
-  p.value = 0.05,
-  aggregation = "default"
-)
+friedmanPostHocTestBMR(bmr, measure = NULL, p.value = 0.05,
+  aggregation = "default")
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -49,31 +45,28 @@ are required.
 # see benchmark
 }
 \seealso{
-Other benchmark: 
-\code{\link{BenchmarkResult}},
-\code{\link{batchmark}()},
-\code{\link{benchmark}()},
-\code{\link{convertBMRToRankMatrix}()},
-\code{\link{friedmanTestBMR}()},
-\code{\link{generateCritDifferencesData}()},
-\code{\link{getBMRAggrPerformances}()},
-\code{\link{getBMRFeatSelResults}()},
-\code{\link{getBMRFilteredFeatures}()},
-\code{\link{getBMRLearnerIds}()},
-\code{\link{getBMRLearnerShortNames}()},
-\code{\link{getBMRLearners}()},
-\code{\link{getBMRMeasureIds}()},
-\code{\link{getBMRMeasures}()},
-\code{\link{getBMRModels}()},
-\code{\link{getBMRPerformances}()},
-\code{\link{getBMRPredictions}()},
-\code{\link{getBMRTaskDescs}()},
-\code{\link{getBMRTaskIds}()},
-\code{\link{getBMRTuneResults}()},
-\code{\link{plotBMRBoxplots}()},
-\code{\link{plotBMRRanksAsBarChart}()},
-\code{\link{plotBMRSummary}()},
-\code{\link{plotCritDifferences}()},
-\code{\link{reduceBatchmarkResults}()}
+Other benchmark: \code{\link{BenchmarkResult}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
+  \code{\link{convertBMRToRankMatrix}},
+  \code{\link{friedmanTestBMR}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{getBMRAggrPerformances}},
+  \code{\link{getBMRFeatSelResults}},
+  \code{\link{getBMRFilteredFeatures}},
+  \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
+  \code{\link{getBMRLearners}},
+  \code{\link{getBMRMeasureIds}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
+  \code{\link{getBMRPerformances}},
+  \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
+  \code{\link{getBMRTaskIds}},
+  \code{\link{getBMRTuneResults}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
 \concept{benchmark}

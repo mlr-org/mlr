@@ -14,45 +14,24 @@
 \alias{makeTuneMultiCritControlRandom}
 \title{Create control structures for multi-criteria tuning.}
 \usage{
-makeTuneMultiCritControlGrid(
-  same.resampling.instance = TRUE,
-  resolution = 10L,
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL
-)
+makeTuneMultiCritControlGrid(same.resampling.instance = TRUE,
+  resolution = 10L, log.fun = "default", final.dw.perc = NULL,
+  budget = NULL)
 
-makeTuneMultiCritControlMBO(
-  n.objectives = mbo.control$n.objectives,
-  same.resampling.instance = TRUE,
-  impute.val = NULL,
-  learner = NULL,
-  mbo.control = NULL,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  continue = FALSE,
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL,
-  mbo.design = NULL
-)
+makeTuneMultiCritControlMBO(n.objectives = mbo.control$n.objectives,
+  same.resampling.instance = TRUE, impute.val = NULL, learner = NULL,
+  mbo.control = NULL, tune.threshold = FALSE,
+  tune.threshold.args = list(), continue = FALSE,
+  log.fun = "default", final.dw.perc = NULL, budget = NULL,
+  mbo.design = NULL)
 
-makeTuneMultiCritControlNSGA2(
-  same.resampling.instance = TRUE,
-  impute.val = NULL,
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL,
-  ...
-)
+makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
+  impute.val = NULL, log.fun = "default", final.dw.perc = NULL,
+  budget = NULL, ...)
 
-makeTuneMultiCritControlRandom(
-  same.resampling.instance = TRUE,
-  maxit = 100L,
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL
-)
+makeTuneMultiCritControlRandom(same.resampling.instance = TRUE,
+  maxit = 100L, log.fun = "default", final.dw.perc = NULL,
+  budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -66,7 +45,7 @@ Either pass one resolution for all parameters, or a named vector.
 See \link[ParamHelpers:generateGridDesign]{ParamHelpers::generateGridDesign}.
 Default is 10.}
 
-\item{log.fun}{(\verb{function} | \code{character(1)})\cr
+\item{log.fun}{(\code{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
 If set to \dQuote{memory} the memory usage for each evaluation will also be displayed, with \code{character(1)} small increase
@@ -135,7 +114,7 @@ Resume calculation from previous run using \link[mlrMBO:mboContinue]{mlrMBO::mbo
 Requires \dQuote{save.file.path} to be set.
 Note that the \link[ParamHelpers:OptPath]{ParamHelpers::OptPath} in the \link[mlrMBO:OptResult]{mlrMBO::OptResult}
 will only include the evaluations after the continuation.
-The complete \link{OptPath} will be found in the slot \verb{$mbo.result$opt.path}.}
+The complete \link{OptPath} will be found in the slot \code{$mbo.result$opt.path}.}
 
 \item{mbo.design}{(\link{data.frame} | \code{NULL})\cr
 Initial design as data frame.
@@ -173,8 +152,7 @@ parameter types can be handled.}
 }
 }
 \seealso{
-Other tune_multicrit: 
-\code{\link{plotTuneMultiCritResult}()},
-\code{\link{tuneParamsMultiCrit}()}
+Other tune_multicrit: \code{\link{plotTuneMultiCritResult}},
+  \code{\link{tuneParamsMultiCrit}}
 }
 \concept{tune_multicrit}

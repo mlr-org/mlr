@@ -4,13 +4,8 @@
 \alias{plotLearningCurve}
 \title{Plot learning curve data using ggplot2.}
 \usage{
-plotLearningCurve(
-  obj,
-  facet = "measure",
-  pretty.names = TRUE,
-  facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL
-)
+plotLearningCurve(obj, facet = "measure", pretty.names = TRUE,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{obj}{(\link{LearningCurveData})\cr
@@ -37,20 +32,17 @@ ggplot2 plot object.
 Visualizes data size (percentage used for model) vs. performance measure(s).
 }
 \seealso{
-Other learning_curve: 
-\code{\link{generateLearningCurveData}()}
+Other learning_curve: \code{\link{generateLearningCurveData}}
 
-Other plot: 
-\code{\link{createSpatialResamplingPlots}()},
-\code{\link{plotBMRBoxplots}()},
-\code{\link{plotBMRRanksAsBarChart}()},
-\code{\link{plotBMRSummary}()},
-\code{\link{plotCalibration}()},
-\code{\link{plotCritDifferences}()},
-\code{\link{plotPartialDependence}()},
-\code{\link{plotROCCurves}()},
-\code{\link{plotResiduals}()},
-\code{\link{plotThreshVsPerf}()}
+Other plot: \code{\link{createSpatialResamplingPlots}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerf}}
 }
 \concept{learning_curve}
 \concept{plot}

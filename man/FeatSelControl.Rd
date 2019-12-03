@@ -13,52 +13,26 @@
 \alias{makeFeatSelControlSequential}
 \title{Create control structures for feature selection.}
 \usage{
-makeFeatSelControlExhaustive(
-  same.resampling.instance = TRUE,
-  maxit = NA_integer_,
-  max.features = NA_integer_,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default"
-)
+makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
+  maxit = NA_integer_, max.features = NA_integer_,
+  tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = "default")
 
-makeFeatSelControlGA(
-  same.resampling.instance = TRUE,
-  impute.val = NULL,
-  maxit = NA_integer_,
-  max.features = NA_integer_,
-  comma = FALSE,
-  mu = 10L,
-  lambda,
-  crossover.rate = 0.5,
-  mutation.rate = 0.05,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default"
-)
+makeFeatSelControlGA(same.resampling.instance = TRUE,
+  impute.val = NULL, maxit = NA_integer_, max.features = NA_integer_,
+  comma = FALSE, mu = 10L, lambda, crossover.rate = 0.5,
+  mutation.rate = 0.05, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default")
 
-makeFeatSelControlRandom(
-  same.resampling.instance = TRUE,
-  maxit = 100L,
-  max.features = NA_integer_,
-  prob = 0.5,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default"
-)
+makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
+  max.features = NA_integer_, prob = 0.5, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default")
 
-makeFeatSelControlSequential(
-  same.resampling.instance = TRUE,
-  impute.val = NULL,
-  method,
-  alpha = 0.01,
-  beta = -0.001,
-  maxit = NA_integer_,
-  max.features = NA_integer_,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default"
-)
+makeFeatSelControlSequential(same.resampling.instance = TRUE,
+  impute.val = NULL, method, alpha = 0.01, beta = -0.001,
+  maxit = NA_integer_, max.features = NA_integer_,
+  tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = "default")
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -82,7 +56,7 @@ Default is \code{FALSE}.}
 Further arguments for threshold tuning that are passed down to \link{tuneThreshold}.
 Default is none.}
 
-\item{log.fun}{(\verb{function} | \code{character(1)})\cr
+\item{log.fun}{(\code{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
 If set to \dQuote{memory} the memory usage for each evaluation will also be displayed, with \code{character(1)} small increase
@@ -197,10 +171,9 @@ Wrappers for feature subset selection, Artificial Intelligence Volume 97, 1997, 
 \url{http://ai.stanford.edu/~ronnyk/wrappersPrint.pdf}.\cr
 }
 \seealso{
-Other featsel: 
-\code{\link{analyzeFeatSelResult}()},
-\code{\link{getFeatSelResult}()},
-\code{\link{makeFeatSelWrapper}()},
-\code{\link{selectFeatures}()}
+Other featsel: \code{\link{analyzeFeatSelResult}},
+  \code{\link{getFeatSelResult}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{selectFeatures}}
 }
 \concept{featsel}

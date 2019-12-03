@@ -4,16 +4,9 @@
 \alias{configureMlr}
 \title{Configures the behavior of the package.}
 \usage{
-configureMlr(
-  show.info,
-  on.learner.error,
-  on.learner.warning,
-  on.par.without.desc,
-  on.par.out.of.bounds,
-  on.measure.not.applicable,
-  show.learner.output,
-  on.error.dump
-)
+configureMlr(show.info, on.learner.error, on.learner.warning,
+  on.par.without.desc, on.par.out.of.bounds, on.measure.not.applicable,
+  show.learner.output, on.error.dump)
 }
 \arguments{
 \item{show.info}{(\code{logical(1)})\cr
@@ -81,7 +74,6 @@ If you do not set an option here, its current value will be kept.
 If you call this function with an empty argument list, everything is set to its defaults.
 }
 \seealso{
-Other configure: 
-\code{\link{getMlrOptions}()}
+Other configure: \code{\link{getMlrOptions}}
 }
 \concept{configure}

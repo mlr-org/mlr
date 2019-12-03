@@ -4,7 +4,12 @@
 \alias{ResampleResult}
 \title{ResampleResult object.}
 \description{
-A resample result is created by \link{resample} and
+A container for resample results.
+}
+\details{
+Resample Result:
+
+A resample result is created by resample and
 contains the following object members:
 \describe{
 \item{task.id (\code{character(1)}):}{
@@ -26,11 +31,11 @@ see general description above.
 }
 \item{aggr (\link{numeric}):}{
 Named vector of aggregated performance values. Names are coded like
-this <measure>.<aggregation>.
+this \code{<measure>.<aggregation>}.
 }
 \item{err.msgs (\link{data.frame}):}{
 Number of rows equals resampling iterations
-and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
+and columns are: \code{iter}, \code{train}, \code{predict}.
 Stores error messages generated during train or predict, if these were caught
 via \link{configureMlr}.
 }
@@ -40,7 +45,7 @@ of \code{dump.frames} objects that can be fed to \code{debugger()} to inspect
 error dumps generated on learner errors. One iteration can generate more than
 one error dump depending on which of training, prediction on training set,
 or prediction on test set, operations fail. Therefore the lists have named
-slots \verb{$train}, \verb{$predict.train}, or \verb{$predict.test} if relevant.
+slots \code{$train}, \code{$predict.train}, or \code{$predict.test} if relevant.
 The error dumps are only saved when option \code{on.error.dump} is \code{TRUE}.
 }
 \item{pred (\link{ResamplePrediction}):}{
@@ -60,21 +65,18 @@ The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling.
 }
 \seealso{
-Other resample: 
-\code{\link{ResamplePrediction}},
-\code{\link{addRRMeasure}()},
-\code{\link{getRRPredictionList}()},
-\code{\link{getRRPredictions}()},
-\code{\link{getRRTaskDescription}()},
-\code{\link{getRRTaskDesc}()},
-\code{\link{makeResampleDesc}()},
-\code{\link{makeResampleInstance}()},
-\code{\link{resample}()}
+Other resample: \code{\link{ResamplePrediction}},
+  \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
+  \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
+  \code{\link{getRRTaskDesc}},
+  \code{\link{makeResampleDesc}},
+  \code{\link{makeResampleInstance}},
+  \code{\link{resample}}
 
-Other debug: 
-\code{\link{FailureModel}},
-\code{\link{getPredictionDump}()},
-\code{\link{getRRDump}()}
+Other debug: \code{\link{FailureModel}},
+  \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
 }
 \concept{debug}
 \concept{resample}

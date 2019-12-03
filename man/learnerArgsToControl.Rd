@@ -7,7 +7,7 @@
 learnerArgsToControl(control, ...)
 }
 \arguments{
-\item{control}{(\verb{function})\cr
+\item{control}{(\code{function})\cr
 Function that creates control structure.}
 
 \item{...}{(any)\cr
