@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## plotting
+
+* `n.show` argument had no effect in `plotFilterValues()`. Thanks @albersonmiranda, #2689
+
 # mlr 2.16.0
 
 ## package infrastructure
