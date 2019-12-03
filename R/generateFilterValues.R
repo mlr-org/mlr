@@ -56,11 +56,11 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   # ensemble
   if (class(method) == "list") {
     if (method[[1]] %in% ls(.FilterEnsembleRegister)) {
-	  ens.method = method[[1]]
-	  method = method[[2]]
-	  if (length(method) == 1) {
-		warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
-	  }
+			ens.method = method[[1]]
+			method = method[[2]]
+			if (length(method) == 1) {
+				warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+			}
     }
   }
 
@@ -133,7 +133,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 			missing.score = setdiff(fn, names(x))
 			x[missing.score] = NA_real_
 			x[match(fn, names(x))]
-    }, filter, index_names, SIMPLIFY=FALSE)    
+    }, filter, index_names, SIMPLIFY = FALSE)    
     fval = do.call(cbind, fval)
     colnames(fval) = method
 	if (!is.null(names(method)))
