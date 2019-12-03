@@ -6,7 +6,7 @@ repos:
     # any R project
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=mlr_style]
-    -   id: lintr
+    # -   id: lintr
     -   id: parsable-R
     -   id: no-browser-statement
     -   id: readme-rmd-rendered
