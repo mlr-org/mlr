@@ -21,16 +21,16 @@ makeRLearner.classif.FDboost = function() {
     properties = c("functionals", "numerics", "twoclass", "prob"),
     name = "Functional linear array classification boosting",
     short.name = "FDboost",
-    note = "Uses only one base learner per functional or scalar covariate. 
+    note = "Uses only one base learner per functional or scalar covariate.
       Uses the same hyperparameters for every baselearner.
       Currently does not support interaction between scalar covariates.
-      Default for family has been set to 'Binomlial', as 'Gaussian' is not applicable."
+      Default for family has been set to 'Binomial', as 'Gaussian' is not applicable."
   )
 }
 
 #' @export
 trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NULL,
-  mstop = 100L, knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, 
+  mstop = 100L, knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
   Binomial.link = "logit", nu = 0.1, family = "Binomial", custom.family.definition = NULL,
   d = NULL, ...) {
 
@@ -42,7 +42,7 @@ trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NUL
 
   # Note: Family PropOdds applicable only for ordinal classification:
   # PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange)
-  
+
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
 
   hh = getFDboostFormulaMat(.task, knots = knots, df = df, bsignal.check.ident = bsignal.check.ident,
@@ -61,7 +61,7 @@ predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response") # additional parameters passed to mboost::predict()
 
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
-  
+
   if (.learner$predict.type == "prob") {
     if (!is.matrix(p) && any(is.na(p))) {
       stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
