@@ -164,7 +164,8 @@ print.FilterValues = function(x, ...) {
 #'   Available options are:
 #'   - `"dec"`-> descending
 #'   - `"inc"` -> increasing
-#'   - `"none"` -> no sorting \br
+#'   - `"none"` -> no sorting
+#'
 #'   Default is decreasing.
 #' @param n.show (`integer(1)`)\cr
 #'   Number of features (maximal) to show.

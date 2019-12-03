@@ -22,9 +22,10 @@ Available options are:
 \itemize{
 \item \code{"dec"}-> descending
 \item \code{"inc"} -> increasing
-\item \code{"none"} -> no sorting \br
-Default is decreasing.
-}}
+\item \code{"none"} -> no sorting
+}
+
+Default is decreasing.}
 
 \item{n.show}{(\code{integer(1)})\cr
 Number of features (maximal) to show.
