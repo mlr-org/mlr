@@ -6,17 +6,17 @@
 # Where the target is a scalar and the covarite is functional covariate,
 # and the regression is an integration with respect to a link function upon the conditional
 # expectation. $g\{E(Y_i|X_i)\} = \theta_0 +\int_{\tau} F\{X_i(\tau), \tau \}d{\tau}$,
-# where the smooth function $F\{X(t), t\}$(estimation surface which is fitted againt 
+# where the smooth function $F\{X(t), t\}$(estimation surface which is fitted againt
 # all X(t), t pair) is not binded to be linear with the functional predictor $X(t)$ and
 # takes an additive form which could quantify how important each functional point is to the
-# response. The basic form for the smooth function is penalized splines. Typical application 
-# for FGAM is Diffusion tensor imaging(DTI) parallel diffusivity on Corpus 
+# response. The basic form for the smooth function is penalized splines. Typical application
+# for FGAM is Diffusion tensor imaging(DTI) parallel diffusivity on Corpus
 # Callosum where signal is higher for voxels where diffusion is hindered for
-# multiple sclerosis patient PASAT score( A cognitive measure). For each pixel, 
-# there could be a tensor of 3*3 symmetric matrix which results from applying gradient 
-# from several non-collinear directions. In FGAM, X(t) is transformed to be in the interval of 
+# multiple sclerosis patient PASAT score( A cognitive measure). For each pixel,
+# there could be a tensor of 3*3 symmetric matrix which results from applying gradient
+# from several non-collinear directions. In FGAM, X(t) is transformed to be in the interval of
 # [0,1] by cdf tranform to let the limited observation data to fill all space of the surface
-# and invariant to tranformation of functional predictors. FGAM support multiple functional 
+# and invariant to tranformation of functional predictors. FGAM support multiple functional
 # covariate. Currently, only splines are used as base learner.
 
 fgam.ps = makeParamSet(
@@ -56,7 +56,7 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
       # ... extract the corresponding original data into a list of matrices
       mat.list[[fdn]] = mdata[, fdn]
       # ... create a formula item
-      # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), 
+      # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM),
       # while refund::lf means linear Model (FLM)
       fkm = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
         fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$mgcv.te_ti.m, parlist$integration)
