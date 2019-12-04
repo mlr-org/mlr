@@ -339,8 +339,16 @@ to a single feature, but you are able to change this by using the arguments `bit
 and `bits.to.features`. Thus allowing you to switch on whole groups of features with a single bit.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>selectFeatures</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='no'>bit.names</span>,
-  <span class='no'>bits.to.features</span>, <span class='no'>control</span>, <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))</pre>
+    <pre class="usage"><span class='fu'>selectFeatures</span>(
+  <span class='no'>learner</span>,
+  <span class='no'>task</span>,
+  <span class='no'>resampling</span>,
+  <span class='no'>measures</span>,
+  <span class='no'>bit.names</span>,
+  <span class='no'>bits.to.features</span>,
+  <span class='no'>control</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -403,10 +411,11 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     <p>([FeatSelResult]).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other featsel: <code><a href='FeatSelControl.html'>FeatSelControl</a></code>,
-  <code><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a></code>,
-  <code><a href='getFeatSelResult.html'>getFeatSelResult</a></code>,
-  <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code></p></div>
+    <div class='dont-index'><p>Other featsel: 
+<code><a href='FeatSelControl.html'>FeatSelControl</a></code>,
+<code><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a>()</code>,
+<code><a href='getFeatSelResult.html'>getFeatSelResult</a>()</code>,
+<code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>

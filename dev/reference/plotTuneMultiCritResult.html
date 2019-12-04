@@ -325,8 +325,14 @@
     <p>Visualizes the pareto front and possibly the dominated points.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotTuneMultiCritResult</span>(<span class='no'>res</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shape</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>plotTuneMultiCritResult</span>(
+  <span class='no'>res</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>shape</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -373,8 +379,9 @@ Whether to use the ID of the measures instead of their name in labels. Defaults 
     <p>ggplot2 plot object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tune_multicrit: <code><a href='TuneMultiCritControl.html'>TuneMultiCritControl</a></code>,
-  <code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a></code></p></div>
+    <div class='dont-index'><p>Other tune_multicrit: 
+<code><a href='TuneMultiCritControl.html'>TuneMultiCritControl</a></code>,
+<code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># see tuneParamsMultiCrit

@@ -329,8 +329,13 @@ resample, or these objects are rbind-ed with extra columns
 &#8220;task.id&#8221; and &#8220;learner.id&#8221;.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getBMRAggrPerformances</span>(<span class='no'>bmr</span>, <span class='kw'>task.ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>learner.ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>as.df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>getBMRAggrPerformances</span>(
+  <span class='no'>bmr</span>,
+  <span class='kw'>task.ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>learner.ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>as.df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -382,29 +387,32 @@ task/learner will be dropped from the return object.</p></td>
     <p>(<a href='https://rdrr.io/r/base/list.html'>list</a> | <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>). See above.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other benchmark: <code><a href='BenchmarkResult.html'>BenchmarkResult</a></code>,
-  <code><a href='batchmark.html'>batchmark</a></code>, <code><a href='benchmark.html'>benchmark</a></code>,
-  <code><a href='convertBMRToRankMatrix.html'>convertBMRToRankMatrix</a></code>,
-  <code><a href='friedmanPostHocTestBMR.html'>friedmanPostHocTestBMR</a></code>,
-  <code><a href='friedmanTestBMR.html'>friedmanTestBMR</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='getBMRFeatSelResults.html'>getBMRFeatSelResults</a></code>,
-  <code><a href='getBMRFilteredFeatures.html'>getBMRFilteredFeatures</a></code>,
-  <code><a href='getBMRLearnerIds.html'>getBMRLearnerIds</a></code>,
-  <code><a href='getBMRLearnerShortNames.html'>getBMRLearnerShortNames</a></code>,
-  <code><a href='getBMRLearners.html'>getBMRLearners</a></code>,
-  <code><a href='getBMRMeasureIds.html'>getBMRMeasureIds</a></code>,
-  <code><a href='getBMRMeasures.html'>getBMRMeasures</a></code>, <code><a href='getBMRModels.html'>getBMRModels</a></code>,
-  <code><a href='getBMRPerformances.html'>getBMRPerformances</a></code>,
-  <code><a href='getBMRPredictions.html'>getBMRPredictions</a></code>,
-  <code><a href='getBMRTaskDescs.html'>getBMRTaskDescs</a></code>,
-  <code><a href='getBMRTaskIds.html'>getBMRTaskIds</a></code>,
-  <code><a href='getBMRTuneResults.html'>getBMRTuneResults</a></code>,
-  <code><a href='plotBMRBoxplots.html'>plotBMRBoxplots</a></code>,
-  <code><a href='plotBMRRanksAsBarChart.html'>plotBMRRanksAsBarChart</a></code>,
-  <code><a href='plotBMRSummary.html'>plotBMRSummary</a></code>,
-  <code><a href='plotCritDifferences.html'>plotCritDifferences</a></code>,
-  <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a></code></p></div>
+    <div class='dont-index'><p>Other benchmark: 
+<code><a href='BenchmarkResult.html'>BenchmarkResult</a></code>,
+<code><a href='batchmark.html'>batchmark</a>()</code>,
+<code><a href='benchmark.html'>benchmark</a>()</code>,
+<code><a href='convertBMRToRankMatrix.html'>convertBMRToRankMatrix</a>()</code>,
+<code><a href='friedmanPostHocTestBMR.html'>friedmanPostHocTestBMR</a>()</code>,
+<code><a href='friedmanTestBMR.html'>friedmanTestBMR</a>()</code>,
+<code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>()</code>,
+<code><a href='getBMRFeatSelResults.html'>getBMRFeatSelResults</a>()</code>,
+<code><a href='getBMRFilteredFeatures.html'>getBMRFilteredFeatures</a>()</code>,
+<code><a href='getBMRLearnerIds.html'>getBMRLearnerIds</a>()</code>,
+<code><a href='getBMRLearnerShortNames.html'>getBMRLearnerShortNames</a>()</code>,
+<code><a href='getBMRLearners.html'>getBMRLearners</a>()</code>,
+<code><a href='getBMRMeasureIds.html'>getBMRMeasureIds</a>()</code>,
+<code><a href='getBMRMeasures.html'>getBMRMeasures</a>()</code>,
+<code><a href='getBMRModels.html'>getBMRModels</a>()</code>,
+<code><a href='getBMRPerformances.html'>getBMRPerformances</a>()</code>,
+<code><a href='getBMRPredictions.html'>getBMRPredictions</a>()</code>,
+<code><a href='getBMRTaskDescs.html'>getBMRTaskDescs</a>()</code>,
+<code><a href='getBMRTaskIds.html'>getBMRTaskIds</a>()</code>,
+<code><a href='getBMRTuneResults.html'>getBMRTuneResults</a>()</code>,
+<code><a href='plotBMRBoxplots.html'>plotBMRBoxplots</a>()</code>,
+<code><a href='plotBMRRanksAsBarChart.html'>plotBMRRanksAsBarChart</a>()</code>,
+<code><a href='plotBMRSummary.html'>plotBMRSummary</a>()</code>,
+<code><a href='plotCritDifferences.html'>plotCritDifferences</a>()</code>,
+<code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -363,9 +363,18 @@ the fitted model and the prediction.</p>
 
     </div>
 
-    <pre class="usage"><span class='fu'>makeMeasure</span>(<span class='no'>id</span>, <span class='no'>minimize</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='no'>fun</span>,
-  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>, <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>id</span>, <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>makeMeasure</span>(
+  <span class='no'>id</span>,
+  <span class='no'>minimize</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
+  <span class='no'>fun</span>,
+  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>,
+  <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>id</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -457,15 +466,17 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
     <p>Measure.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other performance: <code><a href='ConfusionMatrix.html'>ConfusionMatrix</a></code>,
-  <code><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></code>,
-  <code><a href='calculateROCMeasures.html'>calculateROCMeasures</a></code>,
-  <code><a href='estimateRelativeOverfitting.html'>estimateRelativeOverfitting</a></code>,
-  <code><a href='makeCostMeasure.html'>makeCostMeasure</a></code>,
-  <code><a href='makeCustomResampledMeasure.html'>makeCustomResampledMeasure</a></code>,
-  <code><a href='measures.html'>measures</a></code>, <code><a href='performance.html'>performance</a></code>,
-  <code><a href='setAggregation.html'>setAggregation</a></code>,
-  <code><a href='setMeasurePars.html'>setMeasurePars</a></code></p></div>
+    <div class='dont-index'><p>Other performance: 
+<code><a href='ConfusionMatrix.html'>ConfusionMatrix</a></code>,
+<code><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a>()</code>,
+<code><a href='calculateROCMeasures.html'>calculateROCMeasures</a>()</code>,
+<code><a href='estimateRelativeOverfitting.html'>estimateRelativeOverfitting</a>()</code>,
+<code><a href='makeCostMeasure.html'>makeCostMeasure</a>()</code>,
+<code><a href='makeCustomResampledMeasure.html'>makeCustomResampledMeasure</a>()</code>,
+<code><a href='measures.html'>measures</a></code>,
+<code><a href='performance.html'>performance</a>()</code>,
+<code><a href='setAggregation.html'>setAggregation</a>()</code>,
+<code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>model</span>, <span class='no'>pred</span>, <span class='no'>extra.args</span>)
