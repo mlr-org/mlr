@@ -439,17 +439,15 @@ H. Uno et al.
 Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{https://www.jstor.org/stable/27639883}.
 }
 \seealso{
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateConfusionMatrix}()},
-\code{\link{calculateROCMeasures}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCostMeasure}()},
-\code{\link{makeCustomResampledMeasure}()},
-\code{\link{makeMeasure}()},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}
 \keyword{datasets}

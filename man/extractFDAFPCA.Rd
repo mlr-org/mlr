@@ -23,9 +23,8 @@ The function extracts the functional principal components from a data.frame
 containing functional features.
 }
 \seealso{
-Other fda_featextractor: 
-\code{\link{extractFDAFourier}()},
-\code{\link{extractFDAMultiResFeatures}()},
-\code{\link{extractFDAWavelets}()}
+Other fda_featextractor: \code{\link{extractFDAFourier}},
+  \code{\link{extractFDAMultiResFeatures}},
+  \code{\link{extractFDAWavelets}}
 }
 \concept{fda_featextractor}

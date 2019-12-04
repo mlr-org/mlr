@@ -4,12 +4,8 @@
 \alias{generateHyperParsEffectData}
 \title{Generate hyperparameter effect data.}
 \usage{
-generateHyperParsEffectData(
-  tune.result,
-  include.diagnostics = FALSE,
-  trafo = FALSE,
-  partial.dep = FALSE
-)
+generateHyperParsEffectData(tune.result, include.diagnostics = FALSE,
+  trafo = FALSE, partial.dep = FALSE)
 }
 \arguments{
 \item{tune.result}{(\link{TuneResult} | \link{ResampleResult})\cr

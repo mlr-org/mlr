@@ -4,14 +4,8 @@
 \alias{plotTuneMultiCritResult}
 \title{Plots multi-criteria results after tuning using ggplot2.}
 \usage{
-plotTuneMultiCritResult(
-  res,
-  path = TRUE,
-  col = NULL,
-  shape = NULL,
-  pointsize = 2,
-  pretty.names = TRUE
-)
+plotTuneMultiCritResult(res, path = TRUE, col = NULL, shape = NULL,
+  pointsize = 2, pretty.names = TRUE)
 }
 \arguments{
 \item{res}{(\link{TuneMultiCritResult})\cr
@@ -47,8 +41,7 @@ Visualizes the pareto front and possibly the dominated points.
 # see tuneParamsMultiCrit
 }
 \seealso{
-Other tune_multicrit: 
-\code{\link{TuneMultiCritControl}},
-\code{\link{tuneParamsMultiCrit}()}
+Other tune_multicrit: \code{\link{TuneMultiCritControl}},
+  \code{\link{tuneParamsMultiCrit}}
 }
 \concept{tune_multicrit}

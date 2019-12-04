@@ -5,17 +5,9 @@
 \alias{ClassifTask}
 \title{Create a classification task.}
 \usage{
-makeClassifTask(
-  id = deparse(substitute(data)),
-  data,
-  target,
-  weights = NULL,
-  blocking = NULL,
-  coordinates = NULL,
-  positive = NA_character_,
-  fixup.data = "warn",
-  check.data = TRUE
-)
+makeClassifTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr

@@ -5,15 +5,9 @@
 \alias{CostSensTask}
 \title{Create a cost-sensitive classification task.}
 \usage{
-makeCostSensTask(
-  id = deparse(substitute(data)),
-  data,
-  costs,
-  blocking = NULL,
-  coordinates = NULL,
-  fixup.data = "warn",
-  check.data = TRUE
-)
+makeCostSensTask(id = deparse(substitute(data)), data, costs,
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
+  check.data = TRUE)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
@@ -64,9 +58,8 @@ Create a cost-sensitive classification task.
 \seealso{
 \link{Task} \link{ClassifTask} \link{ClusterTask} \link{MultilabelTask} \link{RegrTask} \link{SurvTask}
 
-Other costsens: 
-\code{\link{makeCostSensClassifWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeCostSensWeightedPairsWrapper}()}
+Other costsens: \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeCostSensWeightedPairsWrapper}}
 }
 \concept{costsens}
