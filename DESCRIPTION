@@ -257,6 +257,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    vdiffr,
     wavelets,
     xgboost (>= 0.6-2)
 VignetteBuilder:
