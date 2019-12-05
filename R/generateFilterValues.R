@@ -219,9 +219,13 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L,
 
   plt = ggplot(data = data, mapping = mp)
   plt = plt +
-    geom_bar(position = "identity", stat = "identity")
-
-  plt = plt +
+    geom_bar(position = "identity", stat = "identity") +
+    labs(
+      title = sprintf("%s (%i features), filter = %s",
+        fvalues$task.desc$id,
+        sum(fvalues$task.desc$n.feat),
+        data$method),
+      x = "", y = "") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
   return(plt)
