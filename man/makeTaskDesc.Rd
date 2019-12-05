@@ -11,7 +11,8 @@
 \alias{makeTaskDesc}
 \title{Exported for internal use.}
 \usage{
-makeClassifTaskDesc(id, data, target, weights, blocking, positive, coordinates)
+makeClassifTaskDesc(id, data, target, weights, blocking, positive,
+  coordinates)
 
 makeClusterTaskDesc(id, data, weights, blocking, coordinates)
 

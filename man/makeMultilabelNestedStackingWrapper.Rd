@@ -4,7 +4,8 @@
 \alias{makeMultilabelNestedStackingWrapper}
 \title{Use nested stacking method to create a multilabel learner.}
 \usage{
-makeMultilabelNestedStackingWrapper(learner, order = NULL, cv.folds = 2)
+makeMultilabelNestedStackingWrapper(learner, order = NULL,
+  cv.folds = 2)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -56,38 +57,36 @@ Montanes, E. et al. (2013),
 Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 }
 \seealso{
-Other wrapper: 
-\code{\link{makeBaggingWrapper}()},
-\code{\link{makeClassificationViaRegressionWrapper}()},
-\code{\link{makeConstantClassWrapper}()},
-\code{\link{makeCostSensClassifWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeDownsampleWrapper}()},
-\code{\link{makeDummyFeaturesWrapper}()},
-\code{\link{makeExtractFDAFeatsWrapper}()},
-\code{\link{makeFeatSelWrapper}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeImputeWrapper}()},
-\code{\link{makeMulticlassWrapper}()},
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()},
-\code{\link{makeOverBaggingWrapper}()},
-\code{\link{makePreprocWrapperCaret}()},
-\code{\link{makePreprocWrapper}()},
-\code{\link{makeRemoveConstantFeaturesWrapper}()},
-\code{\link{makeSMOTEWrapper}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{makeUndersampleWrapper}()},
-\code{\link{makeWeightedClassesWrapper}()}
+Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeImputeWrapper}},
+  \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
+  \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
+  \code{\link{makeSMOTEWrapper}},
+  \code{\link{makeTuneWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{makeWeightedClassesWrapper}}
 
-Other multilabel: 
-\code{\link{getMultilabelBinaryPerformances}()},
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()}
+Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}}
 }
 \concept{multilabel}
 \concept{wrapper}
