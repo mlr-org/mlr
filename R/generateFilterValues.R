@@ -214,7 +214,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L,
 
   # extend ggplot2 mapping
   if (feat.type.cols) {
-    mp$fill = "type"
+    mp$fill = quote(type)
   }
 
   plt = ggplot(data = data, mapping = mp)
