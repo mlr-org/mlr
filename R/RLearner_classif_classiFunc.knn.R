@@ -10,6 +10,7 @@ makeRLearner.classif.classiFunc.knn = function() {
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
         values = classiFunc::metricChoices()),
       makeIntegerLearnerParam(id = "q?", default = 0L, lower = 0L),
+      makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "deriv.method", default = "base.diff",
         values = c("base.diff", "fda.deriv.fd")),
