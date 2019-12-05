@@ -5,8 +5,8 @@ repos:
     hooks:
     # any R project
     -   id: style-files
-        args: [--style_pkg=styler, --style_fun=mlr_style]
-    -   id: lintr
+        args: [--style_pkg=styler, --style_fun=mlr_style] # install with remotes::install_github("pat-s/styler@mlr-style")
+    # -   id: lintr
     -   id: parsable-R
     -   id: no-browser-statement
     -   id: readme-rmd-rendered
