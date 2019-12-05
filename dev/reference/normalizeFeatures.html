@@ -331,14 +331,8 @@ Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>normalizeFeatures</span>(
-  <span class='no'>obj</span>,
-  <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"standardize"</span>,
-  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-  <span class='kw'>on.constant</span> <span class='kw'>=</span> <span class='st'>"quiet"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>normalizeFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"standardize"</span>,
+  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>on.constant</span> <span class='kw'>=</span> <span class='st'>"quiet"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -400,14 +394,13 @@ will be returned untouched.<br />
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/pkg/BBmisc/man/normalize.html'>BBmisc::normalize</a></p>
-<p>Other eda_and_preprocess: 
-<code><a href='capLargeValues.html'>capLargeValues</a>()</code>,
-<code><a href='createDummyFeatures.html'>createDummyFeatures</a>()</code>,
-<code><a href='dropFeatures.html'>dropFeatures</a>()</code>,
-<code><a href='mergeSmallFactorLevels.html'>mergeSmallFactorLevels</a>()</code>,
-<code><a href='removeConstantFeatures.html'>removeConstantFeatures</a>()</code>,
-<code><a href='summarizeColumns.html'>summarizeColumns</a>()</code>,
-<code><a href='summarizeLevels.html'>summarizeLevels</a>()</code></p></div>
+<p>Other eda_and_preprocess: <code><a href='capLargeValues.html'>capLargeValues</a></code>,
+  <code><a href='createDummyFeatures.html'>createDummyFeatures</a></code>,
+  <code><a href='dropFeatures.html'>dropFeatures</a></code>,
+  <code><a href='mergeSmallFactorLevels.html'>mergeSmallFactorLevels</a></code>,
+  <code><a href='removeConstantFeatures.html'>removeConstantFeatures</a></code>,
+  <code><a href='summarizeColumns.html'>summarizeColumns</a></code>,
+  <code><a href='summarizeLevels.html'>summarizeLevels</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

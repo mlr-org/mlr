@@ -333,13 +333,8 @@ Internally uses <a href='smote.html'>smote</a> before every model fit.</p>
 down to the next learner.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeSMOTEWrapper</span>(
-  <span class='no'>learner</span>,
-  <span class='kw'>sw.rate</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>sw.nn</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
-  <span class='kw'>sw.standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>sw.alt.logic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>makeSMOTEWrapper</span>(<span class='no'>learner</span>, <span class='kw'>sw.rate</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sw.nn</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
+  <span class='kw'>sw.standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sw.alt.logic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -389,31 +384,30 @@ Default is <code>FALSE</code>.</p></td>
     <p><a href='makeLearner.html'>Learner</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other wrapper: 
-<code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a>()</code>,
-<code><a href='makeClassificationViaRegressionWrapper.html'>makeClassificationViaRegressionWrapper</a>()</code>,
-<code><a href='makeConstantClassWrapper.html'>makeConstantClassWrapper</a>()</code>,
-<code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a>()</code>,
-<code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a>()</code>,
-<code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a>()</code>,
-<code><a href='makeDummyFeaturesWrapper.html'>makeDummyFeaturesWrapper</a>()</code>,
-<code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a>()</code>,
-<code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a>()</code>,
-<code><a href='makeFilterWrapper.html'>makeFilterWrapper</a>()</code>,
-<code><a href='makeImputeWrapper.html'>makeImputeWrapper</a>()</code>,
-<code><a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a>()</code>,
-<code><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a>()</code>,
-<code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a>()</code>,
-<code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a>()</code>,
-<code><a href='makeMultilabelNestedStackingWrapper.html'>makeMultilabelNestedStackingWrapper</a>()</code>,
-<code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a>()</code>,
-<code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a>()</code>,
-<code><a href='makePreprocWrapperCaret.html'>makePreprocWrapperCaret</a>()</code>,
-<code><a href='makePreprocWrapper.html'>makePreprocWrapper</a>()</code>,
-<code><a href='makeRemoveConstantFeaturesWrapper.html'>makeRemoveConstantFeaturesWrapper</a>()</code>,
-<code><a href='makeTuneWrapper.html'>makeTuneWrapper</a>()</code>,
-<code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a>()</code>,
-<code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a>()</code></p></div>
+    <div class='dont-index'><p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
+  <code><a href='makeClassificationViaRegressionWrapper.html'>makeClassificationViaRegressionWrapper</a></code>,
+  <code><a href='makeConstantClassWrapper.html'>makeConstantClassWrapper</a></code>,
+  <code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a></code>,
+  <code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a></code>,
+  <code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a></code>,
+  <code><a href='makeDummyFeaturesWrapper.html'>makeDummyFeaturesWrapper</a></code>,
+  <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a></code>,
+  <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code>,
+  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
+  <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>,
+  <code><a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a></code>,
+  <code><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a></code>,
+  <code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a></code>,
+  <code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a></code>,
+  <code><a href='makeMultilabelNestedStackingWrapper.html'>makeMultilabelNestedStackingWrapper</a></code>,
+  <code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a></code>,
+  <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
+  <code><a href='makePreprocWrapperCaret.html'>makePreprocWrapperCaret</a></code>,
+  <code><a href='makePreprocWrapper.html'>makePreprocWrapper</a></code>,
+  <code><a href='makeRemoveConstantFeaturesWrapper.html'>makeRemoveConstantFeaturesWrapper</a></code>,
+  <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
+  <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
+  <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

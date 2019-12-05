@@ -327,19 +327,10 @@ Features are then selected via select and val." />
 Features are then selected via <code>select</code> and <code>val</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterFeatures</span>(
-  <span class='no'>task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>select.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>filterFeatures</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
+  <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>select.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -432,15 +423,13 @@ filter method (in a list). The ensemble method will use the simple methods to
 calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other filter: 
-<code><a href='generateFilterValuesData.html'>generateFilterValuesData</a>()</code>,
-<code><a href='getFilteredFeatures.html'>getFilteredFeatures</a>()</code>,
-<code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>()</code>,
-<code><a href='listFilterMethods.html'>listFilterMethods</a>()</code>,
-<code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a>()</code>,
-<code><a href='makeFilterWrapper.html'>makeFilterWrapper</a>()</code>,
-<code><a href='makeFilter.html'>makeFilter</a>()</code>,
-<code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p></div>
+    <div class='dont-index'><p>Other filter: <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
+  <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
+  <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
+  <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
+  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
+  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
+  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simple filter</span>

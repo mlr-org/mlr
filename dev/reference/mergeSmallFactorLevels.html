@@ -325,12 +325,8 @@
     <p>Merges factor levels that occur only infrequently into combined levels with a higher frequency.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mergeSmallFactorLevels</span>(
-  <span class='no'>task</span>,
-  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>min.perc</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>new.level</span> <span class='kw'>=</span> <span class='st'>".merged"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mergeSmallFactorLevels</span>(<span class='no'>task</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min.perc</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>new.level</span> <span class='kw'>=</span> <span class='st'>".merged"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -367,14 +363,13 @@ Default is &#8220;.merged&#8221;</p></td>
     <p><code>Task</code>, where merged levels are combined into a new level of name <code>new.level</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other eda_and_preprocess: 
-<code><a href='capLargeValues.html'>capLargeValues</a>()</code>,
-<code><a href='createDummyFeatures.html'>createDummyFeatures</a>()</code>,
-<code><a href='dropFeatures.html'>dropFeatures</a>()</code>,
-<code><a href='normalizeFeatures.html'>normalizeFeatures</a>()</code>,
-<code><a href='removeConstantFeatures.html'>removeConstantFeatures</a>()</code>,
-<code><a href='summarizeColumns.html'>summarizeColumns</a>()</code>,
-<code><a href='summarizeLevels.html'>summarizeLevels</a>()</code></p></div>
+    <div class='dont-index'><p>Other eda_and_preprocess: <code><a href='capLargeValues.html'>capLargeValues</a></code>,
+  <code><a href='createDummyFeatures.html'>createDummyFeatures</a></code>,
+  <code><a href='dropFeatures.html'>dropFeatures</a></code>,
+  <code><a href='normalizeFeatures.html'>normalizeFeatures</a></code>,
+  <code><a href='removeConstantFeatures.html'>removeConstantFeatures</a></code>,
+  <code><a href='summarizeColumns.html'>summarizeColumns</a></code>,
+  <code><a href='summarizeLevels.html'>summarizeLevels</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
