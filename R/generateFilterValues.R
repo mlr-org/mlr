@@ -171,9 +171,8 @@ print.FilterValues = function(x, ...) {
 #'   Number of features (maximal) to show.
 #'   Default is 20.
 #' @param feat.type.cols (`logical(1)`)\cr
-#'   Colors for factor and numeric features.
-#'   `FALSE` means no colors.
-#'   Default is `FALSE`.
+#'   Whether to color different feature types (e.g. numeric | factor).
+#'   Default is to use no colors (`feat.type.cols = FALSE`).
 #' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
@@ -221,8 +220,9 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L,
   plt = plt +
     geom_bar(position = "identity", stat = "identity") +
     labs(
-      title = sprintf("%s (%i features), filter = %s",
+      title = sprintf("%s (%i out of %i features), filter = %s",
         fvalues$task.desc$id,
+        ifelse(n.show > sum(fvalues$task.desc$n.feat), sum(fvalues$task.desc$n.feat), n.show),
         sum(fvalues$task.desc$n.feat),
         data$method),
       x = "", y = "") +

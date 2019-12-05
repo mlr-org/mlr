@@ -25,9 +25,8 @@ Number of features (maximal) to show.
 Default is 20.}
 
 \item{feat.type.cols}{(\code{logical(1)})\cr
-Colors for factor and numeric features.
-\code{FALSE} means no colors.
-Default is \code{FALSE}.}
+Whether to color different feature types (e.g. numeric | factor).
+Default is to use no colors (\code{feat.type.cols = FALSE}).}
 
 \item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
