@@ -4,14 +4,7 @@
 \alias{plotFilterValues}
 \title{Plot filter values using ggplot2.}
 \usage{
-plotFilterValues(
-  fvalues,
-  sort = "dec",
-  n.show = 20L,
-  feat.type.cols = FALSE,
-  facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL
-)
+plotFilterValues(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE)
 }
 \arguments{
 \item{fvalues}{(\link{FilterValues})\cr

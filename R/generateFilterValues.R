@@ -181,7 +181,7 @@ print.FilterValues = function(x, ...) {
 #' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
+  feat.type.cols = FALSE) {
 
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
@@ -192,47 +192,34 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L,
 
   data = fvalues$data
 
+  if (nlevels(as.factor(data$method)) > 1L) {
+    stopf("Please supply only one filter method.")
+  }
+
   # we need to order both, data and the ggplot mapping
   # ggplot will reorder automatically otherwise
   if (sort == "dec") {
-    data = head(setorderv(data, c("value", "name"), c(-1, 1)), n.show)
+    # order and top_n by group: https://stackoverflow.com/a/27766055/4185785
+    data = droplevels(setDT(data)[order(method, -value, name), head(.SD, n.show), by = method])
     mp = aes_string(x = paste0("reorder(name, -value)"), y = "value")
   } else if (sort == "inc") {
     # here we want to have the last x elements
-    data = tail(setorderv(data, c("value", "name"), c(1, 1)), n.show)
+    # order and top_n by group: https://stackoverflow.com/a/27766055/4185785
+    data = setDT(data)[order(method, value, name), tail(.SD, n.show), by = method]
     mp = aes_string(x = paste0("reorder(name, value)"), y = "value")
   } else {
+    data = setDT(data)[, head(.SD, n.show), by = method]
     mp = aes_string(x = paste0("name"), y = "value")
-    data = head(data, n.show)
   }
-
-  methods = colnames(data[, -which(colnames(data) %in% c("name", "type")), drop = FALSE])
 
   # extend ggplot2 mapping
   if (feat.type.cols) {
-    mp = mp$fill = "type"
+    mp$fill = "type"
   }
 
   plt = ggplot(data = data, mapping = mp)
-  plt = plt + geom_bar(position = "identity", stat = "identity")
-
-  if (length(unique(data$method)) > 1L) {
-    plt = plt +
-      facet_wrap(~method, scales = "free_y",
-        nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
-    plt = plt +
-      labs(title = sprintf("%s (%i features)",
-        fvalues$task.desc$id,
-        sum(fvalues$task.desc$n.feat)),
-      x = "", y = "")
-  } else {
-    plt = plt +
-      labs(title = sprintf("%s (%i features), filter = %s",
-        fvalues$task.desc$id,
-        sum(fvalues$task.desc$n.feat),
-        data$method),
-      x = "", y = "")
-  }
+  plt = plt +
+    geom_bar(position = "identity", stat = "identity")
 
   plt = plt +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
