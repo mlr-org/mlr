@@ -76,6 +76,21 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
+#'
+#' #usage of a custom thresholding function
+#'  biggest_gap = function(values, diff) {
+#'    # Calculate the largest difference between values that are 'diff' positions apart
+#'		return(gap_location)
+#'  }
+#'
+#' lrn = makeLearner("classif.lda")
+#' lrn = makeFilterWrapper(lrn, fw.method = "randomForestSRC_importance",
+#'		fw.func = biggest_gap, fw.func.args = list("diff" = 1))
+#' r = resample(lrn, task, outer, extract = function(model) {
+#'   getFilteredFeatures(model)
+#' })
+#' print(r$extract)
+#'
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.func = NULL, fw.func.args = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...) {
@@ -119,9 +134,9 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
-	  makeFunctionLearnerParam(id = "fw.func"),
-	  makeUntypedLearnerParam(id = "fw.func.args", default = NULL),     
-	  makeUntypedLearnerParam(id = "fw.mandatory.feat")
+			makeFunctionLearnerParam(id = "fw.func"),
+			makeUntypedLearnerParam(id = "fw.func.args", default = NULL),     
+			makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
     par.vals = filterNull(list(fw.method = fw.method,
       fw.base.methods = fw.base.methods, fw.perc = fw.perc,

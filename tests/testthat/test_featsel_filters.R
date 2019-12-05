@@ -74,31 +74,26 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
 })
 
 test_that("Custom threshold function for filtering works correctly", {
-	biggest_gap <- function(values, diff) {
+	biggest_gap = function(values, diff) {
 	  gap_size = 0
 	  gap_location = 0
 
 	  for (i in (diff+1):length(values)) {
-		gap = values[[i - diff]] - values[[i]]
-		if (gap > gap_size) {
-		  gap_size = gap
-		  gap_location = i - 1
-		}
+			gap = values[[i - diff]] - values[[i]]
+			if (gap > gap_size) {
+				gap_size = gap
+				gap_location = i - 1
+			}
 	  }
 	  return(gap_location)
 	}
 
-	filt1 = 
-	  makeFilterWrapper(
-		makeLearner(cl = "classif.lda", id = "lda_class", predict.type = "response"), 
-		fw.method = "randomForestSRC_importance",
-		fw.func = biggest_gap,
-		fw.func.args = list("diff" = 1),
-		more.args = list("randomForestSRC_importance" = list(ntree = 50))
-	  )
-	inner = makeResampleDesc("CV", iters = 3, stratify = TRUE)  # Tuning
-	r = resample(filt1, multiclass.task, inner, extract = function(model) {
-	  getFilteredFeatures(model)
-	})
-	expect_equal(r$extract, list(c("Petal.Length", "Petal.Width"), c("Petal.Length", "Petal.Width"), c("Petal.Length", "Petal.Width")))
+  ftask = filterFeatures(task = multiclass.task,
+                         method = "randomForestSRC_importance",
+                         func = biggest_gap,
+                         func.args = list("diff" = 1),
+                         more.args = list("randomForestSRC_importance" = list(ntree = 50))
+                        )
+  feats = getTaskFeatureNames(ftask)
+  expect_equal(feats, c("Petal.Length", "Petal.Width"))
 })
