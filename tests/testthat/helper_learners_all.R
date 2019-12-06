@@ -85,7 +85,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
     y = getPredictionResponse(p)
     range = diff(range(y))
     # regr.gausspr: checked manually. the output is supposed to be an SE estimation
-    if (lrn$id %in% c("regr.gausspr")) { #nolint
+    if (lrn$id %in% c("regr.gausspr")) { # nolint
       range = 2 * range
     }
     expect_numeric(info = info, s, lower = 0, upper = range, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))

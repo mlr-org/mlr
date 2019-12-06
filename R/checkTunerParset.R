@@ -18,10 +18,11 @@ checkTunerParset = function(learner, par.set, measures, control) {
     stopf("Can only tune parameters for which learner parameters exist: %s", collapse(x))
   }
 
-  checkParsOk = function(algo, ok)
+  checkParsOk = function(algo, ok) {
     if (length(filterParams(par.set, type = ok)$pars) < length(par.set$pars)) {
       stopf("%s can only be applied to: %s!", algo, collapse(ok))
     }
+  }
 
   checkStart = function() {
     if (!is.null(control$start)) {

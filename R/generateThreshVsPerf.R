@@ -23,8 +23,9 @@
 #'   across the threshold grid, the measures, and whether the performance estimates were
 #'   aggregated (only applicable for (list of) [ResampleResult]s).
 #' @export
-generateThreshVsPerfData = function(obj, measures, gridsize = 100L, aggregate = TRUE, task.id = NULL)
+generateThreshVsPerfData = function(obj, measures, gridsize = 100L, aggregate = TRUE, task.id = NULL) {
   UseMethod("generateThreshVsPerfData")
+}
 #' @export
 generateThreshVsPerfData.Prediction = function(obj, measures, gridsize = 100L, aggregate = TRUE,
   task.id = NULL) {
