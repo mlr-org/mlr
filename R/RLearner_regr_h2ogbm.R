@@ -59,7 +59,9 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
 
   params = list(...)
   # check if h2o connection already exists, otherwise start one
-  conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
+  conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) {
+    return(FALSE)
+  })
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
     options("h2o.use.data.table" = TRUE)
