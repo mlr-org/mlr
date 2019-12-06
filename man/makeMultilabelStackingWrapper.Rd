@@ -49,36 +49,38 @@ Montanes, E. et al. (2013)
 Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
-  \code{\link{makeClassificationViaRegressionWrapper}},
-  \code{\link{makeConstantClassWrapper}},
-  \code{\link{makeCostSensClassifWrapper}},
-  \code{\link{makeCostSensRegrWrapper}},
-  \code{\link{makeDownsampleWrapper}},
-  \code{\link{makeDummyFeaturesWrapper}},
-  \code{\link{makeExtractFDAFeatsWrapper}},
-  \code{\link{makeFeatSelWrapper}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeImputeWrapper}},
-  \code{\link{makeMulticlassWrapper}},
-  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}},
-  \code{\link{makeOverBaggingWrapper}},
-  \code{\link{makePreprocWrapperCaret}},
-  \code{\link{makePreprocWrapper}},
-  \code{\link{makeRemoveConstantFeaturesWrapper}},
-  \code{\link{makeSMOTEWrapper}},
-  \code{\link{makeTuneWrapper}},
-  \code{\link{makeUndersampleWrapper}},
-  \code{\link{makeWeightedClassesWrapper}}
+Other wrapper: 
+\code{\link{makeBaggingWrapper}()},
+\code{\link{makeClassificationViaRegressionWrapper}()},
+\code{\link{makeConstantClassWrapper}()},
+\code{\link{makeCostSensClassifWrapper}()},
+\code{\link{makeCostSensRegrWrapper}()},
+\code{\link{makeDownsampleWrapper}()},
+\code{\link{makeDummyFeaturesWrapper}()},
+\code{\link{makeExtractFDAFeatsWrapper}()},
+\code{\link{makeFeatSelWrapper}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeImputeWrapper}()},
+\code{\link{makeMulticlassWrapper}()},
+\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
+\code{\link{makeMultilabelClassifierChainsWrapper}()},
+\code{\link{makeMultilabelDBRWrapper}()},
+\code{\link{makeMultilabelNestedStackingWrapper}()},
+\code{\link{makeOverBaggingWrapper}()},
+\code{\link{makePreprocWrapperCaret}()},
+\code{\link{makePreprocWrapper}()},
+\code{\link{makeRemoveConstantFeaturesWrapper}()},
+\code{\link{makeSMOTEWrapper}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{makeUndersampleWrapper}()},
+\code{\link{makeWeightedClassesWrapper}()}
 
-Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
-  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}}
+Other multilabel: 
+\code{\link{getMultilabelBinaryPerformances}()},
+\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
+\code{\link{makeMultilabelClassifierChainsWrapper}()},
+\code{\link{makeMultilabelDBRWrapper}()},
+\code{\link{makeMultilabelNestedStackingWrapper}()}
 }
 \concept{multilabel}
 \concept{wrapper}

@@ -59,20 +59,22 @@ towards the \code{tunerConfig} argument of \link[irace:irace]{irace::irace}.}
 General tune control object.
 }
 \seealso{
-Other tune: \code{\link{getNestedTuneResultsOptPathDf}},
-  \code{\link{getNestedTuneResultsX}},
-  \code{\link{getResamplingIndices}},
-  \code{\link{getTuneResult}},
-  \code{\link{makeModelMultiplexerParamSet}},
-  \code{\link{makeModelMultiplexer}},
-  \code{\link{makeTuneControlCMAES}},
-  \code{\link{makeTuneControlDesign}},
-  \code{\link{makeTuneControlGenSA}},
-  \code{\link{makeTuneControlGrid}},
-  \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlMBO}},
-  \code{\link{makeTuneControlRandom}},
-  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
-  \code{\link{tuneThreshold}}
+Other tune: 
+\code{\link{getNestedTuneResultsOptPathDf}()},
+\code{\link{getNestedTuneResultsX}()},
+\code{\link{getResamplingIndices}()},
+\code{\link{getTuneResult}()},
+\code{\link{makeModelMultiplexerParamSet}()},
+\code{\link{makeModelMultiplexer}()},
+\code{\link{makeTuneControlCMAES}()},
+\code{\link{makeTuneControlDesign}()},
+\code{\link{makeTuneControlGenSA}()},
+\code{\link{makeTuneControlGrid}()},
+\code{\link{makeTuneControlIrace}()},
+\code{\link{makeTuneControlMBO}()},
+\code{\link{makeTuneControlRandom}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{tuneParams}()},
+\code{\link{tuneThreshold}()}
 }
 \concept{tune}
