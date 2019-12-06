@@ -1,9 +1,8 @@
 # mlr (development version)
 
-# mlr 2.17.0
-
 ## Functional Data
 
+PR: #2638 (@pfistl)
 - Added several learners for regression and classification on functional data
   - classif.classiFunc.(kernel|knn) (knn/kernel using various semi-metrics)
   - (classif|regr).fgam (Functional generalized additive models)
@@ -22,7 +21,6 @@
 
 - Several other minor bug fixes and code improvements
 - Extended and clarified documentation for several fda components.
-
 
 # mlr 2.16.0
 
