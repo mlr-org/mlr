@@ -49,8 +49,9 @@
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
 #' @export
-generateCalibrationData = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL)
+generateCalibrationData = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
   UseMethod("generateCalibrationData")
+}
 #' @export
 generateCalibrationData.Prediction = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
   checkPrediction(obj, task.type = "classif", predict.type = "prob")

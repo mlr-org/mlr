@@ -4,9 +4,17 @@
 \alias{makeBaseWrapper}
 \title{Exported for internal use only.}
 \usage{
-makeBaseWrapper(id, type, next.learner, package = character(0L),
-  par.set = makeParamSet(), par.vals = list(), learner.subclass,
-  model.subclass, cache = FALSE)
+makeBaseWrapper(
+  id,
+  type,
+  next.learner,
+  package = character(0L),
+  par.set = makeParamSet(),
+  par.vals = list(),
+  learner.subclass,
+  model.subclass,
+  cache = FALSE
+)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
