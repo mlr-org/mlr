@@ -325,8 +325,14 @@
     <p>Useful in <a href='trainLearner.html'>trainLearner</a> when you add a learning machine to the package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getTaskData</span>(<span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>features</span>, <span class='kw'>target.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>, <span class='kw'>functionals.as</span> <span class='kw'>=</span> <span class='st'>"dfcols"</span>)</pre>
+    <pre class="usage"><span class='fu'>getTaskData</span>(
+  <span class='no'>task</span>,
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>features</span>,
+  <span class='kw'>target.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+  <span class='kw'>functionals.as</span> <span class='kw'>=</span> <span class='st'>"dfcols"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -390,14 +396,19 @@ Default is &#8220;dfcols&#8221;.</p></td>
     <p>Either a data.frame or a list with data.frame <code>data</code> and vector <code>target</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other task: <code><a href='getTaskClassLevels.html'>getTaskClassLevels</a></code>,
-  <code><a href='getTaskCosts.html'>getTaskCosts</a></code>, <code><a href='getTaskDesc.html'>getTaskDesc</a></code>,
-  <code><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a></code>,
-  <code><a href='getTaskFormula.html'>getTaskFormula</a></code>, <code><a href='getTaskId.html'>getTaskId</a></code>,
-  <code><a href='getTaskNFeats.html'>getTaskNFeats</a></code>, <code><a href='getTaskSize.html'>getTaskSize</a></code>,
-  <code><a href='getTaskTargetNames.html'>getTaskTargetNames</a></code>,
-  <code><a href='getTaskTargets.html'>getTaskTargets</a></code>, <code><a href='getTaskType.html'>getTaskType</a></code>,
-  <code><a href='subsetTask.html'>subsetTask</a></code></p></div>
+    <div class='dont-index'><p>Other task: 
+<code><a href='getTaskClassLevels.html'>getTaskClassLevels</a>()</code>,
+<code><a href='getTaskCosts.html'>getTaskCosts</a>()</code>,
+<code><a href='getTaskDesc.html'>getTaskDesc</a>()</code>,
+<code><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a>()</code>,
+<code><a href='getTaskFormula.html'>getTaskFormula</a>()</code>,
+<code><a href='getTaskId.html'>getTaskId</a>()</code>,
+<code><a href='getTaskNFeats.html'>getTaskNFeats</a>()</code>,
+<code><a href='getTaskSize.html'>getTaskSize</a>()</code>,
+<code><a href='getTaskTargetNames.html'>getTaskTargetNames</a>()</code>,
+<code><a href='getTaskTargets.html'>getTaskTargets</a>()</code>,
+<code><a href='getTaskType.html'>getTaskType</a>()</code>,
+<code><a href='subsetTask.html'>subsetTask</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"mlbench"</span>)

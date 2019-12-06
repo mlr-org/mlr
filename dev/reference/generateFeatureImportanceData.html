@@ -325,10 +325,20 @@
     <p>Estimate how important individual features or groups of features are by contrasting prediction performances. For method &#8220;permutation.importance&#8221; compute the change in performance from permuting the values of a feature (or a group of features) and compare that to the predictions made on the unmcuted data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generateFeatureImportanceData</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"permutation.importance"</span>,
-  <span class='no'>learner</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a></span>(<span class='no'>task</span>), <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measure</span>, <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> - <span class='no'>y</span>, <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='no'>mean</span>,
-  <span class='kw'>nmc</span> <span class='kw'>=</span> <span class='fl'>50L</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>generateFeatureImportanceData</span>(
+  <span class='no'>task</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"permutation.importance"</span>,
+  <span class='no'>learner</span>,
+  <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskFeatureNames.html'>getTaskFeatureNames</a></span>(<span class='no'>task</span>),
+  <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>measure</span>,
+  <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> - <span class='no'>y</span>,
+  <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='no'>mean</span>,
+  <span class='kw'>nmc</span> <span class='kw'>=</span> <span class='fl'>50L</span>,
+  <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -442,13 +452,14 @@ Whether observation-specific importance is computed for the <code>features</code
     <p>Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
-  <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
-  <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
-  <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
+    <div class='dont-index'><p>Other generate_plot_data: 
+<code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code>,
+<code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>()</code>,
+<code><a href='generateFilterValuesData.html'>generateFilterValuesData</a>()</code>,
+<code><a href='generateLearningCurveData.html'>generateLearningCurveData</a>()</code>,
+<code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a>()</code>,
+<code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a>()</code>,
+<code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

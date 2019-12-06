@@ -341,11 +341,24 @@ but only the estimated mean via background color.</p>
 and the cross-validation performance.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotLearnerPrediction</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>measures</span>,
-  <span class='kw'>cv</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='no'>...</span>, <span class='no'>gridsize</span>, <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>prob.alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>se.band</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>err.mark</span> <span class='kw'>=</span> <span class='st'>"train"</span>, <span class='kw'>bg.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"darkblue"</span>,
-  <span class='st'>"green"</span>, <span class='st'>"darkred"</span>), <span class='kw'>err.col</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>err.size</span> <span class='kw'>=</span> <span class='no'>pointsize</span>,
-  <span class='kw'>greyscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>plotLearnerPrediction</span>(
+  <span class='no'>learner</span>,
+  <span class='no'>task</span>,
+  <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>measures</span>,
+  <span class='kw'>cv</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
+  <span class='no'>...</span>,
+  <span class='no'>gridsize</span>,
+  <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>prob.alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>se.band</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>err.mark</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
+  <span class='kw'>bg.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"darkblue"</span>, <span class='st'>"green"</span>, <span class='st'>"darkred"</span>),
+  <span class='kw'>err.col</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>err.size</span> <span class='kw'>=</span> <span class='no'>pointsize</span>,
+  <span class='kw'>greyscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -351,24 +351,45 @@ parameter types can be handled.</p></dd>
 
     </div>
 
-    <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
-<span class='fu'>makeTuneMultiCritControlMBO</span>(<span class='kw'>n.objectives</span> <span class='kw'>=</span> <span class='no'>mbo.control</span>$<span class='no'>n.objectives</span>,
-  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>makeTuneMultiCritControlMBO</span>(
+  <span class='kw'>n.objectives</span> <span class='kw'>=</span> <span class='no'>mbo.control</span>$<span class='no'>n.objectives</span>,
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
-<span class='fu'>makeTuneMultiCritControlNSGA2</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>makeTuneMultiCritControlNSGA2</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>makeTuneMultiCritControlRandom</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>makeTuneMultiCritControlRandom</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -509,8 +530,9 @@ TuneMultiCritControlGrid, TuneMultiCritControlRandom,
 TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tune_multicrit: <code><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a></code>,
-  <code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a></code></p></div>
+    <div class='dont-index'><p>Other tune_multicrit: 
+<code><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a>()</code>,
+<code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
