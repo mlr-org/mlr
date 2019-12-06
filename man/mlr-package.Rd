@@ -23,6 +23,7 @@ Interface to a large number of classification and
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://mlr.mlr-org.com}
   \item \url{https://github.com/mlr-org/mlr}
   \item Report bugs at \url{https://github.com/mlr-org/mlr/issues}
 }
