@@ -173,8 +173,15 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
     # order by method and (desc(value))
     features = fval[with(fval, order(method, -value)), ]
+
+    # accounting for ensemble filters
+    if (length(method) == 2) {
+      method_sub = method[[1]]
+    } else {
+      method_sub = method
+    }
     # select names of top n
-    features = features[1:nselect, ]$name
+    features = features[method == method_sub, name][1:nselect]
 
   } else {
     features = NULL

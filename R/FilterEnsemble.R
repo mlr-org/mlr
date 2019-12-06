@@ -214,7 +214,7 @@ makeFilterEnsemble(
 
     # add columns "type" and "method"
     fval.ens$type = fval.all.ranked$type[1:length(unique(fval.all.ranked$name))]
-    fval.ens$method = "E-mean"
+    fval.ens$method = "E-median"
 
     # merge filters
     fval.ens = mergeFilters(fval.all.ranked, fval.ens)
