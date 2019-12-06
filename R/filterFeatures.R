@@ -71,7 +71,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
   assertClass(task, "SupervisedTask")
   if (!is.null(func))
-	assertFunction(func)
+	  assertFunction(func)
 
   # base.methods arrive here in a list when called from 'tuneParams'.
   # we need them as a chr vec for further proc, so transforming
@@ -95,7 +95,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     perc = round(perc * p),
     abs = min(abs, p),
     threshold = p,
-	func = p
+	  func = p
   )
 
   # Caching implementation: @pat-s, Nov 2018
@@ -161,7 +161,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   if (select == "threshold") {
     nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
   } else if (select == "func") {
-	nselect = do.call(func, args = c(list("values" = fval[with(fval, order(method, -value)), ][["value"]]), func.args))
+	  nselect = do.call(func, args = c(list("values" = fval[with(fval, order(method, -value)), ][["value"]]), func.args))
   }
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
