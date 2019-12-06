@@ -169,7 +169,7 @@ print.FilterValues = function(x, ...) {
 #'   Default is decreasing.
 #' @param n.show (`integer(1)`)\cr
 #'   Number of features (maximal) to show.
-#'   Default is 20.
+#'   Default is to plot all features.
 #' @param feat.type.cols (`logical(1)`)\cr
 #'   Whether to color different feature types (e.g. numeric | factor).
 #'   Default is to use no colors (`feat.type.cols = FALSE`).
@@ -179,7 +179,7 @@ print.FilterValues = function(x, ...) {
 #' @examples
 #' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
-plotFilterValues = function(fvalues, sort = "dec", n.show = 20L,
+plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fv$data),
   feat.type.cols = FALSE) {
 
   assertClass(fvalues, classes = "FilterValues")

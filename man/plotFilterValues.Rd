@@ -4,7 +4,12 @@
 \alias{plotFilterValues}
 \title{Plot filter values using ggplot2.}
 \usage{
-plotFilterValues(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE)
+plotFilterValues(
+  fvalues,
+  sort = "dec",
+  n.show = nrow(fv$data),
+  feat.type.cols = FALSE
+)
 }
 \arguments{
 \item{fvalues}{(\link{FilterValues})\cr
@@ -22,7 +27,7 @@ Default is decreasing.}
 
 \item{n.show}{(\code{integer(1)})\cr
 Number of features (maximal) to show.
-Default is 20.}
+Default is to plot all features.}
 
 \item{feat.type.cols}{(\code{logical(1)})\cr
 Whether to color different feature types (e.g. numeric | factor).
@@ -43,21 +48,24 @@ fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValues(fv)
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{listFilterEnsembleMethods}},
-  \code{\link{listFilterMethods}},
-  \code{\link{makeFilterEnsemble}},
-  \code{\link{makeFilterWrapper}}, \code{\link{makeFilter}}
+Other filter: 
+\code{\link{filterFeatures}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{getFilteredFeatures}()},
+\code{\link{listFilterEnsembleMethods}()},
+\code{\link{listFilterMethods}()},
+\code{\link{makeFilterEnsemble}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeFilter}()}
 
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
-  \code{\link{generateThreshVsPerfData}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{generateFeatureImportanceData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generatePartialDependenceData}()},
+\code{\link{generateThreshVsPerfData}()}
 }
 \concept{filter}
 \concept{generate_plot_data}
