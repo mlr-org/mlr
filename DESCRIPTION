@@ -134,7 +134,7 @@ Description: Interface to a large number of classification and
     allowing for easy nested resampling. Most operations can be
     parallelized.
 License: BSD_2_clause + file LICENSE
-URL: https://github.com/mlr-org/mlr
+URL: https://mlr.mlr-org.com, https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 Depends:
     ParamHelpers (>= 1.10),

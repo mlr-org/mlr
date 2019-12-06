@@ -5,18 +5,9 @@
 \alias{Measure}
 \title{Construct performance measure.}
 \usage{
-makeMeasure(
-  id,
-  minimize,
-  properties = character(0L),
-  fun,
-  extra.args = list(),
-  aggr = test.mean,
-  best = NULL,
-  worst = NULL,
-  name = id,
-  note = ""
-)
+makeMeasure(id, minimize, properties = character(0L), fun,
+  extra.args = list(), aggr = test.mean, best = NULL, worst = NULL,
+  name = id, note = "")
 }
 \arguments{
 \item{id}{(`character(1)`)\cr
@@ -112,21 +103,20 @@ Object slots:
 }
 }
 \examples{
-f = function(task, model, pred, extra.args)
+f = function(task, model, pred, extra.args) {
   sum((pred$data$response - pred$data$truth)^2)
+}
 makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 }
 \seealso{
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateConfusionMatrix}()},
-\code{\link{calculateROCMeasures}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCostMeasure}()},
-\code{\link{makeCustomResampledMeasure}()},
-\code{\link{measures}},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{measures}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}

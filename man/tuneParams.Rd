@@ -4,16 +4,8 @@
 \alias{tuneParams}
 \title{Hyperparameter tuning.}
 \usage{
-tuneParams(
-  learner,
-  task,
-  resampling,
-  measures,
-  par.set,
-  control,
-  show.info = getMlrOption("show.info"),
-  resample.fun = resample
-)
+tuneParams(learner, task, resampling, measures, par.set, control,
+  show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -126,22 +118,21 @@ print(head(df2[, -ncol(df2)]))
 \seealso{
 \link{generateHyperParsEffectData}
 
-Other tune: 
-\code{\link{TuneControl}},
-\code{\link{getNestedTuneResultsOptPathDf}()},
-\code{\link{getNestedTuneResultsX}()},
-\code{\link{getResamplingIndices}()},
-\code{\link{getTuneResult}()},
-\code{\link{makeModelMultiplexerParamSet}()},
-\code{\link{makeModelMultiplexer}()},
-\code{\link{makeTuneControlCMAES}()},
-\code{\link{makeTuneControlDesign}()},
-\code{\link{makeTuneControlGenSA}()},
-\code{\link{makeTuneControlGrid}()},
-\code{\link{makeTuneControlIrace}()},
-\code{\link{makeTuneControlMBO}()},
-\code{\link{makeTuneControlRandom}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{tuneThreshold}()}
+Other tune: \code{\link{TuneControl}},
+  \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
+  \code{\link{getTuneResult}},
+  \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
+  \code{\link{makeTuneWrapper}},
+  \code{\link{tuneThreshold}}
 }
 \concept{tune}
