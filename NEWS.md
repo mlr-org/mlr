@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## filters - bugfixes
+
+- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
+
 # mlr 2.16.0
 
 ## package infrastructure
