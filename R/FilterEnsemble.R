@@ -114,7 +114,7 @@ makeFilterEnsemble(
 
     # add columns "type" and "method"
     fval.ens$type = fval.all.ranked$type[1:length(unique(fval.all.ranked$name))]
-    fval.ens$method = "E-min"
+    fval.ens$filter = "E-min"
 
     # merge filters
     fval.ens = mergeFilters(fval.all.ranked, fval.ens)
@@ -147,7 +147,7 @@ makeFilterEnsemble(
 
     # add columns "type" and "method"
     fval.ens$type = fval.all.ranked$type[1:length(unique(fval.all.ranked$name))]
-    fval.ens$method = "E-mean"
+    fval.ens$filter = "E-mean"
 
     # merge filters
     fval.ens = mergeFilters(fval.all.ranked, fval.ens)
@@ -181,7 +181,7 @@ makeFilterEnsemble(
 
     # add columns "type" and "method"
     fval.ens$type = fval.all.ranked$type[1:length(unique(fval.all.ranked$name))]
-    fval.ens$method = "E-max"
+    fval.ens$filter = "E-max"
 
     # merge filters
     fval.ens = mergeFilters(fval.all.ranked, fval.ens)
@@ -214,7 +214,7 @@ makeFilterEnsemble(
 
     # add columns "type" and "method"
     fval.ens$type = fval.all.ranked$type[1:length(unique(fval.all.ranked$name))]
-    fval.ens$method = "E-median"
+    fval.ens$filter = "E-median"
 
     # merge filters
     fval.ens = mergeFilters(fval.all.ranked, fval.ens)
@@ -251,7 +251,7 @@ makeFilterEnsemble(
 
     # add columns "type" and "method"
     fval.ens$type = fval.all.ranked$type[1:length(unique(fval.all.ranked$name))]
-    fval.ens$method = "E-Borda"
+    fval.ens$filter = "E-Borda"
 
     # merge filters
     fval.ens = mergeFilters(fval.all.ranked, fval.ens)
@@ -273,8 +273,8 @@ rankBaseFilters = function(task, method = method,
 
   # rank base filters by method
   fval.all.ranked = fval.calc$data[, rank := frank(value,
-    ties.method = "first"), by = method]
-  setorderv(fval.all.ranked, c("method", "rank"))
+    ties.method = "first"), by = filter]
+  setorderv(fval.all.ranked, c("filter", "rank"))
 
   return(fval.all.ranked)
 
