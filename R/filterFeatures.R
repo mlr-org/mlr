@@ -150,9 +150,6 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     # Set the the filter values of the mandatory features to infinity to always select them
     fval[fval$name %in% mandatory.feat, "value"] = Inf
   }
-  if (select == "threshold") {
-    nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
-  }
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
   if (length(levels(as.factor(fval$filter))) >= 2) {
@@ -168,6 +165,9 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
       assertSubset(select.method, choices = unique(fval$filter))
       fval = fval[fval$filter == select.method, ]
     }
+  }
+  if (select == "threshold") {
+    nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
   }
   if (nselect > 0L) {
 
