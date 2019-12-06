@@ -18,27 +18,21 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 Get the note for the learner.
 }
 \seealso{
-Other learner: 
-\code{\link{LearnerProperties}},
-\code{\link{getClassWeightParam}()},
-\code{\link{getHyperPars}()},
-\code{\link{getLearnerId}()},
-\code{\link{getLearnerPackages}()},
-\code{\link{getLearnerParVals}()},
-\code{\link{getLearnerParamSet}()},
-\code{\link{getLearnerPredictType}()},
-\code{\link{getLearnerShortName}()},
-\code{\link{getLearnerType}()},
-\code{\link{getParamSet}()},
-\code{\link{helpLearnerParam}()},
-\code{\link{helpLearner}()},
-\code{\link{makeLearners}()},
-\code{\link{makeLearner}()},
-\code{\link{removeHyperPars}()},
-\code{\link{setHyperPars}()},
-\code{\link{setId}()},
-\code{\link{setLearnerId}()},
-\code{\link{setPredictThreshold}()},
-\code{\link{setPredictType}()}
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{getClassWeightParam}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
+  \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
+  \code{\link{setPredictThreshold}},
+  \code{\link{setPredictType}}
 }
 \concept{learner}

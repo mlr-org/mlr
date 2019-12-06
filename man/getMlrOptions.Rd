@@ -13,7 +13,6 @@ getMlrOptions()
 Gets the options for mlr.
 }
 \seealso{
-Other configure: 
-\code{\link{configureMlr}()}
+Other configure: \code{\link{configureMlr}}
 }
 \concept{configure}

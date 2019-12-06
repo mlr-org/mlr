@@ -54,9 +54,8 @@ In International Conference of Knowledge Based Computer Systems, pp. 46-57.
 National Center for Software Technology, Mumbai, India, Allied Press.
 }
 \seealso{
-Other imbalancy: 
-\code{\link{makeOverBaggingWrapper}()},
-\code{\link{makeUndersampleWrapper}()},
-\code{\link{oversample}()}
+Other imbalancy: \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{oversample}}
 }
 \concept{imbalancy}

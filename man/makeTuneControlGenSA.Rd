@@ -5,17 +5,10 @@
 \alias{TuneControlGenSA}
 \title{Create control object for hyperparameter tuning with GenSA.}
 \usage{
-makeTuneControlGenSA(
-  same.resampling.instance = TRUE,
-  impute.val = NULL,
-  start = NULL,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL,
-  ...
-)
+makeTuneControlGenSA(same.resampling.instance = TRUE,
+  impute.val = NULL, start = NULL, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default",
+  final.dw.perc = NULL, budget = NULL, ...)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -85,22 +78,20 @@ Can handle numeric(vector) and integer(vector) hyperparameters, but no dependenc
 For integers the internally proposed numeric values are automatically rounded.
 }
 \seealso{
-Other tune: 
-\code{\link{TuneControl}},
-\code{\link{getNestedTuneResultsOptPathDf}()},
-\code{\link{getNestedTuneResultsX}()},
-\code{\link{getResamplingIndices}()},
-\code{\link{getTuneResult}()},
-\code{\link{makeModelMultiplexerParamSet}()},
-\code{\link{makeModelMultiplexer}()},
-\code{\link{makeTuneControlCMAES}()},
-\code{\link{makeTuneControlDesign}()},
-\code{\link{makeTuneControlGrid}()},
-\code{\link{makeTuneControlIrace}()},
-\code{\link{makeTuneControlMBO}()},
-\code{\link{makeTuneControlRandom}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{tuneParams}()},
-\code{\link{tuneThreshold}()}
+Other tune: \code{\link{TuneControl}},
+  \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
+  \code{\link{getTuneResult}},
+  \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
+  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
+  \code{\link{tuneThreshold}}
 }
 \concept{tune}
