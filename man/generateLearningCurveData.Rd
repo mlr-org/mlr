@@ -5,15 +5,9 @@
 \alias{LearningCurveData}
 \title{Generates a learning curve.}
 \usage{
-generateLearningCurveData(
-  learners,
-  task,
-  resampling = NULL,
-  percs = seq(0.1, 1, by = 0.1),
-  measures,
-  stratify = FALSE,
-  show.info = getMlrOption("show.info")
-)
+generateLearningCurveData(learners, task, resampling = NULL,
+  percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{[(list of) [Learner])\cr
@@ -68,17 +62,15 @@ r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
 plotLearningCurve(r)
 }
 \seealso{
-Other generate_plot_data: 
-\code{\link{generateCalibrationData}()},
-\code{\link{generateCritDifferencesData}()},
-\code{\link{generateFeatureImportanceData}()},
-\code{\link{generateFilterValuesData}()},
-\code{\link{generatePartialDependenceData}()},
-\code{\link{generateThreshVsPerfData}()},
-\code{\link{plotFilterValues}()}
+Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{plotFilterValues}}
 
-Other learning_curve: 
-\code{\link{plotLearningCurve}()}
+Other learning_curve: \code{\link{plotLearningCurve}}
 }
 \concept{generate_plot_data}
 \concept{learning_curve}

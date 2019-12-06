@@ -4,12 +4,8 @@
 \alias{getTaskFormula}
 \title{Get formula of a task.}
 \usage{
-getTaskFormula(
-  x,
-  target = getTaskTargetNames(x),
-  explicit.features = FALSE,
-  env = parent.frame()
-)
+getTaskFormula(x, target = getTaskTargetNames(x),
+  explicit.features = FALSE, env = parent.frame())
 }
 \arguments{
 \item{x}{(\link{Task} | \link{TaskDesc})\cr
@@ -31,22 +27,18 @@ Default is \code{parent.frame()}.}
 (\link{formula}).
 }
 \description{
-This is usually simply \verb{<target> ~ }.
-For multilabel it is \verb{<target_1> + ... + <target_k> ~}.
+This is usually simply \code{<target> ~ }.
+For multilabel it is \code{<target_1> + ... + <target_k> ~}.
 }
 \seealso{
-Other task: 
-\code{\link{getTaskClassLevels}()},
-\code{\link{getTaskCosts}()},
-\code{\link{getTaskData}()},
-\code{\link{getTaskDesc}()},
-\code{\link{getTaskFeatureNames}()},
-\code{\link{getTaskId}()},
-\code{\link{getTaskNFeats}()},
-\code{\link{getTaskSize}()},
-\code{\link{getTaskTargetNames}()},
-\code{\link{getTaskTargets}()},
-\code{\link{getTaskType}()},
-\code{\link{subsetTask}()}
+Other task: \code{\link{getTaskClassLevels}},
+  \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
+  \code{\link{getTaskDesc}},
+  \code{\link{getTaskFeatureNames}},
+  \code{\link{getTaskId}}, \code{\link{getTaskNFeats}},
+  \code{\link{getTaskSize}},
+  \code{\link{getTaskTargetNames}},
+  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
+  \code{\link{subsetTask}}
 }
 \concept{task}

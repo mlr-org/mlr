@@ -4,16 +4,8 @@
 \alias{makeCostMeasure}
 \title{Creates a measure for non-standard misclassification costs.}
 \usage{
-makeCostMeasure(
-  id = "costs",
-  minimize = TRUE,
-  costs,
-  combine = mean,
-  best = NULL,
-  worst = NULL,
-  name = id,
-  note = ""
-)
+makeCostMeasure(id = "costs", minimize = TRUE, costs, combine = mean,
+  best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
@@ -56,16 +48,13 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 Creates a cost measure for non-standard classification error costs.
 }
 \seealso{
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateConfusionMatrix}()},
-\code{\link{calculateROCMeasures}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCustomResampledMeasure}()},
-\code{\link{makeMeasure}()},
-\code{\link{measures}},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}
