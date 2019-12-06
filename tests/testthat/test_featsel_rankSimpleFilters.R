@@ -5,7 +5,7 @@ test_that("base filters of ensemble filters are ranked correctly", {
     nselect = 9, more.args = list())
 
   # split into groups to check the ordering of vars "value" and "rank" for each
-  data.split = split(filters.ranked, filters.ranked$method)
+  data.split = split(filters.ranked, filters.ranked$filter)
 
   foo = lapply(data.split, function(x) {
     expect_false(is.unsorted(x[["value"]]))
