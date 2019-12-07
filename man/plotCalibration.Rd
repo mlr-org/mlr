@@ -4,8 +4,14 @@
 \alias{plotCalibration}
 \title{Plot calibration data using ggplot2.}
 \usage{
-plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE,
-  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
+plotCalibration(
+  obj,
+  smooth = FALSE,
+  reference = TRUE,
+  rag = TRUE,
+  facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL
+)
 }
 \arguments{
 \item{obj}{(\link{CalibrationData})\cr
@@ -52,17 +58,20 @@ plotCalibration(out)
 }
 }
 \seealso{
-Other plot: \code{\link{createSpatialResamplingPlots}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerf}}
+Other plot: 
+\code{\link{createSpatialResamplingPlots}()},
+\code{\link{plotBMRBoxplots}()},
+\code{\link{plotBMRRanksAsBarChart}()},
+\code{\link{plotBMRSummary}()},
+\code{\link{plotCritDifferences}()},
+\code{\link{plotLearningCurve}()},
+\code{\link{plotPartialDependence}()},
+\code{\link{plotROCCurves}()},
+\code{\link{plotResiduals}()},
+\code{\link{plotThreshVsPerf}()}
 
-Other calibration: \code{\link{generateCalibrationData}}
+Other calibration: 
+\code{\link{generateCalibrationData}()}
 }
 \concept{calibration}
 \concept{plot}

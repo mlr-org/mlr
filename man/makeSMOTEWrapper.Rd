@@ -4,8 +4,13 @@
 \alias{makeSMOTEWrapper}
 \title{Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.}
 \usage{
-makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L,
-  sw.standardize = TRUE, sw.alt.logic = FALSE)
+makeSMOTEWrapper(
+  learner,
+  sw.rate = 1,
+  sw.nn = 5L,
+  sw.standardize = TRUE,
+  sw.alt.logic = FALSE
+)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -48,29 +53,30 @@ Note that observation weights do not influence the sampling and are simply passe
 down to the next learner.
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
-  \code{\link{makeClassificationViaRegressionWrapper}},
-  \code{\link{makeConstantClassWrapper}},
-  \code{\link{makeCostSensClassifWrapper}},
-  \code{\link{makeCostSensRegrWrapper}},
-  \code{\link{makeDownsampleWrapper}},
-  \code{\link{makeDummyFeaturesWrapper}},
-  \code{\link{makeExtractFDAFeatsWrapper}},
-  \code{\link{makeFeatSelWrapper}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeImputeWrapper}},
-  \code{\link{makeMulticlassWrapper}},
-  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}},
-  \code{\link{makeMultilabelStackingWrapper}},
-  \code{\link{makeOverBaggingWrapper}},
-  \code{\link{makePreprocWrapperCaret}},
-  \code{\link{makePreprocWrapper}},
-  \code{\link{makeRemoveConstantFeaturesWrapper}},
-  \code{\link{makeTuneWrapper}},
-  \code{\link{makeUndersampleWrapper}},
-  \code{\link{makeWeightedClassesWrapper}}
+Other wrapper: 
+\code{\link{makeBaggingWrapper}()},
+\code{\link{makeClassificationViaRegressionWrapper}()},
+\code{\link{makeConstantClassWrapper}()},
+\code{\link{makeCostSensClassifWrapper}()},
+\code{\link{makeCostSensRegrWrapper}()},
+\code{\link{makeDownsampleWrapper}()},
+\code{\link{makeDummyFeaturesWrapper}()},
+\code{\link{makeExtractFDAFeatsWrapper}()},
+\code{\link{makeFeatSelWrapper}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeImputeWrapper}()},
+\code{\link{makeMulticlassWrapper}()},
+\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
+\code{\link{makeMultilabelClassifierChainsWrapper}()},
+\code{\link{makeMultilabelDBRWrapper}()},
+\code{\link{makeMultilabelNestedStackingWrapper}()},
+\code{\link{makeMultilabelStackingWrapper}()},
+\code{\link{makeOverBaggingWrapper}()},
+\code{\link{makePreprocWrapperCaret}()},
+\code{\link{makePreprocWrapper}()},
+\code{\link{makeRemoveConstantFeaturesWrapper}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{makeUndersampleWrapper}()},
+\code{\link{makeWeightedClassesWrapper}()}
 }
 \concept{wrapper}

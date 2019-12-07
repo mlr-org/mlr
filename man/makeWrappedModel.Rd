@@ -5,8 +5,15 @@
 \alias{WrappedModel}
 \title{Induced model of learner.}
 \usage{
-makeWrappedModel(learner, learner.model, task.desc, subset, features,
-  factor.levels, time)
+makeWrappedModel(
+  learner,
+  learner.model,
+  task.desc,
+  subset,
+  features,
+  factor.levels,
+  time
+)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr

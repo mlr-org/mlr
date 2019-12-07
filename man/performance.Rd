@@ -4,8 +4,14 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-performance(pred, measures, task = NULL, model = NULL, feats = NULL,
-  simpleaggr = FALSE)
+performance(
+  pred,
+  measures,
+  task = NULL,
+  model = NULL,
+  feats = NULL,
+  simpleaggr = FALSE
+)
 }
 \arguments{
 \item{pred}{(\link{Prediction})\cr
@@ -50,14 +56,16 @@ ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 performance(pred, measures = ms, task, mod)
 }
 \seealso{
-Other performance: \code{\link{ConfusionMatrix}},
-  \code{\link{calculateConfusionMatrix}},
-  \code{\link{calculateROCMeasures}},
-  \code{\link{estimateRelativeOverfitting}},
-  \code{\link{makeCostMeasure}},
-  \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{setAggregation}},
-  \code{\link{setMeasurePars}}
+Other performance: 
+\code{\link{ConfusionMatrix}},
+\code{\link{calculateConfusionMatrix}()},
+\code{\link{calculateROCMeasures}()},
+\code{\link{estimateRelativeOverfitting}()},
+\code{\link{makeCostMeasure}()},
+\code{\link{makeCustomResampledMeasure}()},
+\code{\link{makeMeasure}()},
+\code{\link{measures}},
+\code{\link{setAggregation}()},
+\code{\link{setMeasurePars}()}
 }
 \concept{performance}

@@ -25,13 +25,16 @@ Optional list of named (hyper)parameter settings. The arguments in
 Sets hyperparameters of measures.
 }
 \seealso{
-Other performance: \code{\link{ConfusionMatrix}},
-  \code{\link{calculateConfusionMatrix}},
-  \code{\link{calculateROCMeasures}},
-  \code{\link{estimateRelativeOverfitting}},
-  \code{\link{makeCostMeasure}},
-  \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}, \code{\link{setAggregation}}
+Other performance: 
+\code{\link{ConfusionMatrix}},
+\code{\link{calculateConfusionMatrix}()},
+\code{\link{calculateROCMeasures}()},
+\code{\link{estimateRelativeOverfitting}()},
+\code{\link{makeCostMeasure}()},
+\code{\link{makeCustomResampledMeasure}()},
+\code{\link{makeMeasure}()},
+\code{\link{measures}},
+\code{\link{performance}()},
+\code{\link{setAggregation}()}
 }
 \concept{performance}
