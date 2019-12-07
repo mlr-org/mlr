@@ -343,78 +343,29 @@ section in the online tutorial:
 
     <pre class="usage"><span class='fu'>makeRLearner</span>()
 
-<span class='fu'>makeRLearnerClassif</span>(
-  <span class='no'>cl</span>,
-  <span class='no'>package</span>,
-  <span class='no'>par.set</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>class.weights.param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>)
-)
+<span class='fu'>makeRLearnerClassif</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>class.weights.param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerMultilabel</span>(
-  <span class='no'>cl</span>,
-  <span class='no'>package</span>,
-  <span class='no'>par.set</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>)
-)
+<span class='fu'>makeRLearnerMultilabel</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerRegr</span>(
-  <span class='no'>cl</span>,
-  <span class='no'>package</span>,
-  <span class='no'>par.set</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>)
-)
+<span class='fu'>makeRLearnerRegr</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerSurv</span>(
-  <span class='no'>cl</span>,
-  <span class='no'>package</span>,
-  <span class='no'>par.set</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>)
-)
+<span class='fu'>makeRLearnerSurv</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerCluster</span>(
-  <span class='no'>cl</span>,
-  <span class='no'>package</span>,
-  <span class='no'>par.set</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>)
-)
+<span class='fu'>makeRLearnerCluster</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))
 
-<span class='fu'>makeRLearnerCostSens</span>(
-  <span class='no'>cl</span>,
-  <span class='no'>package</span>,
-  <span class='no'>par.set</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>)
-)</pre>
+<span class='fu'>makeRLearnerCostSens</span>(<span class='no'>cl</span>, <span class='no'>package</span>, <span class='no'>par.set</span>, <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>short.name</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>callees</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

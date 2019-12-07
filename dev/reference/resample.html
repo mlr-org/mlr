@@ -343,130 +343,45 @@ existing resampling strategies. Note that if you need to work with precomputed t
 test splits (i.e., resampling instances), you have to stick with <code>resample</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>resample</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='no'>resampling</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>extract</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+    <pre class="usage"><span class='fu'>resample</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>extract</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>crossval</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>crossval</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>measures</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>repcv</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>folds</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>repcv</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>folds</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>holdout</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>3</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>holdout</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>3</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>measures</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>subsample</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>3</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>subsample</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>3</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>bootstrapOOB</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>bootstrapOOB</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>measures</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>bootstrapB632</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>bootstrapB632</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>measures</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>bootstrapB632plus</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>bootstrapB632plus</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>growingcv</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>horizon</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>initial.window</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>growingcv</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>horizon</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>initial.window</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))
 
-<span class='fu'>fixedcv</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>horizon</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>initial.window</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)</pre>
+<span class='fu'>fixedcv</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>horizon</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>initial.window</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='no'>measures</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -587,16 +502,14 @@ sure to appropriately adjust the resampling strategy and the aggregation for
 the measure. See example code below.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other resample: 
-<code><a href='ResamplePrediction.html'>ResamplePrediction</a></code>,
-<code><a href='ResampleResult.html'>ResampleResult</a></code>,
-<code><a href='addRRMeasure.html'>addRRMeasure</a>()</code>,
-<code><a href='getRRPredictionList.html'>getRRPredictionList</a>()</code>,
-<code><a href='getRRPredictions.html'>getRRPredictions</a>()</code>,
-<code><a href='getRRTaskDescription.html'>getRRTaskDescription</a>()</code>,
-<code><a href='getRRTaskDesc.html'>getRRTaskDesc</a>()</code>,
-<code><a href='makeResampleDesc.html'>makeResampleDesc</a>()</code>,
-<code><a href='makeResampleInstance.html'>makeResampleInstance</a>()</code></p></div>
+    <div class='dont-index'><p>Other resample: <code><a href='ResamplePrediction.html'>ResamplePrediction</a></code>,
+  <code><a href='ResampleResult.html'>ResampleResult</a></code>, <code><a href='addRRMeasure.html'>addRRMeasure</a></code>,
+  <code><a href='getRRPredictionList.html'>getRRPredictionList</a></code>,
+  <code><a href='getRRPredictions.html'>getRRPredictions</a></code>,
+  <code><a href='getRRTaskDescription.html'>getRRTaskDescription</a></code>,
+  <code><a href='getRRTaskDesc.html'>getRRTaskDesc</a></code>,
+  <code><a href='makeResampleDesc.html'>makeResampleDesc</a></code>,
+  <code><a href='makeResampleInstance.html'>makeResampleInstance</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
