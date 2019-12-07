@@ -155,7 +155,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   }
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
-  if (length(levels(as.factor(fval$method))) >= 2) {
+  if (length(levels(as.factor(fval$filter))) >= 2) {
     # if 'method' is an ensemble method, we always choose the ensemble method
     # unless select.method is specified specifically. Method[[1]] should usually
     # be the ensemble method
@@ -163,18 +163,19 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
       stopf("You supplied multiple filters. Please choose which should be used for the final subsetting of the features.")
     }
     if (is.null(select.method)) {
-      fval = fval[fval$method == fval$method, ]
+      fval = fval[filter == method[[1]], ]
     } else {
-      assertSubset(select.method, choices = unique(fval$method))
-      fval = fval[fval$method == select.method, ]
+      assertSubset(select.method, choices = unique(fval$filter))
+      fval = fval[fval$filter == select.method, ]
     }
   }
   if (nselect > 0L) {
 
     # order by method and (desc(value))
-    features = fval[with(fval, order(method, -value)), ]
+    features = fval[with(fval, order(filter, -value)), ]
+
     # select names of top n
-    features = features[1:nselect, ]$name
+    features = features[1:nselect, name][1:nselect]
 
   } else {
     features = NULL

@@ -4,8 +4,14 @@
 \alias{capLargeValues}
 \title{Convert large/infinite numeric values in a data.frame or task.}
 \usage{
-capLargeValues(obj, target = character(0L), cols = NULL,
-  threshold = Inf, impute = threshold, what = "abs")
+capLargeValues(
+  obj,
+  target = character(0L),
+  cols = NULL,
+  threshold = Inf,
+  impute = threshold,
+  what = "abs"
+)
 }
 \arguments{
 \item{obj}{(\link{data.frame} | \link{Task})\cr
@@ -49,12 +55,13 @@ Only numeric/integer columns are affected.
 capLargeValues(iris, threshold = 5, impute = 5)
 }
 \seealso{
-Other eda_and_preprocess: \code{\link{createDummyFeatures}},
-  \code{\link{dropFeatures}},
-  \code{\link{mergeSmallFactorLevels}},
-  \code{\link{normalizeFeatures}},
-  \code{\link{removeConstantFeatures}},
-  \code{\link{summarizeColumns}},
-  \code{\link{summarizeLevels}}
+Other eda_and_preprocess: 
+\code{\link{createDummyFeatures}()},
+\code{\link{dropFeatures}()},
+\code{\link{mergeSmallFactorLevels}()},
+\code{\link{normalizeFeatures}()},
+\code{\link{removeConstantFeatures}()},
+\code{\link{summarizeColumns}()},
+\code{\link{summarizeLevels}()}
 }
 \concept{eda_and_preprocess}

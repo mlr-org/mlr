@@ -22,20 +22,22 @@ the best found hyperparameter settings for each resampling iteration.
 # see example of makeTuneWrapper
 }
 \seealso{
-Other tune: \code{\link{TuneControl}},
-  \code{\link{getNestedTuneResultsOptPathDf}},
-  \code{\link{getResamplingIndices}},
-  \code{\link{getTuneResult}},
-  \code{\link{makeModelMultiplexerParamSet}},
-  \code{\link{makeModelMultiplexer}},
-  \code{\link{makeTuneControlCMAES}},
-  \code{\link{makeTuneControlDesign}},
-  \code{\link{makeTuneControlGenSA}},
-  \code{\link{makeTuneControlGrid}},
-  \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlMBO}},
-  \code{\link{makeTuneControlRandom}},
-  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
-  \code{\link{tuneThreshold}}
+Other tune: 
+\code{\link{TuneControl}},
+\code{\link{getNestedTuneResultsOptPathDf}()},
+\code{\link{getResamplingIndices}()},
+\code{\link{getTuneResult}()},
+\code{\link{makeModelMultiplexerParamSet}()},
+\code{\link{makeModelMultiplexer}()},
+\code{\link{makeTuneControlCMAES}()},
+\code{\link{makeTuneControlDesign}()},
+\code{\link{makeTuneControlGenSA}()},
+\code{\link{makeTuneControlGrid}()},
+\code{\link{makeTuneControlIrace}()},
+\code{\link{makeTuneControlMBO}()},
+\code{\link{makeTuneControlRandom}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{tuneParams}()},
+\code{\link{tuneThreshold}()}
 }
 \concept{tune}

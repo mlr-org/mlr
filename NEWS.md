@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## filters - bugfixes:
+
+* Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
+
 # mlr 2.16.0
 
 ## package infrastructure

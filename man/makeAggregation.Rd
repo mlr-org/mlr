@@ -20,7 +20,7 @@ Set of aggregation properties.
 \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 }}
 
-\item{fun}{(\code{function(task, perf.test, perf.train, measure, group, pred)})\cr
+\item{fun}{(\verb{function(task, perf.test, perf.train, measure, group, pred)})\cr
 Calculates the aggregated performance. In most cases you will only need the performances
 \code{perf.test} and optionally \code{perf.train} on the test and training data sets.
 \describe{

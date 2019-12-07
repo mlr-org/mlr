@@ -19,7 +19,9 @@ If \link{configureMlr} configuration \code{on.error.dump} is \code{FALSE} or if 
 prediction did not fail, this returns \code{NULL}.
 }
 \seealso{
-Other debug: \code{\link{FailureModel}},
-  \code{\link{ResampleResult}}, \code{\link{getRRDump}}
+Other debug: 
+\code{\link{FailureModel}},
+\code{\link{ResampleResult}},
+\code{\link{getRRDump}()}
 }
 \concept{debug}
