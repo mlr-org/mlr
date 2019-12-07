@@ -4,12 +4,8 @@
 \alias{mergeSmallFactorLevels}
 \title{Merges small levels of factors into new level.}
 \usage{
-mergeSmallFactorLevels(
-  task,
-  cols = NULL,
-  min.perc = 0.01,
-  new.level = ".merged"
-)
+mergeSmallFactorLevels(task, cols = NULL, min.perc = 0.01,
+  new.level = ".merged")
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -36,13 +32,12 @@ Default is \dQuote{.merged}}
 Merges factor levels that occur only infrequently into combined levels with a higher frequency.
 }
 \seealso{
-Other eda_and_preprocess: 
-\code{\link{capLargeValues}()},
-\code{\link{createDummyFeatures}()},
-\code{\link{dropFeatures}()},
-\code{\link{normalizeFeatures}()},
-\code{\link{removeConstantFeatures}()},
-\code{\link{summarizeColumns}()},
-\code{\link{summarizeLevels}()}
+Other eda_and_preprocess: \code{\link{capLargeValues}},
+  \code{\link{createDummyFeatures}},
+  \code{\link{dropFeatures}},
+  \code{\link{normalizeFeatures}},
+  \code{\link{removeConstantFeatures}},
+  \code{\link{summarizeColumns}},
+  \code{\link{summarizeLevels}}
 }
 \concept{eda_and_preprocess}

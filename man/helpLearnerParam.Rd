@@ -20,31 +20,24 @@ Print the description of parameters of a given learner. The description
 is automatically extracted from the help pages of the learner, so it may be incomplete.
 }
 \seealso{
-Other learner: 
-\code{\link{LearnerProperties}},
-\code{\link{getClassWeightParam}()},
-\code{\link{getHyperPars}()},
-\code{\link{getLearnerId}()},
-\code{\link{getLearnerNote}()},
-\code{\link{getLearnerPackages}()},
-\code{\link{getLearnerParVals}()},
-\code{\link{getLearnerParamSet}()},
-\code{\link{getLearnerPredictType}()},
-\code{\link{getLearnerShortName}()},
-\code{\link{getLearnerType}()},
-\code{\link{getParamSet}()},
-\code{\link{helpLearner}()},
-\code{\link{makeLearners}()},
-\code{\link{makeLearner}()},
-\code{\link{removeHyperPars}()},
-\code{\link{setHyperPars}()},
-\code{\link{setId}()},
-\code{\link{setLearnerId}()},
-\code{\link{setPredictThreshold}()},
-\code{\link{setPredictType}()}
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{getClassWeightParam}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
+  \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
+  \code{\link{setPredictThreshold}},
+  \code{\link{setPredictType}}
 
-Other help: 
-\code{\link{helpLearner}()}
+Other help: \code{\link{helpLearner}}
 }
 \concept{help}
 \concept{learner}

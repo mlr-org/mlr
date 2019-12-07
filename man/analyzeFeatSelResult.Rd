@@ -25,10 +25,9 @@ It can also print information about all calculations done in each intermediate s
 Currently only implemented for sequential feature selection.
 }
 \seealso{
-Other featsel: 
-\code{\link{FeatSelControl}},
-\code{\link{getFeatSelResult}()},
-\code{\link{makeFeatSelWrapper}()},
-\code{\link{selectFeatures}()}
+Other featsel: \code{\link{FeatSelControl}},
+  \code{\link{getFeatSelResult}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{selectFeatures}}
 }
 \concept{featsel}

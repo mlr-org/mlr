@@ -25,11 +25,10 @@ performance measure.
 # see makeMultilabelBinaryRelevanceWrapper
 }
 \seealso{
-Other multilabel: 
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelNestedStackingWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()}
+Other multilabel: \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}}
 }
 \concept{multilabel}
