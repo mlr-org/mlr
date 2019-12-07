@@ -325,15 +325,9 @@
     <p>Create a cost-sensitive classification task.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeCostSensTask</span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)),
-  <span class='no'>data</span>,
-  <span class='no'>costs</span>,
-  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
-  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>makeCostSensTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>costs</span>,
+  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
+  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -399,10 +393,9 @@ Default is <code>TRUE</code>.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p>
-<p>Other costsens: 
-<code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a>()</code>,
-<code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a>()</code>,
-<code><a href='makeCostSensWeightedPairsWrapper.html'>makeCostSensWeightedPairsWrapper</a>()</code></p></div>
+<p>Other costsens: <code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a></code>,
+  <code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a></code>,
+  <code><a href='makeCostSensWeightedPairsWrapper.html'>makeCostSensWeightedPairsWrapper</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -325,13 +325,8 @@
     <p>Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generateThreshVsPerfData</span>(
-  <span class='no'>obj</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>gridsize</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
-  <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>task.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>generateThreshVsPerfData</span>(<span class='no'>obj</span>, <span class='no'>measures</span>, <span class='kw'>gridsize</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
+  <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>task.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -378,17 +373,15 @@ across the threshold grid, the measures, and whether the performance estimates w
 aggregated (only applicable for (list of) <a href='ResampleResult.html'>ResampleResult</a>s).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other generate_plot_data: 
-<code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code>,
-<code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>()</code>,
-<code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a>()</code>,
-<code><a href='generateFilterValuesData.html'>generateFilterValuesData</a>()</code>,
-<code><a href='generateLearningCurveData.html'>generateLearningCurveData</a>()</code>,
-<code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a>()</code>,
-<code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p>
-<p>Other thresh_vs_perf: 
-<code><a href='plotROCCurves.html'>plotROCCurves</a>()</code>,
-<code><a href='plotThreshVsPerf.html'>plotThreshVsPerf</a>()</code></p></div>
+    <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
+  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
+  <code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a></code>,
+  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
+  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
+  <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
+  <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
+<p>Other thresh_vs_perf: <code><a href='plotROCCurves.html'>plotROCCurves</a></code>,
+  <code><a href='plotThreshVsPerf.html'>plotThreshVsPerf</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
