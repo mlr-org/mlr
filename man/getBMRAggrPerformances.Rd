@@ -4,13 +4,8 @@
 \alias{getBMRAggrPerformances}
 \title{Extract the aggregated performance values from a benchmark result.}
 \usage{
-getBMRAggrPerformances(
-  bmr,
-  task.ids = NULL,
-  learner.ids = NULL,
-  as.df = FALSE,
-  drop = FALSE
-)
+getBMRAggrPerformances(bmr, task.ids = NULL, learner.ids = NULL,
+  as.df = FALSE, drop = FALSE)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -52,31 +47,28 @@ Either a list of lists of \dQuote{aggr} numeric vectors, as returned by
 \dQuote{task.id} and \dQuote{learner.id}.
 }
 \seealso{
-Other benchmark: 
-\code{\link{BenchmarkResult}},
-\code{\link{batchmark}()},
-\code{\link{benchmark}()},
-\code{\link{convertBMRToRankMatrix}()},
-\code{\link{friedmanPostHocTestBMR}()},
-\code{\link{friedmanTestBMR}()},
-\code{\link{generateCritDifferencesData}()},
-\code{\link{getBMRFeatSelResults}()},
-\code{\link{getBMRFilteredFeatures}()},
-\code{\link{getBMRLearnerIds}()},
-\code{\link{getBMRLearnerShortNames}()},
-\code{\link{getBMRLearners}()},
-\code{\link{getBMRMeasureIds}()},
-\code{\link{getBMRMeasures}()},
-\code{\link{getBMRModels}()},
-\code{\link{getBMRPerformances}()},
-\code{\link{getBMRPredictions}()},
-\code{\link{getBMRTaskDescs}()},
-\code{\link{getBMRTaskIds}()},
-\code{\link{getBMRTuneResults}()},
-\code{\link{plotBMRBoxplots}()},
-\code{\link{plotBMRRanksAsBarChart}()},
-\code{\link{plotBMRSummary}()},
-\code{\link{plotCritDifferences}()},
-\code{\link{reduceBatchmarkResults}()}
+Other benchmark: \code{\link{BenchmarkResult}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
+  \code{\link{convertBMRToRankMatrix}},
+  \code{\link{friedmanPostHocTestBMR}},
+  \code{\link{friedmanTestBMR}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{getBMRFeatSelResults}},
+  \code{\link{getBMRFilteredFeatures}},
+  \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
+  \code{\link{getBMRLearners}},
+  \code{\link{getBMRMeasureIds}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
+  \code{\link{getBMRPerformances}},
+  \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
+  \code{\link{getBMRTaskIds}},
+  \code{\link{getBMRTuneResults}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
 \concept{benchmark}

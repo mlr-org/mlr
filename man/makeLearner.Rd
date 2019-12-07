@@ -5,16 +5,9 @@
 \alias{Learner}
 \title{Create learner object.}
 \usage{
-makeLearner(
-  cl,
-  id = cl,
-  predict.type = "response",
-  predict.threshold = NULL,
-  fix.factors.prediction = FALSE,
-  ...,
-  par.vals = list(),
-  config = list()
-)
+makeLearner(cl, id = cl, predict.type = "response",
+  predict.threshold = NULL, fix.factors.prediction = FALSE, ...,
+  par.vals = list(), config = list())
 }
 \arguments{
 \item{cl}{(\code{character(1)})\cr
@@ -58,7 +51,7 @@ training) to that feature. Default is \code{FALSE}.}
 \item{...}{(any)\cr Optional named (hyper)parameters. If you want to set
 specific hyperparameters for a learner during model creation, these should
 go here. You can get a list of available hyperparameters using
-\verb{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
+\code{getParamSet(<learner>)}. Alternatively hyperparameters can be given using
 the \code{par.vals} argument but \code{...} should be preferred!}
 
 \item{par.vals}{(\link{list})\cr Optional list of named (hyper)parameters. The
@@ -86,7 +79,7 @@ The former aims at specifying default hyperparameter settings from \code{mlr}
 which differ from the actual defaults in the underlying learner. For
 example, \code{respect.unordered.factors} is set to \code{order} in \code{mlr} while the
 default in \link[ranger:ranger]{ranger::ranger} depends on the argument \code{splitrule}.
-\verb{getHyperPars(<learner>)} can be used to query hyperparameter defaults that
+\code{getHyperPars(<learner>)} can be used to query hyperparameter defaults that
 differ from the underlying learner. This function also shows all
 hyperparameters set by the user during learner creation (if these differ
 from the learner defaults).
@@ -177,27 +170,22 @@ lrn = makeLearner("classif.lda", method = "t", nu = 10)
 getHyperPars(lrn)
 }
 \seealso{
-Other learner: 
-\code{\link{LearnerProperties}},
-\code{\link{getClassWeightParam}()},
-\code{\link{getHyperPars}()},
-\code{\link{getLearnerId}()},
-\code{\link{getLearnerNote}()},
-\code{\link{getLearnerPackages}()},
-\code{\link{getLearnerParVals}()},
-\code{\link{getLearnerParamSet}()},
-\code{\link{getLearnerPredictType}()},
-\code{\link{getLearnerShortName}()},
-\code{\link{getLearnerType}()},
-\code{\link{getParamSet}()},
-\code{\link{helpLearnerParam}()},
-\code{\link{helpLearner}()},
-\code{\link{makeLearners}()},
-\code{\link{removeHyperPars}()},
-\code{\link{setHyperPars}()},
-\code{\link{setId}()},
-\code{\link{setLearnerId}()},
-\code{\link{setPredictThreshold}()},
-\code{\link{setPredictType}()}
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{getClassWeightParam}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerNote}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{removeHyperPars}},
+  \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
+  \code{\link{setPredictThreshold}},
+  \code{\link{setPredictType}}
 }
 \concept{learner}

@@ -21,18 +21,13 @@ By default \code{NULL} if all observations are used.}
 Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
 \seealso{
-Other task: 
-\code{\link{getTaskClassLevels}()},
-\code{\link{getTaskData}()},
-\code{\link{getTaskDesc}()},
-\code{\link{getTaskFeatureNames}()},
-\code{\link{getTaskFormula}()},
-\code{\link{getTaskId}()},
-\code{\link{getTaskNFeats}()},
-\code{\link{getTaskSize}()},
-\code{\link{getTaskTargetNames}()},
-\code{\link{getTaskTargets}()},
-\code{\link{getTaskType}()},
-\code{\link{subsetTask}()}
+Other task: \code{\link{getTaskClassLevels}},
+  \code{\link{getTaskData}}, \code{\link{getTaskDesc}},
+  \code{\link{getTaskFeatureNames}},
+  \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
+  \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
+  \code{\link{getTaskTargetNames}},
+  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
+  \code{\link{subsetTask}}
 }
 \concept{task}

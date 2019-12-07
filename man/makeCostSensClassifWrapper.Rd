@@ -27,36 +27,34 @@ preferred.)
 Then the classifier is fitted to that data and subsequently used for prediction.
 }
 \seealso{
-Other costsens: 
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeCostSensTask}()},
-\code{\link{makeCostSensWeightedPairsWrapper}()}
+Other costsens: \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeCostSensWeightedPairsWrapper}}
 
-Other wrapper: 
-\code{\link{makeBaggingWrapper}()},
-\code{\link{makeClassificationViaRegressionWrapper}()},
-\code{\link{makeConstantClassWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeDownsampleWrapper}()},
-\code{\link{makeDummyFeaturesWrapper}()},
-\code{\link{makeExtractFDAFeatsWrapper}()},
-\code{\link{makeFeatSelWrapper}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeImputeWrapper}()},
-\code{\link{makeMulticlassWrapper}()},
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelNestedStackingWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()},
-\code{\link{makeOverBaggingWrapper}()},
-\code{\link{makePreprocWrapperCaret}()},
-\code{\link{makePreprocWrapper}()},
-\code{\link{makeRemoveConstantFeaturesWrapper}()},
-\code{\link{makeSMOTEWrapper}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{makeUndersampleWrapper}()},
-\code{\link{makeWeightedClassesWrapper}()}
+Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
+  \code{\link{makeFeatSelWrapper}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeImputeWrapper}},
+  \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
+  \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
+  \code{\link{makeSMOTEWrapper}},
+  \code{\link{makeTuneWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{makeWeightedClassesWrapper}}
 }
 \concept{costsens}
 \concept{wrapper}

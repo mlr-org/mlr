@@ -5,16 +5,9 @@
 \alias{SurvTask}
 \title{Create a survival task.}
 \usage{
-makeSurvTask(
-  id = deparse(substitute(data)),
-  data,
-  target,
-  weights = NULL,
-  blocking = NULL,
-  coordinates = NULL,
-  fixup.data = "warn",
-  check.data = TRUE
-)
+makeSurvTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr

@@ -31,12 +31,11 @@ multilabel  \tab logical matrix, columns named with labels\cr
 }
 }
 \seealso{
-Other predict: 
-\code{\link{asROCRPrediction}()},
-\code{\link{getPredictionProbabilities}()},
-\code{\link{getPredictionTaskDesc}()},
-\code{\link{predict.WrappedModel}()},
-\code{\link{setPredictThreshold}()},
-\code{\link{setPredictType}()}
+Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{getPredictionProbabilities}},
+  \code{\link{getPredictionTaskDesc}},
+  \code{\link{predict.WrappedModel}},
+  \code{\link{setPredictThreshold}},
+  \code{\link{setPredictType}}
 }
 \concept{predict}

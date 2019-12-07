@@ -5,16 +5,9 @@
 \alias{MultilabelTask}
 \title{Create a multilabel task.}
 \usage{
-makeMultilabelTask(
-  id = deparse(substitute(data)),
-  data,
-  target,
-  weights = NULL,
-  blocking = NULL,
-  coordinates = NULL,
-  fixup.data = "warn",
-  check.data = TRUE
-)
+makeMultilabelTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
