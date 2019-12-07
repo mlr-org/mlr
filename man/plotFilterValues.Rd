@@ -32,10 +32,6 @@ Default is to plot all features.}
 \item{feat.type.cols}{(\code{logical(1)})\cr
 Whether to color different feature types (e.g. numeric | factor).
 Default is to use no colors (\code{feat.type.cols = FALSE}).}
-
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -48,21 +44,24 @@ fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValues(fv)
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{listFilterEnsembleMethods}},
-  \code{\link{listFilterMethods}},
-  \code{\link{makeFilterEnsemble}},
-  \code{\link{makeFilterWrapper}}, \code{\link{makeFilter}}
+Other filter: 
+\code{\link{filterFeatures}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{getFilteredFeatures}()},
+\code{\link{listFilterEnsembleMethods}()},
+\code{\link{listFilterMethods}()},
+\code{\link{makeFilterEnsemble}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeFilter}()}
 
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
-  \code{\link{generateThreshVsPerfData}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{generateFeatureImportanceData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generatePartialDependenceData}()},
+\code{\link{generateThreshVsPerfData}()}
 }
 \concept{filter}
 \concept{generate_plot_data}

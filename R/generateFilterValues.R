@@ -173,7 +173,6 @@ print.FilterValues = function(x, ...) {
 #' @param feat.type.cols (`logical(1)`)\cr
 #'   Whether to color different feature types (e.g. numeric | factor).
 #'   Default is to use no colors (`feat.type.cols = FALSE`).
-#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
