@@ -10,15 +10,8 @@
 \alias{cv10}
 \title{Create a description object for a resampling strategy.}
 \usage{
-makeResampleDesc(
-  method,
-  predict = "test",
-  ...,
-  stratify = FALSE,
-  stratify.cols = NULL,
-  fixed = FALSE,
-  blocking.cv = FALSE
-)
+makeResampleDesc(method, predict = "test", ..., stratify = FALSE,
+  stratify.cols = NULL, fixed = FALSE, blocking.cv = FALSE)
 }
 \arguments{
 \item{method}{(\code{character(1)})\cr
@@ -146,15 +139,13 @@ makeResampleDesc("Subsample", iters = 10)
 makeResampleDesc("Holdout")
 }
 \seealso{
-Other resample: 
-\code{\link{ResamplePrediction}},
-\code{\link{ResampleResult}},
-\code{\link{addRRMeasure}()},
-\code{\link{getRRPredictionList}()},
-\code{\link{getRRPredictions}()},
-\code{\link{getRRTaskDescription}()},
-\code{\link{getRRTaskDesc}()},
-\code{\link{makeResampleInstance}()},
-\code{\link{resample}()}
+Other resample: \code{\link{ResamplePrediction}},
+  \code{\link{ResampleResult}}, \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
+  \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
+  \code{\link{getRRTaskDesc}},
+  \code{\link{makeResampleInstance}},
+  \code{\link{resample}}
 }
 \concept{resample}

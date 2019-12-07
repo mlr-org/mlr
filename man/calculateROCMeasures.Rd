@@ -65,20 +65,16 @@ pred = predict(fit, task = sonar.task)
 calculateROCMeasures(pred)
 }
 \seealso{
-Other roc: 
-\code{\link{asROCRPrediction}()}
+Other roc: \code{\link{asROCRPrediction}}
 
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateConfusionMatrix}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCostMeasure}()},
-\code{\link{makeCustomResampledMeasure}()},
-\code{\link{makeMeasure}()},
-\code{\link{measures}},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}
 \concept{roc}

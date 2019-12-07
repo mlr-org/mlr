@@ -24,9 +24,8 @@ entries can have a subset of the following slots, depending on which step in the
 \dQuote{predict.test} (prediction on test subset).
 }
 \seealso{
-Other debug: 
-\code{\link{FailureModel}},
-\code{\link{ResampleResult}},
-\code{\link{getPredictionDump}()}
+Other debug: \code{\link{FailureModel}},
+  \code{\link{ResampleResult}},
+  \code{\link{getPredictionDump}}
 }
 \concept{debug}

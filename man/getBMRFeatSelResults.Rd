@@ -4,13 +4,8 @@
 \alias{getBMRFeatSelResults}
 \title{Extract the feature selection results from a benchmark result.}
 \usage{
-getBMRFeatSelResults(
-  bmr,
-  task.ids = NULL,
-  learner.ids = NULL,
-  as.df = FALSE,
-  drop = FALSE
-)
+getBMRFeatSelResults(bmr, task.ids = NULL, learner.ids = NULL,
+  as.df = FALSE, drop = FALSE)
 }
 \arguments{
 \item{bmr}{(\link{BenchmarkResult})\cr
@@ -52,31 +47,28 @@ Returns a nested list of \link{FeatSelResult}s. The first level of nesting is by
 Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 }
 \seealso{
-Other benchmark: 
-\code{\link{BenchmarkResult}},
-\code{\link{batchmark}()},
-\code{\link{benchmark}()},
-\code{\link{convertBMRToRankMatrix}()},
-\code{\link{friedmanPostHocTestBMR}()},
-\code{\link{friedmanTestBMR}()},
-\code{\link{generateCritDifferencesData}()},
-\code{\link{getBMRAggrPerformances}()},
-\code{\link{getBMRFilteredFeatures}()},
-\code{\link{getBMRLearnerIds}()},
-\code{\link{getBMRLearnerShortNames}()},
-\code{\link{getBMRLearners}()},
-\code{\link{getBMRMeasureIds}()},
-\code{\link{getBMRMeasures}()},
-\code{\link{getBMRModels}()},
-\code{\link{getBMRPerformances}()},
-\code{\link{getBMRPredictions}()},
-\code{\link{getBMRTaskDescs}()},
-\code{\link{getBMRTaskIds}()},
-\code{\link{getBMRTuneResults}()},
-\code{\link{plotBMRBoxplots}()},
-\code{\link{plotBMRRanksAsBarChart}()},
-\code{\link{plotBMRSummary}()},
-\code{\link{plotCritDifferences}()},
-\code{\link{reduceBatchmarkResults}()}
+Other benchmark: \code{\link{BenchmarkResult}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
+  \code{\link{convertBMRToRankMatrix}},
+  \code{\link{friedmanPostHocTestBMR}},
+  \code{\link{friedmanTestBMR}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{getBMRAggrPerformances}},
+  \code{\link{getBMRFilteredFeatures}},
+  \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
+  \code{\link{getBMRLearners}},
+  \code{\link{getBMRMeasureIds}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
+  \code{\link{getBMRPerformances}},
+  \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
+  \code{\link{getBMRTaskIds}},
+  \code{\link{getBMRTuneResults}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
 \concept{benchmark}

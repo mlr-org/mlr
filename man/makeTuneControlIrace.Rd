@@ -5,17 +5,10 @@
 \alias{TuneControlIrace}
 \title{Create control object for hyperparameter tuning with Irace.}
 \usage{
-makeTuneControlIrace(
-  impute.val = NULL,
-  n.instances = 100L,
-  show.irace.output = FALSE,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL,
-  ...
-)
+makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
+  show.irace.output = FALSE, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = "default",
+  final.dw.perc = NULL, budget = NULL, ...)
 }
 \arguments{
 \item{impute.val}{(\link{numeric})\cr
@@ -93,22 +86,20 @@ store its tuning results in a file on disk, see the package documentation for de
 and how to change the file path.
 }
 \seealso{
-Other tune: 
-\code{\link{TuneControl}},
-\code{\link{getNestedTuneResultsOptPathDf}()},
-\code{\link{getNestedTuneResultsX}()},
-\code{\link{getResamplingIndices}()},
-\code{\link{getTuneResult}()},
-\code{\link{makeModelMultiplexerParamSet}()},
-\code{\link{makeModelMultiplexer}()},
-\code{\link{makeTuneControlCMAES}()},
-\code{\link{makeTuneControlDesign}()},
-\code{\link{makeTuneControlGenSA}()},
-\code{\link{makeTuneControlGrid}()},
-\code{\link{makeTuneControlMBO}()},
-\code{\link{makeTuneControlRandom}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{tuneParams}()},
-\code{\link{tuneThreshold}()}
+Other tune: \code{\link{TuneControl}},
+  \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
+  \code{\link{getTuneResult}},
+  \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
+  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
+  \code{\link{tuneThreshold}}
 }
 \concept{tune}

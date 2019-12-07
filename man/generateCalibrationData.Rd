@@ -5,7 +5,8 @@
 \alias{CalibrationData}
 \title{Generate classifier calibration data.}
 \usage{
-generateCalibrationData(obj, breaks = "Sturges", groups = NULL, task.id = NULL)
+generateCalibrationData(obj, breaks = "Sturges", groups = NULL,
+  task.id = NULL)
 }
 \arguments{
 \item{obj}{(list of \link{Prediction} | list of \link{ResampleResult} | \link{BenchmarkResult})\cr
@@ -63,17 +64,15 @@ predicted probability bins.
 Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
 }
 \seealso{
-Other generate_plot_data: 
-\code{\link{generateCritDifferencesData}()},
-\code{\link{generateFeatureImportanceData}()},
-\code{\link{generateFilterValuesData}()},
-\code{\link{generateLearningCurveData}()},
-\code{\link{generatePartialDependenceData}()},
-\code{\link{generateThreshVsPerfData}()},
-\code{\link{plotFilterValues}()}
+Other generate_plot_data: \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generateLearningCurveData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{plotFilterValues}}
 
-Other calibration: 
-\code{\link{plotCalibration}()}
+Other calibration: \code{\link{plotCalibration}}
 }
 \concept{calibration}
 \concept{generate_plot_data}
