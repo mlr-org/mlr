@@ -5,15 +5,9 @@
 \alias{TuneControlRandom}
 \title{Create control object for hyperparameter tuning with random search.}
 \usage{
-makeTuneControlRandom(
-  same.resampling.instance = TRUE,
-  maxit = NULL,
-  tune.threshold = FALSE,
-  tune.threshold.args = list(),
-  log.fun = "default",
-  final.dw.perc = NULL,
-  budget = NULL
-)
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = NULL,
+  tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = "default", final.dw.perc = NULL, budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{(\code{logical(1)})\cr
@@ -63,22 +57,20 @@ the random search algorithm.}
 Random search. All kinds of parameter types can be handled.
 }
 \seealso{
-Other tune: 
-\code{\link{TuneControl}},
-\code{\link{getNestedTuneResultsOptPathDf}()},
-\code{\link{getNestedTuneResultsX}()},
-\code{\link{getResamplingIndices}()},
-\code{\link{getTuneResult}()},
-\code{\link{makeModelMultiplexerParamSet}()},
-\code{\link{makeModelMultiplexer}()},
-\code{\link{makeTuneControlCMAES}()},
-\code{\link{makeTuneControlDesign}()},
-\code{\link{makeTuneControlGenSA}()},
-\code{\link{makeTuneControlGrid}()},
-\code{\link{makeTuneControlIrace}()},
-\code{\link{makeTuneControlMBO}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{tuneParams}()},
-\code{\link{tuneThreshold}()}
+Other tune: \code{\link{TuneControl}},
+  \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
+  \code{\link{getTuneResult}},
+  \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
+  \code{\link{tuneThreshold}}
 }
 \concept{tune}

@@ -21,15 +21,14 @@ Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 Adds new measures to an existing \code{ResampleResult}.
 }
 \seealso{
-Other resample: 
-\code{\link{ResamplePrediction}},
-\code{\link{ResampleResult}},
-\code{\link{getRRPredictionList}()},
-\code{\link{getRRPredictions}()},
-\code{\link{getRRTaskDescription}()},
-\code{\link{getRRTaskDesc}()},
-\code{\link{makeResampleDesc}()},
-\code{\link{makeResampleInstance}()},
-\code{\link{resample}()}
+Other resample: \code{\link{ResamplePrediction}},
+  \code{\link{ResampleResult}},
+  \code{\link{getRRPredictionList}},
+  \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
+  \code{\link{getRRTaskDesc}},
+  \code{\link{makeResampleDesc}},
+  \code{\link{makeResampleInstance}},
+  \code{\link{resample}}
 }
 \concept{resample}

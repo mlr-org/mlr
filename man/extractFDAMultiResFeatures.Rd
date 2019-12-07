@@ -4,7 +4,8 @@
 \alias{extractFDAMultiResFeatures}
 \title{Multiresolution feature extraction.}
 \usage{
-extractFDAMultiResFeatures(res.level = 3L, shift = 0.5, curve.lens = NULL)
+extractFDAMultiResFeatures(res.level = 3L, shift = 0.5,
+  curve.lens = NULL)
 }
 \arguments{
 \item{res.level}{(\code{integer(1)})\cr
@@ -25,9 +26,8 @@ as features. The segments length are set in a hierachy way so the features
 cover different resolution levels.
 }
 \seealso{
-Other fda_featextractor: 
-\code{\link{extractFDAFPCA}()},
-\code{\link{extractFDAFourier}()},
-\code{\link{extractFDAWavelets}()}
+Other fda_featextractor: \code{\link{extractFDAFPCA}},
+  \code{\link{extractFDAFourier}},
+  \code{\link{extractFDAWavelets}}
 }
 \concept{fda_featextractor}

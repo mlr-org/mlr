@@ -4,15 +4,8 @@
 \alias{makeFeatSelWrapper}
 \title{Fuse learner with feature selection.}
 \usage{
-makeFeatSelWrapper(
-  learner,
-  resampling,
-  measures,
-  bit.names,
-  bits.to.features,
-  control,
-  show.info = getMlrOption("show.info")
-)
+makeFeatSelWrapper(learner, resampling, measures, bit.names,
+  bits.to.features, control, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -72,37 +65,35 @@ lrn = makeFeatSelWrapper("classif.ksvm", resampling = inner, control = ctrl)
 r = resample(lrn, iris.task, outer, extract = getFeatSelResult)
 }
 \seealso{
-Other featsel: 
-\code{\link{FeatSelControl}},
-\code{\link{analyzeFeatSelResult}()},
-\code{\link{getFeatSelResult}()},
-\code{\link{selectFeatures}()}
+Other featsel: \code{\link{FeatSelControl}},
+  \code{\link{analyzeFeatSelResult}},
+  \code{\link{getFeatSelResult}},
+  \code{\link{selectFeatures}}
 
-Other wrapper: 
-\code{\link{makeBaggingWrapper}()},
-\code{\link{makeClassificationViaRegressionWrapper}()},
-\code{\link{makeConstantClassWrapper}()},
-\code{\link{makeCostSensClassifWrapper}()},
-\code{\link{makeCostSensRegrWrapper}()},
-\code{\link{makeDownsampleWrapper}()},
-\code{\link{makeDummyFeaturesWrapper}()},
-\code{\link{makeExtractFDAFeatsWrapper}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeImputeWrapper}()},
-\code{\link{makeMulticlassWrapper}()},
-\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
-\code{\link{makeMultilabelClassifierChainsWrapper}()},
-\code{\link{makeMultilabelDBRWrapper}()},
-\code{\link{makeMultilabelNestedStackingWrapper}()},
-\code{\link{makeMultilabelStackingWrapper}()},
-\code{\link{makeOverBaggingWrapper}()},
-\code{\link{makePreprocWrapperCaret}()},
-\code{\link{makePreprocWrapper}()},
-\code{\link{makeRemoveConstantFeaturesWrapper}()},
-\code{\link{makeSMOTEWrapper}()},
-\code{\link{makeTuneWrapper}()},
-\code{\link{makeUndersampleWrapper}()},
-\code{\link{makeWeightedClassesWrapper}()}
+Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensRegrWrapper}},
+  \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeImputeWrapper}},
+  \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
+  \code{\link{makeOverBaggingWrapper}},
+  \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
+  \code{\link{makeSMOTEWrapper}},
+  \code{\link{makeTuneWrapper}},
+  \code{\link{makeUndersampleWrapper}},
+  \code{\link{makeWeightedClassesWrapper}}
 }
 \concept{featsel}
 \concept{wrapper}

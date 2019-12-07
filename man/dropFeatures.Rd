@@ -20,13 +20,12 @@ Features to drop.}
 Drop some features of task.
 }
 \seealso{
-Other eda_and_preprocess: 
-\code{\link{capLargeValues}()},
-\code{\link{createDummyFeatures}()},
-\code{\link{mergeSmallFactorLevels}()},
-\code{\link{normalizeFeatures}()},
-\code{\link{removeConstantFeatures}()},
-\code{\link{summarizeColumns}()},
-\code{\link{summarizeLevels}()}
+Other eda_and_preprocess: \code{\link{capLargeValues}},
+  \code{\link{createDummyFeatures}},
+  \code{\link{mergeSmallFactorLevels}},
+  \code{\link{normalizeFeatures}},
+  \code{\link{removeConstantFeatures}},
+  \code{\link{summarizeColumns}},
+  \code{\link{summarizeLevels}}
 }
 \concept{eda_and_preprocess}
