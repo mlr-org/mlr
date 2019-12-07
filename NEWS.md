@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## learners - general
+
+- xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
+
 # mlr 2.16.0
 
 ## package infrastructure
