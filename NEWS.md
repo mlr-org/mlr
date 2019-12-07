@@ -1,8 +1,9 @@
 # mlr (development version)
 
-## filters - bugfixes:
+## filters - bugfixes
 
-* Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
+- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
+- Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
 
 # mlr 2.16.0
 

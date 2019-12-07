@@ -109,3 +109,11 @@ test_that("ensemble filters subset the task correctly", {
     base.methods = c("univariate.model.score", "praznik_CMIM"))
   expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
 })
+
+test_that("Thresholding works with ensemble filters", {
+  foo = filterFeatures(iris.task, method = "E-min",
+    base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
+    thresh = 2)
+
+  expect_equal(getTaskNFeats(foo), 3)
+})
