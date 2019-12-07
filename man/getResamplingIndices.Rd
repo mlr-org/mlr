@@ -25,6 +25,7 @@ the resampling indices used for the respective method.
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.rpart")
 # stupid mini grid
+library("ParamHelpers")
 ps = makeParamSet(
   makeDiscreteParam("cp", values = c(0.05, 0.1)),
   makeDiscreteParam("minsplit", values = c(10, 20))
