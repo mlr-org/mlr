@@ -151,7 +151,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  print(x$data[with(x$data, order(method, -value)), ])
+  print(x$data[with(x$data, order(filter, -value)), ])
 }
 #' Plot filter values using ggplot2.
 #'
@@ -213,7 +213,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
       fvalues$task.desc$id,
       sum(fvalues$task.desc$n.feat),
-      data$method),
+      data$filter),
     x = "", y = "")
   }
   plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
