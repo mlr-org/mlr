@@ -258,7 +258,7 @@ Suggests:
     tgp,
     TH.data,
     wavelets,
-    xgboost (>= 0.6-2)
+    xgboost (>= 0.7)
 VignetteBuilder:
     knitr
 ByteCompile: yes
