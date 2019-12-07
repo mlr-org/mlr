@@ -4,9 +4,17 @@
 \alias{makeFilterWrapper}
 \title{Fuse learner with a feature filter method.}
 \usage{
-makeFilterWrapper(learner, fw.method = "randomForestSRC_importance",
-  fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL,
-  fw.threshold = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...)
+makeFilterWrapper(
+  learner,
+  fw.method = "randomForestSRC_importance",
+  fw.base.methods = NULL,
+  fw.perc = NULL,
+  fw.abs = NULL,
+  fw.threshold = NULL,
+  fw.mandatory.feat = NULL,
+  cache = FALSE,
+  ...
+)
 }
 \arguments{
 \item{learner}{(\link{Learner} | \code{character(1)})\cr
@@ -93,38 +101,41 @@ r = resample(lrn, task, outer, extract = function(model) {
 print(r$extract)
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{listFilterEnsembleMethods}},
-  \code{\link{listFilterMethods}},
-  \code{\link{makeFilterEnsemble}},
-  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+Other filter: 
+\code{\link{filterFeatures}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{getFilteredFeatures}()},
+\code{\link{listFilterEnsembleMethods}()},
+\code{\link{listFilterMethods}()},
+\code{\link{makeFilterEnsemble}()},
+\code{\link{makeFilter}()},
+\code{\link{plotFilterValues}()}
 
-Other wrapper: \code{\link{makeBaggingWrapper}},
-  \code{\link{makeClassificationViaRegressionWrapper}},
-  \code{\link{makeConstantClassWrapper}},
-  \code{\link{makeCostSensClassifWrapper}},
-  \code{\link{makeCostSensRegrWrapper}},
-  \code{\link{makeDownsampleWrapper}},
-  \code{\link{makeDummyFeaturesWrapper}},
-  \code{\link{makeExtractFDAFeatsWrapper}},
-  \code{\link{makeFeatSelWrapper}},
-  \code{\link{makeImputeWrapper}},
-  \code{\link{makeMulticlassWrapper}},
-  \code{\link{makeMultilabelBinaryRelevanceWrapper}},
-  \code{\link{makeMultilabelClassifierChainsWrapper}},
-  \code{\link{makeMultilabelDBRWrapper}},
-  \code{\link{makeMultilabelNestedStackingWrapper}},
-  \code{\link{makeMultilabelStackingWrapper}},
-  \code{\link{makeOverBaggingWrapper}},
-  \code{\link{makePreprocWrapperCaret}},
-  \code{\link{makePreprocWrapper}},
-  \code{\link{makeRemoveConstantFeaturesWrapper}},
-  \code{\link{makeSMOTEWrapper}},
-  \code{\link{makeTuneWrapper}},
-  \code{\link{makeUndersampleWrapper}},
-  \code{\link{makeWeightedClassesWrapper}}
+Other wrapper: 
+\code{\link{makeBaggingWrapper}()},
+\code{\link{makeClassificationViaRegressionWrapper}()},
+\code{\link{makeConstantClassWrapper}()},
+\code{\link{makeCostSensClassifWrapper}()},
+\code{\link{makeCostSensRegrWrapper}()},
+\code{\link{makeDownsampleWrapper}()},
+\code{\link{makeDummyFeaturesWrapper}()},
+\code{\link{makeExtractFDAFeatsWrapper}()},
+\code{\link{makeFeatSelWrapper}()},
+\code{\link{makeImputeWrapper}()},
+\code{\link{makeMulticlassWrapper}()},
+\code{\link{makeMultilabelBinaryRelevanceWrapper}()},
+\code{\link{makeMultilabelClassifierChainsWrapper}()},
+\code{\link{makeMultilabelDBRWrapper}()},
+\code{\link{makeMultilabelNestedStackingWrapper}()},
+\code{\link{makeMultilabelStackingWrapper}()},
+\code{\link{makeOverBaggingWrapper}()},
+\code{\link{makePreprocWrapperCaret}()},
+\code{\link{makePreprocWrapper}()},
+\code{\link{makeRemoveConstantFeaturesWrapper}()},
+\code{\link{makeSMOTEWrapper}()},
+\code{\link{makeTuneWrapper}()},
+\code{\link{makeUndersampleWrapper}()},
+\code{\link{makeWeightedClassesWrapper}()}
 }
 \concept{filter}
 \concept{wrapper}

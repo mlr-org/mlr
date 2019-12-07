@@ -16,25 +16,31 @@ Interactive function that gives the user quick access to the
 help pages associated with various functions involved in the given learner.
 }
 \seealso{
-Other learner: \code{\link{LearnerProperties}},
-  \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
-  \code{\link{getLearnerNote}},
-  \code{\link{getLearnerPackages}},
-  \code{\link{getLearnerParVals}},
-  \code{\link{getLearnerParamSet}},
-  \code{\link{getLearnerPredictType}},
-  \code{\link{getLearnerShortName}},
-  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{helpLearnerParam}},
-  \code{\link{makeLearners}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
-  \code{\link{setHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
-  \code{\link{setPredictThreshold}},
-  \code{\link{setPredictType}}
+Other learner: 
+\code{\link{LearnerProperties}},
+\code{\link{getClassWeightParam}()},
+\code{\link{getHyperPars}()},
+\code{\link{getLearnerId}()},
+\code{\link{getLearnerNote}()},
+\code{\link{getLearnerPackages}()},
+\code{\link{getLearnerParVals}()},
+\code{\link{getLearnerParamSet}()},
+\code{\link{getLearnerPredictType}()},
+\code{\link{getLearnerShortName}()},
+\code{\link{getLearnerType}()},
+\code{\link{getParamSet}()},
+\code{\link{helpLearnerParam}()},
+\code{\link{makeLearners}()},
+\code{\link{makeLearner}()},
+\code{\link{removeHyperPars}()},
+\code{\link{setHyperPars}()},
+\code{\link{setId}()},
+\code{\link{setLearnerId}()},
+\code{\link{setPredictThreshold}()},
+\code{\link{setPredictType}()}
 
-Other help: \code{\link{helpLearnerParam}}
+Other help: 
+\code{\link{helpLearnerParam}()}
 }
 \concept{help}
 \concept{learner}

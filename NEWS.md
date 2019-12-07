@@ -4,6 +4,11 @@
 
 - xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
 
+## filters - bugfixes
+
+- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
+- Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
+
 # mlr 2.16.0
 
 ## package infrastructure
