@@ -137,7 +137,6 @@ License: BSD_2_clause + file LICENSE
 URL: https://mlr.mlr-org.com, https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 Depends:
-    ParamHelpers (>= 1.10),
     R (>= 3.0.2)
 Imports:
     backports (>= 1.1.0),
@@ -147,6 +146,7 @@ Imports:
     ggplot2,
     methods,
     parallelMap (>= 1.3),
+    ParamHelpers (>= 1.10),
     stats,
     stringi,
     survival,
