@@ -34,7 +34,9 @@ print(performance(p))
 configureMlr(on.learner.error = "stop")
 }
 \seealso{
-Other debug: \code{\link{ResampleResult}},
-  \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
+Other debug: 
+\code{\link{ResampleResult}},
+\code{\link{getPredictionDump}()},
+\code{\link{getRRDump}()}
 }
 \concept{debug}
