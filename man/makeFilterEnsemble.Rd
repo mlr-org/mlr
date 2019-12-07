@@ -16,7 +16,7 @@ will use.}
 \item{desc}{(\code{character(1)})\cr
 Short description of the filter.}
 
-\item{fun}{(\code{function(task, nselect, ...})\cr
+\item{fun}{(\verb{function(task, nselect, ...})\cr
 Function which takes a task and returns a named numeric vector of scores,
 one score for each feature of \code{task}.
 Higher scores mean higher importance of the feature.
@@ -34,12 +34,14 @@ documentation for the \code{fun} parameter specific to each filter can
 be found in the description.
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{listFilterEnsembleMethods}},
-  \code{\link{listFilterMethods}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
+Other filter: 
+\code{\link{filterFeatures}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{getFilteredFeatures}()},
+\code{\link{listFilterEnsembleMethods}()},
+\code{\link{listFilterMethods}()},
+\code{\link{makeFilterWrapper}()},
+\code{\link{makeFilter}()},
+\code{\link{plotFilterValues}()}
 }
 \concept{filter}

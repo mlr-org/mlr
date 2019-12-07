@@ -5,8 +5,13 @@
 \alias{ThreshVsPerfData}
 \title{Generate threshold vs. performance(s) for 2-class classification.}
 \usage{
-generateThreshVsPerfData(obj, measures, gridsize = 100L,
-  aggregate = TRUE, task.id = NULL)
+generateThreshVsPerfData(
+  obj,
+  measures,
+  gridsize = 100L,
+  aggregate = TRUE,
+  task.id = NULL
+)
 }
 \arguments{
 \item{obj}{(list of \link{Prediction} | list of \link{ResampleResult} | \link{BenchmarkResult})\cr
@@ -41,16 +46,18 @@ aggregated (only applicable for (list of) \link{ResampleResult}s).
 Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
-  \code{\link{plotFilterValues}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{generateFeatureImportanceData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generatePartialDependenceData}()},
+\code{\link{plotFilterValues}()}
 
-Other thresh_vs_perf: \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerf}}
+Other thresh_vs_perf: 
+\code{\link{plotROCCurves}()},
+\code{\link{plotThreshVsPerf}()}
 }
 \concept{generate_plot_data}
 \concept{thresh_vs_perf}

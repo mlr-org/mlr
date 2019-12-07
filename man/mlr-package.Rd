@@ -6,7 +6,7 @@
 \alias{mlr-package}
 \title{mlr: Machine Learning in R}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Interface to a large number of classification and
     regression techniques, including machine-readable parameter
@@ -30,34 +30,34 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (0000-0003-0748-6624)
+\strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (\href{https://orcid.org/0000-0003-0748-6624}{ORCID})
 
 Authors:
 \itemize{
-  \item Bernd Bischl \email{bernd_bischl@gmx.net} (0000-0001-6002-6980)
-  \item Michel Lang \email{michellang@gmail.com} (0000-0001-9754-0393)
+  \item Bernd Bischl \email{bernd_bischl@gmx.net} (\href{https://orcid.org/0000-0001-6002-6980}{ORCID})
+  \item Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
   \item Lars Kotthoff \email{larsko@uwyo.edu}
   \item Julia Schiffner \email{schiffner@math.uni-duesseldorf.de}
   \item Jakob Richter \email{code@jakob-r.de}
   \item Zachary Jones \email{zmj@zmjones.com}
-  \item Giuseppe Casalicchio \email{giuseppe.casalicchio@stat.uni-muenchen.de} (0000-0001-5324-5966)
+  \item Giuseppe Casalicchio \email{giuseppe.casalicchio@stat.uni-muenchen.de} (\href{https://orcid.org/0000-0001-5324-5966}{ORCID})
   \item Mason Gallo \email{masonagallo@gmail.com}
 }
 
 Other contributors:
 \itemize{
-  \item Jakob Bossek \email{jakob.bossek@tu-dortmund.de} (0000-0002-4121-4668) [contributor]
-  \item Erich Studerus \email{erich.studerus@upkbs.ch} (0000-0003-4233-0182) [contributor]
+  \item Jakob Bossek \email{jakob.bossek@tu-dortmund.de} (\href{https://orcid.org/0000-0002-4121-4668}{ORCID}) [contributor]
+  \item Erich Studerus \email{erich.studerus@upkbs.ch} (\href{https://orcid.org/0000-0003-4233-0182}{ORCID}) [contributor]
   \item Leonard Judt \email{leonard.judt@tu-dortmund.de} [contributor]
   \item Tobias Kuehn \email{tobi.kuehn@gmx.de} [contributor]
-  \item Pascal Kerschke \email{kerschke@uni-muenster.de} (0000-0003-2862-1418) [contributor]
+  \item Pascal Kerschke \email{kerschke@uni-muenster.de} (\href{https://orcid.org/0000-0003-2862-1418}{ORCID}) [contributor]
   \item Florian Fendt \email{flo_fendt@gmx.de} [contributor]
-  \item Philipp Probst \email{philipp_probst@gmx.de} (0000-0001-8402-6790) [contributor]
-  \item Xudong Sun \email{xudong.sun@stat.uni-muenchen.de} (0000-0003-3269-2307) [contributor]
-  \item Janek Thomas \email{janek.thomas@stat.uni-muenchen.de} (0000-0003-4511-6245) [contributor]
+  \item Philipp Probst \email{philipp_probst@gmx.de} (\href{https://orcid.org/0000-0001-8402-6790}{ORCID}) [contributor]
+  \item Xudong Sun \email{xudong.sun@stat.uni-muenchen.de} (\href{https://orcid.org/0000-0003-3269-2307}{ORCID}) [contributor]
+  \item Janek Thomas \email{janek.thomas@stat.uni-muenchen.de} (\href{https://orcid.org/0000-0003-4511-6245}{ORCID}) [contributor]
   \item Bruno Vieira \email{bruno.hebling.vieira@usp.br} [contributor]
-  \item Laura Beggel \email{laura.beggel@web.de} (0000-0002-8872-8535) [contributor]
-  \item Quay Au \email{quay.au@stat.uni-muenchen.de} (0000-0002-5252-8902) [contributor]
+  \item Laura Beggel \email{laura.beggel@web.de} (\href{https://orcid.org/0000-0002-8872-8535}{ORCID}) [contributor]
+  \item Quay Au \email{quay.au@stat.uni-muenchen.de} (\href{https://orcid.org/0000-0002-5252-8902}{ORCID}) [contributor]
   \item Martin Binder \email{ma.binder@campus.lmu.de} [contributor]
   \item Florian Pfisterer \email{pfistererf@googlemail.com} [contributor]
   \item Stefan Coors \email{stefan.coors@gmx.net} [contributor]

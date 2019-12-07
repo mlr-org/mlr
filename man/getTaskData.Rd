@@ -4,8 +4,14 @@
 \alias{getTaskData}
 \title{Extract data in task.}
 \usage{
-getTaskData(task, subset = NULL, features, target.extra = FALSE,
-  recode.target = "no", functionals.as = "dfcols")
+getTaskData(
+  task,
+  subset = NULL,
+  features,
+  target.extra = FALSE,
+  recode.target = "no",
+  functionals.as = "dfcols"
+)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -66,13 +72,18 @@ head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = 
 head(getTaskData(task, subset = 1:100, recode.target = "01"))
 }
 \seealso{
-Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskCosts}}, \code{\link{getTaskDesc}},
-  \code{\link{getTaskFeatureNames}},
-  \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
-  \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
-  \code{\link{getTaskTargetNames}},
-  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
-  \code{\link{subsetTask}}
+Other task: 
+\code{\link{getTaskClassLevels}()},
+\code{\link{getTaskCosts}()},
+\code{\link{getTaskDesc}()},
+\code{\link{getTaskFeatureNames}()},
+\code{\link{getTaskFormula}()},
+\code{\link{getTaskId}()},
+\code{\link{getTaskNFeats}()},
+\code{\link{getTaskSize}()},
+\code{\link{getTaskTargetNames}()},
+\code{\link{getTaskTargets}()},
+\code{\link{getTaskType}()},
+\code{\link{subsetTask}()}
 }
 \concept{task}
