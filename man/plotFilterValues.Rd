@@ -7,7 +7,7 @@
 plotFilterValues(
   fvalues,
   sort = "dec",
-  n.show = nrow(fv$data),
+  n.show = nrow(fvalues$data),
   feat.type.cols = FALSE
 )
 }

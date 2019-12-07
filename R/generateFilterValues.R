@@ -179,7 +179,7 @@ print.FilterValues = function(x, ...) {
 #' @examples
 #' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
-plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fv$data),
+plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
   feat.type.cols = FALSE) {
 
   assertClass(fvalues, classes = "FilterValues")
