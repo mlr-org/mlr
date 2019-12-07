@@ -19,13 +19,16 @@ row and column sums of observations.}
 }
 }
 \seealso{
-Other performance: \code{\link{calculateConfusionMatrix}},
-  \code{\link{calculateROCMeasures}},
-  \code{\link{estimateRelativeOverfitting}},
-  \code{\link{makeCostMeasure}},
-  \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}, \code{\link{setAggregation}},
-  \code{\link{setMeasurePars}}
+Other performance: 
+\code{\link{calculateConfusionMatrix}()},
+\code{\link{calculateROCMeasures}()},
+\code{\link{estimateRelativeOverfitting}()},
+\code{\link{makeCostMeasure}()},
+\code{\link{makeCustomResampledMeasure}()},
+\code{\link{makeMeasure}()},
+\code{\link{measures}},
+\code{\link{performance}()},
+\code{\link{setAggregation}()},
+\code{\link{setMeasurePars}()}
 }
 \concept{performance}
