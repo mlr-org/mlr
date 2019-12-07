@@ -143,7 +143,7 @@ Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),
     checkmate (>= 1.8.2),
-    data.table,
+    data.table (>= 1.12.4),
     ggplot2,
     methods,
     parallelMap (>= 1.3),
