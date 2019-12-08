@@ -173,7 +173,9 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
     # order by method and (desc(value))
     features = fval[with(fval, order(filter, -value)), ]
-    features = features[1:nselect, "name"][1:nselect]
+
+    # select names of top n
+    features = features[1:nselect, ][1:nselect]$name
 
   } else {
     features = NULL

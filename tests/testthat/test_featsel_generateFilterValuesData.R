@@ -25,7 +25,7 @@ test_that("filterFeatures", {
     col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
-  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "value", asc = FALSE), 5L)$name))
+  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(as.data.frame(feat.imp.old$data), "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task, method = "variance"))
   ff = filterFeatures(binaryclass.task, fval = feat.imp.old, abs = 5L)
@@ -38,7 +38,7 @@ test_that("filterFeatures", {
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
-    head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
+    head(sortByCol(as.data.frame(feat.imp.new$data), "value", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
@@ -57,35 +57,6 @@ test_that("filterFeatures", {
   f = getFilteredFeatures(m)
   expect_is(f, "character")
   expect_equal(length(f), 1L)
-})
-
-test_that("plotFilterValues", {
-  filter.methods = listFilterMethods(tasks = TRUE)
-
-  filter.classif = as.character(filter.methods[filter.methods$task.classif == TRUE, "id"])
-  filter.classif = setdiff(filter.classif, "permutation.importance") # this filter needs additional arguments
-
-  fv = generateFilterValuesData(binaryclass.task, method = filter.classif)
-  plotFilterValues(fv)
-
-  filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE & filter.methods$task.classif == FALSE, "id"])
-
-  fv = generateFilterValuesData(regr.num.task, method = filter.regr)
-  plotFilterValues(fv)
-
-  path = file.path(tempdir(), "test.svg")
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC_importance"))
-  plotFilterValues(fv2)
-  ggsave(path)
-  doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(120))
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
-
-  # facetting works:
-  q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
-  testFacetting(q, 2L)
-  q = plotFilterValues(fv2, facet.wrap.ncol = 2L)
-  testFacetting(q, ncol = 2L)
 })
 
 test_that("args are passed down to filter methods", { # we had an issue here, see #941

@@ -1,8 +1,4 @@
-context("FDA_regr_FDboost")
-# predict the heat value of fossil fuels using spectral data, one spectrum is
-# ultra-violet-visible (UV-VIS), measured at 1335 wavelengths(lambda = 1/f$), the ohter a near infrared
-# spectrum(NIR), measured at 2307 wavelengths(lambda = 1/f$). The distance for both data are
-# not equal distance in wavelegnths.
+context("FDA_FDboost")
 
 test_that("regr_FDboost is equal to reference", {
   requirePackagesOrSkip("FDboost", default.method = "load")

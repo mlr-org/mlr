@@ -4,7 +4,7 @@
 \alias{reextractFDAFeatures}
 \title{Re-extract features from a data set}
 \usage{
-reextractFDAFeatures(obj, desc)
+reextractFDAFeatures(obj, desc, ...)
 }
 \arguments{
 \item{obj}{(\link{Task} | \link{data.frame})\cr
@@ -13,6 +13,9 @@ as matrix columns.}
 
 \item{desc}{(\code{extractFDAFeatDesc})\cr
 FDAFeature extraction description as returned by \link{extractFDAFeatures}}
+
+\item{...}{(any)\cr
+Further args passed on to methods.}
 }
 \value{
 \link{data.frame} or \link{Task} containing the extracted Features
