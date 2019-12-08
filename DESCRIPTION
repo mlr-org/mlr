@@ -163,6 +163,7 @@ Suggests:
     care,
     caret (>= 6.0-57),
     class,
+    classiFunc,
     clue,
     cluster,
     ClusterR,
@@ -186,6 +187,7 @@ Suggests:
     FDboost,
     flare,
     FNN,
+    forecast (>= 8.3),
     fpc,
     frbs,
     FSelector,
@@ -245,6 +247,7 @@ Suggests:
     rrlda,
     rsm,
     RSNNS,
+    rucrdtw,
     RWeka,
     sda,
     sf,
@@ -257,9 +260,10 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    tsfeatures,
     vdiffr,
     wavelets,
-    xgboost (>= 0.6-2)
+    xgboost (>= 0.7)
 VignetteBuilder:
     knitr
 ByteCompile: yes
