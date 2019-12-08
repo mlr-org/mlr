@@ -5,10 +5,20 @@
 \alias{FeatureImportanceData}
 \title{Generate feature importance.}
 \usage{
-generateFeatureImportanceData(task, method = "permutation.importance",
-  learner, features = getTaskFeatureNames(task), interaction = FALSE,
-  measure, contrast = function(x, y) x - y, aggregation = mean,
-  nmc = 50L, replace = TRUE, local = FALSE, show.info = FALSE)
+generateFeatureImportanceData(
+  task,
+  method = "permutation.importance",
+  learner,
+  features = getTaskFeatureNames(task),
+  interaction = FALSE,
+  measure,
+  contrast = function(x, y) x - y,
+  aggregation = mean,
+  nmc = 50L,
+  replace = TRUE,
+  local = FALSE,
+  show.info = FALSE
+)
 }
 \arguments{
 \item{task}{(\link{Task})\cr
@@ -110,12 +120,13 @@ imp = generateFeatureImportanceData(iris.task, "permutation.importance",
 Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateCalibrationData}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
-  \code{\link{generateThreshVsPerfData}},
-  \code{\link{plotFilterValues}}
+Other generate_plot_data: 
+\code{\link{generateCalibrationData}()},
+\code{\link{generateCritDifferencesData}()},
+\code{\link{generateFilterValuesData}()},
+\code{\link{generateLearningCurveData}()},
+\code{\link{generatePartialDependenceData}()},
+\code{\link{generateThreshVsPerfData}()},
+\code{\link{plotFilterValues}()}
 }
 \concept{generate_plot_data}

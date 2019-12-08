@@ -4,40 +4,44 @@
 \alias{makeExtractFDAFeatMethod}
 \title{Constructor for FDA feature extraction methods.}
 \usage{
-makeExtractFDAFeatMethod(learn, reextract, args = list())
+makeExtractFDAFeatMethod(learn, reextract, args = list(), par.set = NULL)
 }
 \arguments{
-\item{learn}{(\code{function(data, target, col, ...)})\cr
+\item{learn}{(\verb{function(data, target, col, ...)})\cr
 Function to learn and extract information on functional column \code{col}.
 Arguments are:
 \itemize{
 \item data \link{data.frame}\cr
-Data.frame with one row per observation of a single functional feature
-or time series and one column per measurement time point.
-All entries need to be numeric.
-\item data \link{data.frame}\cr
 Data.frame containing matricies with one row per observation of a single functional
-or time series and one column per measurement time point. All entries need to be numeric.
-\item target \link{character}\cr
+or time series and one column per meahttps://github.com/mlr-org/mlr/pull/2005/conflict?name=R\%252FextractFDAFeatures.R&ancestor_oid=bdc5d882cc86adac456842bebf1a2cf9bb0eb648&base_oid=55d472e23f5c3eb8099607bd9f539034d93e82a4&head_oid=4076800589c60b20acc926e5a545df9f73193b65surement time point.
+All entries need to be numeric.
+\item target (\code{character(1)})\cr
 Name of the target variable. Default: \dQuote{NULL}.
 The variable is only set to be consistent with the API.
-\item col (\link{character} | \link{numeric})\cr
+\item col (\code{character(1)} | \code{numeric(1)})\cr
 column names or indices, the extraction should be performed on.
 The function has to return a named list of values.
 }}
 
-\item{reextract}{(\code{function(data, target, col, ...)})\cr
+\item{reextract}{(\verb{function(data, target, col, ...)})\cr
 Function used for reextracting data in predict phase.
 Can be equal to \code{learn}.}
 
 \item{args}{(\link{list})\cr
 Named list of arguments to pass to \code{learn} via \code{...}.}
+
+\item{par.set}{(\link{ParamSet})\cr
+Paramset added to the learner if used in conjunction with a \link{makeExtractFDAFeatsWrapper}.
+Can be \code{NULL}.`}
 }
 \description{
-This can be used to implement custom feature FDA extraction.
+This can be used to implement custom FDA feature extraction.
+Takes a \code{learn} and a \code{reextract} function along with some optional
+parameters to those as argument.
 }
 \seealso{
-Other fda: \code{\link{extractFDAFeatures}},
-  \code{\link{makeExtractFDAFeatsWrapper}}
+Other fda: 
+\code{\link{extractFDAFeatures}()},
+\code{\link{makeExtractFDAFeatsWrapper}()}
 }
 \concept{fda}

@@ -4,8 +4,14 @@
 \alias{normalizeFeatures}
 \title{Normalize features.}
 \usage{
-normalizeFeatures(obj, target = character(0L), method = "standardize",
-  cols = NULL, range = c(0, 1), on.constant = "quiet")
+normalizeFeatures(
+  obj,
+  target = character(0L),
+  method = "standardize",
+  cols = NULL,
+  range = c(0, 1),
+  on.constant = "quiet"
+)
 }
 \arguments{
 \item{obj}{(\link{data.frame} | \link{Task})\cr
@@ -57,12 +63,13 @@ For constant features most methods fail, special behaviour for this case is impl
 \seealso{
 \link[BBmisc:normalize]{BBmisc::normalize}
 
-Other eda_and_preprocess: \code{\link{capLargeValues}},
-  \code{\link{createDummyFeatures}},
-  \code{\link{dropFeatures}},
-  \code{\link{mergeSmallFactorLevels}},
-  \code{\link{removeConstantFeatures}},
-  \code{\link{summarizeColumns}},
-  \code{\link{summarizeLevels}}
+Other eda_and_preprocess: 
+\code{\link{capLargeValues}()},
+\code{\link{createDummyFeatures}()},
+\code{\link{dropFeatures}()},
+\code{\link{mergeSmallFactorLevels}()},
+\code{\link{removeConstantFeatures}()},
+\code{\link{summarizeColumns}()},
+\code{\link{summarizeLevels}()}
 }
 \concept{eda_and_preprocess}

@@ -7,11 +7,12 @@
 extractFDAFourier(trafo.coeff = "phase")
 }
 \arguments{
-\item{trafo.coeff}{(\link{character})\cr
+\item{trafo.coeff}{(\code{character(1)})\cr
 Specifies which transformation of the complex frequency domain
 representation should be calculated as a feature representation.
 Must be one of \dQuote{amplitude} or \dQuote{phase}.
-Default is \dQuote{phase}.}
+Default is \dQuote{phase}.
+The phase shift is returned in Rad, i.e. values lie in [-180, 180].}
 }
 \value{
 (\link{data.frame}).
@@ -21,8 +22,12 @@ The function extracts features from functional data based on the fast fourier
 transform. For more details refer to \link[stats:fft]{stats::fft}.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDAFPCA}},
-  \code{\link{extractFDAMultiResFeatures}},
-  \code{\link{extractFDAWavelets}}
+Other fda_featextractor: 
+\code{\link{extractFDABsignal}()},
+\code{\link{extractFDADTWKernel}()},
+\code{\link{extractFDAFPCA}()},
+\code{\link{extractFDAMultiResFeatures}()},
+\code{\link{extractFDATsfeatures}()},
+\code{\link{extractFDAWavelets}()}
 }
 \concept{fda_featextractor}

@@ -18,14 +18,15 @@ The effective degree of freedom of penalized bspline.}
 }
 \description{
 The function extracts features from functional data based on the Bspline fit.
-For more details refer to \code{\link[FDboost]{bsignal}}.
+For more details refer to \code{\link[FDboost:bsignal]{FDboost::bsignal()}}.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDADTWKernel}},
-  \code{\link{extractFDAFPCA}},
-  \code{\link{extractFDAFourier}},
-  \code{\link{extractFDAMultiResFeatures}},
-  \code{\link{extractFDATsfeatures}},
-  \code{\link{extractFDAWavelets}}
+Other fda_featextractor: 
+\code{\link{extractFDADTWKernel}()},
+\code{\link{extractFDAFPCA}()},
+\code{\link{extractFDAFourier}()},
+\code{\link{extractFDAMultiResFeatures}()},
+\code{\link{extractFDATsfeatures}()},
+\code{\link{extractFDAWavelets}()}
 }
 \concept{fda_featextractor}

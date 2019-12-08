@@ -4,8 +4,12 @@
 \alias{extractFDADTWKernel}
 \title{DTW kernel features}
 \usage{
-extractFDADTWKernel(ref.method = "random", n.refs = 0.05,
-  refs = NULL, dtwwindow = 0.05)
+extractFDADTWKernel(
+  ref.method = "random",
+  n.refs = 0.05,
+  refs = NULL,
+  dtwwindow = 0.05
+)
 }
 \arguments{
 \item{ref.method}{(\code{character(1)})\cr
@@ -30,11 +34,12 @@ Size of the warping window size (as a proportion of query length).}
 The function extracts features from functional data based on the DTW distance with a reference dataframe.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDABsignal}},
-  \code{\link{extractFDAFPCA}},
-  \code{\link{extractFDAFourier}},
-  \code{\link{extractFDAMultiResFeatures}},
-  \code{\link{extractFDATsfeatures}},
-  \code{\link{extractFDAWavelets}}
+Other fda_featextractor: 
+\code{\link{extractFDABsignal}()},
+\code{\link{extractFDAFPCA}()},
+\code{\link{extractFDAFourier}()},
+\code{\link{extractFDAMultiResFeatures}()},
+\code{\link{extractFDATsfeatures}()},
+\code{\link{extractFDAWavelets}()}
 }
 \concept{fda_featextractor}

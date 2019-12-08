@@ -4,14 +4,14 @@
 \alias{extractFDAFeatures}
 \title{Extract features from functional data.}
 \usage{
-extractFDAFeatures(obj, target = character(0L), feat.methods = list())
+extractFDAFeatures(obj, target = character(0L), feat.methods = list(), ...)
 }
 \arguments{
 \item{obj}{(\link{Task} | \link{data.frame})\cr
 Task or data.frame to extract functional features from.
 Must contain functional features as matrix columns.}
 
-\item{target}{(\link{character})\cr
+\item{target}{(\code{character(1)})\cr
 Task target column. Only neccessary for data.frames
 Default is \code{character(0)}.}
 
@@ -21,36 +21,51 @@ List of functional features along with the desired methods for each functional f
 functional feature.
 Names of \code{feat.methods} must match column names of functional features.
 Available feature extraction methods are available under family \code{fda_featextractor}.
-Default is \link{list} which does nothing.}
+Specifying a functional feature multiple times with different extraction methods allows
+for the extraction of different features from the same functional.
+Default is \code{\link[=list]{list()}} which does nothing.}
+
+\item{...}{(any)\cr
+Further hyperparameters passed on to the \code{feat.methods} specified above.}
 }
 \value{
 (\link{list})
-\item{data (\link{data.frame} | \link{Task})}{Extracted features, returns a data.frame when
-given a \link{data.frame} and a Task when given a Task.}
-\item{desc (\code{extractFDAFeatDesc})}{Description object. See description for details.}
+\item{data|task (\link{data.frame} | \link{Task})}{Extracted features, same type as obj.}
+\item{desc (\code{extracFDAFeatDesc})}{Description object. See description for details.}
 }
 \description{
 Extract non-functional features from functional features using various methods.
+
 The function \link{extractFDAFeatures} performs the extraction for all functional features
 via the methods specified in \code{feat.methods} and transforms all mentioned functional
-matrix features into regular data.frame columns.
+(matrix) features into regular data.frame columns.
 Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
 which contains learned coefficients and other helpful data for
-extraction during the predict-phase is returned. This can be used with
+re-extraction during the predict-phase is returned. This can be used with
 \link{reextractFDAFeatures} in order to extract features during the prediction phase.
 }
 \details{
-The description object contains these slots
-\describe{
-\item{target \link{character}}{See argument.}
-\item{coln \link{character}}{colum names of data.}
-\item{fd.cols \link{character}}{Functional feature names.}
-\item{extractFDAFeat \link{list}}{Contains \code{feature.methods} and relevant
-parameters for reextraction}.
+The description object contains these slots:
+\itemize{
+\item target \code{\link{character}}: See argument.
+\item coln \code{\link{character}}: Colum names of data.
+\item fd.cols \code{\link{character}}: Functional feature names.
+\item extractFDAFeat \code{\link{list}}: Contains \code{feature.methods} and relevant
+parameters for reextraction.
 }
+}
+\examples{
+df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
+fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2 = 5:8), exclude.cols = "y")
+task = makeClassifTask(data = fdf, target = "y")
+extracted = extractFDAFeatures(task,
+  feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
+print(extracted$task)
+reextractFDAFeatures(task, extracted$desc)
 }
 \seealso{
-Other fda: \code{\link{makeExtractFDAFeatMethod}},
-  \code{\link{makeExtractFDAFeatsWrapper}}
+Other fda: 
+\code{\link{makeExtractFDAFeatMethod}()},
+\code{\link{makeExtractFDAFeatsWrapper}()}
 }
 \concept{fda}

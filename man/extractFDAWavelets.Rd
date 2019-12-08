@@ -7,11 +7,15 @@
 extractFDAWavelets(filter = "la8", boundary = "periodic")
 }
 \arguments{
-\item{filter}{(\link{character})\cr
+\item{filter}{(\code{character(1)})\cr
 Specifies which filter should be used.
-Default is \dQuote{la8}.}
+Must be one of \code{d}|\code{la}|\code{bl}|\code{c} followed by an even
+number for the level of the filter.
+The level of the filter needs to be smaller or equal then the time-series length.
+For more information and acceptable filters see \code{help(wt.filter)}.
+Defaults to \code{la8}.}
 
-\item{boundary}{(\link{character})\cr
+\item{boundary}{(\code{character(1)})\cr
 Boundary to be used.
 \dQuote{periodic} assumes circular time series,
 for \dQuote{reflection} the series is extended to twice its length.
@@ -26,8 +30,12 @@ functional data.
 See \link[wavelets:dwt]{wavelets::dwt} for more information.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDAFPCA}},
-  \code{\link{extractFDAFourier}},
-  \code{\link{extractFDAMultiResFeatures}}
+Other fda_featextractor: 
+\code{\link{extractFDABsignal}()},
+\code{\link{extractFDADTWKernel}()},
+\code{\link{extractFDAFPCA}()},
+\code{\link{extractFDAFourier}()},
+\code{\link{extractFDAMultiResFeatures}()},
+\code{\link{extractFDATsfeatures}()}
 }
 \concept{fda_featextractor}
