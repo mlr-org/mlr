@@ -55,6 +55,7 @@ something like a new \dQuote{class.weights} parameter for the learner via observ
 }
 \examples{
 set.seed(123)
+library("ParamHelpers")
 # using the direct parameter of the SVM (which is already defined in the learner)
 lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 res = holdout(lrn, sonar.task)
