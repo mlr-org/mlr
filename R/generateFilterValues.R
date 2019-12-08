@@ -190,7 +190,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
 
   data = fvalues$data
 
-  if (nlevels(as.factor(data$method)) > 1L) {
+  if (nlevels(as.factor(data$filter)) > 1L) {
     stopf("Please supply only one filter method.")
   }
 
@@ -198,15 +198,15 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
   # ggplot will reorder automatically otherwise
   if (sort == "dec") {
     # order and top_n by group: https://stackoverflow.com/a/27766055/4185785
-    data = droplevels(setDT(data)[order(method, -value, name), head(.SD, n.show), by = method])
+    data = droplevels(setDT(data)[order(filter, -value, name), head(.SD, n.show), by = filter])
     mp = aes_string(x = paste0("reorder(name, -value)"), y = "value")
   } else if (sort == "inc") {
     # here we want to have the last x elements
     # order and top_n by group: https://stackoverflow.com/a/27766055/4185785
-    data = setDT(data)[order(method, value, name), tail(.SD, n.show), by = method]
+    data = setDT(data)[order(filter, value, name), tail(.SD, n.show), by = filter]
     mp = aes_string(x = paste0("reorder(name, value)"), y = "value")
   } else {
-    data = setDT(data)[, head(.SD, n.show), by = method]
+    data = setDT(data)[, head(.SD, n.show), by = filter]
     mp = aes_string(x = paste0("name"), y = "value")
   }
 
