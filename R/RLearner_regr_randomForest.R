@@ -29,7 +29,7 @@ makeRLearner.regr.randomForest = function() {
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
-    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE.",
+    note = "See the section about 'regr.randomForest' in `?makeLearner` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE.",
     callees = "randomForest"
   )
 }

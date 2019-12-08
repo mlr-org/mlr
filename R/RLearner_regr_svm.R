@@ -27,7 +27,7 @@ makeRLearner.regr.svm = function() {
 }
 
 #' @export
-trainLearner.regr.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.svm = function(.learner, .task, .subset, .weights = NULL, ...) {
   if (sum(getTaskDesc(.task)$n.feat[c("factors", "ordered")]) > 0) {
     f = getTaskFormula(.task)
     e1071::svm(f, data = getTaskData(.task, .subset), ...)

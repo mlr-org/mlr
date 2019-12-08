@@ -57,6 +57,7 @@ test_that("parallel featsel", {
 test_that("parallel exporting of options works", {
   skip_on_ci()
   doit = function(mode, level) {
+
     data = iris
     data[, 1] = 1 # this is going to crash lda
     task = makeClassifTask(data = data, target = "Species")
