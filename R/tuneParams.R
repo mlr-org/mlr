@@ -43,6 +43,7 @@
 #' @export
 #' @examples
 #' set.seed(123)
+#' library("ParamHelpers")
 #' # a grid search for an SVM (with a tiny number of points...)
 #' # note how easily we can optimize on a log-scale
 #' ps = makeParamSet(

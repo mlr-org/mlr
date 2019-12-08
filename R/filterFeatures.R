@@ -54,9 +54,9 @@
 #' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
 #'
 #' @examples
-#' # simple filter
-#' filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 #' # ensemble filter
+#' filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
+#' # simple filter
 #' filterFeatures(iris.task, method = "E-min",
 #'   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
 #' @export
@@ -173,9 +173,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
     # order by method and (desc(value))
     features = fval[with(fval, order(filter, -value)), ]
-
-    # select names of top n
-    features = features[1:nselect, name][1:nselect]
+    features = features[1:nselect, "name"][1:nselect]
 
   } else {
     features = NULL

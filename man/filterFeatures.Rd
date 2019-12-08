@@ -87,9 +87,9 @@ calculate its ranking. See \code{listFilterEnsembleMethods()} for available ense
 }
 
 \examples{
-# simple filter
-filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 # ensemble filter
+filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
+# simple filter
 filterFeatures(iris.task, method = "E-min",
   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
 }
