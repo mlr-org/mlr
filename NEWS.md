@@ -34,7 +34,6 @@ PR: #2638 (@pfistl)
 
 - `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
 - Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
->>>>>>> master
 
 # mlr 2.16.0
 
