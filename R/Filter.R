@@ -229,7 +229,7 @@ rf.importance = makeFilter(
   .FilterRegister[["randomForestSRC_importance"]]$fun(...)
 }
 
-randomForestSRC.rfsrc = makeFilter( #nolint
+randomForestSRC.rfsrc = makeFilter( # nolint
   name = "randomForestSRC_importance",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg = "randomForestSRC",
@@ -282,7 +282,7 @@ rf.min.depth = makeFilter(
   .FilterRegister[["randomForestSRC_var.select"]]$fun(...)
 }
 
-randomForestSRC.var.select = makeFilter( #nolint
+randomForestSRC.var.select = makeFilter( # nolint
   name = "randomForestSRC_var.select",
   desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg = "randomForestSRC",
@@ -292,7 +292,7 @@ randomForestSRC.var.select = makeFilter( #nolint
     # method "vh.imp" is not supported as it does return values to rank features on
     assert_choice(method, c("md", "vh"))
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE,
+      method = method, verbose = FALSE, always.use = getTaskFeatureNames(task),
       ...)
 	im$varselect[setdiff(rownames(im$varselect), im$topvars), 'depth'] = NA
 	im$topvars
@@ -408,7 +408,7 @@ makeFilter(
     setNames(im, rownames(im))
   })
 
-randomForest.importance = makeFilter( #nolint
+randomForest.importance = makeFilter( # nolint
   name = "randomForest_importance",
   desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
   pkg = "randomForest",
@@ -694,7 +694,7 @@ makeFilter(
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   })
 
-oneR = makeFilter( #nolint
+oneR = makeFilter( # nolint
   name = "FSelector_oneR",
   desc = "oneR association rule",
   pkg = "FSelector",
@@ -919,7 +919,8 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-praznik_filter = function(fun) { #nolint
+praznik_filter = function(fun) {
+  # nolint
   force(fun)
 
   function(task, nselect, ...) {
@@ -1026,7 +1027,8 @@ makeFilter(
 #' @name makeFilter
 NULL
 
-FSelectorRcpp.filter = function(type) { #nolint
+FSelectorRcpp.filter = function(type) {
+  # nolint
   force(type)
 
   function(task, nselect, ...) {

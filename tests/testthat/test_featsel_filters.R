@@ -60,14 +60,14 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
   expect_silent(
     suppressWarnings(generateFilterValuesData(task = multiclass.task,
       method = "randomForestSRC_var.select",
-    more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
+      more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
   )
 
   # method = "vh.imp" is not supported
   expect_error(
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
-                                                 method = "randomForestSRC_var.select",
-    more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
+    fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
+      method = "randomForestSRC_var.select",
+      more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
   )
 })
 
@@ -77,4 +77,48 @@ test_that("randomForestSRC_var.select minimal depth filter returns NA for featur
                                  nselect = 5,
                                  more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
   expect_equal(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.width")]), TRUE)
+})
+
+test_that("ensemble filters subset the task correctly", {
+
+  # expectation for all filters was checked manually just right after the
+  # internal aggregation (in filterFeatures.R)
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-mean",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-min",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("nox", "rm", "tax", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-max",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-median",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-Borda",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+})
+
+test_that("Thresholding works with ensemble filters", {
+  foo = filterFeatures(iris.task, method = "E-min",
+    base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
+    thresh = 2)
+
+  expect_equal(getTaskNFeats(foo), 3)
 })
