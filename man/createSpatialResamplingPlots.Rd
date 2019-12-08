@@ -4,19 +4,11 @@
 \alias{createSpatialResamplingPlots}
 \title{Create (spatial) resampling plot objects.}
 \usage{
-createSpatialResamplingPlots(
-  task = NULL,
-  resample = NULL,
-  crs = NULL,
-  datum = 4326,
-  repetitions = 1,
-  color.train = "#0072B5",
-  color.test = "#E18727",
-  point.size = 0.5,
-  axis.text.size = 14,
-  x.axis.breaks = waiver(),
-  y.axis.breaks = waiver()
-)
+createSpatialResamplingPlots(task = NULL, resample = NULL,
+  crs = NULL, datum = 4326, repetitions = 1,
+  color.train = "#0072B5", color.test = "#E18727", point.size = 0.5,
+  axis.text.size = 14, x.axis.breaks = waiver(),
+  y.axis.breaks = waiver())
 }
 \arguments{
 \item{task}{\link{Task} \cr
@@ -152,17 +144,15 @@ cowplot::plot_grid(p1, p12, p2, p22, ncol = 1)
 }
 }
 \seealso{
-Other plot: 
-\code{\link{plotBMRBoxplots}()},
-\code{\link{plotBMRRanksAsBarChart}()},
-\code{\link{plotBMRSummary}()},
-\code{\link{plotCalibration}()},
-\code{\link{plotCritDifferences}()},
-\code{\link{plotLearningCurve}()},
-\code{\link{plotPartialDependence}()},
-\code{\link{plotROCCurves}()},
-\code{\link{plotResiduals}()},
-\code{\link{plotThreshVsPerf}()}
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerf}}
 }
 \author{
 Patrick Schratz

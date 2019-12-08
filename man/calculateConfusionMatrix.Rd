@@ -5,7 +5,8 @@
 \alias{print.ConfusionMatrix}
 \title{Confusion matrix.}
 \usage{
-calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE, set = "both")
+calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE,
+  set = "both")
 
 \method{print}{ConfusionMatrix}(x, both = TRUE, digits = 2, ...)
 }
@@ -83,16 +84,13 @@ r = crossval("classif.lda", iris.task, iters = 2L)
 print(calculateConfusionMatrix(r$pred))
 }
 \seealso{
-Other performance: 
-\code{\link{ConfusionMatrix}},
-\code{\link{calculateROCMeasures}()},
-\code{\link{estimateRelativeOverfitting}()},
-\code{\link{makeCostMeasure}()},
-\code{\link{makeCustomResampledMeasure}()},
-\code{\link{makeMeasure}()},
-\code{\link{measures}},
-\code{\link{performance}()},
-\code{\link{setAggregation}()},
-\code{\link{setMeasurePars}()}
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \concept{performance}

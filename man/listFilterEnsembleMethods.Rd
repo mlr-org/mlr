@@ -18,14 +18,12 @@ Default is \code{TRUE}.}
 Returns a subset-able dataframe with filter information.
 }
 \seealso{
-Other filter: 
-\code{\link{filterFeatures}()},
-\code{\link{generateFilterValuesData}()},
-\code{\link{getFilteredFeatures}()},
-\code{\link{listFilterMethods}()},
-\code{\link{makeFilterEnsemble}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeFilter}()},
-\code{\link{plotFilterValues}()}
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterEnsemble}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
 \concept{filter}
