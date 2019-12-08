@@ -142,7 +142,7 @@ fda.binary.gp.task = gunpoint.task
 suppressMessages({
   gp = getTaskData(gunpoint.task, subset = seq_len(100), functionals.as = "dfcols")
 })
-gp.fdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
+gp.fdf = makeFunctionalData(gp[, seq_len(31)], fd.features = list("fd" = 2:31))
 fda.binary.gp.task.small = makeClassifTask(data = gp.fdf, target = "X1")
 fda.regr.fs.task = fuelsubset.task
 

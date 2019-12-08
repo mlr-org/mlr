@@ -1,5 +1,27 @@
 # mlr (development version)
 
+## Functional Data
+
+PR: #2638 (@pfistl)
+- Added several learners for regression and classification on functional data
+  - classif.classiFunc.(kernel|knn) (knn/kernel using various semi-metrics)
+  - (classif|regr).fgam (Functional generalized additive models)
+  - (classif|regr).FDboost (Boosted functional generalized additive models)
+
+- Added preprocessing steps for feature extraction from functional data
+  - extractFDAFourier (Fourier transform)
+  - extractFDAWavelets (Wavelet features)
+  - extractFDAFPCA (Principal components)
+  - extractFDATsfeatures (Time-Series features from tsfeatures package)
+  - extractFDADTWKernel (Dynamic Time-Warping Kernel)
+  - extractFDAMultiResFeatures (Compute features at multiple resolutions)
+
+- Fixed a bug where multiclass to binaryclass reduction techniques did not work
+  with functional data.
+
+- Several other minor bug fixes and code improvements
+- Extended and clarified documentation for several fda components.
+
 ## learners - general
 
 - xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
@@ -61,9 +83,9 @@
 - `regr.randomForest` gains three new methods to estimate the standard error:
   - `se.method = "jackknife"`
   - `se.method = "bootstrap"`
-  - `se.method = "sd"`  
-  See `?regr.randomForest` for more details.  
-  `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
+  - `se.method = "sd"`
+  See `?regr.randomForest` for more details.
+  `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))
   (@jakob-r, #1784)
 - `regr.gbm` now supports `quantile distribution` (@bthieurmel, #2603)
 - `classif.plsdaCaret` now supports multiclass classification (@GegznaV, #2621)
