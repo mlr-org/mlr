@@ -18,10 +18,14 @@ mydata3$y = factor(rep(c("a", "b", "c"), each = c(n)))
 mydata4 = mydata3
 mydata4$y = factor(rep(c("a", "b", "c"), each = c(n)), levels = c("c", "b", "a"))
 
-mytask1a = makeClassifTask(id = "t1a", data = mydata1, target = "y", positive = "a")
-mytask1b = makeClassifTask(id = "t1b", data = mydata1, target = "y", positive = "b")
-mytask2a = makeClassifTask(id = "t2a", data = mydata2, target = "y", positive = "a")
-mytask2b = makeClassifTask(id = "t2b", data = mydata2, target = "y", positive = "b")
+mytask1a = makeClassifTask(id = "t1a", data = mydata1, target = "y",
+  positive = "a")
+mytask1b = makeClassifTask(id = "t1b", data = mydata1, target = "y",
+  positive = "b")
+mytask2a = makeClassifTask(id = "t2a", data = mydata2, target = "y",
+  positive = "a")
+mytask2b = makeClassifTask(id = "t2b", data = mydata2, target = "y",
+  positive = "b")
 mytask3 = makeClassifTask(id = "t3", data = mydata3, target = "y")
 mytask4 = makeClassifTask(id = "t4", data = mydata4, target = "y")
 
@@ -69,7 +73,8 @@ test_that("no labels are switched", {
       tmp = holdout(lrn, task, split = 0.5, stratify = TRUE)
       # print(as.data.frame(getRRPredictions(tmp)))
       err = tmp$aggr[[1L]]
-      expect_true(!is.na(err) & err <= 1 / 3, info = paste(getTaskDesc(task)$id, id, err, sep = ", "))
+      expect_true(!is.na(err) & err <= 1 / 3,
+        info = paste(getTaskDesc(task)$id, id, err, sep = ", "))
       err
     })
   }
