@@ -12,8 +12,7 @@ test_that("learners work: classif", {
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     classif.xyf = list(ydim = 2L),
-    classif.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed")),
+    classif.h2o.deeplearning = list(hidden = 2L),
     classif.FDboost = list(mstop = 2L)
   )
 
@@ -26,11 +25,13 @@ test_that("learners work: classif", {
 
   # binary classif with factors
   lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerHandlesFactors, task = task,
+    hyperpars = hyperpars)
 
   # binary classif with ordered factors
   lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task,
+    hyperpars = hyperpars)
 
   # binary classif with prob
   lrns = listLearnersCustom(binaryclass.task, properties = "prob", create = TRUE)
@@ -40,7 +41,8 @@ test_that("learners work: classif", {
   # binary classif with weights
   lrns = listLearnersCustom(binaryclass.task, properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
-    task = binaryclass.task, train.inds = binaryclass.train.inds, test.inds = binaryclass.test.inds,
+    task = binaryclass.task, train.inds = binaryclass.train.inds,
+    test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
@@ -59,20 +61,45 @@ test_that("learners work: classif", {
 
   # classif with variable importance
   lrns = listLearnersCustom(task, properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerCanCalculateImportance, task = task,
+    hyperpars = hyperpars)
 
   # classif with only one feature
-  min.task = makeClassifTask("oneCol", data.frame(x = 1:10, y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
+  min.task = makeClassifTask("oneCol", data.frame(x = 1:10,
+    y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
   lrns = listLearnersCustom(min.task, create = TRUE)
   # FIXME: classif.boosting: Remove if bug is removed in adabag!
   # FIXME: classif.quaDA: Remove if bug is removed in DiscriMiner::quaDA!
   # FIXME: classif.rknn: Remove if bug is removed in rknn::rknn!
   # classif.cvglmnet does not claim to work for 1d problems
-  # classif.dbnDNN, classif.evtree, classif.geoDA, classif.linDA, classif.lqa (not im mlr anymore), classif.lvq1, classif.mda (maybe only subset error), classif.pamr (maybe only subset error), classif.plsdaCaret (error maybe fixable in caret), classif.rotationForest (gives some error, no one would use it for 1d anyway), classif.rrlda error eccours in the learner.
+  # classif.dbnDNN, classif.evtree, classif.geoDA, classif.linDA, classif.lqa
+  # (not im mlr anymore),
+  # classif.lvq1, classif.mda (maybe only subset error),
+  # classif.pamr (maybe only subset error),
+  # classif.plsdaCaret (error maybe fixable in caret),
+  # classif.rotationForest (gives some error, no one would use it for 1d anyway),
+  # classif.rrlda error eccours in the learner.
   # classif.cforest: fraction of 0.000000 is too small (only travis?)
-  not.working = c("classif.boosting", "classif.cforest", "classif.cvglmnet", "classif.dbnDNN", "classif.evtree", "classif.geoDA", "classif.glmnet", "classif.linDA", "classif.lvq1", "classif.mda", "classif.pamr", "classif.plsdaCaret", "classif.quaDA", "classif.rknn", "classif.rotationForest", "classif.rrlda")
-  lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
-  lapply(lrns, testBasicLearnerProperties, task = min.task, hyperpars = hyperpars)
+  not.working = c(
+    "classif.boosting",
+    "classif.cforest",
+    "classif.cvglmnet",
+    "classif.dbnDNN",
+    "classif.evtree",
+    "classif.geoDA",
+    "classif.glmnet",
+    "classif.linDA",
+    "classif.lvq1",
+    "classif.mda",
+    "classif.pamr",
+    "classif.plsdaCaret",
+    "classif.quaDA",
+    "classif.rotationForest",
+    "classif.rrlda",
+    "classif.rknn")
+  lrns_sub = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
+  lapply(lrns_sub, testBasicLearnerProperties, task = min.task,
+    hyperpars = hyperpars)
 })
 
 

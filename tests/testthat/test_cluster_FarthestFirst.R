@@ -13,12 +13,11 @@ test_that("cluster_FarthestFirst", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     ctrl = do.call(RWeka::Weka_control, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = RWeka::FarthestFirst(noclass.train, control = ctrl)
     p = predict(m, noclass.test) + 1
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("cluster.FarthestFirst", noclass.df, character(0L), noclass.train.inds,
-    old.predicts.list, parset.list)
+  testSimpleParsets("cluster.FarthestFirst", noclass.df, character(0L),
+    noclass.train.inds, old.predicts.list, parset.list)
 })

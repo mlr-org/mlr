@@ -1,7 +1,8 @@
 context("filters")
 
 test_that("base filters of ensemble filters are ranked correctly", {
-  filters.ranked = rankBaseFilters(task.filters.rank, method = c("univariate.model.score", "variance"),
+  filters.ranked = rankBaseFilters(task.filters.rank,
+    method = c("univariate.model.score", "variance"),
     nselect = 9, more.args = list())
 
   # split into groups to check the ordering of vars "value" and "rank" for each

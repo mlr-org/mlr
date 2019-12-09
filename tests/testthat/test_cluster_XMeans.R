@@ -2,8 +2,8 @@ context("cluster_XMeans")
 
 test_that("cluster_XMeans", {
   requirePackagesOrSkip("RWeka", default.method = "load")
-  RWeka::WPM("refresh-cache")
-  RWeka::WPM('install-package', 'XMeans')
+  # RWeka::WPM("refresh-cache")
+  # RWeka::WPM("install-package", "XMeans")
 
   parset.list = list(
     list(),
@@ -20,6 +20,6 @@ test_that("cluster_XMeans", {
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("cluster.XMeans", noclass.df, character(0L), noclass.train.inds,
-    old.predicts.list, parset.list)
+  testSimpleParsets("cluster.XMeans", noclass.df, character(0L),
+    noclass.train.inds, old.predicts.list, parset.list)
 })

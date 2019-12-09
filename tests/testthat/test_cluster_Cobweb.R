@@ -12,12 +12,11 @@ test_that("cluster_Cobweb", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     ctrl = do.call(RWeka::Weka_control, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = RWeka::Cobweb(noclass.train, control = ctrl)
     p = predict(m, noclass.test) + 1
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("cluster.Cobweb", noclass.df, character(0L), noclass.train.inds,
-    old.predicts.list, parset.list)
+  testSimpleParsets("cluster.Cobweb", noclass.df, character(0L),
+    noclass.train.inds, old.predicts.list, parset.list)
 })
