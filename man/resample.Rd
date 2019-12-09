@@ -164,7 +164,7 @@ By default \code{NULL} which means no weights are used unless specified in the t
 Should all fitted models be returned?
 Default is \code{FALSE}.}
 
-\item{extract}{(\verb{function})\cr
+\item{extract}{(\code{function})\cr
 Function used to extract information from a fitted model during resampling.
 Is applied to every \link{WrappedModel} resulting from calls to \link{train}
 during resampling.

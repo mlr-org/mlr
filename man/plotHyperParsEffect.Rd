@@ -91,7 +91,7 @@ interpolation so that you can see which points were interpolated. Not used
 with partial dependence.
 Default is \code{FALSE}.}
 
-\item{nested.agg}{(\verb{function})\cr
+\item{nested.agg}{(\code{function})\cr
 The function used to aggregate nested cross validation runs when plotting 2
 hyperparameters. This is also used for nested aggregation in partial
 dependence.

@@ -1,7 +1,10 @@
 #' @title ResampleResult object.
 #'
-#' @description
-#' A resample result is created by [resample] and
+#' @description A container for resample results.
+#'
+#' @details Resample Result:
+#'
+#' A resample result is created by resample and
 #' contains the following object members:
 #' \describe{
 #' \item{task.id (`character(1)`):}{
@@ -23,11 +26,11 @@
 #' }
 #' \item{aggr ([numeric]):}{
 #'   Named vector of aggregated performance values. Names are coded like
-#'   this <measure>.<aggregation>.
+#'   this `<measure>.<aggregation>`.
 #' }
 #' \item{err.msgs ([data.frame]):}{
 #'   Number of rows equals resampling iterations
-#'   and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
+#'   and columns are: `iter`, `train`, `predict`.
 #'   Stores error messages generated during train or predict, if these were caught
 #'   via [configureMlr].
 #' }

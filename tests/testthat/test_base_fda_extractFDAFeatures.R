@@ -6,21 +6,23 @@ test_that("extractFDAFeatures", {
   # check output data
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
-  expect_equal(nrow(df), 129)
-  # expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "heatan", "h20"))
+  expect_equal(nrow(df), 129L)
+  expect_subset(colnames(df), c(paste0("NIR.phase.", seq_len(231)),
+    paste0("UVVIS.multires.", seq_len(9)), "heatan", "h20"))
 })
 
 test_that("extractFeatures multiple times", {
-  methods = list("UVVIS" = extractFDAMultiResFeatures(), "UVVIS" = extractFDAFourier(),
+  methods = list("UVVIS" = extractFDAMultiResFeatures(),
+    "UVVIS" = extractFDAFourier(),
     "NIR" = extractFDAMultiResFeatures())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_class(df, "data.frame")
   expect_true(nrow(df) == 129L)
-  # expect_true(ncol(df) == 6L)
-  # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-  # "h20", "NIR.mean"))
+  expect_true(ncol(df) == 154L)
+  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase.", seq_len(134)),
+    paste0("NIR.multires.", seq_len(9)), paste0("UVVIS.multires.", seq_len(9))))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -28,31 +30,31 @@ test_that("extractFeatures multiple times", {
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
   expect_true(nrow(df) == 129L)
-  # expect_true(ncol(df) == 8L)
-  # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-  # "h20", "NIR.mean", "NIR.min", "NIR.max"))
+  expect_true(ncol(df) == 385L)
+  expect_subset(colnames(df),
+    c("heatan", "h20",
+      paste0("UVVIS.multires.", seq_len(9)), paste0("NIR.multires.", seq_len(9)),
+      paste0("UVVIS.phase.", seq_len(134)), paste0("NIR.phase.", seq_len(231))))
 })
-
 
 test_that("extractFDAFeatures colnames work", {
   methods = list("NIR" = extractFDAFourier())
   t = subsetTask(fuelsubset.task, subset = 1:30,
-                 features = getTaskFeatureNames(fuelsubset.task))
+    features = getTaskFeatureNames(fuelsubset.task))
   t2 = extractFDAFeatures(t, feat.methods = methods)
   cn = getTaskFeatureNames(t2$task)
   expect_match(setdiff(cn, "h2o"), regexp = "[NIR.phase]", all = TRUE)
 })
 
-
 test_that("Wrong methods yield errors", {
   t = subsetTask(fuelsubset.task, subset = 1:2,
-                 features = getTaskFeatureNames(fuelsubset.task))
+    features = getTaskFeatureNames(fuelsubset.task))
 
   wrng1 = function() {
     lrn = function(data, target, col, vals = NULL) {
       1
     }
-    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
     "feat.method needs to return")
@@ -61,7 +63,7 @@ test_that("Wrong methods yield errors", {
     lrn = function(data) {
       data[, 1]
     }
-    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),
     "Must have formal arguments")
@@ -94,9 +96,9 @@ test_that("extractFDAFeaturesDesc", {
   expect_subset(t$desc$target, getTaskTargetNames(fuelsubset.task))
   expect_subset(unique(t$desc$colclasses), choices = c("numeric", "matrix"))
   expect_list(t$desc$extractFDAFeat)
-  expect_list(t$desc$extractFDAFeat$UVVIS$args)
+  expect_list(t$desc$extractFDAFeat$UVVIS$extractor.vals)
   expect_function(t$desc$extractFDAFeat$UVVIS$reextract)
-  expect_list(t$desc$extractFDAFeat$NIR$args)
+  expect_list(t$desc$extractFDAFeat$NIR$extractor.vals)
   expect_function(t$desc$extractFDAFeat$NIR$reextract)
 })
 
@@ -109,7 +111,7 @@ test_that("extractFDAFeatures task equal data.frame", {
   t3 = extractFDAFeatures(getTaskData(gp.subset, functionals.as = "matrix"), target = "X1", feat.methods = fm)
   expect_identical(getTaskData(t2$task), t3$data)
   expect_equal(t2$desc, t3$desc)
-  expect_equal(t2$desc$extractFDAFeat$fd$arg$trafo.coeff, "amplitude")
+  expect_equal(t2$desc$extractFDAFeat$fd$extractor.vals$trafo.coeff, "amplitude")
 
   expect_error(extractFDAFeatures(gp.subset, feat.methods = list("fd" = extractFDAFourier(),
     "fd2" = extractFDAMultiResFeatures())), regexp = "Must be a subset of")
@@ -284,4 +286,12 @@ test_that("Fourier equal to package", {
   # Can not have factors
   gp2 = data.frame(v1 = t(1:4), X1 = as.factor(1))
   expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
+})
+
+test_that("extract and reextract have correct args", {
+  lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = list("all" = extractFDAFourier()))
+  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"), subsetTask(fuelsubset.task, subset = 1:20))
+  prd = predict(mod, subsetTask(fuelsubset.task, subset = 21:40))
+  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$extractor.vals$trafo.coeff, "amplitude")
+  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$extractor.vals$trafo.coeff, "amplitude")
 })

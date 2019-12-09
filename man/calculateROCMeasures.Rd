@@ -38,7 +38,7 @@ Calculate the absolute number of correct/incorrect classifications and the follo
 \item \code{fnr} False negative rate (Miss rate)
 \item \code{tnr} True negative rate (Specificity)
 \item \code{ppv} Positive predictive value (Precision)
-\item \verb{for} False omission rate
+\item \code{for} False omission rate
 \item \code{lrp} Positive likelihood ratio (LR+)
 \item \code{fdr} False discovery rate
 \item \code{npv} Negative predictive value
@@ -50,8 +50,8 @@ Calculate the absolute number of correct/incorrect classifications and the follo
 For details on the used measures see \link{measures} and also
 \url{https://en.wikipedia.org/wiki/Receiver_operating_characteristic}.
 
-The element for the false omission rate in the resulting object is not called \verb{for} but
-\code{fomr} since \verb{for} should never be used as a variable name in an object.
+The element for the false omission rate in the resulting object is not called \code{for} but
+\code{fomr} since \code{for} should never be used as a variable name in an object.
 }
 \section{Methods (by generic)}{
 \itemize{

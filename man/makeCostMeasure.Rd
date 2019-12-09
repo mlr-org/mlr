@@ -29,7 +29,7 @@ Default is \code{TRUE}.}
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.}
 
-\item{combine}{(\verb{function})\cr
+\item{combine}{(\code{function})\cr
 How to combine costs over all cases for a SINGLE test set?
 Note this is not the same as the \code{aggregate} argument in \link{makeMeasure}
 You can set this as well via \link{setAggregation}, as for any measure.

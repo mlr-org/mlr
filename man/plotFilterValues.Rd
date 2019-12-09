@@ -7,10 +7,8 @@
 plotFilterValues(
   fvalues,
   sort = "dec",
-  n.show = 20L,
-  feat.type.cols = FALSE,
-  facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL
+  n.show = nrow(fvalues$data),
+  feat.type.cols = FALSE
 )
 }
 \arguments{
@@ -18,22 +16,22 @@ plotFilterValues(
 Filter values.}
 
 \item{sort}{(\code{character(1)})\cr
-Sort features like this.
-\dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
+Available options are:
+\itemize{
+\item \code{"dec"}-> descending
+\item \code{"inc"} -> increasing
+\item \code{"none"} -> no sorting
+}
+
 Default is decreasing.}
 
 \item{n.show}{(\code{integer(1)})\cr
 Number of features (maximal) to show.
-Default is 20.}
+Default is to plot all features.}
 
 \item{feat.type.cols}{(\code{logical(1)})\cr
-Colors for factor and numeric features.
-\code{FALSE} means no colors.
-Default is \code{FALSE}.}
-
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+Whether to color different feature types (e.g. numeric | factor).
+Default is to use no colors (\code{feat.type.cols = FALSE}).}
 }
 \value{
 ggplot2 plot object.

@@ -7,7 +7,7 @@ test_that("listLearners", {
   expect_subset(listLearnerProperties(), names(x1))
 
   x1a = listLearners("classif", create = FALSE, properties = "missings",
-                     warn.missing.packages = FALSE)
+    warn.missing.packages = FALSE)
   expect_data_frame(x1a, min.rows = 10)
   expect_true(nrow(x1a) < nrow(x1))
   expect_character(x1a$note, any.missing = FALSE)
@@ -29,11 +29,5 @@ test_that("listLearners", {
 
 test_that("listLearners printer (#1336)", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
-  width = getOption("width")
-  options(width = 1000)
-  out = capture.output(print(x1), file = NULL)
-  expect_equal(length(stri_match_all(out, regex = "\n")), 334)
-  out = capture.output(head(x1, n = 10), file = NULL)
-  expect_equal(length(stri_match_all(out, regex = "\n")), 11)
-  options(width = width)
+  expect_silent(capture.output(print(x1), file = NULL))
 })

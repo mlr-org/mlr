@@ -21,8 +21,6 @@ makeRLearner.regr.cvglmnet = function() {
       makeNumericVectorLearnerParam(id = "lower.limits", upper = 0),
       makeNumericVectorLearnerParam(id = "upper.limits", lower = 0),
       makeIntegerLearnerParam(id = "maxit", default = 100000L, lower = 1L),
-      # FIXME Data dependent default. If n.features < 500 'covariance', 'naive' otherwise
-      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive")),
       makeNumericLearnerParam(id = "fdev", default = 1.0e-5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "devmax", default = 0.999, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "eps", default = 1.0e-6, lower = 0, upper = 1),
@@ -31,7 +29,12 @@ makeRLearner.regr.cvglmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250.0),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
+      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L),
+      makeUntypedLearnerParam(id = "offset", default = NULL),
+      # FIXME Data dependent default. If n.features < 500 'covariance', 'naive' otherwise
+      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive"), requires = quote(family == "gaussian")),
+      makeNumericVectorLearnerParam(id = "gamma", lower = 0, upper = 1, requires = quote(relax == TRUE)),
+      makeLogicalLearnerParam(id = "relax", default = FALSE)
     ),
     properties = c("numerics", "factors", "weights"),
     name = "GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)",

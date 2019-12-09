@@ -31,7 +31,7 @@ Instantiate objects (or return strings)?
 Default is \code{FALSE}.}
 }
 \value{
-([character\verb{|}list` of \link{Measure}). Class names of matching
+([character\code{|}list` of \link{Measure}). Class names of matching
 measures or instantiated objects.
 }
 \description{

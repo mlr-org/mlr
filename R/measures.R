@@ -1,24 +1,27 @@
 #' @title Performance measures.
-#' @name measures
 #'
 #' @description
-#' A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality
-#' of the prediction (or maybe only the model, think AIC).
-#' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
+#' A performance measure is evaluated after a single train/predict step and
+#' returns a single number to assess the quality of the prediction (or maybe
+#' only the model, think AIC). The measure itself knows whether it wants to be
+#' minimized or maximized and for what tasks it is applicable.
 #'
-#' All supported measures can be found by [listMeasures] or as a table
-#' in the tutorial appendix: <https://mlr.mlr-org.com/articles/tutorial/measures.html>.
+#' All supported measures can be found by [listMeasures] or as a table in the
+#' tutorial appendix: <https://mlr.mlr-org.com/articles/tutorial/measures.html>.
 #'
-#' If you want a measure for a misclassification cost matrix, look at [makeCostMeasure].
-#' If you want to implement your own measure, look at [makeMeasure].
+#' If you want a measure for a misclassification cost matrix, look at
+#' [makeCostMeasure]. If you want to implement your own measure, look at
+#' [makeMeasure].
 #'
-#' Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
+#' Most measures can directly be accessed via the function named after the
+#' scheme measureX (e.g. measureSSE).
 #'
-#' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
-#' starting with 1. If this is not the case, some of the measures will generate warnings.
+#' For clustering measures, we compact the predicted cluster IDs such that they
+#' form a continuous series starting with 1. If this is not the case, some of
+#' the measures will generate warnings.
 #'
-#' Some measure have parameters. Their defaults are set in the constructor [makeMeasure] and can be
-#' overwritten using [setMeasurePars].
+#' Some measure have parameters. Their defaults are set in the constructor
+#' [makeMeasure] and can be overwritten using [setMeasurePars].
 #'
 #' @param truth ([factor])\cr
 #'   Vector of the true class.

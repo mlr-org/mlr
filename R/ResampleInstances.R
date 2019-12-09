@@ -73,8 +73,9 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
   # uses resulting factor levels from kmeans clustering to set up a list of
   # length x (x = folds) with row indices of the data referring to which fold
   # each observations is assigned to
-  test.inds = lapply(levels(inds), function(x, spl)
-    which(spl == x), spl = inds)
+  test.inds = lapply(levels(inds), function(x, spl) {
+    which(spl == x)
+  }, spl = inds)
 
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }

@@ -77,7 +77,7 @@ Packages are loaded if and only if this option is \code{TRUE}.
 Default is \code{FALSE}.}
 }
 \value{
-([data.frame\verb{|}list` of \link{Learner}).
+([data.frame\code{|}list` of \link{Learner}).
 Either a descriptive data.frame that allows access to all properties of the learners
 or a list of created learner objects (named by ids of listed learners).
 }

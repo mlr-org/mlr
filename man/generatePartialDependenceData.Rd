@@ -57,7 +57,7 @@ partial dependences of all observations in \code{data} across all values of the 
 The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 Default is \code{FALSE}.}
 
-\item{fun}{\verb{function}\cr
+\item{fun}{\code{function}\cr
 
 A function which operates on the output on the predictions made on the \code{input} data. For regression
 this means a numeric vector, and, e.g., for a multiclass classification problem, this migh instead be probabilities

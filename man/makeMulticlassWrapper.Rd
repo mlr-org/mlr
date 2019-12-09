@@ -11,7 +11,7 @@ makeMulticlassWrapper(learner, mcw.method = "onevsrest")
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{mcw.method}{(\code{character(1)} | \verb{function}) \cr
+\item{mcw.method}{(\code{character(1)} | \code{function}) \cr
 \dQuote{onevsone} or \dQuote{onevsrest}.
 You can also pass a function, with signature \verb{function(task)} and which
 returns a ECOC codematrix with entries +1,-1,0.

@@ -35,3 +35,4 @@ revdep/*
 ^CRAN-RELEASE$
 .pre-commit-config.yaml
 ^\.circleci$
+^\.pre-commit-config\.yaml$

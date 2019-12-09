@@ -1,5 +1,42 @@
 # mlr (development version)
 
+## plotting
+
+* `n.show` argument had no effect in `plotFilterValues()`. Thanks @albersonmiranda. (#2689)
+
+## Functional Data
+
+PR: #2638 (@pfistl)
+- Added several learners for regression and classification on functional data
+  - classif.classiFunc.(kernel|knn) (knn/kernel using various semi-metrics)
+  - (classif|regr).fgam (Functional generalized additive models)
+  - (classif|regr).FDboost (Boosted functional generalized additive models)
+
+- Added preprocessing steps for feature extraction from functional data
+  - extractFDAFourier (Fourier transform)
+  - extractFDAWavelets (Wavelet features)
+  - extractFDAFPCA (Principal components)
+  - extractFDATsfeatures (Time-Series features from tsfeatures package)
+  - extractFDADTWKernel (Dynamic Time-Warping Kernel)
+  - extractFDAMultiResFeatures (Compute features at multiple resolutions)
+
+- Fixed a bug where multiclass to binaryclass reduction techniques did not work
+  with functional data.
+
+- Several other minor bug fixes and code improvements
+- Extended and clarified documentation for several fda components.
+
+## learners - general
+
+- xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
+
+## filters - bugfixes
+
+- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
+- Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
+
+# mlr 2.16.0
+
 ## package infrastructure
 
 - There is now a reference grouping for all functions on the pkgdown site (https://mlr.mlr-org.com/reference/index.html)
@@ -9,6 +46,7 @@
 
 - fixed a bug in `classif.xgboost` which prevented passing a watchlist for binary tasks. This was caused by a suboptimal internal label inversion approach. Thanks to @001ben for reporting (#32) (@mllg)
 - update `fda.usc` learners to work with package version >=2.0
+- update `glmnet` learners to upstream package version 3.0.0
 - update `xgboost` learners to upstream version 0.90.2 (@pat-s & @be-marc, #2681)
 - Updated ParamSet for learners `classif.gbm` and `regr.gbm`. Specifically, param `shrinkage` now defaults to 0.1 instead of 0.001. Also more choices for param `distribution` have been added. Internal parallelization by the package is now suppressed (param `n.cores`). (@pat-s, #2651)
 - Update parameters for `h2o.deeplearning` learners (@albersonmiranda, #2668)
@@ -49,9 +87,9 @@
 - `regr.randomForest` gains three new methods to estimate the standard error:
   - `se.method = "jackknife"`
   - `se.method = "bootstrap"`
-  - `se.method = "sd"`  
-  See `?regr.randomForest` for more details.  
-  `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))  
+  - `se.method = "sd"`
+  See `?regr.randomForest` for more details.
+  `regr.ranger` relies on the functions provided by the package ("jackknife" and "infjackknife" (default))
   (@jakob-r, #1784)
 - `regr.gbm` now supports `quantile distribution` (@bthieurmel, #2603)
 - `classif.plsdaCaret` now supports multiclass classification (@GegznaV, #2621)
