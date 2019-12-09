@@ -1,6 +1,5 @@
 context("fda")
 
-
 test_that("makeFunctionalData works", {
   df = data.frame(matrix(rnorm(10^2), nrow = 10))
   df$fct = as.factor(letters[1:10])
@@ -28,11 +27,9 @@ test_that("FDA properties work", {
   expect_error(train(lrn, subsetTask(tsk, features = 1:3)), "numeric inputs")
   expect_error(train(lrn, subsetTask(tsk, features = 1)), "numeric inputs")
   # No error for single functional
-  # FIXME Undoc below with fda.usc update
-  # expect_silent(train(lrn, subsetTask(tsk, features = 2)))
-  # expect_silent(train(lrn, subsetTask(tsk, features = 3)))
+  expect_silent(train(lrn, subsetTask(tsk, features = 2)))
+  expect_silent(train(lrn, subsetTask(tsk, features = 3)))
 })
-
 
 test_that("makeFunctionalData subsetting works", {
   df = data.frame(matrix(rnorm(10^2), nrow = 10))
@@ -104,7 +101,6 @@ test_that("makeFunctionalData works for different inputs", {
   expect_class(fdf, "data.frame")
 })
 
-
 test_that("getFunctionalFeatures works for different inputs", {
   fdf = getFunctionalFeatures(gunpoint.task)
   expect_class(fdf[[1]], "matrix")
@@ -130,8 +126,6 @@ test_that("getFunctionalFeatures works for different inputs", {
   expect_class(fdf[[1]], "matrix")
   expect_data_frame(fdf, ncols = 1L, nrows = 100L)
 })
-
-
 
 test_that("makeFunctionalData Tasks work", {
   df = data.frame(matrix(rnorm(50), nrow = 5))
@@ -196,7 +190,6 @@ test_that("makeFunctionalData Tasks work", {
   expect_equal(subs.clust2$task.desc$n.feat["ordered"], c("ordered" = 0L))
   expect_equal(subs.clust2$task.desc$size, 5L)
 })
-
 
 test_that("getTaskData for functionals", {
   df = data.frame(matrix(rnorm(50), nrow = 5))
@@ -303,7 +296,6 @@ test_that("makeFunctionalData produces valid error messages", {
     fd.features = list("fd1" = 1:3)), "fd.features contains non-integer")
 })
 
-
 test_that("hasFunctionals works", {
   expect_false(hasFunctionalFeatures(iris.task))
   expect_false(hasFunctionalFeatures(iris.task$task.desc))
@@ -357,7 +349,6 @@ test_that("getTaskData for functional tasks", {
   expect_false(hasFunctionalFeatures(df))
 })
 
-
 test_that("benchmarking on fda tasks works", {
   lrns = list(makeLearner("classif.fdausc.knn"), makeLearner("classif.rpart"), makeLearner("classif.featureless"))
   expect_message({
@@ -371,8 +362,9 @@ test_that("benchmarking on fda tasks works", {
   # Test benchmark mixed learners regression
   set.seed(getOption("mlr.debug.seed"))
   lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
+  # suppress fdboost warning
   expect_message({
-    bmr2 = benchmark(lrns2, fda.regr.fs.task, hout)
+    bmr2 = suppressWarnings(benchmark(lrns2, fda.regr.fs.task, hout))
   }, "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")
   expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart", "regr.featureless"))
@@ -408,4 +400,15 @@ test_that("Self-created data.frame's", {
   df2 = data.frame(matrix(rnorm(100), ncol = 10L))
   df2$fd1 = matrix(as.factor(rep("a", 100L)), ncol = 10L)
   expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
+})
+
+# Test whether we support stratification: #1669
+test_that("supports stratification", {
+  res = makeResampleDesc(method = "RepCV", predict = "test",
+    stratify = TRUE,
+    folds = 2L, reps = 2L)
+
+  # resampling instances
+  resinst = makeResampleInstance(res, gunpoint.task)
+  expect_class(resinst, "ResampleInstance")
 })

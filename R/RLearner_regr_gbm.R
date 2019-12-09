@@ -23,7 +23,7 @@ makeRLearner.regr.gbm = function() {
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = paste0(collapse = "", c('`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.',
-                                    "Param 'n.cores' has been to set to '1' by default to suppress parallelization by the package.")),
+      "Param 'n.cores' has been to set to '1' by default to suppress parallelization by the package.")),
     callees = "gbm"
   )
 }

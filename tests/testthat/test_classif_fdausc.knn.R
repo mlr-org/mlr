@@ -56,3 +56,11 @@ test_that("resampling fdausc.knn", {
   r = resample(lrn, fda.binary.gp.task.small, cv2)
   expect_class(r, "ResampleResult")
 })
+
+test_that("resampling fdausc.knn", {
+  requirePackagesOrSkip("fda.usc", default.method = "load")
+  lrn = makeLearner("classif.fdausc.knn", par.vals = list(knn = 1L, metric = "metric.lp"), predict.type = "prob")
+
+  r = resample(lrn, fda.binary.gp.task.small, hout)
+  expect_class(r, "ResampleResult")
+})
