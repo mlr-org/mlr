@@ -1,5 +1,9 @@
 # mlr (development version)
 
+## plotting
+
+* `n.show` argument had no effect in `plotFilterValues()`. Thanks @albersonmiranda. (#2689)
+
 ## Functional Data
 
 PR: #2638 (@pfistl)

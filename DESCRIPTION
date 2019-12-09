@@ -258,9 +258,10 @@ Suggests:
     svglite,
     SwarmSVM,
     testthat,
-    tsfeatures,
     tgp,
     TH.data,
+    tsfeatures,
+    vdiffr,
     wavelets,
     xgboost (>= 0.7)
 VignetteBuilder:
