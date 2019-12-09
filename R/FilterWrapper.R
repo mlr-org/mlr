@@ -165,7 +165,7 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
     base.methods = fw.base.methods,
     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-    func = fw.fun, func.args = fw.fun.args,
+    fun = fw.fun, fun.args = fw.fun.args,
     mandatory.feat = fw.mandatory.feat,
     cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
