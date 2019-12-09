@@ -1,4 +1,4 @@
-  getLearnerTable = function() {
+getLearnerTable = function() {
 
   ids = as.character(methods("makeRLearner"))
   ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
@@ -6,9 +6,9 @@
   slots = c("cl", "name", "short.name", "package", "properties", "note")
   tab = rbindlist(lapply(ids, function(id) {
     makefuns = c("makeRLearnerClassif", "makeRLearnerMulticlass",
-                 "makeRLearnerCluster", "makeRLearnerCostSens",
-                 "makeRLearnerMultilabel", "makeRLearnerRegr",
-                 "makeRLearnerSurv")  # I hope I didn't forget any...
+      "makeRLearnerCluster", "makeRLearnerCostSens",
+      "makeRLearnerMultilabel", "makeRLearnerRegr",
+      "makeRLearnerSurv") # I hope I didn't forget any...
     fun = getS3method("makeRLearner", id)
     environment(fun) = new.env(parent = environment(fun))
     for (mf in makefuns) {
