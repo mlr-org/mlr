@@ -95,6 +95,7 @@ test_that("Custom threshold function for filtering works correctly", {
                         )
   feats = getTaskFeatureNames(ftask)
   expect_equal(feats, c("Petal.Length", "Petal.Width"))
+})
 
 test_that("ensemble filters subset the task correctly", {
 
