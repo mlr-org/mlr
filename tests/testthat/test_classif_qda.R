@@ -9,11 +9,14 @@ test_that("classif_qda", {
     p = m
   }
 
-  testSimple("classif.qda", multiclass.df, multiclass.target, multiclass.train.inds, p$class)
-  testProb("classif.qda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
+  testSimple("classif.qda", multiclass.df, multiclass.target,
+    multiclass.train.inds, p$class)
+  testProb("classif.qda", multiclass.df, multiclass.target,
+    multiclass.train.inds, p$posterior)
 
   tt = MASS::qda
   tp = function(model, newdata) predict(model, newdata)$class
 
-  testCV("classif.qda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp)
+  testCV("classif.qda", multiclass.df, multiclass.target, tune.train = tt,
+    tune.predict = tp)
 })

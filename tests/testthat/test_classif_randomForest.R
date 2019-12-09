@@ -2,12 +2,11 @@ context("classif_randomForest")
 
 test_that("classif_randomForest", {
   requirePackagesOrSkip("randomForest", default.method = "load")
+
   parset.list = list(
-    list(),
-    list(ntree = 50, mtry = 2),
-    list(ntree = 50, mtry = 4),
-    list(ntree = 200, mtry = 2),
-    list(ntree = 2000, mtry = 4, proximity = TRUE, oob.prox = TRUE)
+    list(ntree = 20, mtry = 2),
+    list(ntree = 20, mtry = 4),
+    list(ntree = 20, mtry = 4, proximity = TRUE, oob.prox = TRUE)
   )
 
   old.predicts.list = list()
@@ -19,9 +18,7 @@ test_that("classif_randomForest", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForest::randomForest, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = multiclass.test, type = "response")
-    set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
@@ -34,7 +31,8 @@ test_that("classif_randomForest", {
 
   tt = randomForest::randomForest
 
-  testCVParsets("classif.randomForest", multiclass.df, multiclass.target, tune.train = tt, parset.list = parset.list)
+  testCVParsets("classif.randomForest", multiclass.df, multiclass.target,
+    tune.train = tt, parset.list = parset.list)
 
   # FIXME test RF with one constant feature
   # data = multiclass.df
