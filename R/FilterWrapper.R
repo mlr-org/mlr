@@ -17,7 +17,7 @@
 #' @param fw.threshold (`numeric(1)`)\cr If set, select features whose score
 #'   exceeds `fw.threshold`. Mutually exclusive with arguments `fw.perc`, `fw.abs`
 #'   and `fw.func`.
-#' @param fw.func (`function)`)\cr . If set, select features via a custom thresholding 
+#' @param fw.func (`function)`)\cr . If set, select features via a custom thresholding
 #'   function, which must return the number of top scoring features to select\cr
 #'   Mutually exclusive with arguments `fw.perc`, `fw.abs` and `fw.threshold`.
 #' @param func.args (any)\cr Arguments passed to the custom thresholding function
@@ -77,12 +77,12 @@
 #' })
 #' print(r$extract)
 #'
-#' #usage of a custom thresholding function
+#' # usage of a custom thresholding function
 #' biggest_gap = function(values, diff) {
 #'   gap_size = 0
 #'   gap_location = 0
-#'   
-#'   for (i in (diff+1):length(values)) {
+#'
+#'   for (i in (diff + 1):length(values)) {
 #'     gap = values[[i - diff]] - values[[i]]
 #'     if (gap > gap_size) {
 #'       gap_size = gap
@@ -94,12 +94,11 @@
 #'
 #' lrn = makeLearner("classif.lda")
 #' lrn = makeFilterWrapper(lrn, fw.method = "randomForestSRC_importance",
-#'		fw.func = biggest_gap, fw.func.args = list("diff" = 1))
+#'   fw.func = biggest_gap, fw.func.args = list("diff" = 1))
 #' r = resample(lrn, task, outer, extract = function(model) {
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-#'
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.func = NULL, fw.func.args = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...) {
@@ -143,14 +142,14 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
       makeNumericLearnerParam(id = "fw.threshold"),
-			makeFunctionLearnerParam(id = "fw.func"),
-			makeUntypedLearnerParam(id = "fw.func.args", default = NULL),     
-			makeUntypedLearnerParam(id = "fw.mandatory.feat")
+      makeFunctionLearnerParam(id = "fw.func"),
+      makeUntypedLearnerParam(id = "fw.func.args", default = NULL),
+      makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
     par.vals = filterNull(list(fw.method = fw.method,
       fw.base.methods = fw.base.methods, fw.perc = fw.perc,
-      fw.abs = fw.abs, fw.threshold = fw.threshold, 
-	    fw.func = fw.func, fw.func.args = fw.func.args,
+      fw.abs = fw.abs, fw.threshold = fw.threshold,
+      fw.func = fw.func, fw.func.args = fw.func.args,
       fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel",
     cache = cache)
@@ -166,7 +165,7 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights 
   .task = do.call(filterFeatures, c(list(task = .task, method = fw.method,
     base.methods = fw.base.methods,
     perc = fw.perc, abs = fw.abs, threshold = fw.threshold,
-	  func = fw.func, func.args = fw.func.args,
+    func = fw.func, func.args = fw.func.args,
     mandatory.feat = fw.mandatory.feat,
     cache = .learner$cache), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)

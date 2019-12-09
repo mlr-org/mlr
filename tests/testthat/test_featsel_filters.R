@@ -89,10 +89,9 @@ test_that("Custom threshold function for filtering works correctly", {
 	}
 
   ftask = filterFeatures(task = multiclass.task,
-                         method = "randomForestSRC_importance",
-                         func = biggest_gap,
-                         func.args = list("diff" = 1),
-                         more.args = list("randomForestSRC_importance" = list(ntree = 50))
+                         method = "univariate.model.score",
+                         fun = biggest_gap,
+                         fun.args = list("diff" = 1)
                         )
   feats = getTaskFeatureNames(ftask)
   expect_equal(feats, c("Petal.Length", "Petal.Width"))
