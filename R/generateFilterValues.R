@@ -170,6 +170,9 @@ print.FilterValues = function(x, ...) {
 #' @param n.show (`integer(1)`)\cr
 #'   Number of features (maximal) to show.
 #'   Default is to plot all features.
+#' @param filter (`character(1)`)
+#'   In case `fvalues` contains multiple filter methods, which method should be
+#'   plotted?
 #' @param feat.type.cols (`logical(1)`)\cr
 #'   Whether to color different feature types (e.g. numeric | factor).
 #'   Default is to use no colors (`feat.type.cols = FALSE`).
@@ -179,7 +182,7 @@ print.FilterValues = function(x, ...) {
 #' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
-  feat.type.cols = FALSE) {
+  filter = NULL, feat.type.cols = FALSE) {
 
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
@@ -190,9 +193,15 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
 
   data = fvalues$data
 
-  if (nlevels(as.factor(data$filter)) > 1L) {
+  if (is.null(filter) && nlevels(as.factor(data$filter)) > 1L) {
     stopf("Please supply only one filter method.")
   }
+
+  filter_sub = filter
+  if (filter %nin% levels(data$filter)) {
+    stopf("Method '%s' not found among the filter methods supplied via argument 'fvalues'.", filter_sub)
+  }
+  data = data[filter == filter_sub, ]
 
   # we need to order both, data and the ggplot mapping
   # ggplot will reorder automatically otherwise
