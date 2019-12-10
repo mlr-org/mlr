@@ -219,7 +219,7 @@ checkFilterArguments = function(perc, abs, threshold, fun) {
     return("threshold")
   }
   if (!is.null(fun)) {
-    assertfunction(fun)
+    assertFunction(fun)
     return("fun")
   }
 }
