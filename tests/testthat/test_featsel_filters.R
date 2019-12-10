@@ -89,12 +89,12 @@ test_that("Custom threshold function for filtering works correctly", {
 	}
 
   ftask = filterFeatures(task = multiclass.task,
-                         method = "univariate.model.score",
+                         method = "variance",
                          fun = biggest_gap,
                          fun.args = list("diff" = 1)
                         )
   feats = getTaskFeatureNames(ftask)
-  expect_equal(feats, c("Petal.Length", "Petal.Width"))
+  expect_equal(feats, c("Petal.Length"))
 })
 
 test_that("ensemble filters subset the task correctly", {
