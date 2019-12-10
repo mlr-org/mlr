@@ -59,35 +59,6 @@ test_that("filterFeatures", {
   expect_equal(length(f), 1L)
 })
 
-test_that("plotFilterValues", {
-  filter.methods = listFilterMethods(tasks = TRUE)
-
-  filter.classif = as.character(filter.methods[filter.methods$task.classif == TRUE, "id"])
-  filter.classif = setdiff(filter.classif, "permutation.importance") # this filter needs additional arguments
-
-  fv = generateFilterValuesData(binaryclass.task, method = filter.classif)
-  plotFilterValues(fv)
-
-  filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE & filter.methods$task.classif == FALSE, "id"])
-
-  fv = generateFilterValuesData(regr.num.task, method = filter.regr)
-  plotFilterValues(fv)
-
-  path = file.path(tempdir(), "test.svg")
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC_importance"))
-  plotFilterValues(fv2)
-  ggsave(path)
-  doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(120))
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
-
-  # facetting works:
-  q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
-  testFacetting(q, 2L)
-  q = plotFilterValues(fv2, facet.wrap.ncol = 2L)
-  testFacetting(q, ncol = 2L)
-})
-
 test_that("args are passed down to filter methods", { # we had an issue here, see #941
 
   expect_error(generateFilterValuesData(regr.num.task, method = c("mrmr", "univariate.model.score"),
