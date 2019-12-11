@@ -44,7 +44,7 @@ convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average", 
   df = melt(df, c("task.id", "learner.id"), "alg.rank")
   df = dcast(df, learner.id ~ task.id)
   task.id.names = setdiff(colnames(df), "learner.id")
-  mat = as.matrix(df[, ..task.id.names])
+  mat = as.matrix(df[, task.id.names])
   rownames(mat) = df$learner.id
   colnames(mat) = task.id.names
   return(mat)
