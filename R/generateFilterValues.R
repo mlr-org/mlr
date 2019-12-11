@@ -203,6 +203,10 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
     data = data[filter == filter_sub, ]
   }
 
+  # for R CMD check "undefined global variable"
+  value = NULL
+  name = NULL
+
   # we need to order both, data and the ggplot mapping
   # ggplot will reorder automatically otherwise
   if (sort == "dec") {
