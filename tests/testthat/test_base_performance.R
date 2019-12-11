@@ -3,11 +3,13 @@ context("performance")
 test_that("performance", {
   res = makeResampleDesc("Holdout")
   lrn = makeLearner("classif.rpart")
-  rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc))
+  rf = resample(lrn, task = binaryclass.task, resampling = res,
+    measures = list(acc))
   expect_true(all(rf$aggr > 0))
 
   res = makeResampleDesc("Bootstrap", iters = 3L)
-  rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc))
+  rf = resample(lrn, task = binaryclass.task, resampling = res,
+    measures = list(acc))
   expect_true(all(rf$aggr > 0))
 
   m = setAggregation(acc, test.median)
@@ -28,20 +30,23 @@ test_that("performance", {
       expect_equal(e1, e2)
       0
     })
-  r = resample(lrn, task = binaryclass.task, resampling = res, measures = mymeasure)
+  r = resample(lrn, task = binaryclass.task, resampling = res,
+    measures = mymeasure)
   expect_true(r$aggr >= 0)
 
   perf = performance(r$pred, measures = mymeasure, task = binaryclass.task)
   expect_true(perf >= 0)
 
   # multiple measures as list
-  res = performance(r$pred, measures = list(ber, acc, tp), task = binaryclass.task)
+  res = performance(r$pred, measures = list(ber, acc, tp),
+    task = binaryclass.task)
   expect_true(!any(is.na(res)))
   expect_true(length(res) == 3)
   expect_equal(names(res), c("ber", "acc", "tp"))
 
   # custom measure
-  mymeasure = makeCustomResampledMeasure(measure.id = "mym", aggregation.id = "train.mean",
+  mymeasure = makeCustomResampledMeasure(measure.id = "mym",
+    aggregation.id = "train.mean",
     properties = c("classif", "predtype.response"),
     fun = function(task, group, pred, feats, extra.args) {
       mean(pred$data$truth != pred$data$response)
@@ -62,21 +67,24 @@ test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
     if (i == "quiet") {
       expect_equal(unname(performance(pred, auc)), NA_real_)
       # does this also work with benchmark?
-      b = benchmark(lrn, binaryclass.task, measures = list(acc, auc), resamplings = cv3)
+      b = benchmark(lrn, binaryclass.task, measures = list(acc, auc),
+        resamplings = cv5)
       expect_true(any(is.na(as.data.frame(b)$auc)))
       expect_false(any(is.na(as.data.frame(b)$acc)))
     } else if (i == "warn") {
       expect_warning(expect_equal(unname(performance(pred, auc)), NA_real_))
       # does this also work with benchmark?
       expect_warning({
-        b = benchmark(lrn, binaryclass.task, measures = list(acc, auc), resamplings = cv3)
+        b = benchmark(lrn, binaryclass.task, measures = list(acc, auc),
+          resamplings = cv5)
       })
       expect_true(any(is.na(as.data.frame(b)$auc)))
       expect_false(any(is.na(as.data.frame(b)$acc)))
     } else {
       expect_error(performance(pred, auc))
       # does this also work with benchmark?
-      expect_error(benchmark(lrn.list, binaryclass.task, measures = list(acc, auc),
+      expect_error(benchmark(lrn.list, binaryclass.task,
+        measures = list(acc, auc),
         resamplings = cv3))
     }
   }
@@ -94,7 +102,8 @@ test_that("performance checks for missing truth col", {
 
 test_that("performance checks for req prob type", {
   lrn = makeLearner("classif.rpart")
-  expect_error(holdout(lrn, binaryclass.task, measures = auc), "predict type to be: 'prob'")
+  expect_error(holdout(lrn, binaryclass.task, measures = auc),
+    "predict type to be: 'prob'")
 })
 
 test_that("performance works with ResamplePrediction", {
