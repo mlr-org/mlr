@@ -8,7 +8,7 @@ jobs:
       # create a unique env var for the cache. Unfortunately normal env vars
       # are not picked up by the cache, therefore this workaround is needed.
       # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
-      - run: echo "$(date -d "$D" '+%d')3.6.1" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
       - restore_cache:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
@@ -45,7 +45,7 @@ jobs:
       - image: rocker/verse:3.6.1
     steps:
       - checkout
-      - run: echo "$(date -d "$D" '+%d')3.6.1" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
       - restore_cache:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
       - run:
@@ -68,7 +68,7 @@ jobs:
       # create a unique env var for the cache. Unfortunately normal env vars
       # are not picked up by the cache, therefore this workaround is needed.
       # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
-      - run: echo "$(date -d "$D" '+%d')3.5.3" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
       - restore_cache:
          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
@@ -108,7 +108,7 @@ jobs:
       # create a unique env var for the cache. Unfortunately normal env vars
       # are not picked up by the cache, therefore this workaround is needed.
       # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
-      - run: echo "$(date -d "$D" '+%d')" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
       - restore_cache:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 

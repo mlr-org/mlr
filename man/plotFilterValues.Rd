@@ -8,6 +8,7 @@ plotFilterValues(
   fvalues,
   sort = "dec",
   n.show = nrow(fvalues$data),
+  filter = NULL,
   feat.type.cols = FALSE
 )
 }
@@ -28,6 +29,10 @@ Default is decreasing.}
 \item{n.show}{(\code{integer(1)})\cr
 Number of features (maximal) to show.
 Default is to plot all features.}
+
+\item{filter}{(\code{character(1)})
+In case \code{fvalues} contains multiple filter methods, which method should be
+plotted?}
 
 \item{feat.type.cols}{(\code{logical(1)})\cr
 Whether to color different feature types (e.g. numeric | factor).

@@ -65,7 +65,7 @@ fv
 Optionally, a vector of filter methods can be passed.
 
 ```{r}
-fv2 = generateFilterValuesData(iris.task, 
+fv2 = generateFilterValuesData(iris.task,
   method = c("FSelectorRcpp_information.gain", "FSelector_chi.squared"))
 fv2$data
 ```
@@ -73,7 +73,8 @@ fv2$data
 A bar plot of importance values for the individual features can be obtained using function `plotFilterValues()`.
 
 ```{r, fig.width=10}
-plotFilterValues(fv2) + ggpubr::theme_pubr()
+plotFilterValues(fv2, filter = "FSelectorRcpp_information.gain") +
+  ggpubr::theme_pubr()
 ```
 
 By default `plotFilterValues()` will create facetted subplots if multiple filter methods are passed as input to `generateFilterValuesData()`.
@@ -122,7 +123,7 @@ We use `information.gain` as importance measure with the aim to subset the datas
 In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.fnn", 
+lrn = makeFilterWrapper(learner = "classif.fnn",
   fw.method = "FSelectorRcpp_information.gain", fw.abs = 2)
 rdesc = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
@@ -161,11 +162,11 @@ As search strategy for tuning a random search with five iterations is used.
 ```{r}
 lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = "FSelector_chi.squared")
 ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
-                  makeNumericParam("C", lower = -10, upper = 10, 
-                    trafo = function(x) 2^x),
-                  makeNumericParam("sigma", lower = -10, upper = 10,
-                    trafo = function(x) 2^x)
-                  )
+  makeNumericParam("C", lower = -10, upper = 10,
+    trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -10, upper = 10,
+    trafo = function(x) 2^x)
+)
 rdesc = makeResampleDesc("CV", iters = 3)
 res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
   control = makeTuneControlRandom(maxit = 5))
@@ -189,8 +190,8 @@ res$y
 After tuning we can generate a new wrapped learner with the optimal percentage value for further use (e.g. to predict to new data).
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared", 
-        fw.perc = res$x$fw.perc, C = res$x$C, sigma = res$x$sigma)
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared",
+  fw.perc = res$x$fw.perc, C = res$x$C, sigma = res$x$sigma)
 mod = train(lrn, bh.task)
 mod
 
