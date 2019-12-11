@@ -195,13 +195,13 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
 
   if (is.null(filter) && nlevels(as.factor(data$filter)) > 1L) {
     stopf("Please supply only one filter method.")
+  } else if (!is.null(filter)) {
+    filter_sub = filter
+    if (filter_sub %nin% levels(data$filter)) {
+      stopf("Method '%s' not found among the filter methods supplied via argument 'fvalues'.", filter_sub)
+    }
+    data = data[filter == filter_sub, ]
   }
-
-  filter_sub = filter
-  if (filter %nin% levels(data$filter)) {
-    stopf("Method '%s' not found among the filter methods supplied via argument 'fvalues'.", filter_sub)
-  }
-  data = data[filter == filter_sub, ]
 
   # we need to order both, data and the ggplot mapping
   # ggplot will reorder automatically otherwise
