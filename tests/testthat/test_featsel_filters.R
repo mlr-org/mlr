@@ -72,10 +72,10 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
 })
 
 test_that("randomForestSRC_var.select minimal depth filter returns NA for features below the threshold", {
-  dat = generateFilterValuesData(task = multiclass.task, 
-                                 method = "randomForestSRC_var.select",
-                                 nselect = 5,
-                                 more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
+  dat = generateFilterValuesData(task = multiclass.task,
+    method = "randomForestSRC_var.select",
+    nselect = 5,
+    more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
   expect_equal(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.width")]), TRUE)
 })
 
