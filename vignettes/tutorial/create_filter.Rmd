@@ -37,12 +37,12 @@ str(filters$rank.correlation)
 ## List of 6
 ##  $ name              : chr "rank.correlation"
 ##  $ desc              : chr "Spearman's correlation between feature and target"
-##  $ pkg               : chr(0) 
+##  $ pkg               : chr(0)
 ##  $ supported.tasks   : chr "regr"
 ##  $ supported.features: chr "numerics"
-##  $ fun               :function (task, nselect, ...)  
+##  $ fun               :function (task, nselect, ...)
 ##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311
-##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x55db8ddf6dc0> 
+##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x55db8ddf6dc0>
 ##  - attr(*, "class")= chr "Filter"
 
 filters$rank.correlation$fun
@@ -121,7 +121,7 @@ You can use it like any other filter method already integrated in `mlr` (i.e., v
 d = generateFilterValuesData(iris.task, method = c("nonsense.filter", "anova.test"))
 d
 
-plotFilterValues(d)
+plotFilterValues(d, filter = "anova.test")
 iris.task.filtered = filterFeatures(iris.task, method = "nonsense.filter", abs = 2)
 iris.task.filtered
 

@@ -20,3 +20,20 @@ test_that("plotFilterValues shows the correct count when n.show > nfeat", {
 
   vdiffr::expect_doppelganger("n.show > nfeat", fv_plot2)
 })
+
+test_that("plotFilterValues errors if arg 'filter' is not avail", {
+  fv = generateFilterValuesData(bh.task, method = "praznik_CMIM")
+  expect_error(plotFilterValues(fv, filter = "foo"))
+})
+
+test_that("plotFilterValues errors if arg 'filter' is not avail", {
+  fv = generateFilterValuesData(iris.task, method = c("variance", "praznik_CMIM"))
+  expect_error(plotFilterValues(fv))
+})
+
+test_that("plotFilterValues arg 'filter' works", {
+  fv = generateFilterValuesData(iris.task, method = c("variance", "praznik_CMIM"))
+  fv_plot3 = plotFilterValues(fv, filter = "variance")
+
+  vdiffr::expect_doppelganger("filter argument", fv_plot3)
+})
