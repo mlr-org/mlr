@@ -2,7 +2,7 @@ context("BaseWrapper")
 
 test_that("BaseWrapper", {
   lrn1 = makeLearner("classif.rpart", minsplit = 2L)
-  ps = makeParamSet(makeNumericLearnerParam("foo", default = 0))
+  ps = makeParamSet(makeNumericLearnerParam("foo"))
   pv = list(foo = 3)
   lrn2 = makeBaseWrapper(id = "foo", lrn1$type, lrn1, par.set = ps, par.vals = pv,
     learner.subclass = "mywrapper", model.subclass = "mymodel")
@@ -32,8 +32,8 @@ test_that("Joint model performance estimation, tuning, and model performance", {
   lrn2 = makeTuneWrapper(
     learner = lrn,
     par.set = makeParamSet(
-      makeDiscreteParam("C", values = 2^(-2:2), default = 1),
-      makeDiscreteParam("sigma", values = 2^(-2:2), default = 1)
+      makeDiscreteParam("C", values = 2^(-2:2)),
+      makeDiscreteParam("sigma", values = 2^(-2:2))
     ),
     measures = list(auc, acc),
     control = makeTuneControlRandom(maxit = 3L),
@@ -61,8 +61,8 @@ test_that("Error when wrapping tune wrapper around another optimization wrapper"
     lrn3 = makeTuneWrapper(
       learner = lrn2,
       par.set = makeParamSet(
-        makeDiscreteParam("C", values = 2^(-2:2), default = 1),
-        makeDiscreteParam("sigma", values = 2^(-2:2), default = 1)
+        makeDiscreteParam("C", values = 2^(-2:2)),
+        makeDiscreteParam("sigma", values = 2^(-2:2))
       ),
       measures = list(auc, acc),
       control = makeTuneControlRandom(maxit = 3L),

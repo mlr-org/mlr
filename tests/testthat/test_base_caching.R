@@ -1,7 +1,6 @@
 context("caching")
 
 test_that("caching works with most filters", {
-
   filters = as.character(listFilterMethods()$id)
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
@@ -15,11 +14,11 @@ test_that("caching works with most filters", {
   out = lapply(list(FALSE, tempdir()), function(i) {
     tune.out = lapply(filter.list.regr, function(.x) {
       lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = .x, cache = i)
-      ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1, default = 0),
+      ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
         makeNumericParam("C", lower = -1, upper = 1,
-          trafo = function(x) 2^x, default = 0),
+          trafo = function(x) 2^x),
         makeNumericParam("sigma", lower = -1, upper = 1,
-          trafo = function(x) 2^x, default = 0)
+          trafo = function(x) 2^x)
       )
       rdesc = makeResampleDesc("CV", iters = 2)
 

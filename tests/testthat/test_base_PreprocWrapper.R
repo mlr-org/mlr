@@ -10,8 +10,8 @@ test_that("PreprocWrapper", {
     return(data)
   }
   ps = makeParamSet(
-    makeNumericLearnerParam(id = "x", default = 0),
-    makeNumericLearnerParam(id = "y", default = 0)
+    makeNumericLearnerParam(id = "x"),
+    makeNumericLearnerParam(id = "y")
   )
   lrn1 = makeLearner("classif.rpart", minsplit = 10)
   lrn2 = makePreprocWrapper(lrn1, train = f1, predict = f2, par.set = ps, par.vals = list(x = 1, y = 2))

@@ -5,7 +5,7 @@ test_that("TuneWrapper", {
   outer = makeResampleDesc("Holdout")
   inner = makeResampleDesc("CV", iters = 2)
 
-  ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001), default = 1))
+  ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001)))
   lrn1a = makeLearner("classif.ksvm")
   lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1,
     control = makeTuneControlGrid())
@@ -117,7 +117,7 @@ test_that("TuneWrapper with glmnet (#958)", {
   requirePackagesOrSkip("glmnet", default.method = "load")
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
-    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),
+    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", lower = 0, upper = 1)),
     control = makeTuneControlRandom())
   mod = train(lrn2, multiclass.task)
   pred = predict(mod, multiclass.task)

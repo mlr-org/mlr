@@ -37,7 +37,7 @@ test_that("error dump is created in resample", {
 test_that("error dump is created during tune", {
   mlr.options = getMlrOptions()
   ps = makeParamSet(
-    makeDiscreteParam("alpha", values = c(1, 0), default = 0)
+    makeDiscreteParam("alpha", values = c(1, 0))
   )
   configureMlr(on.learner.error = "quiet", on.error.dump = TRUE)
   ctrl = makeTuneControlGrid()
@@ -64,7 +64,7 @@ test_that("error dump is created during tune", {
   task$env$data$V1 = NA
   ctrl = makeTuneControlRandom(maxit = 2)
   ps = makeParamSet(
-    makeIntegerParam("k", lower = 1, upper = 5, default = 1)
+    makeIntegerParam("k", lower = 1, upper = 5)
   )
   z = tuneParams(lrn, task, makeResampleDesc("Bootstrap", predict = "both", iters = 2),
     par.set = ps, control = ctrl, measures = getDefaultMeasure(multiclass.task))

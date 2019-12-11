@@ -3,7 +3,7 @@ context("BaseEnsemble")
 test_that("BaseEnsemble", {
   bl1 = makeLearner("classif.rpart", minsplit = 2L, id = "a")
   bl2 = makeLearner("classif.ksvm", C = 2, id = "b")
-  ps = makeParamSet(makeNumericLearnerParam("foo", default = 0))
+  ps = makeParamSet(makeNumericLearnerParam("foo"))
   pv = list(foo = 3)
   be = makeBaseEnsemble(id = "foo", base.learners = list(bl1, bl2), par.set = ps, par.vals = pv,
     cl = "mywrapper")
@@ -24,7 +24,7 @@ test_that("BaseEnsemble", {
 
   bl1 = be
   bl2 = makeOversampleWrapper(makeFilterWrapper(bl2, fw.perc = 0.5), osw.rate = 1)
-  ps = makeParamSet(makeNumericLearnerParam("foo", default = 0))
+  ps = makeParamSet(makeNumericLearnerParam("foo"))
   pv = list(foo = 3)
   be = makeBaseEnsemble(id = "foo", base.learners = list(bl1, bl2), par.set = ps, par.vals = pv,
     cl = "mywrapper")

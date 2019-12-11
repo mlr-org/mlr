@@ -5,8 +5,8 @@ test_that("Nested SpRepCV works without errors", {
   lrn = makeLearner("classif.ranger",
     predict.type = "prob")
 
-  ps = makeParamSet(makeNumericParam("mtry", lower = 3, upper = 3, default = 1),
-    makeNumericParam("num.trees", lower = 10, upper = 10, default = 1))
+  ps = makeParamSet(makeNumericParam("mtry", lower = 3, upper = 3),
+    makeNumericParam("num.trees", lower = 10, upper = 10))
 
   ctrl = makeTuneControlRandom(maxit = 1)
   inner = makeResampleDesc("SpCV", iters = 2)

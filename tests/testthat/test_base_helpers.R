@@ -3,8 +3,8 @@ context("helpers")
 test_that("makeOptPathDFFromMeasures", {
   measures = list(mae, auc)
   par.set = makeParamSet(
-    makeIntegerParam("a", default = 1),
-    makeIntegerParam("b", default = 1)
+    makeIntegerParam("a"),
+    makeIntegerParam("b")
   )
   opt.path = makeOptPathDFFromMeasures(par.set, measures)
   addOptPathEl(opt.path, x = list(1L, 1L), y = c(0.5, 0.5))

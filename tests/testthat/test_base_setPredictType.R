@@ -3,7 +3,7 @@ context("setPredictType")
 test_that("predict.type gets propagated", {
   inner = makeResampleDesc("Holdout")
   lrn1 = makeLearner("classif.rpart")
-  ps = makeParamSet(makeNumericParam("cp", lower = 0.1, upper = 1, default = 1))
+  ps = makeParamSet(makeNumericParam("cp", lower = 0.1, upper = 1))
   ctrl = makeTuneControlRandom(maxit = 2)
   lrn2 = makeTuneWrapper(lrn1, resampling = inner, control = ctrl, par.set = ps,
     measures = getDefaultMeasure(iris.task))

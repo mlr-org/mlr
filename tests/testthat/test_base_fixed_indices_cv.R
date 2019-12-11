@@ -31,7 +31,7 @@ test_that("fixed in nested resampling", {
   # test fixed in nested resampling
   lrn = makeLearner("classif.lda")
   ctrl = makeTuneControlRandom(maxit = 2)
-  ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 20, default = 1))
+  ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
   inner = makeResampleDesc("CV", iters = 4, fixed = TRUE)
   outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
   tune.wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,

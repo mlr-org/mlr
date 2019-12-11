@@ -6,20 +6,20 @@ test_that("tune", {
   minsplit = 1:2
   ps1 = makeParamSet(
     makeDiscreteParam("cp", values = cp),
-    makeDiscreteParam("minsplit", values = minsplit, default = 1)
+    makeDiscreteParam("minsplit", values = minsplit)
   )
   ctrl = makeTuneControlGrid()
   folds = 3
 
   tr = e1071::tune.rpart(formula = multiclass.formula, data = multiclass.df,
-                         cp = cp, minsplit = minsplit,
+    cp = cp, minsplit = minsplit,
     tunecontrol = e1071::tune.control(sampling = "cross", cross = folds))
   lrn = makeLearner("classif.rpart")
   cv.instance = e1071CVToMlrCV(tr)
   m1 = setAggregation(mmce, test.mean)
   m2 = setAggregation(mmce, test.sd)
   tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1,
-                   control = ctrl, measures = list(m1, m2))
+    control = ctrl, measures = list(m1, m2))
   pp = as.data.frame(tr2$opt.path)
   for (i in seq_len(nrow(tr$performances))) {
     cp = tr$performances[i, "cp"]
@@ -40,13 +40,13 @@ test_that("tune", {
   lrn2 = makeLearner("classif.rpart", predict.type = "prob")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   tr2 = tuneParams(lrn2, binaryclass.task, rdesc, par.set = ps1, control = ctrl,
-                   measures = getDefaultMeasure(binaryclass.task))
+    measures = getDefaultMeasure(binaryclass.task))
   expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
   expect_true(isScalarNumeric(tr2$threshold))
 
   # check multiclass thresholding
   ctrl = makeTuneControlGrid(tune.threshold = TRUE,
-                             tune.threshold.args = list(control = list(maxit = 2)))
+    tune.threshold.args = list(control = list(maxit = 2)))
   tr3 = tuneParams(lrn2, multiclass.task, rdesc, par.set = ps1, control = ctrl)
   op.df = as.data.frame(tr3$opt.path)
   op.df = op.df[, grepl("threshold_", colnames(op.df))]
@@ -54,8 +54,8 @@ test_that("tune", {
   expect_true(is.numeric(tr3$threshold) && length(tr3$threshold) == 3L && !any(is.na(tr3$threshold)))
 
   expect_error(tuneParams(lrn, multiclass.task, cv.instance,
-                          par.set = makeParamSet(), control = ctrl,
-                          measures = getDefaultMeasure(multiclass.task)))
+    par.set = makeParamSet(), control = ctrl,
+    measures = getDefaultMeasure(multiclass.task)))
 })
 
 test_that("tuning works with infeasible pars", {
@@ -70,7 +70,7 @@ test_that("tuning works with infeasible pars", {
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   ctrl = makeTuneControlGrid()
   z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
-                 measures = getDefaultMeasure(multiclass.task))
+    measures = getDefaultMeasure(multiclass.task))
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
   expect_true(is.na(d[1L, "error.message"]))
@@ -81,13 +81,13 @@ test_that("tuning works with infeasible pars", {
 test_that("tuning works with errors", {
   configureMlr(on.learner.error = "quiet")
   ps = makeParamSet(
-    makeDiscreteParam("alpha", values = c(1, 0), default = 1)
+    makeDiscreteParam("alpha", values = c(1, 0))
   )
   lrn = makeLearner("classif.__mlrmocklearners__2")
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid()
   z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
-                 measures = getDefaultMeasure(multiclass.task))
+    measures = getDefaultMeasure(multiclass.task))
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
   expect_true(is.na(d[1L, "error.message"]))
@@ -105,7 +105,7 @@ test_that("tuning works with tuneThreshold and multiple measures", {
     makeNumericParam("cp", lower = 0.1, upper = 0.2)
   )
   res = tuneParams(lrn, binaryclass.task, resampling = rdesc,
-                   measures = list(mmce, auc), par.set = ps, control = ctrl)
+    measures = list(mmce, auc), par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 
   # also check with infeasible stuff
@@ -124,7 +124,7 @@ test_that("tuning allows usage of budget", {
   ctrl = makeTuneControlCMAES(budget = 18, lambda = 6, maxit = 3)
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 0.2),
-    makeIntegerParam("minsplit", lower = 1, upper = 10, default = 1)
+    makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
   res = tuneParams(lrn, binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && (length(res$y) == 1L) && !any(is.na(res$y)))
