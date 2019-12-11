@@ -58,7 +58,7 @@ test_that("threshold tuning with feature selection", {
   ctrl = makeFeatSelControlRandom(maxit = 2L, tune.threshold = TRUE,
     tune.threshold.args = list(nsub = 2L))
   fr = selectFeatures(lrn, task = binaryclass.task, resampling = rdesc,
-    control = ctrl, show.info = FALSE, measures = getDefaultMeasure(binarclass.task))
+    control = ctrl, show.info = FALSE, measures = getDefaultMeasure(binaryclass.task))
   df = as.data.frame(fr$opt.path)
   expect_true(is.numeric(df$threshold) && !any(is.na(df$threshold)))
 })
