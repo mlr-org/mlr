@@ -23,5 +23,6 @@ test_that("regr_h2oglm", {
     old.predicts.list[[i]] = as.data.frame(p)[, 1L]
   }
 
-  testSimpleParsets("regr.h2o.glm", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.h2o.glm", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
 })

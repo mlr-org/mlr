@@ -27,7 +27,8 @@ test_that("tuneMBO", {
   mbo.ctrl = mlrMBO::setMBOControlTermination(mbo.ctrl, iters = 2)
   mbo.ctrl = mlrMBO::setMBOControlInfill(mbo.ctrl, crit = mlrMBO::crit.ei)
   ctrl = makeTuneControlMBO(learner = sur.lrn, mbo.control = mbo.ctrl)
-  tr = tuneParams(lrn1, multiclass.task, res, par.set = ps1, control = ctrl, measures = acc)
+  tr = tuneParams(lrn1, multiclass.task, res, par.set = ps1, control = ctrl,
+    measures = acc)
   expect_equal(getOptPathLength(tr$opt.path), n.des + n.iter)
   expect_equal(dim(as.data.frame(tr$opt.path)), c(n.des + n.iter, 2 + 1 + 4))
   expect_number(tr$y, lower = 0.8, upper = 1)
@@ -50,7 +51,8 @@ test_that("tuneMBO works with tune.threshold", {
     makeNumericParam("cp", lower = 0.1, upper = 1)
   )
   sur.lrn = makeLearner("regr.lm", predict.type = "se")
-  ctrl = makeTuneControlMBO(budget = 4L, tune.threshold = TRUE, mbo.design = generateDesign(3, par.set = ps), learner = sur.lrn)
+  ctrl = makeTuneControlMBO(budget = 4L, tune.threshold = TRUE,
+    mbo.design = generateDesign(3, par.set = ps), learner = sur.lrn)
   lrn = makeTuneWrapper(lrn, hout, par.set = ps, control = ctrl)
   mod = train(lrn, sonar.task)
   expect_number(mod$learner.model$opt.result$threshold, lower = 0, upper = 1)

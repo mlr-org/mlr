@@ -13,7 +13,10 @@ test_that("regr_h2odeeplearning", {
   )
   # h20deeplearning needs seed in function call to be reproducible
   debug.seed = getOption("mlr.debug.seed")
-  parset.list = lapply(parset.list, function(x) c(x, seed = debug.seed, reproducible = TRUE))
+  parset.list = lapply(parset.list, function(x) {
+    c(x, seed = debug.seed,
+      reproducible = TRUE)
+  })
   old.predicts.list = list()
 
   for (i in seq_along(parset.list)) {
@@ -27,5 +30,6 @@ test_that("regr_h2odeeplearning", {
     old.predicts.list[[i]] = as.data.frame(p)[, 1L]
   }
 
-  testSimpleParsets("regr.h2o.deeplearning", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.h2o.deeplearning", regr.df, regr.target,
+    regr.train.inds, old.predicts.list, parset.list)
 })

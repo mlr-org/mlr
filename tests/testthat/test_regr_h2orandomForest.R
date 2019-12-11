@@ -24,6 +24,6 @@ test_that("regr_h2orandomForest", {
     p = predict(m, newdata = h2o::as.h2o(regr.test))
     old.predicts.list[[i]] = as.data.frame(p)[, 1L]
   }
-  testSimpleParsets("regr.h2o.randomForest", regr.df, regr.target, regr.train.inds,
-    old.predicts.list, parset.list)
+  testSimpleParsets("regr.h2o.randomForest", regr.df, regr.target,
+    regr.train.inds, old.predicts.list, parset.list)
 })

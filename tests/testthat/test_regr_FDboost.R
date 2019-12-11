@@ -2,8 +2,8 @@ context("FDA_FDboost")
 
 test_that("regr_FDboost is equal to reference", {
   requirePackagesOrSkip("FDboost", default.method = "load")
+
   lrn = makeLearner("regr.FDboost", knots = 40L, df = 4L, mstop = 100L)
-  set.seed(getOption("mlr.debug.seed"))
   mlr.mod = train(lrn, fda.regr.fs.task)
 
   frm = as.formula(mlr.mod$learner.model$formulaFDboost)
@@ -17,10 +17,8 @@ test_that("regr_FDboost is equal to reference", {
   fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
   mat.list = c(mat.list, fdg)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop = 100L, nu = 0.1)
-  set.seed(getOption("mlr.debug.seed"))
   true.mod = FDboost::FDboost(frm, data = mat.list,
     timeformula = ~ bols(1), control = ctrl, family = mboost::Gaussian())
-
 
   prd = predict(mlr.mod, newdata = getTaskData(fda.regr.fs.task,
     functionals.as = "matrix"))

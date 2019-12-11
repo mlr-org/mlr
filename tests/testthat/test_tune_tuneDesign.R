@@ -9,24 +9,28 @@ test_that("tuneDesign", {
     makeDiscreteParam("C", values = c.seq),
     makeDiscreteParam("sigma", values = sigma.seq)
   )
-  rin = makeFixedHoldoutInstance(train.inds = seq(1, 150, 2), test.inds = seq(2, 150, 2), size = 150)
+  rin = makeFixedHoldoutInstance(train.inds = seq(1, 150, 2),
+    test.inds = seq(2, 150, 2), size = 150)
   # discretized param set
   des = expand.grid(C = c.seq, sigma = sigma.seq)
   des.f = do.call(cbind.data.frame, lapply(des, factor))
   ctrl = makeTuneControlDesign(design = des.f)
-  tr1 = tuneParams(lrn, multiclass.task, rin, par.set = ps1, control = ctrl, measures = acc)
+  tr1 = tuneParams(lrn, multiclass.task, rin, par.set = ps1, control = ctrl,
+    measures = acc)
   expect_number(tr1$y, lower = 0.8, upper = 1)
   op1 = as.data.frame(tr1$opt.path)
   op1$C = as.numeric(as.character(op1$C))
   op1$sigma = as.numeric(as.character(op1$sigma))
-  expect_true(all(sortByCol(op1, c("C", "sigma"))[, c("C", "sigma")] == sortByCol(des, c("C", "sigma"))))
+  expect_true(all(sortByCol(op1, c("C", "sigma"))[,
+    c("C", "sigma")] == sortByCol(des, c("C", "sigma"))))
 })
 
 test_that("tuneDesign works with dependent params", {
   ps = makeParamSet(
     makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
     makeNumericParam("C", lower = 1, upper = 2),
-    makeNumericParam("sigma", lower = 1, upper = 2, requires = quote(kernel == "rbfdot"))
+    makeNumericParam("sigma", lower = 1, upper = 2,
+      requires = quote(kernel == "rbfdot"))
   )
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")

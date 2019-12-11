@@ -4,11 +4,10 @@ test_that("regr_randomForest", {
   requirePackagesOrSkip("randomForest", default.method = "load")
 
   parset.list = list(
-    list(),
     list(ntree = 5, mtry = 2),
     list(ntree = 5, mtry = 4),
-    list(proximity = TRUE, oob.prox = TRUE),
-    list(nPerm = 3)
+    list(ntree = 5, proximity = TRUE, oob.prox = TRUE),
+    list(ntree = 5, nPerm = 3)
   )
 
   old.predicts.list = list()
@@ -19,7 +18,6 @@ test_that("regr_randomForest", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForest::randomForest, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = regr.test, type = "response")
     old.predicts.list[[i]] = p
   }
@@ -29,7 +27,8 @@ test_that("regr_randomForest", {
 
   tt = randomForest::randomForest
 
-  testCVParsets("regr.randomForest", regr.df, regr.target, tune.train = tt, parset.list = parset.list)
+  testCVParsets("regr.randomForest", regr.df, regr.target, tune.train = tt,
+    parset.list = parset.list)
 })
 
 
@@ -57,11 +56,10 @@ test_that("different se.methods work", {
     if (se.method == "bootstrap") {
       par.vals = c(par.vals, list(se.ntree = 5L, se.boot = 3L))
     }
-    learner = makeLearner("regr.randomForest", predict.type = "se", par.vals = par.vals)
-    set.seed(getOption("mlr.debug.seed"))
+    learner = makeLearner("regr.randomForest", predict.type = "se",
+      par.vals = par.vals)
     model = train(learner, task = bh.task, subset = 1:500)
 
-    set.seed(getOption("mlr.debug.seed"))
     preds[[se.method]] = predict(model, task = bh.task)
     expect_true(is.numeric(preds[[se.method]]$data$se))
     expect_true(all(preds[[se.method]]$data$se >= 0))
@@ -83,7 +81,8 @@ test_that("dplyr data.frames work", {
   for (cname in colnames(mpg)[sapply(mpg, is.character)]) {
     mpg[[cname]] = as.factor(mpg[[cname]])
   }
-  expect_warning((task.mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
+  expect_warning((task.mpg = makeRegrTask(data = mpg, target = "cty")),
+    "Provided data is not a pure data.frame but from class")
   lrn = makeLearner("regr.randomForest", ntree = 2)
   train(lrn, task.mpg)
 })

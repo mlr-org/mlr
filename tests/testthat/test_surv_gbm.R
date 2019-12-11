@@ -5,10 +5,9 @@ test_that("surv_gbm", {
 
   parset.list = list(
     list(),
-    list(n.trees = 100L),
-    list(interaction.depth = 2L)
+    list(n.trees = 10L),
+    list(interaction.depth = 2L, n.trees = 10L)
   )
-
 
   old.predicts.list = list()
 
@@ -20,10 +19,10 @@ test_that("surv_gbm", {
     capture.output({
       m = do.call(gbm::gbm, pars)
     })
-    set.seed(getOption("mlr.debug.seed"))
     p = gbm::predict.gbm(m, newdata = surv.test, n.trees = m$n.trees)
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("surv.gbm", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("surv.gbm", surv.df, surv.target, surv.train.inds,
+    old.predicts.list, parset.list)
 })

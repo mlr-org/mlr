@@ -1,16 +1,22 @@
-# Be carefull that one need to change the columns name again after cbine several matrix
+# Be careful that one need to change the columns name again after cbine several
+# matrix
 context("FDA_regr_fgam")
+
 test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   requirePackagesOrSkip("refund")
+
   data(DTI)
   dti1 = DTI[DTI$visit == 1 & complete.cases(DTI), ]
   # subset a portion of the data(complete.cases select non missing value rows)
   # dti1 is already a matrix dataframe
-  fit.af = pfr(formula = pasat ~ af(cca, Qtransform = TRUE, k = 7, m = 2), data = dti1)
+  fit.af = pfr(formula = pasat ~ af(cca, Qtransform = TRUE, k = 7, m = 2),
+    data = dti1)
   prd.refund = predict(fit.af, newdata = dti1, type = "response")
-  df = data.frame(as.list(dti1[, c("pasat", "cca")])) # makeFunctionalData require plain dataframe
-  fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94)) # dim(dti1$cca) = (66,93)
-  lrn = makeLearner("regr.fgam", Qtransform = TRUE, mgcv.te_ti.k = 7, mgcv.te_ti.m = 2)
+  # makeFunctionalData require plain dataframe
+  df = data.frame(as.list(dti1[, c("pasat", "cca")]))
+  fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94))
+  lrn = makeLearner("regr.fgam", Qtransform = TRUE, mgcv.te_ti.k = 7,
+    mgcv.te_ti.m = 2)
   task = makeRegrTask(data = fdf, target = "pasat")
   mod1f = train(learner = lrn, task = task)
   prd.mlr = predict(object = mod1f, newdata = fdf)

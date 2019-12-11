@@ -5,9 +5,12 @@ test_that("surv_glmboost", {
 
   parset.list1 = list(
     list(family = mboost::CoxPH()),
-    list(family = mboost::CoxPH(), control = mboost::boost_control(mstop = 100L, nu = 0.1)),
-    list(family = mboost::Weibull(nuirange = c(0, 50.5)), control = mboost::boost_control(mstop = 50L, nu = 1)),
-    list(family = mboost::Gehan(), control = mboost::boost_control(mstop = 100L, nu = 0.5))
+    list(family = mboost::CoxPH(),
+      control = mboost::boost_control(mstop = 100L, nu = 0.1)),
+    list(family = mboost::Weibull(nuirange = c(0, 50.5)),
+      control = mboost::boost_control(mstop = 50L, nu = 1)),
+    list(family = mboost::Gehan(),
+      control = mboost::boost_control(mstop = 100L, nu = 0.5))
   )
 
   parset.list2 = list(
@@ -24,16 +27,23 @@ test_that("surv_glmboost", {
     f = getTaskFormula(surv.task)
     pars = list(f, data = surv.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
-    m = do.call(mboost::glmboost, pars)
-    p = predict(m, newdata = surv.test, type = "link")
+    # suppressed warnings: "NA/Inf replaced by maximum positive value"
+    m = suppressWarnings(do.call(mboost::glmboost, pars))
+    # suppressed warnings: "NA/Inf replaced by maximum positive value"
+    p = suppressWarnings(predict(m, newdata = surv.test, type = "link"))
     old.predicts.list[[i]] = drop(p)
   }
 
-  testSimpleParsets("surv.glmboost", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list2)
+  # suppressed warnings: "NA/Inf replaced by maximum positive value"
+  suppressWarnings(
+    testSimpleParsets("surv.glmboost", surv.df, surv.target, surv.train.inds,
+      old.predicts.list, parset.list2)
+  )
 
   # test alternative matrix interface
-  mod1 = train(makeLearner("surv.glmboost", use.formula = FALSE, center = FALSE), wpbc.task)
-  mod2 = train(makeLearner("surv.glmboost", use.formula = TRUE, center = FALSE), wpbc.task)
+  mod1 = train(makeLearner("surv.glmboost", use.formula = FALSE,
+    center = FALSE), wpbc.task)
+  mod2 = train(makeLearner("surv.glmboost", use.formula = TRUE,
+    center = FALSE), wpbc.task)
   expect_equal(coef(mod1$learner.model), coef(mod2$learner.model))
 })

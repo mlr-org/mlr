@@ -15,11 +15,10 @@ test_that("regr_evtree", {
     parset = parset.list[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(evtree::evtree, pars)
-    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
   }
 
-  testSimpleParsets("regr.evtree", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.evtree", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
 })

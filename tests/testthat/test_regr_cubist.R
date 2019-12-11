@@ -21,7 +21,6 @@ test_that("regr_cubist", {
   for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     parset = c(list(x = X, y = y), parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(Cubist::cubist, parset)
     p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p

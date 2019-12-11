@@ -25,7 +25,8 @@ test_that("surv_cforest", {
     old.predicts.list[[i]] = -1 * predict(m, newdata = surv.test)
   }
 
-  testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list2)
+  testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds,
+    old.predicts.list, parset.list2)
 
   # issue 556
   parset.list3 = list(

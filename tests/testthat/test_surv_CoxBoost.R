@@ -16,14 +16,18 @@ test_that("surv_CoxBoost", {
     x = dropNamed(surv.train, surv.target)
 
     penalty = 9 * sum(y[, "status"])
-    info = getFixDataInfo(surv.train, factors.to.dummies = TRUE, ordered.to.int = TRUE)
-    pars = c(list(time = unname(y[, "time"]), status = unname(y[, "status"]), return.score = FALSE, penalty = penalty,
+    info = getFixDataInfo(surv.train, factors.to.dummies = TRUE,
+      ordered.to.int = TRUE)
+    pars = c(list(time = unname(y[, "time"]), status = unname(y[, "status"]),
+      return.score = FALSE, penalty = penalty,
       x = as.matrix(fixDataForLearner(x, info))), parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(CoxBoost::CoxBoost, pars)
-    p = as.numeric(predict(m, newdata = as.matrix(fixDataForLearner(dropNamed(surv.test, surv.target), info)), type = "lp"))
+    p = as.numeric(predict(m,
+      newdata = as.matrix(fixDataForLearner(dropNamed(surv.test, surv.target),
+        info)), type = "lp"))
     old.predicts.list[[i]] = as.numeric(p)
   }
 
-  testSimpleParsets("surv.CoxBoost", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("surv.CoxBoost", surv.df, surv.target, surv.train.inds,
+    old.predicts.list, parset.list)
 })

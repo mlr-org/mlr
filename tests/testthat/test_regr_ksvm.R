@@ -20,7 +20,6 @@ test_that("regr_ksvm", {
     parset = parset.list[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     capture.output({
       m = do.call(kernlab::ksvm, pars)
     })

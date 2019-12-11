@@ -18,11 +18,11 @@ test_that("surv_rpart", {
     parset = parset.list[[i]]
     pars = list(formula = surv.formula, data = surv.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(rpart::rpart, pars)
     p = predict(m, newdata = surv.test)
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("surv.rpart", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("surv.rpart", surv.df, surv.target, surv.train.inds,
+    old.predicts.list, parset.list)
 })

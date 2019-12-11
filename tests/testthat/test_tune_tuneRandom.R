@@ -9,7 +9,8 @@ test_that("tuneRandom", {
   )
 
   ctrl = makeTuneControlRandom(maxit = 5)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, measures = acc)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+    measures = acc)
   expect_equal(getOptPathLength(tr$opt.path), 5)
   expect_number(tr$y, lower = 0.8, upper = 1)
 })
@@ -21,7 +22,8 @@ test_that("tuneRandom works with dependent params", {
   ps = makeParamSet(
     makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
     makeNumericParam("C", lower = 1, upper = 2),
-    makeNumericParam("sigma", lower = 1, upper = 2, requires = quote(kernel == "rbfdot"))
+    makeNumericParam("sigma", lower = 1, upper = 2,
+      requires = quote(kernel == "rbfdot"))
   )
   ctrl = makeTuneControlRandom(maxit = 5)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
@@ -31,7 +33,8 @@ test_that("tuneRandom works with dependent params", {
 
 test_that("tuneRandom works with trafo", {
   lrn = makeLearner("classif.ksvm")
-  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x))
+  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1,
+    trafo = function(x) 2^x))
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom(maxit = 3)
   tr = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
@@ -41,7 +44,8 @@ test_that("tuneRandom works with trafo", {
 
 test_that("tuneRandom uses budget", {
   lrn = makeLearner("classif.ksvm")
-  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x))
+  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1,
+    trafo = function(x) 2^x))
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom(maxit = 3)
   ctrl2 = makeTuneControlRandom(budget = 3)

@@ -29,18 +29,18 @@ test_that("regr_mob", {
     } else {
       term.feats = parset$term.feats
     }
-    formula = as.formula(paste(regr.target, "~", collapse(term.feats, sep = " + "),
-      "|", collapse(part.feats, sep = " + ")))
+    formula = as.formula(paste(regr.target, "~", collapse(term.feats,
+      sep = " + "), "|", collapse(part.feats, sep = " + ")))
     parset$term.feats = parset$part.feats = NULL
     control = do.call(party::mob_control, parset)
     pars = list(formula = formula, data = regr.train, control = control)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::mob, pars)
     p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("regr.mob", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.mob", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
 
   # FIXME: Does not work with the extenden formula for mob!
   # tt = "mob"
