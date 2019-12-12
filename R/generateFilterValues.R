@@ -56,15 +56,15 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   # ensemble
   if (class(method) == "list") {
     if (method[[1]] %in% ls(.FilterEnsembleRegister)) {
-			ens.method = method[[1]]
-			method = method[[2]]
-			if (length(method) == 1) {
-				warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
-			}
+      ens.method = method[[1]]
+      method = method[[2]]
+      if (length(method) == 1) {
+        warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+      }
     }
   }
 
-  lapply(method, assertSubset, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)  
+  assertSubset(unlist(method), choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg))))) {
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
@@ -126,19 +126,21 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
 
   } else {
     index_names = names(method)
-	if (is.null(index_names))
-		index_names = method
-	fval = mapply(function(x, name) {
-			x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[name]]))
-			missing.score = setdiff(fn, names(x))
-			x[missing.score] = NA_real_
-			x[match(fn, names(x))]
-    }, filter, index_names, SIMPLIFY = FALSE)    
+    if (is.null(index_names)) {
+      index_names = method
+    }
+    fval = mapply(function(x, name) {
+      x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[name]]))
+      missing.score = setdiff(fn, names(x))
+      x[missing.score] = NA_real_
+      x[match(fn, names(x))]
+    }, filter, index_names, SIMPLIFY = FALSE)
     fval = do.call(cbind, fval)
     colnames(fval) = method
-	if (!is.null(names(method)))
-		colnames(fval) = names(method)
-	types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
+    if (!is.null(names(method))) {
+      colnames(fval) = names(method)
+    }
+    types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
     out = data.table(name = row.names(fval),
       type = types, fval, row.names = NULL, stringsAsFactors = FALSE)

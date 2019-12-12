@@ -19,7 +19,6 @@
 ## misc
 
 - Add `configureMlr()` to `.onLoad()`, possibly fixing some edge cases (#2585) (@pat-s, #2637)
-- Allow ensemble filters to include multiple base filters of the same type (#2688)
 
 ## learners - bugfixes
 
@@ -29,6 +28,7 @@
 
 - Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information (@pat-s, #2649)
 * Bugfix: With the new _praznik_ v7.0.0 release filter `praznik_CMIM` does no longer return a result for logical features. See https://gitlab.com/mbq/praznik/issues/19 for more information
+- Allow ensemble filters to include multiple base filters of the same type (#2688)
 
 # mlr 2.15.0
 
