@@ -325,9 +325,13 @@
     <p>Plot filter values using ggplot2.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotFilterValues</span>(<span class='no'>fvalues</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='st'>"dec"</span>, <span class='kw'>n.show</span> <span class='kw'>=</span> <span class='fl'>20L</span>,
-  <span class='kw'>feat.type.cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>facet.wrap.nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>facet.wrap.ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>plotFilterValues</span>(
+  <span class='no'>fvalues</span>,
+  <span class='kw'>sort</span> <span class='kw'>=</span> <span class='st'>"dec"</span>,
+  <span class='kw'>n.show</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>fvalues</span>$<span class='no'>data</span>),
+  <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>feat.type.cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -340,28 +344,31 @@ Filter values.</p></td>
     <tr>
       <th>sort</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
-Sort features like this.
-&#8220;dec&#8221; = decreasing, &#8220;inc&#8221; = increasing, &#8220;none&#8221; = no sorting.
-Default is decreasing.</p></td>
+Available options are:</p><ul>
+<li><p><code>"dec"</code>-&gt; descending</p></li>
+<li><p><code>"inc"</code> -&gt; increasing</p></li>
+<li><p><code>"none"</code> -&gt; no sorting</p></li>
+</ul>
+
+<p>Default is decreasing.</p></td>
     </tr>
     <tr>
       <th>n.show</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of features (maximal) to show.
-Default is 20.</p></td>
+Default is to plot all features.</p></td>
+    </tr>
+    <tr>
+      <th>filter</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)
+In case <code>fvalues</code> contains multiple filter methods, which method should be
+plotted?</p></td>
     </tr>
     <tr>
       <th>feat.type.cols</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
-Colors for factor and numeric features.
-<code>FALSE</code> means no colors.
-Default is <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>facet.wrap.nrow, facet.wrap.ncol</th>
-      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
-Number of rows and columns for facetting. Default for both is <code>NULL</code>.
-In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p></td>
+Whether to color different feature types (e.g. numeric | factor).
+Default is to use no colors (<code>feat.type.cols = FALSE</code>).</p></td>
     </tr>
     </table>
 
@@ -370,20 +377,23 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
     <p>ggplot2 plot object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
-  <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
-  <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>, <code><a href='makeFilter.html'>makeFilter</a></code></p>
-<p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
-  <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
-  <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code></p></div>
+    <div class='dont-index'><p>Other filter: 
+<code><a href='filterFeatures.html'>filterFeatures</a>()</code>,
+<code><a href='generateFilterValuesData.html'>generateFilterValuesData</a>()</code>,
+<code><a href='getFilteredFeatures.html'>getFilteredFeatures</a>()</code>,
+<code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>()</code>,
+<code><a href='listFilterMethods.html'>listFilterMethods</a>()</code>,
+<code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a>()</code>,
+<code><a href='makeFilterWrapper.html'>makeFilterWrapper</a>()</code>,
+<code><a href='makeFilter.html'>makeFilter</a>()</code></p>
+<p>Other generate_plot_data: 
+<code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code>,
+<code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>()</code>,
+<code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a>()</code>,
+<code><a href='generateFilterValuesData.html'>generateFilterValuesData</a>()</code>,
+<code><a href='generateLearningCurveData.html'>generateLearningCurveData</a>()</code>,
+<code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a>()</code>,
+<code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fv</span> <span class='kw'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"variance"</span>)

@@ -333,9 +333,16 @@ label. The threshold used to assign the label can later be changed using the
 <p>To see all possible properties of a learner, go to: <a href='LearnerProperties.html'>LearnerProperties</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeLearner</span>(<span class='no'>cl</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>cl</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>,
-  <span class='kw'>predict.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fix.factors.prediction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+    <pre class="usage"><span class='fu'>makeLearner</span>(
+  <span class='no'>cl</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>cl</span>,
+  <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>,
+  <span class='kw'>predict.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fix.factors.prediction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -497,23 +504,28 @@ observation according to the prior probabilities observed in the training data.<
 correspond to the prior probabilities observed in the training data.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other learner: <code><a href='LearnerProperties.html'>LearnerProperties</a></code>,
-  <code><a href='getClassWeightParam.html'>getClassWeightParam</a></code>,
-  <code><a href='getHyperPars.html'>getHyperPars</a></code>, <code><a href='getLearnerId.html'>getLearnerId</a></code>,
-  <code><a href='getLearnerNote.html'>getLearnerNote</a></code>,
-  <code><a href='getLearnerPackages.html'>getLearnerPackages</a></code>,
-  <code><a href='getLearnerParVals.html'>getLearnerParVals</a></code>,
-  <code><a href='getLearnerParamSet.html'>getLearnerParamSet</a></code>,
-  <code><a href='getLearnerPredictType.html'>getLearnerPredictType</a></code>,
-  <code><a href='getLearnerShortName.html'>getLearnerShortName</a></code>,
-  <code><a href='getLearnerType.html'>getLearnerType</a></code>, <code><a href='getParamSet.html'>getParamSet</a></code>,
-  <code><a href='helpLearnerParam.html'>helpLearnerParam</a></code>,
-  <code><a href='helpLearner.html'>helpLearner</a></code>, <code><a href='makeLearners.html'>makeLearners</a></code>,
-  <code><a href='removeHyperPars.html'>removeHyperPars</a></code>,
-  <code><a href='setHyperPars.html'>setHyperPars</a></code>, <code><a href='setId.html'>setId</a></code>,
-  <code><a href='setLearnerId.html'>setLearnerId</a></code>,
-  <code><a href='setPredictThreshold.html'>setPredictThreshold</a></code>,
-  <code><a href='setPredictType.html'>setPredictType</a></code></p></div>
+    <div class='dont-index'><p>Other learner: 
+<code><a href='LearnerProperties.html'>LearnerProperties</a></code>,
+<code><a href='getClassWeightParam.html'>getClassWeightParam</a>()</code>,
+<code><a href='getHyperPars.html'>getHyperPars</a>()</code>,
+<code><a href='getLearnerId.html'>getLearnerId</a>()</code>,
+<code><a href='getLearnerNote.html'>getLearnerNote</a>()</code>,
+<code><a href='getLearnerPackages.html'>getLearnerPackages</a>()</code>,
+<code><a href='getLearnerParVals.html'>getLearnerParVals</a>()</code>,
+<code><a href='getLearnerParamSet.html'>getLearnerParamSet</a>()</code>,
+<code><a href='getLearnerPredictType.html'>getLearnerPredictType</a>()</code>,
+<code><a href='getLearnerShortName.html'>getLearnerShortName</a>()</code>,
+<code><a href='getLearnerType.html'>getLearnerType</a>()</code>,
+<code><a href='getParamSet.html'>getParamSet</a>()</code>,
+<code><a href='helpLearnerParam.html'>helpLearnerParam</a>()</code>,
+<code><a href='helpLearner.html'>helpLearner</a>()</code>,
+<code><a href='makeLearners.html'>makeLearners</a>()</code>,
+<code><a href='removeHyperPars.html'>removeHyperPars</a>()</code>,
+<code><a href='setHyperPars.html'>setHyperPars</a>()</code>,
+<code><a href='setId.html'>setId</a>()</code>,
+<code><a href='setLearnerId.html'>setLearnerId</a>()</code>,
+<code><a href='setPredictThreshold.html'>setPredictThreshold</a>()</code>,
+<code><a href='setPredictType.html'>setPredictType</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.rpart"</span>)</div><div class='output co'>#&gt; Learner classif.rpart from package rpart

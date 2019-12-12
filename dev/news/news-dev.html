@@ -323,6 +323,41 @@
 <h1 class="page-header">
 <a href="#mlr-development-version" class="anchor"></a>mlr (development version)<small> Unreleased </small>
 </h1>
+<div id="plotting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plotting" class="anchor"></a>plotting</h2>
+<ul>
+<li>
+<code>n.show</code> argument had no effect in <code><a href="../reference/plotFilterValues.html">plotFilterValues()</a></code>. Thanks <a href='https://github.com/albersonmiranda'>@albersonmiranda</a>. (<a href='https://github.com/mlr-org/mlr/issues/2689'>#2689</a>)</li>
+</ul>
+</div>
+<div id="functional-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functional-data" class="anchor"></a>Functional Data</h2>
+<p>PR: <a href='https://github.com/mlr-org/mlr/issues/2638'>#2638</a> (<a href='https://github.com/pfistl'>@pfistl</a>)</p>
+<ul>
+<li>Added several learners for regression and classification on functional data
+<ul>
+<li>classif.classiFunc.(kernel|knn) (knn/kernel using various semi-metrics)</li>
+<li>(classif|regr).fgam (Functional generalized additive models)</li>
+<li>(classif|regr).FDboost (Boosted functional generalized additive models)</li>
+</ul>
+</li>
+<li>Added preprocessing steps for feature extraction from functional data
+<ul>
+<li>extractFDAFourier (Fourier transform)</li>
+<li>extractFDAWavelets (Wavelet features)</li>
+<li>extractFDAFPCA (Principal components)</li>
+<li>extractFDATsfeatures (Time-Series features from tsfeatures package)</li>
+<li>extractFDADTWKernel (Dynamic Time-Warping Kernel)</li>
+<li>extractFDAMultiResFeatures (Compute features at multiple resolutions)</li>
+</ul>
+</li>
+<li><p>Fixed a bug where multiclass to binaryclass reduction techniques did not work with functional data.</p></li>
+<li>Several other minor bug fixes and code improvements</li>
+<li><p>Extended and clarified documentation for several fda components.</p></li>
+</ul>
+</div>
 <div id="learners---general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learners---general" class="anchor"></a>learners - general</h2>

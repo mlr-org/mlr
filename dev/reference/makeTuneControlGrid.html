@@ -327,14 +327,20 @@ in the par.set passed to tuneParams." />
     <div class="ref-description">
     <p>A basic grid search can handle all kinds of parameter types.
 You can either use their correct param type and <code>resolution</code>,
-or discretize them yourself by always using <a href='https://paramhelpers.mlr-org.com/reference/Param.html'>ParamHelpers::makeDiscreteParam</a>
+or discretize them yourself by always using <a href='https://rdrr.io/pkg/ParamHelpers/man/Param.html'>ParamHelpers::makeDiscreteParam</a>
 in the <code>par.set</code> passed to <a href='tuneParams.html'>tuneParams</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeTuneControlGrid</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>makeTuneControlGrid</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
+  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -365,7 +371,7 @@ in the same order as your measures.</p></td>
 Resolution of the grid for each numeric/integer parameter in <code>par.set</code>.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
-See <a href='https://paramhelpers.mlr-org.com/reference/generateGridDesign.html'>ParamHelpers::generateGridDesign</a>.
+See <a href='https://rdrr.io/pkg/ParamHelpers/man/generateGridDesign.html'>ParamHelpers::generateGridDesign</a>.
 Default is 10.</p></td>
     </tr>
     <tr>
@@ -416,21 +422,23 @@ evaluations. If set, must equal the size of the grid.</p></td>
     <p>(TuneControlGrid)</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
-  <code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a></code>,
-  <code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></code>,
-  <code><a href='getResamplingIndices.html'>getResamplingIndices</a></code>,
-  <code><a href='getTuneResult.html'>getTuneResult</a></code>,
-  <code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></code>,
-  <code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a></code>,
-  <code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a></code>,
-  <code><a href='makeTuneControlDesign.html'>makeTuneControlDesign</a></code>,
-  <code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a></code>,
-  <code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></code>,
-  <code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a></code>,
-  <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
-  <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
-  <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
+    <div class='dont-index'><p>Other tune: 
+<code><a href='TuneControl.html'>TuneControl</a></code>,
+<code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a>()</code>,
+<code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a>()</code>,
+<code><a href='getResamplingIndices.html'>getResamplingIndices</a>()</code>,
+<code><a href='getTuneResult.html'>getTuneResult</a>()</code>,
+<code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a>()</code>,
+<code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a>()</code>,
+<code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a>()</code>,
+<code><a href='makeTuneControlDesign.html'>makeTuneControlDesign</a>()</code>,
+<code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a>()</code>,
+<code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a>()</code>,
+<code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a>()</code>,
+<code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a>()</code>,
+<code><a href='makeTuneWrapper.html'>makeTuneWrapper</a>()</code>,
+<code><a href='tuneParams.html'>tuneParams</a>()</code>,
+<code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

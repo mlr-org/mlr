@@ -349,10 +349,18 @@ see function arguments.</p>
 under <a href='imputations.html'>imputations</a> or create one yourself using <a href='makeImputeMethod.html'>makeImputeMethod</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>impute</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>dummy.type</span> <span class='kw'>=</span> <span class='st'>"factor"</span>, <span class='kw'>force.dummies</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>impute.new.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>recode.factor.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>impute</span>(
+  <span class='no'>obj</span>,
+  <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
+  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>dummy.classes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
+  <span class='kw'>dummy.cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
+  <span class='kw'>dummy.type</span> <span class='kw'>=</span> <span class='st'>"factor"</span>,
+  <span class='kw'>force.dummies</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>impute.new.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>recode.factor.levels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -449,9 +457,11 @@ including newly created ones during imputation.</p></dd>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other impute: <code><a href='imputations.html'>imputations</a></code>,
-  <code><a href='makeImputeMethod.html'>makeImputeMethod</a></code>,
-  <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>, <code><a href='reimpute.html'>reimpute</a></code></p></div>
+    <div class='dont-index'><p>Other impute: 
+<code><a href='imputations.html'>imputations</a></code>,
+<code><a href='makeImputeMethod.html'>makeImputeMethod</a>()</code>,
+<code><a href='makeImputeWrapper.html'>makeImputeWrapper</a>()</code>,
+<code><a href='reimpute.html'>reimpute</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>NA</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>)), <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>)

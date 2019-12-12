@@ -51,7 +51,7 @@
 
 <meta property="og:title" content="Extract functional principal component analysis features. — extractFDAFPCA" />
 <meta property="og:description" content="The function extracts the functional principal components from a data.frame
-containing functional features." />
+containing functional features. Uses stats::prcomp." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -324,25 +324,29 @@ containing functional features." />
 
     <div class="ref-description">
     <p>The function extracts the functional principal components from a data.frame
-containing functional features.</p>
+containing functional features. Uses <code><a href='https://rdrr.io/r/stats/prcomp.html'>stats::prcomp</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extractFDAFPCA</span>(<span class='kw'>pve</span> <span class='kw'>=</span> <span class='fl'>0.99</span>, <span class='kw'>npc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>extractFDAFPCA</span>(<span class='kw'>rank.</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pve</th>
-      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
-Fraction of variance explained for the functional principal components.
-Default is 0.99.</p></td>
+      <th>rank.</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+Number of principal components to extract.
+Default is <code>NULL</code></p></td>
     </tr>
     <tr>
-      <th>npc</th>
-      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
-Number of principal components to extract. Overrides <code>pve</code> param.
-Default is <code>NULL</code></p></td>
+      <th>center</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>) <br />
+Should data be centered before applying PCA?</p></td>
+    </tr>
+    <tr>
+      <th>scale.</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>) <br />
+Should data be scaled before applying PCA?</p></td>
     </tr>
     </table>
 
@@ -351,9 +355,13 @@ Default is <code>NULL</code></p></td>
     <p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other fda_featextractor: <code><a href='extractFDAFourier.html'>extractFDAFourier</a></code>,
-  <code><a href='extractFDAMultiResFeatures.html'>extractFDAMultiResFeatures</a></code>,
-  <code><a href='extractFDAWavelets.html'>extractFDAWavelets</a></code></p></div>
+    <div class='dont-index'><p>Other fda_featextractor: 
+<code><a href='extractFDABsignal.html'>extractFDABsignal</a>()</code>,
+<code><a href='extractFDADTWKernel.html'>extractFDADTWKernel</a>()</code>,
+<code><a href='extractFDAFourier.html'>extractFDAFourier</a>()</code>,
+<code><a href='extractFDAMultiResFeatures.html'>extractFDAMultiResFeatures</a>()</code>,
+<code><a href='extractFDATsfeatures.html'>extractFDATsfeatures</a>()</code>,
+<code><a href='extractFDAWavelets.html'>extractFDAWavelets</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -334,11 +334,12 @@ transform. For more details refer to <a href='https://rdrr.io/r/stats/fft.html'>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>trafo.coeff</th>
-      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Specifies which transformation of the complex frequency domain
 representation should be calculated as a feature representation.
 Must be one of &#8220;amplitude&#8221; or &#8220;phase&#8221;.
-Default is &#8220;phase&#8221;.</p></td>
+Default is &#8220;phase&#8221;.
+The phase shift is returned in Rad, i.e. values lie in [-180, 180].</p></td>
     </tr>
     </table>
 
@@ -347,9 +348,13 @@ Default is &#8220;phase&#8221;.</p></td>
     <p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other fda_featextractor: <code><a href='extractFDAFPCA.html'>extractFDAFPCA</a></code>,
-  <code><a href='extractFDAMultiResFeatures.html'>extractFDAMultiResFeatures</a></code>,
-  <code><a href='extractFDAWavelets.html'>extractFDAWavelets</a></code></p></div>
+    <div class='dont-index'><p>Other fda_featextractor: 
+<code><a href='extractFDABsignal.html'>extractFDABsignal</a>()</code>,
+<code><a href='extractFDADTWKernel.html'>extractFDADTWKernel</a>()</code>,
+<code><a href='extractFDAFPCA.html'>extractFDAFPCA</a>()</code>,
+<code><a href='extractFDAMultiResFeatures.html'>extractFDAMultiResFeatures</a>()</code>,
+<code><a href='extractFDATsfeatures.html'>extractFDATsfeatures</a>()</code>,
+<code><a href='extractFDAWavelets.html'>extractFDAWavelets</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

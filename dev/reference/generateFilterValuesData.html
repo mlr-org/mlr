@@ -327,8 +327,13 @@ For a list of features, use listFilterMethods." />
 For a list of features, use <a href='listFilterMethods.html'>listFilterMethods</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generateFilterValuesData</span>(<span class='no'>task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>), <span class='no'>...</span>, <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())</pre>
+    <pre class="usage"><span class='fu'>generateFilterValuesData</span>(
+  <span class='no'>task</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
+  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>),
+  <span class='no'>...</span>,
+  <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -391,20 +396,23 @@ filter method (in a list). The ensemble method will use the simple methods to
 calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a></code>,
-  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
-  <code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a></code>,
-  <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
-  <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p>
-<p>Other filter: <code><a href='filterFeatures.html'>filterFeatures</a></code>,
-  <code><a href='getFilteredFeatures.html'>getFilteredFeatures</a></code>,
-  <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a></code>,
-  <code><a href='listFilterMethods.html'>listFilterMethods</a></code>,
-  <code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
-  <code><a href='makeFilter.html'>makeFilter</a></code>, <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
+    <div class='dont-index'><p>Other generate_plot_data: 
+<code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code>,
+<code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>()</code>,
+<code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a>()</code>,
+<code><a href='generateLearningCurveData.html'>generateLearningCurveData</a>()</code>,
+<code><a href='generatePartialDependenceData.html'>generatePartialDependenceData</a>()</code>,
+<code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a>()</code>,
+<code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p>
+<p>Other filter: 
+<code><a href='filterFeatures.html'>filterFeatures</a>()</code>,
+<code><a href='getFilteredFeatures.html'>getFilteredFeatures</a>()</code>,
+<code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>()</code>,
+<code><a href='listFilterMethods.html'>listFilterMethods</a>()</code>,
+<code><a href='makeFilterEnsemble.html'>makeFilterEnsemble</a>()</code>,
+<code><a href='makeFilterWrapper.html'>makeFilterWrapper</a>()</code>,
+<code><a href='makeFilter.html'>makeFilter</a>()</code>,
+<code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># two simple filter methods</span>
