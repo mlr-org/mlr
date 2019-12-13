@@ -34,12 +34,10 @@ test_that("filterFeatures", {
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
-  # extra test for rf.min.depth filter (#1066)
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rf.min.depth",
-    more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
-
+  # extra test for randomForestSRC_var.select filter (#1066)
+  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "randomForestSRC_var.select",
+    more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test for auc filter (two class dataset)
   toy.data = data.frame(
@@ -73,6 +71,13 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
   )
 })
 
+test_that("randomForestSRC_var.select minimal depth filter returns NA for features below the threshold", {
+  dat = generateFilterValuesData(task = multiclass.task,
+    method = "randomForestSRC_var.select",
+    nselect = 5,
+    more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
+  expect_equal(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.width")]), TRUE)
+})
 
 test_that("ensemble filters subset the task correctly", {
 
