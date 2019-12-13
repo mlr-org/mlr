@@ -74,7 +74,7 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
 })
 
 
-test_that("Ensemble filters can accept duplicate base methods", {
+test_that("Ensemble filters can deal with non-unique base methods", {
   lda = makeLearner(cl = "classif.lda", id = "lda_class", predict.type = "response")
   ff = filterFeatures(multiclass.task, 
                       method = "E-mean", 

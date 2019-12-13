@@ -67,7 +67,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   assertSubset(unlist(method), choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg))))) {
-    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+    req_pkg = lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
   }
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   td = getTaskDesc(task)
