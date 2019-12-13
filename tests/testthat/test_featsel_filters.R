@@ -34,9 +34,9 @@ test_that("filterFeatures", {
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
-  # extra test for rf.min.depth filter (#1066)
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rf.min.depth",
-    more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
+  # extra test for randomForestSRC_var.select filter (#1066)
+  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "randomForestSRC_var.select",
+    more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
 
   # extra test for auc filter (two class dataset)
