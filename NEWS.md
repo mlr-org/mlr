@@ -30,6 +30,10 @@ PR: #2638 (@pfistl)
 
 - xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
 
+## filters - general
+
+- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (#2686)
+
 ## filters - bugfixes
 
 - `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
