@@ -7,11 +7,12 @@ test_that("downsample", {
   for (rsm.method in rsm.methods) {
     rin = makeResampleInstance(rsm.method, task = binaryclass.task)
     rin2 = downsample(rin, perc = 0.5)
-    sapply(seq_along(rin$train.inds), function(i)
+    sapply(seq_along(rin$train.inds), function(i) {
       expect_equal(
         length(rin2$train.inds[[i]]),
         length(rin$train.inds[[i]]) / 2
       )
+    }
     )
   }
 })

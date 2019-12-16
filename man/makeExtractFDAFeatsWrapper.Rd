@@ -17,7 +17,9 @@ List of functional features along with the desired methods for each functional f
 functional feature.
 Names of \code{feat.methods} must match column names of functional features.
 Available feature extraction methods are available under family \code{fda_featextractor}.
-Default is \link{list} which does nothing.}
+Specifying a functional feature multiple times with different extraction methods allows
+for the extraction of different features from the same functional.
+Default is \code{\link[=list]{list()}} which does nothing.}
 }
 \value{
 \link{Learner}.

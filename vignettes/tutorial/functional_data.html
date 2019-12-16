@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Functional Data</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Functional Data</h1>
+
+
+
+<p>In (<a href="http://faculty.bscb.cornell.edu/~hooker/ShortCourseHandout.pdf">Hooker, 2017</a>) it is defined, that “Functional data is multivariate data with an ordering on the dimensions”. It means that this type of data consists of curves varying over a continuum, such as time, frequency, or wavelength. Thus, functional data is often present when measurements at various time points are analyzed. The curves of functional data are usually interdependent, which means that the measurement at a point, e.g., <span class="math inline">\(t_{i + 1}\)</span>, depends on measurements at some other points, e.g., <span class="math inline">\({t_1, ..., t_i}; i \in \mathbb{N}\)</span>.</p>
+<p>As the most well-known machine learning techniques generally do not emphasize the interdependence between features, they are often not <em>well suited</em> for such tasks. Application of these techniques can lead to poor performance. Functional data analysis, on the other hand, tries to address this issue either by using algorithms particularly tailored to functional data or by transforming the functional covariates into a continuum (e.g., time, wavelength) nondependent feature space. For a more in-depth introduction to functional data analysis see, e.g. <a href="http://rd.springer.com/article/10.1007/BF02293704">When the data are functions</a> (Ramsay, J.O., 1982).</p>
+<p>Each observation of a functional covariate in the data is an evaluation of a functional, i.e., it consists of measurements of a scalar value at various time (wavelength or another type of continuum) points. A single observation might then look like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
+<span class="kw">library</span>(FDboost)
+<span class="kw">library</span>(ggplot2)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot NIR curve for first observarion</span>
+<span class="kw">data</span>(fuelSubset, <span class="dt">package =</span> <span class="st">&quot;FDboost&quot;</span>)
+
+<span class="co"># NIR_Obs_1 contains the measurements for NIR of the first functional covariate and</span>
+<span class="co"># lambda indicates the wavelength points the data was measured at.</span>
+df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;NIR_Obs1&quot;</span> =<span class="st"> </span>fuelSubset<span class="op">$</span>NIR[<span class="dv">1</span>, ],
+                <span class="st">&quot;lambda&quot;</span> =<span class="st"> </span>fuelSubset<span class="op">$</span>nir.lambda)
+<span class="kw">ggplot</span>(df) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> NIR_Obs1, <span class="dt">x =</span> lambda))</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><em>Note:</em> this is an example of spectroscopic data. NIR stands for “near infra-red radiation (light)”, UVVIS (you will find this below) – “ultra-violet and visible radiation (light)”, and in spectroscopy it is common to denote wavelengths as “lambda” <span class="math inline">\((\lambda)\)</span>. For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible “colors” expressed as numbers.</p>
+<div id="how-to-model-functional-data" class="section level1">
+<h1>How to model functional data?</h1>
+<p>There are two commonly used approaches for analyzing functional data.</p>
+<ul>
+<li>Directly analyze the functional data using a <a href="learner.html">learner</a> that is suitable for functional data on a <a href="task.html">task</a>. Those learners have the prefixes <strong>classif.fda</strong> and <strong>regr.fda</strong>.</li>
+</ul>
+<p>For more info on learners see <a href="functional_data.html#constructing-a-learner">fda learners</a>. For this purpose, the functional data has to be saved as a matrix column in the data frame used for constructing the <a href="task.html">task</a>. For more info on functional tasks, consider the following section.</p>
+<ul>
+<li>Transform the task into a format suitable for standard <strong>classification</strong> or <strong>regression</strong> <a href="learner.html">learners</a>.</li>
+</ul>
+<p>This is done by <a href="functional_data.html#feature-extraction">extracting</a> non-temporal/non-functional features from the curves. Non-temporal features do not have any interdependence between each other, similarly to features in traditional machine learning. This is explained in more detail <a href="functional_data.html#feature-extraction">below</a>.</p>
+</div>
+<div id="creating-a-task-that-contains-functional-features" class="section level1">
+<h1>Creating a task that contains functional features</h1>
+<p>The first step is to get the data in the right format. <code>mlr</code> expects a <code>base::data.frame</code> which consists of the functional features and the target variable as input. Functional data in contrast to <strong>numeric</strong> data have to be stored as a matrix column in the data frame. After that, a <a href="task.html">task</a> that contains the data in a well-defined format is created. The <a href="task.html">tasks</a> come in different flavors, such as <code>makeClassifTask()</code> and <code>makeRegrTask()</code>, which can be used according to the class of the target variable.</p>
+<p>In the following example, the data is first stored as matrix columns using the helper function <code>makeFunctionalData()</code> for the <a href="&amp;fuelSubset.task">fuelSubset</a> data from package <code>FDboost</code>.</p>
+<p>The data is provided in the following structure:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(fuelSubset)
+## List of 7
+##  $ heatan      : num [1:129] 26.8 27.5 23.8 18.2 17.5 ...
+##  $ h2o         : num [1:129] 2.3 3 2 1.85 2.39 ...
+##  $ nir.lambda  : num [1:231] 800 803 805 808 810 ...
+##  $ NIR         : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...
+##  $ uvvis.lambda: num [1:134] 250 256 261 267 273 ...
+##  $ UVVIS       : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...
+##  $ h2o.fit     : num [1:129] 2.58 3.43 1.83 2.03 3.07 ...</code></pre></div>
+<ul>
+<li><strong>heatan</strong> is the target variable, in this case, a numeric value.</li>
+<li><strong>h2o</strong> is an additional scalar variable.</li>
+<li><strong>NIR</strong> and <strong>UVVIS</strong> are matrices containing the curve data. Each column corresponds to a single wavelength the data was sampled at. Each row indicates a single curve. <strong>NIR</strong> was measured at 231 wavelength points, while <strong>UVVIS</strong> was measured at 129 wavelength points.</li>
+<li><strong>nir.lambda</strong> and <strong>uvvis.lambda</strong> are numeric vectors of length 231 and 129 indicate the wavelength points the data was measured at. Each entry corresponds to one column of <strong>NIR</strong> and <strong>UVVIS</strong> respectively. For now, we ignore this additional information in <code>mlr</code>.</li>
+</ul>
+<p>Our data already contains functional features as matrices in a list. In order to demonstrate how such a matrix can be created from arbitrary numeric columns, we transform the list into a data frame with a set of numeric columns for each matrix. These columns refer to the matrix columns in the list, i.e., <strong>UVVIS.1</strong> is the first column of the UVVIS matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Put all values into a data frame</span>
+df =<span class="st"> </span><span class="kw">data.frame</span>(fuelSubset[<span class="kw">c</span>(<span class="st">&quot;heatan&quot;</span>, <span class="st">&quot;h2o&quot;</span>, <span class="st">&quot;UVVIS&quot;</span>, <span class="st">&quot;NIR&quot;</span>)])
+<span class="kw">str</span>(df[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
+## 'data.frame':    129 obs. of  5 variables:
+##  $ heatan : num  26.8 27.5 23.8 18.2 17.5 ...
+##  $ h2o    : num  2.3 3 2 1.85 2.39 ...
+##  $ UVVIS.1: num  0.145 -1.584 -0.814 -1.311 -1.373 ...
+##  $ UVVIS.2: num  -0.0111 -2.0467 -1.053 -1.2445 -1.8826 ...
+##  $ UVVIS.3: num  0.0372 -1.5695 -0.9381 -1.0649 -1.4016 ...</code></pre></div>
+<p>Before constructing the <a href="task.html">task</a>, the data is again reformatted therefore it contains column matrices. This is done by providing a list <strong>fd.features</strong>, that identifies the functional covariates. All columns not mentioned in the list are kept as-is. In our case, the column indices 3:136 correspond to the columns of the UVVIS matrix. Alternatively, we could also specify the respective column names.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
+<span class="co"># fd.features is a named list, where each name corresponds to the name of the </span>
+<span class="co"># functional feature and the values to the respective column indices or column names.</span>
+fd.features =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;UVVIS&quot;</span> =<span class="st"> </span><span class="dv">3</span><span class="op">:</span><span class="dv">136</span>, <span class="st">&quot;NIR&quot;</span> =<span class="st"> </span><span class="dv">137</span><span class="op">:</span><span class="dv">367</span>)
+fdf =<span class="st"> </span><span class="kw">makeFunctionalData</span>(df, <span class="dt">fd.features =</span> fd.features)</code></pre></div>
+<p><code>makeFunctionalData()</code> returns a <code>base::data.frame</code>, where the functional features are contained as matrices.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(fdf)
+## 'data.frame':    129 obs. of  4 variables:
+##  $ heatan: num  26.8 27.5 23.8 18.2 17.5 ...
+##  $ h2o   : num  2.3 3 2 1.85 2.39 ...
+##  $ UVVIS : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr  &quot;UVVIS.1&quot; &quot;UVVIS.2&quot; &quot;UVVIS.3&quot; &quot;UVVIS.4&quot; ...
+##  $ NIR   : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr  &quot;NIR.1&quot; &quot;NIR.2&quot; &quot;NIR.3&quot; &quot;NIR.4&quot; ...</code></pre></div>
+<p>Now with a data frame containing the functionals as matrices, a <a href="task.html">task</a> can be created:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a regression task, classification tasks behave analogously</span>
+<span class="co"># In this case we use column indices</span>
+tsk1 =<span class="st"> </span><span class="kw">makeRegrTask</span>(<span class="st">&quot;fuelsubset&quot;</span>, <span class="dt">data =</span> fdf, <span class="dt">target =</span> <span class="st">&quot;heatan&quot;</span>)
+tsk1
+## Supervised task: fuelsubset
+## Type: regr
+## Target: heatan
+## Observations: 129
+## Features:
+##    numerics     factors     ordered functionals 
+##           1           0           0           2 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Has coordinates: FALSE</code></pre></div>
+</div>
+<div id="constructing-a-learner" class="section level1">
+<h1>Constructing a learner</h1>
+<p>For functional data, <a href="learner.html">learners</a> are constructed using <code>makeLearner(&quot;classif.&lt;R_method_name&gt;&quot;)</code> or <code>makeLearner(&quot;regr.&lt;R_method_name&gt;&quot;)</code> depending on the target variable.</p>
+<p>Applying learners to a <a href="task.html">task</a> works in two ways:</p>
+<p>**Either use a <a href="learner.html">learner</a> suitable for functional <a href="data:**" class="uri">data:**</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following learners can be used for tsk1 (a regression task).</span>
+<span class="kw">listLearners</span>(tsk1, <span class="dt">properties =</span> <span class="st">&quot;functionals&quot;</span>, <span class="dt">warn.missing.packages =</span> <span class="ot">FALSE</span>)
+##              class                                        name  short.name
+## 1     regr.FDboost Functional linear array regression boosting     FDboost
+## 2 regr.featureless                      Featureless regression featureless
+##          package type installed numerics factors ordered missings weights
+## 1 FDboost,mboost regr      TRUE     TRUE   FALSE   FALSE    FALSE   FALSE
+## 2            mlr regr      TRUE     TRUE    TRUE    TRUE     TRUE   FALSE
+##    prob oneclass twoclass multiclass class.weights featimp oobpreds
+## 1 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE
+## 2 FALSE    FALSE    FALSE      FALSE         FALSE   FALSE    FALSE
+##   functionals single.functional    se lcens rcens icens
+## 1        TRUE             FALSE FALSE FALSE FALSE FALSE
+## 2        TRUE             FALSE FALSE FALSE FALSE FALSE
+## ... (#elements: 24)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create an FDboost learner for regression</span>
+fdalrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;regr.FDboost&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Or alternatively, use knn for classification:</span>
+knn.lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.fdausc.knn&quot;</span>)</code></pre></div>
+<p>Learners can have different properties, depending on whether they support either a <code>single.functional</code> or multiple <code>functionals</code>, i.e. multiple different sensors for the same observation.</p>
+<p>We can check for those properties when selecting a leaner:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getLearnerProperties</span>(fdalrn)
+## [1] &quot;numerics&quot;    &quot;functionals&quot;</code></pre></div>
+<p><strong>or use a standard <a href="learner.html">learner</a>:</strong></p>
+<p>In this case, the temporal structure is disregarded, and the functional data treated as simple numeric features.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Decision Tree learner</span>
+rpartlrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.rpart&quot;</span>)</code></pre></div>
+<p>Alternatively, transform the functional data into a non-temporal/non-functional space by <a href="functional_data.html#feature-extraction">extracting</a> features before training. In this case, a standard regression- or classification-<a href="learner.html">learner</a> can be applied.</p>
+<p>This is explained in more detail in the <a href="functional_data.html#feature-extraction">feature extraction</a> section below.</p>
+</div>
+<div id="training-the-learner" class="section level1">
+<h1>Training the learner</h1>
+<p>The resulting <a href="learner.html">learner</a> can now be trained on the task created in section <a href="functional_data.html#creating-a-task">Creating a task</a> above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Train the fdalrn on the constructed task</span>
+m =<span class="st"> </span><span class="kw">train</span>(<span class="dt">learner =</span> fdalrn, <span class="dt">task =</span> tsk1)
+p =<span class="st"> </span><span class="kw">predict</span>(m, tsk1)
+<span class="kw">performance</span>(p, rmse)
+##     rmse 
+## 2.181438</code></pre></div>
+<p>Alternatively, learners that do not explicitly treat functional covariates can be applied. In this case, the temporal structure is completely disregarded, and all columns are treated as independent.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Train a normal learner on the constructed task.</span>
+<span class="co"># Note that we get a message, that functionals have been converted to numerics.</span>
+rpart.lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;regr.rpart&quot;</span>)
+m =<span class="st"> </span><span class="kw">train</span>(<span class="dt">learner =</span> rpart.lrn, <span class="dt">task =</span> tsk1)
+## Functional features have been converted to numerics
+
+m
+## Model for learner.id=regr.rpart; learner.class=regr.rpart
+## Trained on: task.id = fuelsubset; obs = 129; features = 3
+## Hyperparameters: xval=0</code></pre></div>
+</div>
+<div id="feature-extraction" class="section level1">
+<h1>Feature extraction</h1>
+<p>In contrast to applying a learner that works on a <a href="task.html">task</a> containing functional features, the <a href="task.html">task</a> can be converted to a standard <a href="task.html">task</a>. This works by transforming the functional features into a non-functional domain, e.g., by extracting wavelets.</p>
+<p>The currently supported preprocessing functions are:</p>
+<ul>
+<li>discrete wavelet transform;</li>
+<li>fast Fourier transform;</li>
+<li>functional principal component analysis;</li>
+<li>multi-resolution feature extraction.</li>
+</ul>
+<p>In order to do this, we specify methods for each functional feature in the task in a <strong>list</strong>. In this case, we simply want to extract the Fourier transform from each <strong>UVVIS</strong> functional and the Functional PCA Scores from each <strong>NIR</strong> functional. Variable names can be specified multiple times with different extractors. Additional arguments supplied to the <em>extract</em> functions are passed on.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># feat.methods specifies what to extract from which functional</span>
+<span class="co"># In this example, we extract the Fourier transformation from the first functional.</span>
+<span class="co"># From the second functional, fpca scores are extracted.</span>
+feat.methods =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;UVVIS&quot;</span> =<span class="st"> </span><span class="kw">extractFDAFourier</span>(), <span class="st">&quot;NIR&quot;</span> =<span class="st"> </span><span class="kw">extractFDAFPCA</span>())
+
+<span class="co"># Either create a new task from an existing task</span>
+extracted =<span class="st"> </span><span class="kw">extractFDAFeatures</span>(tsk1, <span class="dt">feat.methods =</span> feat.methods)
+extracted
+## $task
+## Supervised task: fuelsubset
+## Type: regr
+## Target: heatan
+## Observations: 129
+## Features:
+##    numerics     factors     ordered functionals 
+##         137           0           0           0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Has coordinates: FALSE
+## 
+## $desc
+## Extraction of features from functional data:
+## Target: heatan
+## Functional Features: 2; Extracted features: 2</code></pre></div>
+<div id="wavelets" class="section level2">
+<h2>Wavelets</h2>
+<p>In this example, discrete wavelet feature transformation is applied to the data using the function <code>extractFDAWavelets</code>. Discrete wavelet transform decomposes the functional into several <em>wavelets</em>. This essentially transforms the time signal to a time-scale representation, where every wavelet captures the data at a different resolution. We can specify which additional parameters (i.e., the <code>filter</code> (a type of wavelet) and the <code>boundary</code>) in the pars argument. This function returns a regression task of type <em>regr</em> since the raw data contained temporal structure but the transformed data does not inherit temporal structure anymore. For more information on wavelets consider the documentation of <code>wavelets::dwt</code>. A more comprehensive guide is, for example, given <a href="https://www.cs.unm.edu/~williams/cs530/arfgtw.pdf">here</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify the feature extraction method and generate new task.</span>
+<span class="co"># Here, we use the Haar filter:</span>
+feat.methods =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;UVVIS&quot;</span> =<span class="st"> </span><span class="kw">extractFDAWavelets</span>(<span class="dt">filter =</span> <span class="st">&quot;haar&quot;</span>))
+task.w =<span class="st"> </span><span class="kw">extractFDAFeatures</span>(tsk1, <span class="dt">feat.methods =</span> feat.methods)
+
+<span class="co"># Use the Daubechie wavelet with filter length 4.</span>
+feat.methods =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;NIR&quot;</span> =<span class="st"> </span><span class="kw">extractFDAWavelets</span>(<span class="dt">filter =</span> <span class="st">&quot;d4&quot;</span>))
+task.wd4 =<span class="st"> </span><span class="kw">extractFDAFeatures</span>(tsk1, <span class="dt">feat.methods =</span> feat.methods)</code></pre></div>
+</div>
+<div id="fourier-transformation" class="section level2">
+<h2>Fourier transformation</h2>
+<p>Now, we use the Fourier feature transformation. The Fourier transform takes a functional and transforms it to a frequency domain by splitting the signal up into its different frequency components. A more detailed tutorial on Fourier transform can be found <a href="http://www0.cs.ucl.ac.uk/teaching/GZ05/03-fourier.pdf">here</a>. Either the amplitude or the phase of the complex Fourier coefficients can be used for analysis. This can be specified in the additional <code>trafo.coeff</code> argument:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify the feature extraction method and generate new task.</span>
+<span class="co"># We use the Fourier features and the amplitude for NIR, as well as the phase for UVVIS</span>
+feat.methods =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;NIR&quot;</span> =<span class="st"> </span><span class="kw">extractFDAFourier</span>(<span class="dt">trafo.coeff =</span> <span class="st">&quot;amplitude&quot;</span>),
+                    <span class="st">&quot;UVVIS&quot;</span> =<span class="st"> </span><span class="kw">extractFDAFourier</span>(<span class="dt">trafo.coeff =</span> <span class="st">&quot;phase&quot;</span>))
+task.fourier =<span class="st"> </span><span class="kw">extractFDAFeatures</span>(tsk1, <span class="dt">feat.methods =</span> feat.methods)
+task.fourier</code></pre></div>
+</div>
+</div>
+<div id="wrappers" class="section level1">
+<h1>Wrappers</h1>
+<p>Additionally we can wrap the preprocessing around a standard learner such as <a href="rpart::rpart()">classif.rpart</a>. For additional information, please consider the <a href="wrapper.html#wrapper">Wrappers</a> section.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use a FDAFeatExtractWrapper</span>
+<span class="co"># In this case we extract the Fourier features from the NIR variable</span>
+feat.methods =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;NIR&quot;</span> =<span class="st"> </span><span class="kw">extractFDAFourier</span>())
+wrapped.lrn =<span class="st"> </span><span class="kw">makeExtractFDAFeatsWrapper</span>(<span class="st">&quot;regr.rpart&quot;</span>,  <span class="dt">feat.methods =</span> feat.methods)
+
+<span class="co"># And run the learner</span>
+<span class="kw">train</span>(wrapped.lrn, fuelsubset.task)
+## Functional features have been converted to numerics
+## Model for learner.id=regr.rpart.extracted; learner.class=extractFDAFeatsWrapper
+## Trained on: task.id = fs.fdf; obs = 129; features = 3
+## Hyperparameters: xval=0</code></pre></div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

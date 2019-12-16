@@ -16,13 +16,18 @@
 #' @param perc (`numeric(1)`)\cr
 #'   If set, select `perc`*100 top scoring features.
 #'   `perc = 1` means to select all features.`
-#'   Mutually exclusive with arguments `abs` and `threshold`.
+#'   Mutually exclusive with arguments `abs`, `threshold` and `fun`.
 #' @param abs (`numeric(1)`)\cr
 #'   If set, select `abs` top scoring features.
-#'   Mutually exclusive with arguments `perc` and `threshold`.
+#'   Mutually exclusive with arguments `perc`, `threshold` and `fun`.
 #' @param threshold (`numeric(1)`)\cr
 #'   If set, select features whose score exceeds `threshold`.
-#'   Mutually exclusive with arguments `perc` and `abs`.
+#'   Mutually exclusive with arguments `perc`, `abs` and `fun`.
+#' @param fun (`function`)\cr
+#'   If set, select features via a custom thresholding function, which must return the number of top scoring features to select.
+#'   Mutually exclusive with arguments `perc`, `abs` and `threshold`.
+#' @param fun.args (any)\cr
+#'   Arguments passed to the custom thresholding function
 #' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
 #' @param select.method If multiple methods are supplied in argument `method`,
@@ -61,10 +66,13 @@
 #'   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
 #' @export
 filterFeatures = function(task, method = "randomForestSRC_importance", fval = NULL,
-  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL,
+  perc = NULL, abs = NULL, threshold = NULL, fun = NULL, fun.args = NULL, mandatory.feat = NULL,
   select.method = NULL, base.methods = NULL, cache = FALSE, ...) {
 
   assertClass(task, "SupervisedTask")
+  if (!is.null(fun)) {
+    assertFunction(fun)
+  }
   assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
 
   # if an ensemble method is not passed as a list but via 'base.methods' + 'method'
@@ -75,12 +83,13 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     method = list(method, base.methods)
   }
 
-  select = checkFilterArguments(perc, abs, threshold)
+  select = checkFilterArguments(perc, abs, threshold, fun)
   p = getTaskNFeats(task)
   nselect = switch(select,
     perc = round(perc * p),
     abs = min(abs, p),
-    threshold = p
+    threshold = p,
+    fun = p
   )
 
   # Caching implementation: @pat-s, Nov 2018
@@ -137,7 +146,7 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     if (!all(mandatory.feat %in% fval$name)) {
       stop("At least one mandatory feature was not found in the task.")
     }
-    if (select != "threshold" && nselect < length(mandatory.feat)) {
+    if (select != "threshold" && select != "fun" && nselect < length(mandatory.feat)) {
       stop("The number of features to be filtered cannot be smaller than the number of mandatory features.")
     }
     # Set the the filter values of the mandatory features to infinity to always select them
@@ -145,10 +154,12 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   }
   if (select == "threshold") {
     nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
+  } else if (select == "fun") {
+    nselect = do.call(fun, args = c(list("values" = fval[with(fval, order(filter, -value)), ][["value"]]), fun.args))
   }
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
-  if (length(levels(as.factor(fval$method))) >= 2) {
+  if (length(levels(as.factor(fval$filter))) >= 2) {
     # if 'method' is an ensemble method, we always choose the ensemble method
     # unless select.method is specified specifically. Method[[1]] should usually
     # be the ensemble method
@@ -156,18 +167,19 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
       stopf("You supplied multiple filters. Please choose which should be used for the final subsetting of the features.")
     }
     if (is.null(select.method)) {
-      fval = fval[fval$method == fval$method, ]
+      fval = fval[filter == method[[1]], ]
     } else {
-      assertSubset(select.method, choices = unique(fval$method))
-      fval = fval[fval$method == select.method, ]
+      assertSubset(select.method, choices = unique(fval$filter))
+      fval = fval[fval$filter == select.method, ]
     }
   }
   if (nselect > 0L) {
 
     # order by method and (desc(value))
-    features = fval[with(fval, order(method, -value)), ]
+    features = fval[with(fval, order(filter, -value)), ]
+
     # select names of top n
-    features = features[1:nselect, ]$name
+    features = features[1:nselect, ][1:nselect]$name
 
   } else {
     features = NULL
@@ -178,13 +190,13 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   subsetTask(task, features = features)
 }
 
-checkFilterArguments = function(perc, abs, threshold) {
-  sum.null = sum(!is.null(perc), !is.null(abs), !is.null(threshold))
+checkFilterArguments = function(perc, abs, threshold, fun) {
+  sum.null = sum(!is.null(perc), !is.null(abs), !is.null(threshold), !is.null(fun))
   if (sum.null == 0L) {
-    stop("At least one of 'perc', 'abs' or 'threshold' must be not NULL")
+    stop("At least one of 'perc', 'abs', 'threshold' or 'fun' must be not NULL")
   }
   if (sum.null >= 2L) {
-    stop("Arguments 'perc', 'abs' and 'threshold' are mutually exclusive")
+    stop("Arguments 'perc', 'abs', 'threshold' and 'fun' are mutually exclusive")
   }
 
   if (!is.null(perc)) {
@@ -198,5 +210,9 @@ checkFilterArguments = function(perc, abs, threshold) {
   if (!is.null(threshold)) {
     assertNumber(threshold)
     return("threshold")
+  }
+  if (!is.null(fun)) {
+    assertFunction(fun)
+    return("fun")
   }
 }

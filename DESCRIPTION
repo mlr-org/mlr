@@ -134,7 +134,7 @@ Description: Interface to a large number of classification and
     allowing for easy nested resampling. Most operations can be
     parallelized.
 License: BSD_2_clause + file LICENSE
-URL: https://github.com/mlr-org/mlr
+URL: https://mlr.mlr-org.com, https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 Depends:
     ParamHelpers (>= 1.10),
@@ -143,7 +143,7 @@ Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),
     checkmate (>= 1.8.2),
-    data.table,
+    data.table (>= 1.12.4),
     ggplot2,
     methods,
     parallelMap (>= 1.3),
@@ -163,6 +163,7 @@ Suggests:
     care,
     caret (>= 6.0-57),
     class,
+    classiFunc,
     clue,
     cluster,
     ClusterR,
@@ -186,6 +187,7 @@ Suggests:
     FDboost,
     flare,
     FNN,
+    forecast (>= 8.3),
     fpc,
     frbs,
     FSelector,
@@ -245,6 +247,7 @@ Suggests:
     rrlda,
     rsm,
     RSNNS,
+    rucrdtw,
     RWeka,
     sda,
     sf,
@@ -257,12 +260,14 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    tsfeatures,
+    vdiffr,
     wavelets,
-    xgboost (>= 0.6-2)
+    xgboost (>= 0.7)
 VignetteBuilder:
     knitr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2

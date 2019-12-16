@@ -28,7 +28,7 @@ makeRLearner.classif.svm = function() {
 }
 
 #' @export
-trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL, ...) {
   if (sum(getTaskDesc(.task)$n.feat[c("factors", "ordered")]) > 0) {
     # use formula interface if factors are present
     f = getTaskFormula(.task)

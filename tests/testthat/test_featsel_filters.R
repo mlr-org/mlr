@@ -34,12 +34,10 @@ test_that("filterFeatures", {
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
-  # extra test for rf.min.depth filter (#1066)
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "rf.min.depth",
-    more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
-
+  # extra test for randomForestSRC_var.select filter (#1066)
+  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task, method = "randomForestSRC_var.select",
+    more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
-  expect_numeric(fv$data$value, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
   # extra test for auc filter (two class dataset)
   toy.data = data.frame(
@@ -62,15 +60,91 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
   expect_silent(
     suppressWarnings(generateFilterValuesData(task = multiclass.task,
       method = "randomForestSRC_var.select",
-    more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
+      more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
   )
 
   # method = "vh.imp" is not supported
   expect_error(
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
-                                                 method = "randomForestSRC_var.select",
-    more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
+    fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
+      method = "randomForestSRC_var.select",
+      more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
   )
+})
+
+test_that("Custom threshold function for filtering works correctly", {
+  biggest_gap = function(values, diff) {
+    gap_size = 0
+    gap_location = 0
+
+    for (i in (diff + 1):length(values)) {
+      gap = values[[i - diff]] - values[[i]]
+      if (gap > gap_size) {
+        gap_size = gap
+        gap_location = i - 1
+      }
+    }
+    return(gap_location)
+  }
+
+  ftask = filterFeatures(task = multiclass.task,
+    method = "variance",
+    fun = biggest_gap,
+    fun.args = list("diff" = 1)
+  )
+  feats = getTaskFeatureNames(ftask)
+  expect_equal(feats, c("Petal.Length"))
+})
+  
+test_that("randomForestSRC_var.select minimal depth filter returns NA for features below the threshold", {
+  dat = generateFilterValuesData(task = multiclass.task,
+    method = "randomForestSRC_var.select",
+    nselect = 5,
+    more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
+  expect_equal(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.width")]), TRUE)
+})
+
+test_that("ensemble filters subset the task correctly", {
+
+  # expectation for all filters was checked manually just right after the
+  # internal aggregation (in filterFeatures.R)
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-mean",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-min",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("nox", "rm", "tax", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-max",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-median",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+
+  task.filtered = filterFeatures(bh.task,
+    method = "E-Borda",
+    abs = 5,
+    base.methods = c("univariate.model.score", "praznik_CMIM"))
+  expect_equal(getTaskFeatureNames(task.filtered), c("indus", "nox", "rm", "ptratio", "lstat"))
+})
+
+test_that("Thresholding works with ensemble filters", {
+  foo = filterFeatures(iris.task, method = "E-min",
+    base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
+    thresh = 2)
+
+  expect_equal(getTaskNFeats(foo), 3)
 })
 
 

@@ -138,7 +138,7 @@ tsk1
 
 For functional data, [learners](learner.html) are constructed using  `makeLearner("classif.<R_method_name>")` or  `makeLearner("regr.<R_method_name>")` depending on the target variable.
 
-Applying learners to a [task](task.html) works in two ways
+Applying learners to a [task](task.html) works in two ways:
 
 **Either use a [learner](learner.html) suitable for functional data:**
 
@@ -155,6 +155,18 @@ fdalrn = makeLearner("regr.FDboost")
 ```{r}
 # Or alternatively, use knn for classification:
 knn.lrn = makeLearner("classif.fdausc.knn")
+```
+
+Learners can have different properties, depending on whether they support 
+either a `single.functional` or multiple `functionals`, i.e. multiple different sensors for the same observation.
+
+- A learner will have the property `functionals` if it can handle one or multiple functional covariates.
+- A learner will have the property `single.functional` if it can handle only a single functional covariate.
+
+We can check for those properties when selecting a leaner:
+
+```{r}
+getLearnerProperties(fdalrn)
 ```
 
 **or use a standard [learner](learner.html):**
