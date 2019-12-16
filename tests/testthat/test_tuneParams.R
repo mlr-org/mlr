@@ -98,7 +98,7 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "rf.importance", "rf.min.depth"))
+    "univariate", "rf.importance", "randomForestSRC_var.select"))
 
   ps = makeParamSet(
     makeDiscreteVectorParam("fw.base.methods", len = 2, values = filter.list.classif),
@@ -123,7 +123,7 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "rf.importance", "rf.min.depth"))
+    "univariate", "rf.importance", "randomForestSRC_var.select"))
 
   ps = makeParamSet(
     makeDiscreteVectorParam("fw.base.methods", len = 2, values = filter.list.classif),

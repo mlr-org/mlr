@@ -10,7 +10,8 @@ makeRLearner.classif.fdausc.kernel = function() {
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "h", default = NULL, special.vals = list(NULL)),
-      makeDiscreteLearnerParam(id = "Ker", default = "AKer.norm", values = list("AKer.norm", "AKer.cos", "AKer.epa", "AKer.tri", "AKer.quar", "AKer.unif")),
+      makeDiscreteLearnerParam(id = "Ker", default = "AKer.norm",
+        values = list("AKer.norm", "AKer.cos", "AKer.epa", "AKer.tri", "AKer.quar", "AKer.unif")),
       makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = c("metric.lp", "metric.kl",
         "metric.hausdorff", "metric.dist")),
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = c("GCV.S", "CV.S", "GCCV.S")),
@@ -27,7 +28,8 @@ makeRLearner.classif.fdausc.kernel = function() {
 }
 
 #' @export
-trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, Ker, ...) {
+
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
@@ -35,8 +37,15 @@ trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
   par.cv = learnerArgsToControl(list, trim, draw)
-  fda.usc::classif.kernel(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
-    par.S = list(w = .weights), ...)
+  par.funs = learnerArgsToControl(list, metric, Ker)
+  par.funs = lapply(par.funs, function(x) getFromNamespace(x, "fda.usc"))
+
+  trainfun = getFromNamespace("classif.kernel", "fda.usc")
+  mod = do.call("trainfun",
+    c(list(group = d$target, fdataobj = data.fdclass, par.CV = par.cv, par.S = list(w = .weights)),
+      list(metric = par.funs$metric)[which(names(par.funs) == "metric")],
+      list(Ker = par.funs$Ker)[which(names(par.funs) == "Ker")],
+      ...))
 }
 
 #' @export

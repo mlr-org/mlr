@@ -45,7 +45,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "updater"), # Default depends on the selected booster
       makeNumericLearnerParam(id = "sketch_eps", default = 0.03, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "one_drop", default = FALSE, requires = quote(booster == "dart")),
-      makeDiscreteLearnerParam(id = "tree_method", default = "exact", values = c("exact", "hist"), requires = quote(booster != "gblinear")),
+      makeDiscreteLearnerParam(id = "tree_method", default = "auto", values = c("auto", "exact", "approx", "hist", "gpu_hist"), requires = quote(booster != "gblinear")),
       makeDiscreteLearnerParam(id = "grow_policy", default = "depthwise", values = c("depthwise", "lossguide"), requires = quote(tree_method == "hist")),
       makeIntegerLearnerParam(id = "max_leaves", default = 0L, lower = 0L, requires = quote(grow_policy == "lossguide")),
       makeIntegerLearnerParam(id = "max_bin", default = 256L, lower = 2L, requires = quote(tree_method == "hist")),

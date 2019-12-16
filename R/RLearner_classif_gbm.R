@@ -45,7 +45,6 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL, .
 
 #' @export
 predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
-
   td = .model$task.desc
   m = .model$learner.model
   p = gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
