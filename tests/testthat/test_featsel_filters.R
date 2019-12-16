@@ -57,31 +57,28 @@ test_that("filterFeatures", {
   expect_equal(fv$data$value, c(0.25, 0.25, 0.5, 0.5, 0.125))
 })
 
-
 test_that("randomForestSRC_var.select filter handles user choices correctly", {
   expect_silent(
     suppressWarnings(generateFilterValuesData(task = multiclass.task,
       method = "randomForestSRC_var.select",
-    more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
+      more.args = list("randomForestSRC_var.select" = c(method = "vh", conservative = "low"))))
   )
 
   # method = "vh.imp" is not supported
   expect_error(
-  fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
-                                                 method = "randomForestSRC_var.select",
-    more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
+    fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
+      method = "randomForestSRC_var.select",
+      more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
   )
 })
 
-
 test_that("Ensemble filters can deal with non-unique base methods", {
   lda = makeLearner(cl = "classif.lda", id = "lda_class", predict.type = "response")
-  ff = filterFeatures(multiclass.task, 
-                      method = "E-mean", 
-                      base.methods = list("filter1" = "univariate.model.score", "filter2" = "univariate.model.score"),
-                      abs = 2,
-                      more.args = list("filter1" = list(perf.learner = lda), "filter2" = list(perf.learner = lda))
-       )
+  ff = filterFeatures(multiclass.task,
+    method = "E-mean",
+    base.methods = list("filter1" = "univariate.model.score", "filter2" = "univariate.model.score"),
+    abs = 2,
+    more.args = list("filter1" = list(perf.learner = lda), "filter2" = list(perf.learner = lda))
+  )
   expect_equal(getTaskFeatureNames(ff), c("Petal.Length", "Petal.Width"))
 })
-
