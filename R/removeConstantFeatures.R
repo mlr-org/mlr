@@ -35,7 +35,7 @@ removeConstantFeatures = function(obj, perc = 0, dont.rm = character(0L), na.ign
 removeConstantFeatures.Task = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
   assertCharacter(dont.rm)
   dont.rm = union(dont.rm, getTaskTargetNames(obj))
-  data = removeConstantFeatures(getTaskData(obj), perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, tol = tol, show.info = show.info)
+  data = removeConstantFeatures(getTaskData(obj, functionals.as = "matrix"), perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, tol = tol, show.info = show.info)
   changeData(task = obj, data = data)
 }
 

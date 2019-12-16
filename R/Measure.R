@@ -85,8 +85,9 @@
 #' @family performance
 #' @aliases Measure
 #' @examples
-#' f = function(task, model, pred, extra.args)
+#' f = function(task, model, pred, extra.args) {
 #'   sum((pred$data$response - pred$data$truth)^2)
+#' }
 #' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 makeMeasure = function(id, minimize, properties = character(0L),
   fun, extra.args = list(), aggr = test.mean, best = NULL, worst = NULL, name = id, note = "") {

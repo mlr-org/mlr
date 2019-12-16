@@ -25,13 +25,13 @@ makeRLearner.regr.ranger = function() {
       makeNumericLearnerParam(id = "alpha", lower = 0L, upper = 1L, default = 0.5, requires = quote(splitrule == "maxstat")),
       makeNumericLearnerParam(id = "minprop", lower = 0, upper = 0.5, default = 0.1, requires = quote(splitrule == "maxstat")),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE),
-      makeDiscreteLearnerParam(id = "se.method", default = "infjack", values = c("jack",  "infjack"), requires = quote(keep.inbag == TRUE), when = "predict")
+      makeDiscreteLearnerParam(id = "se.method", default = "infjack", values = c("jack", "infjack"), requires = quote(keep.inbag == TRUE), when = "predict")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
     properties = c("numerics", "factors", "ordered", "oobpreds", "featimp", "se", "weights"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable. `mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task. Se estimation is mc bias-corrected jackknife after bootstrap, see '?regr.randomForest' for more details.",
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable. `mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task. SE estimation is mc bias-corrected jackknife after bootstrap, see the section about 'regr.randomForest' in `?makeLearner` for more details.",
     callees = "ranger"
   )
 }
