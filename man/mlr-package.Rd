@@ -64,6 +64,7 @@ Other contributors:
   \item Steve Bronder \email{sab2287@columbia.edu} [contributor]
   \item Alexander Engelhardt \email{alexander.w.engelhardt@gmail.com} [contributor]
   \item Christoph Molnar \email{christoph.molnar@stat.uni-muenchen.de} [contributor]
+  \item Annette Spooner \email{a.spooner@unsw.edu.au} [contributor]
 }
 
 }
