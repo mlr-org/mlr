@@ -10,12 +10,14 @@
 #'   See the examples for more information.
 #'   Default is \dQuote{randomForestSRC_importance}.
 #' @param nselect (`integer(1)`)\cr
-#'   Number of scores to request. Scores are getting calculated for all features per default.
+#' Number of scores to request. Scores are getting calculated for all features
+#' per default.
 #' @param ... (any)\cr
-#'   Passed down to selected method. Can only be use if `method` contains one element.
+#'   Passed down to selected method. Can only be use if `method` contains one
+#'   element.
 #' @param more.args (named [list])\cr
-#'   Extra args passed down to filter methods. List elements are named with the filter
-#'   `method` name the args should be passed down to.
+#'   Extra args passed down to filter methods. List elements are named with the
+#'   filter `method` name the args should be passed down to.
 #'   A more general and flexible option than `...`.
 #'   Default is empty list.
 #' @return ([FilterValues]). A `list` containing:
@@ -33,9 +35,10 @@
 #'
 #' @section Simple and ensemble filters:
 #'
-#' Besides passing (multiple) simple filter methods you can also pass an ensemble
-#' filter method (in a list). The ensemble method will use the simple methods to
-#' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
+#' Besides passing (multiple) simple filter methods you can also pass an
+#' ensemble filter method (in a list). The ensemble method will use the simple
+#' methods to calculate its ranking. See `listFilterEnsembleMethods()` for
+#' available ensemble methods.
 #'
 #' @family generate_plot_data
 #' @family filter
@@ -46,9 +49,11 @@
 #'   method = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"))
 #' # using ensemble method "E-mean"
 #' fval = generateFilterValuesData(iris.task,
-#'   method = list("E-mean", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
+#'   method = list("E-mean", c("FSelectorRcpp_gain.ratio",
+#'     "FSelectorRcpp_information.gain")))
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC_importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC_importance",
+  nselect = getTaskNFeats(task), ..., more.args = list()) {
 
   # define for later checks
   ens.method = NULL
