@@ -358,9 +358,9 @@
 <code>h2o.gbm</code> learners were not running until <code>wcol</code> was passed somehow due to an internal bug. In addition, this bug caused another issue during prediction where the prediction <code>data.frame</code> was somehow formatted as a character rather a numeric. Thanks to <a href='https://github.com/nagdevAmruthnath'>@nagdevAmruthnath</a> for bringing this up in <a href='https://github.com/mlr-org/mlr/issues/2630'>#2630</a>.</li>
 </ul>
 </div>
-<div id="filters---general" class="section level2">
+<div id="filters---general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#filters---general" class="anchor"></a>filters - general</h2>
+<a href="#filters---general-1" class="anchor"></a>filters - general</h2>
 <ul>
 <li>Bugfix: Allow <code>method = "vh"</code> for filter <code>randomForestSRC_var.select</code> and return informative error message for not supported values. Also argument <code>conservative</code> can now be passed. See <a href='https://github.com/mlr-org/mlr/issues/2646'>#2646</a> and <a href='https://github.com/mlr-org/mlr/issues/2639'>#2639</a> for more information (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2649'>#2649</a>)</li>
 <li>Bugfix: Allow <code>method = "md"</code> of filter <code>randomForestSRC_var.select</code> to set the value returned for features below its threshold to NA (Issue <a href='https://github.com/mlr-org/mlr/issues/2687'>#2687</a>)</li>
