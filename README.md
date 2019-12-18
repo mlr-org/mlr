@@ -19,13 +19,20 @@ Machine learning in R.
 * [Cheatsheet](https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf)
 * [Changelog](https://mlr.mlr-org.com/news/index.html)
 
-**We are actively working on [mlr3](https://github.com/mlr-org/mlr3) as a successor of *mlr*. This implies that we have less time to reply to *mlr* issues.**
-
-* Stackoverflow: [mlr](https://stackoverflow.com/questions/tagged/mlr)
+* [Stackoverflow](https://stackoverflow.com/questions/tagged/mlr): `#mlr`
 * [Slack](https://mlr-org.slack.com/)
 * [Blog](https://mlr-org.com/)
 
-### Installation
+# Deprecated
+
+_mlr_ is considered retired from the mlr-org team.
+We won't add new features anymore and will only fix _severe_ bugs.
+We suggest to use the new [mlr3](https://mlr3.mlr-org.com/) framework from now on and for future projects.
+
+Not all features of _mlr_ are already implemented in _mlr3_. 
+If you are missing a crucial feature, please open an issue in the respective [mlr3 extension package](https://github.com/mlr-org/mlr3/wiki/Extension-Packages) and do not hesitate to follow-up on it.
+
+# Installation
 
 **Release**
 
@@ -92,11 +99,8 @@ Simple usage questions are better suited at Stackoverflow using the [mlr](https:
 Please note that all of us work in academia and put a lot of work into this project - simply because we like it, not because we are paid for it.
 
 New development efforts should go into [_mlr3_](https://github.com/mlr-org/mlr3).
-We have a [developer guide](https://www.notion.so/mlrorg/Developer-Guide-65e60b651a2e44e89a36b72df92158ea) and our own coding style which can easily applied by using the `mlr_style` from the [styler](https://github.com/r-lib/styler) package.
-
-# mlr-tutorial
-
-Please read [here](https://www.notion.so/mlrorg/mlr-Tutorial-b71444fe979c4a8cafe91e10e7f81d79) if you want to contribute to the Online Manual.
+We have a own style guide which can easily applied by using the `mlr_style` from the [styler](https://github.com/r-lib/styler) package.
+See [our wiki](https://github.com/mlr-org/mlr3/wiki/Style-Guide#styler-mlr-style) for more information.
 
 # Talks, Workshops, etc.
 
