@@ -80,6 +80,38 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
   )
 })
 
+test_that("Custom threshold function for filtering works correctly", {
+  biggest_gap = function(values, diff) {
+    gap_size = 0
+    gap_location = 0
+
+    for (i in (diff + 1):length(values)) {
+      gap = values[[i - diff]] - values[[i]]
+      if (gap > gap_size) {
+        gap_size = gap
+        gap_location = i - 1
+      }
+    }
+    return(gap_location)
+  }
+
+  ftask = filterFeatures(task = multiclass.task,
+    method = "variance",
+    fun = biggest_gap,
+    fun.args = list("diff" = 1)
+  )
+  feats = getTaskFeatureNames(ftask)
+  expect_equal(feats, c("Petal.Length"))
+})
+
+test_that("randomForestSRC_var.select minimal depth filter returns NA for features below the threshold", {
+  dat = generateFilterValuesData(task = multiclass.task,
+    method = "randomForestSRC_var.select",
+    nselect = 5,
+    more.args = list("randomForestSRC_var.select" = list(method = "md", nrep = 5)))
+  expect_equal(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.width")]), TRUE)
+})
+
 test_that("ensemble filters subset the task correctly", {
 
   # expectation for all filters was checked manually just right after the

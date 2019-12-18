@@ -11,6 +11,8 @@ filterFeatures(
   perc = NULL,
   abs = NULL,
   threshold = NULL,
+  fun = NULL,
+  fun.args = NULL,
   mandatory.feat = NULL,
   select.method = NULL,
   base.methods = NULL,
@@ -34,15 +36,22 @@ Default is \code{NULL} and not used.}
 
 \item{perc}{(\code{numeric(1)})\cr
 If set, select \code{perc}*100 top scoring features.
-\code{perc = 1} means to select all features.\verb{Mutually exclusive with arguments}abs\code{and}threshold`.}
+\code{perc = 1} means to select all features.\verb{Mutually exclusive with arguments}abs\verb{, }threshold\code{and}fun`.}
 
 \item{abs}{(\code{numeric(1)})\cr
 If set, select \code{abs} top scoring features.
-Mutually exclusive with arguments \code{perc} and \code{threshold}.}
+Mutually exclusive with arguments \code{perc}, \code{threshold} and \code{fun}.}
 
 \item{threshold}{(\code{numeric(1)})\cr
 If set, select features whose score exceeds \code{threshold}.
-Mutually exclusive with arguments \code{perc} and \code{abs}.}
+Mutually exclusive with arguments \code{perc}, \code{abs} and \code{fun}.}
+
+\item{fun}{(\code{function})\cr
+If set, select features via a custom thresholding function, which must return the number of top scoring features to select.
+Mutually exclusive with arguments \code{perc}, \code{abs} and \code{threshold}.}
+
+\item{fun.args}{(any)\cr
+Arguments passed to the custom thresholding function}
 
 \item{mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}

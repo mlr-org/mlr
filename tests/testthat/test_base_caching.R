@@ -6,7 +6,7 @@ test_that("caching works with most filters", {
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "rf.importance", "rf.min.depth"))
+    "univariate", "rf.importance", "randomForestSRC_var.select"))
   filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
 
   # tune over various filters using all possible caching options

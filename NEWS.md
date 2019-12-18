@@ -30,6 +30,10 @@ PR: #2638 (@pfistl)
 
 - xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
 
+## filters - general
+
+- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (#2686)
+
 ## filters - bugfixes
 
 - `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
@@ -62,6 +66,7 @@ PR: #2638 (@pfistl)
 ## filters - general
 
 - Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information (@pat-s, #2649)
+- Bugfix: Allow `method = "md"` of filter `randomForestSRC_var.select` to set the value returned for features below its threshold to NA (Issue #2687)
 * Bugfix: With the new _praznik_ v7.0.0 release filter `praznik_CMIM` does no longer return a result for logical features. See https://gitlab.com/mbq/praznik/issues/19 for more information
 
 # mlr 2.15.0

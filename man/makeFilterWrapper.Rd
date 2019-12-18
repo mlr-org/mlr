@@ -11,6 +11,8 @@ makeFilterWrapper(
   fw.perc = NULL,
   fw.abs = NULL,
   fw.threshold = NULL,
+  fw.fun = NULL,
+  fw.fun.args = NULL,
   fw.mandatory.feat = NULL,
   cache = FALSE,
   ...
@@ -29,14 +31,18 @@ filters. See \link{listFilterMethods}. Can only be used in combination with
 ensemble filters. See \link{listFilterEnsembleMethods}.}
 
 \item{fw.perc}{(\code{numeric(1)})\cr If set, select \code{fw.perc}*100 top scoring
-features. Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
+features. Mutually exclusive with arguments \code{fw.abs}, \code{fw.threshold} and `fw.fun.}
 
 \item{fw.abs}{(\code{numeric(1)})\cr If set, select \code{fw.abs} top scoring features.
-Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
+Mutually exclusive with arguments \code{fw.perc}, \code{fw.threshold} and \code{fw.fun}.}
 
 \item{fw.threshold}{(\code{numeric(1)})\cr If set, select features whose score
-exceeds \code{fw.threshold}. Mutually exclusive with arguments \code{fw.perc} and
-\code{fw.abs}.}
+exceeds \code{fw.threshold}. Mutually exclusive with arguments \code{fw.perc}, \code{fw.abs}
+and \code{fw.fun}.}
+
+\item{fw.fun}{(\verb{function)})\cr . If set, select features via a custom thresholding
+function, which must return the number of top scoring features to select\cr
+Mutually exclusive with arguments \code{fw.perc}, \code{fw.abs} and \code{fw.threshold}.}
 
 \item{fw.mandatory.feat}{(\link{character})\cr Mandatory features which are always
 included regardless of their scores}
@@ -47,6 +53,8 @@ filter value creation. See details.}
 \item{...}{(any)\cr Additional parameters passed down to the filter. If you
 are using more than one filter method, you need to pass the arguments in a
 named list via \code{more.args}. For example \code{more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))}.}
+
+\item{func.args}{(any)\cr Arguments passed to the custom thresholding function}
 }
 \value{
 \link{Learner}.
@@ -95,6 +103,29 @@ lrn = makeLearner("classif.lda")
 lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
   fw.base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"),
   fw.perc = 0.5)
+r = resample(lrn, task, outer, extract = function(model) {
+  getFilteredFeatures(model)
+})
+print(r$extract)
+
+# usage of a custom thresholding function
+biggest_gap = function(values, diff) {
+  gap_size = 0
+  gap_location = 0
+
+  for (i in (diff + 1):length(values)) {
+    gap = values[[i - diff]] - values[[i]]
+    if (gap > gap_size) {
+      gap_size = gap
+      gap_location = i - 1
+    }
+  }
+  return(gap_location)
+}
+
+lrn = makeLearner("classif.lda")
+lrn = makeFilterWrapper(lrn, fw.method = "randomForestSRC_importance",
+  fw.fun = biggest_gap, fw.fun.args = list("diff" = 1))
 r = resample(lrn, task, outer, extract = function(model) {
   getFilteredFeatures(model)
 })
