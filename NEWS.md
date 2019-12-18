@@ -32,11 +32,12 @@ PR: #2638 (@pfistl)
 
 ## filters - general
 
-- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (#2686)
+- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (@annette987, #2686)
+- Allow ensemble filters to include multiple base filters of the same type (@annette987, #2688)
 
 ## filters - bugfixes
 
-- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
+- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (@annette987, #2699)
 - Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
 
 # mlr 2.16.0
@@ -68,7 +69,6 @@ PR: #2638 (@pfistl)
 - Bugfix: Allow `method = "vh"` for filter `randomForestSRC_var.select` and return informative error message for not supported values. Also argument `conservative` can now be passed. See #2646 and #2639 for more information (@pat-s, #2649)
 - Bugfix: Allow `method = "md"` of filter `randomForestSRC_var.select` to set the value returned for features below its threshold to NA (Issue #2687)
 * Bugfix: With the new _praznik_ v7.0.0 release filter `praznik_CMIM` does no longer return a result for logical features. See https://gitlab.com/mbq/praznik/issues/19 for more information
-- Allow ensemble filters to include multiple base filters of the same type (#2688)
 
 # mlr 2.15.0
 
