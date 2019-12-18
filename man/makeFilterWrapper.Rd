@@ -49,6 +49,9 @@ If set, select features via a custom thresholding function, which must
 return the number of top scoring features to select. Mutually exclusive
 with arguments \code{fw.perc}, \code{fw.abs} and \code{fw.threshold}.}
 
+\item{fw.fun.args}{(any)\cr
+Arguments passed to the custom thresholding function}
+
 \item{fw.mandatory.feat}{(\link{character})\cr
 Mandatory features which are always
 included regardless of their scores}
@@ -61,9 +64,6 @@ filter value creation. See details.}
 Additional parameters passed down to the filter. If you are using more than
 one filter method, you need to pass the arguments in a named list via
 \code{more.args}. For example \code{more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))}.}
-
-\item{fun.args}{(any)\cr
-Arguments passed to the custom thresholding function}
 }
 \value{
 \link{Learner}.

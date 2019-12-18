@@ -25,7 +25,7 @@
 #'   If set, select features via a custom thresholding function, which must
 #'   return the number of top scoring features to select. Mutually exclusive
 #'   with arguments `fw.perc`, `fw.abs` and `fw.threshold`.
-#' @param fun.args (any)\cr
+#' @param fw.fun.args (any)\cr
 #'   Arguments passed to the custom thresholding function
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always
