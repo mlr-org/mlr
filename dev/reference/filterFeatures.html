@@ -334,6 +334,8 @@ Features are then selected via <code>select</code> and <code>val</code>.</p>
   <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fun.args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>select.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -367,19 +369,30 @@ Default is <code>NULL</code> and not used.</p></td>
       <th>perc</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 If set, select <code>perc</code>*100 top scoring features.
-<code>perc = 1</code> means to select all features.<code>Mutually exclusive with arguments</code>abs<code>and</code>threshold`.</p></td>
+<code>perc = 1</code> means to select all features.<code>Mutually exclusive with arguments</code>abs<code>, </code>threshold<code>and</code>fun`.</p></td>
     </tr>
     <tr>
       <th>abs</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 If set, select <code>abs</code> top scoring features.
-Mutually exclusive with arguments <code>perc</code> and <code>threshold</code>.</p></td>
+Mutually exclusive with arguments <code>perc</code>, <code>threshold</code> and <code>fun</code>.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 If set, select features whose score exceeds <code>threshold</code>.
-Mutually exclusive with arguments <code>perc</code> and <code>abs</code>.</p></td>
+Mutually exclusive with arguments <code>perc</code>, <code>abs</code> and <code>fun</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fun</th>
+      <td><p>(<code>function</code>)<br />
+If set, select features via a custom thresholding function, which must return the number of top scoring features to select.
+Mutually exclusive with arguments <code>perc</code>, <code>abs</code> and <code>threshold</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fun.args</th>
+      <td><p>(any)<br />
+Arguments passed to the custom thresholding function</p></td>
     </tr>
     <tr>
       <th>mandatory.feat</th>

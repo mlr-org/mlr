@@ -336,6 +336,8 @@ object, which can be used like any other learner object. Internally uses
   <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fw.abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fw.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fw.fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fw.fun.args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fw.mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
@@ -364,18 +366,24 @@ ensemble filters. See <a href='listFilterEnsembleMethods.html'>listFilterEnsembl
     <tr>
       <th>fw.perc</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select <code>fw.perc</code>*100 top scoring
-features. Mutually exclusive with arguments <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
+features. Mutually exclusive with arguments <code>fw.abs</code>, <code>fw.threshold</code> and `fw.fun.</p></td>
     </tr>
     <tr>
       <th>fw.abs</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select <code>fw.abs</code> top scoring features.
-Mutually exclusive with arguments <code>fw.perc</code> and <code>fw.threshold</code>.</p></td>
+Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.threshold</code> and <code>fw.fun</code>.</p></td>
     </tr>
     <tr>
       <th>fw.threshold</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select features whose score
-exceeds <code>fw.threshold</code>. Mutually exclusive with arguments <code>fw.perc</code> and
-<code>fw.abs</code>.</p></td>
+exceeds <code>fw.threshold</code>. Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.abs</code>
+and <code>fw.fun</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fw.fun</th>
+      <td><p>(<code>function)</code>)<br /> . If set, select features via a custom thresholding
+function, which must return the number of top scoring features to select<br />
+Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
     </tr>
     <tr>
       <th>fw.mandatory.feat</th>
@@ -392,6 +400,10 @@ filter value creation. See details.</p></td>
       <td><p>(any)<br /> Additional parameters passed down to the filter. If you
 are using more than one filter method, you need to pass the arguments in a
 named list via <code>more.args</code>. For example <code>more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))</code>.</p></td>
+    </tr>
+    <tr>
+      <th>func.args</th>
+      <td><p>(any)<br /> Arguments passed to the custom thresholding function</p></td>
     </tr>
     </table>
 
@@ -475,6 +487,32 @@ multiple workers try to write the same cache at the same time.</p>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
 })</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "Petal.Length" "Petal.Width" 
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "Petal.Length" "Petal.Width" 
+#&gt; </div><div class='input'>
+<span class='co'># usage of a custom thresholding function</span>
+<span class='no'>biggest_gap</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>values</span>, <span class='no'>diff</span>) {
+  <span class='no'>gap_size</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  <span class='no'>gap_location</span> <span class='kw'>=</span> <span class='fl'>0</span>
+
+  <span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> (<span class='no'>diff</span> + <span class='fl'>1</span>):<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>values</span>)) {
+    <span class='no'>gap</span> <span class='kw'>=</span> <span class='no'>values</span><span class='kw'>[[</span><span class='no'>i</span> - <span class='no'>diff</span>]] - <span class='no'>values</span><span class='kw'>[[</span><span class='no'>i</span>]]
+    <span class='kw'>if</span> (<span class='no'>gap</span> <span class='kw'>&gt;</span> <span class='no'>gap_size</span>) {
+      <span class='no'>gap_size</span> <span class='kw'>=</span> <span class='no'>gap</span>
+      <span class='no'>gap_location</span> <span class='kw'>=</span> <span class='no'>i</span> - <span class='fl'>1</span>
+    }
+  }
+  <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>gap_location</span>)
+}
+
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
+<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFilterWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>fw.method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
+  <span class='kw'>fw.fun</span> <span class='kw'>=</span> <span class='no'>biggest_gap</span>, <span class='kw'>fw.fun.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"diff"</span> <span class='kw'>=</span> <span class='fl'>1</span>))
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
+  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "Petal.Length" "Petal.Width" 
 #&gt; 
 #&gt; [[2]]
