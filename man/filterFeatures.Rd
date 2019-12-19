@@ -30,7 +30,8 @@ Default is \dQuote{randomForestSRC_importance}.}
 
 \item{fval}{(\link{FilterValues})\cr
 Result of \link{generateFilterValuesData}.
-If you pass this, the filter values in the object are used for feature filtering.
+If you pass this, the filter values in the object are used for feature
+filtering.
 \code{method} and \code{...} are ignored then.
 Default is \code{NULL} and not used.}
 
@@ -47,11 +48,12 @@ If set, select features whose score exceeds \code{threshold}.
 Mutually exclusive with arguments \code{perc}, \code{abs} and \code{fun}.}
 
 \item{fun}{(\code{function})\cr
-If set, select features via a custom thresholding function, which must return the number of top scoring features to select.
-Mutually exclusive with arguments \code{perc}, \code{abs} and \code{threshold}.}
+If set, select features via a custom thresholding function, which must
+return the number of top scoring features to select. Mutually exclusive
+with arguments \code{perc}, \code{abs} and \code{threshold}.}
 
 \item{fun.args}{(any)\cr
-Arguments passed to the custom thresholding function}
+Arguments passed to the custom thresholding function.}
 
 \item{mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
@@ -90,9 +92,10 @@ computation on many systems, but there is no guarantee.
 \section{Simple and ensemble filters}{
 
 
-Besides passing (multiple) simple filter methods you can also pass an ensemble
-filter method (in a list). The ensemble method will use the simple methods to
-calculate its ranking. See \code{listFilterEnsembleMethods()} for available ensemble methods.
+Besides passing (multiple) simple filter methods you can also pass an
+ensemble filter method (in a list). The ensemble method will use the simple
+methods to calculate its ranking. See \code{listFilterEnsembleMethods()} for
+available ensemble methods.
 }
 
 \examples{
@@ -100,7 +103,8 @@ calculate its ranking. See \code{listFilterEnsembleMethods()} for available ense
 filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 # ensemble filter
 filterFeatures(iris.task, method = "E-min",
-  base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
+  base.methods = c("FSelectorRcpp_gain.ratio",
+    "FSelectorRcpp_information.gain"), abs = 2)
 }
 \seealso{
 Other filter: 

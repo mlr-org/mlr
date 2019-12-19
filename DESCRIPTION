@@ -121,7 +121,11 @@ Authors@R:
       person(given = "Christoph",
              family = "Molnar",
              role = "ctb",
-             email = "christoph.molnar@stat.uni-muenchen.de"))
+             email = "christoph.molnar@stat.uni-muenchen.de"),
+      person(given = "Annette",
+             family = "Spooner",
+             role = "ctb",
+             email = "a.spooner@unsw.edu.au"))
 Description: Interface to a large number of classification and
     regression techniques, including machine-readable parameter
     descriptions. There is also an experimental extension for survival
