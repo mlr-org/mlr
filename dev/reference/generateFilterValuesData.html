@@ -354,18 +354,20 @@ Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     <tr>
       <th>nselect</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
-Number of scores to request. Scores are getting calculated for all features per default.</p></td>
+Number of scores to request. Scores are getting calculated for all features
+per default.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>(any)<br />
-Passed down to selected method. Can only be use if <code>method</code> contains one element.</p></td>
+Passed down to selected method. Can only be use if <code>method</code> contains one
+element.</p></td>
     </tr>
     <tr>
       <th>more.args</th>
       <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
-Extra args passed down to filter methods. List elements are named with the filter
-<code>method</code> name the args should be passed down to.
+Extra args passed down to filter methods. List elements are named with the
+filter <code>method</code> name the args should be passed down to.
 A more general and flexible option than <code>...</code>.
 Default is empty list.</p></td>
     </tr>
@@ -391,9 +393,10 @@ One column for each method with the feature importance values.</p></li>
     
 
 
-<p>Besides passing (multiple) simple filter methods you can also pass an ensemble
-filter method (in a list). The ensemble method will use the simple methods to
-calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for available ensemble methods.</p>
+<p>Besides passing (multiple) simple filter methods you can also pass an
+ensemble filter method (in a list). The ensemble method will use the simple
+methods to calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods()</a></code> for
+available ensemble methods.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other generate_plot_data: 
@@ -420,7 +423,8 @@ calculate its ranking. See <code><a href='listFilterEnsembleMethods.html'>listFi
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>))
 <span class='co'># using ensemble method "E-mean"</span>
 <span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>)))</div></pre>
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>,
+    <span class='st'>"FSelectorRcpp_information.gain"</span>)))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

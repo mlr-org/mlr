@@ -354,56 +354,65 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
     </tr>
     <tr>
       <th>fw.method</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
 Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>fw.base.methods</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br /> Simple Filter methods for ensemble
-filters. See <a href='listFilterMethods.html'>listFilterMethods</a>. Can only be used in combination with
-ensemble filters. See <a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>.</p></td>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+Simple Filter methods for ensemble filters. See <a href='listFilterMethods.html'>listFilterMethods</a>. Can
+only be used in combination with ensemble filters. See
+<a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>.</p></td>
     </tr>
     <tr>
       <th>fw.perc</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select <code>fw.perc</code>*100 top scoring
-features. Mutually exclusive with arguments <code>fw.abs</code>, <code>fw.threshold</code> and `fw.fun.</p></td>
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+If set, select <code>fw.perc</code>*100 top scoring features. Mutually exclusive with
+arguments <code>fw.abs</code>, <code>fw.threshold</code> and `fw.fun.</p></td>
     </tr>
     <tr>
       <th>fw.abs</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select <code>fw.abs</code> top scoring features.
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+If set, select <code>fw.abs</code> top scoring features.
 Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.threshold</code> and <code>fw.fun</code>.</p></td>
     </tr>
     <tr>
       <th>fw.threshold</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br /> If set, select features whose score
-exceeds <code>fw.threshold</code>. Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.abs</code>
-and <code>fw.fun</code>.</p></td>
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+If set, select features whose score exceeds <code>fw.threshold</code>. Mutually
+exclusive with arguments <code>fw.perc</code>, <code>fw.abs</code> and <code>fw.fun</code>.</p></td>
     </tr>
     <tr>
       <th>fw.fun</th>
-      <td><p>(<code>function)</code>)<br /> . If set, select features via a custom thresholding
-function, which must return the number of top scoring features to select<br />
-Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
+      <td><p>(<code>function)</code>)<br />
+If set, select features via a custom thresholding function, which must
+return the number of top scoring features to select. Mutually exclusive
+with arguments <code>fw.perc</code>, <code>fw.abs</code> and <code>fw.threshold</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fw.fun.args</th>
+      <td><p>(any)<br />
+Arguments passed to the custom thresholding function</p></td>
     </tr>
     <tr>
       <th>fw.mandatory.feat</th>
-      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br /> Mandatory features which are always
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+Mandatory features which are always
 included regardless of their scores</p></td>
     </tr>
     <tr>
       <th>cache</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br /> Whether to use caching during
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br />
+Whether to use caching during
 filter value creation. See details.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>(any)<br /> Additional parameters passed down to the filter. If you
-are using more than one filter method, you need to pass the arguments in a
-named list via <code>more.args</code>. For example <code>more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))</code>.</p></td>
-    </tr>
-    <tr>
-      <th>func.args</th>
-      <td><p>(any)<br /> Arguments passed to the custom thresholding function</p></td>
+      <td><p>(any)<br />
+Additional parameters passed down to the filter. If you are using more than
+one filter method, you need to pass the arguments in a named list via
+<code>more.args</code>. For example <code>more.args = list("FSelectorRcpp_information.gain" = list(equal = TRUE))</code>.</p></td>
     </tr>
     </table>
 
@@ -420,13 +429,15 @@ in <code>fw.method</code> is performed. At least two methods need to be selected
 passed down to the next learner.</p>
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
-    <p>If <code>cache = TRUE</code>, the default mlr cache directory is used
-to cache filter values. The directory is operating system dependent and can
-be checked with <code><a href='cache_helpers.html'>getCacheDir()</a></code>. Alternatively a custom directory can be
-passed to store the cache. The cache can be cleared with
-<code><a href='cache_helpers.html'>deleteCacheDir()</a></code>. Caching is disabled by default. Care should be taken
-when operating on large clusters due to possible write conflicts to disk if
-multiple workers try to write the same cache at the same time.</p>
+    
+
+<p>If <code>cache = TRUE</code>, the default mlr cache directory is used to cache filter
+values. The directory is operating system dependent and can be checked with
+<code><a href='cache_helpers.html'>getCacheDir()</a></code>. Alternatively a custom directory can be passed to store
+the cache. The cache can be cleared with <code><a href='cache_helpers.html'>deleteCacheDir()</a></code>. Caching is
+disabled by default. Care should be taken when operating on large clusters
+due to possible write conflicts to disk if multiple workers try to write
+the same cache at the same time.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter: 
