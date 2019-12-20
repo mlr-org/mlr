@@ -3,7 +3,7 @@ context("classif_glmboost")
 test_that("classif_glmboost", {
   requirePackagesOrSkip("mboost", default.method = "load")
 
-  parset.list1 <- list(
+  parset.list1 = list(
     list(family = mboost::Binomial()),
     list(family = mboost::Binomial(), control = mboost::boost_control(nu = 0.03)),
     list(
@@ -12,22 +12,22 @@ test_that("classif_glmboost", {
     )
   )
 
-  parset.list2 <- list(
+  parset.list2 = list(
     list(),
     list(family = "Binomial", nu = 0.03),
     list(family = "Binomial", Binomial.link = "probit", mstop = 10, center = TRUE)
   )
 
-  old.predicts.list <- list()
-  old.probs.list <- list()
+  old.predicts.list = list()
+  old.probs.list = list()
 
   for (i in seq_along(parset.list1)) {
-    parset <- parset.list1[[i]]
-    pars <- list(binaryclass.formula, data = binaryclass.train)
-    pars <- c(pars, parset)
-    m <- do.call(mboost::glmboost, pars)
-    old.predicts.list[[i]] <- predict(m, newdata = binaryclass.test, type = "class")
-    old.probs.list[[i]] <- 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
+    parset = parset.list1[[i]]
+    pars = list(binaryclass.formula, data = binaryclass.train)
+    pars = c(pars, parset)
+    m = do.call(mboost::glmboost, pars)
+    old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
+    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
   }
 
   testSimpleParsets(
@@ -41,10 +41,10 @@ test_that("classif_glmboost", {
 })
 
 test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaExp'", {
-  families <- list("AUC", "AdaExp")
+  families = list("AUC", "AdaExp")
   lapply(families, FUN = function(x) {
-    lrn <- makeLearner("classif.glmboost", par.vals = list(family = x), predict.type = "prob")
-    mod <- train(lrn, binaryclass.task)
+    lrn = makeLearner("classif.glmboost", par.vals = list(family = x), predict.type = "prob")
+    mod = train(lrn, binaryclass.task)
     expect_error(predict(mod, binaryclass.task), "support probabilities")
   })
 })
