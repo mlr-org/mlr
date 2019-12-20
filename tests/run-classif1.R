@@ -1,5 +1,8 @@
 library(testthat)
 
-set.seed(getOption("mlr.debug.seed"))
+# no tests on CRAN
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
-test_check("mlr", "_classif_[a-l].*")
+  set.seed(getOption("mlr.debug.seed"))
+  test_check("mlr", "_classif_[a-l].*")
+}
