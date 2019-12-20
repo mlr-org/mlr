@@ -161,3 +161,14 @@ test_that("Thresholding works with ensemble filters", {
 
   expect_equal(getTaskNFeats(foo), 3)
 })
+
+test_that("Ensemble filters can deal with non-unique base methods", {
+  lda = makeLearner(cl = "classif.lda", id = "lda_class", predict.type = "response")
+  ff = filterFeatures(multiclass.task,
+    method = "E-mean",
+    base.methods = list("filter1" = "univariate.model.score", "filter2" = "univariate.model.score"),
+    abs = 2,
+    more.args = list("filter1" = list(perf.learner = lda), "filter2" = list(perf.learner = lda))
+  )
+  expect_equal(getTaskFeatureNames(ff), c("Petal.Length", "Petal.Width"))
+})

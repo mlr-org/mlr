@@ -32,11 +32,12 @@ PR: #2638 (@pfistl)
 
 ## filters - general
 
-- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (#2686)
+- Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (@annette987, #2686)
+- Allow ensemble filters to include multiple base filters of the same type (@annette987, #2688)
 
 ## filters - bugfixes
 
-- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (#2699, @annette987)
+- `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (@annette987, #2699)
 - Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
 
 # mlr 2.16.0

@@ -10,12 +10,14 @@
 #'   See the examples for more information.
 #'   Default is \dQuote{randomForestSRC_importance}.
 #' @param nselect (`integer(1)`)\cr
-#'   Number of scores to request. Scores are getting calculated for all features per default.
+#' Number of scores to request. Scores are getting calculated for all features
+#' per default.
 #' @param ... (any)\cr
-#'   Passed down to selected method. Can only be use if `method` contains one element.
+#'   Passed down to selected method. Can only be use if `method` contains one
+#'   element.
 #' @param more.args (named [list])\cr
-#'   Extra args passed down to filter methods. List elements are named with the filter
-#'   `method` name the args should be passed down to.
+#'   Extra args passed down to filter methods. List elements are named with the
+#'   filter `method` name the args should be passed down to.
 #'   A more general and flexible option than `...`.
 #'   Default is empty list.
 #' @return ([FilterValues]). A `list` containing:
@@ -33,9 +35,10 @@
 #'
 #' @section Simple and ensemble filters:
 #'
-#' Besides passing (multiple) simple filter methods you can also pass an ensemble
-#' filter method (in a list). The ensemble method will use the simple methods to
-#' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
+#' Besides passing (multiple) simple filter methods you can also pass an
+#' ensemble filter method (in a list). The ensemble method will use the simple
+#' methods to calculate its ranking. See `listFilterEnsembleMethods()` for
+#' available ensemble methods.
 #'
 #' @family generate_plot_data
 #' @family filter
@@ -46,27 +49,30 @@
 #'   method = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"))
 #' # using ensemble method "E-mean"
 #' fval = generateFilterValuesData(iris.task,
-#'   method = list("E-mean", c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain")))
+#'   method = list("E-mean", c("FSelectorRcpp_gain.ratio",
+#'     "FSelectorRcpp_information.gain")))
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC_importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC_importance",
+  nselect = getTaskNFeats(task), ..., more.args = list()) {
 
   # define for later checks
   ens.method = NULL
 
   # ensemble
   if (class(method) == "list") {
-    ens.method = method[[1]]
-    method = method[[2]]
-    assertSubset(ens.method, choices = ls(.FilterEnsembleRegister), empty.ok = FALSE)
-    if (length(method) == 1) {
-      warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+    if (method[[1]] %in% ls(.FilterEnsembleRegister)) {
+      ens.method = method[[1]]
+      method = method[[2]]
+      if (length(method) == 1) {
+        warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
+      }
     }
   }
 
-  assertSubset(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
+  assertSubset(unlist(method), choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)), empty.ok = FALSE)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg))))) {
-    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+    req_pkg = lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
   }
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   td = getTaskDesc(task)
@@ -91,7 +97,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   }
   assertCount(nselect)
   assertList(more.args, names = "unique", max.len = length(method))
-  assertSubset(names(more.args), method)
   dot.args = list(...)
   if (length(dot.args) > 0L && length(more.args) > 0L) {
     stopf("Do not use both 'more.args' and '...' here!")
@@ -125,21 +130,25 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     }
 
   } else {
-    fval = lapply(filter, function(x) {
-      x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
+    index_names = names(method)
+    if (is.null(index_names)) {
+      index_names = method
+    }
+    fval = mapply(function(x, name) {
+      x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[name]]))
       missing.score = setdiff(fn, names(x))
       x[missing.score] = NA_real_
       x[match(fn, names(x))]
-    })
+    }, filter, index_names, SIMPLIFY = FALSE)
     fval = do.call(cbind, fval)
-    colnames(fval) = method
+    colnames(fval) = index_names
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
     out = data.table(name = row.names(fval),
       type = types, fval, row.names = NULL, stringsAsFactors = FALSE)
 
     # variable.factor = FALSE has no effect
-    out = melt(out, value.name = "value", measure.vars = method,
+    out = melt(out, value.name = "value", measure.vars = index_names,
       variable.name = "filter")
   }
 

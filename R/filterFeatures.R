@@ -10,7 +10,8 @@
 #'   Default is \dQuote{randomForestSRC_importance}.
 #' @param fval ([FilterValues])\cr
 #'   Result of [generateFilterValuesData].
-#'   If you pass this, the filter values in the object are used for feature filtering.
+#'   If you pass this, the filter values in the object are used for feature
+#'   filtering.
 #'   `method` and `...` are ignored then.
 #'   Default is `NULL` and not used.
 #' @param perc (`numeric(1)`)\cr
@@ -24,10 +25,11 @@
 #'   If set, select features whose score exceeds `threshold`.
 #'   Mutually exclusive with arguments `perc`, `abs` and `fun`.
 #' @param fun (`function`)\cr
-#'   If set, select features via a custom thresholding function, which must return the number of top scoring features to select.
-#'   Mutually exclusive with arguments `perc`, `abs` and `threshold`.
+#'   If set, select features via a custom thresholding function, which must
+#'   return the number of top scoring features to select. Mutually exclusive
+#'   with arguments `perc`, `abs` and `threshold`.
 #' @param fun.args (any)\cr
-#'   Arguments passed to the custom thresholding function
+#'   Arguments passed to the custom thresholding function.
 #' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
 #' @param select.method If multiple methods are supplied in argument `method`,
@@ -54,35 +56,33 @@
 #'
 #' @section Simple and ensemble filters:
 #'
-#' Besides passing (multiple) simple filter methods you can also pass an ensemble
-#' filter method (in a list). The ensemble method will use the simple methods to
-#' calculate its ranking. See `listFilterEnsembleMethods()` for available ensemble methods.
+#' Besides passing (multiple) simple filter methods you can also pass an
+#' ensemble filter method (in a list). The ensemble method will use the simple
+#' methods to calculate its ranking. See `listFilterEnsembleMethods()` for
+#' available ensemble methods.
 #'
 #' @examples
 #' # simple filter
 #' filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 #' # ensemble filter
 #' filterFeatures(iris.task, method = "E-min",
-#'   base.methods = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"), abs = 2)
+#'   base.methods = c("FSelectorRcpp_gain.ratio",
+#'     "FSelectorRcpp_information.gain"), abs = 2)
 #' @export
-filterFeatures = function(task, method = "randomForestSRC_importance", fval = NULL,
-  perc = NULL, abs = NULL, threshold = NULL, fun = NULL, fun.args = NULL, mandatory.feat = NULL,
-  select.method = NULL, base.methods = NULL, cache = FALSE, ...) {
+filterFeatures = function(task, method = "randomForestSRC_importance",
+  fval = NULL, perc = NULL, abs = NULL, threshold = NULL, fun = NULL,
+  fun.args = NULL, mandatory.feat = NULL, select.method = NULL,
+  base.methods = NULL, cache = FALSE, ...) {
 
   assertClass(task, "SupervisedTask")
   if (!is.null(fun)) {
     assertFunction(fun)
   }
+  assertChoice(method, choices = append(ls(.FilterRegister),
+    ls(.FilterEnsembleRegister)))
 
-  # base.methods arrive here in a list when called from 'tuneParams'.
-  # we need them as a chr vec for further proc, so transforming
-  if (is.list(base.methods)) {
-    base.methods = as.character(base.methods)
-  }
-
-  assertChoice(method, choices = append(ls(.FilterRegister), ls(.FilterEnsembleRegister)))
-
-  # if an ensemble method is not passed as a list but via 'base.methods' + 'method'
+  # if an ensemble method is not passed as a list but via 'base.methods' +
+  # 'method'
   if (method %in% ls(.FilterEnsembleRegister) && !is.null(base.methods)) {
     if (length(base.methods) == 1) {
       warningf("You only passed one base filter method to an ensemble filter. Please use at least two base filter methods to have a voting effect.")
@@ -103,7 +103,8 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   if (is.null(fval)) {
 
     if (!isFALSE(cache)) {
-      requirePackages("memoise", why = "caching of filter features", default.method = "load")
+      requirePackages("memoise", why = "caching of filter features",
+        default.method = "load")
 
       # check for user defined cache dir
       if (is.character(cache)) {
@@ -122,11 +123,13 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
 
       # caching calls to `generateFilterValuesData()` with the same arguments
       cache.dir = memoise::cache_filesystem(cache.dir)
-      generate.fv.data = memoise::memoise(generateFilterValuesData, cache = cache.dir)
+      generate.fv.data = memoise::memoise(generateFilterValuesData,
+        cache = cache.dir)
     } else {
       generate.fv.data = generateFilterValuesData
     }
-    fval = generate.fv.data(task = task, method = method, nselect = getTaskNFeats(task), ...)$data
+    fval = generate.fv.data(task = task, method = method,
+      nselect = getTaskNFeats(task), ...)$data
   } else {
     assertClass(fval, "FilterValues")
     if (!is.null(fval$method)) { ## fval is generated by deprecated getFilterValues
@@ -153,7 +156,8 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
     if (!all(mandatory.feat %in% fval$name)) {
       stop("At least one mandatory feature was not found in the task.")
     }
-    if (select != "threshold" && select != "fun" && nselect < length(mandatory.feat)) {
+    if (select != "threshold" && select != "fun" &&
+      nselect < length(mandatory.feat)) {
       stop("The number of features to be filtered cannot be smaller than the number of mandatory features.")
     }
     # Set the the filter values of the mandatory features to infinity to always select them
@@ -162,7 +166,8 @@ filterFeatures = function(task, method = "randomForestSRC_importance", fval = NU
   if (select == "threshold") {
     nselect = sum(fval[["value"]] >= threshold, na.rm = TRUE)
   } else if (select == "fun") {
-    nselect = do.call(fun, args = c(list("values" = fval[with(fval, order(filter, -value)), ][["value"]]), fun.args))
+    nselect = do.call(fun, args = c(list("values" = fval[with(fval,
+      order(filter, -value)), ][["value"]]), fun.args))
   }
   # in case multiple filters have been calculated, choose which ranking is used
   # for the final subsetting
