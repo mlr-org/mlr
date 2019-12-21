@@ -1,6 +1,8 @@
 version: 2.1
 jobs:
   release:
+    environment:
+      - NOT_CRAN: true
     docker:
       - image: rocker/verse:3.6.1
     steps:
@@ -61,6 +63,8 @@ jobs:
             R -q -e 'tic::after_deploy()'
 
   oldrelease:
+    environment:
+      - NOT_CRAN: true
     docker:
       - image: rocker/verse:3.5.3
     steps:
