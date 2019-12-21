@@ -176,6 +176,39 @@ red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
 red.rug.line.xpath = "/svg:svg//svg:line[contains(@style, 'stroke: #FF0000;')]"
 black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"
 
+test.confMatrix = function(p) {
+
+  lvls = getTaskClassLevels(p$task.desc)
+  l = length(lvls)
+
+  # test absolute
+  cm = calculateConfusionMatrix(p, relative = FALSE)
+  expect_true(is.matrix(cm$result) && nrow(cm$result) == l + 1 && ncol(cm$result) == l + 1)
+  expect_set_equal(cm$result[1:l, l + 1], cm$result[l + 1, 1:l])
+
+  # test absolute number of errors
+  d = cm$result[1:l, 1:l]
+  diag(d) = 0
+  expect_true(sum(unlist(d)) == cm$result[l + 1, l + 1])
+
+  # test absolute with sums
+  cm = calculateConfusionMatrix(p, sums = TRUE)
+  expect_true(is.matrix(cm$result) && nrow(cm$result) == l + 2 && ncol(cm$result) == l + 2)
+  expect_set_equal(cm$result[1:l, l + 1], cm$result[l + 1, 1:l])
+  # test absolute number of errors
+  d = cm$result[1:l, 1:l]
+  diag(d) = 0
+  expect_true(sum(unlist(d)) == cm$result[l + 1, l + 1])
+
+  # test relative
+  cm = calculateConfusionMatrix(p, relative = TRUE)
+
+  # sums have to be 1 or 0 (if no observation in that group)
+  expect_true(all(rowSums(cm$relative.row[, 1:l]) == 1 |
+    rowSums(cm$relative.row[, 1:l]) == 0))
+  expect_true(all(colSums(cm$relative.col[1:l, ]) == 1 |
+    colSums(cm$relative.col[1:l, ]) == 0))
+}
 # used in `test_base_rankBaseFilters.R` ----------------------------------------
 
 task.filters.rank = structure(list(type = "surv", weights = NULL,

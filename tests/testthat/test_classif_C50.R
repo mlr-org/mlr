@@ -7,15 +7,13 @@ test_that("classif_C50", {
   expect_equal(lrn1, lrn2)
 
   requirePackages("C50", default.method = "load")
+
   parset.list = list(
     list(),
-    list(control = C50::C5.0Control(seed = getOption("mlr.debug.seed"))),
-    list(trials = 5L, control = C50::C5.0Control(minCases = 10L,
-      seed = getOption("mlr.debug.seed"))),
-    list(rules = TRUE, control = C50::C5.0Control(bands = 100L,
-      seed = getOption("mlr.debug.seed"))),
-    list(control = C50::C5.0Control(CF = 0.5, sample = 0.444,
-      seed = getOption("mlr.debug.seed")))
+    list(control = C50::C5.0Control(), seed = getOption("mlr.debug.seed")),
+    list(trials = 5L, control = C50::C5.0Control(minCases = 10L, seed = getOption("mlr.debug.seed"))),
+    list(rules = TRUE, control = C50::C5.0Control(bands = 100L, seed = getOption("mlr.debug.seed"))),
+    list(control = C50::C5.0Control(CF = 0.5, sample = 0.444, seed = getOption("mlr.debug.seed")))
   )
 
   old.predicts.list = list()
@@ -26,7 +24,6 @@ test_that("classif_C50", {
     pars = list(x = multiclass.train[, names(multiclass.train) %nin% multiclass.target],
       y = multiclass.train[, multiclass.target])
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(C50::C5.0, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = multiclass.test, type = "class")

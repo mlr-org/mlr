@@ -9,9 +9,11 @@ test_that("BaseEnsemble", {
     cl = "mywrapper")
   expect_true(setequal(getHyperPars(be), list(a.xval = 0L, a.minsplit = 2L,
     b.fit = FALSE, b.C = 2, foo = 3)))
+
   be = setHyperPars(be, a.minsplit = 11)
   expect_true(setequal(getHyperPars(be), list(a.xval = 0L, a.minsplit = 11L,
     b.fit = FALSE, b.C = 2, foo = 3)))
+
   be = setHyperPars(be, foo = 12)
   expect_true(setequal(getHyperPars(be), list(a.xval = 0L, a.minsplit = 11L,
     b.fit = FALSE, b.C = 2, foo = 12)))
@@ -48,13 +50,16 @@ test_that("BaseEnsemble", {
       ksvm.filtered.oversampled.fw.method = "randomForestSRC_importance",
       ksvm.filtered.oversampled.fw.perc = 0.5,
       ksvm.filtered.oversampled.osw.rate = 1)))
+
   # check removing hyperpars
   be.rm = removeHyperPars(be, names(getHyperPars(be)))
   expect_true(length(getHyperPars(be.rm)) == 0)
+
   # check setPredictType
   be.pt = setPredictType(be, predict.type = "prob")
   expect_equal(be.pt$predict.type, "prob")
   expect_equal(lapply(be.pt$base.learners, function(x) x$predict.type), list(rpart = "prob", ksvm.filtered.oversampled = "prob"))
+
   be.pt = setPredictType(be, predict.type = "response")
   expect_equal(be.pt$predict.type, "response")
   expect_equal(lapply(be.pt$base.learners, function(x) x$predict.type), list(rpart = "response", ksvm.filtered.oversampled = "response"))

@@ -17,20 +17,22 @@ test_that("classif_fnn", {
     parset = parset.list[[i]]
 
     j = which(colnames(multiclass.train) == multiclass.target)
-    pars = list(train = multiclass.train[, -j], test = multiclass.test[, -j], cl = multiclass.train[, j])
+    pars = list(train = multiclass.train[, -j], test = multiclass.test[, -j],
+      cl = multiclass.train[, j])
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list1[[i]] = do.call(FNN::knn, pars)
 
     j = which(colnames(binaryclass.train) == binaryclass.target)
-    pars = list(train = binaryclass.train[, -j], test = binaryclass.test[, -j], cl = binaryclass.train[, j])
+    pars = list(train = binaryclass.train[, -j], test = binaryclass.test[, -j],
+      cl = binaryclass.train[, j])
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list2[[i]] = do.call(FNN::knn, pars)
   }
 
-  testSimpleParsets("classif.fnn", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list1, parset.list)
-  testSimpleParsets("classif.fnn", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list2, parset.list)
+  testSimpleParsets("classif.fnn", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list1, parset.list)
+  testSimpleParsets("classif.fnn", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.predicts.list2, parset.list)
 
   tt = function(formula, data, k = 1) {
     j = which(colnames(data) == as.character(formula)[2])
@@ -41,6 +43,8 @@ test_that("classif_fnn", {
     FNN::knn(train = model$train, test = newdata, cl = model$cl, k = model$k)
   }
 
-  testCVParsets("classif.fnn", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
-  testCVParsets("classif.fnn", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("classif.fnn", multiclass.df, multiclass.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
+  testCVParsets("classif.fnn", binaryclass.df, binaryclass.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
 })

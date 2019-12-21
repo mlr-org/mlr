@@ -3,12 +3,12 @@ context("getOOBPreds")
 test_that("getOOBPreds", {
   lrns = list(
     makeLearner("classif.randomForest"),
-    makeFilterWrapper(learner = "classif.randomForest", fw.method = "FSelectorRcpp_information.gain",
+    makeFilterWrapper(learner = "classif.randomForest",
+      fw.method = "FSelectorRcpp_information.gain",
       fw.abs = 2))
 
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
-
 
   for (lrn in lrns) {
     mod = train(lrn, task)

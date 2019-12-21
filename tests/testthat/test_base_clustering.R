@@ -6,6 +6,7 @@ test_that("clustering predict", {
   pred = predict(model, task = noclass.task)
   y = pred$data$response
   expect_true(is.integer(y))
+
   p = getPredictionProbabilities(pred)
   expect_true(is.data.frame(p) && nrow(noclass.df) && ncol(p) == max(y))
 })

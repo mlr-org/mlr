@@ -14,16 +14,16 @@ test_that("cluster_cmeans", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    set.seed(getOption("mlr.debug.seed"))
     m = e1071::cmeans(noclass.train, centers = centers)
-    p = as.integer(clue::cl_predict(m, newdata = noclass.test, type = "class_ids"))
+    p = as.integer(clue::cl_predict(m, newdata = noclass.test,
+      type = "class_ids"))
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("cluster.cmeans", noclass.df, character(0L), noclass.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("cluster.cmeans", noclass.df, character(0L),
+    noclass.train.inds, old.predicts.list, parset.list)
 
   # test fuzzy clustering memberships
-  set.seed(getOption("mlr.debug.seed"))
   m = e1071::cmeans(noclass.train, centers = centers)
   p = clue::cl_predict(m, newdata = noclass.test, type = "memberships")
   class(p) = "matrix"

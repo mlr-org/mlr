@@ -1,20 +1,25 @@
 context("regr_glmboost")
+
 test_that("regr_glmboost", {
   requirePackagesOrSkip("mboost", default.method = "load")
 
   parset.list1 = list(
-    list(),
-    list(family = mboost::Gaussian(), control = mboost::boost_control(nu = 0.03)),
-    list(family = mboost::GammaReg(nuirange = c(0, 50)), control = mboost::boost_control(mstop = 600), center = TRUE),
+    list(family = mboost::Gaussian(),
+      control = mboost::boost_control(nu = 0.03)),
+    list(family = mboost::GammaReg(nuirange = c(0, 50)),
+      control = mboost::boost_control(mstop = 50), center = TRUE),
     list(family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
   )
   parset.list2 = list(
-    list(),
     list(family = "Gaussian", nu = 0.03),
-    list(family = "GammaReg", nuirange = c(0, 50), mstop = 600, center = TRUE),
-    list(family = "custom.family", custom.family.definition = mboost::Family(ngradient = function(y, f, w = 1) y - f,
+    list(family = "GammaReg", nuirange = c(0, 50), mstop = 50, center = TRUE),
+    list(family = "custom.family",
+      custom.family.definition = mboost::Family(ngradient = function(y, f,
+        w = 1) {
+        y - f
+      },
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
   )
@@ -23,14 +28,12 @@ test_that("regr_glmboost", {
     parset = parset.list1[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
-    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
   }
-  testSimpleParsets("regr.glmboost", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
+  testSimpleParsets("regr.glmboost", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list2)
 })
-
 
 test_that("regr_glmboost works with families for count data", {
   # set some dummy counts
@@ -53,10 +56,9 @@ test_that("regr_glmboost works with families for count data", {
     parset = parset.list1[[i]]
     pars = list(regr.formula, data = new.regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
-    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = as.vector(predict(m, newdata = new.regr.test))
   }
-  testSimpleParsets("regr.glmboost", new.regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
+  testSimpleParsets("regr.glmboost", new.regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list2)
 })

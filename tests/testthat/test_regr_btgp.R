@@ -4,7 +4,6 @@ test_that("regr_btgp", {
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(
-    list(),
     list(meanfn = "linear", bprior = "bflat", corr = "expsep")
   )
 
@@ -26,9 +25,9 @@ test_that("regr_btgp", {
     parset = parset.list[[i]]
     pars = list(X = train, Z = y, verb = 0, basemax = n.num, pred.n = FALSE)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(tgp::btgp, pars)
     old.predicts.list[[i]] = predict(m, XX = test, pred.n = FALSE)$ZZ.km
   }
-  testSimpleParsets("regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds,
+    old.predicts.list, parset.list)
 })

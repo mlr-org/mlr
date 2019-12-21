@@ -1,4 +1,5 @@
 context("filterFeatures_fselectorrcpp")
+
 test_that("filterFeatures_fselectorrcpp", {
   a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1) # numeric vector
   b = c("one", "two", "three") # character vector
@@ -20,7 +21,10 @@ test_that("filterFeatures_fselectorrcpp", {
   }
 
   lrn = makeLearner("classif.rpart")
-  lrn = makeFilterWrapper(learner = lrn, fw.method = "FSelectorRcpp_information.gain", fw.perc = 0.1)
-  res = resample(learner = lrn, task = binaryclass.task, resampling = cv3, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
+  lrn = makeFilterWrapper(learner = lrn,
+    fw.method = "FSelectorRcpp_information.gain", fw.perc = 0.1)
+  res = resample(learner = lrn, task = binaryclass.task, resampling = cv3,
+    measures = list(mmce, timetrain), extract = getFilteredFeatures,
+    show.info = FALSE)
   expect_length(res$extract[[1L]], 6)
 })

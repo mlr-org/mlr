@@ -7,7 +7,8 @@ test_that("TuneWrapper", {
 
   ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001)))
   lrn1a = makeLearner("classif.ksvm")
-  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid())
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1,
+    control = makeTuneControlGrid())
 
   m = train(lrn2, task = multiclass.task)
 
@@ -24,13 +25,13 @@ test_that("TuneWrapper", {
   )
   lrn1b = makeLearner("regr.ksvm")
   lrn2 = makeTuneWrapper(lrn1b, resampling = inner, par.set = ps2, control =
-    makeTuneControlGenSA(start = list(C = 0, epsilon = 0.1, sigma = 0), max.call = 5))
+    makeTuneControlGenSA(start = list(C = 0, epsilon = 0.1, sigma = 0), max.call = 5),
+  measures = getDefaultMeasure(regr.task))
 
   m = train(lrn2, task = regr.task)
   or = m$learner.model$opt.result
   expect_equal(getOptPathLength(or$opt.path), 5)
   expect_true(!any(is.na(as.data.frame(or$opt.path)$mse.test.mean)))
-
 
   # check that predict.type is taken from base learner
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
@@ -49,7 +50,8 @@ test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
   tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
   # this resulted in an error as "s" was not passed to predict
-  res = resample(tw, binaryclass.task, rdesc)
+  # suppressed warning: 'multinomial or binomial class has fewer than 8 observations; dangerous ground'
+  res = suppressWarnings(resample(tw, binaryclass.task, rdesc))
   expect_class(res, "ResampleResult")
 })
 
@@ -65,10 +67,10 @@ test_that("TuneWrapper uses tune.threshold", {
   m = train(lrn, binaryclass.task)
   p = predict(m, binaryclass.task)
   expect_true(!all(p$threshold == 0.5))
+
   r = resample(lrn, binaryclass.task, resampling = rdesc)
   expect_true(!all(r$pred$threshold == 0.5))
 })
-
 
 test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   inner = makeResampleDesc("Holdout")
@@ -80,6 +82,7 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   xs = getNestedTuneResultsX(r)
   expect_equal(colnames(xs), "C")
   expect_equal(nrow(xs), 2)
+
   opdf = getNestedTuneResultsOptPathDf(r)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 4)
@@ -96,7 +99,6 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   expect_equal(nrow(opdf), 20)
   expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))
 })
-
 
 test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issue 242", {
   rdesc = makeResampleDesc("Holdout")
@@ -115,7 +117,7 @@ test_that("TuneWrapper with glmnet (#958)", {
   requirePackagesOrSkip("glmnet", default.method = "load")
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
-    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),
+    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", lower = 0, upper = 1)),
     control = makeTuneControlRandom())
   mod = train(lrn2, multiclass.task)
   pred = predict(mod, multiclass.task)
@@ -148,6 +150,7 @@ test_that("TuneWrapper respects train parameters (#2472)", {
   expect_equal(mod$learner.model$opt.result$x, list(p1 = 0, p2 = 0, p3 = 0))
   expect_true(mod$learner.model$opt.result$y == 0)
   pred = predict(mod, tsk)
-  # we expect that the optimal parameter are also applied for prediction and therefore y_hat = p1+p2+p3+p3 should be 0
+  # we expect that the optimal parameter are also applied for prediction and
+  # therefore y_hat = p1+p2+p3+p3 should be 0
   expect_true(all(pred$data$response == 0))
 })

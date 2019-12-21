@@ -93,6 +93,7 @@ test_that("predict preserves rownames", {
   nd = data[1:2, ]
   p = predict(mod, task = task, subset = 1:2)
   expect_equal(rownames(as.data.frame(p)), as.character(c(nrow(data), nrow(data) - 1L)))
+
   p = predict(mod, newdata = nd, subset = 2)
   expect_equal(rownames(as.data.frame(p)), as.character(nrow(data) - 1L))
 })
@@ -113,9 +114,11 @@ test_that("predict.threshold", {
   lrn = makeLearner("classif.lda", predict.type = "prob", predict.threshold = 0)
   r = holdout(lrn, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))
+
   lrn = makeLearner("classif.lda", predict.type = "prob", predict.threshold = 1)
   r = holdout(lrn, binaryclass.task)
   expect_true(all(r$pred$data$response == td$negative))
+
   lrn = makeLearner("classif.lda", predict.type = "prob",
     predict.threshold = c(setosa = 1000000000, virginica = 0, versicolor = 100000))
   r = holdout(lrn, multiclass.task)
@@ -141,5 +144,6 @@ test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
 test_that("predict works with data.table as newdata", {
   lrn = makeLearner("classif.qda")
   mod = train(lrn, iris.task)
-  expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
+  expect_warning(predict(mod, newdata = data.table(iris)),
+    regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
 })

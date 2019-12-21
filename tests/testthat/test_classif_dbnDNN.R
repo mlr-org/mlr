@@ -18,8 +18,6 @@ test_that("classif_dbnDNN", {
   for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
 
-
-    set.seed(getOption("mlr.debug.seed"))
     capture.output({
       # neuralnet is not dealing with formula with `.` well
       x = data.matrix(binaryclass.train[, -ncol(binaryclass.train)])

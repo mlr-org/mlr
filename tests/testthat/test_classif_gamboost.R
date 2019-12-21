@@ -5,14 +5,16 @@ test_that("classif_gamboost", {
 
   parset.list1 = list(
     list(family = mboost::Binomial()),
-    list(family = mboost::Binomial(), baselearner = "bols", control = mboost::boost_control(nu = 0.03, mstop = 100)),
-    list(family = mboost::Binomial(link = "probit"), baselearner = "btree", control = mboost::boost_control(mstop = 200))
+    list(family = mboost::Binomial(), baselearner = "bols",
+      control = mboost::boost_control(nu = 0.03, mstop = 10)),
+    list(family = mboost::Binomial(link = "probit"), baselearner = "btree",
+      control = mboost::boost_control(mstop = 10))
   )
 
   parset.list2 = list(
     list(),
-    list(family = "Binomial", baselearner = "bols", nu = 0.03, mstop = 100),
-    list(family = "Binomial", Binomial.link = "probit", baselearner = "btree", mstop = 200)
+    list(family = "Binomial", baselearner = "bols", nu = 0.03, mstop = 10),
+    list(family = "Binomial", Binomial.link = "probit", baselearner = "btree", mstop = 10)
   )
 
   old.predicts.list = list()
@@ -22,16 +24,26 @@ test_that("classif_gamboost", {
     parset = parset.list1[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::gamboost, pars)
-    set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
-    set.seed(getOption("mlr.debug.seed"))
-    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
+
+    # suppressed warnings: "Some ‘x’ values are beyond ‘boundary.knots’; Linear extrapolation used."
+    suppressWarnings(
+      old.predicts.list[[i]] <- predict(m, newdata = binaryclass.test, type = "class")
+    )
+    suppressWarnings(
+      old.probs.list[[i]] <- 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
+    )
   }
 
-  testSimpleParsets("classif.gamboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
-  testProbParsets("classif.gamboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
+  # suppressed warnings: "Some ‘x’ values are beyond ‘boundary.knots’; Linear extrapolation used."
+  suppressWarnings(
+    testSimpleParsets("classif.gamboost", binaryclass.df, binaryclass.target,
+      binaryclass.train.inds, old.predicts.list, parset.list2)
+  )
+  suppressWarnings(
+    testProbParsets("classif.gamboost", binaryclass.df, binaryclass.target,
+      binaryclass.train.inds, old.probs.list, parset.list2)
+  )
 })
 
 test_that("classif_gamboost probability predictions with family 'AUC' and 'AdaExp'", {

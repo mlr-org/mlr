@@ -22,11 +22,11 @@ test_that("regr_fnn", {
     j = which(colnames(rtrain) == regr.target)
     pars = list(train = rtrain[, -j], test = rtest[, -j], y = rtrain[, j])
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list1[[i]] = do.call(FNN::knn.reg, pars)$pred
   }
 
-  testSimpleParsets("regr.fnn", rdf, regr.target, regr.train.inds, old.predicts.list1, parset.list)
+  testSimpleParsets("regr.fnn", rdf, regr.target, regr.train.inds,
+    old.predicts.list1, parset.list)
 
   tt = function(formula, data, k = 3) {
     j = which(colnames(data) == as.character(formula)[2])
@@ -34,8 +34,10 @@ test_that("regr_fnn", {
   }
   tp = function(model, newdata) {
     newdata = newdata[, -model$target]
-    FNN::knn.reg(train = model$train, test = newdata, y = model$y, k = model$k)$pred
+    FNN::knn.reg(train = model$train, test = newdata, y = model$y,
+      k = model$k)$pred
   }
 
-  testCVParsets("regr.fnn", rdf, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("regr.fnn", rdf, regr.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
 })

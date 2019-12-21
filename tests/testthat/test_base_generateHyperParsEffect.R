@@ -9,7 +9,7 @@ test_that("generate data", {
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
     resampling = rdesc, par.set = ps,
-    show.info = FALSE)
+    show.info = FALSE, measures = getDefaultMeasure(pid.task))
   res = resample(lrn, task = pid.task, resampling = cv2,
     extract = getTuneResult)
   orig = getNestedTuneResultsOptPathDf(res)
@@ -62,7 +62,7 @@ test_that("1 numeric hyperparam", {
 test_that("1 discrete hyperparam", {
   # generate data
   ps = makeParamSet(makeDiscreteParam("kernel", values = c("vanilladot",
-    "polydot", "rbfdot"))
+    "polydot", "rbfdot"), default = "rbfdot")
   )
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
@@ -88,8 +88,7 @@ test_that("1 discrete hyperparam", {
 
 test_that("1 numeric hyperparam with optimizer failure", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = c(-1, 0.5, 1.5))
-  )
+  ps = makeParamSet(makeDiscreteParam("C", values = c(-1, 0.5, 1.5)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
@@ -115,13 +114,12 @@ test_that("1 numeric hyperparam with optimizer failure", {
 
 test_that("1 numeric hyperparam with nested cv", {
   # generate data
-  ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2)
-  )
+  ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2))
   ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
-    resampling = rdesc, par.set = ps,
-    show.info = FALSE)
+    resampling = rdesc, par.set = ps, show.info = FALSE,
+    measures = getDefaultMeasure(pid.task))
   res = resample(lrn, task = pid.task, resampling = cv2,
     extract = getTuneResult)
   orig = getNestedTuneResultsOptPathDf(res)

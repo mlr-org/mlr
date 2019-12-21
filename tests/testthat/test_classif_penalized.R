@@ -17,7 +17,6 @@ test_that("classif_penalized", {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     capture.output({
       m = do.call(penalized::penalized, pars)
     })

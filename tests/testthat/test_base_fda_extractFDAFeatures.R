@@ -1,7 +1,8 @@
 context("extactFDAFeatures")
 
 test_that("extractFDAFeatures", {
-  methods = list("UVVIS" = extractFDAMultiResFeatures(), "NIR" = extractFDAFourier())
+  methods = list("UVVIS" = extractFDAMultiResFeatures(),
+    "NIR" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
@@ -21,8 +22,10 @@ test_that("extractFeatures multiple times", {
   expect_class(df, "data.frame")
   expect_true(nrow(df) == 129L)
   expect_true(ncol(df) == 154L)
-  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase.", seq_len(134)),
-    paste0("NIR.multires.", seq_len(9)), paste0("UVVIS.multires.", seq_len(9))))
+  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase.",
+    seq_len(134)),
+  paste0("NIR.multires.", seq_len(9)), paste0("UVVIS.multires.",
+    seq_len(9))))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -52,7 +55,8 @@ test_that("Wrong methods yield errors", {
     lrn = function(data, target, col, vals = NULL) {
       1
     }
-    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
+      par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
     "feat.method needs to return")
@@ -62,7 +66,8 @@ test_that("Wrong methods yield errors", {
     lrn = function(data) {
       data[, 1]
     }
-    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
+      par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),
     "Must have formal arguments")
@@ -86,7 +91,8 @@ test_that("extractFDAFeatures colnames work", {
 })
 
 test_that("extractFDAFeaturesDesc", {
-  methods = list("UVVIS" = extractFDAMultiResFeatures(), "NIR" = extractFDAFourier())
+  methods = list("UVVIS" = extractFDAMultiResFeatures(),
+    "NIR" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check desc
   expect_is(t$desc, "extractFDAFeatDesc")
@@ -107,13 +113,15 @@ test_that("extractFDAFeatures task equal data.frame", {
   fm = list("fd" = extractFDAFourier(trafo.coeff = "amplitude"))
   t2 = extractFDAFeatures(gp.subset, feat.methods = fm)
   gp.desc = getTaskDesc(gp.subset)
-  t3 = extractFDAFeatures(getTaskData(gp.subset, functionals.as = "matrix"), target = "X1", feat.methods = fm)
+  t3 = extractFDAFeatures(getTaskData(gp.subset, functionals.as = "matrix"),
+    target = "X1", feat.methods = fm)
   expect_identical(getTaskData(t2$task), t3$data)
   expect_equal(t2$desc, t3$desc)
   expect_equal(t2$desc$extractFDAFeat$fd$extractor.vals$trafo.coeff, "amplitude")
 
-  expect_error(extractFDAFeatures(gp.subset, feat.methods = list("fd" = extractFDAFourier(),
-    "fd2" = extractFDAMultiResFeatures())), regexp = "Must be a subset of")
+  expect_error(extractFDAFeatures(gp.subset,
+    feat.methods = list("fd" = extractFDAFourier(),
+      "fd2" = extractFDAMultiResFeatures())), regexp = "Must be a subset of")
 })
 
 test_that("reextractFDAFeatures", {
@@ -136,9 +144,13 @@ test_that("extract reextract feat.methods all", {
 })
 
 test_that("extract and reextract have correct args", {
-  lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = list("all" = extractFDAFourier()))
-  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"), subsetTask(fuelsubset.task, subset = 1:20))
+  lrn = makeExtractFDAFeatsWrapper("regr.rpart",
+    feat.methods = list("all" = extractFDAFourier()))
+  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"),
+    subsetTask(fuelsubset.task, subset = 1:20))
   prd = predict(mod, subsetTask(fuelsubset.task, subset = 21:40))
-  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$extractor.vals$trafo.coeff, "amplitude")
-  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$extractor.vals$trafo.coeff, "amplitude")
+  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$extractor.vals$trafo.coeff,
+    "amplitude")
+  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$extractor.vals$trafo.coeff,
+    "amplitude")
 })

@@ -8,7 +8,8 @@ test_that("learners work: multilabel", {
   # multiabel
   lrns = listLearnersCustom("multilabel", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testBasicLearnerProperties, task = multilabel.task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = multilabel.task,
+    hyperpars = hyperpars)
 
   # multilabel, probs
   lrns = listLearnersCustom("multilabel", properties = "prob", create = TRUE)
@@ -17,15 +18,18 @@ test_that("learners work: multilabel", {
 
   # multilabel, factors
   lrns = listLearnersCustom("multilabel", properties = "factors", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesFactors, task = multilabel.task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerHandlesFactors, task = multilabel.task,
+    hyperpars = hyperpars)
 
   # multilabel, ordered
   lrns = listLearnersCustom("multilabel", properties = "ordered", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = multilabel.task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = multilabel.task,
+    hyperpars = hyperpars)
 
   # multilabel, missings
   lrns = listLearnersCustom("multilabel", properties = "missings", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesMissings, task = multilabel.task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerHandlesMissings, task = multilabel.task,
+    hyperpars = hyperpars)
 
   # multilabel, weights
   lrns = listLearnersCustom("multilabel", properties = "weights", create = TRUE)

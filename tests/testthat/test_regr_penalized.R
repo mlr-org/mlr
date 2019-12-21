@@ -13,7 +13,8 @@ test_that("regr_penalized", {
     list(fusedl = TRUE, lambda2 = 2, maxiter = 20L)
   )
 
-  # to make test of empty list feasable (in terms of time), number of obs need to be reduced
+  # to make test of empty list feasable (in terms of time), number of obs need
+  # to be reduced
   regr.train.inds = sample(seq(1, 506), size = 150)
   regr.test.inds = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
   regr.train = regr.df[regr.train.inds, ]
@@ -26,7 +27,6 @@ test_that("regr_penalized", {
     parset = parset.list[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     capture.output({
       m = do.call(penalized::penalized, pars)
     })

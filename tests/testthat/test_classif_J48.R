@@ -15,7 +15,6 @@ test_that("classif_j48", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    set.seed(getOption("mlr.debug.seed"))
     parset$Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))
     ctrl = do.call(RWeka::Weka_control, parset)
     m = RWeka::J48(formula = multiclass.formula, data = multiclass.train, control = ctrl)
@@ -25,14 +24,20 @@ test_that("classif_j48", {
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.J48", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets("classif.J48", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testSimpleParsets("classif.J48", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list, parset.list)
+  testProbParsets("classif.J48", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-    RWeka::J48(formula, data = data[subset, ], control = RWeka::Weka_control(..., Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
+    RWeka::J48(formula, data = data[subset, ],
+      control = RWeka::Weka_control(...,
+        Q = as.integer(runif(1, min = -.Machine$integer.max,
+          max = .Machine$integer.max))))
   }
 
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
-  testCVParsets("classif.J48", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("classif.J48", multiclass.df, multiclass.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
 })

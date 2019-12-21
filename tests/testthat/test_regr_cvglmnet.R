@@ -31,7 +31,8 @@ test_that("regr_cvglmnet", {
     }
     newx = regr.test
     newx[, regr.class.col] = NULL
-    p = as.vector(predict(m, as.matrix(fixDataForLearner(newx, info)), type = "response"))
+    p = as.vector(predict(m, as.matrix(fixDataForLearner(newx, info)),
+      type = "response"))
     old.predicts.list[[i]] = p
   }
   testSimpleParsets("regr.cvglmnet", regr.df, regr.target,

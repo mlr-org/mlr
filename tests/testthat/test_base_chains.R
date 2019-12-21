@@ -1,6 +1,7 @@
 context("chains")
 
 test_that("chains", {
+
   lrn1 = makeLearner("classif.rpart", minsplit = 10)
   lrn4 = makeFilterWrapper(lrn1, fw.perc = 0.5)
 
@@ -25,6 +26,7 @@ test_that("chains", {
   or = m$learner.model$opt.result
   expect_equal(length(or$x), 2)
   expect_equal(getOptPathLength(or$opt.path), 2 * 2)
+
   perf = performance(p, mmce)
   expect_true(perf < 0.1)
 })

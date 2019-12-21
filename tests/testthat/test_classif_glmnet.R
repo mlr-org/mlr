@@ -26,7 +26,6 @@ test_that("classif_glmnet", {
     pars = c(pars, parset)
     glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
-    set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])

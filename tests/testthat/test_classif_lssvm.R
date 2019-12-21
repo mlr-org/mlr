@@ -21,7 +21,7 @@ test_that("classif_lssvm", {
     parset = parset.list1[[i]]
     pars = list(x = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
+    #set.seed(getOption("mlr.debug.seed"))
     m = do.call(kernlab::lssvm, pars)
     old.predicts.list[[i]] = kernlab::predict(m, newdata = multiclass.test)
   }

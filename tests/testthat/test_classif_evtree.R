@@ -23,8 +23,8 @@ test_that("classif_evtree", {
     old.probs.list[[i]] = p[, 1]
   }
 
-  testSimpleParsets("classif.evtree", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-    old.predicts.list, parset.list)
-  testProbParsets("classif.evtree", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-    old.probs.list, parset.list)
+  testSimpleParsets("classif.evtree", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.predicts.list, parset.list)
+  testProbParsets("classif.evtree", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.probs.list, parset.list)
 })

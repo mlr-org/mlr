@@ -8,6 +8,7 @@ test_that("over and undersample works", {
   tab2 = table(df[, binaryclass.target])
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"] * 2)
+
   task = undersample(binaryclass.task, rate = 0.5)
   df = getTaskData(task)
   tab2 = table(df[, binaryclass.target])
@@ -21,6 +22,7 @@ test_that("over and undersample wrapper", {
   lrn2 = makeUndersampleWrapper(lrn1, usw.rate = 0.5)
   r = resample(lrn2, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
+
   lrn2 = makeOversampleWrapper(lrn1, osw.rate = 1.5)
   r = resample(lrn2, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
@@ -33,7 +35,8 @@ test_that("over and undersample arg check works", {
 })
 
 test_that("over and undersample works with weights", {
-  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target, weights = seq_len(nrow(binaryclass.df)))
+  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target,
+    weights = seq_len(nrow(binaryclass.df)))
   task2 = undersample(task, rate = 0.5)
   expect_true(length(task2$weights) < length(task$weights))
   expect_true(all(task2$weights %in% task$weights))
@@ -70,6 +73,7 @@ test_that("control which class gets over or under sampled", {
   lrn2 = makeUndersampleWrapper(lrn1, usw.rate = 0.1, usw.cl = z$min.name)
   r = resample(lrn2, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
+
   lrn2 = makeOversampleWrapper(lrn1, osw.rate = 1.5, osw.cl = z$max.name)
   r = resample(lrn2, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))

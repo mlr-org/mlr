@@ -24,7 +24,8 @@ test_that("classif_h2ogbm", {
     old.probs.list[[i]] = as.data.frame(p)[, 2L]
   }
 
-  testProbParsets("classif.h2o.gbm", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.h2o.gbm", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.probs.list, parset.list)
 })
 
 test_that("class names are integers and probabilities predicted (#1787)", {
@@ -52,8 +53,8 @@ test_that("feature importances are returned", {
   feat.imp = getFeatureImportance(mod)$res
   feat.imp.h2o = h2o::h2o.varimp(getLearnerModel(mod))[, c("variable", "relative_importance")]
   # Convert to data.frame with same structure for equality check
-  feat.imp.h2o = data.frame(as.list(xtabs(relative_importance ~ variable, data = feat.imp.h2o)))[names(feat.imp)]
+  feat.imp.h2o = data.frame(as.list(xtabs(relative_importance ~ variable,
+    data = feat.imp.h2o)))[names(feat.imp)]
 
-  expect_equal(feat.imp,
-    feat.imp.h2o)
+  expect_equal(feat.imp, feat.imp.h2o)
 })

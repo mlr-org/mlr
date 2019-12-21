@@ -7,7 +7,6 @@ test_that("fixed in single resampling", {
     blocking = fixed)
 
   # test blocking in single resample
-  set.seed(getOption("mlr.debug.seed"))
   lrn = makeLearner("classif.lda")
   rdesc = makeResampleDesc("CV", fixed = TRUE)
   p = resample(lrn, ct, rdesc)$pred
@@ -36,7 +35,7 @@ test_that("fixed in nested resampling", {
   inner = makeResampleDesc("CV", iters = 4, fixed = TRUE)
   outer = makeResampleDesc("CV", iters = 5, fixed = TRUE)
   tune.wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
-    control = ctrl, show.info = FALSE)
+    control = ctrl, show.info = FALSE, measures = getDefaultMeasure(ct))
 
   p = resample(tune.wrapper, ct, outer, show.info = FALSE,
     extract = getTuneResult)
@@ -57,7 +56,7 @@ test_that("fixed in nested resampling", {
   inner = makeResampleDesc("CV", iters = 6)
   outer = makeResampleDesc("CV", fixed = TRUE)
   tune.wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
-    control = ctrl, show.info = FALSE)
+    control = ctrl, show.info = FALSE, measures = getDefaultMeasure(ct))
   p = resample(tune.wrapper, ct, outer, show.info = FALSE,
     extract = getTuneResult)
   expect_length(getResamplingIndices(p, inner = TRUE)[[1]][[1]], 6)

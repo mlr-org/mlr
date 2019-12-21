@@ -18,19 +18,25 @@ test_that("tuneThreshold", {
   expect_true(tr$perf >= 0 && tr$perf < 0.1)
 })
 
-test_that("tuheThreshold works with all tuning methods", {
+test_that("tuneThreshold works with all tuning methods", {
   lrn = makeLearner("classif.lda", predict.type = "prob")
   ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 3))
   ctrls = list(
-    gensa = makeTuneControlGenSA(start = list(nu = 2.5), maxit = 1, tune.threshold = TRUE),
-    cmaes = makeTuneControlCMAES(start = list(nu = 2.5), maxit = 1, tune.threshold = TRUE),
-    design = makeTuneControlDesign(design = generateDesign(n = 2, par.set = ps), tune.threshold = TRUE),
+    gensa = makeTuneControlGenSA(start = list(nu = 2.5), maxit = 1,
+      tune.threshold = TRUE),
+    cmaes = makeTuneControlCMAES(start = list(nu = 2.5), maxit = 1,
+      tune.threshold = TRUE),
+    design = makeTuneControlDesign(design = generateDesign(n = 2, par.set = ps),
+      tune.threshold = TRUE),
     grid = makeTuneControlGrid(resolution = 2L, tune.threshold = TRUE),
-    irace = makeTuneControlIrace(maxExperiments = 12, nbIterations = 1L, minNbSurvival = 1, tune.threshold = TRUE)
+    irace = makeTuneControlIrace(maxExperiments = 12, nbIterations = 1L,
+      minNbSurvival = 1, tune.threshold = TRUE)
   )
   for (ctrl in ctrls) {
-    lrn.tuned = makeTuneWrapper(lrn, resampling = cv2, measures = acc, par.set = ps, control = ctrl)
-    res = resample(lrn.tuned, binaryclass.task, resampling = makeResampleDesc("Holdout"), extract = getTuneResult)
+    lrn.tuned = makeTuneWrapper(lrn, resampling = cv2, measures = acc,
+      par.set = ps, control = ctrl)
+    res = resample(lrn.tuned, binaryclass.task,
+      resampling = makeResampleDesc("Holdout"), extract = getTuneResult)
     expect_number(res$extract[[1]]$threshold)
   }
 })

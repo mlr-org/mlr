@@ -18,9 +18,7 @@ test_that("classif_RRF", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(RRF::RRF, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = multiclass.test, type = "response")
-    set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2

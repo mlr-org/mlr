@@ -3,17 +3,13 @@ context("classif_multinom")
 test_that("classif_multinom", {
   requirePackagesOrSkip("nnet", default.method = "load")
 
-  set.seed(getOption("mlr.debug.seed"))
   capture.output({
     m = nnet::multinom(formula = multiclass.formula, data = multiclass.train)
   })
 
-  set.seed(getOption("mlr.debug.seed"))
   p = predict(m, newdata = multiclass.test)
-
   testSimple("classif.multinom", multiclass.df, multiclass.target, multiclass.train.inds, p)
 
-  set.seed(getOption("mlr.debug.seed"))
   p = predict(m, newdata = multiclass.test, type = "probs")
   testProb("classif.multinom", multiclass.df, multiclass.target, multiclass.train.inds, p)
 

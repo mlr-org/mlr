@@ -44,6 +44,7 @@ test_that("ConstantClassWrapper predicts with frac", {
   p1 = predict(m1, task = multiclass.task, subset = multiclass.test.inds)
   p2 = predict(m2, task = multiclass.task, subset = multiclass.test.inds)
   expect_false(all(getPredictionResponse(p1) == getPredictionResponse(p2)))
+
   have = getPredictionResponse(p2)
   want = rep.int(multiclass.df[1, multiclass.target], length(multiclass.test.inds))
   expect_equal(have, want)

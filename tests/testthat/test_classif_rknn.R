@@ -4,7 +4,7 @@ test_that("classif_rknn", {
   requirePackagesOrSkip("rknn", default.method = "load")
 
   k = c(2L, 4L)
-  r = c(200L, 600L)
+  r = c(100L, 100L)
   mtry = c(2L, 3L)
   parset.grid = expand.grid(k = k, r = r, mtry = mtry)
   parset.list = apply(parset.grid, MARGIN = 1L, as.list)
@@ -27,10 +27,12 @@ test_that("classif_rknn", {
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("classif.rknn", multiclass.df, multiclass.target, multiclass.train.inds,
+  testSimpleParsets("classif.rknn", multiclass.df, multiclass.target,
+    multiclass.train.inds,
     old.predicts.list, parset.list)
 
-  tt = function(formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L, cluster = NULL) {
+  tt = function(formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L,
+    cluster = NULL) {
     return(list(formula = formula, data = data, k = k, r = r, mtry = mtry,
       seed = seed, cluster = cluster))
   }

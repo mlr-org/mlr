@@ -9,16 +9,19 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
     super = makeLearner(super, predict.type = sm.pt)
     # sm.pt = NULL
   }
-  if (method == "hill.climb" && bms.pt == "response" && inherits(task, "ClassifTask")) {
+  if (method == "hill.climb" && bms.pt == "response" && inherits(task,
+    "ClassifTask")) {
     return()
   }
 
-  slrn = makeStackedLearner(base, super, method = method, use.feat = use.feat, predict.type = sm.pt)
+  slrn = makeStackedLearner(base, super, method = method, use.feat = use.feat,
+    predict.type = sm.pt)
   tr = train(slrn, task)
   pr = predict(tr, task)
 
   if (sm.pt == "prob") {
-    expect_equal(ncol(pr$data[, grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
+    expect_equal(ncol(pr$data[, grepl("prob", colnames(pr$data))]),
+      length(getTaskClassLevels(task)))
   }
 
   if (method %nin% c("stack.cv", "hill.climb")) {
@@ -61,7 +64,8 @@ test_that("Stacking works with wrapped learners (#687)", {
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
   lrns[[1]] = makeFilterWrapper(lrns[[1]], fw.abs = 2)
-  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb")
+  expect_silent(makeStackedLearner(base.learners = lrns, predict.type = "prob",
+    method = "hill.climb"))
 })
 
 test_that("Parameters for hill climb works", {
@@ -69,7 +73,8 @@ test_that("Parameters for hill climb works", {
   base = c("classif.rpart", "classif.lda", "classif.svm")
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
-  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",
+  m = makeStackedLearner(base.learners = lrns, predict.type = "prob",
+    method = "hill.climb",
     parset = list(bagprob = 0.8, bagtime = 5, replace = FALSE))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
@@ -82,8 +87,10 @@ test_that("Parameters for hill climb works", {
     return(1 - sum(diag(tb)) / sum(tb))
   }
 
-  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",
-    parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
+  m = makeStackedLearner(base.learners = lrns, predict.type = "prob",
+    method = "hill.climb",
+    parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2,
+      metric = metric))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 
@@ -95,7 +102,8 @@ test_that("Parameters for compress model", {
   base = c("classif.rpart", "classif.lda", "classif.svm")
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
-  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "compress",
+  m = makeStackedLearner(base.learners = lrns, predict.type = "prob",
+    method = "compress",
     parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
@@ -105,8 +113,8 @@ test_that("Parameters for compress model", {
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "response")
-  m = makeStackedLearner(base.learners = lrns, predict.type = "response", method = "compress",
-    parset = list(k = 5, prob = 0.3))
+  m = makeStackedLearner(base.learners = lrns, predict.type = "response",
+    method = "compress", parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
-  res = predict(tmp, tsk)
+  expect_silent(predict(tmp, tsk))
 })

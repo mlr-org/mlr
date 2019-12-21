@@ -1,7 +1,10 @@
 context("checkData")
 
 test_that("checkData", {
-  expect_error(makeClassifTask(data = binaryclass.df, target = "foo"), "doesn't contain target var: foo")
+  expect_error(
+    makeClassifTask(data = binaryclass.df, target = "foo"),
+    "doesn't contain target var: foo"
+  )
 
   # y contains missings
   df = multiclass.df

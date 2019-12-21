@@ -20,7 +20,6 @@ test_that("classif_knn", {
     test[, multiclass.target] = NULL
     pars = list(train = train, cl = y, test = test)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     p = do.call(class::knn, pars)
     old.predicts.list[[i]] = p
   }
@@ -37,10 +36,9 @@ test_that("classif_knn", {
     y = train[, target]
     train[, target] = NULL
     newdata[, target] = NULL
-    set.seed(getOption("mlr.debug.seed"))
     class::knn(train = train, cl = y, test = newdata, k = model$k)
   }
 
-  testCVParsets("classif.knn", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
-    parset.list = parset.list)
+  testCVParsets("classif.knn", multiclass.df, multiclass.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
 })

@@ -1,4 +1,5 @@
 context("regr_gamboost")
+
 test_that("regr_gamboost", {
   requirePackagesOrSkip("mboost", default.method = "attach")
 
@@ -14,9 +15,13 @@ test_that("regr_gamboost", {
   )
   parset.list2 = list(
     list(),
-    list(family = "Gaussian", baselearner = "bols", dfbase = 4, nu = 0.03, mstop = 200),
-    list(family = "GammaReg", baselearner = "btree", nuirange = c(0, 50), mstop = 100),
-    list(family = "custom.family", custom.family.definition = mboost::Family(ngradient = function(y, f, w = 1) y - f,
+    list(family = "Gaussian", baselearner = "bols", dfbase = 4, nu = 0.03,
+      mstop = 200),
+    list(family = "GammaReg", baselearner = "btree", nuirange = c(0, 50),
+      mstop = 200),
+    list(family = "custom.family",
+      custom.family.definition = mboost::Family(ngradient =
+        function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
   )
@@ -25,14 +30,17 @@ test_that("regr_gamboost", {
     parset = parset.list1[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
-    m = do.call(mboost::gamboost, pars)
-    set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
+    # suppress warnings: "cannot compute ‘bbs’ for non-numeric variables; used
+    # ‘bols’ instead."
+    m = suppressWarnings(do.call(mboost::gamboost, pars))
+    old.predicts.list[[i]] = suppressWarnings(as.vector(predict(m,
+      newdata = regr.test)))
   }
-  testSimpleParsets("regr.gamboost", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
+  suppressWarnings(
+    testSimpleParsets("regr.gamboost", regr.df, regr.target, regr.train.inds,
+      old.predicts.list, parset.list2)
+  )
 })
-
 
 test_that("regr_gamboost works with families for count data", {
   # set some dummy counts
@@ -56,10 +64,16 @@ test_that("regr_gamboost works with families for count data", {
     parset = parset.list1[[i]]
     pars = list(regr.formula, data = new.regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::gamboost, pars)
-    set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = as.vector(predict(m, newdata = new.regr.test))
+
+    old.predicts.list[[i]] = suppressWarnings(as.vector(predict(m,
+      newdata = new.regr.test)))
   }
-  testSimpleParsets("regr.gamboost", new.regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
+
+  # suppressed warnings: "Some ‘x’ values are beyond ‘boundary.knots’; Linear
+  # extrapolation used."
+  suppressWarnings(
+    testSimpleParsets("regr.gamboost", new.regr.df, regr.target, regr.train.inds,
+      old.predicts.list, parset.list2)
+  )
 })

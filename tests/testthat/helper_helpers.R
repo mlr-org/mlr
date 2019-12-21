@@ -206,8 +206,8 @@ testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list
   }
 }
 
-
-testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tune.predict = predict) {
+testCV = function(t.name, df, target, folds = 2, parset = list(),
+  tune.train, tune.predict = predict) {
 
   requirePackages("e1071", default.method = "load")
   data = df
@@ -229,7 +229,9 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     return(p)
   }
 
-  tr = e1071::tune(method = tt, predict.func = tp, train.x = formula, data = data, tunecontrol = e1071::tune.control(cross = folds, best.model = FALSE))
+  tr = e1071::tune(method = tt, predict.func = tp, train.x = formula,
+    data = data,
+    tunecontrol = e1071::tune.control(cross = folds, best.model = FALSE))
 
   cv.instance = e1071CVToMlrCV(tr)
   lrn = do.call("makeLearner", c(t.name, parset))
@@ -249,14 +251,13 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
   invisible(TRUE)
 }
 
-testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
+testCVParsets = function(t.name, df, target, folds = 2, tune.train,
+  tune.predict = predict, parset.list) {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     testCV(t.name, df, target, folds, parset, tune.train, tune.predict)
   }
 }
-
-
 
 testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.train, tune.predict = predict) {
 

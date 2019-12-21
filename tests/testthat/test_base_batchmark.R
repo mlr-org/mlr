@@ -1,7 +1,3 @@
-# the whole unit tests currently breaks on CRAN due to a problem with datatable on WB / rdevel
-# see PR here:
-# https://github.com/mlr-org/mlr/pull/2210
-
 context("batchmark")
 
 prev = getOption("batchtools.verbose")
@@ -18,10 +14,12 @@ test_that("batchmark", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resamplings = rin, reg = reg)
+  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
+                  tasks = binaryclass.task, resamplings = rin, reg = reg)
 
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
+
   tab = summarizeExperiments(reg = reg)
   expect_equal(tab$problem, "binary")
   expect_equal(tab$algorithm, "classif.lda")
@@ -34,9 +32,11 @@ test_that("batchmark", {
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
   expect_true(setequal(names(preds), "binary"))
+
   preds1 = preds[[1L]]
   expect_true(is.list(preds1))
   expect_true(setequal(names(preds1), "classif.lda"))
+
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
 
@@ -72,9 +72,11 @@ test_that("batchmark", {
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
   expect_true(setequal(names(preds), task.names))
+
   preds1 = preds[[1L]]
   expect_true(is.list(preds1))
   expect_true(setequal(names(preds1), learner.names))
+
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
 
@@ -92,7 +94,8 @@ test_that("batchmark", {
 
   # make it more complex
   ps = makeParamSet(makeDiscreteLearnerParam("cp", values = c(0.01, 0.1)))
-  learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel", "classif.rpart.tuned", "classif.lda.filtered")
+  learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel",
+                    "classif.rpart.tuned", "classif.lda.filtered")
   learners = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
   learners = c(learners, list(
     makeFeatSelWrapper(learners[[1L]], resampling = rin, control = makeFeatSelControlRandom(maxit = 3)),
@@ -125,9 +128,11 @@ test_that("batchmark", {
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
   expect_true(setequal(names(preds), task.names))
+
   preds1 = preds[[1L]]
   expect_true(is.list(preds1))
   expect_true(setequal(names(preds1), learner.names))
+
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
 
@@ -146,11 +151,14 @@ test_that("batchmark", {
   expect_is(tr, "list")
   expect_equal(length(tr), 2)
   expect_true(setequal(names(tr), task.names))
+
   tr1 = tr[[task.names[1L]]]
   expect_true(is.list(tr1))
   expect_true(setequal(names(tr1), learner.names))
+
   tr11 = tr1[[paste0(learner.names[2L], ".tuned")]]
   expect_equal(length(tr11), 2)
+
   tr111 = tr11[[1L]]
   expect_is(tr111, "TuneResult")
 
@@ -166,11 +174,14 @@ test_that("batchmark", {
   expect_is(tf, "list")
   expect_equal(length(tf), 2)
   expect_true(setequal(names(tf), task.names))
+
   tf1 = tf[[task.names[1L]]]
   expect_true(is.list(tf1))
   expect_true(setequal(names(tf1), learner.names))
+
   tf11 = tf1[[paste0(learner.names[1L], ".featsel")]]
   expect_equal(length(tf11), 2)
+
   tf111 = tf11[[1L]]
   expect_is(tf111, "FeatSelResult")
 
@@ -247,19 +258,24 @@ test_that("keep.preds and models are passed down to resample()", {
   models = getBMRModels(res)
   expect_true(is.list(models))
   expect_true(setequal(names(models), "binary"))
+
   models1 = models[[1L]]
   expect_true(is.list(models1))
   expect_true(setequal(names(models1), "classif.lda"))
+
   models11 = models1[[1L]]
   expect_true(is.list(models11))
   expect_equal(length(models11), 2L)
+
   models111 = models11[[1L]]
   expect_is(models111, "WrappedModel")
 
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
-  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = FALSE, reg = reg)
+  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
+                  tasks = binaryclass.task, resamplings = rin, models = FALSE, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
+
   res = reduceBatchmarkResults(reg = reg, keep.pred = FALSE)
   x = res$results$binary$classif.lda
   models11 = getBMRModels(res)[[1L]][[1L]]
@@ -268,22 +284,20 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_null(models11)
 })
 
-
 test_that("batchmark works with resampling instances", {
-  skip_if_not_installed("batchtools")
-  library(batchtools)
+  requirePackagesOrSkip("batchtools")
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
   task = binaryclass.task
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)
   rdesc = makeResampleDesc("CV", iters = 2L)
   rin = makeResampleInstance(rdesc, task)
-  ids = batchmark(learners = learners, task = task, resampling = rin, reg = reg)
+  ids = batchmark(learners = learners, tasks = task, resamplings = rin, reg = reg)
   expect_data_table(ids, nrow = 4)
 })
 
 test_that("batchmark works with incomplete results", {
-  skip_if_not_installed("batchtools")
+  requirePackagesOrSkip("batchtools")
   library(batchtools)
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
   task = binaryclass.task
@@ -291,7 +305,7 @@ test_that("batchmark works with incomplete results", {
   learners = lapply(learner.names, makeLearner)
   rdesc = makeResampleDesc("CV", iters = 4L)
   rin = makeResampleInstance(rdesc, task)
-  ids = batchmark(learners = learners, task = task, resampling = rin, reg = reg)
+  ids = batchmark(learners = learners, tasks = task, resamplings = rin, reg = reg)
   submitJobs(1:6, reg = reg)
   expect_true(waitForJobs(reg = reg))
   expect_warning({

@@ -14,13 +14,15 @@ test_that("hyperpars", {
     getHyperPars(removeHyperPars(lrn, "C")))
 
   # test a more complex param object
-  lrn = makeLearner("classif.ksvm", class.weights = c(setosa = 1, versicolor = 2, virginica = 3))
+  lrn = makeLearner("classif.ksvm", class.weights = c(setosa = 1,
+    versicolor = 2, virginica = 3))
   m = train(lrn, task = multiclass.task)
 
   # check warnings
   mlr.opts = getMlrOptions()
   configureMlr(on.par.without.desc = "warn", show.learner.output = FALSE)
   expect_warning(makeLearner("classif.rpart", foo = 1), "Setting parameter foo without")
+
   configureMlr(on.par.without.desc = "quiet")
   expect_warning(makeLearner("classif.rpart", foo = 1), NA)
   configureMlr(show.learner.output = FALSE)
@@ -45,7 +47,8 @@ test_that("removing par settings works", {
   expect_equal(getHyperPars(lrn3), list(method = "mve"))
 
   # now remove all hyperpars using a wrapped wrapper
-  lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.qda", nu = 2), fw.perc = 0.5), osw.rate = 1)
+  lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.qda", nu = 2),
+    fw.perc = 0.5), osw.rate = 1)
   lrn1 = removeHyperPars(lrn, ids = names(getHyperPars(lrn)))
   expect_true(length(getHyperPars(lrn1)) == 0)
 })

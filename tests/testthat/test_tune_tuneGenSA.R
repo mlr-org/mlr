@@ -6,7 +6,8 @@ test_that("tuneGenSA", {
     makeNumericParam("cp", lower = 0.001, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
-  ctrl1 = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
+  ctrl1 = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L),
+    maxit = 5)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1, measures = acc)
   expect_number(tr1$y, lower = 0.8, upper = 1)
@@ -17,8 +18,9 @@ test_that("tuneGenSA", {
     makeIntegerParam("ntree", lower = 100, upper = 500)
   )
 
-  ctrl2 = makeTuneControlGenSA(start = list(cutoff = c(1 / 3, 1 / 3, 1 / 3), ntree = 200L),
-    maxit = 5, max.call = 3)
+  ctrl2 = makeTuneControlGenSA(start = list(cutoff = c(1 / 3, 1 / 3, 1 / 3),
+    ntree = 200L),
+  maxit = 5, max.call = 3)
   tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res,
     par.set = ps2, control = ctrl2)
   expect_equal(ncol(as.data.frame(tr2$opt.path)), 4 + 1 + 2 + 2)
@@ -40,8 +42,10 @@ test_that("tuneGenSA with budget", {
     makeNumericParam("cp", lower = 0.001, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
-  expect_error((makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), max.call = 5, budget = 8)))
-  ctrl1 = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), max.call = 30, budget = 30)
+  expect_error((makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L),
+    max.call = 5, budget = 8)))
+  ctrl1 = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L),
+    max.call = 30, budget = 30)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
   expect_identical(getOptPathLength(tr1$opt.path), ctrl1$budget)

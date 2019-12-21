@@ -6,7 +6,9 @@ test_that("selectFeatures", {
   lrn = makeLearner("classif.lda")
 
   ctrl = makeFeatSelControlRandom(maxit = 2L)
-  fr = selectFeatures(lrn, task = multiclass.task, resampling = rdesc, control = ctrl, show.info = FALSE)
+  fr = selectFeatures(lrn, task = multiclass.task, resampling = rdesc,
+    control = ctrl, show.info = FALSE,
+    measures = getDefaultMeasure(multiclass.task))
   expect_equal(getOptPathLength(fr$opt.path), 2L)
   expect_equal(nrow(as.data.frame(fr$opt.path)), 2L)
   expect_equal(ncol(as.data.frame(fr$opt.path)), 9L)
@@ -19,7 +21,8 @@ test_that("selectFeatures", {
 
   # check empty model
   ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 10)
-  fr = selectFeatures(lrn, task = multiclass.task, resampling = rdesc, control = ctrl, show.info = FALSE)
+  fr = selectFeatures(lrn, task = multiclass.task, resampling = rdesc,
+    control = ctrl, show.info = FALSE)
   expect_equal(fr$x, character(0))
 
   # check bits.to.features
@@ -36,13 +39,17 @@ test_that("selectFeatures", {
     "exec.time", "error.message")))
   expect_equal(nrow(df), 2L)
 
-  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bit.names = bns, control = ctrl, show.info = FALSE), "you also have to set bits.to.features")
+  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc,
+    bit.names = bns, control = ctrl, show.info = FALSE), "you also have to set bits.to.features")
 
-  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bit.names = bns, bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task)), control = ctrl, show.info = FALSE), "Must have length")
+  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc,
+    bit.names = bns, bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task)), control = ctrl, show.info = FALSE), "Must have length")
 
-  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bits.to.features = function(x, task) c("test1", "test2"), control = ctrl, show.info = FALSE), "\\(test1,test2\\) that are not in the task.")
+  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc,
+    bits.to.features = function(x, task) c("test1", "test2"), control = ctrl, show.info = FALSE), "\\(test1,test2\\) that are not in the task.")
 
-  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc, bits.to.features = function(x, task) NULL, control = ctrl, show.info = FALSE), "but an object of type NULL")
+  expect_error(selectFeatures(lrn, task = multiclass.task, resampling = rdesc,
+    bits.to.features = function(x, task) NULL, control = ctrl, show.info = FALSE), "but an object of type NULL")
 })
 
 test_that("threshold tuning with feature selection", {
@@ -50,7 +57,8 @@ test_that("threshold tuning with feature selection", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
   ctrl = makeFeatSelControlRandom(maxit = 2L, tune.threshold = TRUE,
     tune.threshold.args = list(nsub = 2L))
-  fr = selectFeatures(lrn, task = binaryclass.task, resampling = rdesc, control = ctrl, show.info = FALSE)
+  fr = selectFeatures(lrn, task = binaryclass.task, resampling = rdesc,
+    control = ctrl, show.info = FALSE, measures = getDefaultMeasure(binaryclass.task))
   df = as.data.frame(fr$opt.path)
   expect_true(is.numeric(df$threshold) && !any(is.na(df$threshold)))
 })
@@ -59,10 +67,12 @@ test_that("show info works in selectFeatures", {
   rdesc = makeResampleDesc("Holdout", split = 0.05, stratify = TRUE)
   ctrl = makeFeatSelControlRandom(maxit = 1L)
   expect_message({
-    z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
+    z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc,
+      control = ctrl, show.info = TRUE)
   }, "1: [01].*([0-9]+ bits)")
   expect_message({
-    z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
+    z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc,
+      control = ctrl, show.info = TRUE)
   }, "mmce.test.mean=0.[0-9]+")
 })
 

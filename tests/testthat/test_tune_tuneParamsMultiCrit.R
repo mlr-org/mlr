@@ -42,8 +42,11 @@ test_that("tuneParamsMultiCrit", {
 
   # MBO
   ctrl = makeTuneMultiCritControlMBO(2L, budget = 4L * length(ps$pars) + 1L)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+  # suppressed warnings: "generateDesign could only produce 50 points instead of
+  # 1000!"
+  res = suppressWarnings(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
     measures = list(tpr, fpr), control = ctrl)
+  )
   mycheck(res, 4L * length(ps$pars) + 1L)
 
   # MBO with mbo.control
@@ -54,8 +57,10 @@ test_that("tuneParamsMultiCrit", {
   mbo.control = mlrMBO::setMBOControlMultiObj(mbo.control)
   mbo.control = mlrMBO::setMBOControlTermination(mbo.control, iters = 1)
   ctrl = makeTuneMultiCritControlMBO(mbo.control = mbo.control)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
+  # suppressed warnings: "generateDesign could only produce 50 points instead of
+  # 1000!"
+  res = suppressWarnings(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
+    par.set = ps, measures = list(tpr, fpr), control = ctrl))
   mycheck(res, 4L * length(ps$pars) + 1L)
 
   # MBO with dependent param set
@@ -82,11 +87,11 @@ test_that("tuneParamsMultiCrit works with low number of evals and dependencies",
   )
   ctrl = makeTuneMultiCritControlRandom(maxit = 1L)
   rdesc = makeResampleDesc("Holdout")
-  res = tuneParamsMultiCrit("classif.ksvm", sonar.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
+  expect_silent(tuneParamsMultiCrit("classif.ksvm", sonar.task, rdesc,
+    par.set = ps, measures = list(tpr, fpr), control = ctrl))
 })
 
-# FIXME: I am not sure how we can check wich value is imputed for theoptimizer?
+# FIXME: I am not sure how we can check wich value is imputed for the optimizer?
 test_that("y imputing works", {
   configureMlr(on.learner.error = "quiet")
   lrn = makeLearner("classif.__mlrmocklearners__2")
@@ -97,9 +102,10 @@ test_that("y imputing works", {
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
   res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
     measures = list(tpr, fpr), control = ctrl)
-  ctrl = makeTuneMultiCritControlNSGA2(impute.val = c(100, 100), popsize = 4L, generations = 1L)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
+  ctrl = makeTuneMultiCritControlNSGA2(impute.val = c(100, 100), popsize = 4L,
+    generations = 1L)
+  expect_silent(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl))
 
   configureMlr(on.learner.error = "stop")
 })
@@ -146,8 +152,9 @@ test_that("tuneParamsMultiCrit with budget", {
   # nsga2
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
   mycheck(ctrl, ctrl$extra.args$popsize * (ctrl$extra.args$generations + 1))
-  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L),
-    ".* contradicts the product of .*")
+  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L,
+    budget = 8L),
+  ".* contradicts the product of .*")
   expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L),
     ".* contradicts the product of .*")
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, budget = 12L)
@@ -163,8 +170,8 @@ test_that("plotTuneMultiCritResult works with pretty.names", {
   ctrl.grid = makeTuneMultiCritControlGrid()
   opt.multi.crit = tuneParamsMultiCrit(lrn, multiclass.task, hout,
     list(mmce, acc), par.set = ps, control = ctrl.grid)
-  plotTuneMultiCritResult(opt.multi.crit)
-  plotTuneMultiCritResult(opt.multi.crit, pretty.names = FALSE)
+  expect_silent(plotTuneMultiCritResult(opt.multi.crit))
+  expect_silent(plotTuneMultiCritResult(opt.multi.crit, pretty.names = FALSE))
 })
 
 test_that("tuneParamsMultiCrit with resample.fun", {
@@ -193,9 +200,13 @@ test_that("tuneParamsMultiCrit with resample.fun", {
   expect_true(all(getOptPathY(res$opt.path) == 0.5))
 
   # MBO
-  ctrl = makeTuneMultiCritControlMBO(2L, budget = 4L * length(ps$pars) + 1L, learner = "regr.lm")
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl, resample.fun = constant05Resample)
+  ctrl = makeTuneMultiCritControlMBO(2L, budget = 4L * length(ps$pars) + 1L,
+    learner = "regr.lm")
+  # suppressed warnings: "generateDesign could only produce 50 points instead of
+  # 1000!"
+  res = suppressWarnings(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
+    par.set = ps, measures = list(tpr, fpr), control = ctrl,
+    resample.fun = constant05Resample))
   expect_true(all(getOptPathY(res$opt.path) == 0.5))
 })
 
@@ -212,10 +223,12 @@ test_that("check n.objectives for MBO multi crit", {
     ".* Must be of type 'single integerish value', not 'double'.")
   ctrl = makeTuneMultiCritControlMBO(2L)
 
-  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, measures = list(mmce),
+  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
+    measures = list(mmce),
     par.set = ps, control = ctrl),
   ".* Must have length >= 2, but has length 1.")
-  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, measures = list(mmce, tpr, fpr),
+  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
+    measures = list(mmce, tpr, fpr),
     par.set = ps, control = ctrl),
   ".* Must have length 2, but has length 3.")
 })

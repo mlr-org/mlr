@@ -21,18 +21,10 @@ test_that("classif_LiblineaRL2LogReg", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(LiblineaR::LiblineaR, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newx = binaryclass.test[, -binaryclass.class.col], proba = TRUE)
     old.predicts.list[[i]] = as.factor(p$predictions)
     old.probs.list[[i]] = p$probabilities[, 2L]
   }
-
-  # parset.list = list(
-  #   list(),
-  #   list(type = 7),
-  #   list(cost = 5L),
-  #   list(type = 7, cost = 5L)
-  # )
 
   testSimpleParsets("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)

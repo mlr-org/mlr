@@ -25,6 +25,6 @@ test_that("regr_extraTrees", {
     old.predicts.list[[i]] = predict(m, x.test)
   }
 
-  testSimpleParsets("regr.extraTrees", regr.num.df, regr.num.target, regr.num.train.inds,
-    old.predicts.list, parset.list)
+  testSimpleParsets("regr.extraTrees", regr.num.df, regr.num.target,
+    regr.num.train.inds, old.predicts.list, parset.list)
 })

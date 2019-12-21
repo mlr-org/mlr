@@ -1,4 +1,3 @@
-
 context("dump")
 
 test_that("error dump is created in train", {
@@ -17,7 +16,6 @@ test_that("error dump is created in predict", {
   p = predict(mod, task)
   expect_class(getPredictionDump(p), "dump.frames")
 })
-
 
 test_that("error dump is created in resample", {
   lrn = makeLearner("classif.__mlrmocklearners__2", alpha = 0, config = list(on.learner.error = "quiet", on.error.dump = TRUE))
@@ -45,19 +43,20 @@ test_that("error dump is created during tune", {
   ctrl = makeTuneControlGrid()
   lrn = makeLearner("classif.__mlrmocklearners__2")
   nodumplrn = makeLearner("classif.__mlrmocklearners__2", config = list(on.error.dump = FALSE))
-  z = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl)
+  z = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl,
+    measures = getDefaultMeasure(multiclass.task))
 
   expect_equal(length(getOptPathEl(z$opt.path, 1)$extra$.dump), 1)
   expect_equal(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]], list())
   expect_class(getOptPathEl(z$opt.path, 2)$extra$.dump[[1]]$train, "dump.frames")
 
-  z = tuneParams(nodumplrn, multiclass.task, hout, par.set = ps, control = ctrl)
+  z = tuneParams(nodumplrn, multiclass.task, hout, par.set = ps, control = ctrl,
+    measures = getDefaultMeasure(multiclass.task))
 
   expect_equal(length(getOptPathEl(z$opt.path, 1)$extra$.dump), 1)
   expect_equal(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]], list())
   expect_equal(length(getOptPathEl(z$opt.path, 2)$extra$.dump), 1)
   expect_equal(getOptPathEl(z$opt.path, 2)$extra$.dump[[1]], list())
-
 
   lrn = makeLearner("classif.knn")
   lrn$properties = c(lrn$properties, "missings")
@@ -67,7 +66,8 @@ test_that("error dump is created during tune", {
   ps = makeParamSet(
     makeIntegerParam("k", lower = 1, upper = 5)
   )
-  z = tuneParams(lrn, task, makeResampleDesc("Bootstrap", predict = "both", iters = 2), par.set = ps, control = ctrl)
+  z = tuneParams(lrn, task, makeResampleDesc("Bootstrap", predict = "both", iters = 2),
+    par.set = ps, control = ctrl, measures = getDefaultMeasure(multiclass.task))
   expect_equal(length(getOptPathEl(z$opt.path, 1)$extra$.dump), 2)
   expect_class(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]]$predict.test, "dump.frames")
   expect_class(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]]$predict.train, "dump.frames")

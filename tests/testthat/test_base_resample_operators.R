@@ -15,8 +15,8 @@ test_that("resample getter work", {
   # getRRPredictionList
   r1 = resample(lrn, binaryclass.task, makeResampleDesc("CV", iters = 2, predict = "test"))
   r2 = resample(lrn, binaryclass.task, makeResampleDesc("CV", iters = 2, predict = "both"))
-  # FIXME: add check for "train" after https://github.com/mlr-org/mlr/issues/1284 has been fixed
-  # r3 = resample(lrn, binaryclass.task, makeResampleDesc("CV", iters = 2, predict = "train"), setAggregation(mmce, train.mean))
+  r3 = resample(lrn, binaryclass.task, makeResampleDesc("CV", iters = 2, predict = "train"),
+    setAggregation(mmce, train.mean))
 
   # check if structure is correct
   expect_named(getRRPredictionList(r1), c("train", "test"))

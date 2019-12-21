@@ -24,7 +24,6 @@ test_that("regr_glmnet", {
     pars = c(pars, parset)
     glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
-    set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
@@ -38,7 +37,8 @@ test_that("regr_glmnet", {
   }
   test.dat = regr.df
   test.dat$chas = as.numeric(test.dat$chas)
-  testSimpleParsets("regr.glmnet", test.dat, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.glmnet", test.dat, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
 })
 
 

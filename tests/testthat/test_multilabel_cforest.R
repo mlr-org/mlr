@@ -22,7 +22,8 @@ test_that("multilabel_cforest", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::cforest, pars)
-    p = predict(m, newdata = multilabel.test) # multivariate cforest can only predict probs
+    # multivariate cforest can only predict probs
+    p = predict(m, newdata = multilabel.test)
     p2 = do.call(rbind, p)
     old.probs.list[[i]] = data.frame(p2)
   }

@@ -7,12 +7,16 @@ test_that("BaseWrapper", {
   lrn2 = makeBaseWrapper(id = "foo", lrn1$type, lrn1, par.set = ps, par.vals = pv,
     learner.subclass = "mywrapper", model.subclass = "mymodel")
   expect_equal(getHyperPars(lrn2), list(xval = 0L, minsplit = 2L, foo = 3))
+
   lrn2 = setHyperPars(lrn2, minsplit = 11)
   expect_equal(getHyperPars(lrn2), list(xval = 0L, minsplit = 11L, foo = 3))
+
   lrn2 = setHyperPars(lrn2, foo = 12)
   expect_equal(getHyperPars(lrn2), list(xval = 0L, minsplit = 11L, foo = 12))
+
   lrn2 = setHyperPars(lrn2, foo = 12)
   expect_equal(getHyperPars(lrn2), list(xval = 0L, minsplit = 11L, foo = 12))
+
   lrn2.rm = removeHyperPars(lrn2, names(getHyperPars(lrn2)))
   expect_equal(length(getHyperPars(lrn2.rm)), 0)
 
@@ -41,7 +45,7 @@ test_that("Joint model performance estimation, tuning, and model performance", {
     control = makeFeatSelControlRandom(maxit = 3L),
     resampling = makeResampleDesc(method = "Holdout")
   )
-  bmrk = benchmark(lrn3, pid.task, makeResampleDesc(method = "Holdout"))
+  bmrk = benchmark(lrn3, pid.task, makeResampleDesc(method = "Holdout"), measures = getDefaultMeasure(pid.task))
   expect_is(bmrk, "BenchmarkResult")
 })
 
@@ -64,6 +68,6 @@ test_that("Error when wrapping tune wrapper around another optimization wrapper"
       control = makeTuneControlRandom(maxit = 3L),
       resampling = makeResampleDesc(method = "Holdout")
     )
-    bmrk = benchmark(lrn3, pid.task)
+    bmrk = benchmark(lrn3, pid.task, resampling, measures = getDefaultMeasure(pid.task))
   }, "Cannot wrap a tuning wrapper around another optimization wrapper!")
 })

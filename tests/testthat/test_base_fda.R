@@ -102,21 +102,22 @@ test_that("makeFunctionalData works for different inputs", {
 })
 
 test_that("getFunctionalFeatures works for different inputs", {
-  fdf = getFunctionalFeatures(gunpoint.task)
+  fdf = getFunctionalFeatures(gunpoint.task, features = getTaskNFeats(gunpoint.task))
   expect_class(fdf[[1]], "matrix")
   expect_data_frame(fdf, ncols = 1L, nrows = 200L)
 
   fdf2 = getTaskData(gunpoint.task, functionals.as = "matrix")
-  fdf3 = getFunctionalFeatures(fdf2)
+  fdf3 = getFunctionalFeatures(fdf2, features = getTaskNFeats(gunpoint.task))
   expect_class(fdf3[[1]], "matrix")
   expect_data_frame(fdf3, ncols = 1L, nrows = 200L)
 
   # Throws errors
-  expect_error(getFunctionalFeatures(matrix("blub")))
-  expect_error(getFunctionalFeatures(data.frame("blub")), "No functional features in the data")
+  expect_error(getFunctionalFeatures(matrix("blub"), features = getTaskNFeats(gunpoint.task)))
+  expect_error(getFunctionalFeatures(data.frame("blub"), features = getTaskNFeats(gunpoint.task)),
+    "No functional features in the data")
 
   # Works for multiple functionals
-  fdf4 = getFunctionalFeatures(fuelsubset.task)
+  fdf4 = getFunctionalFeatures(fuelsubset.task, features = getTaskFeatureNames(fuelsubset.task))
   expect_class(fdf4[[1]], "matrix")
   expect_class(fdf4[[2]], "matrix")
   expect_data_frame(fdf4, ncols = 2L, nrows = 129L)
@@ -133,13 +134,12 @@ test_that("makeFunctionalData Tasks work", {
   df$treg = 1:5
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 5:10, "fd3" = c("X2", "X3", "X4")))
 
-
   clt = makeClassifTask(data = fdf, target = "tcl")
   expect_class(clt, c("ClassifTask", "SupervisedTask", "Task"))
   expect_equal(clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
 
-  subs.clt = subsetTask(clt, subset = c(2, 5))
+  subs.clt = subsetTask(clt, subset = c(2, 5), features = getTaskFeatureNames(clt))
   expect_class(subs.clt, c("ClassifTask", "SupervisedTask", "Task"))
   expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(subs.clt$task.desc$n.feat["factors"], c("factors" = 0L))
@@ -154,7 +154,6 @@ test_that("makeFunctionalData Tasks work", {
   expect_equal(subs.clt2$task.desc$n.feat["numerics"], c("numerics" = 1L))
   expect_equal(subs.clt2$task.desc$n.feat["ordered"], c("ordered" = 0L))
   expect_equal(subs.clt2$task.desc$size, 5L)
-
 
   regt = makeRegrTask(data = fdf, target = "treg")
   expect_class(regt, c("RegrTask", "SupervisedTask", "Task"))
@@ -175,7 +174,7 @@ test_that("makeFunctionalData Tasks work", {
   expect_equal(clustt$task.desc$n.feat["factors"], c("factors" = 1L))
   expect_equal(clustt$task.desc$n.feat["numerics"], c("numerics" = 1L))
 
-  subs.clust1 = subsetTask(clustt, subset = 2:4)
+  subs.clust1 = subsetTask(clustt, subset = 2:4, features = getTaskFeatureNames(clustt))
   expect_class(subs.clust1, c("ClusterTask", "UnsupervisedTask", "Task"))
   expect_equal(subs.clust1$task.desc$n.feat["factors"], c("factors" = 1L))
   expect_equal(subs.clust1$task.desc$n.feat["numerics"], c("numerics" = 1L))
@@ -219,7 +218,6 @@ test_that("getTaskData for functionals", {
   })
   expect_true(!("matrix" %in% lapply(tdata4$data, class)))
   expect_equal(tdata4$target, as.factor(letters[1:5]))
-
 
   # For clustering task
   clustt = makeClusterTask(data = fdf)
@@ -352,7 +350,7 @@ test_that("getTaskData for functional tasks", {
 test_that("benchmarking on fda tasks works", {
   lrns = list(makeLearner("classif.fdausc.knn"), makeLearner("classif.rpart"), makeLearner("classif.featureless"))
   expect_message({
-    bmr = benchmark(lrns, fda.binary.gp.task.small, cv2)
+    bmr = benchmark(lrns, fda.binary.gp.task.small, cv2, measures = getDefaultMeasure(fda.binary.gp.task.small))
   }, "Functional features have been")
   expect_class(bmr, "BenchmarkResult")
   expect_equal(names(bmr$results$gp.fdf), c("classif.fdausc.knn", "classif.rpart", "classif.featureless"))
@@ -360,11 +358,10 @@ test_that("benchmarking on fda tasks works", {
 
 
   # Test benchmark mixed learners regression
-  set.seed(getOption("mlr.debug.seed"))
   lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
   # suppress fdboost warning
   expect_message({
-    bmr2 = suppressWarnings(benchmark(lrns2, fda.regr.fs.task, hout))
+    bmr2 = suppressWarnings(benchmark(lrns2, fda.regr.fs.task, hout, measures = getDefaultMeasure(fda.regr.fs.task)))
   }, "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")
   expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart", "regr.featureless"))

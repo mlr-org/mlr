@@ -12,12 +12,14 @@ test_that("classif_rFerns", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(list(formula = binaryclass.formula, data = binaryclass.train), parset)
+    parset = c(list(formula = binaryclass.formula, data = binaryclass.train),
+      parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(rFerns::rFerns, parset)
     old.predicts.list[[i]] = factor(predict(m, binaryclass.test))
   }
 
-  testSimpleParsets("classif.rFerns", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testSimpleParsets("classif.rFerns", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds,
     old.predicts.list, parset.list)
 })

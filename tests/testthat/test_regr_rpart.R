@@ -18,16 +18,17 @@ test_that("regr_rpart", {
     parset = parset.list[[i]]
     pars = list(formula = regr.formula, data = regr.train)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(rpart::rpart, pars)
     p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }
 
-  testSimpleParsets("regr.rpart", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.rpart", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
 
   tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata)
 
-  testCVParsets("regr.rpart", regr.df, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("regr.rpart", regr.df, regr.target, tune.train = tt,
+    tune.predict = tp, parset.list = parset.list)
 })

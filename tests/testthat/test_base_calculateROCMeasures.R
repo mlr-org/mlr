@@ -1,6 +1,7 @@
 context("calculateROCMeasures")
 
 test_that("calculateROCMeasures", {
+
   rdesc = makeResampleDesc("CV", iters = 3)
   pred = resample(makeLearner("classif.rpart"), binaryclass.task, rdesc)
   r = calculateROCMeasures(pred$pred)

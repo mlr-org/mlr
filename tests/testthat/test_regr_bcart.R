@@ -33,5 +33,6 @@ test_that("regr_bcart", {
 
     old.predicts.list[[i]] = predict(m, XX = test, pred.n = FALSE)$ZZ.km
   }
-  testSimpleParsets("regr.bcart", regr.df[, c(2:5, 14)], regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.bcart", regr.df[, c(2:5, 14)], regr.target,
+    regr.train.inds, old.predicts.list, parset.list)
 })

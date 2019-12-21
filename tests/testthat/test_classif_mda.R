@@ -1,11 +1,7 @@
 context("classif_mda")
 
 test_that("classif_mda", {
-  requirePackagesOrSkip("!mda", default.method = "load")
-  if (getRversion() > "3.5.3") {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
-  set.seed(getOption("mlr.debug.seed"))
+  requirePackagesOrSkip("mda", default.method = "load")
 
   parset.list1 = list(
     list(start.method = "lvq"),
@@ -28,24 +24,22 @@ test_that("classif_mda", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mda::mda, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = multiclass.test)
-    set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = multiclass.test, type = "posterior")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
-    old.predicts.list, parset.list2)
-  testProbParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
-    old.probs.list, parset.list2)
+  testSimpleParsets("classif.mda", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list, parset.list2)
+  testProbParsets("classif.mda", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.probs.list, parset.list2)
 
   tt = mda::mda
   tp = function(model, newdata) predict(model, newdata)
 
-  testCVParsets("classif.mda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
-    parset.list = parset.list2)
-  testCV("classif.mda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
-    parset = list(start.method = "lvq", subclasses = 17))
+  testCVParsets("classif.mda", multiclass.df, multiclass.target,
+    tune.train = tt, tune.predict = tp, parset.list = parset.list1)
+  testCV("classif.mda", multiclass.df, multiclass.target, tune.train = tt,
+    tune.predict = tp, parset = list(start.method = "lvq", subclasses = 17))
 })

@@ -28,10 +28,10 @@ test_that("classif_cforest", {
     old.probs.list[[i]] = sapply(p, "[", 1)
   }
 
-  testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-    old.predicts.list, parset.list2)
-  testProbParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-    old.probs.list, parset.list2)
+  testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.predicts.list, parset.list2)
+  testProbParsets("classif.cforest", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.probs.list, parset.list2)
 
   # issue 556
   parset.list3 = list(

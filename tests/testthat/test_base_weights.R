@@ -17,7 +17,7 @@ test_that("weights", {
   df.w = as.data.frame(p.w)
   expect_equal(df.w$response, df$response)
   inds = seq(1, 10, 2)
-  rt.w2 = subsetTask(rt.w, inds)
+  rt.w2 = subsetTask(rt.w, inds, features = getTaskFeatureNames(rt.w))
   expect_equal(rt.w2$weights, ws[inds])
 
   # glm bug, we need do.call
@@ -36,7 +36,7 @@ test_that("weights remain after subset", {
     wtask = changeData(t, weights = ws)
     expect_true(getTaskDesc(wtask)$has.weights)
     expect_equal(wtask$weights, ws)
-    expect_equal(subsetTask(wtask, 1:10)$weights, 1:10)
-    expect_true(getTaskDesc(subsetTask(wtask, 1:10))$has.weights)
+    expect_equal(subsetTask(wtask, 1:10, features = getTaskFeatureNames(wtask))$weights, 1:10)
+    expect_true(getTaskDesc(subsetTask(wtask, 1:10, getTaskFeatureNames(wtask)))$has.weights)
   }
 })

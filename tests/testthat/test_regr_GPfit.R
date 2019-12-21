@@ -4,7 +4,6 @@ test_that("regr_GPfit", {
   testFun = function(x) {
     return(4 * x[, 1]^2 - 2 * x[, 2])
   }
-  set.seed(getOption("mlr.debug.seed"))
   train.inds = 1:20
   s = seq(0, 1, by = 0.2)
   x = expand.grid(s, s)

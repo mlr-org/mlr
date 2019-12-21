@@ -10,7 +10,8 @@ test_that("classif_xgboost", {
 
   parset.probs.list = list(
     list(),
-    list(objective = "multi:softprob") # We had a bug here that 'multi:softprob' didn't work with binaryclass
+    # We had a bug here that 'multi:softprob' didn't work with binaryclass
+    list(objective = "multi:softprob")
   )
 
   old.predicts.list = list()
@@ -24,10 +25,10 @@ test_that("classif_xgboost", {
     if (is.null(parset$verbose)) parset$verbose = 0L
     if (is.null(parset$nround)) parset$nrounds = 1L
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
     pred = predict(model, data.matrix(binaryclass.test[, 1:60]))
-    old.predicts.list[[i]] = factor(as.numeric(pred > 0.5), labels = binaryclass.class.levs)
+    old.predicts.list[[i]] = factor(as.numeric(pred > 0.5),
+      labels = binaryclass.class.levs)
   }
 
   for (i in seq_along(parset.probs.list)) {
@@ -41,11 +42,11 @@ test_that("classif_xgboost", {
       parset$num_class = length(binaryclass.class.levs)
     }
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
     pred = predict(model, data.matrix(binaryclass.test[, 1:60]))
     if (parset$objective == "multi:softprob") {
-      y = matrix(pred, nrow = length(pred) / length(binaryclass.class.levs), ncol = length(binaryclass.class.levs), byrow = TRUE)
+      y = matrix(pred, nrow = length(pred) / length(binaryclass.class.levs),
+        ncol = length(binaryclass.class.levs), byrow = TRUE)
       old.probs.list[[i]] = y[, 1]
     } else {
       old.probs.list[[i]] = 1 - pred
@@ -60,27 +61,31 @@ test_that("classif_xgboost", {
 })
 
 test_that("xgboost works with different 'missing' arg vals", {
-  lrn = makeLearner("classif.xgboost", missing = NA_real_)
-  lrn = makeLearner("classif.xgboost", missing = NA)
-  lrn = makeLearner("classif.xgboost", missing = NULL)
+  expect_silent(makeLearner("classif.xgboost", missing = NA_real_))
+  expect_silent(makeLearner("classif.xgboost", missing = NA))
+  expect_silent(makeLearner("classif.xgboost", missing = NULL))
 })
 
 test_that("xgboost objective 'multi:softmax' does not work with predict.type = 'prob'", {
-  expect_error(train(makeLearner("classif.xgboost", predict.type = "prob", objective = "multi:softmax"), binaryclass.task))
+  expect_error(train(makeLearner("classif.xgboost", predict.type = "prob",
+    objective = "multi:softmax"), binaryclass.task))
 })
 
 test_that("multiclass xgboost with 'multi:softmax' does not produce NA predictions", {
-  mod = train(makeLearner("classif.xgboost", objective = "multi:softmax"), task = multiclass.task)
+  mod = train(makeLearner("classif.xgboost", objective = "multi:softmax"),
+    task = multiclass.task)
   pred = predict(mod, multiclass.task)
   expect_false(any(is.na(pred$data$response)))
 })
 
 # from https://github.com/mlr-org/mlr3learners/issues/32
 test_that("xgboost with multi:softprob", {
-  learner = makeLearner("classif.xgboost", nrounds = 5L, objective = "multi:softprob")
+  learner = makeLearner("classif.xgboost", nrounds = 5L,
+    objective = "multi:softprob")
   mod = train(learner, sonar.task)
   pred = predict(mod, sonar.task)
-  expect_equal(unname(performance(pred, measures = getDefaultMeasure(sonar.task))), 0)
+  expect_equal(unname(performance(pred,
+    measures = getDefaultMeasure(sonar.task))), 0)
 })
 
 # from https://github.com/mlr-org/mlr3learners/issues/32
@@ -88,5 +93,6 @@ test_that("xgboost with binary:logistic", {
   learner = makeLearner("classif.xgboost", nrounds = 5L)
   mod = train(learner, sonar.task)
   pred = predict(mod, sonar.task)
-  expect_equal(unname(performance(pred, measures = getDefaultMeasure(sonar.task))), 0)
+  expect_equal(unname(performance(pred,
+    measures = getDefaultMeasure(sonar.task))), 0)
 })

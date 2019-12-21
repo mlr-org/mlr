@@ -72,10 +72,11 @@ test_that("parallel exporting of options works", {
     on.exit(configureMlr(on.learner.error = "stop"))
     parallelStart(mode = mode, cpus = 2L, level = level, show.info = FALSE)
     on.exit(parallelStop())
-    # if the option is not exported, we cannot pass the next line without error on slave
+    # if the option is not exported, we cannot pass the next line without error
+    # on slave
     r = resample(lrn, task, rdesc)
   }
-  doit("socket", as.character(NA))
+  expect_silent(doit("socket", as.character(NA)))
   # make sure
   configureMlr(on.learner.error = "stop")
 })

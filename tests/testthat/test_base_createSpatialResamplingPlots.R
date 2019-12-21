@@ -1,5 +1,4 @@
 test_that("test createSpatialResamplingPlots() creates 10 ggplot objects", {
-  data(spatial.task, package = "mlr", envir = environment())
 
   # take more reps to see if the restriction on two reps works
   rdesc = makeResampleDesc("SpRepCV", folds = 5, reps = 3)

@@ -15,7 +15,8 @@ test_that("learners_all_general listLearners", {
   expect_true(nrow(x6) > 0L)
   expect_true(setequal(x1$id, c(x2$id, x3$id, x4$id, x5$id, x6$id)))
 
-  x6 = listLearnersCustom("classif", properties = c("multiclass", "factors", "prob"))
+  x6 = listLearnersCustom("classif",
+    properties = c("multiclass", "factors", "prob"))
   expect_true(nrow(x6) > 10 && all(x6$id %in% x2$id))
 })
 
@@ -40,6 +41,7 @@ test_that("listLearners for task", {
 })
 
 test_that("fuzzy matching works for mistyped learners", {
-  expect_error(makeLearner("classi.randomFore", config = list(on.par.without.desc = "quiet"),
+  expect_error(makeLearner("classi.randomFore",
+    config = list(on.par.without.desc = "quiet"),
     expected = "classif.randomForest"))
 })

@@ -21,7 +21,6 @@ test_that("classif_LiblineaRMultiClassSVC", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(LiblineaR::LiblineaR, pars)
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newx = binaryclass.test[, -binaryclass.class.col])
     old.predicts.list[[i]] = as.factor(p$predictions)
   }

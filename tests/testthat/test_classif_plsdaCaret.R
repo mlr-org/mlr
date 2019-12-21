@@ -19,21 +19,20 @@ test_that("classif_plsdaCaret_binary", {
     x[, binaryclass.class.col] = NULL
     pars = list(x = x, y = y)
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(caret::plsda, pars)
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = newx, type = "class")
-    set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = newx, type = "prob")[, 1, 1]
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testSimpleParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds,
     old.probs.list, parset.list)
 })
 
@@ -51,23 +50,21 @@ test_that("classif_plsdaCaret_multiclass", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(x = multiclass.train[, names(multiclass.train) %nin% multiclass.target],
-      y = multiclass.train[, multiclass.target])
+    pars = list(x = multiclass.train[, names(multiclass.train) %nin%
+      multiclass.target],
+    y = multiclass.train[, multiclass.target])
     pars = c(pars, parset)
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(caret::plsda, pars)
     newx = multiclass.test
     newx[, multiclass.class.col] = NULL
-    set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = newx, type = "class")
-    set.seed(getOption("mlr.debug.seed"))
     p2 = predict(m, newdata = newx, type = "prob")[, , 1]
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.plsdaCaret", multiclass.df, multiclass.target, multiclass.train.inds,
-    old.predicts.list, parset.list)
-  testProbParsets("classif.plsdaCaret", multiclass.df, multiclass.target, multiclass.train.inds,
-    old.probs.list, parset.list)
+  testSimpleParsets("classif.plsdaCaret", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.predicts.list, parset.list)
+  testProbParsets("classif.plsdaCaret", multiclass.df, multiclass.target,
+    multiclass.train.inds, old.probs.list, parset.list)
 })
