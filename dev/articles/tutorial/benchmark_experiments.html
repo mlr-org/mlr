@@ -753,74 +753,25 @@
 <p>Additional to the absolute performance, relative performance, i.e., ranking the learners is usually of interest and might provide valuable additional insight.</p>
 <p>Function <code><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix()</a></code> calculates ranks based on aggregated learner performances of one measure. We choose the <a href="measures.html" target="_blank">mean misclassification error</a>. The rank structure can be visualized by <code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">m =<span class="st"> </span><span class="kw"><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix</a></span>(bmr, mmce)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The melt</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">## to the relevant reshape2 method; please note that reshape2 is deprecated, and</span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="co">## this redirection is now deprecated as well. To continue using melt methods from</span></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">## reshape2 while both libraries are attached, e.g. melt.list, you can prepend the</span></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">## namespace like reshape2::melt(setDF(df)). In the next version, this warning will</span></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">## become an error.</span></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">## Warning in dcast(df, learner.id ~ task.id): The dcast generic in data.table has</span></a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">## been passed a data.frame and will attempt to redirect to the reshape2::dcast;</span></a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">## please note that reshape2 is deprecated, and this redirection is now deprecated</span></a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co">## as well. Please do this redirection yourself like reshape2::dcast(df). In the</span></a>
-<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="co">## next version, this warning will become an error.</span></a>
-<a class="sourceLine" id="cb22-14" data-line-number="14">m</a>
-<a class="sourceLine" id="cb22-15" data-line-number="15"><span class="co">##              iris-example mlbench.ringnorm mlbench.waveform</span></a>
-<a class="sourceLine" id="cb22-16" data-line-number="16"><span class="co">## lda                     1                3                2</span></a>
-<a class="sourceLine" id="cb22-17" data-line-number="17"><span class="co">## rpart                   3                2                3</span></a>
-<a class="sourceLine" id="cb22-18" data-line-number="18"><span class="co">## randomForest            2                1                1</span></a>
-<a class="sourceLine" id="cb22-19" data-line-number="19"><span class="co">##              PimaIndiansDiabetes-example Sonar-example</span></a>
-<a class="sourceLine" id="cb22-20" data-line-number="20"><span class="co">## lda                                    1             2</span></a>
-<a class="sourceLine" id="cb22-21" data-line-number="21"><span class="co">## rpart                                  3             3</span></a>
-<a class="sourceLine" id="cb22-22" data-line-number="22"><span class="co">## randomForest                           2             1</span></a></code></pre></div>
+<a class="sourceLine" id="cb22-2" data-line-number="2">m</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">##              iris-example mlbench.ringnorm mlbench.waveform</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">## lda                     1                3                2</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="co">## rpart                   3                2                3</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">## randomForest            2                1                1</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">##              PimaIndiansDiabetes-example Sonar-example</span></a>
+<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">## lda                                    1             2</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">## rpart                                  3             3</span></a>
+<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">## randomForest                           2             1</span></a></code></pre></div>
 <p>Methods with best performance, i.e., with lowest <a href="measures.html" target="_blank">mmce</a>, are assigned the lowest rank. Linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) is best for the iris and PimaIndiansDiabetes-examples while the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> shows best results on the remaining tasks.</p>
 <p><code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code> with option <code>pos = "tile"</code> shows a corresponding heat map. The ranks are displayed on the x-axis and the learners are color-coded.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span>(bmr, <span class="dt">pos =</span> <span class="st">"tile"</span>, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The melt</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">## to the relevant reshape2 method; please note that reshape2 is deprecated, and</span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">## this redirection is now deprecated as well. To continue using melt methods from</span></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">## reshape2 while both libraries are attached, e.g. melt.list, you can prepend the</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">## namespace like reshape2::melt(setDF(df)). In the next version, this warning will</span></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">## become an error.</span></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">## Warning in dcast(df, learner.id ~ task.id): The dcast generic in data.table has</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">## been passed a data.frame and will attempt to redirect to the reshape2::dcast;</span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">## please note that reshape2 is deprecated, and this redirection is now deprecated</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">## as well. Please do this redirection yourself like reshape2::dcast(df). In the</span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">## next version, this warning will become an error.</span></a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span>(bmr, <span class="dt">pos =</span> <span class="st">"tile"</span>, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 <p>A similar plot can also be obtained via <code><a href="../../reference/plotBMRSummary.html">plotBMRSummary()</a></code>. With option <code>trafo = "rank"</code> the ranks are displayed instead of the aggregated performances.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRSummary.html">plotBMRSummary</a></span>(bmr, <span class="dt">trafo =</span> <span class="st">"rank"</span>, <span class="dt">jitter =</span> <span class="dv">0</span>)</a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>Alternatively, you can draw stacked bar charts (the default) or bar charts with juxtaposed bars (<code>pos = "dodge"</code>) that are better suited to compare the frequencies of learners within and across ranks.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span>(bmr, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The melt</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">## to the relevant reshape2 method; please note that reshape2 is deprecated, and</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">## this redirection is now deprecated as well. To continue using melt methods from</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">## reshape2 while both libraries are attached, e.g. melt.list, you can prepend the</span></a>
-<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">## namespace like reshape2::melt(setDF(df)). In the next version, this warning will</span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="co">## become an error.</span></a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co">## Warning in dcast(df, learner.id ~ task.id): The dcast generic in data.table has</span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="co">## been passed a data.frame and will attempt to redirect to the reshape2::dcast;</span></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="co">## please note that reshape2 is deprecated, and this redirection is now deprecated</span></a>
-<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co">## as well. Please do this redirection yourself like reshape2::dcast(df). In the</span></a>
-<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="co">## next version, this warning will become an error.</span></a>
-<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="kw"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span>(bmr, <span class="dt">pos =</span> <span class="st">"dodge"</span>, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a>
-<a class="sourceLine" id="cb25-15" data-line-number="15"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The melt</span></a>
-<a class="sourceLine" id="cb25-16" data-line-number="16"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb25-17" data-line-number="17"><span class="co">## to the relevant reshape2 method; please note that reshape2 is deprecated, and</span></a>
-<a class="sourceLine" id="cb25-18" data-line-number="18"><span class="co">## this redirection is now deprecated as well. To continue using melt methods from</span></a>
-<a class="sourceLine" id="cb25-19" data-line-number="19"><span class="co">## reshape2 while both libraries are attached, e.g. melt.list, you can prepend the</span></a>
-<a class="sourceLine" id="cb25-20" data-line-number="20"><span class="co">## namespace like reshape2::melt(setDF(df)). In the next version, this warning will</span></a>
-<a class="sourceLine" id="cb25-21" data-line-number="21"><span class="co">## become an error.</span></a>
-<a class="sourceLine" id="cb25-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb25-23" data-line-number="23"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The dcast</span></a>
-<a class="sourceLine" id="cb25-24" data-line-number="24"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb25-25" data-line-number="25"><span class="co">## to the reshape2::dcast; please note that reshape2 is deprecated, and this</span></a>
-<a class="sourceLine" id="cb25-26" data-line-number="26"><span class="co">## redirection is now deprecated as well. Please do this redirection yourself like</span></a>
-<a class="sourceLine" id="cb25-27" data-line-number="27"><span class="co">## reshape2::dcast(df). In the next version, this warning will become an error.</span></a></code></pre></div>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span>(bmr, <span class="dt">pos =</span> <span class="st">"dodge"</span>, <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr))</a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-25-1.png" width="50%"><img src="benchmark_experiments_files/figure-html/unnamed-chunk-25-2.png" width="50%"></p>
 </div>
 </div>
@@ -864,39 +815,14 @@
 <p>Function <code><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData()</a></code> does all necessary calculations while function <code><a href="../../reference/plotCritDifferences.html">plotCritDifferences()</a></code> draws the plot. See the tutorial page about <a href="visualization.html" target="_blank">visualization</a> for details on data generation and plotting functions.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># Nemenyi test</span></a>
 <a class="sourceLine" id="cb28-2" data-line-number="2">g =<span class="st"> </span><span class="kw"><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData</a></span>(bmr, <span class="dt">p.value =</span> <span class="fl">0.1</span>, <span class="dt">test =</span> <span class="st">"nemenyi"</span>)</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The melt</span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="co">## to the relevant reshape2 method; please note that reshape2 is deprecated, and</span></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">## this redirection is now deprecated as well. To continue using melt methods from</span></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">## reshape2 while both libraries are attached, e.g. melt.list, you can prepend the</span></a>
-<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">## namespace like reshape2::melt(setDF(df)). In the next version, this warning will</span></a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">## become an error.</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">## Warning in dcast(df, learner.id ~ task.id): The dcast generic in data.table has</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">## been passed a data.frame and will attempt to redirect to the reshape2::dcast;</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">## please note that reshape2 is deprecated, and this redirection is now deprecated</span></a>
-<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co">## as well. Please do this redirection yourself like reshape2::dcast(df). In the</span></a>
-<a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">## next version, this warning will become an error.</span></a>
-<a class="sourceLine" id="cb28-15" data-line-number="15"><span class="kw"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span>(g) <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">2</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb28-16" data-line-number="16"><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lda"</span> =<span class="st"> "#F8766D"</span>, <span class="st">"rpart"</span> =<span class="st"> "#00BA38"</span>, <span class="st">"randomForest"</span> =<span class="st"> "#619CFF"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="kw"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span>(g) <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">2</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lda"</span> =<span class="st"> "#F8766D"</span>, <span class="st">"rpart"</span> =<span class="st"> "#00BA38"</span>, <span class="st">"randomForest"</span> =<span class="st"> "#619CFF"</span>))</a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co"># Bonferroni-Dunn test</span></a>
 <a class="sourceLine" id="cb29-3" data-line-number="3">g =<span class="st"> </span><span class="kw"><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData</a></span>(bmr, <span class="dt">p.value =</span> <span class="fl">0.1</span>, <span class="dt">test =</span> <span class="st">"bd"</span>, <span class="dt">baseline =</span> <span class="st">"randomForest"</span>)</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The melt</span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">## to the relevant reshape2 method; please note that reshape2 is deprecated, and</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">## this redirection is now deprecated as well. To continue using melt methods from</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">## reshape2 while both libraries are attached, e.g. melt.list, you can prepend the</span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">## namespace like reshape2::melt(setDF(df)). In the next version, this warning will</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">## become an error.</span></a>
-<a class="sourceLine" id="cb29-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">## Warning in melt(setDF(df), c("task.id", "learner.id"), "alg.rank"): The dcast</span></a>
-<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co">## generic in data.table has been passed a data.frame and will attempt to redirect</span></a>
-<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">## to the reshape2::dcast; please note that reshape2 is deprecated, and this</span></a>
-<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co">## redirection is now deprecated as well. Please do this redirection yourself like</span></a>
-<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co">## reshape2::dcast(df). In the next version, this warning will become an error.</span></a>
-<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="kw"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span>(g) <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">2</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb29-18" data-line-number="18"><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lda"</span> =<span class="st"> "#F8766D"</span>, <span class="st">"rpart"</span> =<span class="st"> "#00BA38"</span>, <span class="st">"randomForest"</span> =<span class="st"> "#619CFF"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="kw"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span>(g) <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">2</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lda"</span> =<span class="st"> "#F8766D"</span>, <span class="st">"rpart"</span> =<span class="st"> "#00BA38"</span>, <span class="st">"randomForest"</span> =<span class="st"> "#619CFF"</span>))</a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-28-2.png" width="700"></p>
 </div>
 <div id="custom-plots" class="section level2">
