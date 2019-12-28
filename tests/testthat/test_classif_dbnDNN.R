@@ -31,6 +31,7 @@ test_that("classif_dbnDNN", {
       }
       pars = list(x = x, y = onehot)
       pars = c(pars, parset)
+      set.seed(getOption("mlr.debug.seed"))
       m = do.call(deepnet::dbn.dnn.train, pars)
       p = deepnet::nn.predict(m, data.matrix(binaryclass.test[, -ncol(binaryclass.test)]))
       colnames(p) = binaryclass.class.levs

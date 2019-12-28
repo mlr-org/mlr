@@ -1,6 +1,7 @@
 context("learners_all_surv")
 
 test_that("learners work: surv ", {
+  requirePackagesOrSkip("Hmisc", default.method = "load")
 
   # settings to make learners faster and deal with small sample size
   hyperpars = list(
