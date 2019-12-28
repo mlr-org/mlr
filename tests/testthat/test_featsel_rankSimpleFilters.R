@@ -1,6 +1,8 @@
 context("filters")
 
 test_that("base filters of ensemble filters are ranked correctly", {
+  requirePackagesOrSkip("Hmisc", default.method = "load")
+
   filters.ranked = rankBaseFilters(task.filters.rank,
     method = c("univariate.model.score", "variance"),
     nselect = 9, more.args = list())

@@ -1,6 +1,8 @@
 context("measures")
 
 test_that("measures", {
+  requirePackagesOrSkip("Hmisc", default.method = "load")
+
   ct = binaryclass.task
   options(warn = 2)
   on.exit(options(warn = 0))
@@ -132,6 +134,8 @@ test_that("listMeasures", {
 })
 
 test_that("check measure calculations", {
+  requirePackagesOrSkip("Hmisc", default.method = "load")
+
   # tiny datasets for testing
   # features
   var1 = c(1, 2, 3, 4)

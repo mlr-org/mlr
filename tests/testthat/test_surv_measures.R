@@ -52,6 +52,7 @@ test_that("setting measure pars works", {
 })
 
 test_that("hand constructed tests", {
+  requirePackagesOrSkip("Hmisc", default.method = "load")
   n = 100
   time = sort(rexp(n, 0.1)) + 1
   data = data.frame(time = time, status = 1, x1 = order(time))
