@@ -20,6 +20,10 @@
 .onAttach = function(libname, pkgname) {
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
+
+  packageStartupMessage(paste0(strwrap("'mlr' is in maintenance mode since
+      July 2019. Future development efforts will go into its successor 'mlr3'
+      (<https://mlr3.mlr-org.com>)."), collapse = "\n"))
 }
 
 mlr = new.env(parent = emptyenv())
