@@ -6,9 +6,9 @@ test_that("getFeatureImportance", {
   lrn = makeLearner("classif.randomForest")
   mod = train(lrn, binaryclass.task)
   feat.imp = getFeatureImportance(mod, type = 2)$res
-  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(binaryclass.task)),
-    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
-  expect_equal(colnames(feat.imp), mod$features)
+  expect_data_frame(feat.imp, types = c("character", "numeric"),
+    any.missing = FALSE, nrows = 60, ncols = 2)
+  expect_equal(colnames(feat.imp), c("variable", "importance"))
 
   # type 1 shouldn't
   expect_error(getFeatureImportance(mod, type = 1), regexp = ".*importance.*TRUE")
@@ -16,26 +16,26 @@ test_that("getFeatureImportance", {
   lrn = setHyperPars(lrn, importance = TRUE)
   mod = train(lrn, binaryclass.task)
   feat.imp = getFeatureImportance(mod, type = 1)$res
-  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(binaryclass.task)),
-    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
-  expect_equal(colnames(feat.imp), mod$features)
+  expect_data_frame(feat.imp, types = c("character", "numeric"),
+    any.missing = FALSE, nrows = 60, ncols = 2)
+  expect_equal(colnames(feat.imp), c("variable", "importance"))
 
   # regression learner
   lrn = makeLearner("regr.gbm")
   mod = train(lrn, regr.task)
   feat.imp = getFeatureImportance(mod)$res
-  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(regr.task)),
-    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(regr.task))
-  expect_equal(colnames(feat.imp), mod$features)
+  expect_data_frame(feat.imp, types = c("character", "numeric"),
+    any.missing = FALSE, nrows = 13, ncols = 2)
+  expect_equal(colnames(feat.imp), c("variable", "importance"))
 
   # wrapped learner
-  lrn = makeFilterWrapper(makeLearner("regr.gbm"), fw.method = "FSelectorRcpp_information.gain", fw.abs = 2,
-    equal = TRUE)
+  lrn = makeFilterWrapper(makeLearner("regr.gbm"),
+    fw.method = "FSelectorRcpp_information.gain", fw.abs = 2, equal = TRUE)
   mod = train(lrn, regr.task)
   feat.imp = getFeatureImportance(mod)$res
-  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(regr.task)),
-    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(regr.task))
-  expect_equal(colnames(feat.imp), mod$features)
+  expect_data_frame(feat.imp, types = c("character", "numeric"),
+    any.missing = FALSE, nrows = 13, ncols = 2)
+  expect_equal(colnames(feat.imp), c("variable", "importance"))
 
   # For learners without the possibility to calculate feature importance a
   # meaningful error should be returned

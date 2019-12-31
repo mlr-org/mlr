@@ -264,6 +264,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    tidyr,
     tsfeatures,
     vdiffr,
     wavelets,
