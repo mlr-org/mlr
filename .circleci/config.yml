@@ -4,13 +4,13 @@ jobs:
     environment:
       - NOT_CRAN: true
     docker:
-      - image: rocker/verse:3.6.1
+      - image: rocker/verse
     steps:
       - checkout
       # create a unique env var for the cache. Unfortunately normal env vars
       # are not picked up by the cache, therefore this workaround is needed.
       # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
-      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-r-release" > /tmp/_tmp_file
       - restore_cache:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
@@ -44,10 +44,10 @@ jobs:
     environment:
       - FULL: true
     docker:
-      - image: rocker/verse:3.6.1
+      - image: rocker/verse
     steps:
       - checkout
-      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-r-release" > /tmp/_tmp_file
       - restore_cache:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
       - run:
@@ -55,6 +55,9 @@ jobs:
           command: |
             sudo apt update
             sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+            echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+            mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+            mkdir $HOME/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
             R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
@@ -82,8 +85,9 @@ jobs:
           command: |
             sudo apt update
             sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
-            mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
             echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+            mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+            mkdir $HOME/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
             R -q -e 'install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
@@ -113,7 +117,7 @@ jobs:
       # create a unique env var for the cache. Unfortunately normal env vars
       # are not picked up by the cache, therefore this workaround is needed.
       # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
-      - run: echo "$(date '+%d-%m')-3.6.1" > /tmp/_tmp_file
+      - run: echo "$(date '+%d-%m')-r-release" > /tmp/_tmp_file
       - restore_cache:
           key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
 
@@ -122,12 +126,11 @@ jobs:
           name: Install package dependencies
           command: |
             sudo apt update
-            sudo apt install -y libopenmpi-dev openmpi-bin ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+            sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+            echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
             mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
             mkdir $HOME/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
-            echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-            R -q -e 'print(parallel::detectCores())'
-            R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+            R -q -e 'install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
             R -q -e 'tic::before_install()'
