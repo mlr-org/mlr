@@ -90,7 +90,7 @@ discretized into specific values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -331,7 +331,7 @@ discretized into specific values." />
     <p>Constructs a grid of tuning parameters from a learner of the <code>caret</code>
 R-package. These values are then converted into a list of non-tunable
 parameters (<code>par.vals</code>) and a tunable
-<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a> (<code>par.set</code>), which can be used by
+<a href='https://paramhelpers.mlr-org.com/reference/makeParamSet.html'>ParamHelpers::ParamSet</a> (<code>par.set</code>), which can be used by
 <a href='tuneParams.html'>tuneParams</a> for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
 discretized into specific values.</p>
@@ -374,7 +374,7 @@ be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p
 
     <p>(<code><a href='https://rdrr.io/r/base/list.html'>list(2)</a></code>). A list of parameters:</p><ul>
 <li><p><code>par.vals</code> contains a list of all constant tuning parameters</p></li>
-<li><p><code>par.set</code> is a <a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>, containing all the configurable
+<li><p><code>par.set</code> is a <a href='https://paramhelpers.mlr-org.com/reference/makeParamSet.html'>ParamHelpers::ParamSet</a>, containing all the configurable
 tuning parameters</p></li>
 </ul>
 

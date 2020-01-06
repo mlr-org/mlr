@@ -106,7 +106,7 @@ It can be accessed by getOptPathEl(opt.path)$extra$.dump.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -357,7 +357,7 @@ on the TRANSFORMED scale so you directly use it.</p></dd>
 <dt>threshold (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>Vector of finally found and used thresholds
 if <code>tune.threshold</code> was enabled in <a href='TuneControl.html'>TuneControl</a>, otherwise not present and
 hence <code>NULL</code>.</p></dd>
-<dt>opt.path (<a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.
+<dt>opt.path (<a href='https://paramhelpers.mlr-org.com/reference/OptPath.html'>ParamHelpers::OptPath</a>)</dt><dd><p>Optimization path which lead to <code>x</code>.
 Note that when you have trafos on some of your params, the opt.path always contains the
 UNTRANSFORMED values on the original scale. You can simply call <code>trafoOptPath(opt.path)</code> to
 transform them, or, <code>as.data.frame{trafoOptPath(opt.path)}</code>.

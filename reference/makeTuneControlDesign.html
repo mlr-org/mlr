@@ -85,7 +85,7 @@ during tuning. All kinds of parameter types can be handled." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -327,9 +327,14 @@ during tuning. All kinds of parameter types can be handled." />
 during tuning. All kinds of parameter types can be handled.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeTuneControlDesign</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>)</pre>
+    <pre class="usage"><span class='fu'>makeTuneControlDesign</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -359,7 +364,7 @@ in the same order as your measures.</p></td>
       <td><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 <code>data.frame</code> containing the different parameter settings to be evaluated.
 The columns have to be named according to the <code>ParamSet</code> which will be used in <code>tune()</code>.
-Proper designs can be created with <a href='https://rdrr.io/pkg/ParamHelpers/man/generateDesign.html'>ParamHelpers::generateDesign</a> for instance.</p></td>
+Proper designs can be created with <a href='https://paramhelpers.mlr-org.com/reference/generateDesign.html'>ParamHelpers::generateDesign</a> for instance.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
@@ -397,21 +402,23 @@ See the implementation for details.</p></td>
     <p>(TuneControlDesign)</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
-  <code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a></code>,
-  <code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></code>,
-  <code><a href='getResamplingIndices.html'>getResamplingIndices</a></code>,
-  <code><a href='getTuneResult.html'>getTuneResult</a></code>,
-  <code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></code>,
-  <code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a></code>,
-  <code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a></code>,
-  <code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a></code>,
-  <code><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></code>,
-  <code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></code>,
-  <code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a></code>,
-  <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
-  <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>, <code><a href='tuneParams.html'>tuneParams</a></code>,
-  <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
+    <div class='dont-index'><p>Other tune: 
+<code><a href='TuneControl.html'>TuneControl</a></code>,
+<code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a>()</code>,
+<code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a>()</code>,
+<code><a href='getResamplingIndices.html'>getResamplingIndices</a>()</code>,
+<code><a href='getTuneResult.html'>getTuneResult</a>()</code>,
+<code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a>()</code>,
+<code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a>()</code>,
+<code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a>()</code>,
+<code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a>()</code>,
+<code><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a>()</code>,
+<code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a>()</code>,
+<code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a>()</code>,
+<code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a>()</code>,
+<code><a href='makeTuneWrapper.html'>makeTuneWrapper</a>()</code>,
+<code><a href='tuneParams.html'>tuneParams</a>()</code>,
+<code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

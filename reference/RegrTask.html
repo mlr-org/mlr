@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -325,9 +325,16 @@
     <p>Create a regression task.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeRegrTask</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)), <span class='no'>data</span>, <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>, <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>makeRegrTask</span>(
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)),
+  <span class='no'>data</span>,
+  <span class='no'>target</span>,
+  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
+  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

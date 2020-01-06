@@ -157,6 +157,12 @@
     <loc>https://mlr.mlr-org.com/reference/estimateResidualVariance.html</loc>
   </url>
   <url>
+    <loc>https://mlr.mlr-org.com/reference/extractFDABsignal.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr.mlr-org.com/reference/extractFDADTWKernel.html</loc>
+  </url>
+  <url>
     <loc>https://mlr.mlr-org.com/reference/extractFDAFPCA.html</loc>
   </url>
   <url>
@@ -167,6 +173,9 @@
   </url>
   <url>
     <loc>https://mlr.mlr-org.com/reference/extractFDAMultiResFeatures.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr.mlr-org.com/reference/extractFDATsfeatures.html</loc>
   </url>
   <url>
     <loc>https://mlr.mlr-org.com/reference/extractFDAWavelets.html</loc>

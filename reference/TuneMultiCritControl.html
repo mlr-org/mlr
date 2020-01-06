@@ -97,7 +97,7 @@ parameter types can be handled.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -338,7 +338,7 @@ parameter types can be handled.
     <p>The following tuners are available:</p><dl class='dl-horizontal'>
 <dt>makeTuneMultiCritControlGrid</dt><dd><p>Grid search. All kinds of parameter types can be handled.
 You can either use their correct param type and <code>resolution</code>,
-or discretize them yourself by always using <a href='https://rdrr.io/pkg/ParamHelpers/man/Param.html'>ParamHelpers::makeDiscreteParam</a>
+or discretize them yourself by always using <a href='https://paramhelpers.mlr-org.com/reference/Param.html'>ParamHelpers::makeDiscreteParam</a>
 in the <code>par.set</code> passed to <a href='tuneParams.html'>tuneParams</a>.</p></dd>
 <dt>makeTuneMultiCritControlRandom</dt><dd><p>Random search. All kinds of parameter types can be handled.</p></dd>
 <dt>makeTuneMultiCritControlNSGA2</dt><dd><p>Evolutionary method <a href='https://rdrr.io/pkg/mco/man/nsga2.html'>mco::nsga2</a>.
@@ -351,24 +351,45 @@ parameter types can be handled.</p></dd>
 
     </div>
 
-    <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
-<span class='fu'>makeTuneMultiCritControlMBO</span>(<span class='kw'>n.objectives</span> <span class='kw'>=</span> <span class='no'>mbo.control</span>$<span class='no'>n.objectives</span>,
-  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>makeTuneMultiCritControlMBO</span>(
+  <span class='kw'>n.objectives</span> <span class='kw'>=</span> <span class='no'>mbo.control</span>$<span class='no'>n.objectives</span>,
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mbo.control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tune.threshold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tune.threshold.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>continue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mbo.design</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
-<span class='fu'>makeTuneMultiCritControlNSGA2</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>makeTuneMultiCritControlNSGA2</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>impute.val</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>makeTuneMultiCritControlRandom</span>(<span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>makeTuneMultiCritControlRandom</span>(
+  <span class='kw'>same.resampling.instance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
+  <span class='kw'>log.fun</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>final.dw.perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>budget</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -385,7 +406,7 @@ Default is <code>TRUE</code>.</p></td>
 Resolution of the grid for each numeric/integer parameter in <code>par.set</code>.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
-See <a href='https://rdrr.io/pkg/ParamHelpers/man/generateGridDesign.html'>ParamHelpers::generateGridDesign</a>.
+See <a href='https://paramhelpers.mlr-org.com/reference/generateGridDesign.html'>ParamHelpers::generateGridDesign</a>.
 Default is 10.</p></td>
     </tr>
     <tr>
@@ -475,7 +496,7 @@ Default is none.</p></td>
       <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Resume calculation from previous run using <a href='https://rdrr.io/pkg/mlrMBO/man/mboContinue.html'>mlrMBO::mboContinue</a>?
 Requires &#8220;save.file.path&#8221; to be set.
-Note that the <a href='https://rdrr.io/pkg/ParamHelpers/man/OptPath.html'>ParamHelpers::OptPath</a> in the <a href='https://rdrr.io/pkg/mlrMBO/man/OptResult.html'>mlrMBO::OptResult</a>
+Note that the <a href='https://paramhelpers.mlr-org.com/reference/OptPath.html'>ParamHelpers::OptPath</a> in the <a href='https://rdrr.io/pkg/mlrMBO/man/OptResult.html'>mlrMBO::OptResult</a>
 will only include the evaluations after the continuation.
 The complete OptPath will be found in the slot <code>$mbo.result$opt.path</code>.</p></td>
     </tr>
@@ -509,8 +530,9 @@ TuneMultiCritControlGrid, TuneMultiCritControlRandom,
 TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tune_multicrit: <code><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a></code>,
-  <code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a></code></p></div>
+    <div class='dont-index'><p>Other tune_multicrit: 
+<code><a href='plotTuneMultiCritResult.html'>plotTuneMultiCritResult</a>()</code>,
+<code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

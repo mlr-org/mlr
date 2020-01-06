@@ -80,3 +80,14 @@ body {
 .label-default {
     background-color: transparent;
 }
+
+/* let tables use the full site width and cover the sidebar
+  https://github.com/mlr-archive/mlr-tutorial/issues/150 */
+
+.table {
+    width: 135%;
+    max-width: 135%;
+    background-color: white;
+    position: sticky;
+    z-index: 1;
+}

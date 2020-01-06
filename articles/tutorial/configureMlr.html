@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -382,7 +382,7 @@
 <div id="example-turning-off-parameter-checking" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-turning-off-parameter-checking" class="anchor"></a>Example: Turning off parameter checking</h1>
-<p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
+<p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Support Vector Machine with linear kernel and new parameter 'newParam'</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">kernel =</span> <span class="st">"vanilladot"</span>, <span class="dt">newParam =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">## Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span></a>

@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -305,16 +305,16 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">fv</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## FilterValues:</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Task: iris-example</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">##            name    type                         method     value</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">##            name    type                         filter     value</span></a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## 1:  Petal.Width numeric FSelectorRcpp_information.gain 0.9554360</span></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 2: Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 3: Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## 4:  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</span></a></code></pre></div>
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task, </a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">fv2 =<span class="st"> </span><span class="kw"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span>(iris.task,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">method =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelector_chi.squared"</span>))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">fv2<span class="op">$</span>data</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">##            name    type                         method     value</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">##            name    type                         filter     value</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## 1: Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">## 2:  Sepal.Width numeric FSelectorRcpp_information.gain 0.2672750</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## 3: Petal.Length numeric FSelectorRcpp_information.gain 0.9402853</span></a>
@@ -324,7 +324,8 @@
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">## 7: Petal.Length numeric          FSelector_chi.squared 0.9346311</span></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">## 8:  Petal.Width numeric          FSelector_chi.squared 0.9432359</span></a></code></pre></div>
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2) <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubr</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(fv2, <span class="dt">filter =</span> <span class="st">"FSelectorRcpp_information.gain"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span>ggpubr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubr</a></span>()</a></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
 <p>By default <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code> will create facetted subplots if multiple filter methods are passed as input to <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>.</p>
 <p>According to the <code>"information.gain"</code> measure, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information about the target variable <code>Species</code>.</p>
@@ -373,7 +374,7 @@
 <h3 class="hasAnchor">
 <a href="#using-fixed-parameters" class="anchor"></a>Using fixed parameters</h3>
 <p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"classif.fnn"</span>, </a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"classif.fnn"</span>,</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">fw.method =</span> <span class="st">"FSelectorRcpp_information.gain"</span>, <span class="dt">fw.abs =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> iris.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">models =</span> <span class="ot">TRUE</span>)</a>
@@ -400,11 +401,11 @@
 <p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.ksvm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(<span class="kw">makeNumericParam</span>(<span class="st">"fw.perc"</span>, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">                  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">                    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">                  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">                    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">                  )</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-10</span>, <span class="dt">upper =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">)</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, <span class="dt">task =</span> bh.task, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">  <span class="dt">control =</span> <span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">5</span>))</a>
@@ -453,8 +454,8 @@
 <a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">## mse.test.mean </span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">##      15.63745</span></a></code></pre></div>
 <p>After tuning we can generate a new wrapped learner with the optimal percentage value for further use (e.g. to predict to new data).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>, </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">        <span class="dt">fw.perc =</span> res<span class="op">$</span>x<span class="op">$</span>fw.perc, <span class="dt">C =</span> res<span class="op">$</span>x<span class="op">$</span>C, <span class="dt">sigma =</span> res<span class="op">$</span>x<span class="op">$</span>sigma)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span>(<span class="dt">learner =</span> <span class="st">"regr.lm"</span>, <span class="dt">fw.method =</span> <span class="st">"FSelector_chi.squared"</span>,</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="dt">fw.perc =</span> res<span class="op">$</span>x<span class="op">$</span>fw.perc, <span class="dt">C =</span> res<span class="op">$</span>x<span class="op">$</span>C, <span class="dt">sigma =</span> res<span class="op">$</span>x<span class="op">$</span>sigma)</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, bh.task)</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">mod</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">## Model for learner.id=regr.lm.filtered; learner.class=FilterWrapper</span></a>
@@ -634,7 +635,7 @@
 <a class="sourceLine" id="cb21-14" data-line-number="14"><span class="co">## Number of Monte-Carlo iterations: NA</span></a>
 <a class="sourceLine" id="cb21-15" data-line-number="15"><span class="co">## Local: FALSE</span></a>
 <a class="sourceLine" id="cb21-16" data-line-number="16"><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width</span></a>
-<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="co">## 1   0.02896182 0.005060765    0.3105543   0.3007185</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="co">## 1   0.03185321 0.004561184    0.3125292   0.3000365</span></a></code></pre></div>
 </div>
   </div>
 

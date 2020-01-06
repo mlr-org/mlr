@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -373,45 +373,42 @@
 <a href="#regression-extracting-standard-errors" class="anchor"></a>Regression: Extracting standard errors</h2>
 <p>Some learners provide standard errors for predictions, which can be accessed in <code>mlr</code>. An overview is given by calling the function <code><a href="../../reference/listLearners.html">listLearners()</a></code> and setting <code>properties = "se"</code>. By assigning <code>FALSE</code> to <code>check.packages</code> learners from packages which are not installed will be included in the overview.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"regr"</span>, <span class="dt">check.packages =</span> <span class="ot">FALSE</span>, <span class="dt">properties =</span> <span class="st">"se"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"name"</span>)]</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## ParamHelpers uses NA as a special value for dependent parameters.</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## Warning in makeParam(id = id, type = "numeric", learner.param = TRUE, lower = lower, : NA used as a default value for learner parameter missing.</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## ParamHelpers uses NA as a special value for dependent parameters.</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">##                class</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## 1         regr.bcart</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## 2           regr.bgp</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## 3        regr.bgpllm</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## 4           regr.blm</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## 5          regr.btgp</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## 6       regr.btgpllm</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## 7          regr.btlm</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## 8           regr.crs</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## 9       regr.gausspr</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## 10          regr.glm</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## 11        regr.GPfit</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## 12           regr.km</span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## 13         regr.laGP</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">## 14           regr.lm</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## 15 regr.randomForest</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">## 16       regr.ranger</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">##                                                                       name</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## 1                                                            Bayesian CART</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## 2                                                Bayesian Gaussian Process</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## 3        Bayesian Gaussian Process with jumps to the Limiting Linear Model</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## 4                                                    Bayesian Linear Model</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## 5                                          Bayesian Treed Gaussian Process</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">## 6  Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model</span></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">## 7                                              Bayesian Treed Linear Model</span></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">## 8                                                       Regression Splines</span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">## 9                                                       Gaussian Processes</span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">## 10                                           Generalized Linear Regression</span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">## 11                                                        Gaussian Process</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">## 12                                                                 Kriging</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">## 13                                      Local Approximate Gaussian Process</span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">## 14                                                Simple Linear Regression</span></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">## 15                                                           Random Forest</span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">## 16                                                          Random Forests</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">##                class</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## 1         regr.bcart</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## 2           regr.bgp</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## 3        regr.bgpllm</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## 4           regr.blm</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## 5          regr.btgp</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## 6       regr.btgpllm</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## 7          regr.btlm</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## 8           regr.crs</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## 9       regr.gausspr</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## 10          regr.glm</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## 11        regr.GPfit</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## 12           regr.km</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## 13         regr.laGP</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## 14           regr.lm</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## 15 regr.randomForest</span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## 16       regr.ranger</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">##                                                                       name</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## 1                                                            Bayesian CART</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">## 2                                                Bayesian Gaussian Process</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">## 3        Bayesian Gaussian Process with jumps to the Limiting Linear Model</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## 4                                                    Bayesian Linear Model</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## 5                                          Bayesian Treed Gaussian Process</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## 6  Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model</span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## 7                                              Bayesian Treed Linear Model</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## 8                                                       Regression Splines</span></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">## 9                                                       Gaussian Processes</span></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">## 10                                           Generalized Linear Regression</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">## 11                                                        Gaussian Process</span></a>
+<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">## 12                                                                 Kriging</span></a>
+<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">## 13                                      Local Approximate Gaussian Process</span></a>
+<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">## 14                                                Simple Linear Regression</span></a>
+<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">## 15                                                           Random Forest</span></a>
+<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">## 16                                                          Random Forests</span></a></code></pre></div>
 <p>In this example we train a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code>) on the <code>BostonHousing</code> (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) dataset. In order to calculate standard errors set the <code>predict.type</code> to <code>"se"</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">### Create learner and specify predict.type</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">lrn.lm =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">predict.type =</span> <span class="st">'se'</span>)</a>
@@ -648,9 +645,7 @@
 <p><img src="predict_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>For <em>clustering</em> we also get a scatter plot of two selected features. The color of the points indicates the predicted cluster.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> mtcars.task, <span class="dt">features =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), <span class="dt">cv =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">## Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</span></a></code></pre></div>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(lrn, <span class="dt">task =</span> mtcars.task, <span class="dt">features =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), <span class="dt">cv =</span> <span class="dv">0</span>)</a></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>For <em>regression</em>, there are two types of plots. The 1D plot shows the target values in relation to a single feature, the regression curve and, if the chosen learner supports this, the estimated standard error.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="dt">features =</span> <span class="st">"lstat"</span>, <span class="dt">task =</span> bh.task)</a></code></pre></div>

@@ -86,7 +86,7 @@ cover different resolution levels." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -329,8 +329,7 @@ as features. The segments length are set in a hierachy way so the features
 cover different resolution levels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extractFDAMultiResFeatures</span>(<span class='kw'>res.level</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>curve.lens</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>extractFDAMultiResFeatures</span>(<span class='kw'>res.level</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>seg.lens</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -346,8 +345,8 @@ The number of resolution hierachy, each length is divided by a factor of 2.</p><
 The overlapping proportion when slide the window for one step.</p></td>
     </tr>
     <tr>
-      <th>curve.lens</th>
-      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a>)<br />
+      <th>seg.lens</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Curve subsequence lengths. Needs to sum up to the length of the functional.</p></td>
     </tr>
     </table>
@@ -357,9 +356,13 @@ Curve subsequence lengths. Needs to sum up to the length of the functional.</p><
     <p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other fda_featextractor: <code><a href='extractFDAFPCA.html'>extractFDAFPCA</a></code>,
-  <code><a href='extractFDAFourier.html'>extractFDAFourier</a></code>,
-  <code><a href='extractFDAWavelets.html'>extractFDAWavelets</a></code></p></div>
+    <div class='dont-index'><p>Other fda_featextractor: 
+<code><a href='extractFDABsignal.html'>extractFDABsignal</a>()</code>,
+<code><a href='extractFDADTWKernel.html'>extractFDADTWKernel</a>()</code>,
+<code><a href='extractFDAFPCA.html'>extractFDAFPCA</a>()</code>,
+<code><a href='extractFDAFourier.html'>extractFDAFourier</a>()</code>,
+<code><a href='extractFDATsfeatures.html'>extractFDATsfeatures</a>()</code>,
+<code><a href='extractFDAWavelets.html'>extractFDAWavelets</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

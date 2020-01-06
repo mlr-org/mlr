@@ -89,7 +89,7 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -335,8 +335,16 @@ by passing a corresponding control object. For a complete list of implemented al
 <p>Multi-criteria tuning can be done with <a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tuneParams</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='no'>par.set</span>, <span class='no'>control</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>), <span class='kw'>resample.fun</span> <span class='kw'>=</span> <span class='no'>resample</span>)</pre>
+    <pre class="usage"><span class='fu'>tuneParams</span>(
+  <span class='no'>learner</span>,
+  <span class='no'>task</span>,
+  <span class='no'>resampling</span>,
+  <span class='no'>measures</span>,
+  <span class='no'>par.set</span>,
+  <span class='no'>control</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>),
+  <span class='kw'>resample.fun</span> <span class='kw'>=</span> <span class='no'>resample</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -369,7 +377,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
+      <td><p>(<a href='https://paramhelpers.mlr-org.com/reference/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></td>
@@ -410,22 +418,23 @@ the measure. See example code below.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></p>
-<p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
-  <code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a></code>,
-  <code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></code>,
-  <code><a href='getResamplingIndices.html'>getResamplingIndices</a></code>,
-  <code><a href='getTuneResult.html'>getTuneResult</a></code>,
-  <code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></code>,
-  <code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a></code>,
-  <code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a></code>,
-  <code><a href='makeTuneControlDesign.html'>makeTuneControlDesign</a></code>,
-  <code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a></code>,
-  <code><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></code>,
-  <code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></code>,
-  <code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a></code>,
-  <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
-  <code><a href='makeTuneWrapper.html'>makeTuneWrapper</a></code>,
-  <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p></div>
+<p>Other tune: 
+<code><a href='TuneControl.html'>TuneControl</a></code>,
+<code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a>()</code>,
+<code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a>()</code>,
+<code><a href='getResamplingIndices.html'>getResamplingIndices</a>()</code>,
+<code><a href='getTuneResult.html'>getTuneResult</a>()</code>,
+<code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a>()</code>,
+<code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a>()</code>,
+<code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a>()</code>,
+<code><a href='makeTuneControlDesign.html'>makeTuneControlDesign</a>()</code>,
+<code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a>()</code>,
+<code><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a>()</code>,
+<code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a>()</code>,
+<code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a>()</code>,
+<code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a>()</code>,
+<code><a href='makeTuneWrapper.html'>makeTuneWrapper</a>()</code>,
+<code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)

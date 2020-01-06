@@ -93,7 +93,7 @@ getTuneResult." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -343,8 +343,14 @@ See <a href='tuneParams.html'>tuneParams</a> for more details.</p>
 <a href='getTuneResult.html'>getTuneResult</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeTuneWrapper</span>(<span class='no'>learner</span>, <span class='no'>resampling</span>, <span class='no'>measures</span>, <span class='no'>par.set</span>, <span class='no'>control</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>))</pre>
+    <pre class="usage"><span class='fu'>makeTuneWrapper</span>(
+  <span class='no'>learner</span>,
+  <span class='no'>resampling</span>,
+  <span class='no'>measures</span>,
+  <span class='no'>par.set</span>,
+  <span class='no'>control</span>,
+  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -372,7 +378,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>(<a href='https://rdrr.io/pkg/ParamHelpers/man/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
+      <td><p>(<a href='https://paramhelpers.mlr-org.com/reference/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></td>
@@ -395,45 +401,48 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     <p><a href='makeLearner.html'>Learner</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tune: <code><a href='TuneControl.html'>TuneControl</a></code>,
-  <code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a></code>,
-  <code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a></code>,
-  <code><a href='getResamplingIndices.html'>getResamplingIndices</a></code>,
-  <code><a href='getTuneResult.html'>getTuneResult</a></code>,
-  <code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></code>,
-  <code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a></code>,
-  <code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a></code>,
-  <code><a href='makeTuneControlDesign.html'>makeTuneControlDesign</a></code>,
-  <code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a></code>,
-  <code><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></code>,
-  <code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></code>,
-  <code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a></code>,
-  <code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></code>,
-  <code><a href='tuneParams.html'>tuneParams</a></code>, <code><a href='tuneThreshold.html'>tuneThreshold</a></code></p>
-<p>Other wrapper: <code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a></code>,
-  <code><a href='makeClassificationViaRegressionWrapper.html'>makeClassificationViaRegressionWrapper</a></code>,
-  <code><a href='makeConstantClassWrapper.html'>makeConstantClassWrapper</a></code>,
-  <code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a></code>,
-  <code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a></code>,
-  <code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a></code>,
-  <code><a href='makeDummyFeaturesWrapper.html'>makeDummyFeaturesWrapper</a></code>,
-  <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a></code>,
-  <code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a></code>,
-  <code><a href='makeFilterWrapper.html'>makeFilterWrapper</a></code>,
-  <code><a href='makeImputeWrapper.html'>makeImputeWrapper</a></code>,
-  <code><a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a></code>,
-  <code><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a></code>,
-  <code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a></code>,
-  <code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a></code>,
-  <code><a href='makeMultilabelNestedStackingWrapper.html'>makeMultilabelNestedStackingWrapper</a></code>,
-  <code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a></code>,
-  <code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a></code>,
-  <code><a href='makePreprocWrapperCaret.html'>makePreprocWrapperCaret</a></code>,
-  <code><a href='makePreprocWrapper.html'>makePreprocWrapper</a></code>,
-  <code><a href='makeRemoveConstantFeaturesWrapper.html'>makeRemoveConstantFeaturesWrapper</a></code>,
-  <code><a href='makeSMOTEWrapper.html'>makeSMOTEWrapper</a></code>,
-  <code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a></code>,
-  <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a></code></p></div>
+    <div class='dont-index'><p>Other tune: 
+<code><a href='TuneControl.html'>TuneControl</a></code>,
+<code><a href='getNestedTuneResultsOptPathDf.html'>getNestedTuneResultsOptPathDf</a>()</code>,
+<code><a href='getNestedTuneResultsX.html'>getNestedTuneResultsX</a>()</code>,
+<code><a href='getResamplingIndices.html'>getResamplingIndices</a>()</code>,
+<code><a href='getTuneResult.html'>getTuneResult</a>()</code>,
+<code><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a>()</code>,
+<code><a href='makeModelMultiplexer.html'>makeModelMultiplexer</a>()</code>,
+<code><a href='makeTuneControlCMAES.html'>makeTuneControlCMAES</a>()</code>,
+<code><a href='makeTuneControlDesign.html'>makeTuneControlDesign</a>()</code>,
+<code><a href='makeTuneControlGenSA.html'>makeTuneControlGenSA</a>()</code>,
+<code><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a>()</code>,
+<code><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a>()</code>,
+<code><a href='makeTuneControlMBO.html'>makeTuneControlMBO</a>()</code>,
+<code><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a>()</code>,
+<code><a href='tuneParams.html'>tuneParams</a>()</code>,
+<code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p>
+<p>Other wrapper: 
+<code><a href='makeBaggingWrapper.html'>makeBaggingWrapper</a>()</code>,
+<code><a href='makeClassificationViaRegressionWrapper.html'>makeClassificationViaRegressionWrapper</a>()</code>,
+<code><a href='makeConstantClassWrapper.html'>makeConstantClassWrapper</a>()</code>,
+<code><a href='makeCostSensClassifWrapper.html'>makeCostSensClassifWrapper</a>()</code>,
+<code><a href='makeCostSensRegrWrapper.html'>makeCostSensRegrWrapper</a>()</code>,
+<code><a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a>()</code>,
+<code><a href='makeDummyFeaturesWrapper.html'>makeDummyFeaturesWrapper</a>()</code>,
+<code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a>()</code>,
+<code><a href='makeFeatSelWrapper.html'>makeFeatSelWrapper</a>()</code>,
+<code><a href='makeFilterWrapper.html'>makeFilterWrapper</a>()</code>,
+<code><a href='makeImputeWrapper.html'>makeImputeWrapper</a>()</code>,
+<code><a href='makeMulticlassWrapper.html'>makeMulticlassWrapper</a>()</code>,
+<code><a href='makeMultilabelBinaryRelevanceWrapper.html'>makeMultilabelBinaryRelevanceWrapper</a>()</code>,
+<code><a href='makeMultilabelClassifierChainsWrapper.html'>makeMultilabelClassifierChainsWrapper</a>()</code>,
+<code><a href='makeMultilabelDBRWrapper.html'>makeMultilabelDBRWrapper</a>()</code>,
+<code><a href='makeMultilabelNestedStackingWrapper.html'>makeMultilabelNestedStackingWrapper</a>()</code>,
+<code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a>()</code>,
+<code><a href='makeOverBaggingWrapper.html'>makeOverBaggingWrapper</a>()</code>,
+<code><a href='makePreprocWrapperCaret.html'>makePreprocWrapperCaret</a>()</code>,
+<code><a href='makePreprocWrapper.html'>makePreprocWrapper</a>()</code>,
+<code><a href='makeRemoveConstantFeaturesWrapper.html'>makeRemoveConstantFeaturesWrapper</a>()</code>,
+<code><a href='makeSMOTEWrapper.html'>makeSMOTEWrapper</a>()</code>,
+<code><a href='makeUndersampleWrapper.html'>makeUndersampleWrapper</a>()</code>,
+<code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>

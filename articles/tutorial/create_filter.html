@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -299,12 +299,12 @@
 <a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## List of 6</span></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">##  $ name              : chr "rank.correlation"</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">##  $ desc              : chr "Spearman's correlation between feature and target"</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  $ pkg               : chr(0) </span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">##  $ pkg               : chr(0)</span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">##  $ supported.tasks   : chr "regr"</span></a>
 <a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">##  $ supported.features: chr "numerics"</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">##  $ fun               :function (task, nselect, ...)  </span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">##  $ fun               :function (task, nselect, ...)</span></a>
 <a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt; </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt;</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">##  - attr(*, "class")= chr "Filter"</span></a>
 <a class="sourceLine" id="cb1-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20">filters<span class="op">$</span>rank.correlation<span class="op">$</span>fun</a>
@@ -377,7 +377,7 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">d</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">## FilterValues:</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Task: iris-example</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##            name    type          method      value</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##            name    type          filter      value</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## 1: Petal.Length numeric nonsense.filter    4.00000</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## 2:  Petal.Width numeric nonsense.filter    3.00000</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## 3: Sepal.Length numeric nonsense.filter    2.00000</span></a>
@@ -387,7 +387,7 @@
 <a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">## 7: Sepal.Length numeric      anova.test  119.26450</span></a>
 <a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">## 8:  Sepal.Width numeric      anova.test   49.16004</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d)</a></code></pre></div>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span>(d, <span class="dt">filter =</span> <span class="st">"anova.test"</span>)</a></code></pre></div>
 <p><img src="create_filter_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris.task.filtered =<span class="st"> </span><span class="kw"><a href="../../reference/filterFeatures.html">filterFeatures</a></span>(iris.task, <span class="dt">method =</span> <span class="st">"nonsense.filter"</span>, <span class="dt">abs =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">iris.task.filtered</a>

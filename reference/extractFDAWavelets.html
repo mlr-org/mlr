@@ -86,7 +86,7 @@ See wavelets::dwt for more information." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -336,13 +336,17 @@ See <a href='https://rdrr.io/pkg/wavelets/man/dwt.html'>wavelets::dwt</a> for mo
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>filter</th>
-      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Specifies which filter should be used.
-Default is &#8220;la8&#8221;.</p></td>
+Must be one of <code>d</code>|<code>la</code>|<code>bl</code>|<code>c</code> followed by an even
+number for the level of the filter.
+The level of the filter needs to be smaller or equal then the time-series length.
+For more information and acceptable filters see <code><a href='https://rdrr.io/r/utils/help.html'>help(wt.filter)</a></code>.
+Defaults to <code>la8</code>.</p></td>
     </tr>
     <tr>
       <th>boundary</th>
-      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Boundary to be used.
 &#8220;periodic&#8221; assumes circular time series,
 for &#8220;reflection&#8221; the series is extended to twice its length.
@@ -355,9 +359,13 @@ Default is &#8220;periodic&#8221;.</p></td>
     <p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other fda_featextractor: <code><a href='extractFDAFPCA.html'>extractFDAFPCA</a></code>,
-  <code><a href='extractFDAFourier.html'>extractFDAFourier</a></code>,
-  <code><a href='extractFDAMultiResFeatures.html'>extractFDAMultiResFeatures</a></code></p></div>
+    <div class='dont-index'><p>Other fda_featextractor: 
+<code><a href='extractFDABsignal.html'>extractFDABsignal</a>()</code>,
+<code><a href='extractFDADTWKernel.html'>extractFDADTWKernel</a>()</code>,
+<code><a href='extractFDAFPCA.html'>extractFDAFPCA</a>()</code>,
+<code><a href='extractFDAFourier.html'>extractFDAFourier</a>()</code>,
+<code><a href='extractFDAMultiResFeatures.html'>extractFDAMultiResFeatures</a>()</code>,
+<code><a href='extractFDATsfeatures.html'>extractFDATsfeatures</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

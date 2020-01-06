@@ -88,7 +88,7 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
       </span>
     </div>
 
@@ -333,10 +333,19 @@ estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation
 Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generatePartialDependenceData</span>(<span class='no'>obj</span>, <span class='no'>input</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>derivative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>individual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.975</span>)), <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>generatePartialDependenceData</span>(
+  <span class='no'>obj</span>,
+  <span class='no'>input</span>,
+  <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>derivative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>individual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>,
+  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.975</span>)),
+  <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -459,14 +468,16 @@ Whether the partial dependences were aggregated or the individual curves are ret
 <p>Friedman, Jerome. &#8220;Greedy Function Approximation: A Gradient Boosting Machine.&#8221; The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other partial_dependence: <code><a href='plotPartialDependence.html'>plotPartialDependence</a></code></p>
-<p>Other generate_plot_data: <code><a href='generateCalibrationData.html'>generateCalibrationData</a></code>,
-  <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a></code>,
-  <code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a></code>,
-  <code><a href='generateFilterValuesData.html'>generateFilterValuesData</a></code>,
-  <code><a href='generateLearningCurveData.html'>generateLearningCurveData</a></code>,
-  <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></code>,
-  <code><a href='plotFilterValues.html'>plotFilterValues</a></code></p></div>
+    <div class='dont-index'><p>Other partial_dependence: 
+<code><a href='plotPartialDependence.html'>plotPartialDependence</a>()</code></p>
+<p>Other generate_plot_data: 
+<code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code>,
+<code><a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>()</code>,
+<code><a href='generateFeatureImportanceData.html'>generateFeatureImportanceData</a>()</code>,
+<code><a href='generateFilterValuesData.html'>generateFilterValuesData</a>()</code>,
+<code><a href='generateLearningCurveData.html'>generateLearningCurveData</a>()</code>,
+<code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a>()</code>,
+<code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.svm"</span>)
