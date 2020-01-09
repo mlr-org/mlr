@@ -295,7 +295,7 @@ randomForestSRC.var.select = makeFilter( # nolint
       method = method, verbose = FALSE, always.use = getTaskFeatureNames(task),
       ...)
     im$varselect[setdiff(rownames(im$varselect), im$topvars), "depth"] = NA
-    setNames(im$topvars, im$topvars)
+    im$varselect['depth']
   })
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
