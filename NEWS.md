@@ -39,6 +39,7 @@ PR: #2638 (@pfistl)
 
 - `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (@annette987, #2699)
 - Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
+- Fixed problem of not being able to pass arguments using more.args to a simple filter (@annete987, #2709)
 
 # mlr 2.16.0
 
