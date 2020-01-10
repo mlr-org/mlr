@@ -7,12 +7,14 @@ makeRLearner.classif.classiFunc.kernel = function() {
       makeNumericLearnerParam(id = "h",
         lower = 0, upper = Inf,
         default = 1),
-      # Using metricChoices since there are so many options and this 
+      # Using metricChoices since there are so many options and this
       # keeps stuff flexible.
+      # metric.choices: defined in helpers_fda.R
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
-        values = classiFunc::metricChoices()),
+        values = metric.choices),
+      # kernel.choices: defined in helpers_fda.R
       makeDiscreteLearnerParam(id = "ker", default = "Ker.norm",
-        values = classiFunc::kerChoices()),
+        values = kernel.choices),
       makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "deriv.method", default = "base.diff",

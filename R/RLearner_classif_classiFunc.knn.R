@@ -5,10 +5,10 @@ makeRLearner.classif.classiFunc.knn = function() {
     package = "classiFunc",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "knn", lower = 1L, default = 1L),
-      # Using metricChoices since there are so many options and this 
+      # Using metricChoices since there are so many options and this
       # keeps stuff flexible.
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
-        values = classiFunc::metricChoices()),
+        values = metric.choices),
       makeIntegerLearnerParam(id = "q?", default = 0L, lower = 0L),
       makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE),

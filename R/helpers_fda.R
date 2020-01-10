@@ -43,3 +43,6 @@ checkFDCols = function(data, col) {
   assertNumeric(data)
   return(data)
 }
+
+metric.choices = classiFunc::metricChoices()
+kernel.choices = classiFunc::kerChoices()
