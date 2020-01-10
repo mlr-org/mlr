@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the optimization path of a tuning result. — getTuneResultOptPath • mlr</title>
+<title>Version 2.17 • mlr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,8 +49,7 @@
 
 
 
-<meta property="og:title" content="Get the optimization path of a tuning result. — getTuneResultOptPath" />
-<meta property="og:description" content="Returns the opt.path from a (TuneResult) object." />
+<meta property="og:title" content="Version 2.17" />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -71,7 +70,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -316,46 +315,85 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the optimization path of a tuning result.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/tuneParams.R'><code>R/tuneParams.R</code></a></small>
-    <div class="hidden name"><code>getTuneResultOptPath.Rd</code></div>
+      <h1>Changelog <small>2.17</small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    <p>Returns the opt.path from a (<a href='TuneResult.html'>TuneResult</a>) object.</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>getTuneResultOptPath</span>(<span class='no'>tune.result</span>, <span class='kw'>as.df</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>tune.result</th>
-      <td><p>(<a href='TuneResult.html'>TuneResult</a>) <br />
-A tuning result of the (<a href='tuneParams.html'>tuneParams</a>) function.</p></td>
-    </tr>
-    <tr>
-      <th>as.df</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
-Should the optimization path be returned as a data frame?
-Default is <code>TRUE</code>.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>(<a href='https://paramhelpers.mlr-org.com/reference/OptPath.html'>ParamHelpers::OptPath</a>) or (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>).</p>
-
+    <div id="mlr-2-17-0" class="section level1">
+<h1 class="page-header">
+<a href="#mlr-2-17-0" class="anchor"></a>mlr 2.17.0<small> 2020-01-10 </small>
+</h1>
+<div id="plotting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plotting" class="anchor"></a>plotting</h2>
+<ul>
+<li>
+<code>n.show</code> argument had no effect in <code><a href="../reference/plotFilterValues.html">plotFilterValues()</a></code>. Thanks <a href='https://github.com/albersonmiranda'>@albersonmiranda</a>. (<a href='https://github.com/mlr-org/mlr/issues/2689'>#2689</a>)</li>
+</ul>
+</div>
+<div id="functional-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functional-data" class="anchor"></a>Functional Data</h2>
+<p>PR: <a href='https://github.com/mlr-org/mlr/issues/2638'>#2638</a> (<a href='https://github.com/pfistl'>@pfistl</a>)</p>
+<ul>
+<li>Added several learners for regression and classification on functional data
+<ul>
+<li>classif.classiFunc.(kernel|knn) (knn/kernel using various semi-metrics)</li>
+<li>(classif|regr).fgam (Functional generalized additive models)</li>
+<li>(classif|regr).FDboost (Boosted functional generalized additive models)</li>
+</ul>
+</li>
+<li>Added preprocessing steps for feature extraction from functional data
+<ul>
+<li>extractFDAFourier (Fourier transform)</li>
+<li>extractFDAWavelets (Wavelet features)</li>
+<li>extractFDAFPCA (Principal components)</li>
+<li>extractFDATsfeatures (Time-Series features from tsfeatures package)</li>
+<li>extractFDADTWKernel (Dynamic Time-Warping Kernel)</li>
+<li>extractFDAMultiResFeatures (Compute features at multiple resolutions)</li>
+</ul>
+</li>
+<li><p>Fixed a bug where multiclass to binaryclass reduction techniques did not work with functional data.</p></li>
+<li>Several other minor bug fixes and code improvements</li>
+<li><p>Extended and clarified documentation for several fda components.</p></li>
+</ul>
+</div>
+<div id="learners---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---general" class="anchor"></a>learners - general</h2>
+<ul>
+<li>xgboost: added options ‘auto’, ‘approx’ and ‘gpu_hist’ to param <code>tree_method</code> (<a href='https://github.com/albersonmiranda'>@albersonmiranda</a>, <a href='https://github.com/mlr-org/mlr/issues/2701'>#2701</a>)</li>
+</ul>
+</div>
+<div id="filters---general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---general" class="anchor"></a>filters - general</h2>
+<ul>
+<li>Allow a custom threholding function to be passed to filterFeatures and makeFilterWrapper (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2686'>#2686</a>)</li>
+<li>Allow ensemble filters to include multiple base filters of the same type (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2688'>#2688</a>)</li>
+</ul>
+</div>
+<div id="filters---bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---bugfixes" class="anchor"></a>filters - bugfixes</h2>
+<ul>
+<li>
+<code><a href="../reference/filterFeatures.html">filterFeatures()</a></code>: Arg <code>thresh</code> was not working correctly when applied to ensemble filters. (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2699'>#2699</a>)</li>
+<li>Fixed incorrect ranking of ensemble filters. Thanks <a href='https://github.com/annette987'>@annette987</a> (<a href='https://github.com/mlr-org/mlr/issues/2698'>#2698</a>)</li>
+</ul>
+</div>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-    </ul>
-
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mlr-2-17-0">2.17.0</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
 
