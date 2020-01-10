@@ -296,7 +296,7 @@ randomForestSRC.var.select = makeFilter( # nolint
       ...)
     
     im$varselect[setdiff(rownames(im$varselect), im$topvars), "depth"] = NA
-    setNames(im$varselect[["depth"]], rownames(im$varselect))
+    setNames(im$varselect[, "depth"], rownames(im$varselect))
   })
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
