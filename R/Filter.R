@@ -292,7 +292,7 @@ randomForestSRC.var.select = makeFilter( # nolint
     # method "vh.imp" is not supported as it does return values to rank features on
     assert_choice(method, c("md", "vh"))
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, always.use = getTaskFeatureNames(task),
+      method = method, verbose = FALSE,
       ...)
     
     im$varselect[setdiff(rownames(im$varselect), im$topvars), "depth"] = NA
