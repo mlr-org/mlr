@@ -44,5 +44,31 @@ checkFDCols = function(data, col) {
   return(data)
 }
 
-metric.choices = classiFunc::metricChoices()
-kernel.choices = classiFunc::kerChoices()
+# created by `classiFunc::metric.choices`
+# we cannot use the raw function here as otherwise pkg classiFunc would act like
+# a depenency of mlr (because this here is called during loading) the same goes
+# for the actual use of this object in the ParamSet of the classiFunc learners
+# From time to time we should update this list (or if we experience errors)
+# to have the latest settings
+# last update: 01/2020
+metric.choices = c(cosine1 = "cosine", cosine2 = "angular", eJaccard1 = "eJaccard",
+  eJaccard2 = "extended_Jaccard", eDice1 = "eDice", eDice2 = "extended_Dice",
+  eDice3 = "eSorensen", correlation = "correlation", Euclidean1 = "Euclidean",
+  Euclidean2 = "L2", Mahalanobis = "Mahalanobis", Bhjattacharyya = "Bhjattacharyya",
+  Manhattan1 = "Manhattan", Manhattan2 = "City-Block", Manhattan3 = "L1",
+  Manhattan4 = "taxi", supremum1 = "supremum", supremum2 = "max",
+  supremum3 = "maximum", supremum4 = "Tschebyscheff", supremum5 = "Chebyshev",
+  Minkowski1 = "Minkowski", Minkowski2 = "Lp", Canberra = "Canberra",
+  Wave1 = "Wave", Wave2 = "Hedges", divergence = "divergence",
+  Kullback1 = "Kullback", Kullback2 = "Leibler", Bray1 = "Bray",
+  Bray2 = "Curtis", Soergel = "Soergel", Podani1 = "Podani", Podani2 = "discordance",
+  Chord = "Chord", Geodesic = "Geodesic", Whittaker = "Whittaker",
+  Hellinger = "Hellinger", fJaccard1 = "fJaccard", fJaccard2 = "fuzzy_Jaccard",
+  "shortEuclidean", "mean", "relAreas", "jump", "globMax", "globMin",
+  "points", "custom.metric", "amplitudeDistance", "phaseDistance",
+  "FisherRao", "elasticMetric", "elasticDistance", "dtwPath", "rucrdtw",
+  "rucred")
+# created by `classiFunc::metric.choices`
+kernel.choices = c("Ker.norm", "Ker.cos", "Ker.epa", "Ker.tri", "Ker.quar", "Ker.unif",
+  "AKer.norm", "AKer.cos", "AKer.epa", "AKer.tri", "AKer.quar",
+  "AKer.unif", "custom.ker")
