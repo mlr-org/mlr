@@ -39,7 +39,8 @@ PR: #2638 (@pfistl)
 
 - `filterFeatures()`: Arg `thresh` was not working correctly when applied to ensemble filters. (@annette987, #2699)
 - Fixed incorrect ranking of ensemble filters. Thanks @annette987 (#2698)
-- Fixed problem of random forest minimal depth filter returning all NA values. Should only return NAs for features below the threshold. (@annette987, #2710)
+- Fixed an issue which caused the random forest minimal depth filter to only return NA values when using thresholding. 
+  NAs should only be returned for features below the given threshold. (@annette987, #2710)
 
 # mlr 2.16.0
 
@@ -1107,4 +1108,3 @@ In this case, the package name is omitted.
 
 # mlr 1.1-18:
 * Initial release to CRAN
-
