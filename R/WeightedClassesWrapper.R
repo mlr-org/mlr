@@ -42,6 +42,7 @@
 #' @family wrapper
 #' @export
 #' @examples
+#' \donttest{
 #' set.seed(123)
 #' # using the direct parameter of the SVM (which is already defined in the learner)
 #' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
@@ -65,6 +66,7 @@
 #' res = tuneParams(lrn, sonar.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' # print(res$opt.path)
+#' }
 makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1) {
 
   learner = checkLearner(learner, "classif")
