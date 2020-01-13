@@ -114,7 +114,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
   }
   assertList(more.args, names = "unique", max.len = length(method))
 
-
   fn = getTaskFeatureNames(task)
 
   if (!is.null(ens.method)) {
