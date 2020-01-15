@@ -137,7 +137,7 @@ jobs:
             R -q -e 'tic::install()'
       - run:
           name: Run codecov
-          no_output_timeout: 60m
+          no_output_timeout: 90m
           command: |
             R -q -e 'tic::before_script()'
             R -q -e 'RWeka::WPM("refresh-cache");RWeka::WPM("install-package", "XMeans");covr::codecov()'

@@ -145,7 +145,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     types = vcapply(getTaskData(task, target.extra = TRUE)$data[fn], getClass1)
 
     out = data.table(name = row.names(fval),
-      type = types, fval, row.names = NULL, stringsAsFactors = FALSE)
+      type = types, fval, stringsAsFactors = FALSE)
 
     # variable.factor = FALSE has no effect
     out = melt(out, value.name = "value", measure.vars = index_names,

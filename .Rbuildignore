@@ -36,3 +36,4 @@ revdep/*
 .pre-commit-config.yaml
 ^\.circleci$
 ^\.pre-commit-config\.yaml$
+^\.vscode$

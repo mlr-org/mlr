@@ -6,7 +6,6 @@ test_that("classif_adaboostm1", {
   parset.list = list(
     list(),
     list(W = list(RWeka::J48, M = 30)),
-    list(W = list("DecisionStump")),
     list(P = 100),
     list(I = 10, S = 1),
     list(I = 5, Q = FALSE)
@@ -19,7 +18,8 @@ test_that("classif_adaboostm1", {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     ctrl = do.call(RWeka::Weka_control, parset)
-    m = RWeka::AdaBoostM1(formula = binaryclass.formula, data = binaryclass.train, control = ctrl)
+    m = RWeka::AdaBoostM1(formula = binaryclass.formula,
+      data = binaryclass.train, control = ctrl)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = binaryclass.test, type = "probability")
     old.probs.list[[i]] = p[, 1]
@@ -36,7 +36,8 @@ test_that("classif_adaboostm1", {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     ctrl = do.call(RWeka::Weka_control, parset)
-    m = RWeka::AdaBoostM1(formula = multiclass.formula, data = multiclass.train, control = ctrl)
+    m = RWeka::AdaBoostM1(formula = multiclass.formula, data = multiclass.train,
+      control = ctrl)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = multiclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
@@ -53,7 +54,8 @@ test_that("classif_adaboostm1", {
     multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset, ...) {
-    RWeka::AdaBoostM1(formula, data = data[subset, ], control = RWeka::Weka_control(...))
+    RWeka::AdaBoostM1(formula, data = data[subset, ],
+      control = RWeka::Weka_control(...))
   }
 
   tp = function(model, newdata) predict(model, newdata, type = "class")

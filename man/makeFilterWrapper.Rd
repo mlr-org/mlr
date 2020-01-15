@@ -95,6 +95,7 @@ the same cache at the same time.
 }
 
 \examples{
+\donttest{
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 inner = makeResampleDesc("Holdout")
@@ -140,6 +141,7 @@ r = resample(lrn, task, outer, extract = function(model) {
   getFilteredFeatures(model)
 })
 print(r$extract)
+}
 }
 \seealso{
 Other filter: 

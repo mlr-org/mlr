@@ -64,6 +64,7 @@
 #' passed down to the next learner.
 #'
 #' @examples
+#' \donttest{
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
 #' inner = makeResampleDesc("Holdout")
@@ -109,6 +110,7 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
+#' }
 makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.fun = NULL, fw.fun.args = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...) {
