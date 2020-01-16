@@ -292,10 +292,11 @@ randomForestSRC.var.select = makeFilter( # nolint
     # method "vh.imp" is not supported as it does return values to rank features on
     assert_choice(method, c("md", "vh"))
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = method, verbose = FALSE, always.use = getTaskFeatureNames(task),
+      method = method, verbose = FALSE,
       ...)
+    
     im$varselect[setdiff(rownames(im$varselect), im$topvars), "depth"] = NA
-    im$topvars
+    setNames(im$varselect[, "depth"], rownames(im$varselect))
   })
 .FilterRegister[["randomForestSRC.var.select"]] = randomForestSRC.var.select
 .FilterRegister[["randomForestSRC.var.select"]]$desc = "(DEPRECATED)"
