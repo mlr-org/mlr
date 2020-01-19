@@ -25,7 +25,6 @@
 \alias{measureRSQ}
 \alias{expvar}
 \alias{measureEXPVAR}
-\alias{arsq}
 \alias{rrse}
 \alias{measureRRSE}
 \alias{rae}
@@ -175,8 +174,6 @@ measureRSQ(truth, response)
 expvar
 
 measureEXPVAR(truth, response)
-
-arsq
 
 rrse
 
