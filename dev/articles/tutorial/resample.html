@@ -627,42 +627,57 @@ Resampling Figure
 <a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">## Replace: NA</span></a>
 <a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">## Number of Monte-Carlo iterations: NA</span></a>
 <a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">## Local: FALSE</span></a>
-<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">##       crim       zn    indus     chas      nox       rm      age      dis</span></a>
-<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co">## 1 3101.823 1441.936 4512.804 407.3234 4079.684 17790.69 3437.573 3841.604</span></a>
-<a class="sourceLine" id="cb16-17" data-line-number="17"><span class="co">##        rad      tax  ptratio        b   lstat</span></a>
-<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co">## 1 139.3927 597.6171 4013.995 469.6105 11842.2</span></a>
-<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="co">## </span></a>
-<a class="sourceLine" id="cb16-20" data-line-number="20"><span class="co">## [[2]]</span></a>
-<a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co">## FeatureImportance:</span></a>
-<a class="sourceLine" id="cb16-22" data-line-number="22"><span class="co">## Task: BostonHousing-example</span></a>
-<a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co">## </span></a>
-<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co">## Learner: regr.rpart</span></a>
-<a class="sourceLine" id="cb16-25" data-line-number="25"><span class="co">## Measure: NA</span></a>
-<a class="sourceLine" id="cb16-26" data-line-number="26"><span class="co">## Contrast: NA</span></a>
-<a class="sourceLine" id="cb16-27" data-line-number="27"><span class="co">## Aggregation: function (x)  x</span></a>
-<a class="sourceLine" id="cb16-28" data-line-number="28"><span class="co">## Replace: NA</span></a>
-<a class="sourceLine" id="cb16-29" data-line-number="29"><span class="co">## Number of Monte-Carlo iterations: NA</span></a>
-<a class="sourceLine" id="cb16-30" data-line-number="30"><span class="co">## Local: FALSE</span></a>
-<a class="sourceLine" id="cb16-31" data-line-number="31"><span class="co">##       crim       zn    indus     chas      nox       rm     age      dis</span></a>
-<a class="sourceLine" id="cb16-32" data-line-number="32"><span class="co">## 1 3456.299 1219.795 3972.659 193.0891 2217.923 15577.64 2493.07 225.4885</span></a>
-<a class="sourceLine" id="cb16-33" data-line-number="33"><span class="co">##        rad      tax ptratio b    lstat</span></a>
-<a class="sourceLine" id="cb16-34" data-line-number="34"><span class="co">## 1 58.27396 2250.441 2558.66 0 9659.698</span></a>
-<a class="sourceLine" id="cb16-35" data-line-number="35"><span class="co">## </span></a>
-<a class="sourceLine" id="cb16-36" data-line-number="36"><span class="co">## [[3]]</span></a>
-<a class="sourceLine" id="cb16-37" data-line-number="37"><span class="co">## FeatureImportance:</span></a>
-<a class="sourceLine" id="cb16-38" data-line-number="38"><span class="co">## Task: BostonHousing-example</span></a>
-<a class="sourceLine" id="cb16-39" data-line-number="39"><span class="co">## </span></a>
-<a class="sourceLine" id="cb16-40" data-line-number="40"><span class="co">## Learner: regr.rpart</span></a>
-<a class="sourceLine" id="cb16-41" data-line-number="41"><span class="co">## Measure: NA</span></a>
-<a class="sourceLine" id="cb16-42" data-line-number="42"><span class="co">## Contrast: NA</span></a>
-<a class="sourceLine" id="cb16-43" data-line-number="43"><span class="co">## Aggregation: function (x)  x</span></a>
-<a class="sourceLine" id="cb16-44" data-line-number="44"><span class="co">## Replace: NA</span></a>
-<a class="sourceLine" id="cb16-45" data-line-number="45"><span class="co">## Number of Monte-Carlo iterations: NA</span></a>
-<a class="sourceLine" id="cb16-46" data-line-number="46"><span class="co">## Local: FALSE</span></a>
-<a class="sourceLine" id="cb16-47" data-line-number="47"><span class="co">##       crim       zn    indus chas      nox       rm      age     dis      rad</span></a>
-<a class="sourceLine" id="cb16-48" data-line-number="48"><span class="co">## 1 5431.503 2233.188 4145.386    0 3114.175 8294.477 5013.095 1539.99 630.7023</span></a>
-<a class="sourceLine" id="cb16-49" data-line-number="49"><span class="co">##        tax  ptratio        b    lstat</span></a>
-<a class="sourceLine" id="cb16-50" data-line-number="50"><span class="co">## 1 3062.834 688.6419 104.4289 18634.34</span></a></code></pre></div>
+<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">## # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co">##   variable importance</span></a>
+<a class="sourceLine" id="cb16-17" data-line-number="17"><span class="co">##   &lt;chr&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co">## 1 crim          3102.</span></a>
+<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="co">## 2 zn            1442.</span></a>
+<a class="sourceLine" id="cb16-20" data-line-number="20"><span class="co">## 3 indus         4513.</span></a>
+<a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co">## 4 chas           407.</span></a>
+<a class="sourceLine" id="cb16-22" data-line-number="22"><span class="co">## 5 nox           4080.</span></a>
+<a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co">## 6 rm           17791.</span></a>
+<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co">## </span></a>
+<a class="sourceLine" id="cb16-25" data-line-number="25"><span class="co">## [[2]]</span></a>
+<a class="sourceLine" id="cb16-26" data-line-number="26"><span class="co">## FeatureImportance:</span></a>
+<a class="sourceLine" id="cb16-27" data-line-number="27"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb16-28" data-line-number="28"><span class="co">## </span></a>
+<a class="sourceLine" id="cb16-29" data-line-number="29"><span class="co">## Learner: regr.rpart</span></a>
+<a class="sourceLine" id="cb16-30" data-line-number="30"><span class="co">## Measure: NA</span></a>
+<a class="sourceLine" id="cb16-31" data-line-number="31"><span class="co">## Contrast: NA</span></a>
+<a class="sourceLine" id="cb16-32" data-line-number="32"><span class="co">## Aggregation: function (x)  x</span></a>
+<a class="sourceLine" id="cb16-33" data-line-number="33"><span class="co">## Replace: NA</span></a>
+<a class="sourceLine" id="cb16-34" data-line-number="34"><span class="co">## Number of Monte-Carlo iterations: NA</span></a>
+<a class="sourceLine" id="cb16-35" data-line-number="35"><span class="co">## Local: FALSE</span></a>
+<a class="sourceLine" id="cb16-36" data-line-number="36"><span class="co">## # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb16-37" data-line-number="37"><span class="co">##   variable importance</span></a>
+<a class="sourceLine" id="cb16-38" data-line-number="38"><span class="co">##   &lt;chr&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb16-39" data-line-number="39"><span class="co">## 1 crim          3456.</span></a>
+<a class="sourceLine" id="cb16-40" data-line-number="40"><span class="co">## 2 zn            1220.</span></a>
+<a class="sourceLine" id="cb16-41" data-line-number="41"><span class="co">## 3 indus         3973.</span></a>
+<a class="sourceLine" id="cb16-42" data-line-number="42"><span class="co">## 4 chas           193.</span></a>
+<a class="sourceLine" id="cb16-43" data-line-number="43"><span class="co">## 5 nox           2218.</span></a>
+<a class="sourceLine" id="cb16-44" data-line-number="44"><span class="co">## 6 rm           15578.</span></a>
+<a class="sourceLine" id="cb16-45" data-line-number="45"><span class="co">## </span></a>
+<a class="sourceLine" id="cb16-46" data-line-number="46"><span class="co">## [[3]]</span></a>
+<a class="sourceLine" id="cb16-47" data-line-number="47"><span class="co">## FeatureImportance:</span></a>
+<a class="sourceLine" id="cb16-48" data-line-number="48"><span class="co">## Task: BostonHousing-example</span></a>
+<a class="sourceLine" id="cb16-49" data-line-number="49"><span class="co">## </span></a>
+<a class="sourceLine" id="cb16-50" data-line-number="50"><span class="co">## Learner: regr.rpart</span></a>
+<a class="sourceLine" id="cb16-51" data-line-number="51"><span class="co">## Measure: NA</span></a>
+<a class="sourceLine" id="cb16-52" data-line-number="52"><span class="co">## Contrast: NA</span></a>
+<a class="sourceLine" id="cb16-53" data-line-number="53"><span class="co">## Aggregation: function (x)  x</span></a>
+<a class="sourceLine" id="cb16-54" data-line-number="54"><span class="co">## Replace: NA</span></a>
+<a class="sourceLine" id="cb16-55" data-line-number="55"><span class="co">## Number of Monte-Carlo iterations: NA</span></a>
+<a class="sourceLine" id="cb16-56" data-line-number="56"><span class="co">## Local: FALSE</span></a>
+<a class="sourceLine" id="cb16-57" data-line-number="57"><span class="co">## # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb16-58" data-line-number="58"><span class="co">##   variable importance</span></a>
+<a class="sourceLine" id="cb16-59" data-line-number="59"><span class="co">##   &lt;chr&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb16-60" data-line-number="60"><span class="co">## 1 crim          5432.</span></a>
+<a class="sourceLine" id="cb16-61" data-line-number="61"><span class="co">## 2 zn            2233.</span></a>
+<a class="sourceLine" id="cb16-62" data-line-number="62"><span class="co">## 3 indus         4145.</span></a>
+<a class="sourceLine" id="cb16-63" data-line-number="63"><span class="co">## 4 chas             0 </span></a>
+<a class="sourceLine" id="cb16-64" data-line-number="64"><span class="co">## 5 nox           3114.</span></a>
+<a class="sourceLine" id="cb16-65" data-line-number="65"><span class="co">## 6 rm            8294.</span></a></code></pre></div>
 <p>There is also an convenience function <code><a href="../../reference/getResamplingIndices.html">getResamplingIndices()</a></code> to extract the resampling indices from the <code>ResampleResult</code> object:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span>(r)</a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">## $train.inds</span></a>
