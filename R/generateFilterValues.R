@@ -96,7 +96,6 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
       stri_paste(sapply(check.feat[check.length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
   }
   assertCount(nselect)
-  assertList(more.args, names = "unique", max.len = length(method))
   dot.args = list(...)
   if (length(dot.args) > 0L && length(more.args) > 0L) {
     stopf("Do not use both 'more.args' and '...' here!")
@@ -110,7 +109,10 @@ generateFilterValuesData = function(task, method = "randomForestSRC_importance",
     } else {
       stopf("You use more than 1 filter method. Please pass extra arguments via 'more.args' and not '...' to filter methods!")
     }
+  } else if (length(method) == 1L && length(more.args) > 1L) { # simple filter with 1 method and more.args
+    more.args = namedList(method, more.args)
   }
+  assertList(more.args, names = "unique", max.len = length(method))
 
   fn = getTaskFeatureNames(task)
 

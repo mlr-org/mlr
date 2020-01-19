@@ -1,6 +1,11 @@
 # mlr 2.17.0.9000
 
+## filters - bugfixes
 
+- Fixed an issue which caused the random forest minimal depth filter to only return NA values when using thresholding. 
+  NAs should only be returned for features below the given threshold. (@annette987, #2710)
+- Fixed problem which prevented passing filter options via argument `more.args` for simple filters (@annette987, #2709)
+  
 # mlr 2.17.0
 
 ## plotting
@@ -32,6 +37,8 @@ PR: #2638 (@pfistl)
 ## learners - general
 
 - xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
+- `getFeatureImportance()` now returns a long data.frame with columns `variable` and `importance`.
+  Beforehand, a wide data.frame was returned with each variable representing a column (@pat-s, #1755).
 
 ## filters - general
 
@@ -1109,4 +1116,3 @@ In this case, the package name is omitted.
 
 # mlr 1.1-18:
 * Initial release to CRAN
-

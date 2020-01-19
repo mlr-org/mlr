@@ -281,23 +281,6 @@ test_that("check measure calculations", {
   })
   expect_silent(measureRSQ(c(1, 1, 1, 0), c(2, 2, 2, 2)))
 
-  # arsq
-  arsq.test = 1 - (1 - rsq.test) * (2L / (4L - 2L - 1L))
-  arsq.perf = performance(pred.regr, measures = arsq,
-    model = mod.regr)
-  expect_equal(arsq.test, arsq$fun(pred = pred.regr, model = mod.regr))
-  expect_equal(arsq.test, as.numeric(arsq.perf))
-
-  task.regr.arsq = subsetTask(task = task.regr, subset = 1:3)
-  mod.regr.arsq = train(lrn.regr, task.regr.arsq)
-  pred.regr.arsq = predict(mod.regr.arsq, task.regr.arsq)
-  suppressWarnings({
-    expect_equal(NA_real_, as.numeric(performance(pred.regr.arsq, measures = arsq,
-      model = mod.regr.arsq)))
-    expect_warning(performance(pred.regr.arsq, measures = arsq,
-      model = mod.regr.arsq))
-  })
-
   # expvar
   expvar.test = sum((pred.art.regr - mean(tar.regr))^2L) / sum((tar.regr - mean(tar.regr))^2L)
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)

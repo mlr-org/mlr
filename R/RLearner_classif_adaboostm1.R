@@ -9,7 +9,7 @@ makeRLearner.classif.adaboostm1 = function() {
       makeNumericLearnerParam(id = "S", default = 1L),
       makeIntegerLearnerParam(id = "I", default = 10L, lower = 1L),
       makeLogicalLearnerParam(id = "D", default = FALSE, requires = quote(!U)),
-      makeUntypedLearnerParam(id = "W", default = RWeka::DecisionStump),
+      makeUntypedLearnerParam(id = "W", default = list("DecisionStump")),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),

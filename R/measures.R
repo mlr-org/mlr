@@ -265,23 +265,6 @@ measureEXPVAR = function(truth, response) {
   regss / ess
 }
 
-#' @export arsq
-#' @rdname measures
-#' @format none
-arsq = makeMeasure(id = "arsq", minimize = FALSE, best = 1, worst = 0,
-  properties = c("regr", "req.pred", "req.truth"),
-  name = "Adjusted coefficient of determination",
-  note = "Defined as: 1 - (1 - rsq) * (p / (n - p - 1L)). Adjusted R-squared is only defined for normal linear regression.",
-  fun = function(task, model, pred, feats, extra.args) {
-    n = length(pred$data$truth)
-    p = length(model$features)
-    if (n == p + 1) {
-      warning("Adjusted R-squared is undefined if the number observations is equal to the number of independent variables plus one.")
-      return(NA_real_)
-    }
-    1 - (1 - measureRSQ(pred$data$truth, pred$data$response)) * (p / (n - p - 1L))
-  })
-
 #' @export rrse
 #' @rdname measures
 #' @format none
