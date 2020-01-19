@@ -37,6 +37,8 @@ PR: #2638 (@pfistl)
 ## learners - general
 
 - xgboost: added options 'auto', 'approx' and 'gpu_hist' to param `tree_method` (@albersonmiranda, #2701)
+- `getFeatureImportance()` now returns a long data.frame with columns `variable` and `importance`.
+  Beforehand, a wide data.frame was returned with each variable representing a column (@pat-s, #1755).
 
 ## filters - general
 

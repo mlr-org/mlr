@@ -76,7 +76,8 @@ getFeatureImportance = function(object, ...) {
   # convert named vector to data.frame with columns and set NA to 0
   imp[is.na(imp)] = 0L
   imp = as.data.frame(t(imp))
-  rownames(imp) = NULL
+  imp = tidyr::pivot_longer(imp, tidyr::everything(),
+    names_to = "variable", values_to = "importance")
 
   makeS3Obj("FeatureImportance",
     res = imp,

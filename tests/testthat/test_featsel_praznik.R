@@ -67,7 +67,8 @@ test_that("FilterWrapper with praznik mutual information, resample", {
   mod = train(lrn, binaryclass.task)
   feat.imp = getFeatureImportance(mod)$res
   expect_data_frame(feat.imp,
-    types = rep("numeric", getTaskNFeats(binaryclass.task)),
-    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
-  expect_equal(colnames(feat.imp), mod$features)
+    types = c("character", "numeric"),
+    any.missing = FALSE, nrows = getTaskNFeats(binaryclass.task),
+    ncols = 2)
+  expect_equal(colnames(feat.imp), c("variable", "importance"))
 })
