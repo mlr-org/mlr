@@ -1,3 +1,11 @@
+# mlr 2.17.0.9001
+
+* Fix `print.FeatSelResult()` when bits.to.features is used in `selectFeatures()` (#2721)
+* Return a long DF for `getFeatureImportance()` (#2708)
+* Remove adjusted Rsq measure (arsq), fixes #2711
+* `listLearners()` should not fail if a package is not installed (#2717)
+
+
 # mlr 2.17.0.9000
 
 ## filters - bugfixes
