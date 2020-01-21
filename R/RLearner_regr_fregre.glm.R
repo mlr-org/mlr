@@ -1,4 +1,9 @@
-
+#' @title Classification of functional data by Generalized Linear Models.
+#'
+#' @description
+#' Learner for classification using Generalized Linear Models.
+#'
+#' @export
 makeRLearner.regr.fregre.glm = function() {
   makeRLearnerRegr(
     cl = "regr.fregre.glm",
@@ -45,15 +50,3 @@ predictLearner.regr.fregre.glm = function(.learner, .model, .newdata, ...) {
   predict(object = .model$learner.model, newx = nd, type = "response")
 
 }
-
-
-
-registerS3method("makeRLearner", "regr.fregre.glm",
-                 makeRLearner.regr.fregre.glm)
-registerS3method("trainLearner", "regr.fregre.glm",
-                 trainLearner.regr.fregre.glm)
-registerS3method("predictLearner", "regr.fregre.glm",
-                 predictLearner.regr.fregre.glm)
-
-parallelExport("trainLearner.regr.fregre.glm",
-               "predictLearner.regr.fregre.glm")
