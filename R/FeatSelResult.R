@@ -28,7 +28,7 @@ print.FeatSelResult = function(x, ...) {
     clipString(collapse(x, ", "), 50L)
   }
 
-  if (!all.equal(x$x.bit.names, x$x)) {
+  if (!isTRUE(all.equal(x$x.bit.names, x$x))) {
     catf("Bits (%i): %s", length(x$x.bit.names), shortenX(x$x.bit.names))
   }
   catf("Features (%i): %s", length(x$x), shortenX(x$x))

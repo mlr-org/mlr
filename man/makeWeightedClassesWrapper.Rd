@@ -54,6 +54,7 @@ We set this weight depending on the class internally in the wrapper. Basically w
 something like a new \dQuote{class.weights} parameter for the learner via observation weights.
 }
 \examples{
+\donttest{
 set.seed(123)
 # using the direct parameter of the SVM (which is already defined in the learner)
 lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
@@ -77,6 +78,7 @@ rdesc = makeResampleDesc("CV", iters = 2L, stratify = TRUE)
 res = tuneParams(lrn, sonar.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 # print(res$opt.path)
+}
 }
 \seealso{
 Other wrapper: 
