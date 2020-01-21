@@ -1,4 +1,4 @@
-#' @title Classification of functional data by Generalized Linear Models.
+#' @title Regression of functional data by Generalized Linear Models.
 #'
 #' @description
 #' Learner for classification using Generalized Linear Models.
@@ -17,7 +17,7 @@ makeRLearner.regr.fregre.glm = function() {
     properties = c("functionals"),
     name = "Generalized Linear Models regression on FDA",
     short.name = "fregre.glm",
-    note = "model$C[[1]] is set to quote(fregre.glm)"
+    note = "model$call[[1]] is set to quote(fregre.glm)"
   )
 }
 
@@ -35,7 +35,7 @@ trainLearner.regr.fregre.glm = function(.learner, .task, .subset, .weights = NUL
   model = fda.usc::fregre.glm(d.target ~ x, data = dat)
 
   # Fix bug in package. The changed slot looks different when called with
-  # `fda.usc::lassif.glm()` than just `classif.glm()`
+  # `fda.usc::fregre.glm()` than just `fregre.glm()`
   model$call[[1]] = quote(fregre.glm)
 
   return(model)
