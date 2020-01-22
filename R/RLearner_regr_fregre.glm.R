@@ -9,7 +9,9 @@ makeRLearner.regr.fregre.glm = function() {
     cl = "regr.fregre.glm",
     package = "fda.usc",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = "binomial()", values = list("binomial()", "gaussian()", "Gamma()", "inverse.gaussian()", "poisson()")),
+      makeDiscreteLearnerParam(id = "family", default = "binomial()",
+        values = list("binomial()", "gaussian()", "Gamma()",
+          "inverse.gaussian()", "poisson()")),
       makeUntypedLearnerParam(id = "basis.x"),
       makeUntypedLearnerParam(id = "basis.b"),
       makeLogicalLearnerParam(id = "CV", default = FALSE)
@@ -21,11 +23,12 @@ makeRLearner.regr.fregre.glm = function() {
   )
 }
 
-
-trainLearner.regr.fregre.glm = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.regr.fregre.glm = function(.learner, .task, .subset,
+  .weights = NULL, ...) {
 
   # Get and transform functional data
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE,
+    functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
@@ -41,12 +44,10 @@ trainLearner.regr.fregre.glm = function(.learner, .task, .subset, .weights = NUL
   return(model)
 }
 
-
 predictLearner.regr.fregre.glm = function(.learner, .model, .newdata, ...) {
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)
   nd = list(x = fda.usc::fdata(mdata = fd))
 
   predict(object = .model$learner.model, newx = nd, type = "response")
-
 }

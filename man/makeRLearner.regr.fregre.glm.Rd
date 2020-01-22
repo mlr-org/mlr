@@ -2,7 +2,7 @@
 % Please edit documentation in R/RLearner_regr_fregre.glm.R
 \name{makeRLearner.regr.fregre.glm}
 \alias{makeRLearner.regr.fregre.glm}
-\title{Classification of functional data by Generalized Linear Models.}
+\title{Regression of functional data by Generalized Linear Models.}
 \usage{
 \method{makeRLearner}{regr.fregre.glm}()
 }
