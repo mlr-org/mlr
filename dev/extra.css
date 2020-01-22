@@ -76,7 +76,7 @@ body {
 /* borrowed from ropensci/rotemplate ------------------- */
 
 .navbar .navbar-brand {
-  font-size: 22px;
+  font-size: 20px;
   line-height: 26px;
   color: #03638e;
   min-height: 40px;
@@ -124,4 +124,6 @@ body {
 
 small, .small {
   font-size: 70%;
+  font-weight: 400;
+  letter-spacing: 0.03em;
 }
