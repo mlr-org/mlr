@@ -27,12 +27,13 @@ news:
 
 navbar:
   structure:
-    left:  [articles, advanced, extending, appendix, reference, news]
+    left:  [articles, advanced, extending, appendix, reference]
     right: [github, slack, stackoverflow, rss]
 
   components:
     home: ~
     intro: ~
+    news: ~
     articles:
       text: Basics
       menu:
@@ -140,6 +141,9 @@ navbar:
         href: https://jakob-r.de/mlrHyperopt/index.html
       - text: OpenML
         href: http://openml.github.io/openml-r/
+      - text: ---
+      - text: Changelog
+        href: news/index.html
     slack:
       icon: fab fa-slack
       href: https://mlr-org.slack.com
