@@ -1,36 +1,60 @@
-test_that("test", {
+context("RLearner_regr_fregre.glm")
+test_that("regr_fregre.glm behaves like original api", {
+
   # create data-------------------------------------------------------------------
   requirePackagesOrSkip("fda.usc", default.method = "load")
   requirePackagesOrSkip("fda", default.method = "load")
 
+
   data("tecator", package = "fda.usc")
-  leng = length(tecator$absorp.fdata$data[, 1])
-
-  obs = as.numeric(c(rep(0, leng / 2), rep(1, leng / 2 + 1)))
-
-
-  dat = cbind(obs, as.data.frame(tecator$absorp.fdata$data))
-  colnames(dat) <- make.names(colnames(dat), unique = TRUE)
-
-  fd.features = list("absorbtion" = 2:101)
-  fdf = makeFunctionalData(dat, fd.features = fd.features)
-
-  # perform learner---------------------------------------------------------------
-  tsk1 = makeRegrTask("task1", data = fdf, target = "obs")
-
-  fdalrn = makeLearner("regr.fregre.glm")
+  index = c(1:70, 150:200)
+  mlearn = tecator[["learn"]]
+  mlearn$df = tecator$y[index, ]
+  mlearn$absorb.fdata = tecator$absorp.fdata
+  mlearn$absorb.fdata$data = mlearn$absorb.fdata$data[index,]
 
 
-  basis.x = create.bspline.basis(rangeval = c(850, 1050), norder = 4,
-    breaks = c(850, 900, 950, 1050))
+  mtest = tecator[["test"]]
+  mtest$df = tecator$y
+  mtest$absorb.fdata = tecator$absorp.fdata$data
 
-  fdalrn = setHyperPars(fdalrn, basis.x = basis.x)
-  fdalrn = setHyperPars(fdalrn, family = "binomial()")
-
-
-  rdesc = makeResampleDesc("RepCV", fold = 5, reps = 10)
+  mtest$absorb.fdata = tecator$absorp.fdata
+  mtest$absorb.fdata$data = mtest$absorb.fdata$data
 
 
-  r = resample(fdalrn, tsk1, rdesc, measures = list(rmse))
-  r
+  a1 = suppressWarnings(
+    fda.usc::fregre.glm(Fat ~ absorb.fdata, data=mlearn))
+
+
+  p1 = predict(a1, mtest)
+  p2 = predict(a1, mlearn)
+
+
+
+  ph = as.data.frame(mlearn$absorb.fdata$data)
+  ph[, "label"] = mlearn$df$Fat
+
+
+
+  phtest = as.data.frame(mtest$absorb.fdata$data)
+  phtest[, "label"] = mtest$df$Fat
+
+
+  lrn = makeLearner("regr.fregre.glm")
+  fdata = makeFunctionalData(ph, fd.features = NULL, exclude.cols = "label")
+  ftest = makeFunctionalData(phtest, fd.features = NULL, exclude.cols = "label")
+  task = makeRegrTask(data = fdata, target = "label")
+
+  m = suppressWarnings(train(lrn, task))
+  cp = predict(m, newdata = ftest)
+  cp = unlist(cp$data$response, use.names = FALSE)
+
+  cp2 = predict(m, newdata = fdata)
+  cp2 = unlist(cp2$data$response, use.names = FALSE)
+
+  # check if the output from the original API matches the mlr learner's output
+  expect_equal(as.character(cp2), as.character(p2))
+  expect_equal(as.character(cp), as.character(p1))
+
+
 })
