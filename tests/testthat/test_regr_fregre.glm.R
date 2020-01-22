@@ -45,6 +45,6 @@ test_that("regr_fregre.glm behaves like original api", {
   cp2 = unlist(cp2$data$response, use.names = FALSE)
 
   # check if the output from the original API matches the mlr learner's output
-  expect_equal(cp2, as.numeric(p2), tolerance = .00005)
-  expect_equal(cp, as.numeric(p1), tolerance = .00005)
+  expect_equal(cp2, as.numeric(p2), tolerance = .00001)
+  expect_equal(cp, as.numeric(p1), tolerance = .00001)
 })
