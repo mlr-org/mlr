@@ -84,7 +84,6 @@ jobs:
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo R CMD javareconf
-          sudo chown -R ~/.ccache runner:runner
 
       - name: ccache-macOS
         if: runner.os == 'macOS'
@@ -95,7 +94,6 @@ jobs:
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo R CMD javareconf
-          sudo chown -R ~/.ccache runner:runner
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: Prepare tic
