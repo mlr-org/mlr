@@ -104,7 +104,7 @@ jobs:
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-          echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+          echo -e 'options(Ncpus = 2, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
           sudo R CMD javareconf -e && Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()"
           Rscript -e "tic::before_install()"
@@ -114,14 +114,14 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-          echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+          echo -e 'options(Ncpus = 2, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo R CMD javareconf
 
       - name: config-macOS
         if: runner.os == 'macOS'
         run: |
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
-          echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+          echo -e 'options(Ncpus = 2, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo R CMD javareconf
 
       # for some strange Windows reason this step and the next one need to be decoupled
