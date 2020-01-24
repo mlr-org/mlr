@@ -46,7 +46,7 @@ jobs:
 
       - name: Setup java
         if: runner.os != 'Windows'
-        run: sudo R CMD javareconf
+        run: R CMD javareconf
 
       # - name: Cache R packages
       #   if: runner.os != 'Windows'
