@@ -44,6 +44,10 @@ jobs:
         with:
           java-version: '11.0.x'
 
+      - name: Setup java
+        if: runner.os != 'Windows'
+        run: sudo R CMD javareconf
+
       # - name: Cache R packages
       #   if: runner.os != 'Windows'
       #   uses: actions/cache@v1
