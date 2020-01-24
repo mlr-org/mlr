@@ -91,7 +91,7 @@ jobs:
           brew install ccache
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           brew tap osgeo/osgeo4mac
-          brew cask install java11 gdal proj geos udunits gsl
+          brew cask install java11 osgeo-gdal osgeo-proj@5 osgeo-geos udunits gsl
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
@@ -115,7 +115,7 @@ jobs:
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           brew tap osgeo/osgeo4mac
-          brew cask install java11 gdal proj geos udunits gsl
+          brew cask install java11 osgeo-gdal osgeo-proj@5 osgeo-geos udunits gsl
           sudo R CMD javareconf
 
       # for some strange Windows reason this step and the next one need to be decoupled
