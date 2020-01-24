@@ -30,10 +30,7 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
       ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
-      CMAKE_VERSION: 3.16.2
-      NINJA_VERSION: 1.9.0
-      BUILD_TYPE: Release
-      CCACHE_VERSION: 3.7.7
+      CCACHE_DIR: tempdir/.ccache
 
     steps:
       - uses: actions/checkout@v1
