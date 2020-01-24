@@ -90,6 +90,7 @@ jobs:
           export pkgType="source"
           brew install ccache
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
+          brew tap osgeo/osgeo4mac
           brew cask install java11 gdal proj geos udunits gsl
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
