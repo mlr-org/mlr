@@ -41,6 +41,8 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@master
 
       - uses: actions/setup-java@v1
+        with:
+          java-version: '11.0.x'
 
       # - name: Cache R packages
       #   if: runner.os != 'Windows'
