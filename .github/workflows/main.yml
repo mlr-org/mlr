@@ -52,13 +52,22 @@ jobs:
       #     key: ${{ runner.os }}-r-${{ matrix.config.r }}
       #     restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
 
+      - name: Prepare ccache timestamp
+          if: runner.os != 'Windows'
+          id: ccache_cache_timestamp
+          shell: cmake -P {0}
+          run: |
+          string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+          message("::set-output name=timestamp::${current_date}")
+
       - name: Cache ccache
         if: runner.os != 'Windows'
-        uses: actions/cache@v1
+        uses: actions/cache@v1.1.0
         with:
-          path: ~/.ccache
-          key: ${{ runner.os }}-ccache-${{ matrix.config.r }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
+        path: .ccache
+        key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+        restore-keys: |
+            ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-
 
       # only on macOS devel, using binaries on release
       # need to set pkgType env var, otherwise remotes::install_cran() errors
