@@ -52,22 +52,22 @@ jobs:
       #     key: ${{ runner.os }}-r-${{ matrix.config.r }}
       #     restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
 
-      #- name: Prepare ccache timestamp
-      #  if: runner.os != 'Windows'
-      #  id: ccache_cache_timestamp
-      #  shell: cmake -P {0}
-      #  run: |
-      #    string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
-      #    message("::set-output name=timestamp::${current_date}")
-#
-      #- name: Cache ccache
-      #  if: runner.os != 'Windows'
-      #  uses: actions/cache@v1.1.0
-      #  with:
-      #    path: .ccache
-      #    key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-
+      - name: Prepare ccache timestamp
+        if: runner.os != 'Windows'
+        id: ccache_cache_timestamp
+        shell: cmake -P {0}
+        run: |
+          string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+          message("::set-output name=timestamp::${current_date}")
+
+      - name: Cache ccache
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1.1.0
+        with:
+          path: .ccache
+          key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+          restore-keys: |
+            ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-
 
       # only on macOS devel, using binaries on release
       # need to set pkgType env var, otherwise remotes::install_cran() errors
@@ -78,6 +78,9 @@ jobs:
           export pkgType="source"
           brew install ccache
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+          mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+          sudo chown -R runner ~/.ccache
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
@@ -91,6 +94,7 @@ jobs:
           sudo apt install ccache
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+          sudo chown -R runner ~/.ccache
           echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo R CMD javareconf
 
@@ -101,6 +105,7 @@ jobs:
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+          sudo chown -R runner ~/.ccache
           echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo R CMD javareconf
 
