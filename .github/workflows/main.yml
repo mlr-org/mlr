@@ -65,8 +65,8 @@ jobs:
         uses: actions/cache@v1.1.0
         with:
           path: .ccache
-        key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
-        restore-keys: |
+          key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+          restore-keys: |
             ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-
 
       # only on macOS devel, using binaries on release
