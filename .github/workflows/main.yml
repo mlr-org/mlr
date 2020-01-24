@@ -18,13 +18,13 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: '3.6'}
-        - { os: macOS-latest, r: '3.6'}
-        - { os: macOS-latest, r: 'devel'}
-        - { os: ubuntu-18.04, r: '3.3'}
-        - { os: ubuntu-18.04, r: '3.4'}
-        - { os: ubuntu-18.04, r: '3.5'}
-        - { os: ubuntu-18.04, r: '3.6'}
+        - { os: windows-latest, r: '3.6', cc: "cl", cxx: "cl"}
+        - { os: macOS-latest, r: '3.6', cc: "clang", cxx: "clang++"}
+        - { os: macOS-latest, r: 'devel', cc: "clang", cxx: "clang++"}
+        - { os: ubuntu-18.04, r: '3.3', cc: "gcc", cxx: "g++"}
+        - { os: ubuntu-18.04, r: '3.4', cc: "gcc", cxx: "g++"}
+        - { os: ubuntu-18.04, r: '3.5', cc: "gcc", cxx: "g++"}
+        - { os: ubuntu-18.04, r: '3.6', cc: "gcc", cxx: "g++"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -72,6 +72,12 @@ jobs:
           key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
           restore-keys: |
             ${{ matrix.config.name }}-ccache-
+
+      - name: Configure
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} ${{ matrix.config.cc }})
+          set(ENV{CXX} ${{ matrix.config.cxx }})
 
       # only on macOS devel, using binaries on release
       # need to set pkgType env var, otherwise remotes::install_cran() errors
