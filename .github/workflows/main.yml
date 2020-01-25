@@ -117,7 +117,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install miktex
-          choco install openjdk --version=11.0
+          choco install jdk8
 
       - name: config-linux
         if: runner.os == 'Linux'
