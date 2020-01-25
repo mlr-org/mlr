@@ -87,9 +87,8 @@ jobs:
         if: runner.os == 'macOS' && matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
           export pkgType="source"
-          brew tap osgeo/osgeo4mac
+          brew install ccache
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
-          brew cask install ccache java11 gdal osgeo-proj@5 osgeo-geos udunits gsl
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
@@ -103,6 +102,7 @@ jobs:
       - name: Install system dependencies
         if: runner.os != 'Windows'
         run: |
+          Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
