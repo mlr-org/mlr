@@ -27,7 +27,6 @@ jobs:
         - { os: ubuntu-18.04, r: '3.6'}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       R_MAX_NUM_DLLS: 999
       CRAN: ${{ matrix.config.cran }}
       # we are not allowed to write to ~/.ccache, just read
@@ -123,7 +122,7 @@ jobs:
       - name: config-linux
         if: runner.os == 'Linux'
         run: |
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache gcc++\nCXX11=ccache gcc++ -std=gnu99\nCXX14=ccache gcc++ -std=gnu99\nC11=ccache gcc++\nC14=ccache gcc++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
           sudo R CMD javareconf
