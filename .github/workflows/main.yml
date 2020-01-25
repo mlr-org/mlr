@@ -18,13 +18,13 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: '3.6', cc: "cl", cxx: "cl"}
-        - { os: macOS-latest, r: '3.6', cc: "clang", cxx: "clang++"}
-        - { os: macOS-latest, r: 'devel', cc: "clang", cxx: "clang++"}
+        - { os: windows-latest, r: '3.6'}
+        - { os: macOS-latest, r: '3.6'}
+        - { os: macOS-latest, r: 'devel'}
         # - { os: ubuntu-18.04, r: '3.3', cc: "gcc", cxx: "g++"}
         # - { os: ubuntu-18.04, r: '3.4', cc: "gcc", cxx: "g++"}
         # - { os: ubuntu-18.04, r: '3.5', cc: "gcc", cxx: "g++"}
-        - { os: ubuntu-18.04, r: '3.6', cc: "gcc", cxx: "g++"}
+        - { os: ubuntu-18.04, r: '3.6'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -99,6 +99,7 @@ jobs:
           Rscript -e "tic::before_install()"
           Rscript -e "tic::install()"
 
+      # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
       - name: Install system dependencies
         if: runner.os == 'Windows'
         run: |

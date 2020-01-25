@@ -37,3 +37,4 @@ revdep/*
 ^\.circleci$
 ^\.pre-commit-config\.yaml$
 ^\.vscode$
+^src/tempdir/\.ccache$
