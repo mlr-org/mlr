@@ -103,6 +103,7 @@ jobs:
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
           brew install ccache gdal geos udunits gsl jags
+          brew cask install java11
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           sudo R CMD javareconf -e
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
@@ -130,12 +131,14 @@ jobs:
       - name: config-macOS
         if: runner.os == 'macOS'
         run: |
+          rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
-          brew install ccache gdal osgeo-proj@5 geos udunits gsl jags
+          brew install ccache gdal geos udunits gsl jags
           brew cask install java11
+          export PATH="/usr/local/opt/ccache/libexec:$PATH"
+          sudo R CMD javareconf -e
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-          sudo R CMD javareconf
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: Prepare tic
