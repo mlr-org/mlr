@@ -101,7 +101,7 @@ jobs:
 
       # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
       - name: Install system dependencies
-        if: runner.os == 'Windows'
+        if: runner.os != 'Windows'
         run: |
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
