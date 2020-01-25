@@ -83,6 +83,8 @@ jobs:
       # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
       - name: Install system dependencies
         if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
