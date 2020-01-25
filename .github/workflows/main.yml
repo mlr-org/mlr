@@ -99,8 +99,9 @@ jobs:
         if: runner.os == 'macOS' && matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
           export pkgType="source"
+          rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
-          brew install ccache gdal osgeo-proj@5 geos udunits gsl jags
+          brew install ccache gdal geos udunits gsl jags
           brew cask install java11
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           sudo R CMD javareconf
