@@ -28,6 +28,7 @@ jobs:
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_MAX_NUM_DLLS: 999
       CRAN: ${{ matrix.config.cran }}
       # we are not allowed to write to ~/.ccache, just read
       CCACHE_DIR: tempdir/.ccache
