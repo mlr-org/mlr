@@ -1,6 +1,8 @@
 context("cluster_XMeans")
 
 test_that("cluster_XMeans", {
+  skip_on_cran()
+
   requirePackagesOrSkip("RWeka", default.method = "load")
   # RWeka::WPM("refresh-cache")
   # RWeka::WPM("install-package", "XMeans")
