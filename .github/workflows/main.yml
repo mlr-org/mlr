@@ -97,8 +97,9 @@ jobs:
       # because R tries to install binaries for R-devel which do not exist
       - name: Install dependencies (mac-devel)
         if: runner.os == 'macOS' && matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
+        env:
+          pkgType: source
         run: |
-          export pkgType="source"
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
           brew install ccache gdal geos udunits gsl jags
@@ -148,7 +149,9 @@ jobs:
 
       - name: Install dependencies
         if: matrix.config.r != 'devel' || ( runner.os == 'Linux' && matrix.config.r != 'devel' )
-        run: Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+        run: |
+          Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+          Rscript -e "install.packages('rJava', type = 'source')"
 
       - name: Check
         run: Rscript -e 'tic::script()'
