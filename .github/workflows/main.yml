@@ -99,6 +99,13 @@ jobs:
           Rscript -e "tic::before_install()"
           Rscript -e "tic::install()"
 
+      - name: Install system dependencies
+        if: runner.os == 'Windows'
+        run: |
+          Rscript -e "remotes::install_github('r-hub/sysreqs')"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
+
       - name: config-windows
         if: runner.os == 'Windows'
         run: |
