@@ -132,9 +132,9 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           rm '/usr/local/bin/gfortran'
+          brew cask install java11
           brew tap osgeo/osgeo4mac
           brew install ccache gdal geos udunits gsl jags
-          brew cask install java11
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           sudo R CMD javareconf
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars

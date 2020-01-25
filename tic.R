@@ -7,7 +7,7 @@ get_stage("script") %>%
   add_code_step(RWeka::WPM("install-package", "XMeans"))
 
 # R CMD Check
-do_package_checks(args = c("--as-cran", "--no-multiarch"),
+do_package_checks(args = c("--as-cran", "--no-multiarch", "--no-manual"),
   error_on = "error", codecov = FALSE)
 
 # pkgdown
