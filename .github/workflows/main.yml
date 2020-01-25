@@ -102,9 +102,8 @@ jobs:
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
           brew install ccache gdal geos udunits gsl jags
-          brew cask install java11
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
-          sudo R CMD javareconf
+          sudo R CMD javareconf -e
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
