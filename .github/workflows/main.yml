@@ -21,15 +21,14 @@ jobs:
         - { os: windows-latest, r: '3.6', cc: "cl", cxx: "cl"}
         - { os: macOS-latest, r: '3.6', cc: "clang", cxx: "clang++"}
         - { os: macOS-latest, r: 'devel', cc: "clang", cxx: "clang++"}
-        - { os: ubuntu-18.04, r: '3.3', cc: "gcc", cxx: "g++"}
-        - { os: ubuntu-18.04, r: '3.4', cc: "gcc", cxx: "g++"}
-        - { os: ubuntu-18.04, r: '3.5', cc: "gcc", cxx: "g++"}
+        # - { os: ubuntu-18.04, r: '3.3', cc: "gcc", cxx: "g++"}
+        # - { os: ubuntu-18.04, r: '3.4', cc: "gcc", cxx: "g++"}
+        # - { os: ubuntu-18.04, r: '3.5', cc: "gcc", cxx: "g++"}
         - { os: ubuntu-18.04, r: '3.6', cc: "gcc", cxx: "g++"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
-      ACTIONS_RUNNER_DEBUG: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
       # we are not allowed to write to ~/.ccache, just read
       CCACHE_DIR: tempdir/.ccache
 
@@ -76,7 +75,7 @@ jobs:
       - name: ccache cache files
         uses: actions/cache@v1.1.0
         with:
-          path: .ccache
+          path: tempdir/.ccache
           key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
           restore-keys: |
             ${{ matrix.config.name }}-ccache-
@@ -88,11 +87,9 @@ jobs:
         if: runner.os == 'macOS' && matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
           export pkgType="source"
-          brew install ccache
-          export PATH="/usr/local/opt/ccache/libexec:$PATH"
           brew tap osgeo/osgeo4mac
-          brew update
-          brew cask install java11 osgeo-gdal osgeo-proj@5 osgeo-geos udunits gsl
+          export PATH="/usr/local/opt/ccache/libexec:$PATH"
+          brew cask install ccache java11 gdal osgeo-proj@5 osgeo-geos udunits gsl
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
@@ -105,15 +102,14 @@ jobs:
       - name: config-windows
         if: runner.os == 'Windows'
         run: |
-          choco install miktex.portable
+          choco install miktex
           choco install openjdk --version=11.0
 
       - name: config-linux
         if: runner.os == 'Linux'
         run: |
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache gcc++\nCXX11=ccache gcc++ -std=gnu99\nCXX14=ccache gcc++ -std=gnu99\nC11=ccache gcc++\nC14=ccache gcc++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-          sudo apt install openjdk-11-jdk libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
           sudo R CMD javareconf
 
       - name: config-macOS
@@ -121,9 +117,6 @@ jobs:
         run: |
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-          brew tap osgeo/osgeo4mac
-          brew update
-          brew cask install java11 osgeo-gdal osgeo-proj@5 osgeo-geos udunits gsl
           sudo R CMD javareconf
 
       # for some strange Windows reason this step and the next one need to be decoupled
