@@ -100,6 +100,7 @@ jobs:
         env:
           pkgType: source
         run: |
+          export pkgType="source"
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
           brew install ccache gdal geos udunits gsl jags
@@ -132,7 +133,6 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           rm '/usr/local/bin/gfortran'
-          brew cask install java11
           brew tap osgeo/osgeo4mac
           brew install ccache gdal geos udunits gsl jags
           export PATH="/usr/local/opt/ccache/libexec:$PATH"

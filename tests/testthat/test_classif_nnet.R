@@ -3,6 +3,7 @@ context("classif_nnet")
 test_that("classif_nnet", {
   requirePackagesOrSkip("nnet", default.method = "load")
 
+  set.seed(getOption("mlr.debug.seed"))
   capture.output({
     m = nnet::nnet(multiclass.formula, size = 3, data = multiclass.train)
     p = as.factor(predict(m, newdata = multiclass.test, type = "class"))
