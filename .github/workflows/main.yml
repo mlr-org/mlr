@@ -102,14 +102,14 @@ jobs:
         run: |
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
-          brew install ccache gdal geos udunits gsl jags
+          brew install ccache gdal geos udunits gsl
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
-          Rscript -e "remotes::install_github('ropensci/tic@gh-actions', type = 'source') -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()"
+          Rscript -e "remotes::install_github('ropensci/tic@gh-actions', type = 'source')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()"
           Rscript -e "tic::before_install()"
           Rscript -e "tic::install()"
 
