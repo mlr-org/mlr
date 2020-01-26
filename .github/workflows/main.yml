@@ -60,7 +60,7 @@ jobs:
       - name: ccache-macOS
         if: runner.os == 'macOS'
         run: |
-          brew install ccache
+          brew install ccache openjdk@11
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
@@ -100,11 +100,9 @@ jobs:
         env:
           pkgType: source
         run: |
-          export pkgType="source"
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
-          brew install ccache gdal geos udunits gsl jags
-          brew cask install java11
+          brew install ccache gdal geos udunits gsl jags openjdk@11
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
