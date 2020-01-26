@@ -41,13 +41,24 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      # - name: Cache R packages
-      #   if: runner.os != 'Windows'
-      #   uses: actions/cache@v1
-      #   with:
-      #     path: ${{ env.R_LIBS_USER }}
-      #     key: ${{ runner.os }}-r-${{ matrix.config.r }}
-      #     restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
+    steps:
+      - uses: actions/checkout@master
+      - uses: r-lib/actions/setup-tinytex@v1
+      - run: tlmgr --version
+
+      # set current date for use in cache creation
+      # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
+      - name: Prepare cache
+        id: date
+        run: echo "::set-output name=date::$(date '+%d-%m')"
+
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1.1.0
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
       - name: ccache-linux
         if: runner.os == 'Linux'
@@ -55,7 +66,6 @@ jobs:
           sudo apt install ccache
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
-          echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
 
       - name: ccache-macOS
         if: runner.os == 'macOS'
@@ -64,21 +74,6 @@ jobs:
           export PATH="/usr/local/opt/ccache/libexec:$PATH"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
-          echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-
-      - name: Prepare ccache timestamp
-        id: ccache_cache_timestamp
-        shell: cmake -P {0}
-        run: |
-          string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
-          message("::set-output name=timestamp::${current_date}")
-      - name: ccache cache files
-        uses: actions/cache@v1.1.0
-        with:
-          path: tempdir/.ccache
-          key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
-          restore-keys: |
-            ${{ matrix.config.name }}-ccache-
 
       # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
       # FIXME: Also o nlinux not usable due to broken java-7-headless which comes with almost every formula
@@ -107,7 +102,6 @@ jobs:
           sudo R CMD javareconf
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-          echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions', type = 'source')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()"
           Rscript -e "tic::before_install()"
@@ -123,7 +117,6 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-          echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
           sudo R CMD javareconf
 
@@ -132,13 +125,9 @@ jobs:
         env:
           JAVA_HOME: /Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
         run: |
-          rm '/usr/local/bin/gfortran'
-          brew tap osgeo/osgeo4mac
-          brew install ccache gdal geos udunits gsl jags
-          export PATH="/usr/local/opt/ccache/libexec:$PATH"
+          brew install ccache
           sudo R CMD javareconf
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
-          echo -e 'options(Ncpus = 8, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: Prepare tic
