@@ -41,8 +41,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-    steps:
-      - uses: actions/checkout@master
       - uses: r-lib/actions/setup-tinytex@v1
       - run: tlmgr --version
 
