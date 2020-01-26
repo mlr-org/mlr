@@ -123,7 +123,7 @@ jobs:
         env:
           JAVA_HOME: /Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
         run: |
-          brew install ccache
+          brew install ccache openjdk@11
           sudo R CMD javareconf
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
 
