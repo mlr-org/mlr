@@ -31,6 +31,7 @@ jobs:
       CRAN: ${{ matrix.config.cran }}
       # we are not allowed to write to ~/.ccache, just read
       CCACHE_DIR: ./.ccache
+      pkgType: source
 
     steps:
       - uses: actions/checkout@v1
@@ -39,37 +40,39 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
 
-      - uses: r-lib/actions/setup-pandoc@master
-
+      # LaTeX. Installation time:
+      # Linux: ~ 1 min
+      # macOS: ~ 1 min 30s
+      # Windows: never finishes
       - uses: r-lib/actions/setup-tinytex@v1
         if: runner.os != 'Windows'
 
+      - uses: r-lib/actions/setup-pandoc@master
+
       # set current date for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
-      - name: Prepare cache
+      - name: "[Cache] Prepare Cache"
         id: date
         run: echo "::set-output name=date::$(date '+%d-%m')"
 
-      - name: Cache R packages
-        if: runner.os != 'Windows'
+      - name: "[Cache] Cache R packages"
         uses: actions/cache@v1.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
-      - name: ccache-linux
+      - name: "[Linux] ccache"
         if: runner.os == 'Linux'
         run: |
           sudo apt install ccache
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
-      - name: ccache-macOS
+      - name: "[macOS] ccache"
         if: runner.os == 'macOS'
         run: |
-          brew install ccache openjdk@11
-          export PATH="/usr/local/opt/ccache/libexec:$PATH"
+          brew install ccache
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
@@ -88,68 +91,51 @@ jobs:
       # only on macOS devel, using binaries on release
       # need to set pkgType env var, otherwise remotes::install_cran() errors
       # because R tries to install binaries for R-devel which do not exist
-      - name: Install dependencies (mac-devel)
-        if: runner.os == 'macOS' && matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
-        env:
-          pkgType: source
-        run: |
-          rm '/usr/local/bin/gfortran'
-          brew tap osgeo/osgeo4mac
-          brew install ccache gdal geos udunits gsl
-          export PATH="/usr/local/opt/ccache/libexec:$PATH"
-          sudo R CMD javareconf
-          Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache clang -std=gnu99\nCXX=ccache clang++\nCXX11=ccache clang++ -std=gnu99\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
-          Rscript -e "remotes::install_github('ropensci/tic@gh-actions', type = 'source')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()"
-          Rscript -e "tic::before_install()"
-          Rscript -e "tic::install()"
 
-      - name: config-windows
+      - name: "[Windows] Prepare"
         if: runner.os == 'Windows'
         run: |
           choco install miktex
           choco install jdk8
 
-      - name: config-linux
+      - name: "[macOS] Prepare"
+        if: runner.os == 'macOS'
+        run: |
+          brew link --force openjdk@11
+          sudo R CMD javareconf
+
+      - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
         run: |
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
           sudo R CMD javareconf
 
-      - name: config-macOS
-        if: runner.os == 'macOS'
-        env:
-          JAVA_HOME: /Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
-        run: |
-          brew install ccache
-          brew link --force openjdk@11
-          sudo R CMD javareconf
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > ~/.R/Makevars
-
       # for some strange Windows reason this step and the next one need to be decoupled
-      - name: Prepare tic
-        if: matrix.config.r != 'devel' || ( runner.os == 'Linux' && matrix.config.r != 'devel' )
+      - name: "[Stage] Prepare"
         run: |
-          echo -e 'options(pkgType = "source")'
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) {install.packages('curl')}"
 
-      - name: Install dependencies
+      # for some strange Windows reason this step and the next one need to be decoupled
+      - name: "[Stage] Prepare"
         if: matrix.config.r != 'devel' || ( runner.os == 'Linux' && matrix.config.r != 'devel' )
+        run: |
+          Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
+          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) {install.packages('curl')}"
+
+      - name: "[Stage] Install"
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
           Rscript -e "install.packages('rJava', type = 'source')"
 
-      - name: Check
+      - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
 
-      - name: after_success
+      - name: "[Stage] After Success"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == '3.6'
         run: Rscript -e "tic::after_success()"
 
-      - name: Upload check results
+      - name: "[Stage] Upload R CMD check artifacts"
         if: failure()
         uses: actions/upload-artifact@master
         with:
