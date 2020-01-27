@@ -39,6 +39,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
+          Ncpus: 8
 
       # LaTeX. Installation time:
       # Linux: ~ 1 min
@@ -101,7 +102,6 @@ jobs:
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
-          brew link --force openjdk@11
           sudo R CMD javareconf
 
       - name: "[Linux] Prepare"
