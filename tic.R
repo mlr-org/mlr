@@ -2,9 +2,11 @@ get_stage("install") %>%
   # avoid build failure if packages are not avail for specific R versions
   add_code_step(Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true"))
 
-get_stage("script") %>%
-  add_code_step(RWeka::WPM("refresh-cache")) %>%
-  add_code_step(RWeka::WPM("install-package", "XMeans"))
+if (Sys.getenv()$sysname != "Windows") {
+  get_stage("script") %>%
+    add_code_step(RWeka::WPM("refresh-cache")) %>%
+    add_code_step(RWeka::WPM("install-package", "XMeans"))
+}
 
 # R CMD Check
 do_package_checks(args = c("--as-cran", "--no-multiarch"),
