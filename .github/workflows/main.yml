@@ -102,12 +102,11 @@ jobs:
         run: |
           choco install miktex
           choco install jdk8
-          choco install ccache
 
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
-          sudo R CMD javareconf
+          Rscript -e "install.packages('rJava')"
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
@@ -121,17 +120,9 @@ jobs:
           Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) {install.packages('curl')}"
 
-      # for some strange Windows reason this step and the next one need to be decoupled
-      - name: "[Stage] Prepare"
-        if: matrix.config.r != 'devel' || ( runner.os == 'Linux' && matrix.config.r != 'devel' )
-        run: |
-          Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
-          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) {install.packages('curl')}"
-
       - name: "[Stage] Install"
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
-          Rscript -e "install.packages('rJava', type = 'source')"
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
