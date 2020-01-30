@@ -18,19 +18,16 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: '3.6'}
-        - { os: macOS-latest, r: '3.6'}
+        - { os: windows-latest, r: 'release'}
+        - { os: macOS-latest, r: 'release'}
         - { os: macOS-latest, r: 'devel'}
-        # - { os: ubuntu-18.04, r: '3.3', cc: "gcc", cxx: "g++"}
-        # - { os: ubuntu-18.04, r: '3.4', cc: "gcc", cxx: "g++"}
-        # - { os: ubuntu-18.04, r: '3.5', cc: "gcc", cxx: "g++"}
-        - { os: ubuntu-18.04, r: '3.6'}
+        - { os: ubuntu-18.04, r: 'release'}
 
     env:
       R_MAX_NUM_DLLS: 999
       CRAN: ${{ matrix.config.cran }}
       # we are not allowed to write to ~/.ccache, just read
-      CCACHE_DIR: ./.ccache
+      CCACHE_DIR: ${{GITHUB.WORKSPACE}}/.ccache
       pkgType: source
 
     steps:
@@ -52,16 +49,23 @@ jobs:
 
       # set current date for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
-      - name: "[Cache] Prepare Cache"
-        id: date
-        run: echo "::set-output name=date::$(date '+%d-%m')"
+      # - name: "[Cache] Prepare Cache"
+      #   id: date
+      #   run: echo "::set-output name=date::$(date '+%d-%m')"
+      #
+      # - name: "[Cache] Cache R packages"
+      #   uses: actions/cache@v1.1.0
+      #   with:
+      #     path: ${{ env.R_LIBS_USER }}
+      #     key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+      #     restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
-      - name: "[Cache] Cache R packages"
+      - name: "[Cache] Cache ccache"
         uses: actions/cache@v1.1.0
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+          path: ${{ env.CCACHE_DIR}}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test5
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test5
 
       - name: "[Linux] ccache"
         if: runner.os == 'Linux'
@@ -98,6 +102,7 @@ jobs:
         run: |
           choco install miktex
           choco install jdk8
+          choco install ccache
 
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
