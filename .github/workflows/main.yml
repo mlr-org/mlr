@@ -29,7 +29,7 @@ jobs:
       CRAN: ${{ matrix.config.cran }}
       # we are not allowed to write to ~/.ccache, just read
       CCACHE_DIR: ${{GITHUB.WORKSPACE}}/.ccache
-      pkgType: source
+
 
     steps:
       - uses: actions/checkout@v1
@@ -73,6 +73,8 @@ jobs:
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test5-${{steps.datew.outputs.date}}
 
       - name: "[Linux] ccache"
+        env:
+          pkgType: source
         if: runner.os == 'Linux'
         run: |
           sudo apt install ccache
@@ -80,6 +82,8 @@ jobs:
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
       - name: "[macOS] ccache"
+        env:
+          pkgType: source
         if: runner.os == 'macOS'
         run: |
           brew install ccache
@@ -111,13 +115,13 @@ jobs:
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
+          sudo R CMD javareconf
           Rscript -e "install.packages('rJava')"
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
         run: |
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
-          sudo R CMD javareconf
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
