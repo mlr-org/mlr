@@ -30,14 +30,13 @@ jobs:
       # we are not allowed to write to ~/.ccache, just read
       CCACHE_DIR: ${{GITHUB.WORKSPACE}}/.ccache
 
-
     steps:
       - uses: actions/checkout@v1
 
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
-          Ncpus: 8
+          Ncpus: 14
 
       # LaTeX. Installation time:
       # Linux: ~ 1 min
@@ -131,6 +130,14 @@ jobs:
           Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
 
       - name: "[Stage] Install"
+        if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
+        run: |
+          Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+
+      - name: "[Stage] Install (macOS-devel)"
+        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
+        env:
+          pkgType: source
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
