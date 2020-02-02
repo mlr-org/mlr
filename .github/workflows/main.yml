@@ -51,6 +51,7 @@ jobs:
       # set current date for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
       - name: "[Cache] Prepare daily timestamp for cache"
+        if: runner.os != 'Windows'
         id: date
         run: echo "::set-output name=date::$(date '+%d-%m')"
 
@@ -67,6 +68,7 @@ jobs:
       #     restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
       - name: "[Cache] Cache ccache"
+        if: runner.os != 'Windows'
         uses: actions/cache@v1.1.0
         with:
           path: ${{ env.CCACHE_DIR}}
@@ -74,8 +76,6 @@ jobs:
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test5-${{steps.datew.outputs.datew}}
 
       - name: "[Linux] ccache"
-        env:
-          pkgType: source
         if: runner.os == 'Linux'
         run: |
           sudo apt install ccache
@@ -83,8 +83,6 @@ jobs:
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
       - name: "[macOS] ccache"
-        env:
-          pkgType: source
         if: runner.os == 'macOS'
         run: |
           brew install ccache
@@ -116,6 +114,7 @@ jobs:
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
+          export pkgType="source"
           sudo R CMD javareconf
           Rscript -e "install.packages('rJava')"
 
