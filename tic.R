@@ -9,8 +9,7 @@ if (Sys.info()[["sysname"]] != "Windows") {
 }
 
 # R CMD Check
-do_package_checks(args = c("--as-cran", "--no-multiarch"),
-  error_on = "error", codecov = FALSE)
+do_package_checks(error_on = "error", codecov = FALSE)
 
 # pkgdown
 if (ci_is_env("FULL", "true")) {
