@@ -48,7 +48,7 @@ Alternatively, you can set \code{type} to 1, then the measure is the mean
 decrease in accuracy calculated on OOB data. Note, that in this case the
 learner's parameter \code{importance} needs to be set to be able to compute
 feature importance values.
-See \code{\link[=randomForest:importance]{randomForest:importance()}} for details.
+See \code{\link[randomForest:importance]{randomForest::importance()}} for details.
 \item RRF \cr
 This is identical to randomForest.
 \item randomForestSRC \cr
