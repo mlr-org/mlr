@@ -29,7 +29,7 @@
 #'    decrease in accuracy calculated on OOB data. Note, that in this case the
 #'    learner's parameter `importance` needs to be set to be able to compute
 #'    feature importance values.
-#'    See [randomForest:importance()] for details.
+#'    See [randomForest::importance()] for details.
 #' * RRF \cr
 #'    This is identical to randomForest.
 #' * randomForestSRC \cr

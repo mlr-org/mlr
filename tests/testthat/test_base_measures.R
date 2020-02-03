@@ -134,6 +134,10 @@ test_that("listMeasures", {
 })
 
 test_that("check measure calculations", {
+
+  # RWeka not avail
+  skip_on_os("Windows")
+
   requirePackagesOrSkip("Hmisc", default.method = "load")
 
   # tiny datasets for testing

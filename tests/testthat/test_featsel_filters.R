@@ -3,6 +3,10 @@
 context("filterFeatures")
 
 test_that("filterFeatures 1", {
+
+  # FSelector not avail
+  skip_on_os("Windows")
+
   # Loop through all filters
   # univariate.model.score, permutation.importance and auc are handled extra test below
   # 'univariate', 'randomForest_importance' and 'rfsrc_var.select' are deprecated

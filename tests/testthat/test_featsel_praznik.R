@@ -38,6 +38,10 @@ test_that("filterFeatures_praznik", {
 })
 
 test_that("FilterWrapper with praznik mutual information, resample", {
+
+  # FSelector not avail
+  skip_on_os("Windows")
+
   candidates = as.character(listFilterMethods()$id)
   candidates = candidates[startsWith(candidates, "praznik_")]
   lapply(candidates, function(x) {
