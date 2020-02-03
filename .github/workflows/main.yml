@@ -136,6 +136,7 @@ jobs:
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+          ccache -s
 
       - name: "[Stage] Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
@@ -143,6 +144,7 @@ jobs:
           pkgType: source
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+          ccache -s
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
