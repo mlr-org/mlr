@@ -15,7 +15,7 @@ test_that("clustering predict", {
 test_that("clustering performance", {
 
   # RWeka not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   lrn = makeLearner("cluster.SimpleKMeans")
   model = train(lrn, noclass.task)
@@ -31,7 +31,7 @@ test_that("clustering performance", {
 test_that("clustering performance with missing clusters", {
 
   # RWeka not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   lrn = makeLearner("cluster.SimpleKMeans")
   model = train(lrn, noclass.task)
@@ -48,7 +48,7 @@ test_that("clustering performance with missing clusters", {
 test_that("clustering resample", {
 
   # RWeka not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   rdesc = makeResampleDesc("Subsample", split = 0.3, iters = 2)
   lrn = makeLearner("cluster.SimpleKMeans")
@@ -61,7 +61,7 @@ test_that("clustering resample", {
 test_that("clustering benchmark", {
 
   # RWeka not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   task.names = "noclass"
   tasks = list(noclass.task)
@@ -81,7 +81,7 @@ test_that("clustering downsample", {
 test_that("clustering tune", {
 
   # RWeka not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   lrn = makeLearner("cluster.SimpleKMeans")
   rdesc = makeResampleDesc("Holdout")

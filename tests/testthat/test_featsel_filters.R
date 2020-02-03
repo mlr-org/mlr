@@ -5,7 +5,7 @@ context("filterFeatures")
 test_that("filterFeatures 1", {
 
   # FSelector not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   # Loop through all filters
   # univariate.model.score, permutation.importance and auc are handled extra test below

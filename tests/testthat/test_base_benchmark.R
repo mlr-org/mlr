@@ -302,7 +302,7 @@ test_that("benchmark works with ensemble filters", {
 test_that("benchmark handles failure models correctly", {
 
   # RWeka not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   # Define task
   task = binaryclass.task

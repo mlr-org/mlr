@@ -40,7 +40,7 @@ test_that("filterFeatures_praznik", {
 test_that("FilterWrapper with praznik mutual information, resample", {
 
   # FSelector not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   candidates = as.character(listFilterMethods()$id)
   candidates = candidates[startsWith(candidates, "praznik_")]

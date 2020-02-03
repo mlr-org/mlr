@@ -45,7 +45,7 @@ test_that("Filterwrapper permutation.importance (issue #814)", {
 test_that("FilterWrapper with ensemble function in a train call", {
 
   # FSelector not avail
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   lrn = makeLearner("classif.lda")
 
