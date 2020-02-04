@@ -28,7 +28,10 @@ jobs:
       R_MAX_NUM_DLLS: 999
       CRAN: ${{ matrix.config.cran }}
       # we are not allowed to write to ~/.ccache, just read
-      #CCACHE_DIR: ${{GITHUB.WORKSPACE}}/.ccache
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      CCACHE_NOHASHDIR: true
+      CCACHE_SLOPPINESS: include_file_ctime
 
     steps:
       - uses: actions/checkout@v1
@@ -36,7 +39,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
-          Ncpus: 14
+          Ncpus: 4
 
       # LaTeX. Installation time:
       # Linux: ~ 1 min
@@ -70,7 +73,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: actions/cache@v1.1.0
         with:
-          path: $HOME/.ccache
+          path: ${{ env.CCACHE_DIR}}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test6-${{steps.datew.outputs.datew}}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test6-${{steps.datew.outputs.datew}}
 
