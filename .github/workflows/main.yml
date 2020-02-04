@@ -70,7 +70,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: actions/cache@v1.1.0
         with:
-          path: ${{ env.CCACHE_DIR}}
+          path: $HOME/.ccache
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test6-${{steps.datew.outputs.datew}}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test6-${{steps.datew.outputs.datew}}
 
