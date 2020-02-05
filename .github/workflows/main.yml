@@ -107,18 +107,16 @@ jobs:
       # need to set pkgType env var, otherwise remotes::install_cran() errors
       # because R tries to install binaries for R-devel which do not exist
 
-      - name: "[Windows] Prepare"
-        if: runner.os == 'Windows'
-        run: |
-          choco install miktex
-          choco install jdk8
+      # - name: "[Windows] Prepare"
+      #   if: runner.os == 'Windows'
+      #   run: |
+      #     choco install miktex
+      #     choco install jdk8
 
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
-          export pkgType="source"
           sudo R CMD javareconf
-          Rscript -e "install.packages('rJava')"
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
@@ -136,7 +134,6 @@ jobs:
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
-          ccache -s
 
       - name: "[Stage] Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
@@ -144,7 +141,6 @@ jobs:
           pkgType: source
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
-          ccache -s
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
