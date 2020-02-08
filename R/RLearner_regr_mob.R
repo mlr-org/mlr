@@ -10,8 +10,9 @@ makeRLearner.regr.mob = function() {
       makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
-      makeDiscreteLearnerParam(id = "model", default = modeltools::glinearModel,
-        values = list(glinearModel = modeltools::glinearModel, linearModel = modeltools::linearModel)),
+      # see helpers_modeltools.R for `glinearModel`
+      makeDiscreteLearnerParam(id = "model", default = glinearModel,
+        values = list(glinearModel = glinearModel, linearModel = glinearModel)),
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),

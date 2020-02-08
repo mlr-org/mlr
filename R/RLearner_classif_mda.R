@@ -11,8 +11,9 @@ makeRLearner.classif.mda = function() {
       makeIntegerLearnerParam(id = "dimension", lower = 1L),
       makeNumericLearnerParam(id = "eps", default = .Machine$double.eps, lower = 0),
       makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
-      makeDiscreteLearnerParam(id = "method", default = mda::polyreg,
-        values = list(polyreg = mda::polyreg, mars = mda::mars, bruto = mda::bruto, gen.ridge = mda::gen.ridge)),
+      # see helpers_mda.R for objects
+      makeDiscreteLearnerParam(id = "method", default = polyreg,
+        values = list(polyreg = polyreg, mars = mars, bruto = bruto, gen.ridge = gen.ridge)),
       makeLogicalLearnerParam(id = "keep.fitted", default = TRUE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq")),
