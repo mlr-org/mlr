@@ -38,3 +38,4 @@ revdep/*
 ^\.pre-commit-config\.yaml$
 ^\.vscode$
 ^src/tempdir/\.ccache$
+^\.ccache$

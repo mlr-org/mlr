@@ -117,11 +117,12 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           R CMD javareconf
+          brew install freetype
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
         run: |
-          R CMD javareconf
+          sudo R CMD javareconf
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
 
       # for some strange Windows reason this step and the next one need to be decoupled
