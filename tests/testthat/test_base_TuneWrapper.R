@@ -55,23 +55,6 @@ test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   expect_class(res, "ResampleResult")
 })
 
-test_that("TuneWrapper uses tune.threshold", {
-  lrn = makeLearner("classif.lda", predict.type = "prob")
-  rdesc = makeResampleDesc("Holdout")
-  costs = matrix(c(0, 5, 1, 0), 2)
-  colnames(costs) = rownames(costs) = getTaskDesc(binaryclass.task)$class.levels
-  mm = makeCostMeasure(id = "costs", costs = costs, best = 0, worst = 5)
-  ps = makeParamSet(makeDiscreteParam("method", "moment"))
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
-  lrn = makeTuneWrapper(lrn, resampling = rdesc, measures = mm, par.set = ps, control = ctrl)
-  m = train(lrn, binaryclass.task)
-  p = predict(m, binaryclass.task)
-  expect_true(!all(p$threshold == 0.5))
-
-  r = resample(lrn, binaryclass.task, resampling = rdesc)
-  expect_true(!all(r$pred$threshold == 0.5))
-})
-
 test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   inner = makeResampleDesc("Holdout")
   outer = makeResampleDesc("CV", iters = 2)
@@ -98,19 +81,6 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 20)
   expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))
-})
-
-test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issue 242", {
-  rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
-  ps = makeParamSet(
-    makeDiscreteParam("C", 2^(-1))
-  )
-  lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
-  lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),
-    par.set = ps, control = ctrl, show.info = FALSE)
-  r = resample(lrn2, iris.task, rdesc, measures = mmce)
-  expect_identical(sort(names(r$pred$threshold)), c("setosa", "versicolor", "virginica"))
 })
 
 test_that("TuneWrapper with glmnet (#958)", {
