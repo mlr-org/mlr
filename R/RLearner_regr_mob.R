@@ -11,8 +11,8 @@ makeRLearner.regr.mob = function() {
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       # see helpers_modeltools.R for `glinearModel`
-      makeDiscreteLearnerParam(id = "model", default = glinearModel,
-        values = list(glinearModel = glinearModel, linearModel = glinearModel)),
+      makeDiscreteLearnerParam(id = "model", default = function(...) modeltools::glinearModel(...),
+        values = list(glinearModel = function(...) modeltools::glinearModel(...), linearModel = function(...) modeltools::glinearModel(...))),
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),

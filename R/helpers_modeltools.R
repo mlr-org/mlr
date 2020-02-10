@@ -1,1 +1,0 @@
-glinearModel = function(...) modeltools::glinearModel(...)
