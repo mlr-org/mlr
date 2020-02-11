@@ -119,7 +119,10 @@ jobs:
           R CMD javareconf
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
-          brew install Caskroom/cask/xquartz udunits gdal osgeo-proj@5 geos freetype
+          brew install Caskroom/cask/xquartz udunits gdal
+          brew unlink proj
+          brew install osgeo-proj@5 geos freetype
+          brew link --force osgeo-proj@5
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
