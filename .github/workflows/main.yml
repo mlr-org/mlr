@@ -117,6 +117,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           R CMD javareconf
+          rm '/usr/local/bin/gfortran'
           brew install Caskroom/cask/xquartz udunits gdal proj geos
 
       - name: "[Linux] Prepare"
