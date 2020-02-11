@@ -1,6 +1,9 @@
 # mlr 2.17.0.9002
 
-- Internal changes only.
+- Bugfix: `tuneThreshold()` now accounts for the direction of the measure. 
+  Beforehand, the performance measure was always minimized (#2732).
+- pkgdown: Move changelog to Appendix
+- Account for {checkmate} v2.0.0 update (#2734) 
 
 
 # mlr 2.17.0.9001
