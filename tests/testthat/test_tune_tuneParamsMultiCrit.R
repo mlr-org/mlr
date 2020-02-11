@@ -8,8 +8,8 @@ test_that("tuneParamsMultiCrit", {
   )
   ctrl = makeTuneMultiCritControlRandom(maxit = 2)
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
-    par.set = ps, measures = mmce, control = ctrl),
-  ".* May only contain the following types: Measure.")
+    par.set = ps, measures = list(mmce), control = ctrl),
+  ".* Must have length >= 2, but has length 1.")
 
   mycheck = function(res, k) {
     expect_output(print(res), "Points on front")
