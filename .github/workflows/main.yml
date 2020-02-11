@@ -117,7 +117,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           R CMD javareconf
-          brew install freetype
+          brew install Caskroom/cask/xquartz udunits gdal proj geos
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
