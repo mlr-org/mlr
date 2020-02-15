@@ -154,14 +154,14 @@ getBMRPredictions(bmr)
 ## 5 134     M 0.999999755 2.445735e-07        M    1 test
 ## 6  34     R 0.999761364 2.386361e-04        M    1 test
 ## ... (#rows: 70, #cols: 7)
-## 
+##
 ## $`Sonar-example`$classif.rpart
 ## Resampled Prediction for:
 ## Resample description: holdout with 0.67 split rate.
 ## Predict: test
 ## Stratification: FALSE
 ## predict.type: response
-## threshold: 
+## threshold:
 ## time (mean): 0.00
 ##    id truth response iter  set
 ## 1 194     M        M    1 test
@@ -382,7 +382,7 @@ The individual performances on the 10 folds for every task, learner, and measure
 
 ```{r}
 perf = getBMRPerformances(bmr, as.df = TRUE)
-head(perf[,-ncol(perf)])
+head(perf[, -ncol(perf)])
 ```
 
 A closer look at the result reveals that the `randomForest::randomForest()` outperforms the classification tree (`rpart::rpart()`) in every instance, while
@@ -408,7 +408,7 @@ Moreover, in the second plot we color the boxes according to the `learner.id`s.
 
 ```{r, fig.asp=7/9}
 plotBMRBoxplots(bmr, measure = mmce, order.lrn = getBMRLearnerIds(bmr))
-plotBMRBoxplots(bmr, measure = ber, style = "violin", pretty.names = FALSE, 
+plotBMRBoxplots(bmr, measure = ber, style = "violin", pretty.names = FALSE,
   order.lrn = getBMRLearnerIds(bmr)) +
   aes(color = learner.id) +
   theme(strip.text.x = element_text(size = 8))
@@ -541,13 +541,13 @@ See the tutorial page about [visualization](visualization.html){target="_blank"}
 ```{r, fig.asp = 0.5}
 # Nemenyi test
 g = generateCritDifferencesData(bmr, p.value = 0.1, test = "nemenyi")
-plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
+plotCritDifferences(g) + coord_cartesian(xlim = c(-1, 5), ylim = c(0, 2)) +
   scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
 
 # Bonferroni-Dunn test
 g = generateCritDifferencesData(bmr, p.value = 0.1, test = "bd", baseline = "randomForest")
-plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
-    scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
+plotCritDifferences(g) + coord_cartesian(xlim = c(-1, 5), ylim = c(0, 2)) +
+  scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
 ```
 
 ## Custom plots
@@ -562,7 +562,7 @@ perf = getBMRPerformances(bmr, as.df = TRUE)
 
 # Density plots for two tasks
 qplot(mmce, colour = learner.id, facets = . ~ task.id,
-  data = perf[perf$task.id %in% c("iris-example", "Sonar-example"),], geom = "density") +
+  data = perf[perf$task.id %in% c("iris-example", "Sonar-example"), ], geom = "density") +
   theme(strip.text.x = element_text(size = 8))
 ```
 
@@ -570,24 +570,20 @@ In order to plot multiple performance measures in parallel, `perf` is reshaped t
 Below we generate grouped boxplots showing the error rate and the training time [timetrain](measures.html){target="_blank"}.
 
 ```{r, fig.asp = 2/3, echo = FALSE, results='hide'}
-### For some reason the resulting img changes in every run by a few bytes. 
+### For some reason the resulting img changes in every run by a few bytes.
 ### To not trigger a false positive change in every run, we add the img by hand.
 ### This is ofc bad bc changes in the code are not triggering a change in the img
 ```
 
-```{r, fig.asp = 2/3, eval = FALSE}
+```{r, fig.asp = 2/3}
 # Compare mmce and timetrain
 df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
-df = df[df$variable != "ber",]
+df = df[df$variable != "ber", ]
 head(df)
 
 qplot(variable, value, data = df, colour = learner.id, geom = "boxplot",
   xlab = "measure", ylab = "performance") +
-  facet_wrap(~ task.id, nrow = 2)
-```
-
-```{r echo = FALSE}
-knitr::include_graphics("../../reference/figures/benchmark-experiments-30-1.png")
+  facet_wrap(~task.id, nrow = 2)
 ```
 
 It might also be useful to assess if learner performances in single resampling iterations, i.e., in one fold, are related.
@@ -600,7 +596,7 @@ Below, function `GGally::ggpairs()` from package `GGally::GGally()` is used to g
 ```{r fig.asp = 2/3}
 perf = getBMRPerformances(bmr, task.id = "Sonar-example", as.df = TRUE)
 df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
-df = df[df$variable == "mmce",]
+df = df[df$variable == "mmce", ]
 df = reshape2::dcast(df, task.id + iter ~ variable + learner.id)
 head(df)
 
