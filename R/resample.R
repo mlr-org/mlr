@@ -131,11 +131,6 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     printResampleFormatLine("Measures:", measure.lognames)
   }
 
-  # FIXME
-  # iter.results contains only thresholds of 0.5
-
-  # The learner going in here should contain a $predict.threshold slot if tune.threshold = TRUE during tuning
-
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
   time2 = Sys.time()
@@ -163,7 +158,6 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
 
   err.msgs = c(NA_character_, NA_character_)
   err.dumps = list()
-  # FIXME: Learner here has no predict.threshold set
   m = train(learner, task, subset = train.i, weights = weights[train.i])
   if (isFailureModel(m)) {
     err.msgs[1L] = getFailureModelMsg(m)
@@ -307,7 +301,8 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin,
     pred = NULL
   }
 
-  # storing a threshold here might confuse users
+  # storing a threshold here might confuse users, hence we remove the slot
+  # for ResampleResult containers
   # see https://github.com/mlr-org/mlr/issues/2289
   pred$threshold = NULL
 
