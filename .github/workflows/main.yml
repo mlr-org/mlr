@@ -88,7 +88,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install ccache
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/bin/g++-9 \nCXX11=ccache /usr/local/bin/g++-9 \nCXX14=ccache /usr/local/bin/g++-9\nC11=ccache /usr/local/bin/g++-9 \nC14=ccache /usr/local/bin/g++-9 \nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/bin/g++-9 \nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
       # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
@@ -133,8 +133,8 @@ jobs:
           curl -O https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
           sudo installer -package clang-7.0.0.pkg -target /
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v1
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v1
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
