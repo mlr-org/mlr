@@ -19,8 +19,8 @@ jobs:
       matrix:
         config:
           - { os: windows-latest, r: "release" }
+          - { os: macOS-latest, r: "devel" }
           - { os: ubuntu-18.04, r: "release" }
-          - { os: ubuntu-18.04, r: "devel" }
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -122,6 +122,9 @@ jobs:
           brew unlink proj
           brew install osgeo-proj@5 geos freetype
           brew link --force osgeo-proj@5
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v1
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
