@@ -53,7 +53,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     if (ttype == "multilabel" || k > 2) {
       names(x) = cls
     }
-    performance(setThreshold(pred, x), measure, task, model, simpleaggr = TRUE)
+    ifelse(measure$minimize, 1, -1) * performance(setThreshold(pred, x), measure, task, model, simpleaggr = TRUE)
   }
 
   if (ttype == "multilabel" || k > 2L) {

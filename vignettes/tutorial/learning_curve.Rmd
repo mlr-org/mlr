@@ -45,7 +45,7 @@ r = generateLearningCurveData(
 # plotLearningCurve(r)
 ```
 
-```{r LearningCurveTPFP-1, fig.asp = 7/9, eval = FALSE}
+```{r LearningCurveTPFP-1, fig.asp = 7/9}
 r = generateLearningCurveData(
   learners = c("classif.rpart", "classif.knn"),
   task = sonar.task,
@@ -54,13 +54,6 @@ r = generateLearningCurveData(
   resampling = makeResampleDesc(method = "CV", iters = 5),
   show.info = FALSE)
 plotLearningCurve(r)
-```
-
-```{r echo = FALSE}
-### For some reason the resulting img changes in every run by a few bytes. 
-### To not trigger a false positive change in every run, we add the img by hand.
-### This is ofc bad bc changes in the code are not triggering a change in the img
-knitr::include_graphics("../../reference/figures/LearningCurveTPFP-1.png")
 ```
 
 What happens in `generateLearningCurveData()` is the following:
@@ -75,7 +68,7 @@ As usual, you can also create the learners beforehand and provide a `list` of Le
 Make sure that all learners have unique `id`s.
 
 ```{r LearningCurveACCx, fig.asp = 3/4, echo = FALSE, results='hide'}
-### For some reason the resulting img changes in every run by a few bytes. 
+### For some reason the resulting img changes in every run by a few bytes.
 ### To not trigger a false positive change in every run, we add the img by hand.
 ### This is ofc bad bc changes in the code are not triggering a change in the img
 lrns = list(
@@ -90,7 +83,7 @@ lc = generateLearningCurveData(learners = lrns, task = sonar.task,
 # plotLearningCurve(lc)
 ```
 
-```{r LearningCurveACCx-1, fig.asp = 3/4, eval = FALSE}
+```{r LearningCurveACCx-1, fig.asp = 3/4}
 lrns = list(
   makeLearner(cl = "classif.ksvm", id = "ksvm1", sigma = 0.2, C = 2),
   makeLearner(cl = "classif.ksvm", id = "ksvm2", sigma = 0.1, C = 1),
@@ -101,13 +94,6 @@ lc = generateLearningCurveData(learners = lrns, task = sonar.task,
   percs = seq(0.1, 1, by = 0.1), measures = acc,
   resampling = rin, show.info = FALSE)
 plotLearningCurve(lc)
-```
-
-```{r echo = FALSE}
-### For some reason the resulting img changes in every run by a few bytes. 
-### To not trigger a false positive change in every run, we add the img by hand.
-### This is ofc bad bc changes in the code are not triggering a change in the img
-knitr::include_graphics("../../reference/figures/LearningCurveACCx-1.png")
 ```
 
 We can display performance on the train set as well as the test set:
@@ -121,18 +107,11 @@ lc2 = generateLearningCurveData(learners = lrns, task = sonar.task,
 # plotLearningCurve(lc2, facet = "learner")
 ```
 
-```{r, fig.asp = 2/3, eval = FALSE}
+```{r, fig.asp = 2/3}
 rin2 = makeResampleDesc(method = "CV", iters = 5, predict = "both")
 lc2 = generateLearningCurveData(learners = lrns, task = sonar.task,
   percs = seq(0.1, 1, by = 0.1),
   measures = list(acc, setAggregation(acc, train.mean)), resampling = rin2,
   show.info = FALSE)
 plotLearningCurve(lc2, facet = "learner")
-```
-
-```{r echo = FALSE}
-### For some reason the resulting img changes in every run by a few bytes. 
-### To not trigger a false positive change in every run, we add the img by hand.
-### This is ofc bad bc changes in the code are not triggering a change in the img
-knitr::include_graphics("../../reference/figures/learning-curve-2-1.png")
 ```
