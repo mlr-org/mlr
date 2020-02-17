@@ -1,10 +1,7 @@
-on:
-  push:
-    branches:
-      - gh_actions
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: "0 3 * * *"
 
 name: GH Actions via {tic}
 
@@ -20,6 +17,7 @@ jobs:
         config:
           - { os: windows-latest, r: "release" }
           - { os: ubuntu-18.04, r: "release" }
+          - { os: ubuntu-18.04, r: "devel" }
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
