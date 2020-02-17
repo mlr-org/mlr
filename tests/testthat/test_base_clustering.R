@@ -18,7 +18,6 @@ test_that("clustering performance", {
   pred = predict(model, task = noclass.task)
 
   expect_true(is.numeric(performance(pred, task = noclass.task, measures = db)))
-  expect_true(is.numeric(performance(pred, task = noclass.task, measures = dunn)))
   expect_true(is.numeric(performance(pred, task = noclass.task, measures = G1)))
   expect_true(is.numeric(performance(pred, task = noclass.task, measures = G2)))
   expect_true(is.numeric(performance(pred, task = noclass.task, measures = silhouette)))
@@ -31,7 +30,6 @@ test_that("clustering performance with missing clusters", {
   pred$data$response = sample(c(1, 3, 4), length(pred$data$response), replace = TRUE)
 
   expect_warning(performance(pred, task = noclass.task, measures = db), NA)
-  expect_warning(performance(pred, task = noclass.task, measures = dunn), NA)
   expect_warning(performance(pred, task = noclass.task, measures = G1), NA)
   expect_warning(performance(pred, task = noclass.task, measures = G2), NA)
   expect_warning(performance(pred, task = noclass.task, measures = silhouette), NA)
