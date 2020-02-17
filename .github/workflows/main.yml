@@ -88,7 +88,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install ccache
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/opt/llvm/bin/clang\nCXX=/usr/local/opt/llvm/bin/clang++\nCXX1X=/usr/local/opt/llvm/bin/clang++\nCXX14=ccache clang++ -std=gnu99\nC11=ccache clang++\nC14=ccache clang++\nFC=ccache gfortran\nF77=ccache gfortran\nLDFLAGS=-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib' > $HOME/.R/Makevars
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/bin/g++-9 \nCXX11=ccache /usr/local/bin/g++-9 \nCXX14=ccache /usr/local/bin/g++-9\nC11=ccache /usr/local/bin/g++-9 \nC14=ccache /usr/local/bin/g++-9 \nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
       # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
@@ -113,6 +113,11 @@ jobs:
       #     choco install miktex
       #     choco install jdk8
 
+      # - need to remove gfortran first because it conflicts with other brew installs
+      # - proj@5 because projv6 is not well supported yet by spatial libs
+      # - reinstall gfortran to have it avail
+      # - pkgconfig is needed for some packages to find their linkers
+      # - clong7 is the only CC compiler which works for some pkgs, e.g. {fs}
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
@@ -123,6 +128,10 @@ jobs:
           brew unlink proj
           brew install osgeo-proj@5 geos freetype
           brew link --force osgeo-proj@5
+          brew cask reinstall gfortran
+          brew install pkgconfig
+          curl -O https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
+          sudo installer -package clang-7.0.0.pkg -target /
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v1
