@@ -272,21 +272,21 @@ test_that("makeFunctionalData produces valid error messages", {
   fdf3 = makeFunctionalData(df, fd.features = NULL, exclude.cols = c("z", "y"))
   cls = lapply(fdf3, class)
   expect_equal(cls[["z"]], "factor")
-  expect_equal(cls[["fd1"]], "matrix")
+  expect_equal(cls[["fd1"]][1], "matrix")
   expect_equal(cls[["y"]], "integer")
   expect_equal(dim(fdf3$fd1), c(3, 1))
 
   # Exclude.cols works for integer
   fdf4 = makeFunctionalData(df, fd.features = NULL, exclude.cols = c(3, 2))
   expect_equal(lapply(fdf4, class)[["z"]], "factor")
-  expect_equal(lapply(fdf4, class)[["fd1"]], "matrix")
+  expect_equal(lapply(fdf4, class)[["fd1"]][1], "matrix")
   expect_equal(lapply(fdf4, class)[["y"]], "integer")
   expect_equal(dim(fdf4$fd1), c(3, 1))
 
   # Check if exclude.cols overwrites fd.features
   fdf5 = makeFunctionalData(df, fd.features = list("fd1" = 1:2), exclude.cols = "x")
   expect_equal(lapply(fdf5, class)[["z"]], "factor")
-  expect_equal(lapply(fdf5, class)[["fd1"]], "matrix")
+  expect_equal(lapply(fdf5, class)[["fd1"]][1], "matrix")
   expect_equal(lapply(fdf5, class)[["x"]], "integer")
   expect_equal(dim(fdf5$fd1), c(3, 1))
 
