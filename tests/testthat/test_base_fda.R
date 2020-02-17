@@ -5,11 +5,11 @@ test_that("makeFunctionalData works", {
   df$fct = as.factor(letters[1:10])
   df$ord = as.ordered(1:10)
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1:5, "fd2" = 6:9))
-  expect_equal(class(fdf[, 1]), "numeric")
-  expect_equal(class(fdf[, 2]), "factor")
-  expect_equal(class(fdf[, 3]), c("ordered", "factor"))
-  expect_equal(class(fdf[, 4]), "matrix")
-  expect_equal(class(fdf[, 5]), "matrix")
+  expect_is(fdf[, 1], "numeric")
+  expect_is(fdf[, 2], "factor")
+  expect_is(fdf[, 3], c("ordered", "factor"))
+  expect_is(fdf[, 4], "matrix")
+  expect_is((fdf[, 5]), "matrix")
   expect_equal(dim(fdf), c(10, 5))
   expect_class(fdf, "data.frame")
 })
@@ -39,19 +39,19 @@ test_that("makeFunctionalData subsetting works", {
 
   # Subset rows
   fdf2 = fdf[1:5, , drop = FALSE]
-  expect_equal(class(fdf2[, 1]), "numeric")
-  expect_equal(class(fdf2[, 2]), "factor")
-  expect_equal(class(fdf2[, 3]), c("ordered", "factor"))
-  expect_equal(class(fdf2[, 4]), "matrix")
-  expect_equal(class(fdf2[, 5]), "matrix")
+  expect_is(fdf2[, 1], "numeric")
+  expect_is(fdf2[, 2], "factor")
+  expect_is(fdf2[, 3], c("ordered", "factor"))
+  expect_is(fdf2[, 4], "matrix")
+  expect_is(fdf2[, 5], "matrix")
   expect_equal(dim(fdf2), c(5, 5))
   expect_class(fdf2, "data.frame")
 
   # Subset cols
   fdf3 = fdf[, 2:4, drop = FALSE]
-  expect_equal(class(fdf3[, 2]), c("ordered", "factor"))
-  expect_equal(class(fdf3[, 3]), "matrix")
-  expect_equal(class(fdf3[, 3]), "matrix")
+  expect_is(fdf3[, 2], c("ordered", "factor"))
+  expect_is(fdf3[, 3], "matrix")
+  expect_is(fdf3[, 3], "matrix")
   expect_equal(dim(fdf3), c(10, 3))
   expect_class(fdf3, "data.frame")
 })
@@ -60,21 +60,21 @@ test_that("makeFunctionalData works for different inputs", {
   df = data.frame(matrix(rnorm(50), nrow = 5))
   # for 1-D matricies
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2:10))
-  expect_equal(class(fdf[, 1]), "matrix")
-  expect_equal(class(fdf[, 2]), "matrix")
+  expect_is(fdf[, 1], "matrix")
+  expect_is(fdf[, 2], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
   # for column name inputs
   fdf = makeFunctionalData(df, fd.features = list("fd1" = "X1", "fd2" = paste0("X", 2:10)))
-  expect_equal(class(fdf[, 1]), "matrix")
-  expect_equal(class(fdf[, 2]), "matrix")
+  expect_is(fdf[, 1], "matrix")
+  expect_is(fdf[, 2], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
   # for fd.features = NULL
   fdf = makeFunctionalData(df, fd.features = NULL)
-  expect_equal(class(fdf[, 1]), "matrix")
+  expect_is(fdf[, 1], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
 
@@ -86,7 +86,7 @@ test_that("makeFunctionalData works for different inputs", {
 
   # default
   fdf = makeFunctionalData(df)
-  expect_equal(class(fdf[, 1]), "matrix")
+  expect_is(fdf[, 1], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
 
@@ -95,20 +95,20 @@ test_that("makeFunctionalData works for different inputs", {
   df2 = df[, 1, drop = FALSE]
   df2$fd1 = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2, fd.features = list("fd2" = "X1"))
-  expect_equal(class(fdf[, 1]), "matrix")
-  expect_equal(class(fdf[, 2]), "matrix")
+  expect_is(fdf[, 1], "matrix")
+  expect_is(fdf[, 2], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 })
 
 test_that("getFunctionalFeatures works for different inputs", {
   fdf = getFunctionalFeatures(gunpoint.task, features = getTaskNFeats(gunpoint.task))
-  expect_equal(class(fdf[, 1]), "matrix")
+  expect_is(fdf[, 1], "matrix")
   expect_data_frame(fdf, ncols = 1L, nrows = 200L)
 
   fdf2 = getTaskData(gunpoint.task, functionals.as = "matrix")
   fdf3 = getFunctionalFeatures(fdf2, features = getTaskNFeats(gunpoint.task))
-  expect_equal(class(fdf[, 1]), "matrix")
+  expect_is(fdf[, 1], "matrix")
   expect_data_frame(fdf3, ncols = 1L, nrows = 200L)
 
   # Throws errors
@@ -118,13 +118,13 @@ test_that("getFunctionalFeatures works for different inputs", {
 
   # Works for multiple functionals
   fdf4 = getFunctionalFeatures(fuelsubset.task, features = getTaskFeatureNames(fuelsubset.task))
-  expect_equal(class(fdf4[, 1]), "matrix")
-  expect_equal(class(fdf4[, 2]), "matrix")
+  expect_is(fdf4[, 1], "matrix")
+  expect_is(fdf4[, 2], "matrix")
   expect_data_frame(fdf4, ncols = 2L, nrows = 129L)
 
   # Params for task method work
   fdf = getFunctionalFeatures(fuelsubset.task, subset = 1:100, features = 1:2)
-  expect_equal(class(fdf[, 1]), "matrix")
+  expect_is(fdf[, 1], "matrix")
   expect_data_frame(fdf, ncols = 1L, nrows = 100L)
 })
 
