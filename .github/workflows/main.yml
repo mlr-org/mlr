@@ -87,9 +87,8 @@ jobs:
       - name: "[macOS] ccache"
         if: runner.os == 'macOS'
         run: |
-          brew install ccache
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/bin/g++-9 \nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
-          mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+          brew install ccache gcc@8
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/bin/clang\nCC11=ccache /usr/local/bin/gcc-8\nCC14=ccache /usr/local/bin/gcc-8\nCXX=ccache /usr/local/bin/g++-8\nCXX11=ccache /usr/local/bin/g++-8\nCXX14=ccache /usr/local/bin/g++-8\nC11=ccache /usr/local/bin/g++-8\nC14=ccache /usr/local/bin/g++-8\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
 
       # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
       # FIXME: Also o nlinux not usable due to broken java-7-headless which comes with almost every formula
@@ -130,8 +129,9 @@ jobs:
           brew link --force osgeo-proj@5
           brew cask reinstall gfortran
           brew install pkgconfig
-          curl -O https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
-          sudo installer -package clang-7.0.0.pkg -target /
+
+      # curl -O https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
+      # sudo installer -package clang-7.0.0.pkg -target /
 
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v1
