@@ -1,6 +1,7 @@
 context("learners_all_clusters")
 
 test_that("learners work: cluster", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
   skip_on_os("windows")
 
   # RWeka not avail on CRAN
