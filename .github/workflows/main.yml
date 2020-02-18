@@ -130,9 +130,6 @@ jobs:
           brew cask reinstall gfortran
           brew install pkgconfig
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v1.0.2
-
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
         run: |
