@@ -88,30 +88,8 @@ jobs:
       - name: "[macOS] ccache"
         if: runner.os == 'macOS'
         run: |
-          brew install ccache gcc@8
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/bin/clang\nCC11=ccache /usr/local/bin/gcc-8\nCC14=ccache /usr/local/bin/gcc-8\nCXX=ccache /usr/local/bin/g++-8\nCXX11=ccache /usr/local/bin/g++-8\nCXX14=ccache /usr/local/bin/g++-8\nC11=ccache /usr/local/bin/g++-8\nC14=ccache /usr/local/bin/g++-8\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
-
-      # Installs system libs listed in the 'SystemRequirements' field in DESCRIPTION
-      # FIXME: Also o nlinux not usable due to broken java-7-headless which comes with almost every formula
-      # - name: Install system dependencies
-      #   if: runner.os == 'Linux'
-      #   env:
-      #     RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-      #   run: |
-      #     Rscript -e "if (!requireNamespace('remotes')) {install.packages('remotes')}"
-      #     Rscript -e "remotes::install_github('r-hub/sysreqs')"
-      #     sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-      #     sudo -s eval "$sysreqs"
-
-      # only on macOS devel, using binaries on release
-      # need to set pkgType env var, otherwise remotes::install_cran() errors
-      # because R tries to install binaries for R-devel which do not exist
-
-      # - name: "[Windows] Prepare"
-      #   if: runner.os == 'Windows'
-      #   run: |
-      #     choco install miktex
-      #     choco install jdk8
+          brew install ccache
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/bin/clang\nCC11=ccache /usr/bin/clang\nCC14=ccache /usr/bin/clang\nCXX=ccache /usr/bin/clang++\nCXX11=ccache /usr/bin/clang++\nCXX14=ccache /usr/bin/clang++\nC11=ccache /usr/bin/clang++\nC14=ccache /usr/bin/clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
 
       # - need to remove gfortran first because it conflicts with other brew installs
       # - proj@5 because projv6 is not well supported yet by spatial libs
