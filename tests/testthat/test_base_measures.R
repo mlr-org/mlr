@@ -838,29 +838,6 @@ test_that("check measure calculations", {
     pred = pred.cluster, feats = data.cluster))
   expect_equal(db.test, as.numeric(db.perf))
 
-  # dunn
-  exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
-    sqrt(sum((c(4, 3) - c(3, 2))^2)))
-  indist = max(sqrt(sum((c(1, 3) - c(2, 4))^2)), sqrt(sum((c(1, 3) - c(4, 2))^2)),
-    sqrt(sum((c(2, 4) - c(4, 2))^2)))
-  dunn.test = exdist / indist
-  dunn.perf = performance(pred.cluster, measures = dunn,
-    model = mod.cluster, feats = data.cluster)
-  expect_equal(dunn.test,
-    dunn$fun(pred = pred.cluster, feats = data.cluster))
-  expect_equal(dunn.test, as.numeric(dunn.perf))
-
-  # g1 index
-  exsum = sqrt(sum((c(1, 3) - c(3, 1))^2)) + sqrt(sum((c(2, 4) - c(3, 1))^2)) +
-    sqrt(sum((c(4, 3) - c(3, 2))^2))
-  insum = sqrt(sum((c(1, 3) - c(2, 4))^2)) + sqrt(sum((c(1, 3) - c(4, 2))^2)) +
-    sqrt(sum((c(2, 4) - c(4, 2))^2))
-  g1.test = exsum / insum
-  g1.perf = performance(pred.cluster, measures = G1,
-    model = mod.cluster, feats = data.cluster)
-  expect_equal(g1.test, G1$fun(pred = pred.cluster, feats = data.cluster))
-  expect_equal(g1.test, as.numeric(g1.perf))
-
   # g2 index
   dists = as.matrix(dist(data.cluster, method = "euclidian"))
   c2.dists = as.vector(dists[, 3L])

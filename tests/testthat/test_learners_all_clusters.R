@@ -3,6 +3,9 @@ context("learners_all_clusters")
 test_that("learners work: cluster", {
   skip_on_os("windows")
 
+  # RWeka not avail on CRAN
+  skip_on_cran()
+
   # settings to make learners faster and deal with small sample size
   hyperpars = list()
 

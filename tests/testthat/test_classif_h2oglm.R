@@ -43,6 +43,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
 
 test_that("feature importances are returned", {
   skip_on_ci()
+  skip_on_cran()
   iris2 = iris[iris$Species %in% c("versicolor", "virginica"), ]
   iris2$Species = droplevels(iris2$Species)
   task = makeClassifTask(data = iris2, target = "Species")
