@@ -130,6 +130,9 @@ jobs:
           brew cask reinstall gfortran
           brew install pkgconfig
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v1
+
       # curl -O https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
       # sudo installer -package clang-7.0.0.pkg -target /
 
