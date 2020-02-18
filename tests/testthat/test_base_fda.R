@@ -349,6 +349,8 @@ test_that("getTaskData for functional tasks", {
 
 test_that("benchmarking on fda tasks works", {
   skip_on_cran()
+  skip_on_os("mac")
+
   # subscript out of bounds
   # Backtrace:
   #   1. testthat::expect_message(...)

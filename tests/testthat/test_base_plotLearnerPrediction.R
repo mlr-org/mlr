@@ -1,6 +1,7 @@
 context("plotLearnerPrediction")
 
 test_that("plotLearnerPrediction", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
   gs = 10
   plotLearnerPrediction("classif.rpart", multiclass.task, gridsize = gs)
   ggsave(tempfile(fileext = ".png"))

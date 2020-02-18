@@ -13,6 +13,7 @@ test_that("clustering predict", {
 
 
 test_that("clustering performance", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
 
   # RWeka not avail
   skip_on_os("windows")
@@ -28,6 +29,7 @@ test_that("clustering performance", {
 })
 
 test_that("clustering performance with missing clusters", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
 
   # RWeka not avail
   skip_on_os("windows")
@@ -44,6 +46,7 @@ test_that("clustering performance with missing clusters", {
 })
 
 test_that("clustering resample", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
 
   # RWeka not avail
   skip_on_os("windows")
@@ -57,6 +60,7 @@ test_that("clustering resample", {
 })
 
 test_that("clustering benchmark", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
 
   # RWeka not avail
   skip_on_os("windows")
@@ -77,6 +81,7 @@ test_that("clustering downsample", {
 })
 
 test_that("clustering tune", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
 
   # RWeka not avail
   skip_on_os("windows")
