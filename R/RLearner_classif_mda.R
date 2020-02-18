@@ -21,7 +21,7 @@ makeRLearner.classif.mda = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq")),
       makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L),
-      makeDiscreteLearnerParam(id = "criterion", default = "misclassification", values = c("misclassification", "deviance"))
+      makeDiscreteLearnerParam(id = "criterion", default = "misclassification", special.vals = c("misclassification", "deviance"))
     ),
     par.vals = list(keep.fitted = FALSE, start.method = "lvq"),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),

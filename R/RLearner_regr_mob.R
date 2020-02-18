@@ -12,7 +12,7 @@ makeRLearner.regr.mob = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       # see helpers_modeltools.R for `glinearModel`
       makeUntypedLearnerParam(id = "model", default = function(...) modeltools::glinearModel(...),
-        values = list(glinearModel = function(...) modeltools::glinearModel(...), linearModel = function(...) modeltools::glinearModel(...))),
+        special.vals = list(glinearModel = function(...) modeltools::glinearModel(...), linearModel = function(...) modeltools::glinearModel(...))),
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),
