@@ -133,17 +133,14 @@ jobs:
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v1.0.2
 
-      # curl -O https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
-      # sudo installer -package clang-7.0.0.pkg -target /
-
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v1
-
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v1.0.2
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
