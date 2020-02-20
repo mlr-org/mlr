@@ -75,8 +75,8 @@ jobs:
         uses: actions/cache@v1.1.0
         with:
           path: ${{ env.CCACHE_DIR}}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test6-${{steps.datew.outputs.datew}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test6-${{steps.datew.outputs.datew}}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
 
       - name: "[Linux] ccache"
         if: runner.os == 'Linux'
