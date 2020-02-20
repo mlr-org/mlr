@@ -2,6 +2,7 @@
 
 context("filterFeatures")
 
+cat("filters")
 test_that("filterFeatures 1", {
 
   # FSelector not avail

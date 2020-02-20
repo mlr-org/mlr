@@ -1,5 +1,6 @@
 context("filterFeatures_fselectorrcpp")
 
+cat("FSelectorRcpp")
 test_that("filterFeatures_fselectorrcpp", {
   a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1) # numeric vector
   b = c("one", "two", "three") # character vector

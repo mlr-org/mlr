@@ -1,5 +1,6 @@
 context("FilterWrapper")
 
+cat("FilterWrapper")
 test_that("FilterWrapper", {
   lrn1 = makeLearner("classif.lda")
   lrn2 = makeFilterWrapper(lrn1, fw.method = "FSelectorRcpp_information.gain",

@@ -4,6 +4,7 @@
 
 context("filterFeatures")
 
+cat("generateFilterValuesData")
 test_that("filterFeatures", {
   ns = getTaskFeatureNames(binaryclass.task)
   f = filterFeatures(binaryclass.task, method = "variance", select = "threshold",
