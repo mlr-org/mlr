@@ -85,11 +85,25 @@ jobs:
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
           mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
 
+      # install ccache and write config file
+      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
       - name: "[macOS] ccache"
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && matrix.config.r != 'devel'
         run: |
           brew install ccache
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/bin/clang\nCC11=ccache /usr/bin/clang\nCC14=ccache /usr/bin/clang\nCXX=ccache /usr/bin/clang++\nCXX11=ccache /usr/bin/clang++\nCXX14=ccache /usr/bin/clang++\nC11=ccache /usr/bin/clang++\nC14=ccache /usr/bin/clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+          wget https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
+          sudo installer -package clang-7.0.0.pkg -target /
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/clang7/bin/clang++\nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nF77=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+
+      # install ccache and write config file
+      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
+      - name: "[macOS-devel] ccache"
+        if: runner.os == 'macOS' && matrix.config.r == 'devel'
+        run: |
+          brew install ccache
+          wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
+          sudo installer -package clang-8.0.0.pkg -target /
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang8/bin/clang\nCC11=ccache /usr/local/clang8/bin/clang\nCC14=ccache /usr/local/clang8/bin/clang\nCXX=ccache /usr/local/clang8/bin/clang++\nCXX11=ccache /usr/local/clang8/bin/clang++\nCXX14=ccache /usr/local/clang8/bin/clang++\nC11=ccache /usr/local/clang8/bin/clang++\nC14=ccache /usr/local/clang8/bin/clang++\nF88=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
 
       # - need to remove gfortran first because it conflicts with other brew installs
       # - proj@5 because projv6 is not well supported yet by spatial libs
