@@ -184,7 +184,6 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
-    # FIXME: pred.test also just returns thresholds of 0.5 all the time
     pred.test = predict(m, task, subset = test.i)
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
