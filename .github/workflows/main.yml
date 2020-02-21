@@ -113,7 +113,6 @@ jobs:
       - name: "[macOS] Prepare"
         if: runner.os == 'macOS'
         run: |
-          R CMD javareconf
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
           brew install Caskroom/cask/xquartz udunits gdal
@@ -122,6 +121,7 @@ jobs:
           brew link --force osgeo-proj@5
           brew cask reinstall gfortran
           brew install pkgconfig
+          R CMD javareconf
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
