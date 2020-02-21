@@ -12,7 +12,7 @@ makeRLearner.classif.mda = function() {
       makeNumericLearnerParam(id = "eps", default = .Machine$double.eps, lower = 0),
       makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
       # see helpers_mda.R for objects
-      makeDiscreteLearnerParam(id = "method", default = function(...) mda::polyreg(...),
+      makeUntypedLearnerParam(id = "method", default = function(...) mda::polyreg(...),
         special.vals = list(polyreg = function(...) mda::polyreg(...),
           mars = function(...) mda::mars(...),
           bruto = function(...) mda::bruto(...),
