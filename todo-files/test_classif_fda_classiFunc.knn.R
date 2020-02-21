@@ -59,7 +59,7 @@ test_that("classif_classiFunc.knn behaves like original api", {
 
   cp.prob = predict(m.prob, newdata = ftest)
   cp2.prob = predict(m.prob, newdata = fdata)
-  expect_equal(class(cp.prob)[1],  "PredictionClassif")
+  expect_equal(class(cp.prob)[1], "PredictionClassif")
 
   expect_equal(as.matrix(getPredictionProbabilities(cp2.prob)), p2.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
