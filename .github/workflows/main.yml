@@ -117,7 +117,7 @@ jobs:
           brew tap osgeo/osgeo4mac
           brew install Caskroom/cask/xquartz udunits gdal
           brew unlink proj
-          brew install osgeo-proj@5 geos freetype
+          brew install osgeo-proj@5
           brew link --force osgeo-proj@5
           brew cask reinstall gfortran
           brew install pkgconfig
@@ -128,7 +128,6 @@ jobs:
         run: |
           sudo R CMD javareconf
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
-
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
@@ -141,11 +140,11 @@ jobs:
         run: |
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      - name: "[Stage] Install (macOS-devel)"
+      # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
+      - name: "[Stage] Prepare & Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
-        env:
-          pkgType: source
         run: |
+          echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
       - name: "[Stage] Script"
