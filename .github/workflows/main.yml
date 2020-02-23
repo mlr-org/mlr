@@ -64,6 +64,7 @@ jobs:
         run: echo "::set-output name=datew::$(date '+%Y-%V')"
 
       - name: "[Cache] Cache R packages"
+        if: runner.os != 'Windows'
         uses: actions/cache@v1.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
