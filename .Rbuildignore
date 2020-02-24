@@ -39,3 +39,4 @@ revdep/*
 ^\.vscode$
 ^src/tempdir/\.ccache$
 ^\.ccache$
+^clang.*$
