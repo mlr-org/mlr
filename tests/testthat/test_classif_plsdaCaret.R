@@ -1,6 +1,7 @@
 context("classif_plsdaCaret")
 
 test_that("classif_plsdaCaret_binary", {
+  skip("until klaR pkg was updated")
   requirePackagesOrSkip("caret", default.method = "load")
   parset.list = list(
     list(),
