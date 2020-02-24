@@ -124,8 +124,8 @@ jobs:
           brew install pkgconfig
           R CMD javareconf
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v1.0.2
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
