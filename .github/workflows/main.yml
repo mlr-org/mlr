@@ -148,6 +148,9 @@ jobs:
           echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic@gh-actions')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v1.0.2
+
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
 
