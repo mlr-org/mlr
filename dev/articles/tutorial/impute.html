@@ -288,23 +288,20 @@
 <p>Also note that some of the learning algorithms included in <code>mlr</code> can deal with missing values in a sensible way, i.e., other than simply deleting observations with missing values. Those Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s have the property <code>"missings"</code> and thus can be identified using <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Regression learners that can deal with missing values</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"regr"</span>, <span class="dt">properties =</span> <span class="st">"missings"</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">## Warning in listLearners.character("regr", properties = "missings"): The following learners could not be constructed, probably because their packages are not installed:</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## classif.classiFunc.kernel,classif.classiFunc.knn</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">##                    class         package</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 1       regr.bartMachine     bartMachine</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 2           regr.cforest           party</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## 3             regr.ctree           party</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">## 4            regr.cubist          Cubist</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## 5       regr.featureless             mlr</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">## 6               regr.gbm             gbm</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">## 7  regr.h2o.deeplearning             h2o</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## 8           regr.h2o.gbm             h2o</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## 9           regr.h2o.glm             h2o</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">## 10 regr.h2o.randomForest             h2o</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">## 11  regr.randomForestSRC randomForestSRC</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">## 12            regr.rpart           rpart</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">## 13          regr.xgboost         xgboost</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">##                    class         package</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## 1       regr.bartMachine     bartMachine</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## 2           regr.cforest           party</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">## 3             regr.ctree           party</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">## 4            regr.cubist          Cubist</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## 5       regr.featureless             mlr</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">## 6               regr.gbm             gbm</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">## 7  regr.h2o.deeplearning             h2o</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">## 8           regr.h2o.gbm             h2o</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">## 9           regr.h2o.glm             h2o</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">## 10 regr.h2o.randomForest             h2o</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">## 11  regr.randomForestSRC randomForestSRC</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">## 12            regr.rpart           rpart</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">## 13          regr.xgboost         xgboost</span></a></code></pre></div>
 <p>See also the list of <a href="integrated_learners.html" target="_blank">integrated learners</a> in the Appendix.</p>
 <div id="imputation-and-reimputation" class="section level1">
 <h1 class="hasAnchor">
