@@ -300,6 +300,11 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin,
     pred = NULL
   }
 
+  # storing a threshold here might confuse users, hence we remove the slot
+  # for ResampleResult containers
+  # see https://github.com/mlr-org/mlr/issues/2289
+  pred$threshold = NULL
+
   list(
     learner.id = learner.id,
     task.id = getTaskId(task),
