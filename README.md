@@ -21,7 +21,7 @@ Machine learning in R.
 * [Changelog](https://mlr.mlr-org.com/news/index.html)
 
 * [Stackoverflow](https://stackoverflow.com/questions/tagged/mlr): `#mlr`
-* [Slack](https://mlr-org.slack.com/)
+* [Mattermost](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 * [Blog](https://mlr-org.com/)
 
 # Deprecated

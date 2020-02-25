@@ -28,7 +28,7 @@ news:
 navbar:
   structure:
     left:  [articles, advanced, extending, appendix, reference]
-    right: [github, slack, stackoverflow, rss]
+    right: [github, mattermost, stackoverflow, rss]
 
   components:
     home: ~
@@ -144,9 +144,9 @@ navbar:
       - text: ---
       - text: Changelog
         href: news/index.html
-    slack:
-      icon: fab fa-slack
-      href: https://mlr-org.slack.com
+    mattermost:
+      icon: fa fa-comments
+      href: https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/
     stackoverflow:
       icon: fab fa-stack-overflow
       href: https://stackoverflow.com/questions/tagged/mlr
