@@ -1427,20 +1427,6 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
     }
   })
 
-#' @export dunn
-#' @rdname measures
-#' @format none
-dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
-  properties = c("cluster", "req.pred", "req.feats"),
-  name = "Dunn index",
-  note = "Defined as the ratio of the smallest distance between observations not in the same cluster to the largest intra-cluster distance. See `?clValid::dunn`.",
-  fun = function(task, model, pred, feats, extra.args) {
-    # produced a confusing note in some cases, see issue #232
-    suppressMessages(requirePackages("clValid", default.method = "load"))
-    r = as.integer(as.factor(pred$data$response))
-    clValid::dunn(Data = feats, clusters = r)
-  })
-
 #' @export G1
 #' @rdname measures
 #' @format none
