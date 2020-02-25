@@ -124,9 +124,6 @@ jobs:
           brew install pkgconfig
           R CMD javareconf
 
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
-
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
         run: |
