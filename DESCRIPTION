@@ -189,7 +189,6 @@ Suggests:
     extraTrees,
     fda.usc,
     FDboost,
-    flare,
     FNN,
     forecast (>= 8.3),
     fpc,
