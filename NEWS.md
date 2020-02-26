@@ -1,3 +1,10 @@
+# mlr 2.17.0.9003
+
+* remove measure `clValid::dunn` and its tests (package orphaned) (#2742)
+* Refactor function calls from packages (`<pkg::fun>`) within ParamSets (#2730) to avoid errors in `listLearners()` if those pkgs are not installed
+* remove `regr_slim` learner due to pkg (flare) being orphaned on CRAN
+
+
 # mlr 2.17.0.9002
 
 - Bugfix: `tuneThreshold()` now accounts for the direction of the measure. 
