@@ -43,7 +43,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.0.9002</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.0.9003</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -287,7 +287,7 @@
 <div id="available-performance-measures" class="section level1">
 <h1 class="hasAnchor">
 <a href="#available-performance-measures" class="anchor"></a>Available performance measures</h1>
-<p><code>mlr</code> provides a large number of performance measures for all types of learning problems. Typical performance measures for <em>classification</em> are the mean misclassification error (<a href="measures.html" target="_blank">mmce</a>), accuracy (<a href="measures.html" target="_blank">acc</a>) or measures based on <a href="roc_analysis.html" target="_blank">ROC analysis</a>. For <em>regression</em> the mean of squared errors (<a href="measures.html" target="_blank">mse</a>) or mean of absolute errors (<a href="measures.html" target="_blank">mae</a>) are usually considered. For <em>clustering</em> tasks, measures such as the Dunn index (<a href="measures.html" target="_blank">dunn</a>) are provided, while for <em>survival</em> predictions, the Concordance Index (<a href="measures.html" target="_blank">cindex</a>) is supported, and for <em>cost-sensitive</em> predictions the misclassification penalty (<a href="measures.html" target="_blank">mcp</a>) and others. It is also possible to access the time to train the learner (<a href="measures.html" target="_blank">timetrain</a>), the time to compute the prediction (<a href="measures.html" target="_blank">timepredict</a>) and their sum (<a href="measures.html" target="_blank">timeboth</a>) as performance measures.</p>
+<p><code>mlr</code> provides a large number of performance measures for all types of learning problems. Typical performance measures for <em>classification</em> are the mean misclassification error (<a href="measures.html" target="_blank">mmce</a>), accuracy (<a href="measures.html" target="_blank">acc</a>) or measures based on <a href="roc_analysis.html" target="_blank">ROC analysis</a>. For <em>regression</em> the mean of squared errors (<a href="measures.html" target="_blank">mse</a>) or mean of absolute errors (<a href="measures.html" target="_blank">mae</a>) are usually considered. For <em>clustering</em> tasks, measures such as the Dunn index (<a href="measures.html" target="_blank">G1 index</a>) are provided, while for <em>survival</em> predictions, the Concordance Index (<a href="measures.html" target="_blank">cindex</a>) is supported, and for <em>cost-sensitive</em> predictions the misclassification penalty (<a href="measures.html" target="_blank">mcp</a>) and others. It is also possible to access the time to train the learner (<a href="measures.html" target="_blank">timetrain</a>), the time to compute the prediction (<a href="measures.html" target="_blank">timepredict</a>) and their sum (<a href="measures.html" target="_blank">timeboth</a>) as performance measures.</p>
 <p>To see which performance measures are implemented, have a look at the table of <a href="measures.html" target="_blank">performance measures</a> and the <code><a href="../../reference/measures.html">measures()</a></code> documentation page.</p>
 <p>If you want to implement an additional measure or include a measure with non-standard misclassification costs, see the section on <a href="create_measure.html" target="_blank">creating custom measures</a>.</p>
 </div>
@@ -361,17 +361,19 @@
 <p>Note that in order to calculate some performance measures it is required that you pass the <code><a href="../../reference/Task.html">Task()</a></code> or the fitted model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) in addition to the <code><a href="../../reference/Prediction.html">Prediction()</a></code>.</p>
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> timetrain, <span class="dt">model =</span> mod)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## timetrain </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## timetrain</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##     0.055</span></a></code></pre></div>
 <p>For many performance measures in cluster analysis the <code><a href="../../reference/Task.html">Task()</a></code> is required.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="dt">centers =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, mtcars.task)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">pred =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod, <span class="dt">task =</span> mtcars.task)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># Calculate the Dunn index</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> dunn, <span class="dt">task =</span> mtcars.task)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">##      dunn </span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## 0.1178415</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># Calculate the G1 index</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../../reference/performance.html">performance</a></span>(pred, <span class="dt">measures =</span> G1, <span class="dt">task =</span> mtcars.task)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">## Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">## Warning: 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">##       G1 </span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">## 61.17497</span></a></code></pre></div>
 <p>Moreover, some measures require a certain type of prediction. For example in binary classification in order to calculate the AUC (<a href="measures.html" target="_blank">auc</a>) – the area under the ROC (receiver operating characteristic) curve – we have to make sure that posterior probabilities are predicted. For more information on ROC analysis, see the section on <a href="roc_analysis.html" target="_blank">ROC analysis</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">predict.type =</span> <span class="st">"prob"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">mod =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(lrn, <span class="dt">task =</span> sonar.task)</a>
