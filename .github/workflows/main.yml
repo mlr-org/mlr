@@ -65,7 +65,7 @@ jobs:
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: gerbal/always-cache@v1.0.3
+        uses: pat-s/always-upload-cache@v1.1.3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
@@ -73,7 +73,7 @@ jobs:
 
       - name: "[Cache] Cache ccache"
         if: runner.os != 'Windows'
-        uses: actions/cache@v1.1.0
+        uses: pat-s/always-upload-cache@v1.1.3
         with:
           path: ${{ env.CCACHE_DIR}}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
