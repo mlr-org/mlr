@@ -25,7 +25,7 @@ In order to calculate the performance measures, call `performance()` on the obje
 `mlr` provides a large number of performance measures for all types of learning problems.
 Typical performance measures for *classification* are the mean misclassification error ([mmce](measures.html){target="_blank"}), accuracy ([acc](measures.html){target="_blank"}) or measures based on [ROC analysis](roc_analysis.html){target="_blank"}.
 For *regression* the mean of squared errors ([mse](measures.html){target="_blank"}) or mean of absolute errors ([mae](measures.html){target="_blank"}) are usually considered.
-For *clustering* tasks, measures such as the Dunn index ([dunn](measures.html){target="_blank"}) are provided, while for *survival* predictions, the Concordance Index ([cindex](measures.html){target="_blank"}) is supported, and for *cost-sensitive* predictions the misclassification penalty ([mcp](measures.html){target="_blank"}) and others. 
+For *clustering* tasks, measures such as the Dunn index ([G1 index](measures.html){target="_blank"}) are provided, while for *survival* predictions, the Concordance Index ([cindex](measures.html){target="_blank"}) is supported, and for *cost-sensitive* predictions the misclassification penalty ([mcp](measures.html){target="_blank"}) and others. 
 It is also possible to access the time to train the learner ([timetrain](measures.html){target="_blank"}), the time to compute the prediction ([timepredict](measures.html){target="_blank"}) and their sum ([timeboth](measures.html){target="_blank"}) as performance measures.
 
 To see which performance measures are implemented, have a look at the table of [performance measures](measures.html){target="_blank"} and the `measures()` documentation page.
@@ -99,7 +99,7 @@ performance(pred, measures = timetrain, model = mod)
 
 ```{r eval = FALSE}
 performance(pred, measures = timetrain, model = mod)
-## timetrain 
+## timetrain
 ##     0.055
 ```
 
@@ -110,8 +110,8 @@ lrn = makeLearner("cluster.kmeans", centers = 3)
 mod = train(lrn, mtcars.task)
 pred = predict(mod, task = mtcars.task)
 
-# Calculate the Dunn index
-performance(pred, measures = dunn, task = mtcars.task)
+# Calculate the G1 index
+performance(pred, measures = G1, task = mtcars.task)
 ```
 
 Moreover, some measures require a certain type of prediction.

@@ -10,8 +10,7 @@ makeRLearner.regr.mob = function() {
       makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
-      makeDiscreteLearnerParam(id = "model", default = modeltools::glinearModel,
-        values = list(glinearModel = modeltools::glinearModel, linearModel = modeltools::linearModel)),
+      makeDiscreteLearnerParam(id = "model", default = "glinearModel", values = list("glinearModel", "linearModel")),
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),
@@ -19,13 +18,13 @@ makeRLearner.regr.mob = function() {
     properties = c("numerics", "factors", "weights"),
     name = "Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node",
     short.name = "mob",
-    callees = c("mob", "mob_control", "glinearModel", "linearModel")
+    callees = c("mob", "mob_control")
   )
 }
 
 #' @export
 trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alpha, bonferroni, minsplit,
-  trim, breakties, verbose, part.feats, term.feats, ...) {
+  trim, breakties, verbose, part.feats, term.feats, model, ...) {
 
   cntrl = learnerArgsToControl(party::mob_control, alpha, bonferroni, minsplit, trim, breakties, verbose)
 
@@ -42,11 +41,20 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   target = getTaskTargetNames(.task)
   f = as.formula(stri_paste(target, "~", collapse(term.feats, sep = " + "), "|", collapse(part.feats, sep = " + "), sep = " "))
 
-  if (is.null(.weights)) {
-    model = party::mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
-  } else {
-    model = party::mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
+  args = list(f, data = getTaskData(.task, .subset), control = cntrl, ...)
+  if (!is.null(.weights)) {
+    args$weights = .weights
   }
+  if (!missing(model)) {
+    if (is.character(model)) {
+      args$model = getFromNamespace(model, "mda")
+    } else {
+      args$model = model #this allows to set the model if on.par.out.of.bounds is set to "warn" or "quiet"
+    }
+  }
+
+  model = do.call(party::mob, args)
+
   # sometimes mob fails to fit a model but does not signal an exception.
   if (anyMissing(coef(model))) {
     stop("Failed to fit party::mob. Some coefficients are estimated as NA")
