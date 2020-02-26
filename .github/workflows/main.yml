@@ -122,6 +122,7 @@ jobs:
           brew link --force osgeo-proj@5
           brew cask reinstall gfortran
           brew install pkgconfig
+          brew install nloptr
           R CMD javareconf
 
       - name: "[Linux] Prepare"
