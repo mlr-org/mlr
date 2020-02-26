@@ -834,18 +834,6 @@ test_that("check measure calculations", {
     pred = pred.cluster, feats = data.cluster))
   expect_equal(db.test, as.numeric(db.perf))
 
-  # dunn
-  exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
-    sqrt(sum((c(4, 3) - c(3, 2))^2)))
-  indist = max(sqrt(sum((c(1, 3) - c(2, 4))^2)), sqrt(sum((c(1, 3) - c(4, 2))^2)),
-    sqrt(sum((c(2, 4) - c(4, 2))^2)))
-  dunn.test = exdist / indist
-  dunn.perf = performance(pred.cluster, measures = dunn,
-    model = mod.cluster, feats = data.cluster)
-  expect_equal(dunn.test,
-    dunn$fun(pred = pred.cluster, feats = data.cluster))
-  expect_equal(dunn.test, as.numeric(dunn.perf))
-
   # g1 index
   exsum = sqrt(sum((c(1, 3) - c(3, 1))^2)) + sqrt(sum((c(2, 4) - c(3, 1))^2)) +
     sqrt(sum((c(4, 3) - c(3, 2))^2))

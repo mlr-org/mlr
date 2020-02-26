@@ -172,7 +172,6 @@ Suggests:
     cluster,
     ClusterR,
     clusterSim (>= 0.44-5),
-    clValid,
     cmaes,
     cowplot,
     CoxBoost,

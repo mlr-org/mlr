@@ -124,7 +124,6 @@
 \alias{meancosts}
 \alias{mcp}
 \alias{db}
-\alias{dunn}
 \alias{G1}
 \alias{G2}
 \alias{silhouette}
@@ -372,8 +371,6 @@ meancosts
 mcp
 
 db
-
-dunn
 
 G1
 
