@@ -11,12 +11,7 @@ makeRLearner.classif.mda = function() {
       makeIntegerLearnerParam(id = "dimension", lower = 1L),
       makeNumericLearnerParam(id = "eps", default = .Machine$double.eps, lower = 0),
       makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
-      # see helpers_mda.R for objects
-      makeUntypedLearnerParam(id = "method", default = function(...) mda::polyreg(...),
-        special.vals = list(polyreg = function(...) mda::polyreg(...),
-          mars = function(...) mda::mars(...),
-          bruto = function(...) mda::bruto(...),
-          gen.ridge = function(...) mda::gen.ridge(...))),
+      makeDiscreteLearnerParam(id = "method", default = "polyreg", values = list("polyreg", "mars", "bruto", "gen.ridge")),
       makeLogicalLearnerParam(id = "keep.fitted", default = TRUE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq")),
@@ -33,9 +28,18 @@ makeRLearner.classif.mda = function() {
 }
 
 #' @export
-trainLearner.classif.mda = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.mda = function(.learner, .task, .subset, .weights = NULL, method, ...) {
   f = getTaskFormula(.task)
-  mda::mda(f, data = getTaskData(.task, .subset), ...)
+  args = list(...)
+  if (!missing(method)) {
+    if (is.character(methods)) {
+      args$method = getFromNamespace(method, "mda")
+    } else {
+      args$method = method #this allows to set the method if on.par.out.of.bounds is set to "warn" or "quiet"
+    }
+  }
+  args = c(list(f, data = getTaskData(.task, .subset)), args)
+  do.call(mda::mda, args)
 }
 
 #' @export
