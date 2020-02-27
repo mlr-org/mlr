@@ -25,24 +25,20 @@
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
 #' @return ([LearningCurveData]). A `list` containing:
-#'   \item{task}{[[Task])\cr
-#'     The task.}
-#'   \item{measures}{[(list of) [Measure])\cr
-#'     Performance measures.}
-#'   \item{data}{([data.frame]) with columns:
-#'     \itemize{
-#'       \item `learner` Names of learners.
-#'       \item `percentage` Percentages drawn from the training split.
-#'       \item One column for each
-#'     [Measure] passed to [generateLearningCurveData].
-#'    }}
+#'   - The [Task]
+#'   - List of [Measure])\cr
+#'     Performance measures
+#'   - data ([data.frame]) with columns:
+#'       - `learner` Names of learners.
+#'       - `percentage` Percentages drawn from the training split.
+#'       - One column for each [Measure] passed to [generateLearningCurveData].
 #' @examples
 #' r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
 #'   task = sonar.task, percs = seq(0.2, 1, by = 0.2),
-#'   measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
+#'   measures = list(tp, fp, tn, fn),
+#'   resampling = makeResampleDesc(method = "Subsample", iters = 5),
 #'   show.info = FALSE)
 #' plotLearningCurve(r)
-#' @noMd
 #' @export
 generateLearningCurveData = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info")) {

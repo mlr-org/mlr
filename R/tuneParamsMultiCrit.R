@@ -28,7 +28,6 @@
 #'   same arguments as, and return the same result type as, [resample].
 #' @return ([TuneMultiCritResult]).
 #' @family tune_multicrit
-#' @noMd
 #' @export
 #' @examples
 #' \donttest{

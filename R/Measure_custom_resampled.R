@@ -1,10 +1,10 @@
 #' @title Construct your own resampled performance measure.
 #'
 #' @description
-#' Construct your own performance measure, used after resampling.
-#' Note that individual training / test set performance values will be set to `NA`, you
-#' only calculate an aggregated value. If you can define a function that makes sense
-#' for every single training / test set, implement your own [Measure].
+#' Construct your own performance measure, used after resampling. Note that
+#' individual training / test set performance values will be set to `NA`, you
+#' only calculate an aggregated value. If you can define a function that makes
+#' sense for every single training / test set, implement your own [Measure].
 #'
 #' @param measure.id (`character(1)`)\cr
 #'   Short name of measure.
@@ -17,19 +17,18 @@
 #'   Long name of the aggregation.
 #'   Default is `aggregation.id`.
 #' @param fun (`function(task, group, pred, extra.args)`)\cr
-#'   Calculates performance value from [ResamplePrediction] object.
-#'   For rare cases you can also use the task, the grouping or the extra arguments `extra.args`.
-#'   \describe{
-#'     \item{`task` ([Task])}{
-#'       The task.}
-#'     \item{`group` ([factor])}{
-#'       Grouping of resampling iterations. This encodes whether specific iterations
-#'       'belong together' (e.g. repeated CV).}
-#'     \item{`pred` ([Prediction])}{
-#'       Prediction object.}
-#'     \item{`extra.args` ([list])}{
-#'       See below.}
-#'   }
+#'   Calculates performance value from [ResamplePrediction] object. For rare
+#'   cases you can also use the task, the grouping or the extra arguments
+#'   `extra.args`.
+#'     - `task` ([Task])\cr
+#'       The task.
+#'     - `group` ([factor])\cr
+#'       Grouping of resampling iterations. This encodes whether specific
+#'       iterations 'belong together' (e.g. repeated CV).
+#'     - `pred` ([Prediction])\cr
+#'       Prediction object.
+#'     - `extra.args` ([list])\cr
+#'       See below.
 #' @param extra.args ([list])\cr
 #'   List of extra arguments which will always be passed to `fun`.
 #'   Default is empty list.
@@ -49,7 +48,6 @@
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
 #' @family performance
-#' @noMd
 #' @export
 makeCustomResampledMeasure = function(measure.id, aggregation.id, minimize = TRUE, properties = character(0L),
   fun, extra.args = list(), best = NULL, worst = NULL, measure.name = measure.id,

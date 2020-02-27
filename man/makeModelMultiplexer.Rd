@@ -3,37 +3,39 @@
 \name{makeModelMultiplexer}
 \alias{makeModelMultiplexer}
 \alias{ModelMultiplexer}
-\title{Create model multiplexer for model selection to tune over multiple possible models.}
+\title{Create model multiplexer for model selection to tune over multiple
+possible models.}
 \usage{
 makeModelMultiplexer(base.learners)
 }
 \arguments{
-\item{base.learners}{([list` of [Learner])\cr
+\item{base.learners}{([list` of \link{Learner})\cr
 List of Learners with unique IDs.}
 }
 \value{
-([ModelMultiplexer]). A [Learner] specialized as `ModelMultiplexer`.
+(\link{ModelMultiplexer}). A \link{Learner} specialized as \code{ModelMultiplexer}.
 }
 \description{
 Combines multiple base learners by dispatching
 on the hyperparameter \dQuote{selected.learner} to a specific model class.
 This allows to tune not only the model class (SVM, random forest, etc) but also
-their hyperparameters in one go. Combine this with [tuneParams] and
-[makeTuneControlIrace] for a very powerful approach, see example below.
+their hyperparameters in one go. Combine this with \link{tuneParams} and
+\link{makeTuneControlIrace} for a very powerful approach, see example below.
 
 The parameter set is the union of all (unique) base learners.
 In order to avoid name clashes all parameter names are prefixed
-with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
+with the base learner id, i.e. \dQuote{\link{learner.id}.\link{parameter.name}}.
 
 The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.
 
-The getter [getLearnerProperties] returns the properties of the
+The getter \link{getLearnerProperties} returns the properties of the
 selected base learner.
 }
 \note{
-Note that logging output during tuning is somewhat shortened to make it more readable.
-  I.e., the artificial prefix before parameter names is suppressed.
+Note that logging output during tuning is somewhat shortened to make it
+more readable. I.e., the artificial prefix before parameter names is
+suppressed.
 }
 \examples{
 set.seed(123)

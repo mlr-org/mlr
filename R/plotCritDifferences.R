@@ -127,28 +127,28 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 }
 #' @title Plot critical differences for a selected measure.
 #'
-#' @description Plots a critical-differences diagram for all classifiers and
-#' a selected measure. If a baseline is selected for the Bonferroni-Dunn
-#' test, the critical difference interval will be positioned arround the baseline.
-#' If not, the best performing algorithm will be chosen as baseline.
-#' The positioning of some descriptive elements can be moved by modifying the
-#' generated data.
+#' @description Plots a critical-differences diagram for all classifiers and a
+#'   selected measure. If a baseline is selected for the Bonferroni-Dunn test,
+#'   the critical difference interval will be positioned around the baseline. If
+#'   not, the best performing algorithm will be chosen as baseline.
+#'
+#'   The positioning of some descriptive elements can be moved by modifying the
+#'   generated data.
 #'
 #' @param obj ([critDifferencesData])
-#'   Result of \link{generateCritDifferencesData} function.
-#' @param baseline (`character(1)`): ([learner.id]) \cr
-#'   Overwrites baseline from \link{generateCritDifferencesData}!\cr
-#'   Select a ([learner.id` as baseline for the critical difference
-#'   diagram, the critical difference will be positioned arround this learner.
+#'   Result of [generateCritDifferencesData()].
+#' @param baseline (`character(1)`): (`learner.id`)\cr
+#'   Overwrites baseline from [generateCritDifferencesData()]!\cr
+#'   Select a `learner.id` as baseline for the critical difference
+#'   diagram, the critical difference will be positioned around this learner.
 #'   Defaults to best performing algorithm.
 #' @template arg_prettynames
 #' @template ret_gg2
 #'
-#' @references Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
-#' JMLR, 2006
+#' @references Janez Demsar, Statistical Comparisons of Classifiers over
+#'   Multiple Data Sets, JMLR, 2006
 #' @family plot
 #' @family benchmark
-#' @noMd
 #' @export
 #' @examples
 #' # see benchmark

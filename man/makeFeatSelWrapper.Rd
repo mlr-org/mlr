@@ -19,27 +19,29 @@ makeFeatSelWrapper(
 The learner.
 If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
-Resampling strategy for feature selection. If you pass a description,
-it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
-If you want to change that behaviour, look at [FeatSelControl].}
+\item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
+Resampling strategy for feature selection. If you pass a description, it is
+instantiated once at the beginning by default, so all points are evaluated
+on the same training/test sets. If you want to change that behavior, look
+at \link{FeatSelControl}.}
 
 \item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
 Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{bit.names}{[character]\cr
-Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-Per default these are the feature names of the task.
-Has to be used together with `bits.to.features`.}
+\item{bit.names}{\link{character}\cr
+Names of bits encoding the solutions. Also defines the total number of bits
+in the encoding. Per default these are the feature names of the task. Has
+to be used together with \code{bits.to.features}.}
 
-\item{bits.to.features}{[function(x, task)]\cr
-Function which transforms an integer-0-1 vector into a character vector of selected features.
-Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-The vector `x` will correspond to the `bit.names` and has to be of the same length.}
+\item{bits.to.features}{\link{function(x, task)}\cr
+Function which transforms an integer-0-1 vector into a character vector of
+selected features. Per default a value of 1 in the ith bit selects the ith
+feature to be in the candidate solution. The vector \code{x} will correspond to
+the \code{bit.names} and has to be of the same length.}
 
-\item{control}{[see [FeatSelControl])
+\item{control}{[see \link{FeatSelControl})
 Control object for search method.
 Also selects the optimization algorithm for feature selection.}
 
@@ -53,17 +55,17 @@ Default is set via \link{configureMlr}.}
 \description{
 Fuses a base learner with a search strategy to select variables.
 Creates a learner object, which can be used like any other learner object,
-but which internally uses [selectFeatures].
-If the train function is called on it,
-the search strategy and resampling are invoked to select an optimal set of variables.
-Finally, a model is fitted on the complete training data with these variables and returned.
-See [selectFeatures] for more details.
+but which internally uses \link{selectFeatures}.
+If the train function is called on it, the search strategy and resampling are
+invoked to select an optimal set of variables. Finally, a model is fitted on
+the complete training data with these variables and returned. See
+\link{selectFeatures} for more details.
 
-After training, the optimal features (and other related information) can be retrieved with
-[getFeatSelResult].
+After training, the optimal features (and other related information) can be
+retrieved with \link{getFeatSelResult}.
 }
 \examples{
-# nested resampling with feature selection (with a pretty stupid algorithm for selection)
+# nested resampling with feature selection (with a nonsense algorithm for selection)
 outer = makeResampleDesc("CV", iters = 2L)
 inner = makeResampleDesc("Holdout")
 ctrl = makeFeatSelControlRandom(maxit = 1)

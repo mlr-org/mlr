@@ -23,27 +23,29 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 \item{task}{(\link{Task})\cr
 The task.}
 
-\item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
-Resampling strategy for feature selection. If you pass a description,
-it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
-If you want to change that behaviour, look at [FeatSelControl].}
+\item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
+Resampling strategy for feature selection. If you pass a description, it is
+instantiated once at the beginning by default, so all points are evaluated
+on the same training/test sets. If you want to change that behavior, look
+at \link{FeatSelControl}.}
 
 \item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
 Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{bit.names}{[character]\cr
-Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-Per default these are the feature names of the task.
-Has to be used together with `bits.to.features`.}
+\item{bit.names}{\link{character}\cr
+Names of bits encoding the solutions. Also defines the total number of bits
+in the encoding. Per default these are the feature names of the task. Has
+to be used together with \code{bits.to.features}.}
 
-\item{bits.to.features}{[function(x, task)]\cr
-Function which transforms an integer-0-1 vector into a character vector of selected features.
-Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-The vector `x` will correspond to the `bit.names` and has to be of the same length.}
+\item{bits.to.features}{\link{function(x, task)}\cr
+Function which transforms an integer-0-1 vector into a character vector of
+selected features. Per default a value of 1 in the ith bit selects the ith
+feature to be in the candidate solution. The vector \code{x} will correspond to
+the \code{bit.names} and has to be of the same length.}
 
-\item{control}{[see [FeatSelControl])
+\item{control}{[see \link{FeatSelControl})
 Control object for search method.
 Also selects the optimization algorithm for feature selection.}
 
@@ -52,18 +54,20 @@ Print verbose output on console?
 Default is set via \link{configureMlr}.}
 }
 \value{
-([FeatSelResult]).
+(\link{FeatSelResult}).
 }
 \description{
-Optimizes the features for a classification or regression problem by choosing a variable selection wrapper approach.
-Allows for different optimization methods, such as forward search or a genetic algorithm.
-You can select such an algorithm (and its settings)
-by passing a corresponding control object. For a complete list of implemented algorithms look at the
-subclasses of ([FeatSelControl]).
+Optimizes the features for a classification or regression problem by choosing
+a variable selection wrapper approach. Allows for different optimization
+methods, such as forward search or a genetic algorithm. You can select such
+an algorithm (and its settings) by passing a corresponding control object.
+For a complete list of implemented algorithms look at the subclasses of
+(\link{FeatSelControl}).
 
-All algorithms operate on a 0-1-bit encoding of candidate solutions. Per default a single bit corresponds
-to a single feature, but you are able to change this by using the arguments `bit.names`
-and `bits.to.features`. Thus allowing you to switch on whole groups of features with a single bit.
+All algorithms operate on a 0-1-bit encoding of candidate solutions. Per
+default a single bit corresponds to a single feature, but you are able to
+change this by using the arguments \code{bit.names} and \code{bits.to.features}. Thus
+allowing you to switch on whole groups of features with a single bit.
 }
 \examples{
 \donttest{

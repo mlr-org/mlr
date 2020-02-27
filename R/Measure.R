@@ -1,27 +1,14 @@
 #' @title Construct performance measure.
 #'
 #' @description
-#' A measure object encapsulates a function to evaluate the performance of a prediction.
-#' Information about already implemented measures can be obtained here: [measures].
+#' A measure object encapsulates a function to evaluate the performance of a
+#' prediction. Information about already implemented measures can be obtained
+#' here: [measures].
 #'
-#' A learner is trained on a training set d1, results in a model m and predicts another set d2
-#' (which may be a different one or the training set) resulting in the prediction.
-#' The performance measure can now be defined using all of the information of the original task,
-#' the fitted model and the prediction.
-#'
-#' Object slots:
-#' \describe{
-#'   \item{id (character(1))}{See argument.}
-#'   \item{minimize (logical(1))}{See argument.}
-#'   \item{properties (character)}{See argument.}
-#'   \item{fun (function)}{See argument.}
-#'   \item{extra.args (list)}{See argument.}
-#'   \item{aggr (Aggregation)}{See argument.}
-#'   \item{best (numeric(1))}{See argument.}
-#'   \item{worst (numeric(1))}{See argument.}
-#'   \item{name (character(1))}{See argument.}
-#'   \item{note (character(1))}{See argument.}
-#' }
+#' A learner is trained on a training set d1, results in a model m and predicts
+#' another set d2 (which may be a different one or the training set) resulting
+#' in the prediction. The performance measure can now be defined using all of
+#' the information of the original task, the fitted model and the prediction.
 #'
 #' @param id (`character(1)`)\cr
 #'   Name of measure.
@@ -30,43 +17,40 @@
 #'   Default is `TRUE`.
 #' @param properties ([character])\cr
 #'   Set of measure properties. Some standard property names include:
-#'   \describe{
-#'     \item{classif}{Is the measure applicable for classification?}
-#'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
-#'     \item{multilabel}{Is the measure applicable for multilabel classification?}
-#'     \item{regr}{Is the measure applicable for regression?}
-#'     \item{surv}{Is the measure applicable for survival?}
-#'     \item{cluster}{Is the measure applicable for cluster?}
-#'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
-#'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
-#'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
-#'     \item{req.task}{Is task object required in calculation? Usually not the case}
-#'     \item{req.model}{Is model object required in calculation? Usually not the case.}
-#'     \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-#'     \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
-#'   }
+#'     - classif\cr Is the measure applicable for classification?
+#'     - classif.multi\cr Is the measure applicable for multi-class classification?
+#'     - multilabel\cr Is the measure applicable for multilabel classification?
+#'     - regr\cr Is the measure applicable for regression?
+#'     - surv\cr Is the measure applicable for survival?
+#'     - cluster\cr Is the measure applicable for cluster?
+#'     - costsens\cr Is the measure applicable for cost-sensitive learning?
+#'     - req.pred\cr Is prediction object required in calculation? Usually the case.
+#'     - req.truth\cr Is truth column required in calculation? Usually the case.
+#'     - req.task\cr Is task object required in calculation? Usually not the case
+#'     - req.model\cr Is model object required in calculation? Usually not the case.
+#'     - req.feats\cr Are feature values required in calculation? Usually not the case.
+#'     - req.prob\cr Are predicted probabilities required in calculation? Usually not the case, example would be AUC.
+#'
 #'   Default is `character(0)`.
 #' @param fun (`function(task, model, pred, feats, extra.args)`)\cr
 #'   Calculates the performance value. Usually you will only need the prediction
 #'   object `pred`.
-#'   \describe{
-#'     \item{`task` ([Task])}{
-#'       The task.}
-#'     \item{`model` ([WrappedModel])}{
-#'       The fitted model.}
-#'     \item{`pred` ([Prediction])}{
-#'       Prediction object.}
-#'     \item{`feats` ([data.frame])}{
-#'       The features.}
-#'     \item{`extra.args` ([list])}{
-#'       See below.}
-#'   }
+#'     - `task` ([Task])\cr
+#'       The task.
+#'     - `model` ([WrappedModel])\cr
+#'       The fitted model.
+#'     - `pred` ([Prediction])\cr
+#'       Prediction object.
+#'     - `feats` ([data.frame])\cr
+#'       The features.
+#'     - `extra.args` ([list])\cr
+#'       See below.
 #' @param extra.args ([list])\cr
 #'   List of extra arguments which will always be passed to `fun`.
-#'   Can be changed after construction via [setMeasurePars]<`3`>.
+#'   Can be changed after construction via [setMeasurePars()].
 #'   Default is empty list.
 #' @param aggr ([Aggregation])\cr
-#'   Aggregation funtion, which is used to aggregate the values measured
+#'   Aggregation function, which is used to aggregate the values measured
 #'   on test / training sets of the measure to a single value.
 #'   Default is [test.mean].
 #' @param best (`numeric(1)`)\cr
@@ -80,7 +64,6 @@
 #' @param note ([character]) \cr
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
-#' @noMd
 #' @export
 #' @family performance
 #' @aliases Measure
@@ -88,7 +71,8 @@
 #' f = function(task, model, pred, extra.args) {
 #'   sum((pred$data$response - pred$data$truth)^2)
 #' }
-#' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
+#' makeMeasure(id = "my.sse", minimize = TRUE,
+#'   properties = c("regr", "response"), fun = f)
 makeMeasure = function(id, minimize, properties = character(0L),
   fun, extra.args = list(), aggr = test.mean, best = NULL, worst = NULL, name = id, note = "") {
 
@@ -128,7 +112,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #' @description
 #' Get the default measure for a task type, task, task description or a learner.
 #' Currently these are:
-#'  \tabular{ll}{
+#'  \tabular{ll\cr
 #'    classif     \tab mmce\cr
 #'    regr        \tab mse\cr
 #'    cluster     \tab db\cr

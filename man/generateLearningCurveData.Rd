@@ -16,26 +16,26 @@ generateLearningCurveData(
 )
 }
 \arguments{
-\item{learners}{[(list of) [Learner])\cr
+\item{learners}{[(list of) \link{Learner})\cr
 Learning algorithms which should be compared.}
 
 \item{task}{(\link{Task})\cr
 The task.}
 
-\item{resampling}{([ResampleDesc] | [ResampleInstance])\cr
+\item{resampling}{(\link{ResampleDesc} | \link{ResampleInstance})\cr
 Resampling strategy to evaluate the performance measure.
 If no strategy is given a default "Holdout" will be performed.}
 
-\item{percs}{([numeric])\cr
+\item{percs}{(\link{numeric})\cr
 Vector of percentages to be drawn from the training split.
 These values represent the x-axis.
-Internally [makeDownsampleWrapper] is used in combination with [benchmark].
+Internally \link{makeDownsampleWrapper} is used in combination with \link{benchmark}.
 Thus for each percentage a different set of observations is drawn resulting in noisy performance measures as the quality of the sample can differ.}
 
-\item{measures}{[(list of) [Measure])\cr
+\item{measures}{[(list of) \link{Measure})\cr
 Performance measures to generate learning curves for, representing the y-axis.}
 
-\item{stratify}{(`logical(1)`)\cr
+\item{stratify}{(\code{logical(1)})\cr
 Only for classification:
 Should the downsampled data be stratified according to the target classes?}
 
@@ -44,18 +44,18 @@ Print verbose output on console?
 Default is set via \link{configureMlr}.}
 }
 \value{
-([LearningCurveData]). A `list` containing:
-  \item{task}{[[Task])\cr
-    The task.}
-  \item{measures}{[(list of) [Measure])\cr
-    Performance measures.}
-  \item{data}{([data.frame]) with columns:
-    \itemize{
-      \item `learner` Names of learners.
-      \item `percentage` Percentages drawn from the training split.
-      \item One column for each
-    [Measure] passed to [generateLearningCurveData].
-   }}
+(\link{LearningCurveData}). A \code{list} containing:
+\itemize{
+\item The \link{Task}
+\item List of \link{Measure})\cr
+Performance measures
+\item data (\link{data.frame}) with columns:
+\itemize{
+\item \code{learner} Names of learners.
+\item \code{percentage} Percentages drawn from the training split.
+\item One column for each \link{Measure} passed to \link{generateLearningCurveData}.
+}
+}
 }
 \description{
 Observe how the performance changes with an increasing number of observations.
@@ -63,7 +63,8 @@ Observe how the performance changes with an increasing number of observations.
 \examples{
 r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
   task = sonar.task, percs = seq(0.2, 1, by = 0.2),
-  measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
+  measures = list(tp, fp, tn, fn),
+  resampling = makeResampleDesc(method = "Subsample", iters = 5),
   show.info = FALSE)
 plotLearningCurve(r)
 }

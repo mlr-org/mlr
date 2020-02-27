@@ -19,7 +19,7 @@ Benchmark result.}
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{p.value}{(`numeric(1)`)\cr
+\item{p.value}{(\code{numeric(1)})\cr
 p-value for the tests. Default: 0.05}
 
 \item{aggregation}{(\code{character(1)}) \cr
@@ -27,21 +27,26 @@ p-value for the tests. Default: 0.05}
 for details on \dQuote{default}.}
 }
 \value{
-([pairwise.htest]): See [PMCMR::posthoc.friedman.nemenyi.test] for details.
+(\link{pairwise.htest}): See \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test} for
+details.
 Additionally two components are added to the list:
-\describe{
-  \item{f.rejnull (`logical(1)`)}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
-  \item{crit.difference (`list(2)`)}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
+\itemize{
+\item f.rejnull (\code{logical(1)}):\cr Whether the according friedman.test rejects
+the Null hypothesis at the selected p.value
+\item crit.difference (\code{list(2)}):\cr Minimal difference the mean ranks of two
+learners need to have in order to be significantly different
 }
 }
 \description{
-Performs a [PMCMR::posthoc.friedman.nemenyi.test] for a
-[BenchmarkResult] and a selected measure.
-This means *all pairwise comparisons* of `learners` are performed.
-The null hypothesis of the post hoc test is that each pair of learners is equal.
-If the null hypothesis of the included ad hoc [stats::friedman.test]
-can be rejected an object of class `pairwise.htest` is returned. If not, the function returns the
-corresponding \link[stats]{friedman.test}.
+Performs a \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test} for a
+\link{BenchmarkResult} and a selected measure.
+
+This means \emph{all pairwise comparisons} of \code{learners} are performed. The null
+hypothesis of the post hoc test is that each pair of learners is equal. If
+the null hypothesis of the included ad hoc \link[stats:friedman.test]{stats::friedman.test} can be
+rejected an object of class \code{pairwise.htest} is returned. If not, the
+function returns the corresponding \link[stats]{friedman.test}.
+
 Note that benchmark results for at least two learners on at least two tasks
 are required.
 }

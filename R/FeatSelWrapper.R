@@ -4,23 +4,22 @@
 #' Fuses a base learner with a search strategy to select variables.
 #' Creates a learner object, which can be used like any other learner object,
 #' but which internally uses [selectFeatures].
-#' If the train function is called on it,
-#' the search strategy and resampling are invoked to select an optimal set of variables.
-#' Finally, a model is fitted on the complete training data with these variables and returned.
-#' See [selectFeatures] for more details.
+#' If the train function is called on it, the search strategy and resampling are
+#' invoked to select an optimal set of variables. Finally, a model is fitted on
+#' the complete training data with these variables and returned. See
+#' [selectFeatures] for more details.
 #'
-#' After training, the optimal features (and other related information) can be retrieved with
-#' [getFeatSelResult].
+#' After training, the optimal features (and other related information) can be
+#' retrieved with [getFeatSelResult].
 #'
 #' @template arg_learner
 #' @inheritParams selectFeatures
 #' @template ret_learner
 #' @family featsel
 #' @family wrapper
-#' @noMd
 #' @export
 #' @examples
-#' # nested resampling with feature selection (with a pretty stupid algorithm for selection)
+#' # nested resampling with feature selection (with a nonsense algorithm for selection)
 #' outer = makeResampleDesc("CV", iters = 2L)
 #' inner = makeResampleDesc("Holdout")
 #' ctrl = makeFeatSelControlRandom(maxit = 1)

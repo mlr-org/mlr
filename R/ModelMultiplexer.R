@@ -1,4 +1,5 @@
-#' @title Create model multiplexer for model selection to tune over multiple possible models.
+#' @title Create model multiplexer for model selection to tune over multiple
+#'   possible models.
 #'
 #' @description
 #' Combines multiple base learners by dispatching
@@ -23,10 +24,10 @@
 #' @aliases ModelMultiplexer
 #' @family multiplexer
 #' @family tune
-#' @noMd
 #' @export
-#' @note Note that logging output during tuning is somewhat shortened to make it more readable.
-#'   I.e., the artificial prefix before parameter names is suppressed.
+#' @note Note that logging output during tuning is somewhat shortened to make it
+#'   more readable. I.e., the artificial prefix before parameter names is
+#'   suppressed.
 #' @examples
 #' set.seed(123)
 #' \donttest{

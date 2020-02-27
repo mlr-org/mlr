@@ -16,7 +16,7 @@ Task type, task, task description, learner name, a learner, or a type of learner
 \description{
 Get the default measure for a task type, task, task description or a learner.
 Currently these are:
-\tabular{ll}{
+\tabular{ll\cr
 classif     \tab mmce\cr
 regr        \tab mse\cr
 cluster     \tab db\cr

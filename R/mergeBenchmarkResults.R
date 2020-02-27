@@ -2,16 +2,16 @@
 #' @description The function automatically combines a list of [BenchmarkResult]
 #'   objects into a single [BenchmarkResult] object as long as the full
 #'   crossproduct of all task-learner combinations are available.
-#' @param bmrs [list of [BenchmarkResult])\cr
+#' @param bmrs (list of [BenchmarkResult])\cr
 #'   `BenchmarkResult` objects that should be merged.
 #' @return [BenchmarkResult]
-#' @details Note that if you want to merge several [BenchmarkResult]
-#'   objects, you must ensure that all possible learner and task combinations will be
-#'   contained in the returned object. Otherwise, the user will be notified which
-#'   task-learner combinations are missing or duplicated.
-#'   When merging [BenchmarkResult] objects with different measures,
-#'   all missing measures will automatically be recomputed.
-#' @noMd
+#' @details Note that if you want to merge several [BenchmarkResult] objects,
+#'   you must ensure that all possible learner and task combinations will be
+#'   contained in the returned object. Otherwise, the user will be notified
+#'   which task-learner combinations are missing or duplicated.
+#'
+#'   When merging [BenchmarkResult] objects with different measures, all missing
+#'   measures will automatically be recomputed.
 #' @export
 mergeBenchmarkResults = function(bmrs) {
 

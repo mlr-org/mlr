@@ -7,13 +7,13 @@
 plotCritDifferences(obj, baseline = NULL, pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{([critDifferencesData])
-Result of \link{generateCritDifferencesData} function.}
+\item{obj}{(\link{critDifferencesData})
+Result of \code{\link[=generateCritDifferencesData]{generateCritDifferencesData()}}.}
 
-\item{baseline}{(`character(1)`): ([learner.id]) \cr
-Overwrites baseline from \link{generateCritDifferencesData}!\cr
-Select a ([learner.id` as baseline for the critical difference
-diagram, the critical difference will be positioned arround this learner.
+\item{baseline}{(\code{character(1)}): (\code{learner.id})\cr
+Overwrites baseline from \code{\link[=generateCritDifferencesData]{generateCritDifferencesData()}}!\cr
+Select a \code{learner.id} as baseline for the critical difference
+diagram, the critical difference will be positioned around this learner.
 Defaults to best performing algorithm.}
 
 \item{pretty.names}{(\code{logical(1)})\cr
@@ -23,10 +23,11 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
 ggplot2 plot object.
 }
 \description{
-Plots a critical-differences diagram for all classifiers and
-a selected measure. If a baseline is selected for the Bonferroni-Dunn
-test, the critical difference interval will be positioned arround the baseline.
-If not, the best performing algorithm will be chosen as baseline.
+Plots a critical-differences diagram for all classifiers and a
+selected measure. If a baseline is selected for the Bonferroni-Dunn test,
+the critical difference interval will be positioned around the baseline. If
+not, the best performing algorithm will be chosen as baseline.
+
 The positioning of some descriptive elements can be moved by modifying the
 generated data.
 }
@@ -34,8 +35,8 @@ generated data.
 # see benchmark
 }
 \references{
-Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
-JMLR, 2006
+Janez Demsar, Statistical Comparisons of Classifiers over
+Multiple Data Sets, JMLR, 2006
 }
 \seealso{
 Other plot: 
