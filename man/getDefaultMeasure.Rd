@@ -16,12 +16,10 @@ Task type, task, task description, learner name, a learner, or a type of learner
 \description{
 Get the default measure for a task type, task, task description or a learner.
 Currently these are:
-\tabular{ll\cr
-classif     \tab mmce\cr
-regr        \tab mse\cr
-cluster     \tab db\cr
-surv        \tab cindex\cr
-costsens    \tab mcp\cr
-multilabel  \tab multilabel.hamloss\cr
-}
+classif: mmce\cr
+regr: mse\cr
+cluster: db\cr
+surv: cindex\cr
+costsen: mcp\cr
+multilabel: multilabel.hamloss\cr
 }

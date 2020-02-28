@@ -7,7 +7,7 @@
 plotCritDifferences(obj, baseline = NULL, pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{(\link{critDifferencesData})
+\item{obj}{(\code{critDifferencesData})
 Result of \code{\link[=generateCritDifferencesData]{generateCritDifferencesData()}}.}
 
 \item{baseline}{(\code{character(1)}): (\code{learner.id})\cr

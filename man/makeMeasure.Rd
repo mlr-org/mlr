@@ -28,19 +28,19 @@ Default is \code{TRUE}.}
 
 \item{properties}{(\link{character})\cr
 Set of measure properties. Some standard property names include:
-- classif\cr Is the measure applicable for classification?
-- classif.multi\cr Is the measure applicable for multi-class classification?
-- multilabel\cr Is the measure applicable for multilabel classification?
-- regr\cr Is the measure applicable for regression?
-- surv\cr Is the measure applicable for survival?
-- cluster\cr Is the measure applicable for cluster?
-- costsens\cr Is the measure applicable for cost-sensitive learning?
-- req.pred\cr Is prediction object required in calculation? Usually the case.
-- req.truth\cr Is truth column required in calculation? Usually the case.
-- req.task\cr Is task object required in calculation? Usually not the case
-- req.model\cr Is model object required in calculation? Usually not the case.
-- req.feats\cr Are feature values required in calculation? Usually not the case.
-- req.prob\cr Are predicted probabilities required in calculation? Usually not the case, example would be AUC.
+- classif: Is the measure applicable for classification?
+- classif.multi: Is the measure applicable for multi-class classification?
+- multilabel: Is the measure applicable for multilabel classification?
+- regr: Is the measure applicable for regression?
+- surv: Is the measure applicable for survival?
+- cluster: Is the measure applicable for cluster?
+- costsens: Is the measure applicable for cost-sensitive learning?
+- req.pred: Is prediction object required in calculation? Usually the case.
+- req.truth: Is truth column required in calculation? Usually the case.
+- req.task: Is task object required in calculation? Usually not the case
+- req.model: Is model object required in calculation? Usually not the case.
+- req.feats: Are feature values required in calculation? Usually not the case.
+- req.prob: Are predicted probabilities required in calculation? Usually not the case, example would be AUC.
 
 Default is \code{character(0)}.}
 

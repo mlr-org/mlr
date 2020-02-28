@@ -22,9 +22,9 @@ This allows to tune not only the model class (SVM, random forest, etc) but also
 their hyperparameters in one go. Combine this with \link{tuneParams} and
 \link{makeTuneControlIrace} for a very powerful approach, see example below.
 
-The parameter set is the union of all (unique) base learners.
-In order to avoid name clashes all parameter names are prefixed
-with the base learner id, i.e. \dQuote{\link{learner.id}.\link{parameter.name}}.
+The parameter set is the union of all (unique) base learners. In order to
+avoid name clashes all parameter names are prefixed with the base learner id,
+i.e. \code{learnerId.parameterName}.
 
 The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.

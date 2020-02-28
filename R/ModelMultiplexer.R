@@ -8,9 +8,9 @@
 #' their hyperparameters in one go. Combine this with [tuneParams] and
 #' [makeTuneControlIrace] for a very powerful approach, see example below.
 #'
-#' The parameter set is the union of all (unique) base learners.
-#' In order to avoid name clashes all parameter names are prefixed
-#' with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
+#' The parameter set is the union of all (unique) base learners. In order to
+#' avoid name clashes all parameter names are prefixed with the base learner id,
+#' i.e. `learnerId.parameterName`.
 #'
 #' The predict.type of the Multiplexer is inherited from the predict.type of the
 #' base learners.

@@ -25,7 +25,7 @@
 #'   Names of bits encoding the solutions. Also defines the total number of bits
 #'   in the encoding. Per default these are the feature names of the task. Has
 #'   to be used together with `bits.to.features`.
-#' @param bits.to.features [function(x, task)]\cr
+#' @param bits.to.features (`function(x, task)`)\cr
 #'   Function which transforms an integer-0-1 vector into a character vector of
 #'   selected features. Per default a value of 1 in the ith bit selects the ith
 #'   feature to be in the candidate solution. The vector `x` will correspond to

@@ -135,7 +135,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #'   The positioning of some descriptive elements can be moved by modifying the
 #'   generated data.
 #'
-#' @param obj ([critDifferencesData])
+#' @param obj (`critDifferencesData`)
 #'   Result of [generateCritDifferencesData()].
 #' @param baseline (`character(1)`): (`learner.id`)\cr
 #'   Overwrites baseline from [generateCritDifferencesData()]!\cr
