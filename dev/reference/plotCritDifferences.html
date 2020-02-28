@@ -50,10 +50,10 @@
 
 
 <meta property="og:title" content="Plot critical differences for a selected measure. — plotCritDifferences" />
-<meta property="og:description" content="Plots a critical-differences diagram for all classifiers and
-a selected measure. If a baseline is selected for the Bonferroni-Dunn
-test, the critical difference interval will be positioned arround the baseline.
-If not, the best performing algorithm will be chosen as baseline.
+<meta property="og:description" content="Plots a critical-differences diagram for all classifiers and a
+selected measure. If a baseline is selected for the Bonferroni-Dunn test,
+the critical difference interval will be positioned around the baseline. If
+not, the best performing algorithm will be chosen as baseline.
 The positioning of some descriptive elements can be moved by modifying the
 generated data." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
@@ -326,11 +326,11 @@ generated data." />
     </div>
 
     <div class="ref-description">
-    <p>Plots a critical-differences diagram for all classifiers and
-a selected measure. If a baseline is selected for the Bonferroni-Dunn
-test, the critical difference interval will be positioned arround the baseline.
-If not, the best performing algorithm will be chosen as baseline.
-The positioning of some descriptive elements can be moved by modifying the
+    <p>Plots a critical-differences diagram for all classifiers and a
+selected measure. If a baseline is selected for the Bonferroni-Dunn test,
+the critical difference interval will be positioned around the baseline. If
+not, the best performing algorithm will be chosen as baseline.</p>
+<p>The positioning of some descriptive elements can be moved by modifying the
 generated data.</p>
     </div>
 
@@ -341,15 +341,15 @@ generated data.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>([critDifferencesData])
-Result of <a href='generateCritDifferencesData.html'>generateCritDifferencesData</a> function.</p></td>
+      <td><p>(<code>critDifferencesData</code>)
+Result of <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData()</a></code>.</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>(`character(1)`): ([learner.id]) <br />
-Overwrites baseline from <a href='generateCritDifferencesData.html'>generateCritDifferencesData</a>!<br />
-Select a ([learner.id` as baseline for the critical difference
-diagram, the critical difference will be positioned arround this learner.
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>): (<code>learner.id</code>)<br />
+Overwrites baseline from <code><a href='generateCritDifferencesData.html'>generateCritDifferencesData()</a></code>!<br />
+Select a <code>learner.id</code> as baseline for the critical difference
+diagram, the critical difference will be positioned around this learner.
 Defaults to best performing algorithm.</p></td>
     </tr>
     <tr>
@@ -364,8 +364,8 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
     <p>ggplot2 plot object.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
-JMLR, 2006</p>
+    <p>Janez Demsar, Statistical Comparisons of Classifiers over
+Multiple Data Sets, JMLR, 2006</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 

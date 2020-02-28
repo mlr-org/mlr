@@ -50,10 +50,10 @@
 
 
 <meta property="og:title" content="Construct your own resampled performance measure. — makeCustomResampledMeasure" />
-<meta property="og:description" content="Construct your own performance measure, used after resampling.
-Note that individual training / test set performance values will be set to `NA`, you
-only calculate an aggregated value. If you can define a function that makes sense
-for every single training / test set, implement your own [Measure]." />
+<meta property="og:description" content="Construct your own performance measure, used after resampling. Note that
+individual training / test set performance values will be set to NA, you
+only calculate an aggregated value. If you can define a function that makes
+sense for every single training / test set, implement your own Measure." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -324,10 +324,10 @@ for every single training / test set, implement your own [Measure]." />
     </div>
 
     <div class="ref-description">
-    <p>Construct your own performance measure, used after resampling.
-Note that individual training / test set performance values will be set to `NA`, you
-only calculate an aggregated value. If you can define a function that makes sense
-for every single training / test set, implement your own [Measure].</p>
+    <p>Construct your own performance measure, used after resampling. Note that
+individual training / test set performance values will be set to <code>NA</code>, you
+only calculate an aggregated value. If you can define a function that makes
+sense for every single training / test set, implement your own <a href='makeMeasure.html'>Measure</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>makeCustomResampledMeasure</span>(
@@ -349,72 +349,75 @@ for every single training / test set, implement your own [Measure].</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>measure.id</th>
-      <td><p>(`character(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Short name of measure.</p></td>
     </tr>
     <tr>
       <th>aggregation.id</th>
-      <td><p>(`character(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Short name of aggregation.</p></td>
     </tr>
     <tr>
       <th>minimize</th>
-      <td><p>(`logical(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the measure be minimized?
-Default is `TRUE`.</p></td>
+Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>([character])<br />
-Set of measure properties. For a list of values see [Measure].
-Default is `character(0)`.</p></td>
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+Set of measure properties. For a list of values see <a href='makeMeasure.html'>Measure</a>.
+Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>fun</th>
-      <td><p>(`function(task, group, pred, extra.args)`)<br />
-Calculates performance value from [ResamplePrediction] object.
-For rare cases you can also use the task, the grouping or the extra arguments `extra.args`.</p><dl class='dl-horizontal'>
-  <dt>`task` ([Task])</dt><dd><p>The task.</p></dd>
-  <dt>`group` ([factor])</dt><dd><p>Grouping of resampling iterations. This encodes whether specific iterations
-    'belong together' (e.g. repeated CV).</p></dd>
-  <dt>`pred` ([Prediction])</dt><dd><p>Prediction object.</p></dd>
-  <dt>`extra.args` ([list])</dt><dd><p>See below.</p></dd>
-
-</dl></td>
+      <td><p>(<code>function(task, group, pred, extra.args)</code>)<br />
+Calculates performance value from <a href='ResamplePrediction.html'>ResamplePrediction</a> object. For rare
+cases you can also use the task, the grouping or the extra arguments
+<code>extra.args</code>.
+- <code>task</code> (<a href='Task.html'>Task</a>)<br />
+The task.
+- <code>group</code> (<a href='https://rdrr.io/r/base/factor.html'>factor</a>)<br />
+Grouping of resampling iterations. This encodes whether specific
+iterations 'belong together' (e.g. repeated CV).
+- <code>pred</code> (<a href='Prediction.html'>Prediction</a>)<br />
+Prediction object.
+- <code>extra.args</code> (<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
+See below.</p></td>
     </tr>
     <tr>
       <th>extra.args</th>
-      <td><p>([list])<br />
-List of extra arguments which will always be passed to `fun`.
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
+List of extra arguments which will always be passed to <code>fun</code>.
 Default is empty list.</p></td>
     </tr>
     <tr>
       <th>best</th>
-      <td><p>(`numeric(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Best obtainable value for measure.
-Default is -`Inf` or `Inf`, depending on `minimize`.</p></td>
+Default is -<code>Inf</code> or <code>Inf</code>, depending on <code>minimize</code>.</p></td>
     </tr>
     <tr>
       <th>worst</th>
-      <td><p>(`numeric(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Worst obtainable value for measure.
-Default is `Inf` or -`Inf`, depending on `minimize`.</p></td>
+Default is <code>Inf</code> or -<code>Inf</code>, depending on <code>minimize</code>.</p></td>
     </tr>
     <tr>
       <th>measure.name</th>
-      <td><p>(`character(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Long name of measure.
-Default is `measure.id`.</p></td>
+Default is <code>measure.id</code>.</p></td>
     </tr>
     <tr>
       <th>aggregation.name</th>
-      <td><p>(`character(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Long name of the aggregation.
-Default is `aggregation.id`.</p></td>
+Default is <code>aggregation.id</code>.</p></td>
     </tr>
     <tr>
       <th>note</th>
-      <td><p>([character]) <br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>) <br />
 Description and additional notes for the measure. Default is &#8220;&#8221;.</p></td>
     </tr>
     </table>

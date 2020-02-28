@@ -50,9 +50,9 @@
 
 
 <meta property="og:title" content="Merge different BenchmarkResult objects. — mergeBenchmarkResults" />
-<meta property="og:description" content="The function automatically combines a list of [BenchmarkResult]
-  objects into a single [BenchmarkResult] object as long as the full
-  crossproduct of all task-learner combinations are available." />
+<meta property="og:description" content="The function automatically combines a list of BenchmarkResult
+objects into a single BenchmarkResult object as long as the full
+crossproduct of all task-learner combinations are available." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -323,9 +323,9 @@
     </div>
 
     <div class="ref-description">
-    <p>The function automatically combines a list of [BenchmarkResult]
-  objects into a single [BenchmarkResult] object as long as the full
-  crossproduct of all task-learner combinations are available.</p>
+    <p>The function automatically combines a list of <a href='BenchmarkResult.html'>BenchmarkResult</a>
+objects into a single <a href='BenchmarkResult.html'>BenchmarkResult</a> object as long as the full
+crossproduct of all task-learner combinations are available.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mergeBenchmarkResults</span>(<span class='no'>bmrs</span>)</pre>
@@ -335,22 +335,22 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>bmrs</th>
-      <td><p>[list of [BenchmarkResult])<br />
-`BenchmarkResult` objects that should be merged.</p></td>
+      <td><p>(list of <a href='BenchmarkResult.html'>BenchmarkResult</a>)<br />
+<code>BenchmarkResult</code> objects that should be merged.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>[BenchmarkResult]</p>
+    <p><a href='BenchmarkResult.html'>BenchmarkResult</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that if you want to merge several [BenchmarkResult]
-  objects, you must ensure that all possible learner and task combinations will be
-  contained in the returned object. Otherwise, the user will be notified which
-  task-learner combinations are missing or duplicated.
-  When merging [BenchmarkResult] objects with different measures,
-  all missing measures will automatically be recomputed.</p>
+    <p>Note that if you want to merge several <a href='BenchmarkResult.html'>BenchmarkResult</a> objects,
+you must ensure that all possible learner and task combinations will be
+contained in the returned object. Otherwise, the user will be notified
+which task-learner combinations are missing or duplicated.</p>
+<p>When merging <a href='BenchmarkResult.html'>BenchmarkResult</a> objects with different measures, all missing
+measures will automatically be recomputed.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

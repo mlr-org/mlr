@@ -50,13 +50,13 @@
 
 
 <meta property="og:title" content="Perform a posthoc Friedman-Nemenyi test. — friedmanPostHocTestBMR" />
-<meta property="og:description" content="Performs a [PMCMR::posthoc.friedman.nemenyi.test] for a
-[BenchmarkResult] and a selected measure.
-This means *all pairwise comparisons* of `learners` are performed.
-The null hypothesis of the post hoc test is that each pair of learners is equal.
-If the null hypothesis of the included ad hoc [stats::friedman.test]
-can be rejected an object of class `pairwise.htest` is returned. If not, the function returns the
-corresponding friedman.test.
+<meta property="og:description" content="Performs a PMCMR::posthoc.friedman.nemenyi.test for a
+BenchmarkResult and a selected measure.
+This means all pairwise comparisons of learners are performed. The null
+hypothesis of the post hoc test is that each pair of learners is equal. If
+the null hypothesis of the included ad hoc stats::friedman.test can be
+rejected an object of class pairwise.htest is returned. If not, the
+function returns the corresponding friedman.test.
 Note that benchmark results for at least two learners on at least two tasks
 are required." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
@@ -329,14 +329,14 @@ are required." />
     </div>
 
     <div class="ref-description">
-    <p>Performs a [PMCMR::posthoc.friedman.nemenyi.test] for a
-[BenchmarkResult] and a selected measure.
-This means *all pairwise comparisons* of `learners` are performed.
-The null hypothesis of the post hoc test is that each pair of learners is equal.
-If the null hypothesis of the included ad hoc [stats::friedman.test]
-can be rejected an object of class `pairwise.htest` is returned. If not, the function returns the
-corresponding <a href='https://rdrr.io/r/stats/friedman.test.html'>friedman.test</a>.
-Note that benchmark results for at least two learners on at least two tasks
+    <p>Performs a <a href='https://rdrr.io/pkg/PMCMR/man/posthoc.friedman.nemenyi.test.html'>PMCMR::posthoc.friedman.nemenyi.test</a> for a
+<a href='BenchmarkResult.html'>BenchmarkResult</a> and a selected measure.</p>
+<p>This means <em>all pairwise comparisons</em> of <code>learners</code> are performed. The null
+hypothesis of the post hoc test is that each pair of learners is equal. If
+the null hypothesis of the included ad hoc <a href='https://rdrr.io/r/stats/friedman.test.html'>stats::friedman.test</a> can be
+rejected an object of class <code>pairwise.htest</code> is returned. If not, the
+function returns the corresponding <a href='https://rdrr.io/r/stats/friedman.test.html'>friedman.test</a>.</p>
+<p>Note that benchmark results for at least two learners on at least two tasks
 are required.</p>
     </div>
 
@@ -363,7 +363,7 @@ Default is the first measure used in the benchmark experiment.</p></td>
     </tr>
     <tr>
       <th>p.value</th>
-      <td><p>(`numeric(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 p-value for the tests. Default: 0.05</p></td>
     </tr>
     <tr>
@@ -376,12 +376,14 @@ for details on &#8220;default&#8221;.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([pairwise.htest]): See [PMCMR::posthoc.friedman.nemenyi.test] for details.
-Additionally two components are added to the list:</p><dl class='dl-horizontal'>
-  <dt>f.rejnull (`logical(1)`)</dt><dd><p>Whether the according friedman.test rejects the Null hypothesis at the selected p.value</p></dd>
-  <dt>crit.difference (`list(2)`)</dt><dd><p>Minimal difference the mean ranks of two learners need to have in order to be significantly different</p></dd>
-
-</dl>
+    <p>(<code>pairwise.htest</code>): See <a href='https://rdrr.io/pkg/PMCMR/man/posthoc.friedman.nemenyi.test.html'>PMCMR::posthoc.friedman.nemenyi.test</a> for
+details.
+Additionally two components are added to the list:</p><ul>
+<li><p>f.rejnull (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>):<br /> Whether the according friedman.test rejects
+the Null hypothesis at the selected p.value</p></li>
+<li><p>crit.difference (<code><a href='https://rdrr.io/r/base/list.html'>list(2)</a></code>):<br /> Minimal difference the mean ranks of two
+learners need to have in order to be significantly different</p></li>
+</ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

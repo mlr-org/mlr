@@ -50,26 +50,13 @@
 
 
 <meta property="og:title" content="Construct performance measure. — makeMeasure" />
-<meta property="og:description" content="A measure object encapsulates a function to evaluate the performance of a prediction.
-Information about already implemented measures can be obtained here: [measures].
-A learner is trained on a training set d1, results in a model m and predicts another set d2
-(which may be a different one or the training set) resulting in the prediction.
-The performance measure can now be defined using all of the information of the original task,
-the fitted model and the prediction.
-Object slots:
-  id (character(1))See argument.
-  minimize (logical(1))See argument.
-  properties (character)See argument.
-  fun (function)See argument.
-  extra.args (list)See argument.
-  aggr (Aggregation)See argument.
-  best (numeric(1))See argument.
-  worst (numeric(1))See argument.
-  name (character(1))See argument.
-  note (character(1))See argument.
-
-
-" />
+<meta property="og:description" content="A measure object encapsulates a function to evaluate the performance of a
+prediction. Information about already implemented measures can be obtained
+here: measures.
+A learner is trained on a training set d1, results in a model m and predicts
+another set d2 (which may be a different one or the training set) resulting
+in the prediction. The performance measure can now be defined using all of
+the information of the original task, the fitted model and the prediction." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -340,26 +327,13 @@ Object slots:
     </div>
 
     <div class="ref-description">
-    <p>A measure object encapsulates a function to evaluate the performance of a prediction.
-Information about already implemented measures can be obtained here: [measures].</p>
-<p>A learner is trained on a training set d1, results in a model m and predicts another set d2
-(which may be a different one or the training set) resulting in the prediction.
-The performance measure can now be defined using all of the information of the original task,
-the fitted model and the prediction.</p>
-<p>Object slots:</p><dl class='dl-horizontal'>
-  <dt>id (character(1))</dt><dd><p>See argument.</p></dd>
-  <dt>minimize (logical(1))</dt><dd><p>See argument.</p></dd>
-  <dt>properties (character)</dt><dd><p>See argument.</p></dd>
-  <dt>fun (function)</dt><dd><p>See argument.</p></dd>
-  <dt>extra.args (list)</dt><dd><p>See argument.</p></dd>
-  <dt>aggr (Aggregation)</dt><dd><p>See argument.</p></dd>
-  <dt>best (numeric(1))</dt><dd><p>See argument.</p></dd>
-  <dt>worst (numeric(1))</dt><dd><p>See argument.</p></dd>
-  <dt>name (character(1))</dt><dd><p>See argument.</p></dd>
-  <dt>note (character(1))</dt><dd><p>See argument.</p></dd>
-
-</dl>
-
+    <p>A measure object encapsulates a function to evaluate the performance of a
+prediction. Information about already implemented measures can be obtained
+here: <a href='measures.html'>measures</a>.</p>
+<p>A learner is trained on a training set d1, results in a model m and predicts
+another set d2 (which may be a different one or the training set) resulting
+in the prediction. The performance measure can now be defined using all of
+the information of the original task, the fitted model and the prediction.</p>
     </div>
 
     <pre class="usage"><span class='fu'>makeMeasure</span>(
@@ -380,82 +354,84 @@ the fitted model and the prediction.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(`character(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 Name of measure.</p></td>
     </tr>
     <tr>
       <th>minimize</th>
-      <td><p>(`logical(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should the measure be minimized?
-Default is `TRUE`.</p></td>
+Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>properties</th>
-      <td><p>([character])<br />
-Set of measure properties. Some standard property names include:</p><dl class='dl-horizontal'>
-  <dt>classif</dt><dd><p>Is the measure applicable for classification?</p></dd>
-  <dt>classif.multi</dt><dd><p>Is the measure applicable for multi-class classification?</p></dd>
-  <dt>multilabel</dt><dd><p>Is the measure applicable for multilabel classification?</p></dd>
-  <dt>regr</dt><dd><p>Is the measure applicable for regression?</p></dd>
-  <dt>surv</dt><dd><p>Is the measure applicable for survival?</p></dd>
-  <dt>cluster</dt><dd><p>Is the measure applicable for cluster?</p></dd>
-  <dt>costsens</dt><dd><p>Is the measure applicable for cost-sensitive learning?</p></dd>
-  <dt>req.pred</dt><dd><p>Is prediction object required in calculation? Usually the case.</p></dd>
-  <dt>req.truth</dt><dd><p>Is truth column required in calculation? Usually the case.</p></dd>
-  <dt>req.task</dt><dd><p>Is task object required in calculation? Usually not the case</p></dd>
-  <dt>req.model</dt><dd><p>Is model object required in calculation? Usually not the case.</p></dd>
-  <dt>req.feats</dt><dd><p>Are feature values required in calculation? Usually not the case.</p></dd>
-  <dt>req.prob</dt><dd><p>Are predicted probabilities required in calculation? Usually not the case, example would be AUC.</p></dd>
-
-</dl><p>Default is `character(0)`.</p></td>
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
+Set of measure properties. Some standard property names include:
+- classif: Is the measure applicable for classification?
+- classif.multi: Is the measure applicable for multi-class classification?
+- multilabel: Is the measure applicable for multilabel classification?
+- regr: Is the measure applicable for regression?
+- surv: Is the measure applicable for survival?
+- cluster: Is the measure applicable for cluster?
+- costsens: Is the measure applicable for cost-sensitive learning?
+- req.pred: Is prediction object required in calculation? Usually the case.
+- req.truth: Is truth column required in calculation? Usually the case.
+- req.task: Is task object required in calculation? Usually not the case
+- req.model: Is model object required in calculation? Usually not the case.
+- req.feats: Are feature values required in calculation? Usually not the case.
+- req.prob: Are predicted probabilities required in calculation? Usually not the case, example would be AUC.</p>
+<p>Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
     </tr>
     <tr>
       <th>fun</th>
-      <td><p>(`function(task, model, pred, feats, extra.args)`)<br />
+      <td><p>(<code>function(task, model, pred, feats, extra.args)</code>)<br />
 Calculates the performance value. Usually you will only need the prediction
-object `pred`.</p><dl class='dl-horizontal'>
-  <dt>`task` ([Task])</dt><dd><p>The task.</p></dd>
-  <dt>`model` ([WrappedModel])</dt><dd><p>The fitted model.</p></dd>
-  <dt>`pred` ([Prediction])</dt><dd><p>Prediction object.</p></dd>
-  <dt>`feats` ([data.frame])</dt><dd><p>The features.</p></dd>
-  <dt>`extra.args` ([list])</dt><dd><p>See below.</p></dd>
-
-</dl></td>
+object <code>pred</code>.
+- <code>task</code> (<a href='Task.html'>Task</a>)<br />
+The task.
+- <code>model</code> (<a href='makeWrappedModel.html'>WrappedModel</a>)<br />
+The fitted model.
+- <code>pred</code> (<a href='Prediction.html'>Prediction</a>)<br />
+Prediction object.
+- <code>feats</code> (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
+The features.
+- <code>extra.args</code> (<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
+See below.</p></td>
     </tr>
     <tr>
       <th>extra.args</th>
-      <td><p>([list])<br />
-List of extra arguments which will always be passed to `fun`.
-Can be changed after construction via [setMeasurePars]&lt;`3`&gt;.
+      <td><p>(<a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
+List of extra arguments which will always be passed to <code>fun</code>.
+Can be changed after construction via <code><a href='setMeasurePars.html'>setMeasurePars()</a></code>.
 Default is empty list.</p></td>
     </tr>
     <tr>
       <th>aggr</th>
-      <td><p>([Aggregation])<br />
-Aggregation funtion, which is used to aggregate the values measured
+      <td><p>(<a href='Aggregation.html'>Aggregation</a>)<br />
+Aggregation function, which is used to aggregate the values measured
 on test / training sets of the measure to a single value.
-Default is [test.mean].</p></td>
+Default is <a href='aggregations.html'>test.mean</a>.</p></td>
     </tr>
     <tr>
       <th>best</th>
-      <td><p>(`numeric(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Best obtainable value for measure.
-Default is -`Inf` or `Inf`, depending on `minimize`.</p></td>
+Default is -<code>Inf</code> or <code>Inf</code>, depending on <code>minimize</code>.</p></td>
     </tr>
     <tr>
       <th>worst</th>
-      <td><p>(`numeric(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Worst obtainable value for measure.
-Default is `Inf` or -`Inf`, depending on `minimize`.</p></td>
+Default is <code>Inf</code> or -<code>Inf</code>, depending on <code>minimize</code>.</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>([character]) <br />
-Name of the measure. Default is `id`.</p></td>
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>) <br />
+Name of the measure. Default is <code>id</code>.</p></td>
     </tr>
     <tr>
       <th>note</th>
-      <td><p>([character]) <br />
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>) <br />
 Description and additional notes for the measure. Default is &#8220;&#8221;.</p></td>
     </tr>
     </table>
@@ -481,7 +457,8 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
     <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>model</span>, <span class='no'>pred</span>, <span class='no'>extra.args</span>) {
   <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>((<span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>response</span> - <span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>truth</span>)^<span class='fl'>2</span>)
 }
-<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
+<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
 #&gt; Performance measure: my.sse
 #&gt; Properties: regr,response
 #&gt; Minimize: TRUE

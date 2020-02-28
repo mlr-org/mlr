@@ -52,13 +52,13 @@
 <meta property="og:title" content="Fuse learner with feature selection. — makeFeatSelWrapper" />
 <meta property="og:description" content="Fuses a base learner with a search strategy to select variables.
 Creates a learner object, which can be used like any other learner object,
-but which internally uses [selectFeatures].
-If the train function is called on it,
-the search strategy and resampling are invoked to select an optimal set of variables.
-Finally, a model is fitted on the complete training data with these variables and returned.
-See [selectFeatures] for more details.
-After training, the optimal features (and other related information) can be retrieved with
-[getFeatSelResult]." />
+but which internally uses selectFeatures.
+If the train function is called on it, the search strategy and resampling are
+invoked to select an optimal set of variables. Finally, a model is fitted on
+the complete training data with these variables and returned. See
+selectFeatures for more details.
+After training, the optimal features (and other related information) can be
+retrieved with getFeatSelResult." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -331,13 +331,13 @@ After training, the optimal features (and other related information) can be retr
     <div class="ref-description">
     <p>Fuses a base learner with a search strategy to select variables.
 Creates a learner object, which can be used like any other learner object,
-but which internally uses [selectFeatures].
-If the train function is called on it,
-the search strategy and resampling are invoked to select an optimal set of variables.
-Finally, a model is fitted on the complete training data with these variables and returned.
-See [selectFeatures] for more details.</p>
-<p>After training, the optimal features (and other related information) can be retrieved with
-[getFeatSelResult].</p>
+but which internally uses <a href='selectFeatures.html'>selectFeatures</a>.
+If the train function is called on it, the search strategy and resampling are
+invoked to select an optimal set of variables. Finally, a model is fitted on
+the complete training data with these variables and returned. See
+<a href='selectFeatures.html'>selectFeatures</a> for more details.</p>
+<p>After training, the optimal features (and other related information) can be
+retrieved with <a href='getFeatSelResult.html'>getFeatSelResult</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>makeFeatSelWrapper</span>(
@@ -361,10 +361,11 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
     </tr>
     <tr>
       <th>resampling</th>
-      <td><p>([ResampleInstance] | [ResampleDesc])<br />
-Resampling strategy for feature selection. If you pass a description,
-it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
-If you want to change that behaviour, look at [FeatSelControl].</p></td>
+      <td><p>(<a href='makeResampleInstance.html'>ResampleInstance</a> | <a href='makeResampleDesc.html'>ResampleDesc</a>)<br />
+Resampling strategy for feature selection. If you pass a description, it is
+instantiated once at the beginning by default, so all points are evaluated
+on the same training/test sets. If you want to change that behavior, look
+at <a href='FeatSelControl.html'>FeatSelControl</a>.</p></td>
     </tr>
     <tr>
       <th>measures</th>
@@ -375,21 +376,22 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>bit.names</th>
-      <td><p>[character]<br />
-Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-Per default these are the feature names of the task.
-Has to be used together with `bits.to.features`.</p></td>
+      <td><p><a href='https://rdrr.io/r/base/character.html'>character</a><br />
+Names of bits encoding the solutions. Also defines the total number of bits
+in the encoding. Per default these are the feature names of the task. Has
+to be used together with <code>bits.to.features</code>.</p></td>
     </tr>
     <tr>
       <th>bits.to.features</th>
-      <td><p>[function(x, task)]<br />
-Function which transforms an integer-0-1 vector into a character vector of selected features.
-Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-The vector `x` will correspond to the `bit.names` and has to be of the same length.</p></td>
+      <td><p>(<code>function(x, task)</code>)<br />
+Function which transforms an integer-0-1 vector into a character vector of
+selected features. Per default a value of 1 in the ith bit selects the ith
+feature to be in the candidate solution. The vector <code>x</code> will correspond to
+the <code>bit.names</code> and has to be of the same length.</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>[see [FeatSelControl])
+      <td><p>[see <a href='FeatSelControl.html'>FeatSelControl</a>)
 Control object for search method.
 Also selects the optimization algorithm for feature selection.</p></td>
     </tr>
@@ -438,7 +440,7 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># nested resampling with feature selection (with a pretty stupid algorithm for selection)</span>
+    <pre class="examples"><div class='input'><span class='co'># nested resampling with feature selection (with a nonsense algorithm for selection)</span>
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlRandom</a></span>(<span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>)

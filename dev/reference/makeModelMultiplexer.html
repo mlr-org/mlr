@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create model multiplexer for model selection to tune over multiple possible models. — makeModelMultiplexer • mlr</title>
+<title>Create model multiplexer for model selection to tune over multiple
+possible models. — makeModelMultiplexer • mlr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,18 +50,19 @@
 
 
 
-<meta property="og:title" content="Create model multiplexer for model selection to tune over multiple possible models. — makeModelMultiplexer" />
+<meta property="og:title" content="Create model multiplexer for model selection to tune over multiple
+possible models. — makeModelMultiplexer" />
 <meta property="og:description" content="Combines multiple base learners by dispatching
 on the hyperparameter &amp;#8220;selected.learner&amp;#8221; to a specific model class.
 This allows to tune not only the model class (SVM, random forest, etc) but also
-their hyperparameters in one go. Combine this with [tuneParams] and
-[makeTuneControlIrace] for a very powerful approach, see example below.
-The parameter set is the union of all (unique) base learners.
-In order to avoid name clashes all parameter names are prefixed
-with the base learner id, i.e. &amp;#8220;[learner.id].[parameter.name]&amp;#8221;.
+their hyperparameters in one go. Combine this with tuneParams and
+makeTuneControlIrace for a very powerful approach, see example below.
+The parameter set is the union of all (unique) base learners. In order to
+avoid name clashes all parameter names are prefixed with the base learner id,
+i.e. learnerId.parameterName.
 The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.
-The getter [getLearnerProperties] returns the properties of the
+The getter getLearnerProperties returns the properties of the
 selected base learner." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -326,7 +328,8 @@ selected base learner." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create model multiplexer for model selection to tune over multiple possible models.</h1>
+    <h1>Create model multiplexer for model selection to tune over multiple
+possible models.</h1>
     <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/ModelMultiplexer.R'><code>R/ModelMultiplexer.R</code></a></small>
     <div class="hidden name"><code>makeModelMultiplexer.Rd</code></div>
     </div>
@@ -335,14 +338,14 @@ selected base learner." />
     <p>Combines multiple base learners by dispatching
 on the hyperparameter &#8220;selected.learner&#8221; to a specific model class.
 This allows to tune not only the model class (SVM, random forest, etc) but also
-their hyperparameters in one go. Combine this with [tuneParams] and
-[makeTuneControlIrace] for a very powerful approach, see example below.</p>
-<p>The parameter set is the union of all (unique) base learners.
-In order to avoid name clashes all parameter names are prefixed
-with the base learner id, i.e. &#8220;[learner.id].[parameter.name]&#8221;.</p>
+their hyperparameters in one go. Combine this with <a href='tuneParams.html'>tuneParams</a> and
+<a href='makeTuneControlIrace.html'>makeTuneControlIrace</a> for a very powerful approach, see example below.</p>
+<p>The parameter set is the union of all (unique) base learners. In order to
+avoid name clashes all parameter names are prefixed with the base learner id,
+i.e. <code>learnerId.parameterName</code>.</p>
 <p>The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.</p>
-<p>The getter [getLearnerProperties] returns the properties of the
+<p>The getter <a href='LearnerProperties.html'>getLearnerProperties</a> returns the properties of the
 selected base learner.</p>
     </div>
 
@@ -353,18 +356,19 @@ selected base learner.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>base.learners</th>
-      <td><p>([list` of [Learner])<br />
+      <td><p>([list` of <a href='makeLearner.html'>Learner</a>)<br />
 List of Learners with unique IDs.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([ModelMultiplexer]). A [Learner] specialized as `ModelMultiplexer`.</p>
+    <p>(ModelMultiplexer). A <a href='makeLearner.html'>Learner</a> specialized as <code>ModelMultiplexer</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Note that logging output during tuning is somewhat shortened to make it more readable.
-  I.e., the artificial prefix before parameter names is suppressed.</p>
+    <p>Note that logging output during tuning is somewhat shortened to make it
+more readable. I.e., the artificial prefix before parameter names is
+suppressed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other multiplexer: 

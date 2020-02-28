@@ -50,14 +50,16 @@
 
 
 <meta property="og:title" content="Feature selection by wrapper approach. — selectFeatures" />
-<meta property="og:description" content="Optimizes the features for a classification or regression problem by choosing a variable selection wrapper approach.
-Allows for different optimization methods, such as forward search or a genetic algorithm.
-You can select such an algorithm (and its settings)
-by passing a corresponding control object. For a complete list of implemented algorithms look at the
-subclasses of ([FeatSelControl]).
-All algorithms operate on a 0-1-bit encoding of candidate solutions. Per default a single bit corresponds
-to a single feature, but you are able to change this by using the arguments `bit.names`
-and `bits.to.features`. Thus allowing you to switch on whole groups of features with a single bit." />
+<meta property="og:description" content="Optimizes the features for a classification or regression problem by choosing
+a variable selection wrapper approach. Allows for different optimization
+methods, such as forward search or a genetic algorithm. You can select such
+an algorithm (and its settings) by passing a corresponding control object.
+For a complete list of implemented algorithms look at the subclasses of
+(FeatSelControl).
+All algorithms operate on a 0-1-bit encoding of candidate solutions. Per
+default a single bit corresponds to a single feature, but you are able to
+change this by using the arguments bit.names and bits.to.features. Thus
+allowing you to switch on whole groups of features with a single bit." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -328,14 +330,16 @@ and `bits.to.features`. Thus allowing you to switch on whole groups of features 
     </div>
 
     <div class="ref-description">
-    <p>Optimizes the features for a classification or regression problem by choosing a variable selection wrapper approach.
-Allows for different optimization methods, such as forward search or a genetic algorithm.
-You can select such an algorithm (and its settings)
-by passing a corresponding control object. For a complete list of implemented algorithms look at the
-subclasses of ([FeatSelControl]).</p>
-<p>All algorithms operate on a 0-1-bit encoding of candidate solutions. Per default a single bit corresponds
-to a single feature, but you are able to change this by using the arguments `bit.names`
-and `bits.to.features`. Thus allowing you to switch on whole groups of features with a single bit.</p>
+    <p>Optimizes the features for a classification or regression problem by choosing
+a variable selection wrapper approach. Allows for different optimization
+methods, such as forward search or a genetic algorithm. You can select such
+an algorithm (and its settings) by passing a corresponding control object.
+For a complete list of implemented algorithms look at the subclasses of
+(<a href='FeatSelControl.html'>FeatSelControl</a>).</p>
+<p>All algorithms operate on a 0-1-bit encoding of candidate solutions. Per
+default a single bit corresponds to a single feature, but you are able to
+change this by using the arguments <code>bit.names</code> and <code>bits.to.features</code>. Thus
+allowing you to switch on whole groups of features with a single bit.</p>
     </div>
 
     <pre class="usage"><span class='fu'>selectFeatures</span>(
@@ -365,10 +369,11 @@ The task.</p></td>
     </tr>
     <tr>
       <th>resampling</th>
-      <td><p>([ResampleInstance] | [ResampleDesc])<br />
-Resampling strategy for feature selection. If you pass a description,
-it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
-If you want to change that behaviour, look at [FeatSelControl].</p></td>
+      <td><p>(<a href='makeResampleInstance.html'>ResampleInstance</a> | <a href='makeResampleDesc.html'>ResampleDesc</a>)<br />
+Resampling strategy for feature selection. If you pass a description, it is
+instantiated once at the beginning by default, so all points are evaluated
+on the same training/test sets. If you want to change that behavior, look
+at <a href='FeatSelControl.html'>FeatSelControl</a>.</p></td>
     </tr>
     <tr>
       <th>measures</th>
@@ -379,21 +384,22 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>bit.names</th>
-      <td><p>[character]<br />
-Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-Per default these are the feature names of the task.
-Has to be used together with `bits.to.features`.</p></td>
+      <td><p><a href='https://rdrr.io/r/base/character.html'>character</a><br />
+Names of bits encoding the solutions. Also defines the total number of bits
+in the encoding. Per default these are the feature names of the task. Has
+to be used together with <code>bits.to.features</code>.</p></td>
     </tr>
     <tr>
       <th>bits.to.features</th>
-      <td><p>[function(x, task)]<br />
-Function which transforms an integer-0-1 vector into a character vector of selected features.
-Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-The vector `x` will correspond to the `bit.names` and has to be of the same length.</p></td>
+      <td><p>(<code>function(x, task)</code>)<br />
+Function which transforms an integer-0-1 vector into a character vector of
+selected features. Per default a value of 1 in the ith bit selects the ith
+feature to be in the candidate solution. The vector <code>x</code> will correspond to
+the <code>bit.names</code> and has to be of the same length.</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>[see [FeatSelControl])
+      <td><p>[see <a href='FeatSelControl.html'>FeatSelControl</a>)
 Control object for search method.
 Also selects the optimization algorithm for feature selection.</p></td>
     </tr>
@@ -407,7 +413,7 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([FeatSelResult]).</p>
+    <p>(<a href='FeatSelResult.html'>FeatSelResult</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other featsel: 
