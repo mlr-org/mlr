@@ -75,8 +75,8 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   perfs = getBMRAggrPerformances(bench.res, as.df = TRUE)
 
   # get perc and learner col data
-  perc = extractSubList(lrnds2[perfs$learner.id], "perc")
-  learner = extractSubList(lrnds2[perfs$learner.id], "lrn.id")
+  perc = extractSubList(lrnds2[as.factor(perfs$learner.id)], "perc")
+  learner = extractSubList(lrnds2[as.factor(perfs$learner.id)], "lrn.id")
   perfs = dropNamed(perfs, c("task.id", "learner.id"))
 
   # set short measures names and resort cols
