@@ -1,5 +1,6 @@
 context("selectFeaturesSequential")
 
+cat("selectFeaturesSequential")
 # This used to cause an error. Now ensure it does not.
 test_that("no crash with sffs", {
   p = mlbench::mlbench.waveform(1000)

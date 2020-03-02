@@ -1,6 +1,10 @@
 context("hyperpars")
 
 test_that("hyperpars", {
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   lrn = makeLearner("classif.rpart", minsplit = 10)
   expect_equal(getHyperPars(lrn), list(xval = 0, minsplit = 10))
 

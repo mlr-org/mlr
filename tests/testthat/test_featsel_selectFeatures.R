@@ -1,5 +1,6 @@
 context("selectFeatures")
 
+cat("selectFeatures")
 test_that("selectFeatures", {
   rdesc = makeResampleDesc("Holdout")
   lrn = makeLearner("classif.lda")

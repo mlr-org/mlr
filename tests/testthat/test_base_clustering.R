@@ -13,6 +13,11 @@ test_that("clustering predict", {
 
 
 test_that("clustering performance", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   lrn = makeLearner("cluster.SimpleKMeans")
   model = train(lrn, noclass.task)
   pred = predict(model, task = noclass.task)
@@ -24,6 +29,11 @@ test_that("clustering performance", {
 })
 
 test_that("clustering performance with missing clusters", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   lrn = makeLearner("cluster.SimpleKMeans")
   model = train(lrn, noclass.task)
   pred = predict(model, task = noclass.task)
@@ -36,6 +46,11 @@ test_that("clustering performance with missing clusters", {
 })
 
 test_that("clustering resample", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   rdesc = makeResampleDesc("Subsample", split = 0.3, iters = 2)
   lrn = makeLearner("cluster.SimpleKMeans")
   res = resample(lrn, noclass.task, rdesc)
@@ -45,6 +60,11 @@ test_that("clustering resample", {
 })
 
 test_that("clustering benchmark", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   task.names = "noclass"
   tasks = list(noclass.task)
   learner.names = "cluster.SimpleKMeans"
@@ -61,6 +81,11 @@ test_that("clustering downsample", {
 })
 
 test_that("clustering tune", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   lrn = makeLearner("cluster.SimpleKMeans")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(

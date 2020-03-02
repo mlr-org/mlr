@@ -1,5 +1,6 @@
 context("featsel")
 
+cat("plotFilterValues")
 test_that("n.show arg has an effect in plotFilterValues()", {
   fv = generateFilterValuesData(iris.task, method = "variance")
   fv_plot = plotFilterValues(fv, n.show = 2)

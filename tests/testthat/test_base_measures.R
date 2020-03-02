@@ -98,6 +98,7 @@ test_that("ber with faulty model produces NA", {
 })
 
 test_that("db with single cluster doesn't give warnings", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
   # using mtcars instead of agri task here because agri conflicts with
   # warning when column names inherit 'x' or 'y'
   expect_warning(crossval("cluster.kmeans", mtcars.task), NA)
@@ -134,6 +135,11 @@ test_that("listMeasures", {
 })
 
 test_that("check measure calculations", {
+  requirePackagesOrSkip("clusterSim", default.method = "load")
+
+  # RWeka not avail
+  skip_on_os("windows")
+
   requirePackagesOrSkip("Hmisc", default.method = "load")
 
   # tiny datasets for testing
