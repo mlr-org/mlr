@@ -1,5 +1,6 @@
 context("filterFeatures_praznik")
 
+cat("praznik")
 test_that("filterFeatures_praznik", {
   a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1) # numeric vector
   b = c("one", "two", "three") # character vector
@@ -38,6 +39,10 @@ test_that("filterFeatures_praznik", {
 })
 
 test_that("FilterWrapper with praznik mutual information, resample", {
+
+  # FSelector not avail
+  skip_on_os("windows")
+
   candidates = as.character(listFilterMethods()$id)
   candidates = candidates[startsWith(candidates, "praznik_")]
   lapply(candidates, function(x) {

@@ -1,5 +1,6 @@
 context("FilterWrapper")
 
+cat("FilterWrapper")
 test_that("FilterWrapper", {
   lrn1 = makeLearner("classif.lda")
   lrn2 = makeFilterWrapper(lrn1, fw.method = "FSelectorRcpp_information.gain",
@@ -43,6 +44,10 @@ test_that("Filterwrapper permutation.importance (issue #814)", {
 })
 
 test_that("FilterWrapper with ensemble function in a train call", {
+
+  # FSelector not avail
+  skip_on_os("windows")
+
   lrn = makeLearner("classif.lda")
 
   # no base.method as ensemble method if fw.base.methods !is.null

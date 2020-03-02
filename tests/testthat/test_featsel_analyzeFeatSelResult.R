@@ -1,5 +1,6 @@
 context("analyzeFeatSelResult")
 
+cat("analyzeFeatSelResult")
 test_that("analyzeFeatSelResult", {
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
