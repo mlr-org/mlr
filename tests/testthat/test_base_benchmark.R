@@ -125,8 +125,8 @@ test_that("benchmark", {
   expect_is(trd, "data.frame")
   expect_equal(ncol(trd), 5)
   expect_equal(nrow(trd), 4)
-  expect_equal(unique(trd$task.id), factor(task.names))
-  expect_equal(unique(trd$learner.id), factor("classif.rpart.tuned"))
+  expect_equal(levels(as.factor(trd$task.id)), task.names)
+  expect_equal(levels(as.factor(trd$learner.id)), "classif.rpart.tuned")
   expect_equal(unique(trd$iter), 1:2)
 
   tf = getBMRFeatSelResults(res, as.df = FALSE)
@@ -145,8 +145,8 @@ test_that("benchmark", {
   expect_is(tfd, "data.frame")
   expect_equal(ncol(tfd), 4)
   expect_gt(nrow(tfd), 10)
-  expect_equal(unique(tfd$task.id), factor(task.names))
-  expect_equal(unique(tfd$learner.id), factor("classif.lda.featsel"))
+  expect_equal(levels(as.factor(tfd$task.id)), task.names)
+  expect_equal(levels(as.factor(tfd$learner.id)), "classif.lda.featsel")
   expect_equal(unique(tfd$iter), 1:2)
 
   tff = getBMRFilteredFeatures(res, as.df = FALSE)
@@ -165,8 +165,8 @@ test_that("benchmark", {
   expect_is(tffd, "data.frame")
   expect_equal(ncol(tffd), 4)
   expect_equal(nrow(tffd), 64)
-  expect_equal(unique(tffd$task.id), factor(task.names))
-  expect_equal(unique(tffd$learner.id), factor("classif.lda.filtered"))
+  expect_equal(levels(as.factor(tffd$task.id)), task.names)
+  expect_equal(levels(as.factor(tffd$learner.id)), "classif.lda.filtered")
   expect_equal(unique(tffd$iter), 1:2)
 
   f = function(tmp, cl) {

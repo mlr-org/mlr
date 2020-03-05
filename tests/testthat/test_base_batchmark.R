@@ -15,7 +15,7 @@ test_that("batchmark", {
   rin = makeResampleDesc("CV", iters = 2L)
 
   ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
-                  tasks = binaryclass.task, resamplings = rin, reg = reg)
+    tasks = binaryclass.task, resamplings = rin, reg = reg)
 
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
@@ -95,7 +95,7 @@ test_that("batchmark", {
   # make it more complex
   ps = makeParamSet(makeDiscreteLearnerParam("cp", values = c(0.01, 0.1)))
   learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel",
-                    "classif.rpart.tuned", "classif.lda.filtered")
+    "classif.rpart.tuned", "classif.lda.filtered")
   learners = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
   learners = c(learners, list(
     makeFeatSelWrapper(learners[[1L]], resampling = rin, control = makeFeatSelControlRandom(maxit = 3)),
@@ -166,8 +166,8 @@ test_that("batchmark", {
   expect_is(trd, "data.frame")
   expect_equal(ncol(trd), 5)
   expect_equal(nrow(trd), 4)
-  expect_equal(unique(trd$task.id), factor(task.names))
-  expect_equal(unique(trd$learner.id), factor("classif.rpart.tuned"))
+  expect_equal(levels(as.factor(trd$task.id)), task.names)
+  expect_equal(levels(as.factor(trd$learner.id)), "classif.rpart.tuned")
   expect_equal(unique(trd$iter), 1:2)
 
   tf = getBMRFeatSelResults(res, as.df = FALSE)
@@ -193,8 +193,8 @@ test_that("batchmark", {
     lapply(tf$multiclass$classif.lda.featsel, function(x) x$x)
   )
   expect_equal(nrow(tfd), sum(lengths(feats)))
-  expect_equal(unique(tfd$task.id), factor(task.names))
-  expect_equal(unique(tfd$learner.id), factor("classif.lda.featsel"))
+  expect_equal(levels(as.factor(tfd$task.id)), task.names)
+  expect_equal(levels(as.factor(tfd$learner.id)), "classif.lda.featsel")
   expect_equal(unique(tfd$iter), 1:2)
 
   tff = getBMRFilteredFeatures(res, as.df = FALSE)
@@ -213,8 +213,8 @@ test_that("batchmark", {
   expect_is(tffd, "data.frame")
   expect_equal(ncol(tffd), 4)
   expect_equal(nrow(tffd), 64)
-  expect_equal(unique(tffd$task.id), factor(task.names))
-  expect_equal(unique(tffd$learner.id), factor("classif.lda.filtered"))
+  expect_equal(levels(as.factor(tffd$task.id)), task.names)
+  expect_equal(levels(as.factor(tffd$learner.id)), "classif.lda.filtered")
   expect_equal(unique(tffd$iter), 1:2)
 
   f = function(tmp, cl) {
@@ -272,7 +272,7 @@ test_that("keep.preds and models are passed down to resample()", {
 
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
   res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
-                  tasks = binaryclass.task, resamplings = rin, models = FALSE, reg = reg)
+    tasks = binaryclass.task, resamplings = rin, models = FALSE, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
 
