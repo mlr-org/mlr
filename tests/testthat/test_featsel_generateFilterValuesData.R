@@ -4,6 +4,7 @@
 
 context("filterFeatures")
 
+cat("generateFilterValuesData")
 test_that("filterFeatures", {
   ns = getTaskFeatureNames(binaryclass.task)
   f = filterFeatures(binaryclass.task, method = "variance", select = "threshold",
@@ -154,6 +155,8 @@ test_that("filter method 'variance' works with missing values", {
 })
 
 test_that("ensemble methods work", {
+  skip_on_cran()
+
   fi = generateFilterValuesData(multiclass.task,
     method = list("E-min", c("FSelectorRcpp_gain.ratio",
       "FSelectorRcpp_information.gain")))

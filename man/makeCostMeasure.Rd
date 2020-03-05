@@ -35,18 +35,18 @@ Note this is not the same as the \code{aggregate} argument in \link{makeMeasure}
 You can set this as well via \link{setAggregation}, as for any measure.
 Default is \link{mean}.}
 
-\item{best}{(`numeric(1)`)\cr
+\item{best}{(\code{numeric(1)})\cr
 Best obtainable value for measure.
-Default is -`Inf` or `Inf`, depending on `minimize`.}
+Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
 
-\item{worst}{(`numeric(1)`)\cr
+\item{worst}{(\code{numeric(1)})\cr
 Worst obtainable value for measure.
-Default is `Inf` or -`Inf`, depending on `minimize`.}
+Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 
-\item{name}{([character]) \cr
-Name of the measure. Default is `id`.}
+\item{name}{(\link{character}) \cr
+Name of the measure. Default is \code{id}.}
 
-\item{note}{([character]) \cr
+\item{note}{(\link{character}) \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{

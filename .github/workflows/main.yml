@@ -1,0 +1,164 @@
+on:
+  push:
+  pull_request:
+  # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: "0 3 * * *"
+
+name: GH Actions via {tic}
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { os: windows-latest, r: "release" }
+          - { os: macOS-latest, r: "release" }
+          - { os: macOS-latest, r: "devel" }
+          - { os: ubuntu-18.04, r: "release" }
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_MAX_NUM_DLLS: 999
+      CRAN: ${{ matrix.config.cran }}
+      # we are not allowed to write to ~/.ccache, just read
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      CCACHE_NOHASHDIR: true
+      CCACHE_SLOPPINESS: include_file_ctime
+      RGL_USE_NULL: true
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
+          Ncpus: 4
+
+      # LaTeX. Installation time:
+      # Linux: ~ 1 min
+      # macOS: ~ 1 min 30s
+      # Windows: never finishes
+      - uses: r-lib/actions/setup-tinytex@v1
+        if: runner.os != 'Windows'
+
+      - uses: r-lib/actions/setup-pandoc@master
+
+      # set current date for use in cache creation
+      # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
+      - name: "[Cache] Prepare daily timestamp for cache"
+        if: runner.os != 'Windows'
+        id: date
+        run: echo "::set-output name=date::$(date '+%d-%m')"
+
+      - name: "[Cache] Prepare weekly timestamp for cache"
+        if: runner.os != 'Windows'
+        id: datew
+        run: echo "::set-output name=datew::$(date '+%Y-%V')"
+
+      - name: "[Cache] Cache R packages"
+        if: runner.os != 'Windows'
+        uses: pat-s/always-upload-cache@v1.1.3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+
+      - name: "[Cache] Cache ccache"
+        if: runner.os != 'Windows'
+        uses: pat-s/always-upload-cache@v1.1.3
+        with:
+          path: ${{ env.CCACHE_DIR}}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
+
+      - name: "[Linux] ccache"
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt install ccache
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+          mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+
+      # install ccache and write config file
+      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
+      - name: "[macOS] ccache"
+        if: runner.os == 'macOS' && matrix.config.r != 'devel'
+        run: |
+          brew install ccache
+          wget https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
+          sudo installer -package clang-7.0.0.pkg -target /
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/clang7/bin/clang++\nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nF77=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+
+      # install ccache and write config file
+      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
+      - name: "[macOS-devel] ccache"
+        if: runner.os == 'macOS' && matrix.config.r == 'devel'
+        run: |
+          brew install ccache
+          wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
+          sudo installer -package clang-8.0.0.pkg -target /
+          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang8/bin/clang\nCC11=ccache /usr/local/clang8/bin/clang\nCC14=ccache /usr/local/clang8/bin/clang\nCXX=ccache /usr/local/clang8/bin/clang++\nCXX11=ccache /usr/local/clang8/bin/clang++\nCXX14=ccache /usr/local/clang8/bin/clang++\nC11=ccache /usr/local/clang8/bin/clang++\nC14=ccache /usr/local/clang8/bin/clang++\nF88=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+
+      # - need to remove gfortran first because it conflicts with other brew installs
+      # - proj@5 because projv6 is not well supported yet by spatial libs
+      # - reinstall gfortran to have it avail
+      # - pkgconfig is needed for some packages to find their linkers
+      # - clong7 is the only CC compiler which works for some pkgs, e.g. {fs}
+      - name: "[macOS] Prepare"
+        if: runner.os == 'macOS'
+        run: |
+          rm '/usr/local/bin/gfortran'
+          brew tap osgeo/osgeo4mac
+          brew install Caskroom/cask/xquartz udunits gdal
+          brew unlink proj
+          brew install osgeo-proj@5
+          brew link --force osgeo-proj@5
+          brew cask reinstall gfortran
+          brew install pkgconfig
+          brew install nlopt
+          R CMD javareconf
+
+      - name: "[Linux] Prepare"
+        if: runner.os == 'Linux'
+        run: |
+          sudo R CMD javareconf
+          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+
+      # for some strange Windows reason this step and the next one need to be decoupled
+      - name: "[Stage] Prepare"
+        run: |
+          Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes')"
+          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
+
+      - name: "[Stage] Install"
+        if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
+        run: |
+          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+
+      # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
+      - name: "[Stage] Prepare & Install (macOS-devel)"
+        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
+        run: |
+          echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+
+      - name: "[Stage] Script"
+        run: Rscript -e 'tic::script()'
+
+      - name: "[Stage] After Success"
+        if: matrix.config.os == 'macOS-latest' && matrix.config.r == '3.6'
+        run: Rscript -e "tic::after_success()"
+
+      - name: "[Stage] Upload R CMD check artifacts"
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check

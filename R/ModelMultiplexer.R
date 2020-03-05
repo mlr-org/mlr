@@ -1,4 +1,5 @@
-#' @title Create model multiplexer for model selection to tune over multiple possible models.
+#' @title Create model multiplexer for model selection to tune over multiple
+#'   possible models.
 #'
 #' @description
 #' Combines multiple base learners by dispatching
@@ -7,9 +8,9 @@
 #' their hyperparameters in one go. Combine this with [tuneParams] and
 #' [makeTuneControlIrace] for a very powerful approach, see example below.
 #'
-#' The parameter set is the union of all (unique) base learners.
-#' In order to avoid name clashes all parameter names are prefixed
-#' with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
+#' The parameter set is the union of all (unique) base learners. In order to
+#' avoid name clashes all parameter names are prefixed with the base learner id,
+#' i.e. `learnerId.parameterName`.
 #'
 #' The predict.type of the Multiplexer is inherited from the predict.type of the
 #' base learners.
@@ -23,10 +24,10 @@
 #' @aliases ModelMultiplexer
 #' @family multiplexer
 #' @family tune
-#' @noMd
 #' @export
-#' @note Note that logging output during tuning is somewhat shortened to make it more readable.
-#'   I.e., the artificial prefix before parameter names is suppressed.
+#' @note Note that logging output during tuning is somewhat shortened to make it
+#'   more readable. I.e., the artificial prefix before parameter names is
+#'   suppressed.
 #' @examples
 #' set.seed(123)
 #' \donttest{

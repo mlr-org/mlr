@@ -1,5 +1,6 @@
 context("FeatSelWrapper")
 
+cat("FeatSelWrapper")
 test_that("FeatSelWrapper", {
   outer = makeResampleDesc("CV", iters = 2L)
   inner = makeResampleDesc("Holdout")

@@ -19,66 +19,65 @@ makeCustomResampledMeasure(
 )
 }
 \arguments{
-\item{measure.id}{(`character(1)`)\cr
+\item{measure.id}{(\code{character(1)})\cr
 Short name of measure.}
 
-\item{aggregation.id}{(`character(1)`)\cr
+\item{aggregation.id}{(\code{character(1)})\cr
 Short name of aggregation.}
 
-\item{minimize}{(`logical(1)`)\cr
+\item{minimize}{(\code{logical(1)})\cr
 Should the measure be minimized?
-Default is `TRUE`.}
+Default is \code{TRUE}.}
 
-\item{properties}{([character])\cr
-Set of measure properties. For a list of values see [Measure].
-Default is `character(0)`.}
+\item{properties}{(\link{character})\cr
+Set of measure properties. For a list of values see \link{Measure}.
+Default is \code{character(0)}.}
 
-\item{fun}{(`function(task, group, pred, extra.args)`)\cr
-Calculates performance value from [ResamplePrediction] object.
-For rare cases you can also use the task, the grouping or the extra arguments `extra.args`.
-\describe{
-  \item{`task` ([Task])}{
-    The task.}
-  \item{`group` ([factor])}{
-    Grouping of resampling iterations. This encodes whether specific iterations
-    'belong together' (e.g. repeated CV).}
-  \item{`pred` ([Prediction])}{
-    Prediction object.}
-  \item{`extra.args` ([list])}{
-    See below.}
-}}
+\item{fun}{(\verb{function(task, group, pred, extra.args)})\cr
+Calculates performance value from \link{ResamplePrediction} object. For rare
+cases you can also use the task, the grouping or the extra arguments
+\code{extra.args}.
+- \code{task} (\link{Task})\cr
+The task.
+- \code{group} (\link{factor})\cr
+Grouping of resampling iterations. This encodes whether specific
+iterations 'belong together' (e.g. repeated CV).
+- \code{pred} (\link{Prediction})\cr
+Prediction object.
+- \code{extra.args} (\link{list})\cr
+See below.}
 
-\item{extra.args}{([list])\cr
-List of extra arguments which will always be passed to `fun`.
+\item{extra.args}{(\link{list})\cr
+List of extra arguments which will always be passed to \code{fun}.
 Default is empty list.}
 
-\item{best}{(`numeric(1)`)\cr
+\item{best}{(\code{numeric(1)})\cr
 Best obtainable value for measure.
-Default is -`Inf` or `Inf`, depending on `minimize`.}
+Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
 
-\item{worst}{(`numeric(1)`)\cr
+\item{worst}{(\code{numeric(1)})\cr
 Worst obtainable value for measure.
-Default is `Inf` or -`Inf`, depending on `minimize`.}
+Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 
-\item{measure.name}{(`character(1)`)\cr
+\item{measure.name}{(\code{character(1)})\cr
 Long name of measure.
-Default is `measure.id`.}
+Default is \code{measure.id}.}
 
-\item{aggregation.name}{(`character(1)`)\cr
+\item{aggregation.name}{(\code{character(1)})\cr
 Long name of the aggregation.
-Default is `aggregation.id`.}
+Default is \code{aggregation.id}.}
 
-\item{note}{([character]) \cr
+\item{note}{(\link{character}) \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
 \link{Measure}.
 }
 \description{
-Construct your own performance measure, used after resampling.
-Note that individual training / test set performance values will be set to `NA`, you
-only calculate an aggregated value. If you can define a function that makes sense
-for every single training / test set, implement your own [Measure].
+Construct your own performance measure, used after resampling. Note that
+individual training / test set performance values will be set to \code{NA}, you
+only calculate an aggregated value. If you can define a function that makes
+sense for every single training / test set, implement your own \link{Measure}.
 }
 \seealso{
 Other performance: 
