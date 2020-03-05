@@ -1,4 +1,4 @@
-#' @title Check whether the object conatins functional features.
+#' @title Check whether the object contains functional features.
 #'
 #' @description
 #' See title.
@@ -11,14 +11,12 @@ hasFunctionalFeatures = function(obj) {
   UseMethod("hasFunctionalFeatures")
 }
 
+#' @export
 hasFunctionalFeatures.data.frame = function(obj) {
   any(vlapply(obj, is.matrix))
 }
 
+#' @export
 hasFunctionalFeatures.Task = function(obj) {
-  hasFunctionalFeatures.TaskDesc(obj$task.desc)
-}
-
-hasFunctionalFeatures.TaskDesc = function(obj) {
-  obj$n.feat["functionals"] > 0L
+  obj$task.desc$n.feat["functionals"] > 0L
 }
