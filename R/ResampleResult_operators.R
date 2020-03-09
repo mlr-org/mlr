@@ -73,7 +73,7 @@ getRRPredictionList = function(res, ...) {
   task.desc = getRRTaskDesc(res)
 
   # split by train and test set
-  set = levels(pred$data$set)
+  set = levels(factor(pred$data$set))
 
   # get prediction objects for train and test set
   prediction = lapply(set, function(s) {

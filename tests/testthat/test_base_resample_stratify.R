@@ -74,7 +74,8 @@ test_that("stratification with survival works", {
 })
 
 test_that("stratification on features work", {
-  df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"), times = 4), z = 1:8)
+  df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"), times = 4),
+    z = 1:8, stringsAsFactors = TRUE)
   task = makeRegrTask(data = df, target = "z")
   rdesc = makeResampleDesc("Holdout", split = 0.5, stratify.cols = c("x", "y"))
   rin = makeResampleInstance(rdesc, task = task)
@@ -88,7 +89,7 @@ test_that("stratification on features work", {
 
 test_that("stratification on integers work", {
   df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"), times = 4),
-    z = rep(1:2, each = 4))
+    z = rep(1:2, each = 4), stringsAsFactors = TRUE)
   task = makeClassifTask(data = df, target = "y")
   rdesc = makeResampleDesc("Holdout", split = 0.5, stratify.cols = "z")
   rin = makeResampleInstance(rdesc, task = task)
@@ -100,7 +101,7 @@ test_that("stratification on integers work", {
 
 test_that("stratification on doubles does not work", {
   df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"),
-    times = 4), z = rep(1:2, each = 4))
+    times = 4), z = rep(1:2, each = 4), stringsAsFactors = TRUE)
   df$z = as.double(df$z)
   task = makeClassifTask(data = df, target = "y")
   rdesc = makeResampleDesc("Holdout", split = 0.5, stratify.cols = "z")
