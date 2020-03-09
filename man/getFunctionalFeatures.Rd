@@ -13,6 +13,9 @@ getFunctionalFeatures(object, subset = NULL, features, recode.target = "no")
 \method{getFunctionalFeatures}{data.frame}(object, subset = NULL, features, recode.target = "no")
 }
 \arguments{
+\item{object}{(\link{Task}/\link{data.frame})\cr
+Object to check on.}
+
 \item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
 By default \code{NULL} if all observations are used.}
@@ -39,7 +42,7 @@ See \link[survival:Surv]{survival::Surv} for the format specification.
 Default for both binary classification and survival is \dQuote{no} (do nothing).}
 }
 \value{
-Returns a \link{\code{data.frame}} containing only the functional features.
+Returns a \code{data.frame} containing only the functional features.
 }
 \description{
 The parameters \dQuote{subset}, \dQuote{features}, and \dQuote{recode.target}
