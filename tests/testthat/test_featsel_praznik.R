@@ -9,7 +9,7 @@ test_that("filterFeatures_praznik", {
   f = rep(c("c1", "c2"), 9)
   df = data.frame(a = a, b = b, c = c, d = d, target = f)
   # makeClassifTask does not support logicals
-  df = convertDataFrameCols(df, logicals.as.factor = TRUE)
+  df = convertDataFrameCols(df, logicals.as.factor = TRUE, chars.as.factor = TRUE)
   task = makeClassifTask(data = df, target = "target")
 
   candidates = as.character(listFilterMethods()$id)
