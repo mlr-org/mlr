@@ -312,7 +312,8 @@
 <p>Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. Though <code>smooth = FALSE</code> by default, setting this option to <code>TRUE</code> replaces the estimated proportions with a loess smoother.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">cal =<span class="st"> </span><span class="kw"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(pred)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal, <span class="dt">smooth =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(cal, <span class="dt">smooth =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## `geom_smooth()` using formula 'y ~ x'</span></a></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>All of the above functionality works with multi-class classification as well.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lrns =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>

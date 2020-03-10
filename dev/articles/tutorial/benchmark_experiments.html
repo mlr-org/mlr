@@ -707,7 +707,10 @@
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr, <span class="dt">measure =</span> ber, <span class="dt">style =</span> <span class="st">"violin"</span>, <span class="dt">pretty.names =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">  <span class="dt">order.lrn =</span> <span class="kw"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(bmr)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">color =</span> learner.id) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">## Warning: `fun.y` is deprecated. Use `fun` instead.</span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">## Warning: `fun.ymin` is deprecated. Use `fun.min` instead.</span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">## Warning: `fun.ymax` is deprecated. Use `fun.max` instead.</span></a></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-18-2.png" width="700"></p>
 <p>Note that by default the measure <code>name</code>s and the learner <code>short.name</code>s are used as axis labels.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">mmce<span class="op">$</span>name</a>
