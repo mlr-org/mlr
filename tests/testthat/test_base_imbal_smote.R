@@ -93,5 +93,5 @@ test_that("smote works with constant factor features", {
   task = makeClassifTask(data = d, target = "y")
   task2 = smote(task, rate = 9, nn = 4L)
 
-  expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
+  expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10)
 })
