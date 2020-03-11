@@ -35,7 +35,7 @@ jobs:
       RGL_USE_NULL: true
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -50,6 +50,12 @@ jobs:
         if: runner.os != 'Windows'
 
       - uses: r-lib/actions/setup-pandoc@master
+
+      - uses: actions/setup-java@v1.3.0
+        with:
+          java-version: '11.0.1' # The JDK version to make available on the path.
+          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+          architecture: x64 # (x64 or x86) - defaults to x64
 
       # set current date for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
