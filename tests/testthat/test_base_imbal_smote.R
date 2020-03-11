@@ -41,7 +41,8 @@ test_that("smote works with only factor features", {
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
     x2 = sample(c("a", "b"), n, replace = TRUE),
-    y = c(rep("a", 2), rep("b", 8))
+    y = c(rep("a", 2), rep("b", 8)),
+    stringsAsFactors = TRUE
   )
   task = makeClassifTask(data = d, target = "y")
   task2 = smote(task, rate = 1.4, nn = 2L)
@@ -80,17 +81,13 @@ test_that("smote works with only integer features", {
 })
 
 test_that("smote works with constant factor features", {
-  skip("fails on R 4.0")
-  # don't get why cran reports
-  # 1/1 mismatches
-  # [1] 10 - 90 == -80
-  skip_on_cran()
 
   # This reproduces the bug from issue #1951
   d = data.frame(
     x1 = rpois(100, 2),
     x2 = gl(5, 20, labels = LETTERS[1:5]),
-    y = as.factor(c(rep("+", 90), rep("-", 10)))
+    y = as.factor(c(rep("+", 90), rep("-", 10))),
+    stringsAsFactors = TRUE
   )
 
   task = makeClassifTask(data = d, target = "y")
