@@ -1,6 +1,8 @@
 context("tuneIrace")
 
 test_that("tuneIrace", {
+  skip("Until irace works with R 4.0")
+
   rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
   ps1 = makeParamSet(
     makeNumericParam("cp", lower = 0.001, upper = 1),
@@ -33,6 +35,8 @@ test_that("tuneIrace", {
 })
 
 test_that("tuneIrace works with dependent params", {
+  skip("Until irace works with R 4.0")
+
   ps = makeParamSet(
     makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
     makeNumericParam("sigma", lower = 1, upper = 2,
@@ -64,6 +68,8 @@ test_that("tuneIrace works with dependent params", {
 
 # we had a bug here
 test_that("tuneIrace works with logical params", {
+  skip("Until irace works with R 4.0")
+
   ps = makeParamSet(
     makeLogicalParam("scaled"),
     makeLogicalParam("shrinking")
@@ -86,6 +92,8 @@ test_that("tuneIrace works with logical params", {
 })
 
 test_that("tuneIrace works with tune.threshold", {
+  skip("Until irace works with R 4.0")
+
   rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
   ps = makeParamSet(makeIntegerParam("minsplit", lower = 1, upper = 3))
 
@@ -97,6 +105,8 @@ test_that("tuneIrace works with tune.threshold", {
 })
 
 test_that("tuneIrace uses digits", {
+  skip("Until irace works with R 4.0")
+
   rdesc = makeResampleDesc(method = "Holdout")
 
   ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L)
@@ -134,6 +144,8 @@ test_that("tuneIrace uses digits", {
 })
 
 test_that("makeTuneControlIrace handles budget parameter", {
+  skip("Until irace works with R 4.0")
+
   rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
   ps = makeParamSet(makeIntegerParam("minsplit", lower = 1, upper = 3))
 
@@ -152,6 +164,8 @@ test_that("makeTuneControlIrace handles budget parameter", {
 })
 
 test_that("Error in hyperparameter tuning with scientific notation for lower/upper boundaries #279", {
+  skip("Until irace works with R 4.0")
+
   ps = makeParamSet(makeNumericParam("shrinkage", lower = 4e-5, upper = 1e-4))
   ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L)
   rdesc = makeResampleDesc(method = "Holdout")
@@ -163,6 +177,8 @@ test_that("Error in hyperparameter tuning with scientific notation for lower/upp
 
 # we had a bug here, see issue #627
 test_that("irace works with unnamed discrete values", {
+  skip("Until irace works with R 4.0")
+
   lrn = makeLearner("classif.rpart")
   ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L)
   ps = makeParamSet(
@@ -174,6 +190,8 @@ test_that("irace works with unnamed discrete values", {
 
 # there was a bug when the column of an opt-path was NA all the way
 test_that("irace handles parameters with unsatisfiable requirement gracefully", {
+  skip("Until irace works with R 4.0")
+
   skip_on_os("windows")
   lrn = makeLearner("classif.J48")
   ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L,
