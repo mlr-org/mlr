@@ -123,6 +123,7 @@ jobs:
           brew cask reinstall gfortran
           brew install pkgconfig
           brew install nlopt
+          brew install libxml2
           R CMD javareconf
 
       - name: "[Linux] Prepare"
