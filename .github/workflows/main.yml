@@ -150,7 +150,7 @@ jobs:
 
       - name: "[macOS] rJava"
         run: |
-          Rscript -e "install.packages("rJava", type = 'source')"
+          Rscript -e "install.packages('rJava', type = 'source')"
           R CMD javareconf
 
       # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
