@@ -19,6 +19,8 @@ test_that("tuneThreshold", {
 })
 
 test_that("tuneThreshold works with all tuning methods", {
+  skip("Until irace works with R 4.0")
+
   lrn = makeLearner("classif.lda", predict.type = "prob")
   ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 3))
   ctrls = list(

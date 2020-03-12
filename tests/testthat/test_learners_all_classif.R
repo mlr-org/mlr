@@ -2,6 +2,9 @@ context("learners_all_classif")
 
 test_that("learners work: classif", {
 
+  # because of missing rJava
+  skip_on_os("windows")
+
   # settings to make learners faster and deal with small data size
   hyperpars = list(
     classif.boosting = list(mfinal = 2L),
