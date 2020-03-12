@@ -28,12 +28,10 @@
 #'     For the repeated CV, the performance is calculated on each repetition and then aggregated
 #'     with the arithmetic mean.}
 #' }
-#' @format None
 #' @seealso [Aggregation]
 #' @name aggregations
-#' @rdname aggregations
-NULL
-
+#' @usage NULL
+#' @format NULL
 #' @export
 #' @rdname aggregations
 test.mean = makeAggregation(
@@ -44,6 +42,8 @@ test.mean = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.sd = makeAggregation(
   id = "test.sd",
@@ -53,6 +53,8 @@ test.sd = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.median = makeAggregation(
   id = "test.median",
@@ -62,6 +64,8 @@ test.median = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.min = makeAggregation(
   id = "test.min",
@@ -71,6 +75,8 @@ test.min = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.max = makeAggregation(
   id = "test.max",
@@ -80,6 +86,8 @@ test.max = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.sum = makeAggregation(
   id = "test.sum",
@@ -89,6 +97,8 @@ test.sum = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.range = makeAggregation(
   id = "test.range",
@@ -98,6 +108,8 @@ test.range = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.rmse = makeAggregation(
   id = "test.rmse",
@@ -107,6 +119,8 @@ test.rmse = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.mean = makeAggregation(
   id = "train.mean",
@@ -116,6 +130,8 @@ train.mean = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.sd = makeAggregation(
   id = "train.sd",
@@ -125,6 +141,8 @@ train.sd = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.median = makeAggregation(
   id = "train.median",
@@ -134,6 +152,8 @@ train.median = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.min = makeAggregation(
   id = "train.min",
@@ -143,6 +163,8 @@ train.min = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.max = makeAggregation(
   id = "train.max",
@@ -152,6 +174,8 @@ train.max = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.sum = makeAggregation(
   id = "train.sum",
@@ -161,6 +185,8 @@ train.sum = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.range = makeAggregation(
   id = "train.range",
@@ -170,6 +196,8 @@ train.range = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 train.rmse = makeAggregation(
   id = "train.rmse",
@@ -179,6 +207,8 @@ train.rmse = makeAggregation(
 )
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 b632 = makeAggregation(
   id = "b632",
@@ -191,6 +221,8 @@ b632 = makeAggregation(
 
 # FIXME: read this again properly and double check it
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 b632plus = makeAggregation(
   id = "b632plus",
@@ -218,6 +250,8 @@ b632plus = makeAggregation(
   })
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 testgroup.mean = makeAggregation(
   id = "testgroup.mean",
@@ -228,6 +262,8 @@ testgroup.mean = makeAggregation(
   })
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 testgroup.sd = makeAggregation(
   id = "testgroup.sd",
@@ -238,6 +274,8 @@ testgroup.sd = makeAggregation(
   })
 
 #' @export
+#' @usage NULL
+#' @format NULL
 #' @rdname aggregations
 test.join = makeAggregation(
   id = "test.join",
