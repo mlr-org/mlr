@@ -25,7 +25,51 @@
 \alias{testgroup.sd}
 \alias{test.join}
 \title{Aggregation methods.}
-\format{None}
+\format{
+None
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+
+An object of class \code{Aggregation} of length 4.
+}
 \usage{
 test.mean
 

@@ -4,8 +4,10 @@
 \name{spatial.task}
 \alias{spatial.task}
 \title{J. Muenchow's Ecuador landslide data set}
-\format{a \code{data.frame} with point samples of landslide and
-non-landslide locations in a study area in the Andes of southern Ecuador.}
+\format{
+a \code{data.frame} with point samples of landslide and
+non-landslide locations in a study area in the Andes of southern Ecuador.
+}
 \description{
 Data set created by Jannes Muenchow, University of Erlangen-Nuremberg,
 Germany.
