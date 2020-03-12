@@ -149,9 +149,10 @@ jobs:
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
       - name: "[macOS] rJava"
+        if: runner.os == 'macOS'
         run: |
-          Rscript -e "install.packages('rJava', type = 'source')"
           R CMD javareconf
+          Rscript -e "install.packages('rJava', type = 'source')"
 
       # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
       - name: "[Stage] Prepare & Install (macOS-devel)"
