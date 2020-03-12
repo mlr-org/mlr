@@ -130,7 +130,6 @@ jobs:
           brew install pkgconfig
           brew install nlopt
           brew install libxml2
-          R CMD javareconf
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
@@ -149,13 +148,17 @@ jobs:
         run: |
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
+      - name: "[macOS] rJava"
+        run: |
+          Rscript -e "install.packages("rJava", type = 'source')"
+          R CMD javareconf
+
       # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
       - name: "[Stage] Prepare & Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
           echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
-          R CMD javareconf
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
