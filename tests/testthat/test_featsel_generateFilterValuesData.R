@@ -5,7 +5,12 @@
 context("filterFeatures")
 
 cat("generateFilterValuesData")
+
 test_that("filterFeatures", {
+
+  # winbuilder gets stuck here
+  skip_on_cran()
+
   ns = getTaskFeatureNames(binaryclass.task)
   f = filterFeatures(binaryclass.task, method = "variance", select = "threshold",
     threshold = -Inf)
@@ -77,6 +82,10 @@ test_that("filterFeatures", {
 })
 
 test_that("args are passed down to filter methods", {
+
+  # winbuilder gets stuck here
+  skip_on_cran()
+
   # we had an issue here, see #941
 
   expect_error(generateFilterValuesData(regr.num.task,
@@ -111,6 +120,10 @@ test_that("args are passed down to filter methods", {
 })
 
 test_that("errors for unsupported task and feature types", {
+
+  # winbuilder gets stuck here
+  skip_on_cran()
+
   expect_error(generateFilterValuesData(multiclass.task,
     method = c("mrmr", "variance", "linear.correlation")),
   "Filter(s) 'mrmr', 'linear.correlation' not compatible with task of type 'classif'",
@@ -126,6 +139,10 @@ test_that("errors for unsupported task and feature types", {
 })
 
 test_that("filter values are named and ordered correctly", {
+
+  # winbuilder gets stuck here
+  skip_on_cran()
+
   # we had an issue here, see #940
 
   ns = getTaskFeatureNames(regr.task)
@@ -150,11 +167,16 @@ test_that("filter values are named and ordered correctly", {
 })
 
 test_that("filter method 'variance' works with missing values", {
+
+  # winbuilder gets stuck here
+  skip_on_cran()
+
   fi = generateFilterValuesData(regr.na.num.task, method = "variance")
   expect_false(anyMissing(fi$data$value))
 })
 
 test_that("ensemble methods work", {
+  # winbuilder gets stuck here
   skip_on_cran()
 
   fi = generateFilterValuesData(multiclass.task,
