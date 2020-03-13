@@ -2,7 +2,7 @@
 % Please edit documentation in R/hasFunctionalFeatures.R
 \name{hasFunctionalFeatures}
 \alias{hasFunctionalFeatures}
-\title{Check whether the object conatins functional features.}
+\title{Check whether the object contains functional features.}
 \usage{
 hasFunctionalFeatures(obj)
 }

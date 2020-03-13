@@ -2,7 +2,7 @@ context("normalizeFeatures")
 
 test_that("normalizeFeatures", {
   df = data.frame(x1 = c(0, -1, 4, 2, 3), x2 = letters[1:5],
-    target = letters[1:5])
+    target = letters[1:5], stringsAsFactors = TRUE)
   task = makeClassifTask(data = df, target = "target")
 
   normalized = normalizeFeatures(df, method = "range", range = c(-1, 4))

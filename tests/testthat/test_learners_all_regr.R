@@ -1,6 +1,10 @@
 context("learners_all_regr")
 
 test_that("learners work: regr ", {
+
+  # because of missing rJava for bartMachine
+  skip_on_os("windows")
+
   requirePackagesOrSkip("crs", default.method = "load")
 
   # settings to make learners faster and deal with small data size

@@ -35,7 +35,7 @@ jobs:
       RGL_USE_NULL: true
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -123,7 +123,7 @@ jobs:
           brew cask reinstall gfortran
           brew install pkgconfig
           brew install nlopt
-          R CMD javareconf
+          brew install libxml2
 
       - name: "[Linux] Prepare"
         if: runner.os == 'Linux'
@@ -141,6 +141,12 @@ jobs:
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: |
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+
+      - name: "[macOS] rJava"
+        if: runner.os == 'macOS'
+        run: |
+          R CMD javareconf
+          Rscript -e "install.packages('rJava', type = 'source')"
 
       # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
       - name: "[Stage] Prepare & Install (macOS-devel)"

@@ -2,7 +2,7 @@ context("impute")
 
 test_that("Impute data frame", {
   data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5),
-    y = c(1, 2, 3, 3, 4), z = NA)
+    y = c(1, 2, 3, 3, 4), z = NA, stringsAsFactors = TRUE)
   target = "z"
   data[6, ] = NA
 
@@ -86,9 +86,13 @@ test_that("Impute data frame", {
     features = "V1")))$data
   expect_true(all(imputed$col2[8:10] == "2"))
   # case 2: impute a numeric (data$x) with a classif learner
-  expect_error(impute(data, target = target, cols = list(x = imputeLearner("classif.naiveBayes"))), "Assertion on 'x' failed")
+  expect_error(impute(data, target = target,
+    cols = list(x = imputeLearner("classif.naiveBayes"))),
+  "Assertion on 'x' failed")
   # case 3: impute a factor (data$f) with a regr learner
-  expect_error(impute(data, target = target, cols = list(f = imputeLearner("regr.rpart"))), "Assertion on 'f' failed")
+  expect_error(impute(data, target = target,
+    cols = list(f = imputeLearner("regr.rpart"))),
+  "Assertion on 'f' failed")
 
   # constant replacements
   imputed = impute(data, target = target, cols = list(f = "xxx", x = 999, y = 1000))$data
@@ -138,12 +142,14 @@ test_that("Impute data frame", {
 })
 
 test_that("Impute and reimpute task", {
-  data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
+  data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4),
+    stringsAsFactors = TRUE)
   data[6L, ] = NA
   classif.tar = factor(c(rep(c("a", "b"), 3L)))
   regr.tar = rep(c(.1, .2), 3L)
   # additional data-frame to check reimpute
-  data2 = data.frame(f = letters[c(2, 1, 1, 1, 1)], x = rep(2., 5), y = c(2, 4, 2, 3, 3))
+  data2 = data.frame(f = letters[c(2, 1, 1, 1, 1)], x = rep(2., 5), y = c(2, 4, 2, 3, 3),
+    stringsAsFactors = TRUE)
   data2[6L, ] = NA
   data2$z = classif.tar
   # test classif task

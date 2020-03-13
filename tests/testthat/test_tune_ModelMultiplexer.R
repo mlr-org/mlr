@@ -93,6 +93,8 @@ test_that("FailureModel works", {
 })
 
 test_that("ModelMultiplexer tuning", {
+  skip("Until irace works with R 4.0")
+
   lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
   rdesc = makeResampleDesc("CV", iters = 2L)
 

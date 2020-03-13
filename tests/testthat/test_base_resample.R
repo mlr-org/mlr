@@ -188,7 +188,8 @@ test_that("resample printer respects show.info", {
 test_that("resample drops unseen factors in predict data set", {
   data = data.frame(a = c("a", "b", "a", "b", "a", "c"),
     b = c(1, 1, 2, 2, 2, 1),
-    trg = c("a", "b", "a", "b", "a", "b"))
+    trg = c("a", "b", "a", "b", "a", "b"),
+    stringsAsFactors = TRUE)
   task = makeClassifTask("unseen.factors", data, "trg")
   resinst = makeResampleInstance("Holdout", task)
   resinst$train.inds[[1]] = 1:4
