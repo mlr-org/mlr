@@ -1,19 +1,18 @@
 #' @title Create control object for hyperparameter tuning with Irace.
 #'
-#' @description
-#' Tuning with iterated F-Racing with method [irace::irace].
-#' All kinds of parameter types can be handled. We return the best of the final elite
-#' candidates found by irace in the last race. Its estimated performance is the mean of all
-#' evaluations ever done for that candidate. More information on irace can be found in the TR at
-#' <http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf>.
+#' @description Tuning with iterated F-Racing with method [irace::irace]. All
+#' kinds of parameter types can be handled. We return the best of the final
+#' elite candidates found by irace in the last race. Its estimated performance
+#' is the mean of all evaluations ever done for that candidate. More information
+#' on irace can be found in package vignette: `vignette("irace-package", package
+#' = "irace")`
 #'
-#' For resampling you have to pass a [ResampleDesc],
-#' not a [ResampleInstance].
+#' For resampling you have to pass a [ResampleDesc], not a [ResampleInstance].
 #' The resampling strategy is randomly instantiated `n.instances` times and
-#' these are the instances in the sense of irace (`instances` element of `tunerConfig`
-#' in [irace::irace]). Also note that irace will always
-#' store its tuning results in a file on disk, see the package documentation for details on this
-#' and how to change the file path.
+#' these are the instances in the sense of irace (`instances` element of
+#' `tunerConfig` in [irace::irace]). Also note that irace will always store its
+#' tuning results in a file on disk, see the package documentation for details
+#' on this and how to change the file path.
 #'
 #' @inherit TuneControl
 #' @param budget (`integer(1)`)\cr
