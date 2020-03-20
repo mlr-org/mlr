@@ -169,14 +169,14 @@ jobs:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
       - name: "[Stage] Before Deploy"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
+        if: matrix.os == 'Linux'
         run: |
           Rscript -e "tic::before_deploy()"
 
       - name: "[Stage] Deploy"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
+        if: matrix.os == 'Linux'
         run: Rscript -e "tic::deploy()"
 
       - name: "[Stage] After Deploy"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
+        if: matrix.os == 'Linux'
         run: Rscript -e "tic::after_deploy()"
