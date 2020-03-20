@@ -22,10 +22,14 @@ test_that("clustering performance", {
   model = train(lrn, noclass.task)
   pred = predict(model, task = noclass.task)
 
-  expect_true(is.numeric(performance(pred, task = noclass.task, measures = db)))
-  expect_true(is.numeric(performance(pred, task = noclass.task, measures = G1)))
-  expect_true(is.numeric(performance(pred, task = noclass.task, measures = G2)))
-  expect_true(is.numeric(performance(pred, task = noclass.task, measures = silhouette)))
+  expect_true(is.numeric(performance(pred, task = noclass.task,
+    measures = db)))
+  expect_true(is.numeric(performance(pred, task = noclass.task,
+    measures = G1)))
+  expect_true(is.numeric(performance(pred, task = noclass.task,
+    measures = G2)))
+  expect_true(is.numeric(performance(pred, task = noclass.task,
+    measures = silhouette)))
 })
 
 test_that("clustering performance with missing clusters", {
@@ -37,12 +41,14 @@ test_that("clustering performance with missing clusters", {
   lrn = makeLearner("cluster.SimpleKMeans")
   model = train(lrn, noclass.task)
   pred = predict(model, task = noclass.task)
-  pred$data$response = sample(c(1, 3, 4), length(pred$data$response), replace = TRUE)
+  pred$data$response = sample(c(1, 3, 4), length(pred$data$response),
+    replace = TRUE)
 
   expect_warning(performance(pred, task = noclass.task, measures = db), NA)
   expect_warning(performance(pred, task = noclass.task, measures = G1), NA)
   expect_warning(performance(pred, task = noclass.task, measures = G2), NA)
-  expect_warning(performance(pred, task = noclass.task, measures = silhouette), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = silhouette),
+    NA)
 })
 
 test_that("clustering resample", {
@@ -71,7 +77,8 @@ test_that("clustering benchmark", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  res = benchmark(learners = learners, task = tasks, resamplings = makeResampleDesc("CV", iters = 2L))
+  res = benchmark(learners = learners, task = tasks,
+    resamplings = makeResampleDesc("CV", iters = 2L))
   expect_true("BenchmarkResult" %in% class(res))
 })
 
