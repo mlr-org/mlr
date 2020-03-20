@@ -1,7 +1,3 @@
-get_stage("install") %>%
-  # avoid build failure if packages are not avail for specific R versions
-  add_code_step(Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true"))
-
 if (Sys.info()[["sysname"]] != "Windows") {
   get_stage("script") %>%
     add_code_step(RWeka::WPM("refresh-cache")) %>%
@@ -9,20 +5,16 @@ if (Sys.info()[["sysname"]] != "Windows") {
 }
 
 # R CMD Check
-do_package_checks(error_on = "error", codecov = FALSE)
+do_package_checks(error_on = "warning", codecov = FALSE)
 
 # pkgdown
-if (ci_is_env("FULL", "true")) {
+if (ci_on_ghactions()) {
   get_stage("before_deploy") %>%
     add_step(step_install_github("mlr-org/mlr3pkgdowntemplate"))
   do_pkgdown()
 }
 
-# only deploy man files in in master branch
-if (ci_is_env("FULL", "true")) {
-
-  get_stage("deploy") %>%
-    add_code_step(pkgbuild::compile_dll()) %>%
-    add_code_step(devtools::document()) %>%
-    add_step(step_push_deploy(commit_paths = c("man/", "DESCRIPTION", "NAMESPACE")))
+if (Sys.info()[["sysname"]] == "Linux") {
+  get_stage("after_success") %>%
+    add_code_step(covr::codecov())
 }

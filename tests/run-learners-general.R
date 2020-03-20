@@ -1,6 +1,8 @@
 library(testthat)
 
-# no tests on CRAN
+# no tests on CRAN because the check limit is 10 mins
 
-set.seed(getOption("mlr.debug.seed"))
-test_check("mlr", "_learners_all_general")
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+  set.seed(getOption("mlr.debug.seed"))
+  test_check("mlr", "_learners_all_general")
+}

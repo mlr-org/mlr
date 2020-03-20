@@ -13,7 +13,7 @@ repos:
     #  R package development
     -   id: roxygenize
     -   id: use-tidy-description
-    -   id: deps-in-desc
+    #-   id: deps-in-desc
         args: [--allow_private_imports]
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0

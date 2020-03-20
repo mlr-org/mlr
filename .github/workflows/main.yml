@@ -168,3 +168,16 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: "[Stage] Before Deploy"
+        if: runner.os == 'Linux'
+        run: |
+          Rscript -e "tic::before_deploy()"
+
+      - name: "[Stage] Deploy"
+        if: runner.os == 'Linux'
+        run: Rscript -e "tic::deploy()"
+
+      - name: "[Stage] After Deploy"
+        if: runner.os == 'Linux'
+        run: Rscript -e "tic::after_deploy()"
