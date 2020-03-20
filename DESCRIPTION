@@ -1,6 +1,6 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.17.1.9000
+Version: 2.17.1
 Authors@R:
     c(person(given = "Bernd",
              family = "Bischl",
@@ -16,6 +16,11 @@ Authors@R:
              family = "Kotthoff",
              role = "aut",
              email = "larsko@uwyo.edu"),
+      person(given = "Patrick",
+             family = "Schratz",
+             role = c("aut", "cre"),
+             email = "patrick.schratz@gmail.com",
+             comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "Julia",
              family = "Schiffner",
              role = "aut",
@@ -37,11 +42,6 @@ Authors@R:
              family = "Gallo",
              role = "aut",
              email = "masonagallo@gmail.com"),
-      person(given = "Patrick",
-             family = "Schratz",
-             role = c("aut", "cre"),
-             email = "patrick.schratz@gmail.com",
-             comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "Jakob",
              family = "Bossek",
              role = "ctb",
