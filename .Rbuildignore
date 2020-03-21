@@ -40,3 +40,4 @@ revdep/*
 ^src/tempdir/\.ccache$
 ^\.ccache$
 ^clang.*$
+.lintr
