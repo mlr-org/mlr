@@ -311,6 +311,7 @@ test_that("benchmark works with ensemble filters", {
 test_that("benchmark handles failure models correctly", {
 
   # RWeka not avail
+  skip_on_cran()
   skip_on_os("windows")
 
   # Define task

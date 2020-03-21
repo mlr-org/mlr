@@ -138,6 +138,7 @@ test_that("check measure calculations", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
 
   # RWeka not avail
+  skip_on_cran()
   skip_on_os("windows")
 
   requirePackagesOrSkip("Hmisc", default.method = "load")

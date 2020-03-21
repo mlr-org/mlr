@@ -3,6 +3,7 @@ context("hyperpars")
 test_that("hyperpars", {
 
   # RWeka not avail
+  skip_on_cran()
   skip_on_os("windows")
 
   lrn = makeLearner("classif.rpart", minsplit = 10)
