@@ -1,6 +1,10 @@
 context("clustering")
 
 test_that("clustering predict", {
+
+  # RWeka causes problems
+  skip_on_cran()
+
   lrn = makeLearner("cluster.cmeans", predict.type = "prob")
   model = train(lrn, noclass.task)
   pred = predict(model, task = noclass.task)
@@ -15,6 +19,8 @@ test_that("clustering predict", {
 test_that("clustering performance", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
 
+  # RWeka causes problems
+  skip_on_cran()
   # RWeka not avail
   skip_on_os("windows")
 
@@ -35,6 +41,8 @@ test_that("clustering performance", {
 test_that("clustering performance with missing clusters", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
 
+  # RWeka causes problems
+  skip_on_cran()
   # RWeka not avail
   skip_on_os("windows")
 
@@ -54,6 +62,8 @@ test_that("clustering performance with missing clusters", {
 test_that("clustering resample", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
 
+  # RWeka causes problems
+  skip_on_cran()
   # RWeka not avail
   skip_on_os("windows")
 
@@ -68,6 +78,8 @@ test_that("clustering resample", {
 test_that("clustering benchmark", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
 
+  # RWeka causes problems
+  skip_on_cran()
   # RWeka not avail
   skip_on_os("windows")
 
@@ -90,6 +102,8 @@ test_that("clustering downsample", {
 test_that("clustering tune", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
 
+  # RWeka causes problems
+  skip_on_cran()
   # RWeka not avail
   skip_on_os("windows")
 
