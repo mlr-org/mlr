@@ -298,7 +298,7 @@ test_that("benchmark works with ensemble filters", {
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   rin = makeResampleDesc("CV", iters = 2L)
-  tune_ctrl = makeTuneControlRandom(maxit = 3)
+  tune.ctrl = makeTuneControlRandom(maxit = 3)
 
   tune_wrapper_svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
     control = tune.ctrl, show.info = FALSE,
