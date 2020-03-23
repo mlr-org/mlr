@@ -1,7 +1,6 @@
 context("calculateConfusionMatrix")
 
 test_that("calculateConfusionMatrix", {
-
   rdesc = makeResampleDesc("CV", iters = 3)
   r = resample(makeLearner("classif.rpart"), iris.task, rdesc)
   test.confMatrix(r$pred)
@@ -75,7 +74,6 @@ test_that("calculateConfusionMatrix elements are consistent with implemented mea
 })
 
 test_that("calculateConfusionMatrix with different factor levels (#2030)", {
-
   lrn = makeLearner("classif.rpart")
   m = train(lrn, iris.task)
   nd = iris[101:150, ]
@@ -89,7 +87,6 @@ test_that("calculateConfusionMatrix with different factor levels (#2030)", {
 
 
 test_that("calculateConfusionMatrix set argument works", {
-
   mod = train("classif.lda", iris.task)
   pred1 = predict(mod, iris.task)
   rdesc = makeResampleDesc("CV", iters = 10, predict = "both")

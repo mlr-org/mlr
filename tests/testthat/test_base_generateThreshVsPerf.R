@@ -51,7 +51,7 @@ test_that("generateThreshVsPerfData", {
   lrns = list(lrn, makeLearner("classif.lda", predict.type = "prob"))
   rdesc = makeResampleDesc("CV", iters = 2L)
   res = benchmark(lrns, binaryclass.task, rdesc, show.info = FALSE,
-                  measures = getDefaultMeasure(binaryclass.task))
+    measures = getDefaultMeasure(binaryclass.task))
   pvs = generateThreshVsPerfData(res, list(tpr, fpr))
   plotThreshVsPerf(pvs)
   ggplot2::ggsave(path)

@@ -112,7 +112,7 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
     names(fd.grids) = fdns
     fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
-        # also setup character vector of formula terms for functional covariates
+    # also setup character vector of formula terms for functional covariates
     mat.list = namedList(fdns)
     formula.terms = namedList(fdns)
     # for each functional covariate

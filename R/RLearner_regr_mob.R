@@ -49,7 +49,7 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
     if (is.character(model)) {
       args$model = getFromNamespace(model, "mda")
     } else {
-      args$model = model #this allows to set the model if on.par.out.of.bounds is set to "warn" or "quiet"
+      args$model = model # this allows to set the model if on.par.out.of.bounds is set to "warn" or "quiet"
     }
   }
 

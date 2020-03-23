@@ -1,7 +1,6 @@
 context("convertMLBenchObjToTask")
 
 test_that("convertMLbenchObjToTask", {
-
   requirePackagesOrSkip("mlbench")
   # get all mlbench.* functions, 1spiral does not work
   fs = ls("package:mlbench", pattern = "mlbench")

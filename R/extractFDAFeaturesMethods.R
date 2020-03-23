@@ -75,7 +75,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
       # In some cases the fft values are very small and rounded to 0.
       phase = apply(fft.trafo, 2, function(z) {
         phase = signif(Arg(z), 6) * 180 / pi # rad to degree
-        phase[Re(z) < 0.1 / (length(z) + 1)] = 0  # Set numeric (machine) errors to 0
+        phase[Re(z) < 0.1 / (length(z) + 1)] = 0 # Set numeric (machine) errors to 0
         return(phase)
       })
     )
@@ -261,7 +261,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #' For more details refer to [tsfeatures::tsfeatures()].
 #' Under the hood this function uses the package [tsfeatures::tsfeatures()].
 #' For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
-#' 
+#'
 #' Note: Currently computes the following features:\cr
 #'   "frequency", "stl_features", "entropy", "acf_features", "arch_stat",
 #'   "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
@@ -281,7 +281,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #'   A function to handle missing values. Use `na.interp` to estimate missing values
 #' @param feats (`character`)\cr
 #'   A character vector of function names to apply to each time-series in order to extract features.\cr
-#'   Default:\cr 
+#'   Default:\cr
 #'   feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
 #'      "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
 #'      "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
@@ -293,11 +293,12 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #' @family fda_featextractor
 extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE,
   na.action = na.pass, feats = NULL, ...) {
-  
-  if (is.null(feats))
+
+  if (is.null(feats)) {
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
-      "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
+      "crossing_points", "flat_spots", "hurst", "holt_parameters", "lumpiness",
       "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
+  }
 
   lrn = function(data, target, col, ...) {
     assertLogical(scale)

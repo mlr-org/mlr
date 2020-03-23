@@ -28,7 +28,7 @@ test_that("classif_boosting rpart control", {
   }
 
   parset.list2 = list(
-    #list(), # mfinal=100
+    # list(), # mfinal=100
     list(mfinal = 1),
     list(mfinal = 2, cp = 0.2)
   )

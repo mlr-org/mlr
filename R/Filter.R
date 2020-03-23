@@ -294,7 +294,7 @@ randomForestSRC.var.select = makeFilter( # nolint
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
       method = method, verbose = FALSE,
       ...)
-    
+
     im$varselect[setdiff(rownames(im$varselect), im$topvars), "depth"] = NA
     setNames(im$varselect[, "depth"], rownames(im$varselect))
   })

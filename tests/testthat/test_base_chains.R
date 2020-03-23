@@ -1,7 +1,6 @@
 context("chains")
 
 test_that("chains", {
-
   lrn1 = makeLearner("classif.rpart", minsplit = 10)
   lrn4 = makeFilterWrapper(lrn1, fw.perc = 0.5)
 

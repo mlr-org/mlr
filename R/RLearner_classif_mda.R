@@ -35,7 +35,7 @@ trainLearner.classif.mda = function(.learner, .task, .subset, .weights = NULL, m
     if (is.character(methods)) {
       args$method = getFromNamespace(method, "mda")
     } else {
-      args$method = method #this allows to set the method if on.par.out.of.bounds is set to "warn" or "quiet"
+      args$method = method # this allows to set the method if on.par.out.of.bounds is set to "warn" or "quiet"
     }
   }
   args = c(list(f, data = getTaskData(.task, .subset)), args)

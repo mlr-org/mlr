@@ -123,9 +123,9 @@ test_that("Fourier equal to expected", {
   t = seq(from = 0, to = 1, length.out = 501)
   data = data.frame(a = 1:2)
   data$fd = matrix(c(
-    .6 * cos(2*pi*t) + .3 * cos(4*2*pi*t + pi/4),
-    .8 * cos(2*pi*t) + .1 * cos(4*2*pi*t + pi/4)
-    ), nrow = 2, byrow = TRUE
+    .6 * cos(2 * pi * t) + .3 * cos(4 * 2 * pi * t + pi / 4),
+    .8 * cos(2 * pi * t) + .1 * cos(4 * 2 * pi * t + pi / 4)
+  ), nrow = 2, byrow = TRUE
   )
   data$a = NULL
 
@@ -136,7 +136,7 @@ test_that("Fourier equal to expected", {
   # Phase in range [-180; 180]
   expect_true(all(fourier.gp >= -180 & fourier.gp <= 180))
   # ~ pi/4 shift for 4th component
-  expect_true(all(abs(fourier.gp[, 5]  - 45) < 10))
+  expect_true(all(abs(fourier.gp[, 5] - 45) < 10))
   expect_true(all(abs(fourier.gp[, 2]) < 10))
   expect_true(all(dim(fourier.gp) == c(2, 501)))
 
@@ -145,8 +145,8 @@ test_that("Fourier equal to expected", {
 
   # Amplitude sqrt(Re^2 + Im^2) >= 0
   expect_true(all(fourier.gp >= 0))
-  expect_true(all(abs(fourier.gp[, 2]  - c(0.6, 0.8)) < 0.01))
-  expect_true(all(abs(fourier.gp[, 5]  - c(0.3, 0.1)) < 0.01))
+  expect_true(all(abs(fourier.gp[, 2] - c(0.6, 0.8)) < 0.01))
+  expect_true(all(abs(fourier.gp[, 5] - c(0.3, 0.1)) < 0.01))
   expect_true(all(dim(fourier.gp) == c(2, 501)))
 
   # Can not have factors
@@ -162,7 +162,7 @@ test_that("tsfeatures works", {
   gpfeats = extractFDATsfeatures()$reextract(data = gp1, col = "UVVIS", vals = gpvals)
   expect_equal(nrow(gpfeats), nrow(gp1))
 
-  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), 
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2),
     feat.methods = list("UVVIS" = extractFDATsfeatures()))
   expect_true(ncol(getTaskData(extr$task)) == 32L)
 
@@ -172,7 +172,7 @@ test_that("tsfeatures works", {
 
 test_that("extraction returns correct cols", {
   requirePackagesOrSkip("tsfeatures")
-  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:7), 
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:7),
     feat.methods = list("UVVIS" = extractFDATsfeatures()))
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 8:14), extr$desc)
   expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)

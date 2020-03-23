@@ -32,7 +32,7 @@ test_that("getResamplingIndices works with getFeatSelResult", {
   lrn1 = makeLearner("classif.rpart")
   ctrl = makeFeatSelControlRandom(maxit = 3)
   lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl,
-                            measures = getDefaultMeasure(multiclass.task))
+    measures = getDefaultMeasure(multiclass.task))
 
   r = resample(lrn2, multiclass.task, outer, extract = function(model) {
     getFeatSelResult(model)

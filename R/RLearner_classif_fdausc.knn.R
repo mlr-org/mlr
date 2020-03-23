@@ -23,7 +23,6 @@ makeRLearner.classif.fdausc.knn = function() {
 #' @export
 trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
 
-
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
