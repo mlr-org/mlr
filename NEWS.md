@@ -1,7 +1,3 @@
-# mlr 2.17.1.9000
-
-- Internal changes only
-
 # mlr 2.17.1
 
 ## Learners - bugfixes
