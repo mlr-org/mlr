@@ -32,6 +32,7 @@ jobs:
       CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
       CCACHE_NOHASHDIR: true
       CCACHE_SLOPPINESS: include_file_ctime
+      TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       RGL_USE_NULL: true
 
     steps:

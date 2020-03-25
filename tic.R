@@ -14,7 +14,7 @@ if (ci_on_ghactions()) {
   do_pkgdown()
 }
 
-if (Sys.info()[["sysname"]] == "Linux") {
+if (ci_has_env("codecov")) {
   get_stage("after_success") %>%
     add_code_step(covr::codecov())
 }
