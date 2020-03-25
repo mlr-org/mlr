@@ -100,7 +100,7 @@ makeMeasure and can be overwritten using setMeasurePars." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.0.9003</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -354,253 +354,115 @@ the measures will generate warnings.</p>
 <a href='makeMeasure.html'>makeMeasure</a> and can be overwritten using <a href='setMeasurePars.html'>setMeasurePars</a>.</p>
     </div>
 
-    <pre class="usage"><span class='no'>featperc</span>
-
-<span class='no'>timetrain</span>
-
-<span class='no'>timepredict</span>
-
-<span class='no'>timeboth</span>
-
-<span class='no'>sse</span>
-
-<span class='fu'>measureSSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>mse</span>
+    <pre class="usage"><span class='fu'>measureSSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
 <span class='fu'>measureMSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>rmse</span>
-
 <span class='fu'>measureRMSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>medse</span>
 
 <span class='fu'>measureMEDSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>sae</span>
-
 <span class='fu'>measureSAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>mae</span>
 
 <span class='fu'>measureMAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>medae</span>
-
 <span class='fu'>measureMEDAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>rsq</span>
 
 <span class='fu'>measureRSQ</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>expvar</span>
-
 <span class='fu'>measureEXPVAR</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>rrse</span>
 
 <span class='fu'>measureRRSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>rae</span>
-
 <span class='fu'>measureRAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>mape</span>
 
 <span class='fu'>measureMAPE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>msle</span>
-
 <span class='fu'>measureMSLE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>rmsle</span>
 
 <span class='fu'>measureRMSLE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>kendalltau</span>
-
 <span class='fu'>measureKendallTau</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>spearmanrho</span>
 
 <span class='fu'>measureSpearmanRho</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>mmce</span>
-
 <span class='fu'>measureMMCE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>acc</span>
 
 <span class='fu'>measureACC</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>ber</span>
-
 <span class='fu'>measureBER</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>multiclass.aunu</span>
 
 <span class='fu'>measureAUNU</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
 
-<span class='no'>multiclass.aunp</span>
-
 <span class='fu'>measureAUNP</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
-
-<span class='no'>multiclass.au1u</span>
 
 <span class='fu'>measureAU1U</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
 
-<span class='no'>multiclass.au1p</span>
-
 <span class='fu'>measureAU1P</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
-
-<span class='no'>multiclass.brier</span>
 
 <span class='fu'>measureMulticlassBrier</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
 
-<span class='no'>logloss</span>
-
 <span class='fu'>measureLogloss</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
-
-<span class='no'>ssr</span>
 
 <span class='fu'>measureSSR</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
 
-<span class='no'>qsr</span>
-
 <span class='fu'>measureQSR</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
-
-<span class='no'>lsr</span>
 
 <span class='fu'>measureLSR</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
 
-<span class='no'>kappa</span>
-
 <span class='fu'>measureKAPPA</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>wkappa</span>
 
 <span class='fu'>measureWKAPPA</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>auc</span>
-
 <span class='fu'>measureAUC</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
-
-<span class='no'>brier</span>
 
 <span class='fu'>measureBrier</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
 
-<span class='no'>brier.scaled</span>
-
 <span class='fu'>measureBrierScaled</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
-
-<span class='no'>bac</span>
 
 <span class='fu'>measureBAC</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>tp</span>
-
 <span class='fu'>measureTP</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
-
-<span class='no'>tn</span>
 
 <span class='fu'>measureTN</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
 
-<span class='no'>fp</span>
-
 <span class='fu'>measureFP</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
-
-<span class='no'>fn</span>
 
 <span class='fu'>measureFN</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
 
-<span class='no'>tpr</span>
-
 <span class='fu'>measureTPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
-
-<span class='no'>tnr</span>
 
 <span class='fu'>measureTNR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
 
-<span class='no'>fpr</span>
-
 <span class='fu'>measureFPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
-
-<span class='no'>fnr</span>
 
 <span class='fu'>measureFNR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
 
-<span class='no'>ppv</span>
-
 <span class='fu'>measurePPV</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>, <span class='kw'>probabilities</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='no'>npv</span>
 
 <span class='fu'>measureNPV</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
 
-<span class='no'>fdr</span>
-
 <span class='fu'>measureFDR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
-
-<span class='no'>mcc</span>
 
 <span class='fu'>measureMCC</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
 
-<span class='no'>f1</span>
-
 <span class='fu'>measureF1</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
-
-<span class='no'>gmean</span>
 
 <span class='fu'>measureGMEAN</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
 
-<span class='no'>gpr</span>
-
 <span class='fu'>measureGPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
-
-<span class='no'>multilabel.hamloss</span>
 
 <span class='fu'>measureMultilabelHamloss</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>multilabel.subset01</span>
-
 <span class='fu'>measureMultilabelSubset01</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>multilabel.f1</span>
 
 <span class='fu'>measureMultilabelF1</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>multilabel.acc</span>
-
 <span class='fu'>measureMultilabelACC</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>multilabel.ppv</span>
 
 <span class='fu'>measureMultilabelPPV</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
 
-<span class='no'>multilabel.tpr</span>
-
-<span class='fu'>measureMultilabelTPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
-
-<span class='no'>cindex</span>
-
-<span class='no'>cindex.uno</span>
-
-<span class='no'>iauc.uno</span>
-
-<span class='no'>ibrier</span>
-
-<span class='no'>meancosts</span>
-
-<span class='no'>mcp</span>
-
-<span class='no'>db</span>
-
-<span class='no'>G1</span>
-
-<span class='no'>G2</span>
-
-<span class='no'>silhouette</span></pre>
+<span class='fu'>measureMultilabelTPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -634,133 +496,6 @@ The name of the positive class.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>An object of class <code>Measure</code> of length 10.</p>
-<p>An object of class <code>Measure</code> of length 10.</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
-<p>none</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>He, H. &amp; Garcia, E. A. (2009)
@@ -791,7 +526,6 @@ Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <a 
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#format">Format</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
@@ -802,7 +536,7 @@ Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <a 
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

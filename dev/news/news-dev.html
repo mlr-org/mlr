@@ -84,7 +84,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.0.9003</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -318,22 +318,22 @@
       
     </div>
 
-    <div id="mlr-2-17-0-9000" class="section level1">
+    <div id="mlr-21709000" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-17-0-9000" class="anchor"></a>mlr 2.17.0.9000<small> Unreleased </small>
+<a href="#mlr-21709000" class="anchor"></a>mlr 2.17.0.9000<small> Unreleased </small>
 </h1>
-<div id="filters---bugfixes" class="section level2">
+<div id="filters---bugfixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#filters---bugfixes" class="anchor"></a>filters - bugfixes</h2>
+<a href="#filters---bugfixes-1" class="anchor"></a>filters - bugfixes</h2>
 <ul>
 <li>Fixed an issue which caused the random forest minimal depth filter to only return NA values when using thresholding. NAs should only be returned for features below the given threshold. (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2710'>#2710</a>)</li>
 <li>Fixed problem which prevented passing filter options via argument <code>more.args</code> for simple filters (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2709'>#2709</a>)</li>
 </ul>
 </div>
 </div>
-    <div id="mlr-2-17-0-9001" class="section level1">
+    <div id="mlr-21709001" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-17-0-9001" class="anchor"></a>mlr 2.17.0.9001<small> Unreleased </small>
+<a href="#mlr-21709001" class="anchor"></a>mlr 2.17.0.9001<small> Unreleased </small>
 </h1>
 <ul>
 <li>Fix <code>print.FeatSelResult()</code> when bits.to.features is used in <code><a href="../reference/selectFeatures.html">selectFeatures()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2721'>#2721</a>)</li>
@@ -343,9 +343,9 @@
 <code><a href="../reference/listLearners.html">listLearners()</a></code> should not fail if a package is not installed (<a href='https://github.com/mlr-org/mlr/issues/2717'>#2717</a>)</li>
 </ul>
 </div>
-    <div id="mlr-2-17-0-9002" class="section level1">
+    <div id="mlr-21709002" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-17-0-9002" class="anchor"></a>mlr 2.17.0.9002<small> Unreleased </small>
+<a href="#mlr-21709002" class="anchor"></a>mlr 2.17.0.9002<small> Unreleased </small>
 </h1>
 <ul>
 <li>Bugfix: <code><a href="../reference/tuneThreshold.html">tuneThreshold()</a></code> now accounts for the direction of the measure. Beforehand, the performance measure was always minimized (<a href='https://github.com/mlr-org/mlr/issues/2732'>#2732</a>).</li>
@@ -353,14 +353,22 @@
 <li>Account for {checkmate} v2.0.0 update (<a href='https://github.com/mlr-org/mlr/issues/2734'>#2734</a>)</li>
 </ul>
 </div>
-    <div id="mlr-2-17-0-9003" class="section level1">
+    <div id="mlr-21709003" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-17-0-9003" class="anchor"></a>mlr 2.17.0.9003<small> Unreleased </small>
+<a href="#mlr-21709003" class="anchor"></a>mlr 2.17.0.9003<small> Unreleased </small>
 </h1>
 <ul>
 <li>remove measure <code>clValid::dunn</code> and its tests (package orphaned) (<a href='https://github.com/mlr-org/mlr/issues/2742'>#2742</a>)</li>
 <li>Refactor function calls from packages (<code>&lt;pkg::fun&gt;</code>) within ParamSets (<a href='https://github.com/mlr-org/mlr/issues/2730'>#2730</a>) to avoid errors in <code><a href="../reference/listLearners.html">listLearners()</a></code> if those pkgs are not installed</li>
 <li>remove <code>regr_slim</code> learner due to pkg (flare) being orphaned on CRAN</li>
+</ul>
+</div>
+    <div id="mlr-21719000" class="section level1">
+<h1 class="page-header">
+<a href="#mlr-21719000" class="anchor"></a>mlr 2.17.1.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li>Internal changes only</li>
 </ul>
 </div>
   </div>
@@ -369,10 +377,11 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mlr-2-17-0-9000">2.17.0.9000</a></li>
-        <li><a href="#mlr-2-17-0-9001">2.17.0.9001</a></li>
-        <li><a href="#mlr-2-17-0-9002">2.17.0.9002</a></li>
-        <li><a href="#mlr-2-17-0-9003">2.17.0.9003</a></li>
+        <li><a href="#mlr-21709000">2.17.0.9000</a></li>
+        <li><a href="#mlr-21709001">2.17.0.9001</a></li>
+        <li><a href="#mlr-21709002">2.17.0.9002</a></li>
+        <li><a href="#mlr-21709003">2.17.0.9003</a></li>
+        <li><a href="#mlr-21719000">2.17.1.9000</a></li>
       </ul>
     </div>
   </div>
@@ -382,7 +391,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

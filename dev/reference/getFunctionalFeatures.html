@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FuelSubset functional data regression task. — fuelsubset.task • mlr</title>
+<title>Get only functional features from a task or a data.frame. — getFunctionalFeatures • mlr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,12 +49,9 @@
 
 
 
-<meta property="og:title" content="FuelSubset functional data regression task. — fuelsubset.task" />
-<meta property="og:description" content="Contains the task (fuelsubset.task).
-2 functional covariates and 1 scalar covariate.
-You have to predict the heat value of some fuel based on the
-ultraviolet radiation spectrum and infrared ray radiation and one scalar
-column called h2o." />
+<meta property="og:title" content="Get only functional features from a task or a data.frame. — getFunctionalFeatures" />
+<meta property="og:description" content="The parameters &amp;#8220;subset&amp;#8221;, &amp;#8220;features&amp;#8221;, and &amp;#8220;recode.target&amp;#8221;
+are ignored for the data.frame method." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -319,34 +316,75 @@ column called h2o." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>FuelSubset functional data regression task.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
-    <div class="hidden name"><code>fuelsubset.task.Rd</code></div>
+    <h1>Get only functional features from a task or a data.frame.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/getFunctionalFeatures.R'><code>R/getFunctionalFeatures.R</code></a></small>
+    <div class="hidden name"><code>getFunctionalFeatures.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Contains the task (<code>fuelsubset.task</code>).
-2 functional covariates and 1 scalar covariate.
-You have to predict the heat value of some fuel based on the
-ultraviolet radiation spectrum and infrared ray radiation and one scalar
-column called h2o.</p>
+    <p>The parameters &#8220;subset&#8221;, &#8220;features&#8221;, and &#8220;recode.target&#8221;
+are ignored for the data.frame method.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>getFunctionalFeatures</span>(<span class='no'>object</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>features</span>, <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>)
 
+<span class='co'># S3 method for Task</span>
+<span class='fu'>getFunctionalFeatures</span>(<span class='no'>object</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>features</span>, <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>)
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>getFunctionalFeatures</span>(<span class='no'>object</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>features</span>, <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>)</pre>
 
-    <p>The features and grids are scaled in the same way as in <a href='https://rdrr.io/pkg/FDboost/man/FDboost.html'>FDboost::FDboost</a>.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>(<a href='Task.html'>Task</a>/<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
+Object to check on.</p></td>
+    </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>(<a href='https://rdrr.io/r/base/integer.html'>integer</a> | <a href='https://rdrr.io/r/base/logical.html'>logical</a> | <code>NULL</code>)<br />
+Selected cases. Either a logical or an index vector.
+By default <code>NULL</code> if all observations are used.</p></td>
+    </tr>
+    <tr>
+      <th>features</th>
+      <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a> | <a href='https://rdrr.io/r/base/integer.html'>integer</a> | <a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br />
+Vector of selected inputs. You can either pass a character vector with the
+feature names, a vector of indices, or a logical vector.<br />
+In case of an index vector each element denotes the position of the feature
+name returned by <a href='getTaskFeatureNames.html'>getTaskFeatureNames</a>.<br />
+Note that the target feature is always included in the
+resulting task, you should not pass it here.
+Default is to use all features.</p></td>
+    </tr>
+    <tr>
+      <th>recode.target</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+Should target classes be recoded? Supported are binary and multilabel classification and survival.
+Possible values for binary classification are &#8220;01&#8221;, &#8220;-1+1&#8221; and &#8220;drop.levels&#8221;.
+In the two latter cases the target vector is converted into a numeric vector.
+The positive class is coded as &#8220;+1&#8221; and the negative class either as &#8220;0&#8221; or &#8220;-1&#8221;.
+&#8220;drop.levels&#8221; will remove empty factor levels in the target column.
+In the multilabel case the logical targets can be converted to factors with &#8220;multilabel.factor&#8221;.
+For survival, you may choose to recode the survival times to &#8220;left&#8221;, &#8220;right&#8221; or &#8220;interval2&#8221; censored times
+using &#8220;lcens&#8221;, &#8220;rcens&#8221; or &#8220;icens&#8221;, respectively.
+See <a href='https://rdrr.io/pkg/survival/man/Surv.html'>survival::Surv</a> for the format specification.
+Default for both binary classification and survival is &#8220;no&#8221; (do nothing).</p></td>
+    </tr>
+    </table>
 
-    <p>See Brockhaus, S., Scheipl, F., Hothorn, T., &amp; Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.</p>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns a <code>data.frame</code> containing only the functional features.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#details">Details</a></li>
-      <li><a href="#references">References</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
     </ul>
 
   </div>

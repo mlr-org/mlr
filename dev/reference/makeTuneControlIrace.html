@@ -50,18 +50,17 @@
 
 
 <meta property="og:title" content="Create control object for hyperparameter tuning with Irace. — makeTuneControlIrace" />
-<meta property="og:description" content="Tuning with iterated F-Racing with method irace::irace.
-All kinds of parameter types can be handled. We return the best of the final elite
-candidates found by irace in the last race. Its estimated performance is the mean of all
-evaluations ever done for that candidate. More information on irace can be found in the TR at
-http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf.
-For resampling you have to pass a ResampleDesc,
-not a ResampleInstance.
+<meta property="og:description" content="Tuning with iterated F-Racing with method irace::irace. All
+kinds of parameter types can be handled. We return the best of the final
+elite candidates found by irace in the last race. Its estimated performance
+is the mean of all evaluations ever done for that candidate. More information
+on irace can be found in package vignette: vignette(&quot;irace-package&quot;, package = &quot;irace&quot;)
+For resampling you have to pass a ResampleDesc, not a ResampleInstance.
 The resampling strategy is randomly instantiated n.instances times and
-these are the instances in the sense of irace (instances element of tunerConfig
-in irace::irace). Also note that irace will always
-store its tuning results in a file on disk, see the package documentation for details on this
-and how to change the file path." />
+these are the instances in the sense of irace (instances element of
+tunerConfig in irace::irace). Also note that irace will always store its
+tuning results in a file on disk, see the package documentation for details
+on this and how to change the file path." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -96,7 +95,7 @@ and how to change the file path." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.0.9003</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -332,18 +331,17 @@ and how to change the file path." />
     </div>
 
     <div class="ref-description">
-    <p>Tuning with iterated F-Racing with method <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>.
-All kinds of parameter types can be handled. We return the best of the final elite
-candidates found by irace in the last race. Its estimated performance is the mean of all
-evaluations ever done for that candidate. More information on irace can be found in the TR at
-<a href='http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf'>http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf</a>.</p>
-<p>For resampling you have to pass a <a href='makeResampleDesc.html'>ResampleDesc</a>,
-not a <a href='makeResampleInstance.html'>ResampleInstance</a>.
+    <p>Tuning with iterated F-Racing with method <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>. All
+kinds of parameter types can be handled. We return the best of the final
+elite candidates found by irace in the last race. Its estimated performance
+is the mean of all evaluations ever done for that candidate. More information
+on irace can be found in package vignette: <code><a href='https://cran.rstudio.com/web/packages/irace/vignettes/irace-package.pdf'>vignette("irace-package", package = "irace")</a></code></p>
+<p>For resampling you have to pass a <a href='makeResampleDesc.html'>ResampleDesc</a>, not a <a href='makeResampleInstance.html'>ResampleInstance</a>.
 The resampling strategy is randomly instantiated <code>n.instances</code> times and
-these are the instances in the sense of irace (<code>instances</code> element of <code>tunerConfig</code>
-in <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>). Also note that irace will always
-store its tuning results in a file on disk, see the package documentation for details on this
-and how to change the file path.</p>
+these are the instances in the sense of irace (<code>instances</code> element of
+<code>tunerConfig</code> in <a href='https://rdrr.io/pkg/irace/man/irace.html'>irace::irace</a>). Also note that irace will always store its
+tuning results in a file on disk, see the package documentation for details
+on this and how to change the file path.</p>
     </div>
 
     <pre class="usage"><span class='fu'>makeTuneControlIrace</span>(
@@ -475,7 +473,7 @@ towards the <code>tunerConfig</code> argument of <a href='https://rdrr.io/pkg/ir
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

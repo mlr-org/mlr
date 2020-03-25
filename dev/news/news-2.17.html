@@ -84,7 +84,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.0.9003</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -318,9 +318,9 @@
       
     </div>
 
-    <div id="mlr-2-17-0" class="section level1">
+    <div id="mlr-2170" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-17-0" class="anchor"></a>mlr 2.17.0<small> 2020-01-10 </small>
+<a href="#mlr-2170" class="anchor"></a>mlr 2.17.0<small> 2020-01-10 </small>
 </h1>
 <div id="plotting" class="section level2">
 <h2 class="hasAnchor">
@@ -335,14 +335,16 @@
 <a href="#functional-data" class="anchor"></a>Functional Data</h2>
 <p>PR: <a href='https://github.com/mlr-org/mlr/issues/2638'>#2638</a> (<a href='https://github.com/pfistl'>@pfistl</a>)</p>
 <ul>
-<li>Added several learners for regression and classification on functional data
+<li>
+<p>Added several learners for regression and classification on functional data</p>
 <ul>
 <li>classif.classiFunc.(kernel|knn) (knn/kernel using various semi-metrics)</li>
 <li>(classif|regr).fgam (Functional generalized additive models)</li>
 <li>(classif|regr).FDboost (Boosted functional generalized additive models)</li>
 </ul>
 </li>
-<li>Added preprocessing steps for feature extraction from functional data
+<li>
+<p>Added preprocessing steps for feature extraction from functional data</p>
 <ul>
 <li>extractFDAFourier (Fourier transform)</li>
 <li>extractFDAWavelets (Wavelet features)</li>
@@ -353,7 +355,7 @@
 </ul>
 </li>
 <li><p>Fixed a bug where multiclass to binaryclass reduction techniques did not work with functional data.</p></li>
-<li>Several other minor bug fixes and code improvements</li>
+<li><p>Several other minor bug fixes and code improvements</p></li>
 <li><p>Extended and clarified documentation for several fda components.</p></li>
 </ul>
 </div>
@@ -374,13 +376,60 @@
 <li>Allow ensemble filters to include multiple base filters of the same type (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2688'>#2688</a>)</li>
 </ul>
 </div>
-<div id="filters---bugfixes-1" class="section level2">
+<div id="filters---bugfixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#filters---bugfixes-1" class="anchor"></a>filters - bugfixes</h2>
+<a href="#filters---bugfixes-2" class="anchor"></a>filters - bugfixes</h2>
 <ul>
 <li>
 <code><a href="../reference/filterFeatures.html">filterFeatures()</a></code>: Arg <code>thresh</code> was not working correctly when applied to ensemble filters. (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2699'>#2699</a>)</li>
 <li>Fixed incorrect ranking of ensemble filters. Thanks <a href='https://github.com/annette987'>@annette987</a> (<a href='https://github.com/mlr-org/mlr/issues/2698'>#2698</a>)</li>
+</ul>
+</div>
+</div>
+    <div id="mlr-2171" class="section level1">
+<h1 class="page-header">
+<a href="#mlr-2171" class="anchor"></a>mlr 2.17.1<small> 2020-03-24 </small>
+</h1>
+<div id="learners---bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learners---bugfixes" class="anchor"></a>Learners - bugfixes</h2>
+<ul>
+<li>remove <code>regr_slim</code> learner due to pkg (flare) being orphaned on CRAN</li>
+</ul>
+</div>
+<div id="measures---bugixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#measures---bugixes" class="anchor"></a>Measures - bugixes</h2>
+<ul>
+<li>remove measure <code>clValid::dunn</code> and its tests (package orphaned) (<a href='https://github.com/mlr-org/mlr/issues/2742'>#2742</a>)</li>
+<li>Bugfix: <code><a href="../reference/tuneThreshold.html">tuneThreshold()</a></code> now accounts for the direction of the measure. Beforehand, the performance measure was always minimized (<a href='https://github.com/mlr-org/mlr/issues/2732'>#2732</a>).</li>
+<li>Remove adjusted Rsq measure (arsq), fixes <a href='https://github.com/mlr-org/mlr/issues/2711'>#2711</a></li>
+</ul>
+</div>
+<div id="filters---bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters---bugfixes" class="anchor"></a>Filters - bugfixes</h2>
+<ul>
+<li>Fixed an issue which caused the random forest minimal depth filter to only return NA values when using thresholding. NAs should only be returned for features below the given threshold. (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2710'>#2710</a>)</li>
+<li>Fixed problem which prevented passing filter options via argument <code>more.args</code> for simple filters (<a href='https://github.com/annette987'>@annette987</a>, <a href='https://github.com/mlr-org/mlr/issues/2709'>#2709</a>)</li>
+</ul>
+</div>
+<div id="feature-selection---bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#feature-selection---bugfixes" class="anchor"></a>Feature selection - bugfixes</h2>
+<ul>
+<li>Fix <code>print.FeatSelResult()</code> when bits.to.features is used in <code><a href="../reference/selectFeatures.html">selectFeatures()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2721'>#2721</a>)</li>
+<li>Return a long DF for <code><a href="../reference/getFeatureImportance.html">getFeatureImportance()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2708'>#2708</a>)</li>
+</ul>
+</div>
+<div id="misc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#misc" class="anchor"></a>Misc</h2>
+<ul>
+<li><p>pkgdown: Move changelog to Appendix</p></li>
+<li><p>Account for {checkmate} v2.0.0 update (<a href='https://github.com/mlr-org/mlr/issues/2734'>#2734</a>)</p></li>
+<li><p>Refactor function calls from packages (<code>&lt;pkg::fun&gt;</code>) within ParamSets (<a href='https://github.com/mlr-org/mlr/issues/2730'>#2730</a>) to avoid errors in <code><a href="../reference/listLearners.html">listLearners()</a></code> if those pkgs are not installed</p></li>
+<li><p><code><a href="../reference/listLearners.html">listLearners()</a></code> should not fail if a package is not installed (<a href='https://github.com/mlr-org/mlr/issues/2717'>#2717</a>)</p></li>
 </ul>
 </div>
 </div>
@@ -390,7 +439,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mlr-2-17-0">2.17.0</a></li>
+        <li><a href="#mlr-2170">2.17.0</a></li>
+        <li><a href="#mlr-2171">2.17.1</a></li>
       </ul>
     </div>
   </div>
@@ -400,7 +450,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

@@ -84,7 +84,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.0.9003</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -318,9 +318,9 @@
       
     </div>
 
-    <div id="mlr-2-14-0" class="section level1">
+    <div id="mlr-2140" class="section level1">
 <h1 class="page-header">
-<a href="#mlr-2-14-0" class="anchor"></a>mlr 2.14.0<small> 2019-04-25 </small>
+<a href="#mlr-2140" class="anchor"></a>mlr 2.14.0<small> 2019-04-25 </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -328,7 +328,7 @@
 <ul>
 <li>add option to use fully predefined indices in resampling (<code><a href="../reference/makeResampleDesc.html">makeResampleDesc(fixed = TRUE)</a></code>) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2412'>#2412</a>).</li>
 <li>
-<code>Task</code> help pages are now split into separate ones, e.g. <code>RegrTask</code>, <code>ClassifTask</code> (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2564'>#2564</a>)</li>
+<code>Task</code> help pages are now split into separate ones, e.g. <code>RegrTask</code>, <code>ClassifTask</code> (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2564'>#2564</a>)</li>
 </ul>
 </div>
 <div id="functions---new" class="section level2">
@@ -377,8 +377,9 @@
 <h2 class="hasAnchor">
 <a href="#filter---general-1" class="anchor"></a>filter - general</h2>
 <ul>
-<li>Added filters <code>FSelectorRcpp_gain.ratio</code>, <code>FSelectorRcpp_information.gain</code> and <code>FSelectorRcpp_symmetrical.uncertainty</code> from package <code>FSelectorRcpp</code>. These filters are ~ 100 times faster than the implementation of the <code>FSelector</code> pkg. Please note that both implementations do things slightly different internally and the <code>FSelectorRcpp</code> methods should not be seen as direct replacement for the <code>FSelector</code> pkg.</li>
-<li>filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2533'>#2533</a>)
+<li><p>Added filters <code>FSelectorRcpp_gain.ratio</code>, <code>FSelectorRcpp_information.gain</code> and <code>FSelectorRcpp_symmetrical.uncertainty</code> from package <code>FSelectorRcpp</code>. These filters are ~ 100 times faster than the implementation of the <code>FSelector</code> pkg. Please note that both implementations do things slightly different internally and the <code>FSelectorRcpp</code> methods should not be seen as direct replacement for the <code>FSelector</code> pkg.</p></li>
+<li>
+<p>filter names have been harmonized using the following scheme: <pkgname>_<filtername>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2533'>#2533</a>)</filtername></pkgname></p>
 <ul>
 <li>
 <code>information.gain</code> -&gt; <code>FSelector_information.gain</code>
@@ -407,9 +408,9 @@
 <li>
 <code>randomForest.importance</code> -&gt; <code>randomForest_importance</code>
 </li>
-</ul></filtername></pkgname>
+</ul>
 </li>
-<li>fixed a bug related to the loading of namespaces for required filter packages (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2483'>#2483</a>)</li>
+<li><p>fixed a bug related to the loading of namespaces for required filter packages (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2483'>#2483</a>)</p></li>
 </ul>
 </div>
 <div id="learners---new-1" class="section level2">
@@ -452,7 +453,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mlr-2-14-0">2.14.0</a></li>
+        <li><a href="#mlr-2140">2.14.0</a></li>
       </ul>
     </div>
   </div>
@@ -462,7 +463,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
