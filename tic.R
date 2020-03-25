@@ -14,7 +14,7 @@ if (ci_on_ghactions()) {
   do_pkgdown()
 }
 
-if (ci_is_env("codecov", "true")) {
+if (ci_is_env("CODECOV", "true")) {
   get_stage("after_success") %>%
     add_code_step(covr::codecov())
 }
