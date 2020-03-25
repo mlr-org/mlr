@@ -19,9 +19,9 @@ jobs:
       matrix:
         config:
           - { os: windows-latest, r: "release" }
-          - { os: macOS-latest, r: "release" }
+          - { os: macOS-latest, r: "release", codecov: "true" }
           - { os: macOS-latest, r: "devel" }
-          - { os: ubuntu-18.04, r: "release", codecov: "true" }
+          - { os: ubuntu-18.04, r: "release"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
