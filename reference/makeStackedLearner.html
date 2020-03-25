@@ -50,17 +50,19 @@
 
 
 <meta property="og:title" content="Create a stacked learner object. — makeStackedLearner" />
-<meta property="og:description" content="A stacked learner uses predictions of several base learners and fits
-a super learner using these predictions as features in order to predict the outcome.
-The following stacking methods are available:
-
-  `average`Averaging of base learner predictions without weights.
-  `stack.nocv`Fits the super learner, where in-sample predictions of the base learners are used.
-  `stack.cv`Fits the super learner, where the base learner predictions are computed
-  by crossvalidated predictions (the resampling strategy can be set via the `resampling` argument).
-  `hill.climb`Select a subset of base learner predictions by hill climbing algorithm.
-  `compress`Train a neural network to compress the model from a collection of base learners.
- 
+<meta property="og:description" content="A stacked learner uses predictions of several base learners and
+fits a super learner using these predictions as features in order to
+predict the outcome. The following stacking methods are available:
+average Averaging of base learner predictions without weights.
+stack.nocv Fits the super learner, where in-sample predictions of
+the base learners are used.
+stack.cv Fits the super learner, where the base learner predictions
+are computed by cross-validated predictions (the resampling strategy can be
+set via the resampling argument).
+hill.climb Select a subset of base learner predictions by hill
+climbing algorithm.
+compress Train a neural network to compress the model from a
+collection of base learners.
 
 " />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
@@ -94,14 +96,14 @@ The following stacking methods are available:
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
-      </span>
-    </div>
 
+      <div class="navbar-brand-container">
+        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+      </div>
+    </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Basics
@@ -275,16 +277,15 @@ The following stacking methods are available:
     <li>
       <a href="http://openml.github.io/openml-r/">OpenML</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Changelog</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
     <span class="fab fa fab fa-github fa-lg"></span>
@@ -292,8 +293,8 @@ The following stacking methods are available:
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -311,7 +312,7 @@ The following stacking methods are available:
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right docsearch" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -334,18 +335,20 @@ The following stacking methods are available:
     </div>
 
     <div class="ref-description">
-    <p>A stacked learner uses predictions of several base learners and fits
-a super learner using these predictions as features in order to predict the outcome.
-The following stacking methods are available:</p>
-<p></p><dl class='dl-horizontal'>
-  <dt>`average`</dt><dd><p>Averaging of base learner predictions without weights.</p></dd>
-  <dt>`stack.nocv`</dt><dd><p>Fits the super learner, where in-sample predictions of the base learners are used.</p></dd>
-  <dt>`stack.cv`</dt><dd><p>Fits the super learner, where the base learner predictions are computed
-  by crossvalidated predictions (the resampling strategy can be set via the `resampling` argument).</p></dd>
-  <dt>`hill.climb`</dt><dd><p>Select a subset of base learner predictions by hill climbing algorithm.</p></dd>
-  <dt>`compress`</dt><dd><p>Train a neural network to compress the model from a collection of base learners.</p></dd>
- 
-</dl>
+    <p>A stacked learner uses predictions of several base learners and
+fits a super learner using these predictions as features in order to
+predict the outcome. The following stacking methods are available:</p><ul>
+<li><p><code>average</code><br /> Averaging of base learner predictions without weights.</p></li>
+<li><p><code>stack.nocv</code><br /> Fits the super learner, where in-sample predictions of
+the base learners are used.</p></li>
+<li><p><code>stack.cv</code><br /> Fits the super learner, where the base learner predictions
+are computed by cross-validated predictions (the resampling strategy can be
+set via the <code>resampling</code> argument).</p></li>
+<li><p><code>hill.climb</code><br /> Select a subset of base learner predictions by hill
+climbing algorithm.</p></li>
+<li><p><code>compress</code><br /> Train a neural network to compress the model from a
+collection of base learners.</p></li>
+</ul>
 
     </div>
 
@@ -364,75 +367,75 @@ The following stacking methods are available:</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>base.learners</th>
-      <td><p>[(list of) [Learner])<br />
-A list of learners created with `makeLearner`.</p></td>
+      <td><p>((list of) <a href='makeLearner.html'>Learner</a>)<br />
+A list of learners created with <code>makeLearner</code>.</p></td>
     </tr>
     <tr>
       <th>super.learner</th>
-      <td><p>[<code><a href='makeLearner.html'>Learner</a> | character(1)</code>]<br />
-The super learner that makes the final prediction based on the base learners.
-If you pass a string, the super learner will be created via `makeLearner`.
-Not used for `method = 'average'`. Default is `NULL`.</p></td>
+      <td><p>(<a href='makeLearner.html'>Learner</a> | character(1))<br />
+The super learner that makes the final prediction based on the base
+learners. If you pass a string, the super learner will be created via
+<code>makeLearner</code>. Not used for <code>method = 'average'</code>. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>predict.type</th>
-      <td><p>(`character(1)`)<br />
-Sets the type of the final prediction for `method = 'average'`.
-For other methods, the predict type should be set within `super.learner`.
-If the type of the base learner prediction, which is set up within `base.learners`, is</p><dl class='dl-horizontal'>
- <dt>`"prob"`</dt><dd><p>then `predict.type = 'prob'` will use the average of all
- bease learner predictions and `predict.type = 'response'` will use
- the class with highest probability as final prediction.</p></dd>
- <dt>`"response"`</dt><dd><p>then, for classification tasks with `predict.type = 'prob'`,
- the final prediction will be the relative frequency based on the predicted base learner classes
- and classification tasks with `predict.type = 'response'` will use majority vote of the base
- learner predictions to determine the final prediction.
- For regression tasks, the final prediction will be the average of the base learner predictions.</p></dd>
-
-</dl></td>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+Sets the type of the final prediction for <code>method = 'average'</code>. For other
+methods, the predict type should be set within <code>super.learner</code>. If the type
+of the base learner prediction, which is set up within <code>base.learners</code>, is</p><ul>
+<li><p><code>"prob"</code><br /> then <code>predict.type = 'prob'</code> will use the average of all
+base learner predictions and <code>predict.type = 'response'</code> will use the
+class with highest probability as final prediction.</p></li>
+<li><p><code>"response"</code><br /> then, for classification tasks with <code>predict.type =    'prob'</code>, the final prediction will be the relative frequency based on the
+predicted base learner classes and classification tasks with <code>predict.type    = 'response'</code> will use majority vote of the base learner predictions to
+determine the final prediction. For regression tasks, the final prediction
+will be the average of the base learner predictions.</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(`character(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
 &#8220;average&#8221; for averaging the predictions of the base learners,
-&#8220;stack.nocv&#8221; for building a super learner using the predictions of the base learners,
-&#8220;stack.cv&#8221; for building a super learner using crossvalidated predictions of the base learners.
-&#8220;hill.climb&#8221; for averaging the predictions of the base learners, with the weights learned from
-hill climbing algorithm and
-&#8220;compress&#8221; for compressing the model to mimic the predictions of a collection of base learners
-while speeding up the predictions and reducing the size of the model.
-Default is &#8220;stack.nocv&#8221;,</p></td>
+&#8220;stack.nocv&#8221; for building a super learner using the predictions of
+the base learners,
+&#8220;stack.cv&#8221; for building a super learner using cross-validated
+predictions of the base learners.
+&#8220;hill.climb&#8221; for averaging the predictions of the base learners,
+with the weights learned from hill climbing algorithm and
+&#8220;compress&#8221; for compressing the model to mimic the predictions of a
+collection of base learners while speeding up the predictions and reducing
+the size of the model. Default is &#8220;stack.nocv&#8221;,</p></td>
     </tr>
     <tr>
       <th>use.feat</th>
-      <td><p>(`logical(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Whether the original features should also be passed to the super learner.
-Not used for `method = 'average'`.
-Default is `FALSE`.</p></td>
+Not used for <code>method = 'average'</code>.
+Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>resampling</th>
-      <td><p>([ResampleDesc])<br />
-Resampling strategy for `method = 'stack.cv'`.
+      <td><p>(<a href='makeResampleDesc.html'>ResampleDesc</a>)<br />
+Resampling strategy for <code>method = 'stack.cv'</code>.
 Currently only CV is allowed for resampling.
-The default `NULL` uses 5-fold CV.</p></td>
+The default <code>NULL</code> uses 5-fold CV.</p></td>
     </tr>
     <tr>
       <th>parset</th>
-      <td><p>the parameters for `hill.climb` method, including</p><dl class='dl-horizontal'>
-  <dt>`replace`</dt><dd><p>Whether a base learner can be selected more than once.</p></dd>
-  <dt>`init`</dt><dd><p>Number of best models being included before the selection algorithm.</p></dd>
-  <dt>`bagprob`</dt><dd><p>The proportion of models being considered in one round of selection.</p></dd>
-  <dt>`bagtime`</dt><dd><p>The number of rounds of the bagging selection.</p></dd>
-  <dt>`metric`</dt><dd><p>The result evaluation metric function taking two parameters `pred` and `true`,
-  the smaller the score the better.</p></dd>
+      <td><p>the parameters for <code>hill.climb</code> method, including</p><ul>
+<li><p><code>replace</code><br /> Whether a base learner can be selected more than once.</p></li>
+<li><p><code>init</code><br /> Number of best models being included before the selection algorithm.</p></li>
+<li><p><code>bagprob</code><br /> The proportion of models being considered in one round of selection.</p></li>
+<li><p><code>bagtime</code><br /> The number of rounds of the bagging selection.</p></li>
+<li><p><code>metric</code><br /> The result evaluation metric function taking two parameters
+<code>pred</code> and <code>true</code>, the smaller the score the better.</p></li>
+</ul>
 
-</dl><p>the parameters for `compress` method, including</p><dl class='dl-horizontal'>
-   <dt>k</dt><dd><p>the size multiplier of the generated data</p></dd>
-   <dt>prob</dt><dd><p>the probability to exchange values</p></dd>
-   <dt>s</dt><dd><p>the standard deviation of each numerical feature</p></dd>
-
-</dl></td>
+<p>the parameters for <code>compress</code> method, including</p><ul>
+<li><p>k<br /> the size multiplier of the generated data</p></li>
+<li><p>prob<br /> the probability to exchange values</p></li>
+<li><p>s<br /> the standard deviation of each numerical feature</p></li>
+</ul></td>
     </tr>
     </table>
 
@@ -469,7 +472,7 @@ The default `NULL` uses 5-fold CV.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

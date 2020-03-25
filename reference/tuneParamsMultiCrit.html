@@ -54,7 +54,7 @@
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
-[TuneMultiCritControl]." />
+TuneMultiCritControl." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -86,14 +86,14 @@ by passing a corresponding control object. For a complete list of implemented al
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
-      </span>
-    </div>
 
+      <div class="navbar-brand-container">
+        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+      </div>
+    </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Basics
@@ -267,16 +267,15 @@ by passing a corresponding control object. For a complete list of implemented al
     <li>
       <a href="http://openml.github.io/openml-r/">OpenML</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Changelog</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
     <span class="fab fa fab fa-github fa-lg"></span>
@@ -284,8 +283,8 @@ by passing a corresponding control object. For a complete list of implemented al
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -303,7 +302,7 @@ by passing a corresponding control object. For a complete list of implemented al
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right docsearch" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -330,7 +329,7 @@ by passing a corresponding control object. For a complete list of implemented al
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
-[TuneMultiCritControl].</p>
+<a href='TuneMultiCritControl.html'>TuneMultiCritControl</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tuneParamsMultiCrit</span>(
@@ -360,27 +359,27 @@ The task.</p></td>
     </tr>
     <tr>
       <th>resampling</th>
-      <td><p>([ResampleInstance] | [ResampleDesc])<br />
+      <td><p>(<a href='makeResampleInstance.html'>ResampleInstance</a> | <a href='makeResampleDesc.html'>ResampleDesc</a>)<br />
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behavior, look at [TuneMultiCritControl].</p></td>
+If you want to change that behavior, look at <a href='TuneMultiCritControl.html'>TuneMultiCritControl</a>.</p></td>
     </tr>
     <tr>
       <th>measures</th>
-      <td><p>[list of [Measure])<br />
+      <td><p>[list of <a href='makeMeasure.html'>Measure</a>)<br />
 Performance measures to optimize simultaneously.</p></td>
     </tr>
     <tr>
       <th>par.set</th>
-      <td><p>([ParamHelpers::ParamSet])<br />
+      <td><p>(<a href='https://paramhelpers.mlr-org.com/reference/makeParamSet.html'>ParamHelpers::ParamSet</a>)<br />
 Collection of parameters and their constraints for optimization.
-Dependent parameters with a `requires` field must use `quote` and not
-`expression` to define it.</p></td>
+Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
+<code>expression</code> to define it.</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>([TuneMultiCritControl])<br />
+      <td><p>(<a href='TuneMultiCritControl.html'>TuneMultiCritControl</a>)<br />
 Control object for search method. Also selects the optimization algorithm for tuning.</p></td>
     </tr>
     <tr>
@@ -391,15 +390,15 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     </tr>
     <tr>
       <th>resample.fun</th>
-      <td><p>([closure])<br />
-The function to use for resampling. Defaults to [resample] and should take the
-same arguments as, and return the same result type as, [resample].</p></td>
+      <td><p>(<a href='https://rdrr.io/r/base/function.html'>closure</a>)<br />
+The function to use for resampling. Defaults to <a href='resample.html'>resample</a> and should take the
+same arguments as, and return the same result type as, <a href='resample.html'>resample</a>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([TuneMultiCritResult]).</p>
+    <p>(<a href='TuneMultiCritResult.html'>TuneMultiCritResult</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tune_multicrit: 
@@ -437,7 +436,7 @@ same arguments as, and return the same result type as, [resample].</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

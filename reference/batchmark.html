@@ -50,26 +50,26 @@
 
 
 <meta property="og:title" content="Run machine learning benchmarks as distributed experiments. — batchmark" />
-<meta property="og:description" content="This function is a very parallel version of [benchmark] using batchtools.
-Experiments are created in the provided registry for each combination of
-learners, tasks and resamplings. The experiments are then stored in a registry and the
-runs can be started via [batchtools::submitJobs]. A job is one train/test split
-of the outer resampling. In case of nested resampling (e.g. with [makeTuneWrapper]),
-each job is a full run of inner resampling, which can be parallelized in a second step
-with ParallelMap. For details on the usage and support backends have
-a look at the batchtools tutorial page:
-&amp;lt;https://github.com/mllg/batchtools&amp;gt;.
-The general workflow with `batchmark` looks like this:
-Create an ExperimentRegistry using [batchtools::makeExperimentRegistry].
-Call `batchmark(...)` which defines jobs for all learners and tasks in an [base::expand.grid] fashion.
-Submit jobs using [batchtools::submitJobs].
-Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].
-Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].
+<meta property="og:description" content="This function is a very parallel version of benchmark using
+batchtools. Experiments are created in the provided registry for each
+combination of learners, tasks and resamplings. The experiments are then
+stored in a registry and the runs can be started via
+batchtools::submitJobs. A job is one train/test split of the outer
+resampling. In case of nested resampling (e.g. with makeTuneWrapper), each
+job is a full run of inner resampling, which can be parallelized in a second
+step with ParallelMap.
+For details on the usage and support backends have a look at the batchtools
+tutorial page: https://github.com/mllg/batchtools.
+The general workflow with batchmark looks like this:
+Create an ExperimentRegistry using batchtools::makeExperimentRegistry.
+Call batchmark(...) which defines jobs for all learners and tasks in an base::expand.grid fashion.
+Submit jobs using batchtools::submitJobs.
+Babysit the computation, wait for all jobs to finish using batchtools::waitForJobs.
+Call reduceBatchmarkResult() to reduce results into a BenchmarkResult.
 
 
-If you want to use this with OpenML datasets you can generate tasks from a vector
-of dataset IDs easily with
-`tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`." />
+If you want to use this with OpenML datasets you can generate tasks
+from a vector of dataset IDs easily with tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))." />
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -101,14 +101,14 @@ of dataset IDs easily with
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
-      </span>
-    </div>
 
+      <div class="navbar-brand-container">
+        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+      </div>
+    </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Basics
@@ -282,16 +282,15 @@ of dataset IDs easily with
     <li>
       <a href="http://openml.github.io/openml-r/">OpenML</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Changelog</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
     <span class="fab fa fab fa-github fa-lg"></span>
@@ -299,8 +298,8 @@ of dataset IDs easily with
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -318,7 +317,7 @@ of dataset IDs easily with
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right docsearch" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -341,26 +340,26 @@ of dataset IDs easily with
     </div>
 
     <div class="ref-description">
-    <p>This function is a very parallel version of [benchmark] using <span class="pkg">batchtools</span>.
-Experiments are created in the provided registry for each combination of
-learners, tasks and resamplings. The experiments are then stored in a registry and the
-runs can be started via [batchtools::submitJobs]. A job is one train/test split
-of the outer resampling. In case of nested resampling (e.g. with [makeTuneWrapper]),
-each job is a full run of inner resampling, which can be parallelized in a second step
-with <span class="pkg">ParallelMap</span>. For details on the usage and support backends have
-a look at the batchtools tutorial page:
-&lt;https://github.com/mllg/batchtools&gt;.</p>
-<p>The general workflow with `batchmark` looks like this:</p><ol>
-<li><p>Create an ExperimentRegistry using [batchtools::makeExperimentRegistry].</p></li>
-<li><p>Call `batchmark(...)` which defines jobs for all learners and tasks in an [base::expand.grid] fashion.</p></li>
-<li><p>Submit jobs using [batchtools::submitJobs].</p></li>
-<li><p>Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].</p></li>
-<li><p>Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].</p></li>
+    <p>This function is a very parallel version of <a href='benchmark.html'>benchmark</a> using
+<span class="pkg">batchtools</span>. Experiments are created in the provided registry for each
+combination of learners, tasks and resamplings. The experiments are then
+stored in a registry and the runs can be started via
+<a href='https://rdrr.io/pkg/batchtools/man/submitJobs.html'>batchtools::submitJobs</a>. A job is one train/test split of the outer
+resampling. In case of nested resampling (e.g. with <a href='makeTuneWrapper.html'>makeTuneWrapper</a>), each
+job is a full run of inner resampling, which can be parallelized in a second
+step with <span class="pkg">ParallelMap</span>.</p>
+<p>For details on the usage and support backends have a look at the batchtools
+tutorial page: <a href='https://github.com/mllg/batchtools'>https://github.com/mllg/batchtools</a>.</p>
+<p>The general workflow with <code>batchmark</code> looks like this:</p><ol>
+<li><p>Create an ExperimentRegistry using <a href='https://rdrr.io/pkg/batchtools/man/makeExperimentRegistry.html'>batchtools::makeExperimentRegistry</a>.</p></li>
+<li><p>Call <code>batchmark(...)</code> which defines jobs for all learners and tasks in an <a href='https://rdrr.io/r/base/expand.grid.html'>base::expand.grid</a> fashion.</p></li>
+<li><p>Submit jobs using <a href='https://rdrr.io/pkg/batchtools/man/submitJobs.html'>batchtools::submitJobs</a>.</p></li>
+<li><p>Babysit the computation, wait for all jobs to finish using <a href='https://rdrr.io/pkg/batchtools/man/waitForJobs.html'>batchtools::waitForJobs</a>.</p></li>
+<li><p>Call <code>reduceBatchmarkResult()</code> to reduce results into a <a href='BenchmarkResult.html'>BenchmarkResult</a>.</p></li>
 </ol>
 
-<p>If you want to use this with <span class="pkg">OpenML</span> datasets you can generate tasks from a vector
-of dataset IDs easily with
-`tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.</p>
+<p>If you want to use this with <span class="pkg">OpenML</span> datasets you can generate tasks
+from a vector of dataset IDs easily with <code>tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>batchmark</span>(
@@ -390,7 +389,7 @@ Tasks that learners should be run on.</p></td>
     </tr>
     <tr>
       <th>resamplings</th>
-      <td><p>[(list of) [ResampleDesc])<br />
+      <td><p>[(list of) <a href='makeResampleDesc.html'>ResampleDesc</a>)<br />
 Resampling strategy for each tasks.
 If only one is provided, it will be replicated to match the number of tasks.
 If missing, a 10-fold cross validation is used.</p></td>
@@ -427,15 +426,16 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>reg</th>
-      <td><p>([batchtools::Registry])<br />
-Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
-uses the last created registry.</p></td>
+      <td><p>(<a href='https://rdrr.io/pkg/batchtools/man/makeRegistry.html'>batchtools::Registry</a>)<br />
+Registry, created by <a href='https://rdrr.io/pkg/batchtools/man/makeExperimentRegistry.html'>batchtools::makeExperimentRegistry</a>. If not
+explicitly passed, uses the last created registry.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([data.table]). Generated job ids are stored in the column &#8220;job.id&#8221;.</p>
+    <p>(data.table). Generated job ids are stored in the column
+&#8220;job.id&#8221;.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other benchmark: 
@@ -480,7 +480,7 @@ uses the last created registry.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

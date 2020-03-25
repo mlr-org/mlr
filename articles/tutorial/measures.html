@@ -39,14 +39,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
-      </span>
-    </div>
 
+      <div class="navbar-brand-container">
+        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1</small></a>
+      </div>
+    </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Basics
@@ -220,25 +220,24 @@
     <li>
       <a href="http://openml.github.io/openml-r/">OpenML</a>
     </li>
+    <li class="divider">
+    <li>
+      <a href="../../news/index.html">Changelog</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../../news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
+        <li>
   <a href="https://github.com/mlr-org/mlr">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -255,7 +254,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+<form class="navbar-form navbar-right docsearch" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
@@ -903,21 +902,6 @@
 <tbody>
 <tr class="odd">
 <td align="left">
-<strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">arsq</a></strong> <br>Adjusted coefficient of determination</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
-<td align="left">Defined as: 1 - (1 - rsq) * (p / (n - p - 1L)). Adjusted R-squared is only defined for normal linear regression.</td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">expvar</a></strong> <br>Explained variance</td>
 <td align="center"></td>
 <td align="right">1</td>
@@ -931,7 +915,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Similar to measure rsq (R-squared). Defined as explained_sum_of_squares / total_sum_of_squares.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">kendalltau</a></strong> <br>Kendall’s tau</td>
 <td align="center"></td>
@@ -946,7 +930,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: Kendall’s tau correlation between truth and response. Only looks at the order. See Rosset et al.: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&amp;rep=rep1&amp;type=pdf">http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&amp;rep=rep1&amp;type=pdf</a>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">mae</a></strong> <br>Mean of absolute errors</td>
 <td align="center">X</td>
@@ -961,7 +945,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: mean(abs(response - truth))</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">mape</a></strong> <br>Mean absolute percentage error</td>
 <td align="center">X</td>
@@ -976,7 +960,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as the abs(truth_i - response_i) / truth_i. Won’t work if any truth value is equal to zero. In this case the output will be NA.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">medae</a></strong> <br>Median of absolute errors</td>
 <td align="center">X</td>
@@ -991,7 +975,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: median(abs(response - truth)).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">medse</a></strong> <br>Median of squared errors</td>
 <td align="center">X</td>
@@ -1006,7 +990,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: median((response - truth)^2).</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">mse</a></strong> <br>Mean of squared errors</td>
 <td align="center">X</td>
@@ -1021,7 +1005,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: mean((response - truth)^2)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">msle</a></strong> <br>Mean squared logarithmic error</td>
 <td align="center">X</td>
@@ -1036,7 +1020,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: mean((log(response + 1, exp(1)) - log(truth + 1, exp(1)))^2). This measure is mostly used for count data, note that all predicted and actual target values must be greater or equal ‘-1’ to compute the measure.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">rae</a></strong> <br>Relative absolute error</td>
 <td align="center">X</td>
@@ -1051,7 +1035,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as sum_of_absolute_errors / mean_absolute_deviation. Undefined for single instances and when every truth value is identical. In this case the output will be NA.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">rmse</a></strong> <br>Root mean squared error</td>
 <td align="center">X</td>
@@ -1066,7 +1050,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.rmse</a></td>
 <td align="left">The RMSE is aggregated as sqrt(mean(rmse.vals.on.test.sets^2)). If you don’t want that, you could also use <code>test.mean</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">rmsle</a></strong> <br>Root mean squared logarithmic error</td>
 <td align="center">X</td>
@@ -1081,7 +1065,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: sqrt(msle). Definition taken from: Definition taken from: https: / /www.kaggle.com / wiki / RootMeanSquaredLogarithmicError. This measure is mostly used for count data, note that all predicted and actual target values must be greater or equal ‘-1’ to compute the measure.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">rrse</a></strong> <br>Root relative squared error</td>
 <td align="center">X</td>
@@ -1096,7 +1080,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as sqrt (sum_of_squared_errors / total_sum_of_squares). Undefined for single instances and when every truth value is identical. In this case the output will be NA.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">rsq</a></strong> <br>Coefficient of determination</td>
 <td align="center"></td>
@@ -1111,7 +1095,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Also called R-squared, which is 1 - residual_sum_of_squares / total_sum_of_squares.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">sae</a></strong> <br>Sum of absolute errors</td>
 <td align="center">X</td>
@@ -1126,7 +1110,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: sum(abs(response - truth))</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">spearmanrho</a></strong> <br>Spearman’s rho</td>
 <td align="center"></td>
@@ -1141,7 +1125,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: Spearman’s rho correlation between truth and response. Only looks at the order. See Rosset et al.: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&amp;rep=rep1&amp;type=pdf">http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&amp;rep=rep1&amp;type=pdf</a>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">sse</a></strong> <br>Sum of squared errors</td>
 <td align="center">X</td>
@@ -1305,21 +1289,6 @@
 </tr>
 <tr class="even">
 <td align="left">
-<strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">dunn</a></strong> <br>Dunn index</td>
-<td align="center"></td>
-<td align="right">Inf</td>
-<td align="right">0</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
-<td align="left">Defined as the ratio of the smallest distance between observations not in the same cluster to the largest intra-cluster distance. See <code><a href="https://rdrr.io/pkg/clValid/man/dunn.html">?clValid::dunn</a></code>.</td>
-</tr>
-<tr class="odd">
-<td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">G1</a></strong> <br>Calinski-Harabasz pseudo F statistic</td>
 <td align="center"></td>
 <td align="right">Inf</td>
@@ -1333,7 +1302,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as ratio of between-cluster variance to within cluster variance. See <code><a href="https://rdrr.io/pkg/clusterSim/man/index.G1.html">?clusterSim::index.G1</a></code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">G2</a></strong> <br>Baker and Hubert adaptation of Goodman-Kruskal’s gamma statistic</td>
 <td align="center"></td>
@@ -1348,7 +1317,7 @@
 <td align="left"><a href="https://mlr-org.github.io/mlr/reference/aggregations.html">test.mean</a></td>
 <td align="left">Defined as: (number of concordant comparisons - number of discordant comparisons) / (number of concordant comparisons + number of discordant comparisons). See <code><a href="https://rdrr.io/pkg/clusterSim/man/index.G2.html">?clusterSim::index.G2</a></code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong><a href="https://mlr-org.github.io/mlr/reference/measures.html">silhouette</a></strong> <br>Rousseeuw’s silhouette internal cluster quality index</td>
 <td align="center"></td>
@@ -1679,7 +1648,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">

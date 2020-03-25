@@ -292,6 +292,9 @@
     <loc>https://mlr.mlr-org.com/reference/getFilteredFeatures.html</loc>
   </url>
   <url>
+    <loc>https://mlr.mlr-org.com/reference/getFunctionalFeatures.html</loc>
+  </url>
+  <url>
     <loc>https://mlr.mlr-org.com/reference/getHomogeneousEnsembleModels.html</loc>
   </url>
   <url>

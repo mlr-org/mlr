@@ -82,14 +82,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">mlr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Version">2.17.0</span>
-      </span>
-    </div>
 
+      <div class="navbar-brand-container">
+        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+      </div>
+    </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Basics
@@ -263,16 +263,15 @@
     <li>
       <a href="http://openml.github.io/openml-r/">OpenML</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Changelog</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/mlr-org/mlr">
     <span class="fab fa fab fa-github fa-lg"></span>
@@ -280,8 +279,8 @@
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -299,7 +298,7 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right docsearch" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -340,7 +339,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learners</th>
-      <td><p>[(list of) [Learner])<br />
+      <td><p>[(list of) <a href='makeLearner.html'>Learner</a>)<br />
 Learning algorithms which should be compared.</p></td>
     </tr>
     <tr>
@@ -350,26 +349,26 @@ The task.</p></td>
     </tr>
     <tr>
       <th>resampling</th>
-      <td><p>([ResampleDesc] | [ResampleInstance])<br />
+      <td><p>(<a href='makeResampleDesc.html'>ResampleDesc</a> | <a href='makeResampleInstance.html'>ResampleInstance</a>)<br />
 Resampling strategy to evaluate the performance measure.
 If no strategy is given a default "Holdout" will be performed.</p></td>
     </tr>
     <tr>
       <th>percs</th>
-      <td><p>([numeric])<br />
+      <td><p>(<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)<br />
 Vector of percentages to be drawn from the training split.
 These values represent the x-axis.
-Internally [makeDownsampleWrapper] is used in combination with [benchmark].
+Internally <a href='makeDownsampleWrapper.html'>makeDownsampleWrapper</a> is used in combination with <a href='benchmark.html'>benchmark</a>.
 Thus for each percentage a different set of observations is drawn resulting in noisy performance measures as the quality of the sample can differ.</p></td>
     </tr>
     <tr>
       <th>measures</th>
-      <td><p>[(list of) [Measure])<br />
+      <td><p>[(list of) <a href='makeMeasure.html'>Measure</a>)<br />
 Performance measures to generate learning curves for, representing the y-axis.</p></td>
     </tr>
     <tr>
       <th>stratify</th>
-      <td><p>(`logical(1)`)<br />
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Only for classification:
 Should the downsampled data be stratified according to the target classes?</p></td>
     </tr>
@@ -383,18 +382,16 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([LearningCurveData]). A `list` containing:</p>
-<dt>task</dt><dd><p>[[Task])<br />
-    The task.</p></dd>
-  <dt>measures</dt><dd><p>[(list of) [Measure])<br />
-    Performance measures.</p></dd>
-  <dt>data</dt><dd><p>([data.frame]) with columns:
-    <ul>
-<li><p>`learner` Names of learners.</p></li>
-<li><p>`percentage` Percentages drawn from the training split.</p></li>
-<li><p>One column for each
-    [Measure] passed to [generateLearningCurveData].</p></li>
-</ul></p></dd>
+    <p>(LearningCurveData). A <code>list</code> containing:</p><ul>
+<li><p>The <a href='Task.html'>Task</a></p></li>
+<li><p>List of <a href='makeMeasure.html'>Measure</a>)<br />
+Performance measures</p></li>
+<li><p>data (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>) with columns:</p><ul>
+<li><p><code>learner</code> Names of learners.</p></li>
+<li><p><code>percentage</code> Percentages drawn from the training split.</p></li>
+<li><p>One column for each <a href='makeMeasure.html'>Measure</a> passed to generateLearningCurveData.</p></li>
+</ul></li>
+</ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -412,7 +409,8 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>generateLearningCurveData</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"classif.rpart"</span>, <span class='st'>"classif.knn"</span>),
   <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>, <span class='kw'>percs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.2</span>),
-  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>tp</span>, <span class='no'>fp</span>, <span class='no'>tn</span>, <span class='no'>fn</span>), <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Subsample"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>5</span>),
+  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>tp</span>, <span class='no'>fp</span>, <span class='no'>tn</span>, <span class='no'>fn</span>),
+  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Subsample"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>5</span>),
   <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'><a href='plotLearningCurve.html'>plotLearningCurve</a></span>(<span class='no'>r</span>)</div><div class='img'><img src='generateLearningCurveData-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
@@ -431,7 +429,7 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo, Patrick Schratz.</p>
+  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
