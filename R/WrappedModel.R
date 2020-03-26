@@ -3,9 +3,9 @@
 #' @description
 #' Result from [train].
 #'
-#' It internally stores the underlying fitted model,
-#' the subset used for training, features used for training, levels of factors in the
-#' data set and computation time that was spent for training.
+#' It internally stores the underlying fitted model, the subset used for
+#' training, features used for training, levels of factors in the data set and
+#' computation time that was spent for training.
 #'
 #' Object members: See arguments.
 #'
@@ -18,20 +18,23 @@
 #' @template arg_subset
 #' @param features ([character])\cr
 #'   Features used for training.
-#' @param factor.levels (named [list] of [character])\cr
-#'   Levels of factor variables (features and potentially target) in training data.
-#'   Named by variable name, non-factors do not occur in the list.
+#' @param factor.levels (named [list] of [character])\cr Levels of factor
+#'   variables (features and potentially target) in training data. Named by
+#'   variable name, non-factors do not occur in the list.
 #' @param time (`numeric(1)`)\cr
 #'   Computation time for model fit in seconds.
 #' @template ret_wmodel
 #' @export
 #' @aliases WrappedModel
-makeWrappedModel = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel = function(learner, learner.model, task.desc, subset,
+  features, factor.levels, time) {
   UseMethod("makeWrappedModel")
 }
 
 #' @export
-makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset,
+  features, factor.levels, time) {
+
   dump = NULL
   if (is.error(learner.model)) {
     learner.model = as.character(learner.model)
@@ -43,6 +46,15 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
   } else {
     cl = "WrappedModel"
   }
+
+  # this fixes the learner$package slot introduced due to how
+  # BBmisc::requirePackages() loads namespaces
+  # see https://github.com/mlr-org/mlr/issues/2748
+  # see https://github.com/mlr-org/mlr/issues/226
+  if (grepl("!", learner$package)) {
+    learner$package = gsub("!", "", learner$package)
+  }
+
   makeS3Obj(cl,
     learner = learner,
     learner.model = learner.model,
@@ -58,10 +70,12 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
 #' @export
 print.WrappedModel = function(x, ...) {
   cat(
-    "Model for learner.id=", x$learner$id, "; learner.class=", getClass1(x$learner), "\n",
+    "Model for learner.id=", x$learner$id, "; learner.class=",
+    getClass1(x$learner), "\n",
     sprintf("Trained on: task.id = %s; obs = %i; features = %i",
       x$task.desc$id, length(x$subset), length(x$features)), "\n",
-    "Hyperparameters: ", getHyperParsString(x$learner, show.missing.values = TRUE), "\n",
+    "Hyperparameters: ", getHyperParsString(x$learner,
+      show.missing.values = TRUE), "\n",
     sep = ""
   )
   if (isFailureModel(x)) {
@@ -74,14 +88,14 @@ print.WrappedModel = function(x, ...) {
 #' @param model ([WrappedModel])\cr
 #'   The model, returned by e.g., [train].
 #' @param more.unwrap (`logical(1)`)\cr
-#'   Some learners are not basic learners from R, but implemented in mlr as meta-techniques.
-#'   Examples are everything that inherits from `HomogeneousEnsemble`.
-#'   In these cases, the `learner.model` is often a list of mlr [WrappedModel]s.
-#'   This option allows to strip them further to basic R models.
-#'   The option is simply ignored for basic learner models.
-#'   Default is `FALSE`.
-#' @return (any). A fitted model, depending the learner / wrapped package. E.g., a
-#'   model of class [rpart::rpart] for learner \dQuote{classif.rpart}.
+#'   Some learners are not basic learners from R, but implemented in mlr as
+#'   meta-techniques. Examples are everything that inherits from
+#'   `HomogeneousEnsemble`. In these cases, the `learner.model` is often a list
+#'   of mlr [WrappedModel]s. This option allows to strip them further to basic R
+#'   models. The option is simply ignored for basic learner models. Default is
+#'   `FALSE`.
+#' @return (any). A fitted model, depending the learner / wrapped package. E.g.,
+#'   a model of class [rpart::rpart] for learner \dQuote{classif.rpart}.
 #' @export
 getLearnerModel = function(model, more.unwrap = FALSE) {
   assertFlag(more.unwrap)
@@ -96,9 +110,11 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' @title Is the model a FailureModel?
 #'
 #' @description
-#' Such a model is created when one sets the corresponding option in [configureMlr].
+#' Such a model is created when one sets the corresponding option in
+#' [configureMlr].
 #'
-#' For complex wrappers this getter returns `TRUE` if ANY model contained in it failed.
+#' For complex wrappers this getter returns `TRUE` if ANY model contained in it
+#' failed.
 #'
 #' @template arg_wrappedmod
 #' @return (`logical(1)`).
@@ -108,7 +124,8 @@ isFailureModel = function(model) {
 }
 
 #' @export
-# by default the model is never a failure. if a failure happens we have the derived class FailureModel
+# by default the model is never a failure. if a failure happens we have the
+# derived class FailureModel
 isFailureModel.WrappedModel = function(model) {
   return(FALSE)
 }
@@ -116,10 +133,11 @@ isFailureModel.WrappedModel = function(model) {
 #' @title Return error message of FailureModel.
 #'
 #' @description
-#' Such a model is created when one sets the corresponding option in [configureMlr].
-#' If no failure occurred, `NA` is returned.
+#' Such a model is created when one sets the corresponding option in
+#' [configureMlr]. If no failure occurred, `NA` is returned.
 #'
-#' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
+#' For complex wrappers this getter returns the first error message encountered
+#' in ANY model that failed.
 #'
 #' @template arg_wrappedmod
 #' @return (`character(1)`).

@@ -14,7 +14,9 @@ The model.}
 (\code{logical(1)}).
 }
 \description{
-Such a model is created when one sets the corresponding option in \link{configureMlr}.
+Such a model is created when one sets the corresponding option in
+\link{configureMlr}.
 
-For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
+For complex wrappers this getter returns \code{TRUE} if ANY model contained in it
+failed.
 }

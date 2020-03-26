@@ -33,9 +33,9 @@ By default \code{NULL} if all observations are used.}
 \item{features}{(\link{character})\cr
 Features used for training.}
 
-\item{factor.levels}{(named \link{list} of \link{character})\cr
-Levels of factor variables (features and potentially target) in training data.
-Named by variable name, non-factors do not occur in the list.}
+\item{factor.levels}{(named \link{list} of \link{character})\cr Levels of factor
+variables (features and potentially target) in training data. Named by
+variable name, non-factors do not occur in the list.}
 
 \item{time}{(\code{numeric(1)})\cr
 Computation time for model fit in seconds.}
@@ -46,9 +46,9 @@ Computation time for model fit in seconds.}
 \description{
 Result from \link{train}.
 
-It internally stores the underlying fitted model,
-the subset used for training, features used for training, levels of factors in the
-data set and computation time that was spent for training.
+It internally stores the underlying fitted model, the subset used for
+training, features used for training, levels of factors in the data set and
+computation time that was spent for training.
 
 Object members: See arguments.
 
