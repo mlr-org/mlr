@@ -6,7 +6,7 @@ on:
     # * is a special character in YAML so you have to quote this string
     - cron: "0 4 * * *"
 
-name: GH Actions via {tic}
+name: R CMD Check via {tic}
 
 jobs:
   R-CMD-check:
