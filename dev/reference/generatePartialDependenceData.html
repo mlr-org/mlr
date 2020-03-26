@@ -74,7 +74,7 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -277,7 +277,7 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -487,16 +487,10 @@ Whether the partial dependences were aggregated or the individual curves are ret
 <span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>iris.task</span>, <span class='st'>"Petal.Width"</span>)
 <span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>iris.task</span>))</div><div class='img'><img src='generatePartialDependenceData-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -507,7 +501,7 @@ Whether the partial dependences were aggregated or the individual curves are ret
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

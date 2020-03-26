@@ -83,7 +83,7 @@ parameter types can be handled.
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -286,7 +286,7 @@ parameter types can be handled.
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -329,12 +329,12 @@ parameter types can be handled.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create control structures for multi-criteria tuning.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControl.R'><code>R/TuneMultiCritControl.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControlGrid.R'><code>R/TuneMultiCritControlGrid.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControlMBO.R'><code>R/TuneMultiCritControlMBO.R</code></a>, and 3 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControl.R'><code>R/TuneMultiCritControl.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControlGrid.R'><code>R/TuneMultiCritControlGrid.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/TuneMultiCritControlMBO.R'><code>R/TuneMultiCritControlMBO.R</code></a>, and 2 more</small>
     <div class="hidden name"><code>TuneMultiCritControl.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The following tuners are available:</p><dl class='dl-horizontal'>
+    <p>The following tuners are available:</p><dl'>
 <dt>makeTuneMultiCritControlGrid</dt><dd><p>Grid search. All kinds of parameter types can be handled.
 You can either use their correct param type and <code>resolution</code>,
 or discretize them yourself by always using <a href='https://paramhelpers.mlr-org.com/reference/Param.html'>ParamHelpers::makeDiscreteParam</a>
@@ -534,14 +534,10 @@ TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
 <code><a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>()</code></p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -552,7 +548,7 @@ TuneMultiCritControlNSGA2, TuneMultiCritControlMBO.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

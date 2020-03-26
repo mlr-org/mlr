@@ -83,7 +83,7 @@ You can also convert the object using as.data.frame." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -286,7 +286,7 @@ You can also convert the object using as.data.frame." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -335,7 +335,7 @@ You can also convert the object using as.data.frame." />
 
     <div class="ref-description">
     <p>Result of a benchmark experiment conducted by <a href='benchmark.html'>benchmark</a>
-with the following members:</p><dl class='dl-horizontal'>
+with the following members:</p><dl'>
 <dt>results (list of <a href='ResampleResult.html'>ResampleResult</a>):</dt><dd><p>A nested <a href='https://rdrr.io/r/base/list.html'>list</a> of resample results,
 first ordered by task id, then by learner id.</p></dd>
 <dt>measures (list of <a href='makeMeasure.html'>Measure</a>):</dt><dd><p>The performance measures used in the benchmark experiment.</p></dd>
@@ -382,12 +382,10 @@ You can also convert the object using <a href='https://rdrr.io/r/base/as.data.fr
 <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a>()</code></p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -398,7 +396,7 @@ You can also convert the object using <a href='https://rdrr.io/r/base/as.data.fr
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

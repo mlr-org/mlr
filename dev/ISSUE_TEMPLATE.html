@@ -69,7 +69,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -272,7 +272,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -319,7 +319,7 @@
 
 
 <p>For bug reports, please respect the following guidelines and check the boxes accordingly. Please include your source code using tripple backticks ` like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># your code</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><pre class="r"># your code</pre></html></div>
 <p>For questions of the type: “How can this be done?”, please consider posting them on Stackoverflow.</p>
 <p>For everything else ignore this template.</p>
 <div id="bug-report" class="section level2">
@@ -361,6 +361,12 @@ Give a minimal reproducible example</li>
 
   </div>
 
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
+  </div>
+
 </div>
 
 
@@ -371,7 +377,7 @@ Give a minimal reproducible example</li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

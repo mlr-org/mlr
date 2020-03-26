@@ -71,7 +71,7 @@ inner workings so the result might not be compatible with everything!" />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -274,7 +274,7 @@ inner workings so the result might not be compatible with everything!" />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -344,7 +344,7 @@ Long name of the aggregation method. Default is <code>id</code>.</p></td>
     <tr>
       <th>properties</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
-Set of aggregation properties.</p><dl class='dl-horizontal'>
+Set of aggregation properties.</p><dl'>
 <dt>req.train</dt><dd><p>Are prediction or train sets required to calculate the aggregation?</p></dd>
 <dt>req.test</dt><dd><p>Are prediction or test sets required to calculate the aggregation?</p></dd>
 
@@ -354,7 +354,7 @@ Set of aggregation properties.</p><dl class='dl-horizontal'>
       <th>fun</th>
       <td><p>(<code>function(task, perf.test, perf.train, measure, group, pred)</code>)<br />
 Calculates the aggregated performance. In most cases you will only need the performances
-<code>perf.test</code> and optionally <code>perf.train</code> on the test and training data sets.</p><dl class='dl-horizontal'>
+<code>perf.test</code> and optionally <code>perf.train</code> on the test and training data sets.</p><dl'>
 <dt><code>task</code> (<a href='Task.html'>Task</a>)</dt><dd><p>The task.</p></dd>
 <dt><code>perf.test</code> (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the test data sets.</p></dd>
 <dt><code>perf.train</code> (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p><a href='performance.html'>performance</a> results on the training data sets.</p></dd>
@@ -382,15 +382,10 @@ Calculates the aggregated performance. In most cases you will only need the perf
   <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>perf.test</span>, <span class='no'>perf.train</span>, <span class='no'>measure</span>, <span class='no'>group</span>, <span class='no'>pred</span>) <span class='fu'><a href='https://rdrr.io/r/stats/IQR.html'>IQR</a></span>(<span class='no'>perf.test</span>)
 )</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -401,7 +396,7 @@ Calculates the aggregated performance. In most cases you will only need the perf
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -70,7 +70,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -273,7 +273,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -399,15 +399,10 @@ If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This
 <span class='no'>ms</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"mmce"</span> <span class='kw'>=</span> <span class='no'>mmce</span>, <span class='st'>"acc"</span> <span class='kw'>=</span> <span class='no'>acc</span>, <span class='st'>"timetrain"</span> <span class='kw'>=</span> <span class='no'>timetrain</span>)
 <span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>ms</span>, <span class='no'>task</span>, <span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = ms, task, mod): object 'pred' not found</span></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -418,7 +413,7 @@ If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

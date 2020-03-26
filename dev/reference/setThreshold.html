@@ -76,7 +76,7 @@ exceeds the threshold of the corresponding label." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -279,7 +279,7 @@ exceeds the threshold of the corresponding label." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -372,15 +372,10 @@ Only for binary classification it can be a single numerical threshold for the po
 <span class='no'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>setosa</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>versicolor</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>virginica</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
 <span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>setThreshold</span>(<span class='no'>pred</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='no'>threshold</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -391,7 +386,7 @@ Only for binary classification it can be a single numerical threshold for the po
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

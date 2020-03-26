@@ -108,7 +108,7 @@ repeatedly generated until the setting is satisfied.
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -311,7 +311,7 @@ repeatedly generated until the setting is satisfied.
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -354,7 +354,7 @@ repeatedly generated until the setting is satisfied.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create control structures for feature selection.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelControl.R'><code>R/FeatSelControl.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelControlExhaustive.R'><code>R/FeatSelControlExhaustive.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelControlGA.R'><code>R/FeatSelControlGA.R</code></a>, and 3 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelControl.R'><code>R/FeatSelControl.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelControlExhaustive.R'><code>R/FeatSelControlExhaustive.R</code></a>, <a href='https://github.com/mlr-org/mlr/blob/master/R/FeatSelControlGA.R'><code>R/FeatSelControlGA.R</code></a>, and 2 more</small>
     <div class="hidden name"><code>FeatSelControl.Rd</code></div>
     </div>
 
@@ -362,7 +362,7 @@ repeatedly generated until the setting is satisfied.
     <p>Feature selection method used by <a href='selectFeatures.html'>selectFeatures</a>.<br />
 The methods used here follow a wrapper approach, described in
 Kohavi and John (1997) (see references).</p>
-<p>The following optimization algorithms are available:</p><dl class='dl-horizontal'>
+<p>The following optimization algorithms are available:</p><dl'>
 <dt>FeatSelControlExhaustive</dt><dd><p>Exhaustive search. All feature sets (up to a certain number
 of features <code>max.features</code>) are searched.</p></dd>
 <dt>FeatSelControlRandom</dt><dd><p>Random search. Features vectors are randomly drawn,
@@ -587,15 +587,10 @@ Wrappers for feature subset selection, Artificial Intelligence Volume 97, 1997, 
 <code><a href='selectFeatures.html'>selectFeatures</a>()</code></p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -606,7 +601,7 @@ Wrappers for feature subset selection, Artificial Intelligence Volume 97, 1997, 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
