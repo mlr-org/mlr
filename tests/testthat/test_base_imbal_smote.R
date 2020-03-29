@@ -84,7 +84,7 @@ test_that("smote works with only integer features", {
 test_that("smote works with constant factor features", {
 
   # covr has some issues here while testthat works
-  if (Sys.getenv("R_COVR" == "")) {
+  if (Sys.getenv("R_COVR") == "") {
 
     # This reproduces the bug from issue #1951
     d = data.frame(
