@@ -59,7 +59,8 @@ Custom y axis breaks}
 corresponding labels.
 }
 \description{
-Visualize partitioning of resample objects with spatial information.
+Visualize partitioning of resample objects with spatial
+information.
 }
 \details{
 If a named list is given to \code{resample}, names will appear in the title of

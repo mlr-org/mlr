@@ -199,7 +199,6 @@ Suggests:
     GPfit,
     h2o (>= 3.6.0.8),
     Hmisc,
-    hrbrthemes,
     irace (>= 2.0),
     kernlab,
     kknn,

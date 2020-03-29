@@ -1,6 +1,7 @@
 #' @title Create (spatial) resampling plot objects.
 #'
-#' @description Visualize partitioning of resample objects with spatial information.
+#' @description Visualize partitioning of resample objects with spatial
+#'   information.
 #' @import ggplot2
 #' @family plot
 #' @author Patrick Schratz
@@ -126,7 +127,6 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   point.size = 0.5, axis.text.size = 14, x.axis.breaks = waiver(),
   y.axis.breaks = waiver()) {
 
-  requireNamespace("hrbrthemes", quietly = TRUE)
   requireNamespace("sf", quietly = TRUE)
 
   # some checks
@@ -136,7 +136,8 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
   if (task$task.desc$has.coordinates == FALSE) {
     stopf("The supplied task needs to have coordinates.")
   }
-  if (!identical(as.integer(rownames(task$env$data)), 1:length(task$env$data[, 1]))) {
+  if (!identical(as.integer(rownames(task$env$data)),
+    1:length(task$env$data[, 1]))) {
     rownames(task$env$data) = seq(1:length(task$env$data[, 1]))
   }
 
@@ -178,7 +179,6 @@ createSpatialResamplingPlots = function(task = NULL, resample = NULL, crs = NULL
         scale_x_continuous(breaks = x.axis.breaks) +
         scale_y_continuous(breaks = y.axis.breaks) +
         coord_sf(datum = sf::st_crs(datum)) +
-        hrbrthemes::theme_ipsum_rc() +
         theme(axis.text.x = element_text(size = axis.text.size),
           axis.text.y = element_text(size = axis.text.size),
           plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm"))
