@@ -40,7 +40,7 @@ makeRLearner.regr.glmnet = function() {
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer.
-      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
+      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.01` by default,
       but needs to be tuned by the user.
       glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
       before setting the specified parameters and after training.

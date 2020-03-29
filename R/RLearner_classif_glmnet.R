@@ -42,7 +42,7 @@ makeRLearner.classif.glmnet = function() {
     note =
       "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise.
       Factors automatically get converted to dummy columns, ordered factors to integer.
-      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
+      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.01` by default,
       but needs to be tuned by the user.
       glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
       before setting the specified parameters and after training.
