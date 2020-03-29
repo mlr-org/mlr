@@ -81,7 +81,7 @@ test_that("smote works with only integer features", {
   expect_equal(getTaskSize(task2), 1036)
 })
 
-test_that("smote works with constant factor features", { # nocov start
+test_that("smote works with constant factor features", {
 
   # This reproduces the bug from issue #1951
   d = data.frame(
@@ -96,9 +96,9 @@ test_that("smote works with constant factor features", { # nocov start
 
   # for some reason we get a different result on macOS than on Linux + Windows
   if (Sys.info()[["sysname"]] == "Darwin") {
-    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
+    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90) # nocov
 
   } else {
-    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10)
+    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10) # nocov
   }
-}) # nocov end
+})
