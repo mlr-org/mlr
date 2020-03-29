@@ -96,9 +96,9 @@ test_that("smote works with constant factor features", {
 
   # for some reason we get a different result on macOS than on Linux + Windows
   if (Sys.info()[["sysname"]] == "Darwin") {
-    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90) # nocov
+    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
 
   } else {
-    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10) # nocov
+    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10)
   }
 })

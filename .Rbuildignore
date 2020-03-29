@@ -41,3 +41,4 @@ revdep/*
 ^\.ccache$
 ^clang.*$
 .lintr
+^\.covrignore$
