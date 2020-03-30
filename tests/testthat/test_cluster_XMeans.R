@@ -4,29 +4,25 @@ test_that("cluster_XMeans", {
   skip_on_os("windows")
   skip_on_cran()
 
-  # covr has some issues here while testthat works
-  if (Sys.getenv("R_COVR") == "") {
+  requirePackagesOrSkip("RWeka", default.method = "load")
+  # RWeka::WPM("refresh-cache")
+  # RWeka::WPM("install-package", "XMeans")
 
-    requirePackagesOrSkip("RWeka", default.method = "load")
-    # RWeka::WPM("refresh-cache")
-    # RWeka::WPM("install-package", "XMeans")
+  parset.list = list(
+    list(),
+    list(I = 1)
+  )
 
-    parset.list = list(
-      list(),
-      list(I = 1)
-    )
+  old.predicts.list = list()
 
-    old.predicts.list = list()
-
-    for (i in seq_along(parset.list)) {
-      parset = parset.list[[i]]
-      ctrl = do.call(RWeka::Weka_control, parset)
-      m = RWeka::XMeans(noclass.train, control = ctrl)
-      p = predict(m, noclass.test) + 1
-      old.predicts.list[[i]] = p
-    }
-
-    testSimpleParsets("cluster.XMeans", noclass.df, character(0L),
-      noclass.train.inds, old.predicts.list, parset.list)
+  for (i in seq_along(parset.list)) {
+    parset = parset.list[[i]]
+    ctrl = do.call(RWeka::Weka_control, parset)
+    m = RWeka::XMeans(noclass.train, control = ctrl)
+    p = predict(m, noclass.test) + 1
+    old.predicts.list[[i]] = p
   }
+
+  testSimpleParsets("cluster.XMeans", noclass.df, character(0L),
+    noclass.train.inds, old.predicts.list, parset.list)
 })

@@ -16,5 +16,7 @@ if (ci_on_ghactions()) {
 
 if (ci_is_env("CODECOV", "true")) {
   get_stage("after_success") %>%
+    add_code_step(RWeka::WPM("refresh-cache")) %>%
+    add_code_step(RWeka::WPM("install-package", "XMeans")) %>%
     add_code_step(covr::codecov())
 }
