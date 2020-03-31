@@ -83,22 +83,26 @@ test_that("smote works with only integer features", {
 
 test_that("smote works with constant factor features", {
 
-  # This reproduces the bug from issue #1951
-  d = data.frame(
-    x1 = rpois(100, 2),
-    x2 = gl(5, 20, labels = LETTERS[1:5]),
-    y = as.factor(c(rep("+", 90), rep("-", 10))),
-    stringsAsFactors = TRUE
-  )
+  # covr has some issues here while testthat works
+  if (Sys.getenv("R_COVR") == "") {
 
-  task = makeClassifTask(data = d, target = "y")
-  task2 = smote(task, rate = 9, nn = 4L)
+    # This reproduces the bug from issue #1951
+    d = data.frame(
+      x1 = rpois(100, 2),
+      x2 = gl(5, 20, labels = LETTERS[1:5]),
+      y = as.factor(c(rep("+", 90), rep("-", 10))),
+      stringsAsFactors = TRUE
+    )
 
-  # for some reason we get a different result on macOS than on Linux + Windows
-  if (Sys.info()[["sysname"]] == "Darwin") {
-    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90) # nocov
+    task = makeClassifTask(data = d, target = "y")
+    task2 = smote(task, rate = 9, nn = 4L)
 
-  } else {
-    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10) # nocov
+    # for some reason we get a different result on macOS than on Linux + Windows
+    if (Sys.info()[["sysname"]] == "Darwin") {
+      expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
+
+    } else {
+      expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10)
+    }
   }
 })
