@@ -17,7 +17,7 @@ development:
 home:
   links:
   - text: Cheatsheet
-    href: https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf
+    href: https://cheatsheets.mlr-org.com/mlr.pdf
 
 toc:
   depth: 3
