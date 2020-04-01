@@ -6,7 +6,7 @@ Machine learning in R.
 
 <!-- badges: start -->
 
-[![R CMD Check via {tic}](https://img.shields.io/github/workflow/status/mlr-org/mlr/R%20CMD%20Check%20via%20%7Btic%7D?logo=github&label=R%20CMD%20Check%20via%20{tic}&style=flat-square)](https://github.com/mlr-org/mlr/actions)
+[![R CMD Check via {tic}](https://github.com/mlr-org/mlr/workflows/R%20CMD%20Check%20via%20{tic}/badge.svg?branch=master)](https://github.com/mlr-org/mlr/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)
 [![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
