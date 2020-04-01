@@ -329,12 +329,12 @@
 <ul>
 <li>The web tutorial was MUCH improved!</li>
 <li>more example tasks and data sets</li>
-<li>Learners and tasks now support ordered factors as features. The task description knows whether ordered factors are present and it is checked whether the learner supports such a feature. We have set this property ‘ordered’ very conservatively, so very few learners have it, where we are sure ordered inputs are handled correctly during training. If you know of more models that support this, please inform us.</li>
+<li>Learners and tasks now support ordered factors as features. The task description knows whether ordered factors are present and it is checked whether the learner supports such a feature. We have set this property âorderedâ very conservatively, so very few learners have it, where we are sure ordered inputs are handled correctly during training. If you know of more models that support this, please inform us.</li>
 <li>basic R learners now have new slots: name (a descriptive name of the algorithm), short.name (abbreviation that can be used in plots and tables) and note (notes regarding slight changes for the mlr integration of the learner and such).</li>
 <li>makeLearner now supports some options regarding learner error handling and output which could before only be set globally via configureMlr</li>
 <li>Additional arguments for imputation functions to allow a more fine-grain control of dummy column creation</li>
 <li>imputeMin and imputeMax now subtract or add a multiple of the range of the data from the minimum or to the maximum, respectively.</li>
-<li>cluster methods now have property ‘prob’ when they support fuzzy cluster membership probabilities, and also then support predict.type = ‘prob’. Everything basically works the same as for posterior probabilities in classif.* methods.</li>
+<li>cluster methods now have property âprobâ when they support fuzzy cluster membership probabilities, and also then support predict.type = âprobâ. Everything basically works the same as for posterior probabilities in classif.* methods.</li>
 <li>predict preserves the rownames of the input in its output</li>
 <li>fixed a bug in createDummyFeatures that caused an error when the data contained missing values.</li>
 <li>plotLearnerPrediction works for clustering and allows greyscale plots (for printing or articles)</li>
@@ -343,7 +343,7 @@
 <li>filterFeatures can now be also applied to the result of getFilterValues</li>
 <li>We dropped the data.frame version of some preprocessing operations like mergeFactorLevelsBySize, joinClassLevels and removeConstantFeatures for consistency. These now always require tasks as input.</li>
 <li>We support a pretty generic framework for stacking / super-learning now, see makeStackedLearner</li>
-<li>imbalancy correction + smote: ** fix a bug in “smote” when only factor features are present ** change to oversampling: sample new observations only (with replacement) ** extension to smote algorithm (sampling): minority class observations in binary classification are either chosen via sampling or alternatively, each minority class observation is used an equal number of times</li>
+<li>imbalancy correction + smote: ** fix a bug in âsmoteâ when only factor features are present ** change to oversampling: sample new observations only (with replacement) ** extension to smote algorithm (sampling): minority class observations in binary classification are either chosen via sampling or alternatively, each minority class observation is used an equal number of times</li>
 <li>made the getters for BenchmarkResult more consistent. These are now: getBMRTaskIds, getBMRLearnerIds, getBMRPredictions, getBMRPerformances, getBMRAggrPerformances getBMRTuneResults, getFeatSelResults, getBMRFilteredFeatures The following methods do not work for BenchmarkResult anymore: getTuneResult, getFeatSelResult</li>
 <li>Removed getFilterResult, because it does the same as getFilteredFeatures</li>
 </ul>

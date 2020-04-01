@@ -332,7 +332,7 @@
 <ul>
 <li>Instead of a wide <code>data.frame</code> filter values are now returned in a long (tidy) <code>tibble</code>. This makes it easier to apply post-processing methods (like <code>group_by()</code>, etc) (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
 <li>
-<code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the tuning results (<code>$extract</code> slot) anymore by default. If you want to keep this slot (e.g. for post tuning analysis), set <code>keep.extract = TRUE</code>. This change originated from the fact that the size of <code>BenchmarkResult</code> objects with extensive tuning got very large (~ GB) which can cause memory problems during runtime if multiple <code><a href="../reference/benchmark.html">benchmark()</a></code> calls are executed on HPCs.</li>
+<code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the tuning results (<code>$extract</code> slot) anymore by default. If you want to keep this slot (e.g.Â for post tuning analysis), set <code>keep.extract = TRUE</code>. This change originated from the fact that the size of <code>BenchmarkResult</code> objects with extensive tuning got very large (~ GB) which can cause memory problems during runtime if multiple <code><a href="../reference/benchmark.html">benchmark()</a></code> calls are executed on HPCs.</li>
 <li>
 <code><a href="../reference/benchmark.html">benchmark()</a></code> does not store the created models (<code>$models</code> slot) anymore by default. The reason is the same as for the <code>$extract</code> slot above. Storing can be enabled using <code>models = TRUE</code>.</li>
 </ul>
@@ -358,7 +358,7 @@
 <li><code>se.method = "jackknife"</code></li>
 <li><code>se.method = "bootstrap"</code></li>
 <li>
-<code>se.method = "sd"</code> See <code>?regr.randomForest</code> for more details. <code>regr.ranger</code> relies on the functions provided by the package (“jackknife” and “infjackknife” (default)) (<a href='https://github.com/jakob-r'>@jakob-r</a>, <a href='https://github.com/mlr-org/mlr/issues/1784'>#1784</a>)</li>
+<code>se.method = "sd"</code> See <code>?regr.randomForest</code> for more details. <code>regr.ranger</code> relies on the functions provided by the package (âjackknifeâ and âinfjackknifeâ (default)) (<a href='https://github.com/jakob-r'>@jakob-r</a>, <a href='https://github.com/mlr-org/mlr/issues/1784'>#1784</a>)</li>
 </ul>
 </li>
 <li>
@@ -373,9 +373,9 @@
 <ul>
 <li>
 <code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
-<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
+<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the âNoteâ slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
 <li>
-<code><a href="https://rdrr.io/pkg/e1071/man/svm.html">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from “stack overflow” issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
+<code><a href="https://rdrr.io/pkg/e1071/man/svm.html">e1071::svm()</a></code> now only uses the formula interface if factors are present. This change is supposed to prevent from âstack overflowâ issues some users encountered when using large datasets. See <a href='https://github.com/mlr-org/mlr/issues/1738'>#1738</a> for more information. (<a href='https://github.com/mb706'>@mb706</a>, <a href='https://github.com/mlr-org/mlr/issues/1740'>#1740</a>)</li>
 </ul>
 </div>
 <div id="learners---new" class="section level2">
@@ -395,7 +395,7 @@
 <li>fixed a bug in which <code><a href="https://rdrr.io/r/base/options.html">options(on.learner.error)</a></code> was not respected in <code><a href="../reference/benchmark.html">benchmark()</a></code>. This caused <code><a href="../reference/benchmark.html">benchmark()</a></code> to stop even if it should have continued including <code>FailureModels</code> in the result (<a href='https://github.com/dagola'>@dagola</a>, <a href='https://github.com/mlr-org/mlr/issues/1984'>#1984</a>)</li>
 <li>
 <code><a href="../reference/getClassWeightParam.html">getClassWeightParam()</a></code> now also works for Wrapper* Models and ensemble models (<a href='https://github.com/ja-thomas'>@ja-thomas</a>, <a href='https://github.com/mlr-org/mlr/issues/891'>#891</a>)</li>
-<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the “Note” slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
+<li>added <code><a href="../reference/getLearnerNote.html">getLearnerNote()</a></code> to query the âNoteâ slot of a learner (<a href='https://github.com/alona-sydorova'>@alona-sydorova</a>, <a href='https://github.com/mlr-org/mlr/issues/2086'>#2086</a>)</li>
 </ul>
 </div>
 <div id="filters---general-2" class="section level2">
@@ -404,7 +404,7 @@
 <ul>
 <li>Filter <code>praznik_mrmr</code> also supports <code>regr</code> and <code>surv</code> tasks</li>
 <li>
-<code><a href="../reference/plotFilterValues.html">plotFilterValues()</a></code> got a bit “smarter” and easier now regarding the ordering of multiple facets. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
+<code><a href="../reference/plotFilterValues.html">plotFilterValues()</a></code> got a bit âsmarterâ and easier now regarding the ordering of multiple facets. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
 <li>
 <code><a href="../reference/filterFeatures.html">filterFeatures()</a></code>, <code><a href="../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> and <code><a href="../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code> gained new examples. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
 </ul>
@@ -413,7 +413,7 @@
 <h2 class="hasAnchor">
 <a href="#filters---new" class="anchor"></a>filters - new</h2>
 <ul>
-<li>Ensemble features are now supported. These filters combine multiple single filters to create a final ranking based on certain statistical operations. All new filters are listed in a dedicated section “ensemble filters” in the <a href="https://mlr.mlr-org.com/articles/tutorial/filter_methods.html">tutorial</a>. Tuning of simple features is not supported yet because of a <a href="https://github.com/berndbischl/ParamHelpers/pull/206">missing feature</a> in <em>ParamHelpers</em>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
+<li>Ensemble features are now supported. These filters combine multiple single filters to create a final ranking based on certain statistical operations. All new filters are listed in a dedicated section âensemble filtersâ in the <a href="https://mlr.mlr-org.com/articles/tutorial/filter_methods.html">tutorial</a>. Tuning of simple features is not supported yet because of a <a href="https://github.com/berndbischl/ParamHelpers/pull/206">missing feature</a> in <em>ParamHelpers</em>. (<a href='https://github.com/pat-s'>@pat-s</a>, <a href='https://github.com/mlr-org/mlr/issues/2456'>#2456</a>)</li>
 </ul>
 </div>
 </div>

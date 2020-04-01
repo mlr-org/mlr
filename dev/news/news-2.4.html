@@ -329,25 +329,25 @@
 <ul>
 <li>WrappedModel printer was slightly improved</li>
 <li>ReampleResult now stores the runtime it took to resample in a slot</li>
-<li>getTaskFormula / getTaskFormulaAsString have new argument ‘explicit.features’</li>
-<li>getTaskData now has recodeY = “drop.levels” which drops empty factor levels</li>
+<li>getTaskFormula / getTaskFormulaAsString have new argument âexplicit.featuresâ</li>
+<li>getTaskData now has recodeY = âdrop.levelsâ which drops empty factor levels</li>
 <li>option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity</li>
 <li>showHyperPars was removed. getParamSet does exactly the same thing</li>
-<li>‘resample’ and ‘benchmark’ got the argument keep.pred, setting it to FALSE allows to discard the prediction objects to save memory</li>
+<li>âresampleâ and âbenchmarkâ got the argument keep.pred, setting it to FALSE allows to discard the prediction objects to save memory</li>
 <li>we had to slightly change how the mem usage is reported in tuning and feature selection See TuneControl and FeatSelControl where it is documented what is done now.</li>
-<li>tuneIrace: allows to set the precision / digits within irace (using the argument ‘digits’ in makeTuneControlIrace); default is maximum precision</li>
-<li>for plotting in general we try to introduce a “data layer”, so the data can be generated independently of the plotting first, into well-defined objects; these can then be plotted with mlr or custom code; the naming scheme is always generate<foo>Data and plot<foo></foo></foo>
+<li>tuneIrace: allows to set the precision / digits within irace (using the argument âdigitsâ in makeTuneControlIrace); default is maximum precision</li>
+<li>for plotting in general we try to introduce a âdata layerâ, so the data can be generated independently of the plotting first, into well-defined objects; these can then be plotted with mlr or custom code; the naming scheme is always generate<foo>Data and plot<foo></foo></foo>
 </li>
 <li>getFilterValues is deprecated in favor of generateFilterValuesData</li>
 <li>plotFilterValues can now plot multiple filter methods using facetting</li>
 <li>plotROCRCurves has been rewritten to use ggplot2</li>
-<li>classif.ada: added “loss” hyperpar</li>
+<li>classif.ada: added âlossâ hyperpar</li>
 <li>add missings properties to all ctree and cforest methods: regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost</li>
 <li>learner xgboost was removed, because the package is not on CRAN anymore, unfortunately</li>
-<li>reg.km: added param ‘iso’</li>
-<li>classif.mda: added param ‘start.method’ and changed its default to ‘lvq’, added params ‘sub.df’, ‘tot.df’ and ‘criterion’</li>
-<li>classif.randomForest: ‘sampsize’ can now be an int vector (instead of a scalar)</li>
-<li>plotThreshVsPerf and plotLearningCurve now have param ‘facet’</li>
+<li>reg.km: added param âisoâ</li>
+<li>classif.mda: added param âstart.methodâ and changed its default to âlvqâ, added params âsub.dfâ, âtot.dfâ and âcriterionâ</li>
+<li>classif.randomForest: âsampsizeâ can now be an int vector (instead of a scalar)</li>
+<li>plotThreshVsPerf and plotLearningCurve now have param âfacetâ</li>
 </ul>
 <div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">

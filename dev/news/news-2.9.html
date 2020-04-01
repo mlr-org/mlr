@@ -331,21 +331,21 @@
 <a href="#functions---general-7" class="anchor"></a>functions - general</h2>
 <ul>
 <li>various cleanups that removed unused code</li>
-<li>subsetTask, getTaskData: arg “features” now also accepts logical and integer</li>
+<li>subsetTask, getTaskData: arg âfeaturesâ now also accepts logical and integer</li>
 <li>removeConstantFeatures now also operates on data.frames and makeRemoveConstantFeaturesWrapper can be used to augment a learner with this preprocessing step.</li>
-<li>normalizeFeatures, createDummyFeatures: arg ‘exclude’ was replaced by ‘cols’</li>
+<li>normalizeFeatures, createDummyFeatures: arg âexcludeâ was replaced by âcolsâ</li>
 <li>normalizeFeatures is now S3 and can be called also on data.frames</li>
-<li>SMOTEWrapper: fix a bug where “sw.nn” was not correctly passed down</li>
+<li>SMOTEWrapper: fix a bug where âsw.nnâ was not correctly passed down</li>
 <li>fixed a bug that caused hyperparameters to be not passed on correctly in the ModelMultiplexer in some cases</li>
 <li>fix bug with NoFeaturesModel and ModelMultiplexer</li>
 <li>fix small bug in DownsampleWrapper when trained with weights</li>
-<li>getNestedTuneResultsOptPathDf: added new arg “trafo”</li>
+<li>getNestedTuneResultsOptPathDf: added new arg âtrafoâ</li>
 <li>improve documentation for permutation.importance filter and perform slight argument renaming to fix potential name clashes</li>
 <li>plotPartialDependence can plot classification tasks with more than one interacted features now</li>
-<li>generateFilterValuesData: added argument ‘more.args’</li>
+<li>generateFilterValuesData: added argument âmore.argsâ</li>
 <li>add pretty.names arguments to plots that show learner short names instead of IDs</li>
-<li>addition of ‘data’ argument to plotPartialDependence which adds the training data to the graph</li>
-<li>added new arguments “facet.wrap.nrow” and “facet.wrap.ncol” which enable arrangement of facets in rows and columns to plotting functions</li>
+<li>addition of âdataâ argument to plotPartialDependence which adds the training data to the graph</li>
+<li>added new arguments âfacet.wrap.nrowâ and âfacet.wrap.ncolâ which enable arrangement of facets in rows and columns to plotting functions</li>
 </ul>
 </div>
 <div id="functions---new-5" class="section level2">
@@ -384,9 +384,9 @@
 <li>fix some bartMachine compatibility issues</li>
 <li>classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default</li>
 <li>clean up randomForestSRC and randomForestSRCSyn learners</li>
-<li>the “penalized” learner were restructured and improved (params were added), also see below.</li>
-<li>add stability.nugget parameter for “regr.km”</li>
-<li>classif.blackboost, regr.blackboost: made sure that arg “stump” is passed on correctly</li>
+<li>the âpenalizedâ learner were restructured and improved (params were added), also see below.</li>
+<li>add stability.nugget parameter for âregr.kmâ</li>
+<li>classif.blackboost, regr.blackboost: made sure that arg âstumpâ is passed on correctly</li>
 <li>fixed parameter values for WEKA learners IBk, J48, PART, EM, SimpleKMeans, XMeans</li>
 <li>classif.glmboost, regr.glmboost: add parameters stopintern and trace</li>
 </ul>
@@ -435,7 +435,7 @@
 <a href="#measures---general-1" class="anchor"></a>measures - general</h2>
 <ul>
 <li>updated gmean measure and unit test, added reference to formula of gmean</li>
-<li>makeCostMeasure: removed arg “task”, names of cost matrix are checked on measure calculation</li>
+<li>makeCostMeasure: removed arg âtaskâ, names of cost matrix are checked on measure calculation</li>
 </ul>
 </div>
 <div id="measures---new-3" class="section level2">

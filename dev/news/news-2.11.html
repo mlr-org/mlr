@@ -340,9 +340,9 @@
 <a href="#functions---general-5" class="anchor"></a>functions - general</h2>
 <ul>
 <li>tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets</li>
-<li>getBMR-operators: now support “drop” argument that simplifies the resulting list</li>
-<li>configureMlr: added option “on.measure.not.applicable” to handle situations where performance cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks</li>
-<li>tuneParams, selectFeatures: removed memory stats from default output for performance reasons (can be restored by using a control object with “log.fun” = “memory”)</li>
+<li>getBMR-operators: now support âdropâ argument that simplifies the resulting list</li>
+<li>configureMlr: added option âon.measure.not.applicableâ to handle situations where performance cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks</li>
+<li>tuneParams, selectFeatures: removed memory stats from default output for performance reasons (can be restored by using a control object with âlog.funâ = âmemoryâ)</li>
 <li>listLearners: change check.packages default to FALSE</li>
 <li>tuneParams and tuneParamsMultiCrit: new parameter <code>resample.fun</code> to specify a custom resampling function to use.</li>
 <li>Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription. New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.</li>
@@ -352,7 +352,7 @@
 <h2 class="hasAnchor">
 <a href="#functions---new-3" class="anchor"></a>functions - new</h2>
 <ul>
-<li>getOOBPreds: get out-of-bag predictions from trained models for learners that store them – these learners have the new “oobpreds” property</li>
+<li>getOOBPreds: get out-of-bag predictions from trained models for learners that store them â these learners have the new âoobpredsâ property</li>
 <li>listTaskTypes, listLearnerProperties</li>
 <li>getMeasureProperties, hasMeasureProperties, listMeasureProperties</li>
 <li>makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator</li>
@@ -373,9 +373,9 @@
 <h2 class="hasAnchor">
 <a href="#learners---general-6" class="anchor"></a>learners - general</h2>
 <ul>
-<li>classif.plsdaCaret: added parameter “method”.</li>
-<li>regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = “jackknife”.</li>
-<li>regr.xgboost, classif.xgboost: removed “factors” property as these learners do not handle categorical features – factors are silently converted to integers internally, which may misinterpret the structure of the data</li>
+<li>classif.plsdaCaret: added parameter âmethodâ.</li>
+<li>regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = âjackknifeâ.</li>
+<li>regr.xgboost, classif.xgboost: removed âfactorsâ property as these learners do not handle categorical features â factors are silently converted to integers internally, which may misinterpret the structure of the data</li>
 <li>glmnet: control parameters are reset to factory settings before applying custom settings and training and set back to factory afterwards</li>
 </ul>
 </div>

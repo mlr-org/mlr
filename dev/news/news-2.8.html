@@ -327,22 +327,22 @@
 <a href="#mlr-28" class="anchor"></a>mlr 2.8:<small> 2016-02-13 </small>
 </h1>
 <ul>
-<li>Feature filter “univariate” had a bad name, was deprecated and is now called “univariate.model.score”. The new one also has better defaults.</li>
-<li>(generate/plot)PartialPrediction: added new arg “geom” for tile plots</li>
+<li>Feature filter âunivariateâ had a bad name, was deprecated and is now called âunivariate.model.scoreâ. The new one also has better defaults.</li>
+<li>(generate/plot)PartialPrediction: added new arg âgeomâ for tile plots</li>
 <li>small fix for plotBMRSummary</li>
 <li>the ModelMultiplexer inherits its predict.type from the base learners now</li>
 <li>check that learners in an ensemble have the same predict.type</li>
 <li>new function getBMRModels to extract stored models from a benchmark result</li>
-<li>Fixed a bug where several learners from the LiblineaR package (“classif.LiblineaRL2LogReg”, “classif.LiblineaRL2SVC”, “regr.LiblineaRL2L2SVR”) were calling the wrong value for “type” (0) and thus training the wrong model.</li>
+<li>Fixed a bug where several learners from the LiblineaR package (âclassif.LiblineaRL2LogRegâ, âclassif.LiblineaRL2SVCâ, âregr.LiblineaRL2L2SVRâ) were calling the wrong value for âtypeâ (0) and thus training the wrong model.</li>
 <li>Fixed a bug where the resampling objects hout, cv2, cv3, cv5, cv10 were not documented in the ResampleDesc help page</li>
 <li>regr.xgboost, classif.xgboost: add feval param</li>
 <li>fixed a bug in irace tuning interface with unamed discrete values</li>
-<li>Fixed bugs in “jackknife” and “bootstrap” se estimators for regr.randomForest.</li>
-<li>Added “sd” estimator for regr.randomForest.</li>
+<li>Fixed bugs in âjackknifeâ and âbootstrapâ se estimators for regr.randomForest.</li>
+<li>Added âsdâ estimator for regr.randomForest.</li>
 <li>Fixed a mini bug in ModelMultiplexer where hyperpars that are only needed in predict were not passed down correctly</li>
-<li>Fixed a bug where the function capLargeValues wasn’t working if you passed a task.</li>
-<li>capLargeValues now has a new argument “target”, to prevent from capping response values.</li>
-<li>classif.gbm, regr.gbm: Updated possible ‘distribution’ settings a bit.</li>
+<li>Fixed a bug where the function capLargeValues wasnât working if you passed a task.</li>
+<li>capLargeValues now has a new argument âtargetâ, to prevent from capping response values.</li>
+<li>classif.gbm, regr.gbm: Updated possible âdistributionâ settings a bit.</li>
 <li>oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper, makeOverBaggingWrapper: Added arguments to specifically select the sampled class.</li>
 </ul>
 <div id="api-changes" class="section level2">
