@@ -331,8 +331,8 @@
 <li>resampling on features now supported for an arbitrary number of factor features</li>
 <li>mlr supports ViperCharts plots now</li>
 <li>ROC plot via ROCR can now be created automatically, before you had to call asROCRPrediction, then construct the plots via ROCR your self. See plotROCRCurves</li>
-<li>all mlr measures now have slots ânameâ and ânoteâ</li>
-<li>exported a few very simple âgettersâ for tasks, see below</li>
+<li>all mlr measures now have slots “name” and “note”</li>
+<li>exported a few very simple “getters” for tasks, see below</li>
 <li>in makeLearner a probability predict.threshold can be set for classifiers, also see setPredictThreshold</li>
 <li>in the control objects for tuning and feature selection, the user can now enable threshold tuning</li>
 <li>in the control objects for tuning and feature selection, the user can now define his own logging function</li>
@@ -343,11 +343,11 @@
 <li>some minor bug fixes</li>
 <li>required basic learner packages are not loaded into the global namespace anymore, requireNamespace is used internally instead. this ensures less name clashes and name shadowing</li>
 <li>resample passes dot arguments to the learner hyperpars</li>
-<li>new option âon.par.out.of.boundsâ to disable out-of-bound checks for model parameters</li>
+<li>new option “on.par.out.of.bounds” to disable out-of-bound checks for model parameters</li>
 <li>measures were slightly internally changed. they expose more properties (check ?Measure) and some now unnecessary object slots were removed</li>
-<li>classif.lda and classif.qda now have hyperpar âpredict.methodâ</li>
+<li>classif.lda and classif.qda now have hyperpar “predict.method”</li>
 <li>filterFeatures and makeFilterWrapper gain an argument for mandatory features</li>
-<li>plotLearnerPrediction has new option âerr.sizeâ</li>
+<li>plotLearnerPrediction has new option “err.size”</li>
 <li>classif.plsDA and cluster.DBscan for now removed because of problems with the underlying learning algorithm</li>
 <li>new aggregation test.join</li>
 <li>the following models now can handle factors and ordereds by extra dummy or int encoding: classif.glmnet, regr.glmnet, surv.glmnet, surv.cvglmnet, surv.penalized, surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost</li>
@@ -359,7 +359,7 @@
 <li>getTaskType, getTaskId, getTaskTargetNames</li>
 <li>plotROCRCurves</li>
 <li>plotViperCharts</li>
-<li>measureSSE, measureMSE, measureRMSE, measureMEDSE, â¦</li>
+<li>measureSSE, measureMSE, measureRMSE, measureMEDSE, …</li>
 <li>PreprocWrapperCaret</li>
 <li>setPredictThreshold</li>
 </ul>
@@ -411,7 +411,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

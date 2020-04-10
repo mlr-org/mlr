@@ -331,30 +331,30 @@
 <a href="#general-2" class="anchor"></a>general</h2>
 <ul>
 <li>Support for functional data (fda) using matrix columns has been added.</li>
-<li>Relaxed the way wrappers can be nested â the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper</li>
+<li>Relaxed the way wrappers can be nested – the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper</li>
 <li>Refactored the resample progress messages to give a better overview and distinguish between train and test measures better</li>
 <li>calculateROCMeasures now returns absolute instead of relative values</li>
-<li>Added support for spatial data by providing spatial partitioning methods âSpCVâ and âSpRepCVâ.</li>
+<li>Added support for spatial data by providing spatial partitioning methods “SpCV” and “SpRepCV”.</li>
 <li>Added new spatial.task classification task.</li>
 <li>Added new spam.task classification task.</li>
 <li>Classification tasks now store the class distribution in the class.distribution member.</li>
 <li>mlr now predicts NA for data that contains NA and learners that do not support missing values.</li>
-<li>Tasks are now subsetted in the âtrainâ function and the factor levels (for classification tasks) based on this subset. This means that the factor level distribution is not necessarily the same as for the entire task, and that the task descriptions of models in resampling reflect the respective subset, while the task description of resample predictions reflect the entire task and not necessarily the task of any individual model.</li>
-<li>Added support for growing and fixed window cross-validation for forecasting through new resample methods âGrowingWindowCVâ and âFixedWindowCVâ.</li>
+<li>Tasks are now subsetted in the “train” function and the factor levels (for classification tasks) based on this subset. This means that the factor level distribution is not necessarily the same as for the entire task, and that the task descriptions of models in resampling reflect the respective subset, while the task description of resample predictions reflect the entire task and not necessarily the task of any individual model.</li>
+<li>Added support for growing and fixed window cross-validation for forecasting through new resample methods “GrowingWindowCV” and “FixedWindowCV”.</li>
 </ul>
 </div>
 <div id="functions---general-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions---general-4" class="anchor"></a>functions - general</h2>
 <ul>
-<li>generatePartialDependenceData: depends now on the âmmpfâ package, removed parameter: âcenterâ, âresampleâ, âfminâ, âfmaxâ and âgridsizeâ added parameter: âuniformâ and ânâ to configure the grid for the partial dependence plot</li>
+<li>generatePartialDependenceData: depends now on the “mmpf” package, removed parameter: “center”, “resample”, “fmin”, “fmax” and “gridsize” added parameter: “uniform” and “n” to configure the grid for the partial dependence plot</li>
 <li>batchmark: allow resample instances and reduction of partial results</li>
-<li>resample, performance: new flag âna.rmâ to remove NAs during aggregation</li>
-<li>plotTuneMultiCritResultGGVIS: new parameters âpoint.infoâ and âpoint.trafoâ to control interactivity</li>
-<li>calculateConfusionMatrix: new parameter âsetâ to specify whether confusion matrix should be computed for âtrainâ, âtestâ, or âbothâ (default)</li>
-<li>PlotBMRSummary: Add parameter âshapeâ</li>
+<li>resample, performance: new flag “na.rm” to remove NAs during aggregation</li>
+<li>plotTuneMultiCritResultGGVIS: new parameters “point.info” and “point.trafo” to control interactivity</li>
+<li>calculateConfusionMatrix: new parameter “set” to specify whether confusion matrix should be computed for “train”, “test”, or “both” (default)</li>
+<li>PlotBMRSummary: Add parameter “shape”</li>
 <li>plotROCCurves: Add faceting argument</li>
-<li>PreprocWrapperCaret: Add param âppc.corrâ, âppc.zvâ, âppc.nzvâ, âppc.n.compâ, âppc.cutoffâ, âppc.freqCutâ, âppc.uniqueCutâ</li>
+<li>PreprocWrapperCaret: Add param “ppc.corr”, “ppc.zv”, “ppc.nzv”, “ppc.n.comp”, “ppc.cutoff”, “ppc.freqCut”, “ppc.uniqueCut”</li>
 </ul>
 </div>
 <div id="functions---new-2" class="section level2">
@@ -386,8 +386,8 @@
 <h2 class="hasAnchor">
 <a href="#measures---general" class="anchor"></a>measures - general</h2>
 <ul>
-<li>measure âarsqâ now has ID âarsqâ</li>
-<li>measure âmeasureMultiLabelF1â was renamed to âmeasureMultilabelF1â for consistency</li>
+<li>measure “arsq” now has ID “arsq”</li>
+<li>measure “measureMultiLabelF1” was renamed to “measureMultilabelF1” for consistency</li>
 </ul>
 </div>
 <div id="measures---new" class="section level2">
@@ -405,10 +405,10 @@
 <li>unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized</li>
 <li>fixed a bug where surv.cforest gave wrong risk predictions (<a href='https://github.com/mlr-org/mlr/issues/1833'>#1833</a>)</li>
 <li>fixed bug where classif.xgboost returned NA predictions with multi:softmax</li>
-<li>classif.lda learner: add âpriorâ hyperparameter</li>
-<li>ranger: update hyperpar ârespect.unordered.factorsâ, add âextratreesâ and ânum.random.splitsâ</li>
-<li>h20deeplearning: Rename hyperpar âMeanSquareâ to âQuadraticâ</li>
-<li>h20*: Add support for âmissingsâ</li>
+<li>classif.lda learner: add ‘prior’ hyperparameter</li>
+<li>ranger: update hyperpar ‘respect.unordered.factors’, add ‘extratrees’ and ‘num.random.splits’</li>
+<li>h20deeplearning: Rename hyperpar ‘MeanSquare’ to ‘Quadratic’</li>
+<li>h20*: Add support for “missings”</li>
 </ul>
 </div>
 <div id="learners---new-2" class="section level2">
@@ -468,7 +468,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

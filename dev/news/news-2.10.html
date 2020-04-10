@@ -330,24 +330,24 @@
 <h2 class="hasAnchor">
 <a href="#functions---general-6" class="anchor"></a>functions - general</h2>
 <ul>
-<li>fixed bug in resample when using predict = âtrainâ (issue <a href='https://github.com/mlr-org/mlr/issues/1284'>#1284</a>)</li>
-<li>update to irace 2.0 â there are algorithmic changes in irace that may affect performance</li>
+<li>fixed bug in resample when using predict = “train” (issue <a href='https://github.com/mlr-org/mlr/issues/1284'>#1284</a>)</li>
+<li>update to irace 2.0 – there are algorithmic changes in irace that may affect performance</li>
 <li>generateFilterValuesData: fixed a bug wrt feature ordering</li>
 <li>imputeLearner: fixed a bug when data actually contained no NAs</li>
-<li>print.Learner: if a learner hyperpar was set to value âNAâ this was not displayed in printer</li>
+<li>print.Learner: if a learner hyperpar was set to value “NA” this was not displayed in printer</li>
 <li>makeLearner, setHyperPars: if you mistype a learner or hyperpar name, mlr uses fuzzy matching to suggest the 3 closest names in the message</li>
 <li>tuneParams: tuning with irace is now also parallelized, i.e., different learner configs are evaluated in parallel.</li>
-<li>benchmark: mini fix, arg âlearnersâ now also accepts class strings</li>
+<li>benchmark: mini fix, arg ‘learners’ now also accepts class strings</li>
 <li>object printers: some mlr printers show head previews of data.frames. these now also print info on the total nr of rows and cols and are less confusing</li>
 <li>aggregations: have better properties now, they know whether they require training or test set evals</li>
 <li>the filter methods have better R docs</li>
-<li>filter randomForestSRC.var.select: new arg âmethodâ</li>
+<li>filter randomForestSRC.var.select: new arg “method”</li>
 <li>filter mrmr: fixed some smaller bugs and updated properties</li>
 <li>generateLearningCurveData: also accepts single learner, does not require a list</li>
-<li>plotThreshVsPerf: added âmeasuresâ arg</li>
+<li>plotThreshVsPerf: added “measures” arg</li>
 <li>plotPartialDependence: can create tile plots with joint partial dependence on two features for multiclass classification by facetting across the classes</li>
-<li>generatePartialDependenceData and generateFunctionalANOVAData: expanded âfunâ argument to allow for calculation of weights</li>
-<li>new â?mlrFamiliesâ manual page which lists all families and the functions belonging to it</li>
+<li>generatePartialDependenceData and generateFunctionalANOVAData: expanded “fun” argument to allow for calculation of weights</li>
+<li>new “?mlrFamilies” manual page which lists all families and the functions belonging to it</li>
 <li>we are converging on data.table as a standard internally, this should not change any API behavior on the outside, though</li>
 <li>generateHyperParsEffectData and plotHyperParsEffect now support more than 2 hyperparameters</li>
 <li>linear.correlation, rank.correlation, anova.test: use Rfast instead of FSelector/custom implementation now, performance should be much better</li>
@@ -355,9 +355,9 @@
 <li>we output resample performance messages for every iteration now</li>
 <li>performance improvements for the auc measure</li>
 <li>createDummyFeatures supports vectors now</li>
-<li>removed the pretty.names argument from plotHyperParsEffect â labels can be set though normal ggplot2 functions on the returned object</li>
-<li>Fixed a bad bug in resample, the slot âruntimeâ or a ResampleResult, when the runtime was measured not in seconds but e.g.Â mins. R measures then potentially in mins, but mlr claimed it would be seconds.</li>
-<li>New âdummyâ learners (that disregard features completely) can be fitted now for baseline comparisons, see âfeaturelessâ learners below.</li>
+<li>removed the pretty.names argument from plotHyperParsEffect – labels can be set though normal ggplot2 functions on the returned object</li>
+<li>Fixed a bad bug in resample, the slot “runtime” or a ResampleResult, when the runtime was measured not in seconds but e.g. mins. R measures then potentially in mins, but mlr claimed it would be seconds.</li>
+<li>New “dummy” learners (that disregard features completely) can be fitted now for baseline comparisons, see “featureless” learners below.</li>
 </ul>
 </div>
 <div id="functions---new-4" class="section level2">
@@ -402,9 +402,9 @@
 <a href="#learners---general-7" class="anchor"></a>learners - general</h2>
 <ul>
 <li>classif.ada: fixed some param problem with rpart.control params</li>
-<li>classif.cforest, regr.cforest, surv.cforest: removed parameters âminprobâ, âpvalueâ, ârandomsplitsâ as these are set internally and cannot be changed by the user</li>
+<li>classif.cforest, regr.cforest, surv.cforest: removed parameters “minprob”, “pvalue”, “randomsplits” as these are set internally and cannot be changed by the user</li>
 <li>regr.GPfit: some more params for correlation kernel</li>
-<li>classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing and other problems), added âcolsample_bylevelâ parameter</li>
+<li>classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing and other problems), added “colsample_bylevel” parameter</li>
 <li>adapted {classif,regr,surv}.ranger parameters for new ranger version</li>
 </ul>
 </div>
@@ -456,7 +456,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

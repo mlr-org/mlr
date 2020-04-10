@@ -329,29 +329,29 @@
 <ul>
 <li>fixed a bug that caused performance() to return incorrect values with ResamplePredictions</li>
 <li>we have (somewhat experimental) support for multilabel classification. so we now have a task, a new baselearner (rFerns), and a generic reduction-to-binary algorithm (MultilabelWrapper)</li>
-<li>tuning: added âbudgetâ parameter in makeTuneControl* (single-objective) and makeTuneMultiCritControl* (multi-objective scenarios), allowing to define a maximum ânumber of evaluationsâ budget for tuning algorithms</li>
-<li>tuning: added âbudgetâ parameter in makeTuneMultiCritControl*, allowing to define a maximum ânumber of evaluationsâ budget for tuning algorithms in the single-objective case</li>
-<li>makeTuneControlGenSA: optimized function will be considered non-smooth per default (change via â¦ args)</li>
-<li>classif.svm, regr.svm: added âscaleâ param</li>
-<li>ksvm: added âcacheâ param</li>
+<li>tuning: added ‘budget’ parameter in makeTuneControl* (single-objective) and makeTuneMultiCritControl* (multi-objective scenarios), allowing to define a maximum “number of evaluations” budget for tuning algorithms</li>
+<li>tuning: added ‘budget’ parameter in makeTuneMultiCritControl*, allowing to define a maximum “number of evaluations” budget for tuning algorithms in the single-objective case</li>
+<li>makeTuneControlGenSA: optimized function will be considered non-smooth per default (change via … args)</li>
+<li>classif.svm, regr.svm: added ‘scale’ param</li>
+<li>ksvm: added ‘cache’ param</li>
 <li>plotFilterValuesGGVIS: sort and n_show are interactive, interactive flag removed</li>
 <li>renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities</li>
 <li>plots now use long names for measures where possible</li>
-<li>there was a nasty bug in measure âmccâ. fixed and unit tested. and apologies.</li>
+<li>there was a nasty bug in measure “mcc”. fixed and unit tested. and apologies.</li>
 <li>removed getTaskFormulaAsString and improved getTaskFormula so the former is not needed anymore</li>
-<li>aggregations now have a ânameâ property, which is a long name</li>
+<li>aggregations now have a ‘name’ property, which is a long name</li>
 <li>generateLearningCurveData and generateThreshVsPerfData now append the aggregation id to the output column name if the measure ids are the same</li>
-<li>plotLearningCurve, plotLearningCurveGGVIS, plotThreshVsPerf, plotThreshVsPerfGGVIS now have an argument âpretty.namesâ which plots the ânameâ element of the measures instead of the âidâ.</li>
-<li>makeCustomResampledMeasure now has arguments âmeasure.idâ and âaggregation.idâ instead of only âidâ which corresponded to the measure. Also, ânameâ and note (corresponding to the measure) as well as âaggregation.nameâ have been added.</li>
-<li>makeCostMeasure now has arguments ânameâ and âidâ.</li>
-<li>classification learner now can have a property âclass.weightsâ, supported by âclass.weights.paramâ. The latter indicates which of the parameters provides that class weights information to the learner.</li>
-<li>class weights integrated in the learner will be used as default for âwcw.paramâ in âmakeWeightedClassesWrapperâ</li>
+<li>plotLearningCurve, plotLearningCurveGGVIS, plotThreshVsPerf, plotThreshVsPerfGGVIS now have an argument ‘pretty.names’ which plots the ‘name’ element of the measures instead of the ‘id’.</li>
+<li>makeCustomResampledMeasure now has arguments ‘measure.id’ and ‘aggregation.id’ instead of only ‘id’ which corresponded to the measure. Also, ‘name’ and note (corresponding to the measure) as well as ‘aggregation.name’ have been added.</li>
+<li>makeCostMeasure now has arguments ‘name’ and ‘id’.</li>
+<li>classification learner now can have a property ‘class.weights’, supported by ‘class.weights.param’. The latter indicates which of the parameters provides that class weights information to the learner.</li>
+<li>class weights integrated in the learner will be used as default for ‘wcw.param’ in ‘makeWeightedClassesWrapper’</li>
 <li>listLearners with create = FALSE does not load packages anymore and is therefore faster and more reliable; it also supports the additional parameter check.packages now that will check whether required packages are installed without loading them</li>
 <li>many new functions for statistical benchmark comparisons are added, see below</li>
 <li>rename hasProperties, getProperties to hasLearnerProperties and getLearnerProperties</li>
 <li>Learner properties are now implemented object oriented as a state of a Learner. Only RLearners have the properties stored in a slot. For each class the getter can be overwritten.</li>
-<li>The hill climbing algorithm for stacking (Caruana 04) is implemented as method âhill.climbâ in âmakeStackedLearnerâ to select models from base learners, which is equivalent to weighted average.</li>
-<li>The model compression algorithm for stacking (Caruana 06) is implemented as method âcompressâ in âmakeStackedLearnerâ to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.</li>
+<li>The hill climbing algorithm for stacking (Caruana 04) is implemented as method ‘hill.climb’ in ‘makeStackedLearner’ to select models from base learners, which is equivalent to weighted average.</li>
+<li>The model compression algorithm for stacking (Caruana 06) is implemented as method ‘compress’ in ‘makeStackedLearner’ to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.</li>
 <li>relativeOverfitting provides a way to estimate how much a model overfits to the training data according to a measure.</li>
 <li>restructured the LiblineaR learners to a more convenient format. These old ones were removed: classif.LiblineaRBinary, classif.LiblineaRLogReg, classif.LiblineaRMultiClass. For the new ones, see below.</li>
 <li>Added some commonly used ResampleDesc description objects, to save typing in resample experiments: hout, cv2, cv3, cv5, cv10.</li>
@@ -447,7 +447,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

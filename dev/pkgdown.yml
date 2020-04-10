@@ -1,5 +1,5 @@
 pandoc: 2.7.3
-pkgdown: 1.5.0
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   mlr: mlr.html
@@ -44,7 +44,7 @@ articles:
   usecase_regression: tutorial/usecase_regression.html
   visualization: tutorial/visualization.html
   wrapper: tutorial/wrapper.html
-last_built: 2020-04-09T05:45Z
+last_built: 2020-04-10T05:54Z
 urls:
   reference: https://mlr.mlr-org.com/reference
   article: https://mlr.mlr-org.com/articles

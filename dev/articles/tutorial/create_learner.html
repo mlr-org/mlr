@@ -604,15 +604,15 @@
 <h1 class="hasAnchor">
 <a href="#registering-your-learner" class="anchor"></a>Registering your learner</h1>
 <p>If your interface code to a new learning algorithm exists only locally, i.e., it is not (yet) merged into <code>mlr</code> or does not live in an extra package with a proper namespace you might want to register the new S3 methods to make sure that these are found by, e.g., <code><a href="../../reference/listLearners.html">listLearners()</a></code>. You can do this as follows:</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r">registerS3method("makeRLearner", "<awesome_new_learner_class>", 
-  makeRLearner.<awesome_new_learner_class>)
-registerS3method("trainLearner", "<awesome_new_learner_class>", 
-  trainLearner.<awesome_new_learner_class>)
-registerS3method("predictLearner", "<awesome_new_learner_class>", 
-  predictLearner.<awesome_new_learner_class>)</awesome_new_learner_class></awesome_new_learner_class></awesome_new_learner_class></awesome_new_learner_class></awesome_new_learner_class></awesome_new_learner_class></pre></body></html></div>
+<div class="sourceCode" id="cb23"><html><body><pre class="r">registerS3method("makeRLearner", "&lt;awesome_new_learner_class&gt;", 
+  makeRLearner.&lt;awesome_new_learner_class&gt;)
+registerS3method("trainLearner", "&lt;awesome_new_learner_class&gt;", 
+  trainLearner.&lt;awesome_new_learner_class&gt;)
+registerS3method("predictLearner", "&lt;awesome_new_learner_class&gt;", 
+  predictLearner.&lt;awesome_new_learner_class&gt;)</pre></body></html></div>
 <p>If you have written more methods, for example in order to extract feature importance values or out-of-bag predictions these also need to be registered in the same manner, for example:</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r">registerS3method("getFeatureImportanceLearner", "<awesome_new_learner_class>",
-  getFeatureImportanceLearner.<awesome_new_learner_class>)</awesome_new_learner_class></awesome_new_learner_class></pre></body></html></div>
+<div class="sourceCode" id="cb24"><html><body><pre class="r">registerS3method("getFeatureImportanceLearner", "&lt;awesome_new_learner_class&gt;",
+  getFeatureImportanceLearner.&lt;awesome_new_learner_class&gt;)</pre></body></html></div>
 <p>For the new learner to work with parallelization, you may have to export the new methods explicitly:</p>
 <div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu">parallelExport</span>(<span class="st">"trainLearner.&lt;awesome_new_learner_class&gt;"</span>,
   <span class="st">"predictLearner.&lt;awesome_new_learner_class&gt;"</span>)</pre></body></html></div>
@@ -703,7 +703,7 @@ registerS3method("predictLearner", "<awesome_new_learner_class>",
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
