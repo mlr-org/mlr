@@ -8,24 +8,29 @@ test_that("makeModelMultiplexerParamSet works", {
 
   lrn = makeModelMultiplexer(bls)
 
-  ps1 = makeModelMultiplexerParamSet(lrn,
+  ps1 = makeModelMultiplexerParamSet(
+    lrn,
     makeNumericParam("sigma", lower = -10, upper = 10, trafo = function(x) 2^x),
     makeIntegerParam("ntree", lower = 1L, upper = 50L)
   )
 
   ps2 = makeModelMultiplexerParamSet(lrn,
-    classif.ksvm = makeParamSet(makeNumericParam("sigma", lower = -10,
+    classif.ksvm = makeParamSet(makeNumericParam("sigma",
+      lower = -10,
       upper = 10, trafo = function(x) 2^x)),
-    classif.randomForest = makeParamSet(makeIntegerParam("ntree", lower = 1L,
+    classif.randomForest = makeParamSet(makeIntegerParam("ntree",
+      lower = 1L,
       upper = 50L))
   )
 
   ps3 = makeParamSet(
     makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
-    makeNumericParam("classif.ksvm.sigma", lower = -10, upper = 10,
+    makeNumericParam("classif.ksvm.sigma",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x,
       requires = quote(selected.learner == "classif.ksvm")),
-    makeIntegerParam("classif.randomForest.ntree", lower = 1L, upper = 50L,
+    makeIntegerParam("classif.randomForest.ntree",
+      lower = 1L, upper = 50L,
       requires = quote(selected.learner == "classif.randomForest"))
   )
 
@@ -40,14 +45,17 @@ test_that("ModelMultiplexer basic stuff works", {
   expect_equal(class(lrn), c("ModelMultiplexer", "BaseEnsemble", "Learner"))
 
   # check hyper par setting and so on
-  lrn2 = setHyperPars(lrn, selected.learner = "classif.rpart",
+  lrn2 = setHyperPars(lrn,
+    selected.learner = "classif.rpart",
     classif.rpart.minsplit = 10000L)
   xs = getHyperPars(lrn2)
-  expect_true(setequal(names(xs), c("selected.learner",
+  expect_true(setequal(names(xs), c(
+    "selected.learner",
     "classif.rpart.minsplit", "classif.rpart.xval")))
   expect_equal(xs$classif.rpart.minsplit, 10000L)
   mod = train(lrn2, task = binaryclass.task)
-  expect_equal(getLearnerModel(mod, more.unwrap = TRUE)$control$minsplit,
+  expect_equal(
+    getLearnerModel(mod, more.unwrap = TRUE)$control$minsplit,
     10000L)
 
   # check removal
@@ -59,7 +67,8 @@ test_that("ModelMultiplexer basic stuff works", {
   lrn2 = setPredictType(lrn, "prob")
   mod = train(lrn2, task = binaryclass.task)
   p = predict(mod, task = binaryclass.task)
-  expect_numeric(getPredictionProbabilities(p), any.missing = FALSE, lower = 0,
+  expect_numeric(getPredictionProbabilities(p),
+    any.missing = FALSE, lower = 0,
     upper = 1)
 })
 
@@ -93,16 +102,16 @@ test_that("FailureModel works", {
 })
 
 test_that("ModelMultiplexer tuning", {
-  skip("Until irace works with R 4.0")
-
   lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
   rdesc = makeResampleDesc("CV", iters = 2L)
 
-  tune.ps = makeModelMultiplexerParamSet(lrn,
+  tune.ps = makeModelMultiplexerParamSet(
+    lrn,
     makeIntegerParam("minsplit", lower = 1, upper = 50))
   # tune with random
   ctrl = makeTuneControlRandom(maxit = 4L)
-  res = tuneParams(lrn, binaryclass.task, rdesc, par.set = tune.ps,
+  res = tuneParams(lrn, binaryclass.task, rdesc,
+    par.set = tune.ps,
     control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
@@ -110,7 +119,8 @@ test_that("ModelMultiplexer tuning", {
   expect_true(all(is.finite(y)))
   # tune with irace
   task = subsetTask(binaryclass.task, subset = c(1:20, 150:170))
-  ctrl = makeTuneControlIrace(maxExperiments = 40L, nbIterations = 2L,
+  ctrl = makeTuneControlIrace(
+    maxExperiments = 40L, nbIterations = 2L,
     minNbSurvival = 1L)
   res = tuneParams(lrn, task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
@@ -132,13 +142,15 @@ test_that("ModelMultiplexer inherits predict.type from base learners", {
   r = holdout(learner, binaryclass.task)
 
   # now check that we can tune the threshold
-  ps = makeModelMultiplexerParamSet(learner,
+  ps = makeModelMultiplexerParamSet(
+    learner,
     makeDiscreteParam("C", 1),
     makeDiscreteParam("mtry", c(2, 3))
   )
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
-  res = tuneParams(learner, binaryclass.task, resampling = rdesc, par.set = ps,
+  res = tuneParams(learner, binaryclass.task,
+    resampling = rdesc, par.set = ps,
     control = ctrl)
 })
 
@@ -173,7 +185,8 @@ test_that("ModelMultiplexer handles tasks with no features", {
 # issue #760
 test_that("ModelMultiplexer passes on hyper pars in predict with both", {
   test.ps = makeRLearnerClassif("test.ps", character(0),
-    makeParamSet(makeIntegerLearnerParam("tpTRAIN", when = "train"),
+    makeParamSet(
+      makeIntegerLearnerParam("tpTRAIN", when = "train"),
       makeIntegerLearnerParam("tpPREDICT", when = "predict"),
       makeIntegerLearnerParam("tpBOTH", when = "both")),
     properties = c("numerics", "twoclass"))
@@ -195,7 +208,8 @@ test_that("ModelMultiplexer passes on hyper pars in predict with both", {
   registerS3method("predictLearner", "test.ps", predictLearner.test.ps)
 
   test.ps.mm = makeModelMultiplexer(list(test.ps))
-  test.ps.mm.args = setHyperPars(test.ps.mm, test.ps.tpTRAIN = 1,
+  test.ps.mm.args = setHyperPars(test.ps.mm,
+    test.ps.tpTRAIN = 1,
     test.ps.tpPREDICT = 2, test.ps.tpBOTH = 3)
   trained = train(test.ps.mm.args, pid.task)
   expect_false(is.null(opts$tpBOTH))
