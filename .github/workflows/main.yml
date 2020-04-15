@@ -34,6 +34,10 @@ jobs:
       CCACHE_SLOPPINESS: include_file_ctime
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       CODECOV: ${{ matrix.config.codecov }}
+      # prevent rgl issues because no X11 display is available
+      RGL_USE_NULL: true
+      # accounnt for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
       # required on macOS >= 10.15.4 for correct linking
       SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 
