@@ -33,8 +33,13 @@ jobs:
       CCACHE_NOHASHDIR: true
       CCACHE_SLOPPINESS: include_file_ctime
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
-      RGL_USE_NULL: true
       CODECOV: ${{ matrix.config.codecov }}
+      # prevent rgl issues because no X11 display is available
+      RGL_USE_NULL: true
+      # accounnt for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
+      # required on macOS >= 10.15.4 for correct linking
+      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 
     steps:
       - uses: actions/checkout@v2
@@ -104,9 +109,20 @@ jobs:
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
         run: |
           brew install ccache
-          wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
-          sudo installer -package clang-8.0.0.pkg -target /
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang8/bin/clang\nCC11=ccache /usr/local/clang8/bin/clang\nCC14=ccache /usr/local/clang8/bin/clang\nCXX=ccache /usr/local/clang8/bin/clang++\nCXX11=ccache /usr/local/clang8/bin/clang++\nCXX14=ccache /usr/local/clang8/bin/clang++\nC11=ccache /usr/local/clang8/bin/clang++\nC14=ccache /usr/local/clang8/bin/clang++\nF88=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+          brew cask install xquartz # for rgl
+          # install SDK 10.13 (High Sierra, used by CRAN)
+          wget -nv https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.13.sdk.tar.xz
+          tar fxz MacOSX10.13.sdk.tar.xz
+          sudo mv MacOSX10.13.sdk /Library/Developer/CommandLineTools/SDKs/
+          rm -rf MacOSX10.13*
+          # install gfortran 8.2 (used by CRAN)
+          wget -nv https://github.com/fxcoudert/gfortran-for-macOS/releases/download/8.2/gfortran-8.2-Mojave.dmg
+          sudo hdiutil attach gfortran*.dmg
+          sudo installer -package /Volumes/gfortran*/gfortran*/gfortran*.pkg -target /
+          sudo hdiutil detach /Volumes/gfortran-8.2-Mojave
+          rm gfortran-8*
+          # set compiler flags
+          mkdir -p ~/.R && echo -e 'CC=ccache clang\nCPP=ccache clang\nCXX=ccache clang++\nCXX11=ccache clang++\nCXX14=ccache clang++\nCXX17=ccache clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCPPFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk -I/usr/local/include\nF77=ccache /usr/local/gfortran/bin/gfortran\nFC=ccache /usr/local/gfortran/bin/gfortran' > $HOME/.R/Makevars
 
       # - need to remove gfortran first because it conflicts with other brew installs
       # - proj@5 because projv6 is not well supported yet by spatial libs
@@ -154,6 +170,7 @@ jobs:
       - name: "[Stage] Prepare & Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
+          export DISPLAY=:99 # for rgl
           echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
