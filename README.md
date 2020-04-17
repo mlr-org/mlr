@@ -19,7 +19,7 @@ Machine learning in R.
 
 - [CRAN release site](https://CRAN.R-project.org/package=mlr)
 - [Online tutorial](https://mlr.mlr-org.com/index.html)
-- [Cheatsheet](https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf)
+- [Cheatsheet](https://cheatsheets.mlr-org.com/mlr.pdf)
 - [Changelog](https://mlr.mlr-org.com/news/index.html)
 
 - [Stackoverflow](https://stackoverflow.com/questions/tagged/mlr): `#mlr`
