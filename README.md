@@ -13,7 +13,6 @@ Machine learning in R.
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 [![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/#retired)
 [![Coverage Status](https://img.shields.io/codecov/c/github/mlr-org/mlr/master.svg)](https://codecov.io/github/mlr-org/mlr?branch=master)
-[![Dependencies](https://tinyverse.netlify.com/badge/mlr)](https://cran.r-project.org/package=mlr)
 
 <!-- badges: end -->
 
