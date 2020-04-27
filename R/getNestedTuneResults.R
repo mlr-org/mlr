@@ -48,9 +48,11 @@ getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
   assertFlag(trafo)
   ops = extractSubList(r$extract, "opt.path", simplify = FALSE)
   if (trafo) ops = lapply(ops, trafoOptPath)
+  browser()
   op.dfs = lapply(ops, as.data.frame)
   op.dfs = setDF(rbindlist(lapply(seq_along(op.dfs), function(i) {
     op.dfs[[i]][, "iter"] = i
     op.dfs[[i]]
   }), fill = TRUE, use.names = TRUE))
+  return(op.dfs)
 }
