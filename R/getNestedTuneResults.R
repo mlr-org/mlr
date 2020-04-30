@@ -53,4 +53,5 @@ getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
     op.dfs[[i]][, "iter"] = i
     op.dfs[[i]]
   }), fill = TRUE, use.names = TRUE))
+  return(op.dfs)
 }
