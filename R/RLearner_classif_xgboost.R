@@ -156,9 +156,14 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
 #' @export
 getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
   mod = getLearnerModel(.model, more.unwrap = TRUE)
-  imp = xgboost::xgb.importance(feature_names = .model$features,
+  imp = xgboost::xgb.importance(
+    feature_names = .model$features,
     model = mod, ...)
 
-  fiv = imp$Gain
+  if (is.null(imp$Gain)) {
+    fiv = imp$Weight
+  } else {
+    fiv = imp$Gain
+  }
   setNames(fiv, imp$Feature)
 }
