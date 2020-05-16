@@ -189,9 +189,10 @@ The resulting [learner](learner.html) can now be trained on the task created in 
 
 ```{r, warning = FALSE, message=FALSE}
 # Train the fdalrn on the constructed task
-m = train(learner = fdalrn, task = tsk1)
-p = predict(m, tsk1)
-performance(p, rmse)
+# FIXME: currenlty not working. See #2758
+#m = train(learner = fdalrn, task = tsk1)
+#p = predict(m, tsk1)
+#performance(p, rmse)
 ```
 
 Alternatively, learners that do not explicitly treat functional covariates can be applied. 
