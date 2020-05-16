@@ -188,10 +188,11 @@ This is explained in more detail in the [feature extraction](functional_data.htm
 The resulting [learner](learner.html) can now be trained on the task created in section [Creating a task](functional_data.html#creating-a-task) above. 
 
 ```{r, warning = FALSE, message=FALSE}
+# FIXME: #2758
 # Train the fdalrn on the constructed task
-m = train(learner = fdalrn, task = tsk1)
-p = predict(m, tsk1)
-performance(p, rmse)
+# m = train(learner = fdalrn, task = tsk1)
+# p = predict(m, tsk1)
+# performance(p, rmse)
 ```
 
 Alternatively, learners that do not explicitly treat functional covariates can be applied. 
