@@ -32,6 +32,7 @@ test_that("learners work: classif", {
   }
 
   # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
+  # FIXME: evtree issue: https://github.com/mlr-org/mlr/issues/2761
   names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
   row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
   lrns[row_ids] = NULL
@@ -40,10 +41,13 @@ test_that("learners work: classif", {
   lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
+  # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
+  # FIXME: evtree issue: https://github.com/mlr-org/mlr/issues/2761
   lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
   names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
   row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
   lrns[row_ids] = NULL
+
   lapply(lrns, testThatLearnerHandlesFactors,
     task = task,
     hyperpars = hyperpars)
@@ -51,6 +55,7 @@ test_that("learners work: classif", {
   # binary classif with ordered factors
 
   # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
+  # FIXME: evtree issue: https://github.com/mlr-org/mlr/issues/2761
   lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
   names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
   row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
