@@ -20,7 +20,8 @@ test_that("learners work: classif", {
   )
 
   # binary classif
-  task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
+  task = subsetTask(binaryclass.task,
+    subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = listLearnersCustom(task, create = TRUE)
   # some learners are not avail on windows
@@ -29,27 +30,51 @@ test_that("learners work: classif", {
     row_ids = which(names %in% "classif.IBk")
     lrns[row_ids] = NULL
   }
+
+  # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
+  # FIXME: evtree issue: https://github.com/mlr-org/mlr/issues/2761
+  names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
+  row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
+  lrns[row_ids] = NULL
+
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
+  # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
+  # FIXME: evtree issue: https://github.com/mlr-org/mlr/issues/2761
   lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesFactors, task = task,
+  names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
+  row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
+  lrns[row_ids] = NULL
+
+  lapply(lrns, testThatLearnerHandlesFactors,
+    task = task,
     hyperpars = hyperpars)
 
   # binary classif with ordered factors
+
+  # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
+  # FIXME: evtree issue: https://github.com/mlr-org/mlr/issues/2761
   lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task,
+  names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
+  row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
+  lrns[row_ids] = NULL
+
+  lapply(lrns, testThatLearnerHandlesOrderedFactors,
+    task = task,
     hyperpars = hyperpars)
 
   # binary classif with prob
   lrns = listLearnersCustom(binaryclass.task, properties = "prob", create = TRUE)
-  lapply(lrns, testBasicLearnerProperties, task = binaryclass.task,
+  lapply(lrns, testBasicLearnerProperties,
+    task = binaryclass.task,
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
   lrns = listLearnersCustom(binaryclass.task, properties = "weights", create = TRUE)
-  lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
+  lapply(lrns, testThatLearnerRespectsWeights,
+    hyperpars = hyperpars,
     task = binaryclass.task, train.inds = binaryclass.train.inds,
     test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
@@ -60,7 +85,12 @@ test_that("learners work: classif", {
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
 
   # classif with oobpreds
+  # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
   lrns = listLearnersCustom(task, properties = "oobpreds", create = TRUE)
+  names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
+  row_ids = which(names %in% "classif.rFerns")
+  lrns[row_ids] = NULL
+
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with oobpreds and probability
@@ -70,11 +100,13 @@ test_that("learners work: classif", {
 
   # classif with variable importance
   lrns = listLearnersCustom(task, properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerCanCalculateImportance, task = task,
+  lapply(lrns, testThatLearnerCanCalculateImportance,
+    task = task,
     hyperpars = hyperpars)
 
   # classif with only one feature
-  min.task = makeClassifTask("oneCol", data.frame(x = 1:10,
+  min.task = makeClassifTask("oneCol", data.frame(
+    x = 1:10,
     y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
   lrns = listLearnersCustom(min.task, create = TRUE)
   # FIXME: classif.boosting: Remove if bug is removed in adabag!
@@ -107,7 +139,8 @@ test_that("learners work: classif", {
     "classif.rrlda",
     "classif.rknn")
   lrns_sub = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
-  lapply(lrns_sub, testBasicLearnerProperties, task = min.task,
+  lapply(lrns_sub, testBasicLearnerProperties,
+    task = min.task,
     hyperpars = hyperpars)
 })
 
