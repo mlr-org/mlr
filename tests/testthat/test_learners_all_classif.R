@@ -33,7 +33,7 @@ test_that("learners work: classif", {
 
   # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
   names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
-  row_ids = which(names %in% "classif.rFerns")
+  row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
   lrns[row_ids] = NULL
 
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
@@ -42,7 +42,7 @@ test_that("learners work: classif", {
   # binary classif with factors
   lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
   names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
-  row_ids = which(names %in% "classif.rFerns")
+  row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
   lrns[row_ids] = NULL
   lapply(lrns, testThatLearnerHandlesFactors,
     task = task,
@@ -53,7 +53,7 @@ test_that("learners work: classif", {
   # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
   lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
   names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
-  row_ids = which(names %in% "classif.rFerns")
+  row_ids = which(names %in% c("classif.rFerns", "classif.evtree"))
   lrns[row_ids] = NULL
 
   lapply(lrns, testThatLearnerHandlesOrderedFactors,
