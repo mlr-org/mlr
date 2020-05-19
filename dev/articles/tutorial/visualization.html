@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9000</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9001</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -379,7 +379,7 @@
   <span class="kw">strip</span> <span class="kw">=</span> <span class="fu">strip.custom</span>(<span class="kw">factor.levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">d</span>$<span class="no">measures</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="no">name</span>),
     <span class="kw">par.strip.text</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">cex</span> <span class="kw">=</span> <span class="fl">0.8</span>)))</pre></body></html></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>Let’s conclude with a brief look on a second example. Here we use <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> but extract the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> object <code>plt</code> and use it to create a traditional <code><a href="https://rdrr.io/r/graphics/plot.html">graphics::plot()</a></code>, additional to the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> plot.</p>
+<p>Let’s conclude with a brief look on a second example. Here we use <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> but extract the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> object <code>plt</code> and use it to create a traditional <code><a href="https://rdrr.io/r/graphics/plot.default.html">graphics::plot()</a></code>, additional to the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> plot.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">sonar</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="no">sonar.task</span>)
 <span class="no">pd</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span>(<span class="no">mod</span>, <span class="no">sonar</span>, <span class="st">"V11"</span>)
 <span class="co">## Loading required package: mmpf</span>
@@ -395,7 +395,7 @@
 
 <span class="no">plt</span></pre></body></html></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">M</span> ~ <span class="no">Value</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">plt</span>$<span class="no">data</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"b"</span>, <span class="kw">xlab</span> <span class="kw">=</span> <span class="no">plt</span>$<span class="no">data</span>$<span class="no">Feature</span>[<span class="fl">1</span>])</pre></body></html></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">M</span> ~ <span class="no">Value</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">plt</span>$<span class="no">data</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"b"</span>, <span class="kw">xlab</span> <span class="kw">=</span> <span class="no">plt</span>$<span class="no">data</span>$<span class="no">Feature</span>[<span class="fl">1</span>])</pre></body></html></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 </div>

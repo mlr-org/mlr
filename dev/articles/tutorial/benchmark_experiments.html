@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9000</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9001</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -757,14 +757,14 @@
 <p>Function <code><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix()</a></code> calculates ranks based on aggregated learner performances of one measure. We choose the <a href="measures.html" target="_blank">mean misclassification error</a>. The rank structure can be visualized by <code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code>.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">m</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix</a></span>(<span class="no">bmr</span>, <span class="no">mmce</span>)
 <span class="no">m</span>
-<span class="co">##              iris-example mlbench.ringnorm mlbench.waveform</span>
-<span class="co">## lda                     1                3                2</span>
-<span class="co">## rpart                   3                2                3</span>
-<span class="co">## randomForest            2                1                1</span>
-<span class="co">##              PimaIndiansDiabetes-example Sonar-example</span>
-<span class="co">## lda                                    1             2</span>
-<span class="co">## rpart                                  3             3</span>
-<span class="co">## randomForest                           2             1</span></pre></body></html></div>
+<span class="co">##              PimaIndiansDiabetes-example Sonar-example iris-example</span>
+<span class="co">## lda                                    1             2            1</span>
+<span class="co">## randomForest                           2             1            2</span>
+<span class="co">## rpart                                  3             3            3</span>
+<span class="co">##              mlbench.ringnorm mlbench.waveform</span>
+<span class="co">## lda                         3                2</span>
+<span class="co">## randomForest                1                1</span>
+<span class="co">## rpart                       2                3</span></pre></body></html></div>
 <p>Methods with best performance, i.e., with lowest <a href="measures.html" target="_blank">mmce</a>, are assigned the lowest rank. Linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) is best for the iris and PimaIndiansDiabetes-examples while the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> shows best results on the remaining tasks.</p>
 <p><code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code> with option <code>pos = "tile"</code> shows a corresponding heat map. The ranks are displayed on the x-axis and the learners are color-coded.</p>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span>(<span class="no">bmr</span>, <span class="kw">pos</span> <span class="kw">=</span> <span class="st">"tile"</span>, <span class="kw">order.lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span>(<span class="no">bmr</span>))</pre></body></html></div>
@@ -798,9 +798,9 @@
 <span class="co">## </span>
 <span class="co">## data:  mmce.test.mean and learner.id and task.id </span>
 <span class="co">## </span>
-<span class="co">##              lda   rpart</span>
-<span class="co">## rpart        0.254 -    </span>
-<span class="co">## randomForest 0.802 0.069</span>
+<span class="co">##              lda   randomForest</span>
+<span class="co">## randomForest 0.802 -           </span>
+<span class="co">## rpart        0.254 0.069       </span>
 <span class="co">## </span>
 <span class="co">## P value adjustment method: none</span></pre></body></html></div>
 <p>At this level of significance, we can reject the null hypothesis that there exists no performance difference between the decision tree (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code>) and the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code>.</p>
@@ -863,13 +863,13 @@
 <span class="no">df</span> <span class="kw">=</span> <span class="no">df</span>[<span class="no">df</span>$<span class="no">variable</span> <span class="kw">==</span> <span class="st">"mmce"</span>, ]
 <span class="no">df</span> <span class="kw">=</span> <span class="kw pkg">reshape2</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/cast.html">dcast</a></span>(<span class="no">df</span>, <span class="no">task.id</span> + <span class="no">iter</span> ~ <span class="no">variable</span> + <span class="no">learner.id</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">df</span>)
-<span class="co">##         task.id iter  mmce_lda mmce_rpart mmce_randomForest</span>
-<span class="co">## 1 Sonar-example    1 0.4285714  0.2380952         0.2380952</span>
-<span class="co">## 2 Sonar-example    2 0.1904762  0.2857143         0.0952381</span>
-<span class="co">## 3 Sonar-example    3 0.3000000  0.3000000         0.1500000</span>
-<span class="co">## 4 Sonar-example    4 0.1904762  0.1904762         0.0000000</span>
-<span class="co">## 5 Sonar-example    5 0.3333333  0.4761905         0.2380952</span>
-<span class="co">## 6 Sonar-example    6 0.2500000  0.2500000         0.1000000</span>
+<span class="co">##         task.id iter  mmce_lda mmce_randomForest mmce_rpart</span>
+<span class="co">## 1 Sonar-example    1 0.4285714         0.2380952  0.2380952</span>
+<span class="co">## 2 Sonar-example    2 0.1904762         0.0952381  0.2857143</span>
+<span class="co">## 3 Sonar-example    3 0.3000000         0.1500000  0.3000000</span>
+<span class="co">## 4 Sonar-example    4 0.1904762         0.0000000  0.1904762</span>
+<span class="co">## 5 Sonar-example    5 0.3333333         0.2380952  0.4761905</span>
+<span class="co">## 6 Sonar-example    6 0.2500000         0.1000000  0.2500000</span>
 
 <span class="kw pkg">GGally</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/GGally/man/ggpairs.html">ggpairs</a></span>(<span class="no">df</span>, <span class="fl">3</span>:<span class="fl">5</span>)
 <span class="co">## Registered S3 method overwritten by 'GGally':</span>

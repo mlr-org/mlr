@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9000</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9001</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -317,7 +317,7 @@
 <p>The fitted model in slot <code>$learner.model</code> of the <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) object can be accessed using function <code>getLearnerModel</code>.</p>
 <p>In the following example we cluster the <code>Ruspini</code> (<code><a href="https://rdrr.io/pkg/cluster/man/ruspini.html">cluster::ruspini()</a></code>) data set (which has four groups and two features) by <span class="math inline">\(K\)</span>-means with <span class="math inline">\(K = 4\)</span> and extract the output of the underlying <code><a href="https://rdrr.io/r/stats/kmeans.html">stats::kmeans()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ruspini</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"cluster"</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">y</span> ~ <span class="no">x</span>, <span class="no">ruspini</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">y</span> ~ <span class="no">x</span>, <span class="no">ruspini</span>)</pre></body></html></div>
 <p><img src="train_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># Generate the task</span>
 <span class="no">ruspini.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">ruspini</span>)

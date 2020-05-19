@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9000</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9001</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -363,11 +363,11 @@
 <span class="co">##  $ UVVIS : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...</span>
 <span class="co">##   ..- attr(*, "dimnames")=List of 2</span>
 <span class="co">##   .. ..$ : NULL</span>
-<span class="co">##   .. ..$ : chr  "UVVIS.1" "UVVIS.2" "UVVIS.3" "UVVIS.4" ...</span>
+<span class="co">##   .. ..$ : chr [1:134] "UVVIS.1" "UVVIS.2" "UVVIS.3" "UVVIS.4" ...</span>
 <span class="co">##  $ NIR   : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</span>
 <span class="co">##   ..- attr(*, "dimnames")=List of 2</span>
 <span class="co">##   .. ..$ : NULL</span>
-<span class="co">##   .. ..$ : chr  "NIR.1" "NIR.2" "NIR.3" "NIR.4" ...</span></pre></body></html></div>
+<span class="co">##   .. ..$ : chr [1:231] "NIR.1" "NIR.2" "NIR.3" "NIR.4" ...</span></pre></body></html></div>
 <p>Now with a data frame containing the functionals as matrices, a <a href="task.html">task</a> can be created:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Create a regression task, classification tasks behave analogously</span>
 <span class="co"># In this case we use column indices</span>
@@ -434,12 +434,11 @@
 <h1 class="hasAnchor">
 <a href="#training-the-learner" class="anchor"></a>Training the learner</h1>
 <p>The resulting <a href="learner.html">learner</a> can now be trained on the task created in section <a href="functional_data.html#creating-a-task">Creating a task</a> above.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Train the fdalrn on the constructed task</span>
-<span class="no">m</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">learner</span> <span class="kw">=</span> <span class="no">fdalrn</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">tsk1</span>)
-<span class="no">p</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">m</span>, <span class="no">tsk1</span>)
-<span class="fu"><a href="../../reference/performance.html">performance</a></span>(<span class="no">p</span>, <span class="no">rmse</span>)
-<span class="co">##     rmse </span>
-<span class="co">## 2.181438</span></pre></body></html></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"># FIXME: #2758
+# Train the fdalrn on the constructed task
+# m = train(learner = fdalrn, task = tsk1)
+# p = predict(m, tsk1)
+# performance(p, rmse)</pre></body></html></div>
 <p>Alternatively, learners that do not explicitly treat functional covariates can be applied. In this case, the temporal structure is completely disregarded, and all columns are treated as independent.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Train a normal learner on the constructed task.</span>
 <span class="co"># Note that we get a message, that functionals have been converted to numerics.</span>
