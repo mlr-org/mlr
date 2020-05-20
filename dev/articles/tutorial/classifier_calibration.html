@@ -325,7 +325,9 @@
 <span class="no">pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">mod</span>, <span class="no">predict</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">iris.task</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">pred</span>) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"randomForest"</span>, <span class="st">"nnet"</span>)
 <span class="no">cal</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span>(<span class="no">pred</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="fl">1</span>))
-<span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(<span class="no">cal</span>)</pre></body></html></div>
+<span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span>(<span class="no">cal</span>)
+<span class="co">## geom_path: Each group consists of only one observation. Do you need to adjust</span>
+<span class="co">## the group aesthetic?</span></pre></body></html></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
   </div>
 
