@@ -1,5 +1,5 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-05-09
+## revision date: 2020-05-21
 on:
   push:
   pull_request:
@@ -20,19 +20,19 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # comment out lines if you do not want to build on certain platforms
+          # use a different tic template type if you do not want to build on all listed platforms
           - { os: windows-latest, r: "release" }
           - { os: macOS-latest, r: "release", pkgdown: "true" }
           - { os: macOS-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
 
     env:
-      # [Custom env] Set max dll number higher
-      R_MAX_NUM_DLLS: 999
-      # [Custom env] Account for udunits2 linking
-      UDUNITS2_LIBS: /usr/local/lib
       # [Custom env] DISPLAY env var for rgl package
       DISPLAY: ":99"
+      # [Custom env] Account for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
+      # [Custom env] Set max dll number higher
+      R_MAX_NUM_DLLS: 999
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
@@ -51,9 +51,11 @@ jobs:
       BUILD_PKGDOWN: ${{ matrix.config.pkgdown }}
       # macOS >= 10.15.4 linking
       SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+      # use GITHUB_TOKEN from GitHub to workaround rate limits in {remotes}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.1.1
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -85,7 +87,7 @@ jobs:
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v1.1.4
+        uses: pat-s/always-upload-cache@v1.2.0
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
@@ -93,7 +95,7 @@ jobs:
 
       - name: "[Cache] Cache ccache"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v1.1.4
+        uses: pat-s/always-upload-cache@v1.2.0
         with:
           path: ${{ env.CCACHE_DIR}}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
@@ -106,24 +108,15 @@ jobs:
           sudo apt install ccache libcurl4-openssl-dev
           mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
+      - name: "[Custom block] [Linux] rJava"
+        if: runner.os == 'macOS'
+        run: |
+          sudo R CMD javareconf
+          Rscript -e "install.packages('rJava', type = 'source')"‚
+
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
       - name: "[macOS] ccache"
-        if: runner.os == 'macOS' && matrix.config.r != 'devel'
-        run: |
-          brew install ccache
-          wget https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
-          sudo installer -package clang-7.0.0.pkg -target /
-          mkdir -p ~/.R && echo -e 'CC=ccache clang\nCPP=ccache clang\nCXX=ccache clang++\nCXX11=ccache clang++\nCXX14=ccache clang++\nCXX17=ccache clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCPPFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include\nF77=ccache /usr/local/gfortran/bin/gfortran\nFC=ccache /usr/local/gfortran/bin/gfortran' > $HOME/.R/Makevars
-
-      - name: "[Custom block] [macOS] xquartz"
-        if: runner.os == 'macOS'
-        run: |
-          brew cask install xquartz
-
-      # install ccache and write config file
-      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
-      - name: "[macOS-devel] ccache"
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
         run: |
           brew install ccache
@@ -149,11 +142,10 @@ jobs:
           brew install udunits gdal nlopt
           brew cask reinstall gfortran
 
-      - name: "[Custom block] [Linux] rJava"
+      - name: "[Custom block] [macOS] xquartz"
         if: runner.os == 'macOS'
         run: |
-          sudo R CMD javareconf
-          Rscript -e "install.packages('rJava', type = 'source')"
+          brew cask install xquartz
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
@@ -171,7 +163,7 @@ jobs:
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
+      # macOS devel needs its own stage because we need to work with an option to suppress the usage of binaries
       - name: "[Stage] Prepare & Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |

@@ -1,0 +1,52 @@
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: "0 4 * * *"
+
+name: Update tic
+
+jobs:
+  update-tic:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { os: macOS-latest, r: "release" }
+
+    env:
+      # use GITHUB_TOKEN from GitHub to workaround rate limits in {remotes}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
+          Ncpus: 4
+
+      - name: "[Stage] Dependencies"
+        run: |
+            brew install curl libsodium
+            Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes', type = 'source')"
+            Rscript -e "remotes::install_github('ropensci/tic', dependencies = TRUE)"
+
+      - name: "[Stage] Update YAMLs"
+        run: |
+            Rscript -e "tic::update_yml()"
+
+      - name: "[Stage] Create Pull Request"
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.TIC_UPDATE }}
+          title: "Update tic templates [ci-skip]"
+          commit-message: "update tic templates"
+          body: "{tic} templates can be updated :rocket: :robot:"
+          branch: update-tic
+          base: master
