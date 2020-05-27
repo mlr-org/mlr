@@ -112,7 +112,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
-          Rscript -e "install.packages('rJava', type = 'source')"‚
+          Rscript -e "install.packages('rJava', type = 'source')"
 
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
