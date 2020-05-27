@@ -1,7 +1,8 @@
 context("FDA_FDboost")
 
 test_that("regr_FDboost is equal to reference", {
-  skip_on_os("mac")
+  # FIXME: #2758
+  skip("errors on all platforms - fix needed!")
   # mboost throwing errors on CRAN
   # subscript out of bounds
   # Backtrace:

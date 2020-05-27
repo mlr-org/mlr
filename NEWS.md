@@ -1,3 +1,8 @@
+# mlr 2.17.1.9002
+
+ - `getFeatureImportance()`: Account for feature importance weight of linear xgboost models
+
+
 # mlr 2.17.1.9001
 
 - Fix learner note for learner glmnet (the default of param `s` did not match the learner note) (#2747)
