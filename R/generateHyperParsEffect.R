@@ -105,7 +105,7 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
     }
     for (hyp in 1:num.hypers) {
       if (!is.numeric(d[, hyp])) {
-        d[, hyp] = type.convert(as.character(d[, hyp]))
+        d[, hyp] = type.convert(as.character(d[, hyp]), as.is = FALSE)
       }
     }
     measures = tune.result$opt.path$y.names
