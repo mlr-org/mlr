@@ -108,11 +108,11 @@ jobs:
           sudo apt install ccache libcurl4-openssl-dev
           mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
-      - name: "[Custom block] [Linux] rJava"
+      - name: "[Custom block] [Linux] Spatial libs and rJava"
         if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
-          Rscript -e "install.packages('rJava', type = 'source')"
+          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
 
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
