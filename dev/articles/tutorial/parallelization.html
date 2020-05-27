@@ -284,10 +284,10 @@
 
     
     
-<p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code>parallel()</code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
-<p>All you have to do is select a backend by calling one of the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) functions. The first loop <code>mlr</code> encounters which is marked as parallel executable will be automatically parallelized. It is good practice to call <code>parallelStop</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html">parallelMap::parallelStop()</a></code>) at the end of your script.</p>
+<p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="https://rdrr.io/pkg/parallelMap/man/parallelMap.html">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="https://rdrr.io/pkg/parallelMap/man/parallelMap.html">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code>parallel()</code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
+<p>All you have to do is select a backend by calling one of the <code>parallelStart*</code> (<code><a href="https://rdrr.io/pkg/parallelMap/man/parallelStart.html">parallelMap::parallelStart()</a></code>) functions. The first loop <code>mlr</code> encounters which is marked as parallel executable will be automatically parallelized. It is good practice to call <code>parallelStop</code> (<code><a href="https://rdrr.io/pkg/parallelMap/man/parallelStop.html">parallelMap::parallelStop()</a></code>) at the end of your script.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"parallelMap"</span>)
-<span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelStartSocket</a></span>(<span class="fl">2</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/parallelMap/man/parallelStart.html">parallelStartSocket</a></span>(<span class="fl">2</span>)
 <span class="co">## Starting parallelization in mode=socket with cpus=2.</span>
 
 <span class="no">rdesc</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="kw">iters</span> <span class="kw">=</span> <span class="fl">3</span>)
@@ -300,14 +300,14 @@
 <span class="co">## Aggregated Result: mmce.test.mean=0.0200000</span>
 <span class="co">## </span>
 
-<span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html">parallelStop</a></span>()
+<span class="fu"><a href="https://rdrr.io/pkg/parallelMap/man/parallelStop.html">parallelStop</a></span>()
 <span class="co">## Stopped parallelization. All cleaned up.</span></pre></body></html></div>
-<p>On Linux or Mac OS X, you may want to use <code>parallelStartMulticore</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) instead.</p>
+<p>On Linux or Mac OS X, you may want to use <code>parallelStartMulticore</code> (<code><a href="https://rdrr.io/pkg/parallelMap/man/parallelStart.html">parallelMap::parallelStart()</a></code>) instead.</p>
 <div id="parallelization-levels" class="section level1">
 <h1 class="hasAnchor">
 <a href="#parallelization-levels" class="anchor"></a>Parallelization levels</h1>
-<p>We offer different parallelization levels for fine grained control over the parallelization. E.g., if you do not want to parallelize the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function because it has only very few iterations but want to parallelize the resampling (<code><a href="../../reference/resample.html">resample()</a></code>) of each learner instead, you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) function. Currently the following levels are supported:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelGetRegisteredLevels.html">parallelGetRegisteredLevels</a></span>()
+<p>We offer different parallelization levels for fine grained control over the parallelization. E.g., if you do not want to parallelize the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function because it has only very few iterations but want to parallelize the resampling (<code><a href="../../reference/resample.html">resample()</a></code>) of each learner instead, you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <code>parallelStart*</code> (<code><a href="https://rdrr.io/pkg/parallelMap/man/parallelStart.html">parallelMap::parallelStart()</a></code>) function. Currently the following levels are supported:</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/parallelMap/man/parallelGetRegisteredLevels.html">parallelGetRegisteredLevels</a></span>()
 <span class="co">## mlr: mlr.benchmark, mlr.resample, mlr.selectFeatures, mlr.tuneParams, mlr.ensemble</span></pre></body></html></div>
 <p>For further details please see the <code><a href="../../reference/parallelization.html">parallelization()</a></code> documentation page.</p>
 </div>
@@ -316,8 +316,8 @@
 <a href="#custom-learners-and-parallelization" class="anchor"></a>Custom learners and parallelization</h1>
 <p>If you have implemented a <a href="create_learner.html" target="_blank">custom learner yourself</a>, locally, you currently need to export this to the slave. So if you see an error after calling, e.g., a parallelized version of <code><a href="../../reference/resample.html">resample()</a></code> like this:</p>
 <pre><code>no applicable method for 'trainLearner' applied to an object of class &lt;my_new_learner&gt;</code></pre>
-<p>simply add the following line somewhere after calling <code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>.</p>
-<pre><code><a href="https://parallelmap.mlr-org.com/reference/parallelExport.html">parallelExport("trainLearner.&lt;my_new_learner&gt;", "predictLearner.&lt;my_new_learner&gt;")</a></code></pre>
+<p>simply add the following line somewhere after calling <code><a href="https://rdrr.io/pkg/parallelMap/man/parallelStart.html">parallelMap::parallelStart()</a></code>.</p>
+<pre><code><a href="https://rdrr.io/pkg/parallelMap/man/parallelExport.html">parallelExport("trainLearner.&lt;my_new_learner&gt;", "predictLearner.&lt;my_new_learner&gt;")</a></code></pre>
 </div>
 <div id="the-end" class="section level1">
 <h1 class="hasAnchor">
