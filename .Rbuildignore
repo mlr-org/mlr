@@ -41,3 +41,6 @@ revdep/*
 ^\.ccache$
 ^clang.*$
 .lintr
+^\.github$
+^clang-.*
+^gfortran.*

@@ -1,3 +1,5 @@
+## tic GitHub Actions template: linux-macos-windows-deploy
+## revision date: 2020-05-21
 on:
   push:
   pull_request:
@@ -18,31 +20,42 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          # use a different tic template type if you do not want to build on all listed platforms
           - { os: windows-latest, r: "release" }
-          - { os: macOS-latest, r: "release" }
+          - { os: macOS-latest, r: "release", pkgdown: "true" }
           - { os: macOS-latest, r: "devel" }
-          - { os: ubuntu-18.04, r: "release", codecov: "true"}
+          - { os: ubuntu-latest, r: "release" }
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      # [Custom env] DISPLAY env var for rgl package
+      DISPLAY: ":99"
+      # [Custom env] Account for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
+      # [Custom env] Set max dll number higher
       R_MAX_NUM_DLLS: 999
+      # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
-      # we are not allowed to write to ~/.ccache, just read
+      # we are not allowed to write to ~/.ccache on GH Actions
+      # setting some ccache options
       CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
       CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
       CCACHE_NOHASHDIR: true
       CCACHE_SLOPPINESS: include_file_ctime
+      # make sure to run `tic::use_ghactions_deploy()` to set up deployment
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
-      CODECOV: ${{ matrix.config.codecov }}
       # prevent rgl issues because no X11 display is available
       RGL_USE_NULL: true
-      # accounnt for udunits2 linking
-      UDUNITS2_LIBS: /usr/local/lib
-      # required on macOS >= 10.15.4 for correct linking
+      # if you use bookdown or blogdown, replace "PKGDOWN" by the respective
+      # capitalized term. This also might need to be done in tic.R
+      BUILD_PKGDOWN: ${{ matrix.config.pkgdown }}
+      # macOS >= 10.15.4 linking
       SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+      # use GITHUB_TOKEN from GitHub to workaround rate limits in {remotes}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.1.1
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -58,8 +71,10 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      # set current date for use in cache creation
+      # set date/week for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
+      # - cache R packages daily
+      # - cache ccache weekly -> 'ccache' helps rebuilding the package cache faster
       - name: "[Cache] Prepare daily timestamp for cache"
         if: runner.os != 'Windows'
         id: date
@@ -72,7 +87,7 @@ jobs:
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v1.1.3
+        uses: pat-s/always-upload-cache@v1.2.0
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
@@ -80,36 +95,31 @@ jobs:
 
       - name: "[Cache] Cache ccache"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v1.1.3
+        uses: pat-s/always-upload-cache@v1.2.0
         with:
           path: ${{ env.CCACHE_DIR}}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-test7-${{steps.datew.outputs.datew}}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
 
+      # install ccache and write config file
       - name: "[Linux] ccache"
         if: runner.os == 'Linux'
         run: |
-          sudo apt install ccache
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-          mkdir -p ~/.ccache && echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+          sudo apt install ccache libcurl4-openssl-dev
+          mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
+
+      - name: "[Custom block] [Linux] Spatial libs and rJava"
+        if: runner.os == 'Linux'
+        run: |
+          sudo R CMD javareconf
+          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
 
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
       - name: "[macOS] ccache"
-        if: runner.os == 'macOS' && matrix.config.r != 'devel'
-        run: |
-          brew install ccache
-          wget https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
-          sudo installer -package clang-7.0.0.pkg -target /
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/clang7/bin/clang++\nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nF77=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
-
-      # install ccache and write config file
-      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
-      - name: "[macOS-devel] ccache"
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
         run: |
           brew install ccache
-          brew cask install xquartz # for rgl
           # install SDK 10.13 (High Sierra, used by CRAN)
           wget -nv https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.13.sdk.tar.xz
           tar fxz MacOSX10.13.sdk.tar.xz
@@ -124,38 +134,26 @@ jobs:
           # set compiler flags
           mkdir -p ~/.R && echo -e 'CC=ccache clang\nCPP=ccache clang\nCXX=ccache clang++\nCXX11=ccache clang++\nCXX14=ccache clang++\nCXX17=ccache clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCPPFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk -I/usr/local/include\nF77=ccache /usr/local/gfortran/bin/gfortran\nFC=ccache /usr/local/gfortran/bin/gfortran' > $HOME/.R/Makevars
 
-      # - need to remove gfortran first because it conflicts with other brew installs
-      # - proj@5 because projv6 is not well supported yet by spatial libs
-      # - reinstall gfortran to have it avail
-      # - pkgconfig is needed for some packages to find their linkers
-      # - clong7 is the only CC compiler which works for some pkgs, e.g. {fs}
-      - name: "[macOS] Prepare"
+      - name: "[Custom block] [macOS] Install additional system libs via brew"
         if: runner.os == 'macOS'
         run: |
           rm '/usr/local/bin/gfortran'
           brew tap osgeo/osgeo4mac
-          brew install Caskroom/cask/xquartz udunits gdal
-          brew unlink proj
-          brew install osgeo-proj@5
-          brew link --force osgeo-proj@5
+          brew install udunits gdal nlopt
           brew cask reinstall gfortran
-          brew install pkgconfig
-          brew install nlopt
-          brew install libxml2
 
-      - name: "[Linux] Prepare"
-        if: runner.os == 'Linux'
+      - name: "[Custom block] [macOS] xquartz"
+        if: runner.os == 'macOS'
         run: |
-          sudo R CMD javareconf
-          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+          brew cask install xquartz
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
         run: |
-          Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes')"
-          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl')"
+          Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes', type = 'source')"
+          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl', type = 'source')"
 
-      - name: "[macOS] rJava"
+      - name: "[Custom block] [macOS] rJava"
         if: runner.os == 'macOS'
         run: |
           R CMD javareconf
@@ -163,21 +161,20 @@ jobs:
 
       - name: "[Stage] Install"
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
-        run: |
-          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+        run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
+      # macOS devel needs its own stage because we need to work with an option to suppress the usage of binaries
       - name: "[Stage] Prepare & Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
-          export DISPLAY=:99 # for rgl
-          echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+          echo -e 'options(Ncpus = 4, pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
 
       - name: "[Stage] After Success"
+        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
         run: Rscript -e "tic::after_success()"
 
       - name: "[Stage] Upload R CMD check artifacts"
@@ -186,16 +183,12 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
       - name: "[Stage] Before Deploy"
-        if: runner.os == 'Linux'
         run: |
           Rscript -e "tic::before_deploy()"
 
       - name: "[Stage] Deploy"
-        if: runner.os == 'Linux'
         run: Rscript -e "tic::deploy()"
 
       - name: "[Stage] After Deploy"
-        if: runner.os == 'Linux'
         run: Rscript -e "tic::after_deploy()"
