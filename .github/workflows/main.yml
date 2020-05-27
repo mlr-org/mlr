@@ -109,7 +109,7 @@ jobs:
           mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
       - name: "[Custom block] [Linux] rJava"
-        if: runner.os == 'macOS'
+        if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
           Rscript -e "install.packages('rJava', type = 'source')"‚
