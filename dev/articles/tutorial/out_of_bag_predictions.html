@@ -306,17 +306,17 @@
 <span class="co">## threshold: M=0.60,R=0.40</span>
 <span class="co">## time: NA</span>
 <span class="co">##   id truth    prob.M    prob.R response</span>
-<span class="co">## 1  1     R 0.5771858 0.4228142        R</span>
-<span class="co">## 2  2     R 0.5845517 0.4154483        R</span>
-<span class="co">## 3  3     R 0.5839262 0.4160738        R</span>
-<span class="co">## 4  4     R 0.4512921 0.5487079        R</span>
-<span class="co">## 5  5     R 0.4909478 0.5090522        R</span>
-<span class="co">## 6  6     R 0.4311339 0.5688661        R</span>
+<span class="co">## 1  1     R 0.5386034 0.4613966        R</span>
+<span class="co">## 2  2     R 0.5097282 0.4902718        R</span>
+<span class="co">## 3  3     R 0.5730803 0.4269197        R</span>
+<span class="co">## 4  4     R 0.3708941 0.6291059        R</span>
+<span class="co">## 5  5     R 0.5461197 0.4538803        R</span>
+<span class="co">## 6  6     R 0.4172523 0.5827477        R</span>
 <span class="co">## ... (#rows: 208, #cols: 5)</span>
 
 <span class="fu"><a href="../../reference/performance.html">performance</a></span>(<span class="no">oob</span>, <span class="kw">measures</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">auc</span>, <span class="no">mmce</span>))
 <span class="co">##       auc      mmce </span>
-<span class="co">## 0.9383301 0.1442308</span></pre></body></html></div>
+<span class="co">## 0.9332219 0.1923077</span></pre></body></html></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>
   </div>
 
