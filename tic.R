@@ -8,7 +8,7 @@ if (Sys.info()[["sysname"]] != "Windows") {
 do_package_checks(error_on = "warning", codecov = FALSE)
 
 # pkgdown
-if (ci_on_ghactions()) {
+if (ci_on_ghactions() && ci_has_env("BUILD_PKGDOWN")) {
   get_stage("before_deploy") %>%
     add_step(step_install_github("mlr-org/mlr3pkgdowntemplate"))
   do_pkgdown()
