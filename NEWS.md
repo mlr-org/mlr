@@ -1,3 +1,8 @@
+# mlr 2.17.1.9003
+
+- Fix order of learners in `generateLearningCurveData()` (#2768)
+
+
 # mlr 2.17.1.9002
 
  - `getFeatureImportance()`: Account for feature importance weight of linear xgboost models
@@ -8,7 +13,6 @@
 - Fix learner note for learner glmnet (the default of param `s` did not match the learner note) (#2747)
 - Remove dep {hrbrthemes} used in `createSpatialResamplingPlots()`. The package caused issues on R-devel. In addition users should set custom themes by themselves.
 - Explicitly return value in `getNestedTuneResultsOptPathDf()` (#2754)
-- Fix wrong order of learners in `generateLearningCurveData()` (#2767)
 
 
 # mlr 2.17.1.9000
