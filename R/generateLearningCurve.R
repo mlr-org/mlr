@@ -57,26 +57,22 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   }
 
   # create downsampled versions for all learners
-  lrnds1 = lapply(learners, function(lrn) {
+  dsws = lapply(learners, function(lrn) {
     lapply(seq_along(percs), function(p.id) {
       perc = percs[p.id]
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
-      list(
-        lrn.id = lrn$id,
-        lrn = setLearnerId(dsw, stri_paste(lrn$id, ".", p.id)),
-        perc = perc
-      )
+      setLearnerId(dsw, stri_paste(lrn$id, ".", p.id))
     })
   })
-  lrnds2 = unlist(lrnds1, recursive = FALSE)
-  dsws = extractSubList(lrnds2, "lrn", simplify = FALSE)
+  dsws = unlist(dsws, recursive = FALSE)
 
   bench.res = benchmark(dsws, task, resampling, measures, show.info = show.info)
+
   perfs = getBMRAggrPerformances(bench.res, as.df = TRUE)
 
   # get perc and learner col data
-  perc = extractSubList(lrnds2[as.factor(perfs$learner.id)], "perc")
-  learner = extractSubList(lrnds2[as.factor(perfs$learner.id)], "lrn.id")
+  perc = extractSubList(bench.res$learners, c("par.vals", "dw.perc")) # get downsample reate
+  learner = extractSubList(bench.res$learners, c("next.learner", "id")) #get ID of unwrapped learner
   perfs = dropNamed(perfs, c("task.id", "learner.id"))
 
   # set short measures names and resort cols
