@@ -34,6 +34,14 @@ jobs:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
+      # [Custom env] setting some ccache options - 1
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      # [Custom env] setting some ccache options - 2
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      # [Custom env] setting some ccache options - 3
+      CCACHE_NOHASHDIR: true
+      # [Custom env] setting some ccache options - 4
+      CCACHE_SLOPPINESS: include_file_ctime
       # make sure to run `tic::use_ghactions_deploy()` to set up deployment
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       # prevent rgl issues because no X11 display is available
