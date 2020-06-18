@@ -1,7 +1,7 @@
 # All available hooks: https://pre-commit.com/hooks.html
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.0.0.9027
+    rev: v0.1.2
     hooks:
     # any R project
     -   id: style-files
@@ -12,11 +12,11 @@ repos:
     -   id: readme-rmd-rendered
     #  R package development
     -   id: roxygenize
-    -   id: use-tidy-description
+    #-   id: use-tidy-description
     #-   id: deps-in-desc
         args: [--allow_private_imports]
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v3.1.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=200']
