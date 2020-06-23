@@ -110,7 +110,6 @@ jobs:
       - name: "[Custom block] [macOS] macOS system libs setup"
         if: runner.os == 'macOS'
         run: |
-          brew tap osgeo/osgeo4mac
           brew install udunits gdal proj nlopt
           brew install ccache
           brew cask install xquartz
