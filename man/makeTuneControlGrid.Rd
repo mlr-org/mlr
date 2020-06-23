@@ -77,7 +77,7 @@ evaluations. If set, must equal the size of the grid.}
 \description{
 A basic grid search can handle all kinds of parameter types.
 You can either use their correct param type and \code{resolution},
-or discretize them yourself by always using \link[ParamHelpers:makeDiscreteParam]{ParamHelpers::makeDiscreteParam}
+or discretize them yourself by always using \link[ParamHelpers:Param]{ParamHelpers::makeDiscreteParam}
 in the \code{par.set} passed to \link{tuneParams}.
 }
 \seealso{

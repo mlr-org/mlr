@@ -33,7 +33,7 @@ Function to preprocess the data before prediction.
 \code{control} is the object you returned in \code{train}.
 Must return the processed data.}
 
-\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+\item{par.set}{(\link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet})\cr
 Parameter set of \link[ParamHelpers:LearnerParam]{ParamHelpers::LearnerParam} objects to describe the
 parameters in \code{args}.
 Default is empty set.}

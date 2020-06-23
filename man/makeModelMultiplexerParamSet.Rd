@@ -10,7 +10,7 @@ makeModelMultiplexerParamSet(multiplexer, ..., .check = TRUE)
 \item{multiplexer}{(\link{ModelMultiplexer})\cr
 The muliplexer learner.}
 
-\item{...}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet} | \link[ParamHelpers:Param]{ParamHelpers::Param})\cr
+\item{...}{(\link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet} | \link[ParamHelpers:Param]{ParamHelpers::Param})\cr
 (a) First option: Named param sets. Names must correspond to base learners.
 You only need to enter the parameters you want to tune without reference
 to the \code{selected.learner} field in any way.\cr

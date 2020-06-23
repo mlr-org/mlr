@@ -29,7 +29,7 @@ Performance measures to evaluate. The first measure, aggregated by the first agg
 is optimized, others are simply evaluated.
 Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+\item{par.set}{(\link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet})\cr
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
 \code{expression} to define it.}

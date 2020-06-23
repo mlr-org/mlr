@@ -54,12 +54,12 @@ This is identical to randomForest.
 \item randomForestSRC \cr
 This method can calculate feature importance for various measures. By
 default the Breiman-Cutler permutation method is used. See
-\code{\link[randomForestSRC:vimp]{randomForestSRC::vimp()}} for details.
+\code{\link[randomForestSRC:vimp.rfsrc]{randomForestSRC::vimp()}} for details.
 \item ranger \cr
 Supports both measures mentioned above for the randomForest
 learner. Note, that you need to specifically set the learners parameter
 \code{importance}, to be able to compute feature importance measures.
-See \code{\link[ranger:importance]{ranger::importance()}} and
+See \code{\link[ranger:importance.ranger]{ranger::importance()}} and
 \code{\link[ranger:ranger]{ranger::ranger()}} for details.
 \item rpart \cr
 Sum of decrease in impurity for each of the surrogate variables at each

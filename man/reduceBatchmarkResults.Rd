@@ -17,7 +17,7 @@ reduceBatchmarkResults(
 A \link[base:data.frame]{base::data.frame} (or \link[data.table:data.table]{data.table::data.table})
 with a column named \dQuote{job.id}.
 Alternatively, you may also pass a vector of integerish job ids.
-If not set, defaults to all successfully terminated jobs (return value of \link[batchtools:findDone]{batchtools::findDone}.}
+If not set, defaults to all successfully terminated jobs (return value of \link[batchtools:findJobs]{batchtools::findDone}.}
 
 \item{keep.pred}{(\code{logical(1)})\cr
 Keep the prediction data in the \code{pred} slot of the result object.
@@ -37,7 +37,7 @@ tuning results.}
 Print verbose output on console?
 Default is set via \link{configureMlr}.}
 
-\item{reg}{(\link[batchtools:ExperimentRegistry]{batchtools::ExperimentRegistry})\cr
+\item{reg}{(\link[batchtools:makeExperimentRegistry]{batchtools::ExperimentRegistry})\cr
 Registry, created by \link[batchtools:makeExperimentRegistry]{batchtools::makeExperimentRegistry}. If not explicitly passed,
 uses the last created registry.}
 }
@@ -45,7 +45,7 @@ uses the last created registry.}
 (\link{BenchmarkResult}).
 }
 \description{
-This creates a \link{BenchmarkResult} from a \link[batchtools:ExperimentRegistry]{batchtools::ExperimentRegistry}.
+This creates a \link{BenchmarkResult} from a \link[batchtools:makeExperimentRegistry]{batchtools::ExperimentRegistry}.
 To setup the benchmark have a look at \link{batchmark}.
 }
 \seealso{

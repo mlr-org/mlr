@@ -104,7 +104,7 @@ A list of all integrated learners is available on the
 \item{package}{(\link{character})\cr
 Package(s) to load for the implementation of the learner.}
 
-\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+\item{par.set}{(\link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet})\cr
 Parameter set of (hyper)parameters and their constraints.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
 \code{expression} to define it.}

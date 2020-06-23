@@ -7,7 +7,7 @@
 \link{ParamSet}.
 }
 \description{
-Returns the \link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet} from a \link{Learner}.
+Returns the \link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet} from a \link{Learner}.
 }
 \seealso{
 Other learner: 

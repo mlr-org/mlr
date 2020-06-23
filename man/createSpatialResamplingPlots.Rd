@@ -91,7 +91,7 @@ Due to a limited axis space in the resulting grid (especially on the x-axis),
 the data will by default projected into a lat/lon projection, specifically
 EPSG 4326.
 If other projections are desired for the resulting map, please set argument
-\code{datum} accordingly. This argument will be passed onto \link[ggplot2:coord_sf]{ggplot2::coord_sf}.
+\code{datum} accordingly. This argument will be passed onto \link[ggplot2:ggsf]{ggplot2::coord_sf}.
 }
 
 \examples{

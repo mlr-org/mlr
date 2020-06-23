@@ -32,7 +32,7 @@ If you want to change that behavior, look at \link{TuneMultiCritControl}.}
 \item{measures}{[list of \link{Measure})\cr
 Performance measures to optimize simultaneously.}
 
-\item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
+\item{par.set}{(\link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet})\cr
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
 \code{expression} to define it.}
