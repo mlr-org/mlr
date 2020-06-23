@@ -116,7 +116,7 @@ in the same order as your measures.}
 The surrogate learner: A regression learner to model performance landscape.
 For the default, \code{NULL}, \pkg{mlrMBO} will automatically create a suitable learner based on the rules described in \link[mlrMBO:makeMBOLearner]{mlrMBO::makeMBOLearner}.}
 
-\item{mbo.control}{(\link[mlrMBO:MBOControl]{mlrMBO::MBOControl} | \code{NULL})\cr
+\item{mbo.control}{(\link[mlrMBO:makeMBOControl]{mlrMBO::MBOControl} | \code{NULL})\cr
 Control object for model-based optimization tuning.
 For the default, \code{NULL}, the control object will be created with all the defaults as described in \link[mlrMBO:makeMBOControl]{mlrMBO::makeMBOControl}.}
 
@@ -162,7 +162,7 @@ The following tuners are available:
 \describe{
 \item{makeTuneMultiCritControlGrid}{Grid search. All kinds of parameter types can be handled.
 You can either use their correct param type and \code{resolution},
-or discretize them yourself by always using \link[ParamHelpers:makeDiscreteParam]{ParamHelpers::makeDiscreteParam}
+or discretize them yourself by always using \link[ParamHelpers:Param]{ParamHelpers::makeDiscreteParam}
 in the \code{par.set} passed to \link{tuneParams}.}
 \item{makeTuneMultiCritControlRandom}{Random search. All kinds of parameter types can be handled.}
 \item{makeTuneMultiCritControlNSGA2}{Evolutionary method \link[mco:nsga2]{mco::nsga2}.

@@ -50,7 +50,7 @@ tuning results.}
 Should all fitted models be stored in the \link{ResampleResult}?
 Default is \code{FALSE}.}
 
-\item{reg}{(\link[batchtools:Registry]{batchtools::Registry})\cr
+\item{reg}{(\link[batchtools:makeRegistry]{batchtools::Registry})\cr
 Registry, created by \link[batchtools:makeExperimentRegistry]{batchtools::makeExperimentRegistry}. If not
 explicitly passed, uses the last created registry.}
 }

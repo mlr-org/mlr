@@ -25,7 +25,7 @@ Default is the first measure used in the benchmark experiment.}
 \item{trafo}{(\code{character(1)})\cr
 Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 (with average handling of ties) of the scores per task.
-NB: You can add always add \link[ggplot2:scale_x_log10]{ggplot2::scale_x_log10} to the result to put scores on a log scale.
+NB: You can add always add \link[ggplot2:scale_continuous]{ggplot2::scale_x_log10} to the result to put scores on a log scale.
 Default is \dQuote{none}.}
 
 \item{order.tsks}{(\code{character(n.tasks)})\cr
@@ -49,7 +49,7 @@ ggplot2 plot object.
 Creates a scatter plot, where each line refers to a task.
 On that line the aggregated scores for all learners are plotted, for that task.
 Optionally, you can apply a rank transformation or just use one of ggplot2's transformations
-like \link[ggplot2:scale_x_log10]{ggplot2::scale_x_log10}.
+like \link[ggplot2:scale_continuous]{ggplot2::scale_x_log10}.
 }
 \examples{
 # see benchmark

@@ -29,7 +29,7 @@ be defined by their lower and upper bounds. The default is \code{TRUE}.}
 (\code{list(2)}). A list of parameters:
 \itemize{
 \item{\code{par.vals}} contains a list of all constant tuning parameters
-\item{\code{par.set}} is a \link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet}, containing all the configurable
+\item{\code{par.set}} is a \link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet}, containing all the configurable
 tuning parameters
 }
 }
@@ -37,7 +37,7 @@ tuning parameters
 Constructs a grid of tuning parameters from a learner of the \code{caret}
 R-package. These values are then converted into a list of non-tunable
 parameters (\code{par.vals}) and a tunable
-\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet} (\code{par.set}), which can be used by
+\link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet} (\code{par.set}), which can be used by
 \link{tuneParams} for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
 discretized into specific values.
