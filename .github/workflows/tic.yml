@@ -27,6 +27,8 @@ jobs:
           - { os: ubuntu-latest, r: "release" }
 
     env:
+      # [Custom env] DISPLAY env var for rgl package
+      DISPLAY: ":99"
       # [Custom env] Set max dll number higher
       R_MAX_NUM_DLLS: 999
       # [Custom env] Account for udunits2 linking
