@@ -1,6 +1,6 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.17.1.9003
+Version: 2.17.1.9004
 Authors@R:
     c(person(given = "Bernd",
              family = "Bischl",
@@ -126,16 +126,17 @@ Authors@R:
              family = "Spooner",
              role = "ctb",
              email = "a.spooner@unsw.edu.au"))
-Description: Interface to a large number of classification and regression
-    techniques, including machine-readable parameter descriptions. There
-    is also an experimental extension for survival analysis, clustering
-    and general, example-specific cost-sensitive learning. Generic
-    resampling, including cross-validation, bootstrapping and subsampling.
-    Hyperparameter tuning with modern optimization techniques, for single-
-    and multi-objective problems.  Filter and wrapper methods for feature
-    selection. Extension of basic learners with additional operations
-    common in machine learning, also allowing for easy nested resampling.
-    Most operations can be parallelized.
+Description: Interface to a large number of classification and
+    regression techniques, including machine-readable parameter
+    descriptions. There is also an experimental extension for survival
+    analysis, clustering and general, example-specific cost-sensitive
+    learning. Generic resampling, including cross-validation,
+    bootstrapping and subsampling.  Hyperparameter tuning with modern
+    optimization techniques, for single- and multi-objective problems.
+    Filter and wrapper methods for feature selection. Extension of basic
+    learners with additional operations common in machine learning, also
+    allowing for easy nested resampling.  Most operations can be
+    parallelized.
 License: BSD_2_clause + file LICENSE
 URL: https://mlr.mlr-org.com, https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues

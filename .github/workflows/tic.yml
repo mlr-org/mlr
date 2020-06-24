@@ -1,5 +1,5 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-05-21
+## revision date: 2020-06-14
 on:
   push:
   pull_request:
@@ -8,10 +8,10 @@ on:
     # * is a special character in YAML so you have to quote this string
     - cron: "0 4 * * *"
 
-name: R CMD Check via {tic}
+name: tic
 
 jobs:
-  R-CMD-check:
+  all:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -22,25 +22,27 @@ jobs:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
           - { os: windows-latest, r: "release" }
-          - { os: macOS-latest, r: "release", pkgdown: "true" }
+          - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
           - { os: macOS-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
 
     env:
       # [Custom env] DISPLAY env var for rgl package
       DISPLAY: ":99"
-      # [Custom env] Account for udunits2 linking
-      UDUNITS2_LIBS: /usr/local/lib
       # [Custom env] Set max dll number higher
       R_MAX_NUM_DLLS: 999
+      # [Custom env] Account for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
-      # we are not allowed to write to ~/.ccache on GH Actions
-      # setting some ccache options
+      # [Custom env] setting some ccache options - 1
       CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      # [Custom env] setting some ccache options - 2
       CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      # [Custom env] setting some ccache options - 3
       CCACHE_NOHASHDIR: true
+      # [Custom env] setting some ccache options - 4
       CCACHE_SLOPPINESS: include_file_ctime
       # make sure to run `tic::use_ghactions_deploy()` to set up deployment
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
@@ -66,86 +68,54 @@ jobs:
       # Linux: ~ 1 min
       # macOS: ~ 1 min 30s
       # Windows: never finishes
-      - uses: r-lib/actions/setup-tinytex@v1
-        if: runner.os != 'Windows'
+      - uses: r-lib/actions/setup-tinytex@master
+        if: matrix.config.latex == 'true'
 
       - uses: r-lib/actions/setup-pandoc@master
 
       # set date/week for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
       # - cache R packages daily
-      # - cache ccache weekly -> 'ccache' helps rebuilding the package cache faster
       - name: "[Cache] Prepare daily timestamp for cache"
         if: runner.os != 'Windows'
         id: date
         run: echo "::set-output name=date::$(date '+%d-%m')"
 
-      - name: "[Cache] Prepare weekly timestamp for cache"
+      - name: "[Custom block] [Cache] Prepare weekly timestamp for cache"
         if: runner.os != 'Windows'
         id: datew
         run: echo "::set-output name=datew::$(date '+%Y-%V')"
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v1.2.0
+        uses: pat-s/always-upload-cache@v2.0.0
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
-      - name: "[Cache] Cache ccache"
+      - name: "[Custom block] [Cache] Cache ccache"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v1.2.0
+        uses: pat-s/always-upload-cache@v2.0.0
         with:
           path: ${{ env.CCACHE_DIR}}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
 
-      # install ccache and write config file
-      - name: "[Linux] ccache"
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt install ccache libcurl4-openssl-dev
-          mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
-
-      - name: "[Custom block] [Linux] Spatial libs and rJava"
+      - name: "[Custom block] [Linux] Linux system libs setup"
         if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
           sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+          mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
-      # install ccache and write config file
-      # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
-      - name: "[macOS] ccache"
-        if: runner.os == 'macOS' && matrix.config.r == 'devel'
+      - name: "[Custom block] [macOS] macOS system libs setup"
+        if: runner.os == 'macOS'
         run: |
+          brew install udunits gdal proj nlopt
           brew install ccache
-          # install SDK 10.13 (High Sierra, used by CRAN)
-          wget -nv https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX10.13.sdk.tar.xz
-          tar fxz MacOSX10.13.sdk.tar.xz
-          sudo mv MacOSX10.13.sdk /Library/Developer/CommandLineTools/SDKs/
-          rm -rf MacOSX10.13*
-          # install gfortran 8.2 (used by CRAN)
-          wget -nv https://github.com/fxcoudert/gfortran-for-macOS/releases/download/8.2/gfortran-8.2-Mojave.dmg
-          sudo hdiutil attach gfortran*.dmg
-          sudo installer -package /Volumes/gfortran*/gfortran*/gfortran*.pkg -target /
-          sudo hdiutil detach /Volumes/gfortran-8.2-Mojave
-          rm gfortran-8*
-          # set compiler flags
-          mkdir -p ~/.R && echo -e 'CC=ccache clang\nCPP=ccache clang\nCXX=ccache clang++\nCXX11=ccache clang++\nCXX14=ccache clang++\nCXX17=ccache clang++\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk\nCPPFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk -I/usr/local/include\nF77=ccache /usr/local/gfortran/bin/gfortran\nFC=ccache /usr/local/gfortran/bin/gfortran' > $HOME/.R/Makevars
-
-      - name: "[Custom block] [macOS] Install additional system libs via brew"
-        if: runner.os == 'macOS'
-        run: |
-          rm '/usr/local/bin/gfortran'
-          brew tap osgeo/osgeo4mac
-          brew install udunits gdal nlopt
-          brew cask reinstall gfortran
-
-      - name: "[Custom block] [macOS] xquartz"
-        if: runner.os == 'macOS'
-        run: |
           brew cask install xquartz
+          mkdir -p ~/.R && echo -e 'CC=ccache clang\nCPP=ccache clang\nCXX=ccache clang++\nCXX11=ccache clang++\nCXX14=ccache clang++\nCXX17=ccache clang++\nF77=ccache /usr/local/gfortran/bin/gfortran\nFC=ccache /usr/local/gfortran/bin/gfortran' > $HOME/.R/Makevars
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
@@ -158,6 +128,10 @@ jobs:
         run: |
           R CMD javareconf
           Rscript -e "install.packages('rJava', type = 'source')"
+
+      - name: "[Stage] [Linux] Install curl"
+        if: runner.os == 'Linux'
+        run: sudo apt install libcurl4-openssl-dev
 
       - name: "[Stage] Install"
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
