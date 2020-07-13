@@ -11,7 +11,7 @@ repos:
     -   id: no-browser-statement
     -   id: readme-rmd-rendered
     #  R package development
-    -   id: roxygenize
+    #-   id: roxygenize
     #-   id: use-tidy-description
     #-   id: deps-in-desc
         args: [--allow_private_imports]
