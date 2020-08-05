@@ -1,5 +1,5 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-06-14
+## revision date: 2020-07-29
 on:
   push:
   pull_request:
@@ -23,27 +23,27 @@ jobs:
           # use a different tic template type if you do not want to build on all listed platforms
           - { os: windows-latest, r: "release" }
           - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
-          - { os: macOS-latest, r: "devel" }
+          - { os: ubuntu-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
 
     env:
-      # [Custom env] DISPLAY env var for rgl package
+      # [Custom env var] DISPLAY env var for rgl package
       DISPLAY: ":99"
-      # [Custom env] Set max dll number higher
-      R_MAX_NUM_DLLS: 999
+      # [Custom env var] setting some ccache options - 4
+      CCACHE_SLOPPINESS: include_file_ctime
+      # [Custom env var] setting some ccache options - 3
+      CCACHE_NOHASHDIR: true
+      # [Custom env var] setting some ccache options - 2
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      # [Custom env var] setting some ccache options - 1
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
       # [Custom env] Account for udunits2 linking
       UDUNITS2_LIBS: /usr/local/lib
+      # [Custom env] Set max dll number higher
+      R_MAX_NUM_DLLS: 999
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
-      # [Custom env] setting some ccache options - 1
-      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
-      # [Custom env] setting some ccache options - 2
-      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
-      # [Custom env] setting some ccache options - 3
-      CCACHE_NOHASHDIR: true
-      # [Custom env] setting some ccache options - 4
-      CCACHE_SLOPPINESS: include_file_ctime
       # make sure to run `tic::use_ghactions_deploy()` to set up deployment
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       # prevent rgl issues because no X11 display is available
@@ -57,7 +57,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2.1.1
+      - uses: actions/checkout@v2.3.1
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -88,7 +88,7 @@ jobs:
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v2.0.0
+        uses: pat-s/always-upload-cache@v2.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
@@ -153,7 +153,7 @@ jobs:
 
       - name: "[Stage] Upload R CMD check artifacts"
         if: failure()
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2.1.1
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check

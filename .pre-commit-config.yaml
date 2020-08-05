@@ -16,7 +16,7 @@ repos:
     #-   id: deps-in-desc
         args: [--allow_private_imports]
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.1.0
+    rev: v3.2.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=200']
