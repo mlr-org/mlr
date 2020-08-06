@@ -112,6 +112,8 @@ jobs:
       - name: "[Custom block] [macOS] macOS system libs setup"
         if: runner.os == 'macOS'
         run: |
+          # conflicts with gfortran from r-lib/actions when linking gcc
+          rm '/usr/local/bin/gfortran'
           brew install udunits gdal proj nlopt
           brew install ccache
           brew cask install xquartz
