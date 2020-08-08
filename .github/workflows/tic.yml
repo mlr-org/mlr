@@ -1,6 +1,7 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-07-29
+## revision date: 2020-08-06
 on:
+  workflow_dispatch:
   push:
   pull_request:
   # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
@@ -27,20 +28,20 @@ jobs:
           - { os: ubuntu-latest, r: "release" }
 
     env:
-      # [Custom env var] DISPLAY env var for rgl package
-      DISPLAY: ":99"
-      # [Custom env var] setting some ccache options - 4
-      CCACHE_SLOPPINESS: include_file_ctime
-      # [Custom env var] setting some ccache options - 3
-      CCACHE_NOHASHDIR: true
-      # [Custom env var] setting some ccache options - 2
-      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
-      # [Custom env var] setting some ccache options - 1
-      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
-      # [Custom env] Account for udunits2 linking
-      UDUNITS2_LIBS: /usr/local/lib
       # [Custom env] Set max dll number higher
       R_MAX_NUM_DLLS: 999
+      # [Custom env] Account for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
+      # [Custom env var] setting some ccache options - 1
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      # [Custom env var] setting some ccache options - 2
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      # [Custom env var] setting some ccache options - 3
+      CCACHE_NOHASHDIR: true
+      # [Custom env var] setting some ccache options - 4
+      CCACHE_SLOPPINESS: include_file_ctime
+      # [Custom env var] fake virtual display for rgl package
+      DISPLAY: ":99"
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
