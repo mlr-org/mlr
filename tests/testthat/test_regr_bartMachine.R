@@ -5,10 +5,13 @@ test_that("regr_bartMachine", {
 
   parset.list = list(
     list(num_burn_in = 10L, num_iterations_after_burn_in = 10L,
-      run_in_sample = FALSE, seed = getOption("mlr.debug.seed")),
+      run_in_sample = FALSE,
+      seed = getOption("mlr.debug.seed")
+      ),
     list(num_burn_in = 10L, num_iterations_after_burn_in = 10L, alpha = 0.8,
       num_trees = 25L, run_in_sample = FALSE,
-      seed = getOption("mlr.debug.seed"))
+      seed = getOption("mlr.debug.seed")
+      )
   )
 
   old.predicts.list = list()
@@ -20,6 +23,7 @@ test_that("regr_bartMachine", {
       verbose = FALSE)
     pars = c(pars, parset)
     m = do.call(bartMachine::bartMachine, pars)
+    set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = predict(m, new_data = regr.test[, xind])
   }
 

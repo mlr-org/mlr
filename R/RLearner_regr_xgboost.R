@@ -20,7 +20,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "lambda", default = 1, lower = 0),
       makeNumericLearnerParam(id = "lambda_bias", default = 0, lower = 0),
       makeNumericLearnerParam(id = "alpha", default = 0, lower = 0),
-      makeUntypedLearnerParam(id = "objective", default = "reg:linear", tunable = FALSE),
+      makeUntypedLearnerParam(id = "objective", default = "reg:squarederror", tunable = FALSE),
       makeUntypedLearnerParam(id = "eval_metric", default = "rmse", tunable = FALSE),
       makeNumericLearnerParam(id = "base_score", default = 0.5, tunable = FALSE),
       makeNumericLearnerParam(id = "max_delta_step", lower = 0, default = 0),
@@ -67,7 +67,7 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
   parlist = list(...)
 
   if (is.null(parlist$objective)) {
-    parlist$objective = "reg:linear"
+    parlist$objective = "reg:squarederror"
   }
 
   task.data = getTaskData(.task, .subset, target.extra = TRUE)
