@@ -459,11 +459,12 @@
 <a href="#training-the-learner" class="anchor"></a>Training the learner</h1>
 <p>The resulting <a href="learner.html">learner</a> can now be trained on the task created in section <a href="functional_data.html#creating-a-task">Creating a task</a> above.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="co"># FIXME: #2758</span>
 <span class="co"># Train the fdalrn on the constructed task</span>
-<span class="co"># m = train(learner = fdalrn, task = tsk1)</span>
-<span class="co"># p = predict(m, tsk1)</span>
-<span class="co"># performance(p, rmse)</span>
+<span class="kw">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(learner = <span class="kw">fdalrn</span>, task = <span class="kw">tsk1</span>)
+<span class="kw">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">m</span>, <span class="kw">tsk1</span>)
+<span class="fu"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">p</span>, <span class="kw">rmse</span>)
+<span class="co">##     rmse </span>
+<span class="co">## 2.181438</span>
 </pre></div>
 <p>Alternatively, learners that do not explicitly treat functional covariates can be applied. In this case, the temporal structure is completely disregarded, and all columns are treated as independent.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
