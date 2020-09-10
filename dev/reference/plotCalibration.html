@@ -329,12 +329,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>plotCalibration</span>(
-  <span class='no'>obj</span>,
-  <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>rag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>facet.wrap.nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>facet.wrap.ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>obj</span>,
+  smooth = <span class='fl'>FALSE</span>,
+  reference = <span class='fl'>TRUE</span>,
+  rag = <span class='fl'>TRUE</span>,
+  facet.wrap.nrow = <span class='kw'>NULL</span>,
+  facet.wrap.ncol = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -392,21 +392,22 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 <code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>lrns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>),
-  <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.nnet"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>))
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>train</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>fit</span>, <span class='no'>predict</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>pred</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"nnet"</span>)
-<span class='no'>out</span> <span class='kw'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span>(<span class='no'>pred</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'>plotCalibration</span>(<span class='no'>out</span>)
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>lrns</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, predict.type = <span class='st'>"prob"</span>),
+  <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.nnet"</span>, predict.type = <span class='st'>"prob"</span>))
+<span class='kw'>fit</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>lrns</span>, <span class='kw'>train</span>, task = <span class='kw'>iris.task</span>)
+<span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>fit</span>, <span class='kw'>predict</span>, task = <span class='kw'>iris.task</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>pred</span>) <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"nnet"</span>)
+<span class='kw'>out</span> <span class='op'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span>(<span class='kw'>pred</span>, groups = <span class='fl'>3</span>)
+<span class='fu'>plotCalibration</span>(<span class='kw'>out</span>)
 
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>lrns</span>, <span class='no'>train</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>fit</span>, <span class='no'>predict</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>pred</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"lda"</span>)
-<span class='no'>out</span> <span class='kw'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span>(<span class='no'>pred</span>)
-<span class='fu'>plotCalibration</span>(<span class='no'>out</span>)
-}</div></pre>
+<span class='kw'>fit</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>lrns</span>, <span class='kw'>train</span>, task = <span class='kw'>sonar.task</span>)
+<span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>fit</span>, <span class='kw'>predict</span>, task = <span class='kw'>sonar.task</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>pred</span>) <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rpart"</span>, <span class='st'>"lda"</span>)
+<span class='kw'>out</span> <span class='op'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span>(<span class='kw'>pred</span>)
+<span class='fu'>plotCalibration</span>(<span class='kw'>out</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -422,7 +423,7 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

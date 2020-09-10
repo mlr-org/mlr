@@ -329,11 +329,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>plotFilterValues</span>(
-  <span class='no'>fvalues</span>,
-  <span class='kw'>sort</span> <span class='kw'>=</span> <span class='st'>"dec"</span>,
-  <span class='kw'>n.show</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>fvalues</span>$<span class='no'>data</span>),
-  <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>feat.type.cols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>fvalues</span>,
+  sort = <span class='st'>"dec"</span>,
+  n.show = <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>fvalues</span><span class='op'>$</span><span class='kw'>data</span>),
+  filter = <span class='kw'>NULL</span>,
+  feat.type.cols = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -399,8 +399,9 @@ Default is to use no colors (<code>feat.type.cols = FALSE</code>).</p></td>
 <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fv</span> <span class='kw'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"variance"</span>)
-<span class='fu'>plotFilterValues</span>(<span class='no'>fv</span>)</div><div class='img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>fv</span> <span class='op'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span>(<span class='kw'>iris.task</span>, method = <span class='st'>"variance"</span>)
+<span class='fu'>plotFilterValues</span>(<span class='kw'>fv</span>)
+</div><div class='img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -416,7 +417,7 @@ Default is to use no colors (<code>feat.type.cols = FALSE</code>).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

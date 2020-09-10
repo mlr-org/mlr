@@ -328,7 +328,7 @@
     <p>Retrieves the current hyperparameter settings of a learner.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getHyperPars</span>(<span class='no'>learner</span>, <span class='kw'>for.fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"predict"</span>, <span class='st'>"both"</span>))</pre>
+    <pre class="usage"><span class='fu'>getHyperPars</span>(<span class='kw'>learner</span>, for.fun = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"predict"</span>, <span class='st'>"both"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -381,7 +381,8 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
 <code><a href='setPredictType.html'>setPredictType</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>getHyperPars</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ranger"</span>))</div><div class='output co'>#&gt; $num.threads
+    <pre class="examples"><div class='input'><span class='fu'>getHyperPars</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ranger"</span>))
+</div><div class='output co'>#&gt; $num.threads
 #&gt; [1] 1
 #&gt; 
 #&gt; $verbose
@@ -391,7 +392,8 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
 #&gt; [1] "order"
 #&gt; </div><div class='input'>
 <span class='co'>## set learner hyperparameter `mtry` manually</span>
-<span class='fu'>getHyperPars</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ranger"</span>, <span class='kw'>mtry</span> <span class='kw'>=</span> <span class='fl'>100</span>))</div><div class='output co'>#&gt; $num.threads
+<span class='fu'>getHyperPars</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.ranger"</span>, mtry = <span class='fl'>100</span>))
+</div><div class='output co'>#&gt; $num.threads
 #&gt; [1] 1
 #&gt; 
 #&gt; $verbose
@@ -418,7 +420,7 @@ overview of all available hyperparameters use <code><a href='getParamSet.html'>g
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

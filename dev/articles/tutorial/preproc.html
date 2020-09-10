@@ -345,14 +345,19 @@
 <li>The only exception: <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> does not have a <code>method</code> argument. Instead all preprocessing options that would be passed to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>’s <code>method</code> argument are given as individual logical parameters to <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</li>
 </ul>
 <p>For example the following call to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code></p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu">preProcess</span>(<span class="no">x</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"knnImpute"</span>, <span class="st">"pca"</span>), <span class="kw">pcaComp</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/caret/man/preProcess.html">preProcess</a></span>(<span class="kw">x</span>, method = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"knnImpute"</span>, <span class="st">"pca"</span>), pcaComp = <span class="fl">10</span>)
+</pre></div>
 <p>with <code>x</code> being a <code>matrix</code> or <code>data.frame</code> would thus translate into</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="no">learner</span>, <span class="kw">ppc.knnImpute</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ppc.pca</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ppc.pcaComp</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="kw">learner</span>, ppc.knnImpute = <span class="fl">TRUE</span>, ppc.pca = <span class="fl">TRUE</span>, ppc.pcaComp = <span class="fl">10</span>)
+</pre></div>
 <p>where <code>learner</code> is a <code>mlr</code> Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) or the name of a learner class like <code>"classif.lda"</code>.</p>
 <p>If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>.</p>
 <p>In the following we show an example where principal components analysis (PCA) is used for dimensionality reduction. This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.</p>
 <p>We consider the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>, which poses a binary classification problem with 208 observations and 60 features.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">sonar.task</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">sonar.task</span>
 <span class="co">## Supervised task: Sonar-example</span>
 <span class="co">## Type: classif</span>
 <span class="co">## Target: Class</span>
@@ -367,30 +372,34 @@
 <span class="co">## Classes: 2</span>
 <span class="co">##   M   R </span>
 <span class="co">## 111  97 </span>
-<span class="co">## Positive class: M</span></pre></body></html></div>
+<span class="co">## Positive class: M</span>
+</pre></div>
 <p>Below we fuse quadratic discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="st">"classif.qda"</span>, <span class="kw">ppc.pca</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ppc.thresh</span> <span class="kw">=</span> <span class="fl">0.9</span>)
-<span class="no">lrn</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span>(<span class="st">"classif.qda"</span>, ppc.pca = <span class="fl">TRUE</span>, ppc.thresh = <span class="fl">0.9</span>)
+<span class="kw">lrn</span>
 <span class="co">## Learner classif.qda.preproc from package MASS</span>
 <span class="co">## Type: classif</span>
 <span class="co">## Name: ; Short name: </span>
 <span class="co">## Class: PreprocWrapperCaret</span>
 <span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span>
 <span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></pre></body></html></div>
+<span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span>
+</pre></div>
 <p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="no">sonar.task</span>)
-<span class="no">mod</span>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">sonar.task</span>)
+<span class="kw">mod</span>
 <span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span>
 <span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span>
 
-<span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(<span class="no">mod</span>)
+<span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(<span class="kw">mod</span>)
 <span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span>
 <span class="co">## Hyperparameters:</span>
 
-<span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(<span class="no">mod</span>, <span class="kw">more.unwrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span>(<span class="kw">mod</span>, more.unwrap = <span class="fl">TRUE</span>)
 <span class="co">## Call:</span>
 <span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span>
 <span class="co">## </span>
@@ -410,21 +419,25 @@
 <span class="co">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</span>
 <span class="co">##          PC19         PC20        PC21         PC22</span>
 <span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span>
-<span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></pre></body></html></div>
+<span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span>
+</pre></div>
 <p>Below the performances of <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">rin</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, <span class="kw">iters</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">stratify</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">sonar.task</span>)
-<span class="no">res</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"classif.qda"</span>, <span class="no">lrn</span>), <span class="no">sonar.task</span>, <span class="no">rin</span>, <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">res</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span>(<span class="st">"CV"</span>, iters = <span class="fl">3</span>, stratify = <span class="fl">TRUE</span>, task = <span class="kw">sonar.task</span>)
+<span class="kw">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"classif.qda"</span>, <span class="kw">lrn</span>), <span class="kw">sonar.task</span>, <span class="kw">rin</span>, show.info = <span class="fl">FALSE</span>)
+<span class="kw">res</span>
 <span class="co">##         task.id          learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example         classif.qda      0.2932367</span>
-<span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span></pre></body></html></div>
+<span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span>
+</pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
 <div id="joint-tuning-of-preprocessing-options-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#joint-tuning-of-preprocessing-options-and-learner-parameters" class="anchor"></a>Joint tuning of preprocessing options and learner parameters</h2>
 <p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="no">lrn</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="kw">lrn</span>)
 <span class="co">##                      Type len     Def                      Constr Req Tunable</span>
 <span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -    TRUE</span>
 <span class="co">## ppc.YeoJohnson    logical   -   FALSE                           -   -    TRUE</span>
@@ -482,22 +495,24 @@
 <span class="co">## ppc.uniqueCut        -</span>
 <span class="co">## method               -</span>
 <span class="co">## nu                   -</span>
-<span class="co">## predict.method       -</span></pre></body></html></div>
+<span class="co">## predict.method       -</span>
+</pre></div>
 <p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> parameters.</p>
 <p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">ps</span> <span class="kw">=</span> <span class="fu">makeParamSet</span>(
-  <span class="fu">makeIntegerParam</span>(<span class="st">"ppc.pcaComp"</span>, <span class="kw">lower</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">upper</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(<span class="no">sonar.task</span>)),
-  <span class="fu">makeDiscreteParam</span>(<span class="st">"predict.method"</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"plug-in"</span>, <span class="st">"debiased"</span>))
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span>(
+  <span class="fu">makeIntegerParam</span>(<span class="st">"ppc.pcaComp"</span>, lower = <span class="fl">1</span>, upper = <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(<span class="kw">sonar.task</span>)),
+  <span class="fu">makeDiscreteParam</span>(<span class="st">"predict.method"</span>, values = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"plug-in"</span>, <span class="st">"debiased"</span>))
 )
-<span class="no">ctrl</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>(<span class="kw">resolution</span> <span class="kw">=</span> <span class="fl">10</span>)
-<span class="no">res</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="no">lrn</span>, <span class="no">sonar.task</span>, <span class="no">rin</span>, <span class="kw">par.set</span> <span class="kw">=</span> <span class="no">ps</span>, <span class="kw">control</span> <span class="kw">=</span> <span class="no">ctrl</span>, <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">res</span>
+<span class="kw">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>(resolution = <span class="fl">10</span>)
+<span class="kw">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="kw">lrn</span>, <span class="kw">sonar.task</span>, <span class="kw">rin</span>, par.set = <span class="kw">ps</span>, control = <span class="kw">ctrl</span>, show.info = <span class="fl">FALSE</span>)
+<span class="kw">res</span>
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span>
 <span class="co">## mmce.test.mean=0.1779848</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">res</span>$<span class="no">opt.path</span>)[<span class="fl">1</span>:<span class="fl">3</span>]
+<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">res</span><span class="op">$</span><span class="kw">opt.path</span>)[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>]
 <span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span>
 <span class="co">## 1            1        plug-in      0.5052450</span>
 <span class="co">## 2            8        plug-in      0.2449275</span>
@@ -518,7 +533,8 @@
 <span class="co">## 17          40       debiased      0.2741891</span>
 <span class="co">## 18          47       debiased      0.3075914</span>
 <span class="co">## 19          53       debiased      0.2642512</span>
-<span class="co">## 20          60       debiased      0.2830918</span></pre></body></html></div>
+<span class="co">## 20          60       debiased      0.2830918</span>
+</pre></div>
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
@@ -545,25 +561,27 @@
 <p>The <em>train</em> function for the scaling example is given below. It calls <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> on the numerical features and returns the scaled training data and the corresponding scaling parameters.</p>
 <p><code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> and slot <code>$control</code> stores the scaling parameters to be used in the prediction stage.</p>
 <p>Regarding the latter note that the <code>center</code> and <code>scale</code> arguments of <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> can be either a logical value or a numeric vector of length equal to the number of the numeric columns in <code>data</code>, respectively. If a logical value was passed to <code>args</code> we store the column means and standard deviations/root mean squares in the <code>$center</code> and <code>$scale</code> slots of the returned <code>$control</code> object.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">trainfun</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">data</span>, <span class="no">target</span>, <span class="no">args</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">center</span>, <span class="no">scale</span>)) {
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">trainfun</span> <span class="op">=</span> <span class="fu">function</span>(<span class="kw">data</span>, <span class="kw">target</span>, <span class="kw">args</span> = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">center</span>, <span class="kw">scale</span>)) {
   <span class="co"># Identify numerical features</span>
-  <span class="no">cns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">data</span>)
-  <span class="no">nums</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="no">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">data</span>, <span class="no">is.numeric</span>)], <span class="no">target</span>)
+  <span class="kw">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">data</span>)
+  <span class="kw">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="kw">data</span>, <span class="kw">is.numeric</span>)], <span class="kw">target</span>)
   <span class="co"># Extract numerical features from the data set and call scale</span>
-  <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">data</span>[, <span class="no">nums</span>, <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>])
-  <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="no">x</span>, <span class="kw">center</span> <span class="kw">=</span> <span class="no">args</span>$<span class="no">center</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="no">args</span>$<span class="no">scale</span>)
+  <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">data</span>[, <span class="kw">nums</span>, drop = <span class="fl">FALSE</span>])
+  <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw">x</span>, center = <span class="kw">args</span><span class="op">$</span><span class="kw">center</span>, scale = <span class="kw">args</span><span class="op">$</span><span class="kw">scale</span>)
   <span class="co"># Store the scaling parameters in control</span>
   <span class="co"># These are needed to preprocess the data before prediction</span>
-  <span class="no">control</span> <span class="kw">=</span> <span class="no">args</span>
-  <span class="kw">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="no">control</span>$<span class="no">center</span>) <span class="kw">&amp;&amp;</span> <span class="no">control</span>$<span class="no">center</span>)
-    <span class="no">control</span>$<span class="no">center</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">x</span>, <span class="st">"scaled:center"</span>)
-  <span class="kw">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="no">control</span>$<span class="no">scale</span>) <span class="kw">&amp;&amp;</span> <span class="no">control</span>$<span class="no">scale</span>)
-    <span class="no">control</span>$<span class="no">scale</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">x</span>, <span class="st">"scaled:scale"</span>)
+  <span class="kw">control</span> <span class="op">=</span> <span class="kw">args</span>
+  <span class="co">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="kw">control</span><span class="op">$</span><span class="kw">center</span>) <span class="op">&amp;&amp;</span> <span class="kw">control</span><span class="op">$</span><span class="kw">center</span>)
+    <span class="kw">control</span><span class="op">$</span><span class="kw">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="kw">x</span>, <span class="st">"scaled:center"</span>)
+  <span class="co">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="kw">control</span><span class="op">$</span><span class="kw">scale</span>) <span class="op">&amp;&amp;</span> <span class="kw">control</span><span class="op">$</span><span class="kw">scale</span>)
+    <span class="kw">control</span><span class="op">$</span><span class="kw">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="kw">x</span>, <span class="st">"scaled:scale"</span>)
   <span class="co"># Recombine the data</span>
-  <span class="no">data</span> <span class="kw">=</span> <span class="no">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="no">cns</span>, <span class="no">nums</span>), <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>]
-  <span class="no">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">x</span>))
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">data</span>, <span class="kw">control</span> <span class="kw">=</span> <span class="no">control</span>))
-}</pre></body></html></div>
+  <span class="kw">data</span> <span class="op">=</span> <span class="kw">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw">cns</span>, <span class="kw">nums</span>), drop = <span class="fl">FALSE</span>]
+  <span class="kw">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">x</span>))
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(data = <span class="kw">data</span>, control = <span class="kw">control</span>))
+}
+</pre></div>
 </div>
 <div id="specifying-the-predict-function" class="section level2">
 <h2 class="hasAnchor">
@@ -581,40 +599,45 @@
 </ul>
 <p>It returns the preprocessed data.</p>
 <p>In our scaling example the <em>predict</em> function scales the numerical features using the parameters from the training stage stored in <code>control</code>.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">predictfun</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">data</span>, <span class="no">target</span>, <span class="no">args</span>, <span class="no">control</span>) {
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">predictfun</span> <span class="op">=</span> <span class="fu">function</span>(<span class="kw">data</span>, <span class="kw">target</span>, <span class="kw">args</span>, <span class="kw">control</span>) {
   <span class="co"># Identify numerical features</span>
-  <span class="no">cns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">data</span>)
-  <span class="no">nums</span> <span class="kw">=</span> <span class="no">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">data</span>, <span class="no">is.numeric</span>)]
+  <span class="kw">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">data</span>)
+  <span class="kw">nums</span> <span class="op">=</span> <span class="kw">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="kw">data</span>, <span class="kw">is.numeric</span>)]
   <span class="co"># Extract numerical features from the data set and call scale</span>
-  <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">data</span>[, <span class="no">nums</span>, <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>])
-  <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="no">x</span>, <span class="kw">center</span> <span class="kw">=</span> <span class="no">control</span>$<span class="no">center</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="no">control</span>$<span class="no">scale</span>)
+  <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">data</span>[, <span class="kw">nums</span>, drop = <span class="fl">FALSE</span>])
+  <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw">x</span>, center = <span class="kw">control</span><span class="op">$</span><span class="kw">center</span>, scale = <span class="kw">control</span><span class="op">$</span><span class="kw">scale</span>)
   <span class="co"># Recombine the data</span>
-  <span class="no">data</span> <span class="kw">=</span> <span class="no">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="no">cns</span>, <span class="no">nums</span>), <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>]
-  <span class="no">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">x</span>))
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">data</span>)
-}</pre></body></html></div>
+  <span class="kw">data</span> <span class="op">=</span> <span class="kw">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw">cns</span>, <span class="kw">nums</span>), drop = <span class="fl">FALSE</span>]
+  <span class="kw">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">x</span>))
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw">data</span>)
+}
+</pre></div>
 </div>
 <div id="creating-the-preprocessing-wrapper" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-the-preprocessing-wrapper" class="anchor"></a>Creating the preprocessing wrapper</h2>
 <p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
 <p>The <em>train</em> and <em>predict</em> functions defined above are passed to <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> via the <code>train</code> and <code>predict</code> arguments. <code>par.vals</code> is a <code>list</code> of parameter values that is relayed to the <code>args</code> argument of the <em>train</em> function.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="kw">trace</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">decay</span> <span class="kw">=</span> <span class="fl">1e-02</span>)
-<span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(<span class="no">lrn</span>, <span class="kw">train</span> <span class="kw">=</span> <span class="no">trainfun</span>, <span class="kw">predict</span> <span class="kw">=</span> <span class="no">predictfun</span>,
-  <span class="kw">par.vals</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">center</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
-<span class="no">lrn</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, trace = <span class="fl">FALSE</span>, decay = <span class="fl">1e-02</span>)
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(<span class="kw">lrn</span>, train = <span class="kw">trainfun</span>, predict = <span class="kw">predictfun</span>,
+  par.vals = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(center = <span class="fl">TRUE</span>, scale = <span class="fl">TRUE</span>))
+<span class="kw">lrn</span>
 <span class="co">## Learner regr.nnet.preproc from package nnet</span>
 <span class="co">## Type: regr</span>
 <span class="co">## Name: ; Short name: </span>
 <span class="co">## Class: PreprocWrapper</span>
 <span class="co">## Properties: numerics,factors,weights</span>
 <span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></pre></body></html></div>
+<span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span>
+</pre></div>
 <p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">rdesc</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="kw">iters</span> <span class="kw">=</span> <span class="fl">3</span>)
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, iters = <span class="fl">3</span>)
 
-<span class="no">r</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="no">lrn</span>, <span class="no">bh.task</span>, <span class="kw">resampling</span> <span class="kw">=</span> <span class="no">rdesc</span>, <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">r</span>
+<span class="kw">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="kw">lrn</span>, <span class="kw">bh.task</span>, resampling = <span class="kw">rdesc</span>, show.info = <span class="fl">FALSE</span>)
+<span class="kw">r</span>
 
 <span class="co">## Resample Result</span>
 <span class="co">## Task: BostonHousing-example</span>
@@ -622,15 +645,16 @@
 <span class="co">## Aggr perf: mse.test.mean=26.6997095</span>
 <span class="co">## Runtime: 0.083282</span>
 
-<span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="kw">trace</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">decay</span> <span class="kw">=</span> <span class="fl">1e-02</span>)
-<span class="no">r</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="no">lrn</span>, <span class="no">bh.task</span>, <span class="kw">resampling</span> <span class="kw">=</span> <span class="no">rdesc</span>, <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">r</span>
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, trace = <span class="fl">FALSE</span>, decay = <span class="fl">1e-02</span>)
+<span class="kw">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="kw">lrn</span>, <span class="kw">bh.task</span>, resampling = <span class="kw">rdesc</span>, show.info = <span class="fl">FALSE</span>)
+<span class="kw">r</span>
 
 <span class="co">## Resample Result</span>
 <span class="co">## Task: BostonHousing-example</span>
 <span class="co">## Learner: regr.nnet</span>
 <span class="co">## Aggr perf: mse.test.mean=56.8645496</span>
-<span class="co">## Runtime: 0.0463462</span></pre></body></html></div>
+<span class="co">## Runtime: 0.0463462</span>
+</pre></div>
 </div>
 <div id="joint-tuning-of-preprocessing-and-learner-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -638,15 +662,16 @@
 <p>Often it’s not clear which preprocessing options work best with a certain learning algorithm. As already shown for the number of principal components in <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> we can <a href="tune.html" target="_blank">tune</a> them easily together with other hyperparameters of the learner.</p>
 <p>In our scaling example we can try if <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
 <p>As mentioned above <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, <span class="kw">trace</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(<span class="no">lrn</span>, <span class="kw">train</span> <span class="kw">=</span> <span class="no">trainfun</span>, <span class="kw">predict</span> <span class="kw">=</span> <span class="no">predictfun</span>,
-  <span class="kw">par.set</span> <span class="kw">=</span> <span class="fu">makeParamSet</span>(
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.nnet"</span>, trace = <span class="fl">FALSE</span>)
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(<span class="kw">lrn</span>, train = <span class="kw">trainfun</span>, predict = <span class="kw">predictfun</span>,
+  par.set = <span class="fu">makeParamSet</span>(
     <span class="fu">makeLogicalLearnerParam</span>(<span class="st">"center"</span>),
     <span class="fu">makeLogicalLearnerParam</span>(<span class="st">"scale"</span>)
   ),
-  <span class="kw">par.vals</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">center</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+  par.vals = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(center = <span class="fl">TRUE</span>, scale = <span class="fl">TRUE</span>))
 
-<span class="no">lrn</span>
+<span class="kw">lrn</span>
 <span class="co">## Learner regr.nnet.preproc from package nnet</span>
 <span class="co">## Type: regr</span>
 <span class="co">## Name: ; Short name: </span>
@@ -655,7 +680,7 @@
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span>
 
-<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="no">lrn</span>)
+<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="kw">lrn</span>)
 <span class="co">##            Type len    Def      Constr Req Tunable Trafo</span>
 <span class="co">## center  logical   -      -           -   -    TRUE     -</span>
 <span class="co">## scale   logical   -      -           -   -    TRUE     -</span>
@@ -668,24 +693,26 @@
 <span class="co">## trace   logical   -   TRUE           -   -   FALSE     -</span>
 <span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span>
 <span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span>
-<span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></pre></body></html></div>
+<span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span>
+</pre></div>
 <p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">rdesc</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)
-<span class="no">ps</span> <span class="kw">=</span> <span class="fu">makeParamSet</span>(
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="kw">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)
+<span class="kw">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span>(
   <span class="fu">makeDiscreteParam</span>(<span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>)),
   <span class="fu">makeLogicalParam</span>(<span class="st">"center"</span>),
   <span class="fu">makeLogicalParam</span>(<span class="st">"scale"</span>)
 )
-<span class="no">ctrl</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()
-<span class="no">res</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="no">lrn</span>, <span class="no">bh.task</span>, <span class="no">rdesc</span>, <span class="kw">par.set</span> <span class="kw">=</span> <span class="no">ps</span>, <span class="kw">control</span> <span class="kw">=</span> <span class="no">ctrl</span>, <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="kw">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span>()
+<span class="kw">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="kw">lrn</span>, <span class="kw">bh.task</span>, <span class="kw">rdesc</span>, par.set = <span class="kw">ps</span>, control = <span class="kw">ctrl</span>, show.info = <span class="fl">FALSE</span>)
 
-<span class="no">res</span>
+<span class="kw">res</span>
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: decay=0.1; center=FALSE; scale=TRUE</span>
 <span class="co">## mse.test.mean=14.0485584</span>
 
-<span class="no">df</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">res</span>$<span class="no">opt.path</span>)
-<span class="no">df</span>[, -<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">df</span>)]
+<span class="kw">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">res</span><span class="op">$</span><span class="kw">opt.path</span>)
+<span class="kw">df</span>[, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">df</span>)]
 <span class="co">##    decay center scale mse.test.mean dob eol error.message</span>
 <span class="co">## 1      0   TRUE  TRUE      18.90371   1  NA          &lt;NA&gt;</span>
 <span class="co">## 2   0.05   TRUE  TRUE      22.41828   2  NA          &lt;NA&gt;</span>
@@ -698,53 +725,56 @@
 <span class="co">## 9    0.1   TRUE FALSE      56.37346   9  NA          &lt;NA&gt;</span>
 <span class="co">## 10     0  FALSE FALSE      90.20231  10  NA          &lt;NA&gt;</span>
 <span class="co">## 11  0.05  FALSE FALSE      90.20117  11  NA          &lt;NA&gt;</span>
-<span class="co">## 12   0.1  FALSE FALSE      30.18762  12  NA          &lt;NA&gt;</span></pre></body></html></div>
+<span class="co">## 12   0.1  FALSE FALSE      30.18762  12  NA          &lt;NA&gt;</span>
+</pre></div>
 </div>
 <div id="preprocessing-wrapper-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preprocessing-wrapper-functions" class="anchor"></a>Preprocessing wrapper functions</h2>
 <p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues">contact us</a>.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">makePreprocWrapperScale</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">learner</span>, <span class="no">center</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="no">scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>) {
-  <span class="no">trainfun</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">data</span>, <span class="no">target</span>, <span class="no">args</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">center</span>, <span class="no">scale</span>)) {
-    <span class="no">cns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">data</span>)
-    <span class="no">nums</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="no">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">data</span>, <span class="no">is.numeric</span>)], <span class="no">target</span>)
-    <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">data</span>[, <span class="no">nums</span>, <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>])
-    <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="no">x</span>, <span class="kw">center</span> <span class="kw">=</span> <span class="no">args</span>$<span class="no">center</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="no">args</span>$<span class="no">scale</span>)
-    <span class="no">control</span> <span class="kw">=</span> <span class="no">args</span>
-    <span class="kw">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="no">control</span>$<span class="no">center</span>) <span class="kw">&amp;&amp;</span> <span class="no">control</span>$<span class="no">center</span>)
-      <span class="no">control</span>$<span class="no">center</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">x</span>, <span class="st">"scaled:center"</span>)
-    <span class="kw">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="no">control</span>$<span class="no">scale</span>) <span class="kw">&amp;&amp;</span> <span class="no">control</span>$<span class="no">scale</span>)
-      <span class="no">control</span>$<span class="no">scale</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">x</span>, <span class="st">"scaled:scale"</span>)
-    <span class="no">data</span> <span class="kw">=</span> <span class="no">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="no">cns</span>, <span class="no">nums</span>), <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>]
-    <span class="no">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">x</span>))
-    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">data</span>, <span class="kw">control</span> <span class="kw">=</span> <span class="no">control</span>))
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="kw">makePreprocWrapperScale</span> <span class="op">=</span> <span class="fu">function</span>(<span class="kw">learner</span>, <span class="kw">center</span> = <span class="fl">TRUE</span>, <span class="kw">scale</span> = <span class="fl">TRUE</span>) {
+  <span class="kw">trainfun</span> <span class="op">=</span> <span class="fu">function</span>(<span class="kw">data</span>, <span class="kw">target</span>, <span class="kw">args</span> = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">center</span>, <span class="kw">scale</span>)) {
+    <span class="kw">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">data</span>)
+    <span class="kw">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="kw">data</span>, <span class="kw">is.numeric</span>)], <span class="kw">target</span>)
+    <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">data</span>[, <span class="kw">nums</span>, drop = <span class="fl">FALSE</span>])
+    <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw">x</span>, center = <span class="kw">args</span><span class="op">$</span><span class="kw">center</span>, scale = <span class="kw">args</span><span class="op">$</span><span class="kw">scale</span>)
+    <span class="kw">control</span> <span class="op">=</span> <span class="kw">args</span>
+    <span class="co">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="kw">control</span><span class="op">$</span><span class="kw">center</span>) <span class="op">&amp;&amp;</span> <span class="kw">control</span><span class="op">$</span><span class="kw">center</span>)
+      <span class="kw">control</span><span class="op">$</span><span class="kw">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="kw">x</span>, <span class="st">"scaled:center"</span>)
+    <span class="co">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span>(<span class="kw">control</span><span class="op">$</span><span class="kw">scale</span>) <span class="op">&amp;&amp;</span> <span class="kw">control</span><span class="op">$</span><span class="kw">scale</span>)
+      <span class="kw">control</span><span class="op">$</span><span class="kw">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="kw">x</span>, <span class="st">"scaled:scale"</span>)
+    <span class="kw">data</span> <span class="op">=</span> <span class="kw">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw">cns</span>, <span class="kw">nums</span>), drop = <span class="fl">FALSE</span>]
+    <span class="kw">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">x</span>))
+    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(data = <span class="kw">data</span>, control = <span class="kw">control</span>))
   }
-  <span class="no">predictfun</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">data</span>, <span class="no">target</span>, <span class="no">args</span>, <span class="no">control</span>) {
-    <span class="no">cns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">data</span>)
-    <span class="no">nums</span> <span class="kw">=</span> <span class="no">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">data</span>, <span class="no">is.numeric</span>)]
-    <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">data</span>[, <span class="no">nums</span>, <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>])
-    <span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="no">x</span>, <span class="kw">center</span> <span class="kw">=</span> <span class="no">control</span>$<span class="no">center</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="no">control</span>$<span class="no">scale</span>)
-    <span class="no">data</span> <span class="kw">=</span> <span class="no">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="no">cns</span>, <span class="no">nums</span>), <span class="kw">drop</span> <span class="kw">=</span> <span class="fl">FALSE</span>]
-    <span class="no">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">x</span>))
-    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">data</span>)
+  <span class="kw">predictfun</span> <span class="op">=</span> <span class="fu">function</span>(<span class="kw">data</span>, <span class="kw">target</span>, <span class="kw">args</span>, <span class="kw">control</span>) {
+    <span class="kw">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">data</span>)
+    <span class="kw">nums</span> <span class="op">=</span> <span class="kw">cns</span>[<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="kw">data</span>, <span class="kw">is.numeric</span>)]
+    <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">data</span>[, <span class="kw">nums</span>, drop = <span class="fl">FALSE</span>])
+    <span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(<span class="kw">x</span>, center = <span class="kw">control</span><span class="op">$</span><span class="kw">center</span>, scale = <span class="kw">control</span><span class="op">$</span><span class="kw">scale</span>)
+    <span class="kw">data</span> <span class="op">=</span> <span class="kw">data</span>[, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw">cns</span>, <span class="kw">nums</span>), drop = <span class="fl">FALSE</span>]
+    <span class="kw">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">x</span>))
+    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw">data</span>)
   }
   <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span>(
-    <span class="no">learner</span>,
-    <span class="kw">train</span> <span class="kw">=</span> <span class="no">trainfun</span>,
-    <span class="kw">predict</span> <span class="kw">=</span> <span class="no">predictfun</span>,
-    <span class="kw">par.set</span> <span class="kw">=</span> <span class="fu">makeParamSet</span>(
+    <span class="kw">learner</span>,
+    train = <span class="kw">trainfun</span>,
+    predict = <span class="kw">predictfun</span>,
+    par.set = <span class="fu">makeParamSet</span>(
       <span class="fu">makeLogicalLearnerParam</span>(<span class="st">"center"</span>),
       <span class="fu">makeLogicalLearnerParam</span>(<span class="st">"scale"</span>)
     ),
-    <span class="kw">par.vals</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">center</span> <span class="kw">=</span> <span class="no">center</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="no">scale</span>)
+    par.vals = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(center = <span class="kw">center</span>, scale = <span class="kw">scale</span>)
   )
 }
 
-<span class="no">lrn</span> <span class="kw">=</span> <span class="fu">makePreprocWrapperScale</span>(<span class="st">"classif.lda"</span>)
-<span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="no">iris.task</span>)
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu">makePreprocWrapperScale</span>(<span class="st">"classif.lda"</span>)
+<span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">iris.task</span>)
 <span class="co">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</span>
 <span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span></pre></body></html></div>
+<span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span>
+</pre></div>
 </div>
 </div>
   </div>
@@ -764,7 +794,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

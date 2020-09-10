@@ -331,10 +331,10 @@ Non factor features will be left untouched and passed to the result.</p>
     </div>
 
     <pre class="usage"><span class='fu'>createDummyFeatures</span>(
-  <span class='no'>obj</span>,
-  <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"1-of-n"</span>,
-  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>obj</span>,
+  target = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
+  method = <span class='st'>"1-of-n"</span>,
+  cols = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -359,7 +359,7 @@ classes.</p></td>
     <tr>
       <th>method</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
-Available are:</p><dl'>
+Available are:</p><dl>
 <dt>"1-of-n":</dt><dd><p>For n factor levels there will be n dummy variables.</p></dd>
 <dt>"reference":</dt><dd><p>There will be n-1 dummy variables leaving out the first factor level of each variable.</p></dd>
 
@@ -401,7 +401,7 @@ Columns to create dummy features for. Default is to use all columns.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -331,12 +331,12 @@ In the no-information case the features carry no information with respect to the
     </div>
 
     <pre class="usage"><span class='fu'>estimateRelativeOverfitting</span>(
-  <span class='no'>predish</span>,
-  <span class='no'>measures</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>learner</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pred.train</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  <span class='kw'>predish</span>,
+  <span class='kw'>measures</span>,
+  <span class='kw'>task</span>,
+  learner = <span class='kw'>NULL</span>,
+  pred.train = <span class='kw'>NULL</span>,
+  iter = <span class='fl'>1</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -400,13 +400,17 @@ Iteration number. Default 1, usually you don't need to specify this. Only needed
 <code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.knn"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
+    <pre class="examples"><div class='input'><span class='kw'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span>(data = <span class='kw'>iris</span>, target = <span class='st'>"Species"</span>)
+<span class='kw'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, iters = <span class='fl'>2</span>)
+<span class='fu'>estimateRelativeOverfitting</span>(<span class='kw'>rdesc</span>, <span class='kw'>acc</span>, <span class='kw'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.knn"</span>))
+</div><div class='output co'>#&gt;    iter relative.overfit.acc
 #&gt; 1:    1          -0.02173913
-#&gt; 2:    2           0.02127660</div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rdesc</span>, <span class='no'>acc</span>, <span class='no'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>))</div><div class='output co'>#&gt;    iter relative.overfit.acc
+#&gt; 2:    2           0.02127660</div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='kw'>rdesc</span>, <span class='kw'>acc</span>, <span class='kw'>task</span>, <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>))
+</div><div class='output co'>#&gt;    iter relative.overfit.acc
 #&gt; 1:    1          -0.06382979
-#&gt; 2:    2           0.06000000</div><div class='input'><span class='no'>rpred</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='st'>"classif.knn"</span>, <span class='no'>task</span>, <span class='no'>rdesc</span>)$<span class='no'>pred</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='no'>rpred</span>, <span class='no'>acc</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt;    iter relative.overfit.acc
+#&gt; 2:    2           0.06000000</div><div class='input'><span class='kw'>rpred</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='st'>"classif.knn"</span>, <span class='kw'>task</span>, <span class='kw'>rdesc</span>)<span class='op'>$</span><span class='kw'>pred</span>
+</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0333333</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>estimateRelativeOverfitting</span>(<span class='kw'>rpred</span>, <span class='kw'>acc</span>, <span class='kw'>task</span>)
+</div><div class='output co'>#&gt;    iter relative.overfit.acc
 #&gt; 1:    1           0.02083333
 #&gt; 2:    2          -0.02127660</div></pre>
   </div>
@@ -424,7 +428,7 @@ Iteration number. Default 1, usually you don't need to specify this. Only needed
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

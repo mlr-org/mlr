@@ -329,13 +329,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>generateLearningCurveData</span>(
-  <span class='no'>learners</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>percs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.1</span>),
-  <span class='no'>measures</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
+  <span class='kw'>learners</span>,
+  <span class='kw'>task</span>,
+  resampling = <span class='kw'>NULL</span>,
+  percs = <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.1</span>, <span class='fl'>1</span>, by = <span class='fl'>0.1</span>),
+  <span class='kw'>measures</span>,
+  stratify = <span class='fl'>FALSE</span>,
+  show.info = <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -411,12 +411,13 @@ Performance measures</p></li>
 <code><a href='plotLearningCurve.html'>plotLearningCurve</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>generateLearningCurveData</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"classif.rpart"</span>, <span class='st'>"classif.knn"</span>),
-  <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>, <span class='kw'>percs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.2</span>),
-  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>tp</span>, <span class='no'>fp</span>, <span class='no'>tn</span>, <span class='no'>fn</span>),
-  <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Subsample"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>5</span>),
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='plotLearningCurve.html'>plotLearningCurve</a></span>(<span class='no'>r</span>)</div><div class='img'><img src='generateLearningCurveData-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>r</span> <span class='op'>=</span> <span class='fu'>generateLearningCurveData</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"classif.rpart"</span>, <span class='st'>"classif.knn"</span>),
+  task = <span class='kw'>sonar.task</span>, percs = <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.2</span>, <span class='fl'>1</span>, by = <span class='fl'>0.2</span>),
+  measures = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>tp</span>, <span class='kw'>fp</span>, <span class='kw'>tn</span>, <span class='kw'>fn</span>),
+  resampling = <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(method = <span class='st'>"Subsample"</span>, iters = <span class='fl'>5</span>),
+  show.info = <span class='fl'>FALSE</span>)
+<span class='fu'><a href='plotLearningCurve.html'>plotLearningCurve</a></span>(<span class='kw'>r</span>)
+</div><div class='img'><img src='generateLearningCurveData-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -432,7 +433,7 @@ Performance measures</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

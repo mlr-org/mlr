@@ -341,16 +341,16 @@ the information of the original task, the fitted model and the prediction.</p>
     </div>
 
     <pre class="usage"><span class='fu'>makeMeasure</span>(
-  <span class='no'>id</span>,
-  <span class='no'>minimize</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='no'>fun</span>,
-  <span class='kw'>extra.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>aggr</span> <span class='kw'>=</span> <span class='no'>test.mean</span>,
-  <span class='kw'>best</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>worst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>id</span>,
-  <span class='kw'>note</span> <span class='kw'>=</span> <span class='st'>""</span>
+  <span class='kw'>id</span>,
+  <span class='kw'>minimize</span>,
+  properties = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
+  <span class='kw'>fun</span>,
+  extra.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  aggr = <span class='kw'>test.mean</span>,
+  best = <span class='kw'>NULL</span>,
+  worst = <span class='kw'>NULL</span>,
+  name = <span class='kw'>id</span>,
+  note = <span class='st'>""</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -458,11 +458,12 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
 <code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>task</span>, <span class='no'>model</span>, <span class='no'>pred</span>, <span class='no'>extra.args</span>) {
-  <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>((<span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>response</span> - <span class='no'>pred</span>$<span class='no'>data</span>$<span class='no'>truth</span>)^<span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='kw'>f</span> <span class='op'>=</span> <span class='fu'>function</span>(<span class='kw'>task</span>, <span class='kw'>model</span>, <span class='kw'>pred</span>, <span class='kw'>extra.args</span>) {
+  <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>((<span class='kw'>pred</span><span class='op'>$</span><span class='kw'>data</span><span class='op'>$</span><span class='kw'>response</span> <span class='op'>-</span> <span class='kw'>pred</span><span class='op'>$</span><span class='kw'>data</span><span class='op'>$</span><span class='kw'>truth</span>)<span class='op'>^</span><span class='fl'>2</span>)
 }
-<span class='fu'>makeMeasure</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"my.sse"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>f</span>)</div><div class='output co'>#&gt; Name: my.sse
+<span class='fu'>makeMeasure</span>(id = <span class='st'>"my.sse"</span>, minimize = <span class='fl'>TRUE</span>,
+  properties = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regr"</span>, <span class='st'>"response"</span>), fun = <span class='kw'>f</span>)
+</div><div class='output co'>#&gt; Name: my.sse
 #&gt; Performance measure: my.sse
 #&gt; Properties: regr,response
 #&gt; Minimize: TRUE
@@ -485,7 +486,7 @@ Description and additional notes for the measure. Default is &#8220;&#8221;.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -332,7 +332,7 @@ Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.
 <p>Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.dev/weka/classifiers/meta/ClassificationViaRegression.html).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeClassificationViaRegressionWrapper</span>(<span class='no'>learner</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>)</pre>
+    <pre class="usage"><span class='fu'>makeClassificationViaRegressionWrapper</span>(<span class='kw'>learner</span>, predict.type = <span class='st'>"response"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -382,9 +382,11 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
 <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.rpart"</span>)
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeClassificationViaRegressionWrapper</span>(<span class='no'>lrn</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>140</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>predictions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>sonar.task</span>)[<span class='fl'>141</span>:<span class='fl'>208</span>, <span class='fl'>1</span>:<span class='fl'>60</span>])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]): object 'mod' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.rpart"</span>)
+<span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'>makeClassificationViaRegressionWrapper</span>(<span class='kw'>lrn</span>)
+<span class='kw'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>sonar.task</span>, subset = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>140</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='kw'>predictions</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>mod</span>, newdata = <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='kw'>sonar.task</span>)[<span class='fl'>141</span><span class='op'>:</span><span class='fl'>208</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>60</span>])
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]): object 'mod' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -400,7 +402,7 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

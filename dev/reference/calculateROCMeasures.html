@@ -364,10 +364,10 @@ fomr since for should never be used as a variable name in an object." />
 <code>fomr</code> since <code>for</code> should never be used as a variable name in an object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)
+    <pre class="usage"><span class='fu'>calculateROCMeasures</span>(<span class='kw'>pred</span>)
 
 <span class='co'># S3 method for ROCMeasures</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>abbreviations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>x</span>, abbreviations = <span class='fl'>TRUE</span>, digits = <span class='fl'>2</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -427,10 +427,11 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
 <code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
-<span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)</div><div class='output co'>#&gt;     predicted
+    <pre class="examples"><div class='input'><span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, predict.type = <span class='st'>"prob"</span>)
+<span class='kw'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>sonar.task</span>)
+<span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>fit</span>, task = <span class='kw'>sonar.task</span>)
+<span class='fu'>calculateROCMeasures</span>(<span class='kw'>pred</span>)
+</div><div class='output co'>#&gt;     predicted
 #&gt; true M        R                             
 #&gt;    M 95       16        tpr: 0.86 fnr: 0.14 
 #&gt;    R 10       87        fpr: 0.1  tnr: 0.9  
@@ -466,7 +467,7 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

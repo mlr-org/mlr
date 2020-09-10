@@ -329,14 +329,14 @@
     </div>
 
     <pre class="usage"><span class='fu'>makeMultilabelTask</span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)),
-  <span class='no'>data</span>,
-  <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
-  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  id = <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='kw'>data</span>)),
+  <span class='kw'>data</span>,
+  <span class='kw'>target</span>,
+  weights = <span class='kw'>NULL</span>,
+  blocking = <span class='kw'>NULL</span>,
+  coordinates = <span class='kw'>NULL</span>,
+  fixup.data = <span class='st'>"warn"</span>,
+  check.data = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -419,7 +419,7 @@ columns in <code>data</code>. The name of the column specifies the name of the l
 is then a char vector that points to these columns.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p></div>
+    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='makeClassifTask.html'>ClassifTask</a> <a href='makeClusterTask.html'>ClusterTask</a> <a href='makeCostSensTask.html'>CostSensTask</a> <a href='makeRegrTask.html'>RegrTask</a> <a href='makeSurvTask.html'>SurvTask</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -436,7 +436,7 @@ is then a char vector that points to these columns.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -290,35 +290,41 @@
 <h2 class="hasAnchor">
 <a href="#plotting-the-learning-curve" class="anchor"></a>Plotting the learning curve</h2>
 <p>The <code>mlr</code> function <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> can generate the data for <em>learning curves</em> for <a href="integrated_learners.html" target="_blank">multiple learners</a> and multiple <a href="measures.html" target="_blank">performance measures</a> at once. With <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code> the result of <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> can be plotted using <code>ggplot2</code>. <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code> has an argument <code>facet</code> which can be either <code>"measure"</code> or <code>"learner"</code>. By default <code>facet = "measure"</code> and facetted subplots are created for each measure input to <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code>. If <code>facet = "measure"</code> learners are mapped to color, and vice versa.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">r</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span>(
-  <span class="kw">learners</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"classif.rpart"</span>, <span class="st">"classif.knn"</span>),
-  <span class="kw">task</span> <span class="kw">=</span> <span class="no">sonar.task</span>,
-  <span class="kw">percs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="fl">1</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">0.2</span>),
-  <span class="kw">measures</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">tp</span>, <span class="no">fp</span>, <span class="no">tn</span>, <span class="no">fn</span>),
-  <span class="kw">resampling</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"CV"</span>, <span class="kw">iters</span> <span class="kw">=</span> <span class="fl">5</span>),
-  <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span>(<span class="no">r</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span>(
+  learners = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"classif.rpart"</span>, <span class="st">"classif.knn"</span>),
+  task = <span class="kw">sonar.task</span>,
+  percs = <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="fl">1</span>, by = <span class="fl">0.2</span>),
+  measures = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">tp</span>, <span class="kw">fp</span>, <span class="kw">tn</span>, <span class="kw">fn</span>),
+  resampling = <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(method = <span class="st">"CV"</span>, iters = <span class="fl">5</span>),
+  show.info = <span class="fl">FALSE</span>)
+<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span>(<span class="kw">r</span>)
+</pre></div>
 <p><img src="learning_curve_files/figure-html/LearningCurveTPFP-1-1.png" width="700"></p>
 <p>What happens in <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> is the following: Each learner will be internally wrapped in a <code>DownsampleWrapper</code> (<code><a href="../../reference/makeDownsampleWrapper.html">makeDownsampleWrapper()</a></code>). To measure the performance at the first step of <code>percs</code>, say <code>0.1</code>, first the data will be split into a <em>training</em> and a <em>test set</em> according to the given <em>resampling strategy</em>. Then a random sample containing 10% of the observations of the <em>training set</em> will be drawn and used to train the learner. The performance will be measured on the <em>complete test set</em>. These steps will be repeated as defined by the given <em>resampling method</em> and for each value of <code>percs</code>.</p>
 <p>In the first example we simply passed a vector of learner names to <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code>. As usual, you can also create the learners beforehand and provide a <code>list</code> of Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects, or even pass a mixed <code>list</code> of Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects and strings. Make sure that all learners have unique <code>id</code>s.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">lrns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="kw">cl</span> <span class="kw">=</span> <span class="st">"classif.ksvm"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="st">"ksvm1"</span>, <span class="kw">sigma</span> <span class="kw">=</span> <span class="fl">0.2</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="fl">2</span>),
-  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="kw">cl</span> <span class="kw">=</span> <span class="st">"classif.ksvm"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="st">"ksvm2"</span>, <span class="kw">sigma</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="fl">1</span>),
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(cl = <span class="st">"classif.ksvm"</span>, id = <span class="st">"ksvm1"</span>, sigma = <span class="fl">0.2</span>, C = <span class="fl">2</span>),
+  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(cl = <span class="st">"classif.ksvm"</span>, id = <span class="st">"ksvm2"</span>, sigma = <span class="fl">0.1</span>, C = <span class="fl">1</span>),
   <span class="st">"classif.randomForest"</span>
 )
-<span class="no">rin</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"CV"</span>, <span class="kw">iters</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="no">lc</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span>(<span class="kw">learners</span> <span class="kw">=</span> <span class="no">lrns</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">sonar.task</span>,
-  <span class="kw">percs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="fl">1</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">0.1</span>), <span class="kw">measures</span> <span class="kw">=</span> <span class="no">acc</span>,
-  <span class="kw">resampling</span> <span class="kw">=</span> <span class="no">rin</span>, <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span>(<span class="no">lc</span>)</pre></body></html></div>
+<span class="kw">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(method = <span class="st">"CV"</span>, iters = <span class="fl">5</span>)
+<span class="kw">lc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span>(learners = <span class="kw">lrns</span>, task = <span class="kw">sonar.task</span>,
+  percs = <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="fl">1</span>, by = <span class="fl">0.1</span>), measures = <span class="kw">acc</span>,
+  resampling = <span class="kw">rin</span>, show.info = <span class="fl">FALSE</span>)
+<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span>(<span class="kw">lc</span>)
+</pre></div>
 <p><img src="learning_curve_files/figure-html/LearningCurveACCx-1-1.png" width="700"></p>
 <p>We can display performance on the train set as well as the test set:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">rin2</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"CV"</span>, <span class="kw">iters</span> <span class="kw">=</span> <span class="fl">5</span>, <span class="kw">predict</span> <span class="kw">=</span> <span class="st">"both"</span>)
-<span class="no">lc2</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span>(<span class="kw">learners</span> <span class="kw">=</span> <span class="no">lrns</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">sonar.task</span>,
-  <span class="kw">percs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="fl">1</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">0.1</span>),
-  <span class="kw">measures</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span>(<span class="no">acc</span>, <span class="no">train.mean</span>)), <span class="kw">resampling</span> <span class="kw">=</span> <span class="no">rin2</span>,
-  <span class="kw">show.info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span>(<span class="no">lc2</span>, <span class="kw">facet</span> <span class="kw">=</span> <span class="st">"learner"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">rin2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(method = <span class="st">"CV"</span>, iters = <span class="fl">5</span>, predict = <span class="st">"both"</span>)
+<span class="kw">lc2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span>(learners = <span class="kw">lrns</span>, task = <span class="kw">sonar.task</span>,
+  percs = <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0.1</span>, <span class="fl">1</span>, by = <span class="fl">0.1</span>),
+  measures = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span>(<span class="kw">acc</span>, <span class="kw">train.mean</span>)), resampling = <span class="kw">rin2</span>,
+  show.info = <span class="fl">FALSE</span>)
+<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span>(<span class="kw">lc2</span>, facet = <span class="st">"learner"</span>)
+</pre></div>
 <p><img src="learning_curve_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
   </div>
@@ -338,7 +344,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -340,7 +340,7 @@ For multilabel classification: A label is predicted (with entry <code>TRUE</code
 exceeds the threshold of the corresponding label.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setThreshold</span>(<span class='no'>pred</span>, <span class='no'>threshold</span>)</pre>
+    <pre class="usage"><span class='fu'>setThreshold</span>(<span class='kw'>pred</span>, <span class='kw'>threshold</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -367,14 +367,21 @@ Only for binary classification it can be a single numerical threshold for the po
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># create task and train learner (LDA)</span>
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>
+<span class='kw'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span>(data = <span class='kw'>iris</span>, target = <span class='st'>"Species"</span>)
+<span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, predict.type = <span class='st'>"prob"</span>)
+<span class='kw'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>task</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'>
 <span class='co'># predict probabilities and compute performance</span>
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div><div class='input'>
+<span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>mod</span>, newdata = <span class='kw'>iris</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='kw'>pred</span>, measures = <span class='kw'>mmce</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>pred</span>))
+</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div><div class='input'>
 <span class='co'># adjust threshold and predict probabilities again</span>
-<span class='no'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>setosa</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>versicolor</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>virginica</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>setThreshold</span>(<span class='no'>pred</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='no'>threshold</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div></pre>
+<span class='kw'>threshold</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(setosa = <span class='fl'>0.4</span>, versicolor = <span class='fl'>0.3</span>, virginica = <span class='fl'>0.3</span>)
+<span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'>setThreshold</span>(<span class='kw'>pred</span>, threshold = <span class='kw'>threshold</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='kw'>pred</span>, measures = <span class='kw'>mmce</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>pred</span>))
+</div><div class='output co'>#&gt; <span class='error'>Error in as.data.frame(pred): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -390,7 +397,7 @@ Only for binary classification it can be a single numerical threshold for the po
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

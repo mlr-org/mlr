@@ -358,115 +358,115 @@ the measures will generate warnings.</p>
 <a href='makeMeasure.html'>makeMeasure</a> and can be overwritten using <a href='setMeasurePars.html'>setMeasurePars</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>measureSSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+    <pre class="usage"><span class='fu'>measureSSE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMSE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureRMSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureRMSE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMEDSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMEDSE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureSAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureSAE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMAE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMEDAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMEDAE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureRSQ</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureRSQ</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureEXPVAR</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureEXPVAR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureRRSE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureRRSE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureRAE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureRAE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMAPE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMAPE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMSLE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMSLE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureRMSLE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureRMSLE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureKendallTau</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureKendallTau</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureSpearmanRho</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureSpearmanRho</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMMCE</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMMCE</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureACC</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureACC</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureBER</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureBER</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureAUNU</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureAUNU</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureAUNP</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureAUNP</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureAU1U</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureAU1U</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureAU1P</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureAU1P</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureMulticlassBrier</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureMulticlassBrier</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureLogloss</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureLogloss</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureSSR</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureSSR</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureQSR</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureQSR</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureLSR</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>)
+<span class='fu'>measureLSR</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>)
 
-<span class='fu'>measureKAPPA</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureKAPPA</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureWKAPPA</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureWKAPPA</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureAUC</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureAUC</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureBrier</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureBrier</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureBrierScaled</span>(<span class='no'>probabilities</span>, <span class='no'>truth</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureBrierScaled</span>(<span class='kw'>probabilities</span>, <span class='kw'>truth</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureBAC</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureBAC</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureTP</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
+<span class='fu'>measureTP</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureTN</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
+<span class='fu'>measureTN</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>)
 
-<span class='fu'>measureFP</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
+<span class='fu'>measureFP</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureFN</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
+<span class='fu'>measureFN</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>)
 
-<span class='fu'>measureTPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
+<span class='fu'>measureTPR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureTNR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
+<span class='fu'>measureTNR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>)
 
-<span class='fu'>measureFPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureFPR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureFNR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureFNR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measurePPV</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>, <span class='kw'>probabilities</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>measurePPV</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>, probabilities = <span class='kw'>NULL</span>)
 
-<span class='fu'>measureNPV</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>)
+<span class='fu'>measureNPV</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>)
 
-<span class='fu'>measureFDR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
+<span class='fu'>measureFDR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureMCC</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureMCC</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureF1</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
+<span class='fu'>measureF1</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureGMEAN</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>negative</span>, <span class='no'>positive</span>)
+<span class='fu'>measureGMEAN</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>negative</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureGPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>, <span class='no'>positive</span>)
+<span class='fu'>measureGPR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>, <span class='kw'>positive</span>)
 
-<span class='fu'>measureMultilabelHamloss</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMultilabelHamloss</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMultilabelSubset01</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMultilabelSubset01</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMultilabelF1</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMultilabelF1</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMultilabelACC</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMultilabelACC</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMultilabelPPV</span>(<span class='no'>truth</span>, <span class='no'>response</span>)
+<span class='fu'>measureMultilabelPPV</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)
 
-<span class='fu'>measureMultilabelTPR</span>(<span class='no'>truth</span>, <span class='no'>response</span>)</pre>
+<span class='fu'>measureMultilabelTPR</span>(<span class='kw'>truth</span>, <span class='kw'>response</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -540,7 +540,7 @@ Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <a 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

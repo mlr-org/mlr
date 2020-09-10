@@ -328,7 +328,7 @@
     <p>Join some class existing levels to new, larger class levels for classification problems.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>joinClassLevels</span>(<span class='no'>task</span>, <span class='no'>new.levels</span>)</pre>
+    <pre class="usage"><span class='fu'>joinClassLevels</span>(<span class='kw'>task</span>, <span class='kw'>new.levels</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -351,7 +351,8 @@ character vector specifies the existing class levels which will be joined to the
     <p><a href='Task.html'>Task</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>joinClassLevels</span>(<span class='no'>iris.task</span>, <span class='kw'>new.levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"setosa"</span>, <span class='st'>"virginica"</span>)))</div><div class='output co'>#&gt; Supervised task: iris-example
+    <pre class="examples"><div class='input'><span class='fu'>joinClassLevels</span>(<span class='kw'>iris.task</span>, new.levels = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(foo = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"setosa"</span>, <span class='st'>"virginica"</span>)))
+</div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species
 #&gt; Observations: 150
@@ -381,7 +382,7 @@ character vector specifies the existing class levels which will be joined to the
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

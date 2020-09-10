@@ -329,13 +329,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>plotThreshVsPerf</span>(
-  <span class='no'>obj</span>,
-  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>obj</span>$<span class='no'>measures</span>,
-  <span class='kw'>facet</span> <span class='kw'>=</span> <span class='st'>"measure"</span>,
-  <span class='kw'>mark.th</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>,
-  <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>facet.wrap.nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>facet.wrap.ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>obj</span>,
+  measures = <span class='kw'>obj</span><span class='op'>$</span><span class='kw'>measures</span>,
+  facet = <span class='st'>"measure"</span>,
+  mark.th = <span class='fl'>NA_real_</span>,
+  pretty.names = <span class='fl'>TRUE</span>,
+  facet.wrap.nrow = <span class='kw'>NULL</span>,
+  facet.wrap.ncol = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -403,8 +403,12 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 <code><a href='plotROCCurves.html'>plotROCCurves</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, sonar.task): object 'mod' not found</span></div><div class='input'><span class='no'>pvs</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>acc</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>acc</span>, <span class='no'>train.mean</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in generateThreshVsPerfData(pred, list(acc, setAggregation(acc,     train.mean))): object 'pred' not found</span></div><div class='input'><span class='fu'>plotThreshVsPerf</span>(<span class='no'>pvs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pvs' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, predict.type = <span class='st'>"prob"</span>)
+<span class='kw'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>sonar.task</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>mod</span>, <span class='kw'>sonar.task</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, sonar.task): object 'mod' not found</span></div><div class='input'><span class='kw'>pvs</span> <span class='op'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='kw'>pred</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>acc</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='kw'>acc</span>, <span class='kw'>train.mean</span>)))
+</div><div class='output co'>#&gt; <span class='error'>Error in generateThreshVsPerfData(pred, list(acc, setAggregation(acc,     train.mean))): object 'pred' not found</span></div><div class='input'><span class='fu'>plotThreshVsPerf</span>(<span class='kw'>pvs</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pvs' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -420,7 +424,7 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

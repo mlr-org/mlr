@@ -337,14 +337,14 @@ label. The threshold used to assign the label can later be changed using the
     </div>
 
     <pre class="usage"><span class='fu'>makeLearner</span>(
-  <span class='no'>cl</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>cl</span>,
-  <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"response"</span>,
-  <span class='kw'>predict.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fix.factors.prediction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>par.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>config</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>cl</span>,
+  id = <span class='kw'>cl</span>,
+  predict.type = <span class='st'>"response"</span>,
+  predict.threshold = <span class='kw'>NULL</span>,
+  fix.factors.prediction = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>,
+  par.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  config = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -531,22 +531,25 @@ correspond to the prior probabilities observed in the training data.</p>
 <code><a href='setPredictType.html'>setPredictType</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.rpart"</span>)</div><div class='output co'>#&gt; Learner classif.rpart from package rpart
+    <pre class="examples"><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.rpart"</span>)
+</div><div class='output co'>#&gt; Learner classif.rpart from package rpart
 #&gt; Type: classif
 #&gt; Name: Decision Tree; Short name: rpart
 #&gt; Class: classif.rpart
 #&gt; Properties: twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp
 #&gt; Predict-Type: response
 #&gt; Hyperparameters: xval=0
-#&gt; </div><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)</div><div class='output co'>#&gt; Learner classif.lda from package MASS
+#&gt; </div><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, predict.type = <span class='st'>"prob"</span>)
+</div><div class='output co'>#&gt; Learner classif.lda from package MASS
 #&gt; Type: classif
 #&gt; Name: Linear Discriminant Analysis; Short name: lda
 #&gt; Class: classif.lda
 #&gt; Properties: twoclass,multiclass,numerics,factors,prob
 #&gt; Predict-Type: prob
 #&gt; Hyperparameters: 
-#&gt; </div><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"t"</span>, <span class='kw'>nu</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'><a href='getHyperPars.html'>getHyperPars</a></span>(<span class='no'>lrn</span>)</div><div class='output co'>#&gt; $method
+#&gt; </div><div class='input'><span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, method = <span class='st'>"t"</span>, nu = <span class='fl'>10</span>)
+<span class='fu'><a href='getHyperPars.html'>getHyperPars</a></span>(<span class='kw'>lrn</span>)
+</div><div class='output co'>#&gt; $method
 #&gt; [1] "t"
 #&gt; 
 #&gt; $nu
@@ -567,7 +570,7 @@ correspond to the prior probabilities observed in the training data.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

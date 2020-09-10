@@ -337,17 +337,17 @@ Additionally, partial derivatives of the marginalized function w.r.t. the featur
     </div>
 
     <pre class="usage"><span class='fu'>generatePartialDependenceData</span>(
-  <span class='no'>obj</span>,
-  <span class='no'>input</span>,
-  <span class='kw'>features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interaction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>derivative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>individual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>,
-  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.975</span>)),
-  <span class='kw'>uniform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>),
-  <span class='no'>...</span>
+  <span class='kw'>obj</span>,
+  <span class='kw'>input</span>,
+  features = <span class='kw'>NULL</span>,
+  interaction = <span class='fl'>FALSE</span>,
+  derivative = <span class='fl'>FALSE</span>,
+  individual = <span class='fl'>FALSE</span>,
+  fun = <span class='kw'>mean</span>,
+  bounds = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.025</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>(<span class='fl'>0.975</span>)),
+  uniform = <span class='fl'>TRUE</span>,
+  n = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>NA</span>),
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -483,13 +483,16 @@ Whether the partial dependences were aggregated or the individual curves are ret
 <code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.svm"</span>)
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>bh.task</span>)
-<span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>bh.task</span>, <span class='st'>"lstat"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: mmpf</span></div><div class='input'><span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>bh.task</span>))</div><div class='img'><img src='generatePartialDependenceData-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>)
-<span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>iris.task</span>, <span class='st'>"Petal.Width"</span>)
-<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>iris.task</span>))</div><div class='img'><img src='generatePartialDependenceData-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.svm"</span>)
+<span class='kw'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>bh.task</span>)
+<span class='kw'>pd</span> <span class='op'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='kw'>fit</span>, <span class='kw'>bh.task</span>, <span class='st'>"lstat"</span>)
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: mmpf</span></div><div class='input'><span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='kw'>pd</span>, data = <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='kw'>bh.task</span>))
+</div><div class='img'><img src='generatePartialDependenceData-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, predict.type = <span class='st'>"prob"</span>)
+<span class='kw'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>iris.task</span>)
+<span class='kw'>pd</span> <span class='op'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='kw'>fit</span>, <span class='kw'>iris.task</span>, <span class='st'>"Petal.Width"</span>)
+<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='kw'>pd</span>, data = <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='kw'>iris.task</span>))
+</div><div class='img'><img src='generatePartialDependenceData-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -505,7 +508,7 @@ Whether the partial dependences were aggregated or the individual curves are ret
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

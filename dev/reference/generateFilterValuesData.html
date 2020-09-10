@@ -331,11 +331,11 @@ For a list of features, use <a href='listFilterMethods.html'>listFilterMethods</
     </div>
 
     <pre class="usage"><span class='fu'>generateFilterValuesData</span>(
-  <span class='no'>task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>nselect</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='no'>task</span>),
-  <span class='no'>...</span>,
-  <span class='kw'>more.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>task</span>,
+  method = <span class='st'>"randomForestSRC_importance"</span>,
+  nselect = <span class='fu'><a href='getTaskNFeats.html'>getTaskNFeats</a></span>(<span class='kw'>task</span>),
+  <span class='kw'>...</span>,
+  more.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -422,12 +422,13 @@ available ensemble methods.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># two simple filter methods</span>
-<span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>))
+<span class='kw'>fval</span> <span class='op'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='kw'>iris.task</span>,
+  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span>))
 <span class='co'># using ensemble method "E-mean"</span>
-<span class='no'>fval</span> <span class='kw'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='no'>iris.task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>,
-    <span class='st'>"FSelectorRcpp_information.gain"</span>)))</div></pre>
+<span class='kw'>fval</span> <span class='op'>=</span> <span class='fu'>generateFilterValuesData</span>(<span class='kw'>iris.task</span>,
+  method = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"E-mean"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>,
+    <span class='st'>"FSelectorRcpp_information.gain"</span>)))
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -443,7 +444,7 @@ available ensemble methods.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

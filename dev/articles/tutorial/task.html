@@ -291,26 +291,27 @@
 <p>The tasks are organized in a hierarchy, with the generic <code><a href="../../reference/Task.html">Task()</a></code> at the top. The following tasks can be instantiated and all inherit from the virtual superclass <code><a href="../../reference/Task.html">Task()</a></code>:</p>
 <ul>
 <li>
-<code><a href="../../reference/RegrTask.html">RegrTask()</a></code> for regression problems,</li>
+<code><a href="../../reference/makeRegrTask.html">RegrTask()</a></code> for regression problems,</li>
 <li>
-<code><a href="../../reference/ClassifTask.html">ClassifTask()</a></code> for binary and <a href="cost_sensitive_classif.html" target="_blank">multi-class classification problems</a> with class-dependent costs can be handled as well),</li>
+<code><a href="../../reference/makeClassifTask.html">ClassifTask()</a></code> for binary and <a href="cost_sensitive_classif.html" target="_blank">multi-class classification problems</a> with class-dependent costs can be handled as well),</li>
 <li>
-<code><a href="../../reference/SurvTask.html">SurvTask()</a></code> for survival analysis,</li>
+<code><a href="../../reference/makeSurvTask.html">SurvTask()</a></code> for survival analysis,</li>
 <li>
-<code><a href="../../reference/ClusterTask.html">ClusterTask()</a></code> for cluster analysis,</li>
+<code><a href="../../reference/makeClusterTask.html">ClusterTask()</a></code> for cluster analysis,</li>
 <li>
-<code><a href="../../reference/MultilabelTask.html">MultilabelTask()</a></code> for multilabel classification problems,</li>
+<code><a href="../../reference/makeMultilabelTask.html">MultilabelTask()</a></code> for multilabel classification problems,</li>
 <li>
-<code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
+<code><a href="../../reference/makeCostSensTask.html">CostSensTask()</a></code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
 </ul>
-<p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code>. All tasks require an identifier (argument <code>id</code>) and a <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame()</a></code> (argument <code>data</code>). If no ID is provided it is automatically generated using the variable name of the data. The ID will be later used to name results, for example of <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>, and to annotate plots. Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.</p>
+<p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <code><a href="../../reference/makeClassifTask.html">makeClassifTask()</a></code>. All tasks require an identifier (argument <code>id</code>) and a <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame()</a></code> (argument <code>data</code>). If no ID is provided it is automatically generated using the variable name of the data. The ID will be later used to name results, for example of <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>, and to annotate plots. Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.</p>
 <div id="regression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression" class="anchor"></a>Regression</h2>
 <p>For supervised learning like regression (as well as classification and survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code> variable.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">BostonHousing</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"mlbench"</span>)
-<span class="no">regr.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/RegrTask.html">makeRegrTask</a></span>(<span class="kw">id</span> <span class="kw">=</span> <span class="st">"bh"</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">BostonHousing</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="st">"medv"</span>)
-<span class="no">regr.task</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">BostonHousing</span>, package = <span class="st">"mlbench"</span>)
+<span class="kw">regr.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeRegrTask.html">makeRegrTask</a></span>(id = <span class="st">"bh"</span>, data = <span class="kw">BostonHousing</span>, target = <span class="st">"medv"</span>)
+<span class="kw">regr.task</span>
 <span class="co">## Supervised task: bh</span>
 <span class="co">## Type: regr</span>
 <span class="co">## Target: medv</span>
@@ -321,7 +322,8 @@
 <span class="co">## Missings: FALSE</span>
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></pre></body></html></div>
+<span class="co">## Has coordinates: FALSE</span>
+</pre></div>
 <p>As you can see, the <code><a href="../../reference/Task.html">Task()</a></code> records the type of the learning problem and basic information about the data set, e.g., the types of the features (<code><a href="https://rdrr.io/r/base/numeric.html">base::numeric()</a></code> vectors, <code>base::factors()</code> or ordered factors), the number of observations, or whether missing values are present.</p>
 <p>Creating tasks for classification and survival analysis follows the same scheme, the data type of the target variables included in <code>data</code> is simply different. For each of these learning problems some specifics are described below.</p>
 </div>
@@ -330,11 +332,12 @@
 <a href="#classification" class="anchor"></a>Classification</h2>
 <p>For classification the target column has to be a <code>factor</code>.</p>
 <p>In the following example we define a classification task for the <code><a href="https://rdrr.io/pkg/mlbench/man/BreastCancer.html">mlbench::BreastCancer()</a></code> data set and exclude the variable <code>Id</code> from all further model fitting and evaluation.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">BreastCancer</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"mlbench"</span>)
-<span class="no">df</span> <span class="kw">=</span> <span class="no">BreastCancer</span>
-<span class="no">df</span>$<span class="no">Id</span> <span class="kw">=</span> <span class="kw">NULL</span>
-<span class="no">classif.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="kw">id</span> <span class="kw">=</span> <span class="st">"BreastCancer"</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="st">"Class"</span>)
-<span class="no">classif.task</span>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">BreastCancer</span>, package = <span class="st">"mlbench"</span>)
+<span class="kw">df</span> <span class="op">=</span> <span class="kw">BreastCancer</span>
+<span class="kw">df</span><span class="op">$</span><span class="kw">Id</span> <span class="op">=</span> <span class="kw">NULL</span>
+<span class="kw">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span>(id = <span class="st">"BreastCancer"</span>, data = <span class="kw">df</span>, target = <span class="st">"Class"</span>)
+<span class="kw">classif.task</span>
 <span class="co">## Supervised task: BreastCancer</span>
 <span class="co">## Type: classif</span>
 <span class="co">## Target: Class</span>
@@ -349,19 +352,23 @@
 <span class="co">## Classes: 2</span>
 <span class="co">##    benign malignant </span>
 <span class="co">##       458       241 </span>
-<span class="co">## Positive class: benign</span></pre></body></html></div>
+<span class="co">## Positive class: benign</span>
+</pre></div>
 <p>In binary classification the two classes are usually referred to as <em>positive</em> and <em>negative</em> class with the positive class being the category of greater interest. This is relevant for many <a href="performance.html" target="_blank">performance measures</a> like the <em>true positive rate</em> or <a href="roc_analysis.html" target="_blank">ROC analysis</a>. Moreover, <code>mlr</code>, where possible, permits to set options (like the <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> or <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>) and returns and plots results (like class posterior probabilities) for the positive class only.</p>
-<p><code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code> by default selects the first factor level of the target variable as the positive class, in the above example <code>benign</code>. Class <code>malignant</code> can be manually selected as follows:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">classif.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="kw">id</span> <span class="kw">=</span> <span class="st">"BreastCancer"</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="st">"Class"</span>, <span class="kw">positive</span> <span class="kw">=</span> <span class="st">"malignant"</span>)</pre></body></html></div>
+<p><code><a href="../../reference/makeClassifTask.html">makeClassifTask()</a></code> by default selects the first factor level of the target variable as the positive class, in the above example <code>benign</code>. Class <code>malignant</code> can be manually selected as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span>(id = <span class="st">"BreastCancer"</span>, data = <span class="kw">df</span>, target = <span class="st">"Class"</span>, positive = <span class="st">"malignant"</span>)
+</pre></div>
 </div>
 <div id="survival-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#survival-analysis" class="anchor"></a>Survival analysis</h2>
 <p>Survival tasks use two target columns. For left and right censored problems these consist of the survival time and a binary event indicator. For interval censored data the two target columns must be specified in the <code>"interval2"</code> format (see <code><a href="https://rdrr.io/pkg/survival/man/Surv.html">survival::Surv()</a></code>).</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">lung</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"survival"</span>)
-<span class="no">lung</span>$<span class="no">status</span> <span class="kw">=</span> (<span class="no">lung</span>$<span class="no">status</span> <span class="kw">==</span> <span class="fl">2</span>) <span class="co"># convert to logical</span>
-<span class="no">surv.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/SurvTask.html">makeSurvTask</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">lung</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"time"</span>, <span class="st">"status"</span>))
-<span class="no">surv.task</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">lung</span>, package = <span class="st">"survival"</span>)
+<span class="kw">lung</span><span class="op">$</span><span class="kw">status</span> <span class="op">=</span> (<span class="kw">lung</span><span class="op">$</span><span class="kw">status</span> <span class="op">==</span> <span class="fl">2</span>) <span class="co"># convert to logical</span>
+<span class="kw">surv.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeSurvTask.html">makeSurvTask</a></span>(data = <span class="kw">lung</span>, target = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"time"</span>, <span class="st">"status"</span>))
+<span class="kw">surv.task</span>
 <span class="co">## Supervised task: lung</span>
 <span class="co">## Type: surv</span>
 <span class="co">## Target: time,status</span>
@@ -373,20 +380,22 @@
 <span class="co">## Missings: TRUE</span>
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></pre></body></html></div>
+<span class="co">## Has coordinates: FALSE</span>
+</pre></div>
 <p>The type of censoring can be specified via the argument <code>censoring</code>, which defaults to <code>"rcens"</code> for right censored data.</p>
 </div>
 <div id="multilabel-classification" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multilabel-classification" class="anchor"></a>Multilabel classification</h2>
 <p>In multilabel classification each object can belong to more than one category at the same time.</p>
-<p>The <code>data</code> are expected to contain as many target columns as there are class labels. The target columns should be logical vectors that indicate which class labels are present. The names of the target columns are taken as class labels and need to be passed to the <code>target</code> argument of <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
-<p>In the following example we get the data of the yeast data set, extract the label names, and pass them to the <code>target</code> argument in <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">yeast</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="no">yeast.task</span>)
+<p>The <code>data</code> are expected to contain as many target columns as there are class labels. The target columns should be logical vectors that indicate which class labels are present. The names of the target columns are taken as class labels and need to be passed to the <code>target</code> argument of <code><a href="../../reference/makeMultilabelTask.html">makeMultilabelTask()</a></code>.</p>
+<p>In the following example we get the data of the yeast data set, extract the label names, and pass them to the <code>target</code> argument in <code><a href="../../reference/makeMultilabelTask.html">makeMultilabelTask()</a></code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">yeast</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="kw">yeast.task</span>)
 
-<span class="no">labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">yeast</span>)[<span class="fl">1</span>:<span class="fl">14</span>]
-<span class="no">yeast.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span>(<span class="kw">id</span> <span class="kw">=</span> <span class="st">"multi"</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">yeast</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="no">labels</span>)
-<span class="no">yeast.task</span>
+<span class="kw">labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="kw">yeast</span>)[<span class="fl">1</span><span class="op">:</span><span class="fl">14</span>]
+<span class="kw">yeast.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMultilabelTask.html">makeMultilabelTask</a></span>(id = <span class="st">"multi"</span>, data = <span class="kw">yeast</span>, target = <span class="kw">labels</span>)
+<span class="kw">yeast.task</span>
 <span class="co">## Supervised task: multi</span>
 <span class="co">## Type: multilabel</span>
 <span class="co">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</span>
@@ -402,16 +411,18 @@
 <span class="co">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 label10 </span>
 <span class="co">##     762    1038     983     862     722     597     428     480     178     253 </span>
 <span class="co">## label11 label12 label13 label14 </span>
-<span class="co">##     289    1816    1799      34</span></pre></body></html></div>
+<span class="co">##     289    1816    1799      34</span>
+</pre></div>
 <p>See also the tutorial page <a href="multilabel.html" target="_blank">multilabel</a>.</p>
 </div>
 <div id="cluster-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cluster-analysis" class="anchor"></a>Cluster analysis</h2>
 <p>As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>. Below we create a learning task from the data set <code><a href="https://rdrr.io/r/datasets/mtcars.html">datasets::mtcars()</a></code>.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">mtcars</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"datasets"</span>)
-<span class="no">cluster.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>)
-<span class="no">cluster.task</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">mtcars</span>, package = <span class="st">"datasets"</span>)
+<span class="kw">cluster.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClusterTask.html">makeClusterTask</a></span>(data = <span class="kw">mtcars</span>)
+<span class="kw">cluster.task</span>
 <span class="co">## Unsupervised task: mtcars</span>
 <span class="co">## Type: cluster</span>
 <span class="co">## Observations: 32</span>
@@ -421,22 +432,24 @@
 <span class="co">## Missings: FALSE</span>
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></pre></body></html></div>
+<span class="co">## Has coordinates: FALSE</span>
+</pre></div>
 </div>
 <div id="cost-sensitive-classification" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cost-sensitive-classification" class="anchor"></a>Cost-sensitive classification</h2>
 <p>The standard objective in classification is to obtain a high prediction accuracy, i.e., to minimize the number of errors. All types of misclassification errors are thereby deemed equally severe. However, in many applications different kinds of errors cause different costs.</p>
-<p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code><a href="../../reference/ClassifTask.html">ClassifTask()</a></code>.</p>
-<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
-<p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code>.</p>
+<p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code><a href="../../reference/makeClassifTask.html">ClassifTask()</a></code>.</p>
+<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code><a href="../../reference/makeCostSensTask.html">CostSensTask()</a></code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
+<p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code><a href="../../reference/makeCostSensTask.html">CostSensTask()</a></code>.</p>
 <p>In the following example we use the <code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code> data and an artificial cost matrix (which is generated as proposed by <a href="https://doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>):</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">df</span> <span class="kw">=</span> <span class="no">iris</span>
-<span class="no">cost</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">150</span> * <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span>), <span class="fl">150</span>) * (<span class="fl">1</span> - <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="fl">3</span>))[<span class="no">df</span>$<span class="no">Species</span>,]
-<span class="no">df</span>$<span class="no">Species</span> <span class="kw">=</span> <span class="kw">NULL</span>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">df</span> <span class="op">=</span> <span class="kw">iris</span>
+<span class="kw">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span>), <span class="fl">150</span>) <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="fl">3</span>))[<span class="kw">df</span><span class="op">$</span><span class="kw">Species</span>,]
+<span class="kw">df</span><span class="op">$</span><span class="kw">Species</span> <span class="op">=</span> <span class="kw">NULL</span>
 
-<span class="no">costsens.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/CostSensTask.html">makeCostSensTask</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">cost</span> <span class="kw">=</span> <span class="no">cost</span>)
-<span class="no">costsens.task</span>
+<span class="kw">costsens.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostSensTask.html">makeCostSensTask</a></span>(data = <span class="kw">df</span>, cost = <span class="kw">cost</span>)
+<span class="kw">costsens.task</span>
 <span class="co">## Supervised task: df</span>
 <span class="co">## Type: costsens</span>
 <span class="co">## Observations: 150</span>
@@ -447,7 +460,8 @@
 <span class="co">## Has blocking: FALSE</span>
 <span class="co">## Has coordinates: FALSE</span>
 <span class="co">## Classes: 3</span>
-<span class="co">## y1, y2, y3</span></pre></body></html></div>
+<span class="co">## y1, y2, y3</span>
+</pre></div>
 <p>For more details see the page on <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a>.</p>
 </div>
 </div>
@@ -463,7 +477,8 @@
 <a href="#accessing-a-learning-task" class="anchor"></a>Accessing a learning task</h1>
 <p>We provide many operators to access the elements stored in a <code><a href="../../reference/Task.html">Task()</a></code>. The most important ones are listed in the documentation of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/getTaskData.html">getTaskData()</a></code>.</p>
 <p>To access the <code><a href="../../reference/TaskDesc.html">TaskDesc()</a></code> that contains basic information about the task you can use:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span>(<span class="no">classif.task</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span>(<span class="kw">classif.task</span>)
 <span class="co">## $id</span>
 <span class="co">## [1] "BreastCancer"</span>
 <span class="co">## </span>
@@ -507,34 +522,38 @@
 <span class="co">##       458       241 </span>
 <span class="co">## </span>
 <span class="co">## attr(,"class")</span>
-<span class="co">## [1] "ClassifTaskDesc"    "SupervisedTaskDesc" "TaskDesc"</span></pre></body></html></div>
+<span class="co">## [1] "ClassifTaskDesc"    "SupervisedTaskDesc" "TaskDesc"</span>
+</pre></div>
 <p>Note that <code><a href="../../reference/TaskDesc.html">TaskDesc()</a></code> have slightly different elements for different types of <code><a href="../../reference/Task.html">Task()</a></code>s. Frequently required elements can also be accessed directly.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># Get the ID</span>
-<span class="fu"><a href="../../reference/getTaskId.html">getTaskId</a></span>(<span class="no">classif.task</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="co"># Get the ID</span>
+<span class="fu"><a href="../../reference/getTaskId.html">getTaskId</a></span>(<span class="kw">classif.task</span>)
 <span class="co">## [1] "BreastCancer"</span>
 
 <span class="co"># Get the type of task</span>
-<span class="fu"><a href="../../reference/getTaskType.html">getTaskType</a></span>(<span class="no">classif.task</span>)
+<span class="fu"><a href="../../reference/getTaskType.html">getTaskType</a></span>(<span class="kw">classif.task</span>)
 <span class="co">## [1] "classif"</span>
 
 <span class="co"># Get the names of the target columns</span>
-<span class="fu"><a href="../../reference/getTaskTargetNames.html">getTaskTargetNames</a></span>(<span class="no">classif.task</span>)
+<span class="fu"><a href="../../reference/getTaskTargetNames.html">getTaskTargetNames</a></span>(<span class="kw">classif.task</span>)
 <span class="co">## [1] "Class"</span>
 
 <span class="co"># Get the number of observations</span>
-<span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(<span class="no">classif.task</span>)
+<span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(<span class="kw">classif.task</span>)
 <span class="co">## [1] 699</span>
 
 <span class="co"># Get the number of input variables</span>
-<span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(<span class="no">classif.task</span>)
+<span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span>(<span class="kw">classif.task</span>)
 <span class="co">## [1] 9</span>
 
 <span class="co"># Get the class levels in classif.task</span>
-<span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(<span class="no">classif.task</span>)
-<span class="co">## [1] "benign"    "malignant"</span></pre></body></html></div>
+<span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span>(<span class="kw">classif.task</span>)
+<span class="co">## [1] "benign"    "malignant"</span>
+</pre></div>
 <p>Moreover, <code>mlr</code> provides several functions to extract data from a <code><a href="../../reference/Task.html">Task()</a></code>.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Accessing the data set in classif.task</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="no">classif.task</span>))
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="co"># Accessing the data set in classif.task</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="kw">classif.task</span>))
 <span class="co">## 'data.frame':    699 obs. of  10 variables:</span>
 <span class="co">##  $ Cl.thickness   : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 5 5 3 6 4 8 1 2 2 4 ...</span>
 <span class="co">##  $ Cell.size      : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 4 1 8 1 10 1 1 1 2 ...</span>
@@ -548,12 +567,12 @@
 <span class="co">##  $ Class          : Factor w/ 2 levels "benign","malignant": 1 1 1 1 1 2 1 1 1 1 ...</span>
 
 <span class="co"># Get the names of the input variables in cluster.task</span>
-<span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span>(<span class="no">cluster.task</span>)
+<span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span>(<span class="kw">cluster.task</span>)
 <span class="co">##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span>
 <span class="co">## [11] "carb"</span>
 
 <span class="co"># Get the values of the target variables in surv.task</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(<span class="no">surv.task</span>))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span>(<span class="kw">surv.task</span>))
 <span class="co">##   time status</span>
 <span class="co">## 1  306   TRUE</span>
 <span class="co">## 2  455   TRUE</span>
@@ -563,26 +582,28 @@
 <span class="co">## 6 1022  FALSE</span>
 
 <span class="co"># Get the cost matrix in costsens.task</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span>(<span class="no">costsens.task</span>))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span>(<span class="kw">costsens.task</span>))
 <span class="co">##      y1        y2         y3</span>
 <span class="co">## [1,]  0 1694.9063 1569.15053</span>
 <span class="co">## [2,]  0  995.0545   18.85981</span>
 <span class="co">## [3,]  0  775.8181 1558.13177</span>
 <span class="co">## [4,]  0  492.8980 1458.78130</span>
 <span class="co">## [5,]  0  222.1929 1260.26371</span>
-<span class="co">## [6,]  0  779.9889  961.82166</span></pre></body></html></div>
+<span class="co">## [6,]  0  779.9889  961.82166</span>
+</pre></div>
 <p>Note that <code><a href="../../reference/getTaskData.html">getTaskData()</a></code> offers many options for converting the data set into a convenient format. This especially comes in handy when you <a href="create_learner.html" target="_blank">integrate a new learner</a> from another <strong>R</strong> package into <code>mlr</code>. In this regard function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> is also useful.</p>
 </div>
 <div id="modifying-a-learning-task" class="section level1">
 <h1 class="hasAnchor">
 <a href="#modifying-a-learning-task" class="anchor"></a>Modifying a learning task</h1>
 <p><code>mlr</code> provides several functions to alter an existing <code><a href="../../reference/Task.html">Task()</a></code>, which is often more convenient than creating a new <code><a href="../../reference/Task.html">Task()</a></code> from scratch. Here are some examples.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Select observations and/or features</span>
-<span class="no">cluster.task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/subsetTask.html">subsetTask</a></span>(<span class="no">cluster.task</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fl">4</span>:<span class="fl">17</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="co"># Select observations and/or features</span>
+<span class="kw">cluster.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/subsetTask.html">subsetTask</a></span>(<span class="kw">cluster.task</span>, subset = <span class="fl">4</span><span class="op">:</span><span class="fl">17</span>)
 
 <span class="co"># It may happen, especially after selecting observations, that features are constant.</span>
 <span class="co"># These should be removed.</span>
-<span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span>(<span class="no">cluster.task</span>)
+<span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span>(<span class="kw">cluster.task</span>)
 <span class="co">## Removing 1 columns: am</span>
 <span class="co">## Unsupervised task: mtcars</span>
 <span class="co">## Type: cluster</span>
@@ -596,7 +617,7 @@
 <span class="co">## Has coordinates: FALSE</span>
 
 <span class="co"># Remove selected features</span>
-<span class="fu"><a href="../../reference/dropFeatures.html">dropFeatures</a></span>(<span class="no">surv.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"meal.cal"</span>, <span class="st">"wt.loss"</span>))
+<span class="fu"><a href="../../reference/dropFeatures.html">dropFeatures</a></span>(<span class="kw">surv.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"meal.cal"</span>, <span class="st">"wt.loss"</span>))
 <span class="co">## Supervised task: lung</span>
 <span class="co">## Type: surv</span>
 <span class="co">## Target: time,status</span>
@@ -611,8 +632,8 @@
 <span class="co">## Has coordinates: FALSE</span>
 
 <span class="co"># Standardize numerical features</span>
-<span class="no">task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/normalizeFeatures.html">normalizeFeatures</a></span>(<span class="no">cluster.task</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"range"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="no">task</span>))
+<span class="kw">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/normalizeFeatures.html">normalizeFeatures</a></span>(<span class="kw">cluster.task</span>, method = <span class="st">"range"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span>(<span class="kw">task</span>))
 <span class="co">##       mpg              cyl              disp              hp        </span>
 <span class="co">##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  </span>
 <span class="co">##  1st Qu.:0.3161   1st Qu.:0.5000   1st Qu.:0.1242   1st Qu.:0.2801  </span>
@@ -633,7 +654,8 @@
 <span class="co">##  Median :0.5   Median :0.0000   Median :0.6667  </span>
 <span class="co">##  Mean   :0.5   Mean   :0.2857   Mean   :0.6429  </span>
 <span class="co">##  3rd Qu.:0.5   3rd Qu.:0.7500   3rd Qu.:1.0000  </span>
-<span class="co">##  Max.   :0.5   Max.   :1.0000   Max.   :1.0000</span></pre></body></html></div>
+<span class="co">##  Max.   :0.5   Max.   :1.0000   Max.   :1.0000</span>
+</pre></div>
 <p>For more functions and more detailed explanations have a look at the <a href="preproc.html" target="_blank">data preprocessing</a> page.</p>
 </div>
 <div id="example-tasks-and-convenience-functions" class="section level1">
@@ -659,7 +681,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

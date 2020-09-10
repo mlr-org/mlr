@@ -293,14 +293,15 @@
 <p>The first way is preferable if you want predictions for data already included in a <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>Just as <code><a href="../../reference/train.html">train()</a></code>, the <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) function has a <code>subset</code> argument, so you can set aside different portions of the data in <code><a href="../../reference/Task.html">Task()</a></code> for training and prediction (more advanced methods for splitting the data in train and test set are described in the section on <a href="resample.html" target="_blank">resampling</a>).</p>
 <p>In the following example we fit a gradient boosting machine (<code><a href="https://rdrr.io/pkg/gbm/man/gbm.html">gbm::gbm()</a></code>) to every second observation of the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set and make predictions on the remaining data in <code><a href="../../reference/bh.task.html">bh.task()</a></code>.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">n</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(<span class="no">bh.task</span>)
-<span class="no">train.set</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="no">test.set</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, <span class="kw">n.trees</span> <span class="kw">=</span> <span class="fl">100</span>)
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="no">bh.task</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="no">train.set</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span>(<span class="kw">bh.task</span>)
+<span class="kw">train.set</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="kw">n</span>, by = <span class="fl">2</span>)
+<span class="kw">test.set</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="kw">n</span>, by = <span class="fl">2</span>)
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, n.trees = <span class="fl">100</span>)
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">bh.task</span>, subset = <span class="kw">train.set</span>)
 
-<span class="no">task.pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">bh.task</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="no">test.set</span>)
-<span class="no">task.pred</span>
+<span class="kw">task.pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, task = <span class="kw">bh.task</span>, subset = <span class="kw">test.set</span>)
+<span class="kw">task.pred</span>
 
 <span class="co">## Prediction: 253 observations</span>
 <span class="co">## predict.type: response</span>
@@ -313,17 +314,19 @@
 <span class="co">## 8   8  27.1 15.61735</span>
 <span class="co">## 10 10  18.9 16.98708</span>
 <span class="co">## 12 12  18.9 20.41749</span>
-<span class="co">## ... (#rows: 253, #cols: 3)</span></pre></body></html></div>
+<span class="co">## ... (#rows: 253, #cols: 3)</span>
+</pre></div>
 <p>The second way is useful if you want to predict data not included in the <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <p>Here we cluster the <code>iris</code> data set without the target variable. All observations with an odd index are included in the <code><a href="../../reference/Task.html">Task()</a></code> and used for training. Predictions are made for the remaining observations.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">iris</span>)
-<span class="no">iris.train</span> <span class="kw">=</span> <span class="no">iris</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">2</span>), -<span class="fl">5</span>]
-<span class="no">iris.test</span> <span class="kw">=</span> <span class="no">iris</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">2</span>), -<span class="fl">5</span>]
-<span class="no">task</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">iris.train</span>)
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="no">task</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">n</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">iris</span>)
+<span class="kw">iris.train</span> <span class="op">=</span> <span class="kw">iris</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="kw">n</span>, by = <span class="fl">2</span>), <span class="op">-</span><span class="fl">5</span>]
+<span class="kw">iris.test</span> <span class="op">=</span> <span class="kw">iris</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="kw">n</span>, by = <span class="fl">2</span>), <span class="op">-</span><span class="fl">5</span>]
+<span class="kw">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClusterTask.html">makeClusterTask</a></span>(data = <span class="kw">iris.train</span>)
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="st">"cluster.kmeans"</span>, <span class="kw">task</span>)
 
-<span class="no">newdata.pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">iris.test</span>)
-<span class="no">newdata.pred</span>
+<span class="kw">newdata.pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, newdata = <span class="kw">iris.test</span>)
+<span class="kw">newdata.pred</span>
 
 <span class="co">## Prediction: 75 observations</span>
 <span class="co">## predict.type: response</span>
@@ -336,15 +339,17 @@
 <span class="co">## 8         2</span>
 <span class="co">## 10        2</span>
 <span class="co">## 12        2</span>
-<span class="co">## ... (#rows: 75, #cols: 1)</span></pre></body></html></div>
+<span class="co">## ... (#rows: 75, #cols: 1)</span>
+</pre></div>
 <p>Note that for supervised learning you do not have to remove the target columns from the data. These columns are automatically removed prior to calling the underlying <code>predict</code> method of the learner.</p>
 <div id="accessing-the-prediction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#accessing-the-prediction" class="anchor"></a>Accessing the prediction</h1>
 <p>Function <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> returns a named <code>list</code> of class <code><a href="../../reference/Prediction.html">Prediction()</a></code>. Its most important element is <code>$data</code> which is a <code>data.frame</code> that contains columns with the true values of the target variable (in case of supervised learning problems) and the predictions. Use <code>as.data.frame</code> (<code><a href="../../reference/Prediction.html">Prediction()</a></code>) for direct access.</p>
 <p>In the following the predictions on the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) and the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data sets are shown. As you may recall, the predictions in the first case were made from a <code><a href="../../reference/Task.html">Task()</a></code> and in the second case from a <code>data.frame</code>.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">### Result of predict with data passed via task argument</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">task.pred</span>))
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co">### Result of predict with data passed via task argument</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">task.pred</span>))
 <span class="co">##    id truth response</span>
 <span class="co">## 2   2  21.6 22.52737</span>
 <span class="co">## 4   4  33.4 36.06190</span>
@@ -354,26 +359,30 @@
 <span class="co">## 12 12  18.9 20.54365</span>
 
 <span class="co">### Result of predict with data passed via newdata argument</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">newdata.pred</span>))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">newdata.pred</span>))
 <span class="co">##    response</span>
 <span class="co">## 2         1</span>
 <span class="co">## 4         1</span>
 <span class="co">## 6         1</span>
 <span class="co">## 8         1</span>
 <span class="co">## 10        1</span>
-<span class="co">## 12        1</span></pre></body></html></div>
+<span class="co">## 12        1</span>
+</pre></div>
 <p>As you can see when predicting from a <code><a href="../../reference/Task.html">Task()</a></code>, the resulting <code>data.frame</code> contains an additional column, called <code>id</code>, which tells us which element in the original data set the prediction corresponds to.</p>
 <p>A direct way to access the true and predicted values of the target variable(s) is provided by functions <code>getPredictionTruth</code> (<code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code>) and [<code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code>].</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(<span class="no">task.pred</span>))
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(<span class="kw">task.pred</span>))
 <span class="co">## [1] 21.6 33.4 28.7 27.1 18.9 18.9</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(<span class="no">task.pred</span>))
-<span class="co">## [1] 22.52737 36.06190 24.75354 16.90299 17.25558 20.54365</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(<span class="kw">task.pred</span>))
+<span class="co">## [1] 22.52737 36.06190 24.75354 16.90299 17.25558 20.54365</span>
+</pre></div>
 <div id="regression-extracting-standard-errors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#regression-extracting-standard-errors" class="anchor"></a>Regression: Extracting standard errors</h2>
 <p>Some learners provide standard errors for predictions, which can be accessed in <code>mlr</code>. An overview is given by calling the function <code><a href="../../reference/listLearners.html">listLearners()</a></code> and setting <code>properties = "se"</code>. By assigning <code>FALSE</code> to <code>check.packages</code> learners from packages which are not installed will be included in the overview.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"regr"</span>, <span class="kw">check.packages</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">properties</span> <span class="kw">=</span> <span class="st">"se"</span>)[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"name"</span>)]
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"regr"</span>, check.packages = <span class="fl">FALSE</span>, properties = <span class="st">"se"</span>)[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"name"</span>)]
 <span class="co">##                class</span>
 <span class="co">## 1         regr.bcart</span>
 <span class="co">## 2           regr.bgp</span>
@@ -407,13 +416,15 @@
 <span class="co">## 13                                      Local Approximate Gaussian Process</span>
 <span class="co">## 14                                                Simple Linear Regression</span>
 <span class="co">## 15                                                           Random Forest</span>
-<span class="co">## 16                                                          Random Forests</span></pre></body></html></div>
+<span class="co">## 16                                                          Random Forests</span>
+</pre></div>
 <p>In this example we train a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code>) on the <code>BostonHousing</code> (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) dataset. In order to calculate standard errors set the <code>predict.type</code> to <code>"se"</code>:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">### Create learner and specify predict.type</span>
-<span class="no">lrn.lm</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>, <span class="kw">predict.type</span> <span class="kw">=</span> <span class="st">'se'</span>)
-<span class="no">mod.lm</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn.lm</span>, <span class="no">bh.task</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="no">train.set</span>)
-<span class="no">task.pred.lm</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod.lm</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">bh.task</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="no">test.set</span>)
-<span class="no">task.pred.lm</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="co">### Create learner and specify predict.type</span>
+<span class="kw">lrn.lm</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.lm"</span>, predict.type = <span class="st">'se'</span>)
+<span class="kw">mod.lm</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn.lm</span>, <span class="kw">bh.task</span>, subset = <span class="kw">train.set</span>)
+<span class="kw">task.pred.lm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod.lm</span>, task = <span class="kw">bh.task</span>, subset = <span class="kw">test.set</span>)
+<span class="kw">task.pred.lm</span>
 
 <span class="co">## Prediction: 253 observations</span>
 <span class="co">## predict.type: se</span>
@@ -426,33 +437,39 @@
 <span class="co">## 8   8  27.1 19.38145 1.1963265</span>
 <span class="co">## 10 10  18.9 18.66449 1.1793944</span>
 <span class="co">## 12 12  18.9 21.25802 1.0727918</span>
-<span class="co">## ... (#rows: 253, #cols: 4)</span></pre></body></html></div>
+<span class="co">## ... (#rows: 253, #cols: 4)</span>
+</pre></div>
 <p>The standard errors can then be extracted using <code><a href="../../reference/getPredictionResponse.html">getPredictionSE()</a></code>.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionSE</a></span>(<span class="no">task.pred.lm</span>))
-<span class="co">## [1] 0.7501615 0.8742590 0.8652139 1.1963265 1.1793944 1.0727918</span></pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionSE</a></span>(<span class="kw">task.pred.lm</span>))
+<span class="co">## [1] 0.7501615 0.8742590 0.8652139 1.1963265 1.1793944 1.0727918</span>
+</pre></div>
 </div>
 <div id="classification-and-clustering-extracting-probabilities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classification-and-clustering-extracting-probabilities" class="anchor"></a>Classification and clustering: Extracting probabilities</h2>
 <p>The predicted probabilities can be extracted from the <code><a href="../../reference/Prediction.html">Prediction()</a></code> using function <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code>. Here is another cluster analysis example. We use fuzzy c-means clustering (<code><a href="https://rdrr.io/pkg/e1071/man/cmeans.html">e1071::cmeans()</a></code>) on the <code>mtcars</code> (<code><a href="https://rdrr.io/r/datasets/mtcars.html">datasets::mtcars()</a></code>) data set.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.cmeans"</span>, <span class="kw">predict.type</span> <span class="kw">=</span> <span class="st">"prob"</span>)
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="no">mtcars.task</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.cmeans"</span>, predict.type = <span class="st">"prob"</span>)
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">mtcars.task</span>)
 
-<span class="no">pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">mtcars.task</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="no">pred</span>))
+<span class="kw">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, task = <span class="kw">mtcars.task</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="kw">pred</span>))
 <span class="co">##                             1          2</span>
 <span class="co">## Mazda RX4         0.020400964 0.97959904</span>
 <span class="co">## Mazda RX4 Wag     0.020360747 0.97963925</span>
 <span class="co">## Datsun 710        0.007341207 0.99265879</span>
 <span class="co">## Hornet 4 Drive    0.457052250 0.54294775</span>
 <span class="co">## Hornet Sportabout 0.981291168 0.01870883</span>
-<span class="co">## Valiant           0.242514386 0.75748561</span></pre></body></html></div>
+<span class="co">## Valiant           0.242514386 0.75748561</span>
+</pre></div>
 <p>For <em>classification problems</em> there are some more things worth mentioning. By default, class labels are predicted.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co">### Linear discriminant analysis on the iris data set</span>
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">iris.task</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="co">### Linear discriminant analysis on the iris data set</span>
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="st">"classif.lda"</span>, task = <span class="kw">iris.task</span>)
 
-<span class="no">pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">iris.task</span>)
-<span class="no">pred</span>
+<span class="kw">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, task = <span class="kw">iris.task</span>)
+<span class="kw">pred</span>
 <span class="co">## Prediction: 150 observations</span>
 <span class="co">## predict.type: response</span>
 <span class="co">## threshold: </span>
@@ -464,46 +481,54 @@
 <span class="co">## 4  4 setosa   setosa</span>
 <span class="co">## 5  5 setosa   setosa</span>
 <span class="co">## 6  6 setosa   setosa</span>
-<span class="co">## ... (#rows: 150, #cols: 3)</span></pre></body></html></div>
+<span class="co">## ... (#rows: 150, #cols: 3)</span>
+</pre></div>
 <p>In order to get predicted posterior probabilities we have to create a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) with the appropriate <code>predict.type</code>.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="kw">predict.type</span> <span class="kw">=</span> <span class="st">"prob"</span>)
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="no">iris.task</span>)
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, predict.type = <span class="st">"prob"</span>)
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">iris.task</span>)
 
-<span class="no">pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">pred</span>))
+<span class="kw">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, newdata = <span class="kw">iris</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">pred</span>))
 <span class="co">##    truth prob.setosa prob.versicolor prob.virginica response</span>
 <span class="co">## 1 setosa           1               0              0   setosa</span>
 <span class="co">## 2 setosa           1               0              0   setosa</span>
 <span class="co">## 3 setosa           1               0              0   setosa</span>
 <span class="co">## 4 setosa           1               0              0   setosa</span>
 <span class="co">## 5 setosa           1               0              0   setosa</span>
-<span class="co">## 6 setosa           1               0              0   setosa</span></pre></body></html></div>
+<span class="co">## 6 setosa           1               0              0   setosa</span>
+</pre></div>
 <p>In addition to the probabilities, class labels are predicted by choosing the class with the maximum probability and breaking ties at random.</p>
 <p>As mentioned above, the predicted posterior probabilities can be accessed via the <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> function.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="no">pred</span>))
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="kw">pred</span>))
 <span class="co">##   setosa versicolor virginica</span>
 <span class="co">## 1      1          0         0</span>
 <span class="co">## 2      1          0         0</span>
 <span class="co">## 3      1          0         0</span>
 <span class="co">## 4      1          0         0</span>
 <span class="co">## 5      1          0         0</span>
-<span class="co">## 6      1          0         0</span></pre></body></html></div>
+<span class="co">## 6      1          0         0</span>
+</pre></div>
 </div>
 <div id="classification-confusion-matrix" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classification-confusion-matrix" class="anchor"></a>Classification: Confusion matrix</h2>
 <p>A confusion matrix can be obtained by calling <code><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix()</a></code>. The columns represent predicted and the rows true class labels.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="no">pred</span>)
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="kw">pred</span>)
 <span class="co">##             predicted</span>
 <span class="co">## true         setosa versicolor virginica -err.-</span>
 <span class="co">##   setosa         50          0         0      0</span>
 <span class="co">##   versicolor      0         49         1      1</span>
 <span class="co">##   virginica       0          5        45      5</span>
-<span class="co">##   -err.-          0          5         1      6</span></pre></body></html></div>
+<span class="co">##   -err.-          0          5         1      6</span>
+</pre></div>
 <p>You can see the number of correctly classified observations on the diagonal of the matrix. Misclassified observations are on the off-diagonal. The total number of errors for single (true and predicted) classes is shown in the <code>-err.-</code> row and column, respectively.</p>
 <p>To get relative frequencies additional to the absolute numbers we can set <code>relative = TRUE</code>.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">conf.matrix</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="no">pred</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="no">conf.matrix</span>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">conf.matrix</span> <span class="op">=</span> <span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="kw">pred</span>, relative = <span class="fl">TRUE</span>)
+<span class="kw">conf.matrix</span>
 <span class="co">## Relative confusion matrix (normalized by row/column):</span>
 <span class="co">##             predicted</span>
 <span class="co">## true         setosa    versicolor virginica -err.-   </span>
@@ -519,16 +544,20 @@
 <span class="co">##   setosa         50          0         0      0</span>
 <span class="co">##   versicolor      0         49         1      1</span>
 <span class="co">##   virginica       0          5        45      5</span>
-<span class="co">##   -err.-          0          5         1      6</span></pre></body></html></div>
+<span class="co">##   -err.-          0          5         1      6</span>
+</pre></div>
 <p>It is possible to normalize by either row or column, therefore every element of the above relative confusion matrix contains two values. The first is the relative frequency grouped by row (the true label) and the second value grouped by column (the predicted label).</p>
 <p>If you want to access the relative values directly you can do this through the <code>$relative.row</code> and <code>$relative.col</code> members of the returned object <code>conf.matrix</code>. For more details see the <code><a href="../../reference/ConfusionMatrix.html">ConfusionMatrix()</a></code> documentation page.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">conf.matrix</span>$<span class="no">relative.row</span>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="kw">conf.matrix</span><span class="op">$</span><span class="kw">relative.row</span>
 <span class="co">##            setosa versicolor virginica -err-</span>
 <span class="co">## setosa          1       0.00      0.00  0.00</span>
 <span class="co">## versicolor      0       0.98      0.02  0.02</span>
-<span class="co">## virginica       0       0.10      0.90  0.10</span></pre></body></html></div>
+<span class="co">## virginica       0       0.10      0.90  0.10</span>
+</pre></div>
 <p>Finally, we can also add the absolute number of observations for each predicted and true class label to the matrix (both absolute and relative) by setting <code>sums = TRUE</code>.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="no">pred</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">sums</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="kw">pred</span>, relative = <span class="fl">TRUE</span>, sums = <span class="fl">TRUE</span>)
 <span class="co">## Relative confusion matrix (normalized by row/column):</span>
 <span class="co">##             predicted</span>
 <span class="co">## true         setosa    versicolor virginica -err.-    -n- </span>
@@ -545,32 +574,34 @@
 <span class="co">## versicolor      0         49         1      1  50</span>
 <span class="co">## virginica       0          5        45      5  50</span>
 <span class="co">## -err.-          0          5         1      6  NA</span>
-<span class="co">## -n-            50         54        46     NA 150</span></pre></body></html></div>
+<span class="co">## -n-            50         54        46     NA 150</span>
+</pre></div>
 </div>
 <div id="classification-adjusting-the-decision-threshold" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classification-adjusting-the-decision-threshold" class="anchor"></a>Classification: Adjusting the decision threshold</h2>
 <p>We can set the threshold value that is used to map the predicted posterior probabilities to class labels. Note that for this purpose we need to create a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) that predicts probabilities. For binary classification, the threshold determines when the <em>positive</em> class is predicted. The default is 0.5. Now, we set the threshold for the positive class to 0.9 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.9). Which of the two classes is the positive one can be seen by accessing the <code><a href="../../reference/Task.html">Task()</a></code>. To illustrate binary classification, we use the <code>Sonar</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html">mlbench::Sonar()</a></code>) data set from the <code>mlbench</code> package.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="kw">predict.type</span> <span class="kw">=</span> <span class="st">"prob"</span>)
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">sonar.task</span>)
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, predict.type = <span class="st">"prob"</span>)
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, task = <span class="kw">sonar.task</span>)
 
 <span class="co">### Label of the positive class</span>
-<span class="fu"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span>(<span class="no">sonar.task</span>)$<span class="no">positive</span>
+<span class="fu"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span>(<span class="kw">sonar.task</span>)<span class="op">$</span><span class="kw">positive</span>
 <span class="co">## [1] "M"</span>
 
 <span class="co">### Default threshold</span>
-<span class="no">pred1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="no">sonar.task</span>)
-<span class="no">pred1</span>$<span class="no">threshold</span>
+<span class="kw">pred1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, <span class="kw">sonar.task</span>)
+<span class="kw">pred1</span><span class="op">$</span><span class="kw">threshold</span>
 <span class="co">##   M   R </span>
 <span class="co">## 0.5 0.5</span>
 
 <span class="co">### Set the threshold value for the positive class</span>
-<span class="no">pred2</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span>(<span class="no">pred1</span>, <span class="fl">0.9</span>)
-<span class="no">pred2</span>$<span class="no">threshold</span>
+<span class="kw">pred2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span>(<span class="kw">pred1</span>, <span class="fl">0.9</span>)
+<span class="kw">pred2</span><span class="op">$</span><span class="kw">threshold</span>
 <span class="co">##   M   R </span>
 <span class="co">## 0.9 0.1</span>
 
-<span class="no">pred2</span>
+<span class="kw">pred2</span>
 <span class="co">## Prediction: 208 observations</span>
 <span class="co">## predict.type: prob</span>
 <span class="co">## threshold: M=0.90,R=0.10</span>
@@ -585,51 +616,56 @@
 <span class="co">## ... (#rows: 208, #cols: 5)</span>
 
 <span class="co">### We can also set the effect in the confusion matrix</span>
-<span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="no">pred1</span>)
+<span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="kw">pred1</span>)
 <span class="co">##         predicted</span>
 <span class="co">## true      M  R -err.-</span>
 <span class="co">##   M      95 16     16</span>
 <span class="co">##   R      10 87     10</span>
 <span class="co">##   -err.- 10 16     26</span>
 
-<span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="no">pred2</span>)
+<span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span>(<span class="kw">pred2</span>)
 <span class="co">##         predicted</span>
 <span class="co">## true      M  R -err.-</span>
 <span class="co">##   M      84 27     27</span>
 <span class="co">##   R       6 91      6</span>
-<span class="co">##   -err.-  6 27     33</span></pre></body></html></div>
+<span class="co">##   -err.-  6 27     33</span>
+</pre></div>
 <p>Note that in the binary case <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> by default extracts the posterior probabilities of the positive class only.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="no">pred1</span>))
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="kw">pred1</span>))
 <span class="co">## [1] 0.1060606 0.7333333 0.0000000 0.1060606 0.9250000 0.0000000</span>
 
 <span class="co">### But we can change that, too</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="no">pred1</span>, <span class="kw">cl</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"M"</span>, <span class="st">"R"</span>)))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span>(<span class="kw">pred1</span>, cl = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"M"</span>, <span class="st">"R"</span>)))
 <span class="co">##           M         R</span>
 <span class="co">## 1 0.1060606 0.8939394</span>
 <span class="co">## 2 0.7333333 0.2666667</span>
 <span class="co">## 3 0.0000000 1.0000000</span>
 <span class="co">## 4 0.1060606 0.8939394</span>
 <span class="co">## 5 0.9250000 0.0750000</span>
-<span class="co">## 6 0.0000000 1.0000000</span></pre></body></html></div>
+<span class="co">## 6 0.0000000 1.0000000</span>
+</pre></div>
 <p>It works similarly for multiclass classification. The threshold has to be given by a named vector specifying the values by which each probability will be divided. The class with the maximum resulting value is then selected.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="kw">predict.type</span> <span class="kw">=</span> <span class="st">"prob"</span>)
-<span class="no">mod</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="no">lrn</span>, <span class="no">iris.task</span>)
-<span class="no">pred</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="no">pred</span>$<span class="no">threshold</span>
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, predict.type = <span class="st">"prob"</span>)
+<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">iris.task</span>)
+<span class="kw">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">mod</span>, newdata = <span class="kw">iris</span>)
+<span class="kw">pred</span><span class="op">$</span><span class="kw">threshold</span>
 <span class="co">##     setosa versicolor  virginica </span>
 <span class="co">##  0.3333333  0.3333333  0.3333333</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">pred</span>)$<span class="no">response</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">pred</span>)<span class="op">$</span><span class="kw">response</span>)
 <span class="co">## </span>
 <span class="co">##     setosa versicolor  virginica </span>
 <span class="co">##         50         54         46</span>
-<span class="no">pred</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span>(<span class="no">pred</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">setosa</span> <span class="kw">=</span> <span class="fl">0.01</span>, <span class="kw">versicolor</span> <span class="kw">=</span> <span class="fl">50</span>, <span class="kw">virginica</span> <span class="kw">=</span> <span class="fl">1</span>))
-<span class="no">pred</span>$<span class="no">threshold</span>
+<span class="kw">pred</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span>(<span class="kw">pred</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(setosa = <span class="fl">0.01</span>, versicolor = <span class="fl">50</span>, virginica = <span class="fl">1</span>))
+<span class="kw">pred</span><span class="op">$</span><span class="kw">threshold</span>
 <span class="co">##     setosa versicolor  virginica </span>
 <span class="co">##       0.01      50.00       1.00</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">pred</span>)$<span class="no">response</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">pred</span>)<span class="op">$</span><span class="kw">response</span>)
 <span class="co">## </span>
 <span class="co">##     setosa versicolor  virginica </span>
-<span class="co">##         50          0        100</span></pre></body></html></div>
+<span class="co">##         50          0        100</span>
+</pre></div>
 <p>If you are interested in tuning the threshold (vector) have a look at the section about <a href="roc_analysis.html" target="_blank">performance curves and threshold tuning</a>.</p>
 </div>
 </div>
@@ -639,18 +675,26 @@
 <p>The function <code><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction()</a></code> allows to visualize predictions, e.g., for teaching purposes or exploring models. It trains the chosen learning method for 1 or 2 selected features and then displays the predictions with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code>.</p>
 <p>For <em>classification</em>, we get a scatter plot of 2 features (by default the first 2 in the data set). The type of symbol shows the true class labels of the data points. Symbols with white border indicate misclassified observations. The posterior probabilities (if the learner under consideration supports this) are represented by the background color where higher saturation means larger probabilities.</p>
 <p>The plot title displays the ID of the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (in the following example CART), its parameters, its training performance and its cross-validation performance. <a href="measures.html" target="_blank">mmce</a> stands for <em>mean misclassification error</em>, i.e., the error rate. See the sections on <a href="performance.html" target="_blank">performance</a> and <a href="resample.html" target="_blank">resampling</a> for further explanations.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="st">"CART"</span>)
-<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="no">lrn</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">iris.task</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>, id = <span class="st">"CART"</span>)
+<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="kw">lrn</span>, task = <span class="kw">iris.task</span>)
+</pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>For <em>clustering</em> we also get a scatter plot of two selected features. The color of the points indicates the predicted cluster.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">lrn</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>)
-<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="no">lrn</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">mtcars.task</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), <span class="kw">cv</span> <span class="kw">=</span> <span class="fl">0</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>)
+<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="kw">lrn</span>, task = <span class="kw">mtcars.task</span>, features = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disp"</span>, <span class="st">"drat"</span>), cv = <span class="fl">0</span>)
+</pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>For <em>regression</em>, there are two types of plots. The 1D plot shows the target values in relation to a single feature, the regression curve and, if the chosen learner supports this, the estimated standard error.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="st">"lstat"</span>, <span class="kw">task</span> <span class="kw">=</span> <span class="no">bh.task</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, features = <span class="st">"lstat"</span>, task = <span class="kw">bh.task</span>)
+</pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
 <p>The 2D variant, as in the classification case, generates a scatter plot of 2 features. The fill color of the dots illustrates the value of the target variable <code>"medv"</code>, the background colors show the estimated mean. The plot does not represent the estimated standard error.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lstat"</span>, <span class="st">"rm"</span>), <span class="kw">task</span> <span class="kw">=</span> <span class="no">bh.task</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit">
+<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span>(<span class="st">"regr.lm"</span>, features = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lstat"</span>, <span class="st">"rm"</span>), task = <span class="kw">bh.task</span>)
+</pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
   </div>
@@ -670,7 +714,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

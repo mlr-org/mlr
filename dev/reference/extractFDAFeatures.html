@@ -342,7 +342,7 @@ re-extraction during the predict-phase is returned. This can be used with
 <a href='reextractFDAFeatures.html'>reextractFDAFeatures</a> in order to extract features during the prediction phase.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extractFDAFeatures</span>(<span class='no'>obj</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>extractFDAFeatures</span>(<span class='kw'>obj</span>, target = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), feat.methods = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -401,12 +401,13 @@ parameters for reextraction.</p></li>
 <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>24</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>8</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>)))
-<span class='no'>fdf</span> <span class='kw'>=</span> <span class='fu'><a href='makeFunctionalData.html'>makeFunctionalData</a></span>(<span class='no'>df</span>, <span class='kw'>fd.features</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x1</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>x2</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>8</span>), <span class='kw'>exclude.cols</span> <span class='kw'>=</span> <span class='st'>"y"</span>)
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>fdf</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"y"</span>)
-<span class='no'>extracted</span> <span class='kw'>=</span> <span class='fu'>extractFDAFeatures</span>(<span class='no'>task</span>,
-  <span class='kw'>feat.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"x1"</span> <span class='kw'>=</span> <span class='fu'><a href='extractFDAFourier.html'>extractFDAFourier</a></span>(), <span class='st'>"x2"</span> <span class='kw'>=</span> <span class='fu'><a href='extractFDAWavelets.html'>extractFDAWavelets</a></span>(<span class='kw'>filter</span> <span class='kw'>=</span> <span class='st'>"haar"</span>)))
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>extracted</span>$<span class='no'>task</span>)</div><div class='output co'>#&gt; Supervised task: fdf
+    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>24</span>), ncol = <span class='fl'>8</span>), y = <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>)))
+<span class='kw'>fdf</span> <span class='op'>=</span> <span class='fu'><a href='makeFunctionalData.html'>makeFunctionalData</a></span>(<span class='kw'>df</span>, fd.features = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x1 = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, x2 = <span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span>), exclude.cols = <span class='st'>"y"</span>)
+<span class='kw'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span>(data = <span class='kw'>fdf</span>, target = <span class='st'>"y"</span>)
+<span class='kw'>extracted</span> <span class='op'>=</span> <span class='fu'>extractFDAFeatures</span>(<span class='kw'>task</span>,
+  feat.methods = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"x1"</span> = <span class='fu'><a href='extractFDAFourier.html'>extractFDAFourier</a></span>(), <span class='st'>"x2"</span> = <span class='fu'><a href='extractFDAWavelets.html'>extractFDAWavelets</a></span>(filter = <span class='st'>"haar"</span>)))
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>extracted</span><span class='op'>$</span><span class='kw'>task</span>)
+</div><div class='output co'>#&gt; Supervised task: fdf
 #&gt; Type: classif
 #&gt; Target: y
 #&gt; Observations: 3
@@ -420,7 +421,8 @@ parameters for reextraction.</p></li>
 #&gt; Classes: 2
 #&gt; a b 
 #&gt; 2 1 
-#&gt; Positive class: a</div><div class='input'><span class='fu'><a href='reextractFDAFeatures.html'>reextractFDAFeatures</a></span>(<span class='no'>task</span>, <span class='no'>extracted</span>$<span class='no'>desc</span>)</div><div class='output co'>#&gt; Supervised task: fdf
+#&gt; Positive class: a</div><div class='input'><span class='fu'><a href='reextractFDAFeatures.html'>reextractFDAFeatures</a></span>(<span class='kw'>task</span>, <span class='kw'>extracted</span><span class='op'>$</span><span class='kw'>desc</span>)
+</div><div class='output co'>#&gt; Supervised task: fdf
 #&gt; Type: classif
 #&gt; Target: y
 #&gt; Observations: 3
@@ -450,7 +452,7 @@ parameters for reextraction.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

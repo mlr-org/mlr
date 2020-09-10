@@ -340,7 +340,7 @@ either be specified by their lower and upper bounds or they will be
 discretized into specific values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getCaretParamSet</span>(<span class='no'>learner</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='no'>task</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>getCaretParamSet</span>(<span class='kw'>learner</span>, length = <span class='fl'>3L</span>, <span class='kw'>task</span>, discretize = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -383,19 +383,20 @@ tuning parameters</p></li>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>caret</span>)
-  <span class='no'>classifTask</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"caret"</span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/topepo/caret'>caret</a></span>)
+  <span class='kw'>classifTask</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span>(data = <span class='kw'>iris</span>, target = <span class='st'>"Species"</span>)
 
   <span class='co'># (1) classification (random forest) with discretized parameters</span>
-  <span class='fu'>getCaretParamSet</span>(<span class='st'>"rf"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>classifTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'>getCaretParamSet</span>(<span class='st'>"rf"</span>, length = <span class='fl'>9L</span>, task = <span class='kw'>classifTask</span>, discretize = <span class='fl'>TRUE</span>)
 
   <span class='co'># (2) regression (gradient boosting machine) without discretized parameters</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlbench</span>)
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BostonHousing</span>)
-  <span class='no'>regrTask</span> <span class='kw'>=</span> <span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
-  <span class='fu'>getCaretParamSet</span>(<span class='st'>"gbm"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>regrTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>mlbench</span>)
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>BostonHousing</span>)
+  <span class='kw'>regrTask</span> <span class='op'>=</span> <span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span>(data = <span class='kw'>BostonHousing</span>, target = <span class='st'>"medv"</span>)
+  <span class='fu'>getCaretParamSet</span>(<span class='st'>"gbm"</span>, length = <span class='fl'>9L</span>, task = <span class='kw'>regrTask</span>, discretize = <span class='fl'>FALSE</span>)
+}
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘caret’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mlr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    train</span></div><div class='output co'>#&gt; note: only 3 unique complexity parameters in default grid. Truncating the grid to 3 .
@@ -427,7 +428,7 @@ tuning parameters</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

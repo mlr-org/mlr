@@ -328,7 +328,7 @@
     <p>Get target data of task.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getTaskTargets</span>(<span class='no'>task</span>, <span class='kw'>recode.target</span> <span class='kw'>=</span> <span class='st'>"no"</span>)</pre>
+    <pre class="usage"><span class='fu'>getTaskTargets</span>(<span class='kw'>task</span>, recode.target = <span class='st'>"no"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -375,8 +375,9 @@ of logical columns for multilabel.</p>
 <code><a href='subsetTask.html'>subsetTask</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-<span class='fu'>getTaskTargets</span>(<span class='no'>task</span>)</div><div class='output co'>#&gt;   [1] setosa     setosa     setosa     setosa     setosa     setosa    
+    <pre class="examples"><div class='input'><span class='kw'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span>(data = <span class='kw'>iris</span>, target = <span class='st'>"Species"</span>)
+<span class='fu'>getTaskTargets</span>(<span class='kw'>task</span>)
+</div><div class='output co'>#&gt;   [1] setosa     setosa     setosa     setosa     setosa     setosa    
 #&gt;   [7] setosa     setosa     setosa     setosa     setosa     setosa    
 #&gt;  [13] setosa     setosa     setosa     setosa     setosa     setosa    
 #&gt;  [19] setosa     setosa     setosa     setosa     setosa     setosa    
@@ -417,7 +418,7 @@ of logical columns for multilabel.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
