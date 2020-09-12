@@ -109,6 +109,7 @@ test_that("learners work: classif", {
     "classif.cforest",
     "classif.cvglmnet",
     "classif.dbnDNN",
+    "classif.evtree",
     "classif.geoDA",
     "classif.glmnet",
     "classif.linDA",
