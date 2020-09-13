@@ -1,8 +1,48 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-09-11T05:22Z
+articles:
+  mlr: mlr.html
+  tutorial/advanced_tune: advanced_tune.html
+  tutorial/bagging: bagging.html
+  tutorial/benchmark_experiments: benchmark_experiments.html
+  tutorial/classifier_calibration: classifier_calibration.html
+  tutorial/configureMlr: configureMlr.html
+  tutorial/cost_sensitive_classif: cost_sensitive_classif.html
+  tutorial/create_filter: create_filter.html
+  tutorial/create_imputation: create_imputation.html
+  tutorial/create_learner: create_learner.html
+  tutorial/create_measure: create_measure.html
+  tutorial/example_tasks: example_tasks.html
+  tutorial/feature_selection: feature_selection.html
+  tutorial/filter_methods: filter_methods.html
+  tutorial/functional_data: functional_data.html
+  tutorial/handling_of_spatial_data: handling_of_spatial_data.html
+  tutorial/hyperpar_tuning_effects: hyperpar_tuning_effects.html
+  tutorial/impute: impute.html
+  tutorial/integrated_learners: integrated_learners.html
+  tutorial/learner: learner.html
+  tutorial/learning_curve: learning_curve.html
+  tutorial/measures: measures.html
+  tutorial/mlr_publications: mlr_publications.html
+  tutorial/multilabel: multilabel.html
+  tutorial/nested_resampling: nested_resampling.html
+  tutorial/out_of_bag_predictions: out_of_bag_predictions.html
+  tutorial/over_and_undersampling: over_and_undersampling.html
+  tutorial/parallelization: parallelization.html
+  tutorial/partial_dependence: partial_dependence.html
+  tutorial/performance: performance.html
+  tutorial/predict: predict.html
+  tutorial/preproc: preproc.html
+  tutorial/resample: resample.html
+  tutorial/roc_analysis: roc_analysis.html
+  tutorial/task: task.html
+  tutorial/train: train.html
+  tutorial/tune: tune.html
+  tutorial/usecase_regression: usecase_regression.html
+  tutorial/visualization: visualization.html
+  tutorial/wrapper: wrapper.html
+last_built: 2020-09-13T05:19Z
 urls:
   reference: https://mlr.mlr-org.com/reference
   article: https://mlr.mlr-org.com/articles
