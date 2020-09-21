@@ -75,7 +75,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     blocking.cv = desc$blocking.cv
   }
 
-  if (length(blocking) > 0 && blocking.cv == FALSE) {
+  if (length(blocking) > 0 && fixed && blocking.cv == FALSE) {
     warningf("'Blocking' features in the task were detected but 'blocking.cv' was not set in 'resample()'.")
     warningf("Setting 'blocking.cv' to TRUE to prevent undesired behavior. Set `blocking.cv' = TRUE` in `makeResampleDesc()` to silence this warning'.")
     blocking.cv = TRUE
