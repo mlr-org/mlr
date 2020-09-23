@@ -923,6 +923,11 @@ Resampling Figure
 <div class="sourceCode" id="cb23"><pre class="downlit">
 <span class="kw">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, fixed = <span class="fl">TRUE</span>)
 <span class="kw">p</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.lda"</span>, <span class="kw">task</span>, <span class="kw">rdesc</span>)
+<span class="co">## Warning in makeResampleInstance(resampling, task = task): 'Blocking' features in</span>
+<span class="co">## the task were detected but 'blocking.cv' was not set in 'resample()'.</span>
+<span class="co">## Warning in makeResampleInstance(resampling, task = task): Setting 'blocking.cv'</span>
+<span class="co">## to TRUE to prevent undesired behavior. Set `blocking.cv' = TRUE` in</span>
+<span class="co">## `makeResampleDesc()` to silence this warning'.</span>
 <span class="co">## Warning in instantiateResampleInstance.CVDesc(desc, size, task): Adjusting</span>
 <span class="co">## levels to match number of blocking levels.</span>
 <span class="co">## Resampling: cross-validation</span>
