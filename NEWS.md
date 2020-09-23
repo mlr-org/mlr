@@ -1,3 +1,8 @@
+# mlr 2.17.1.9005
+
+- xgboost: update `objective` default from `reg:linear` (deprecated) to `reg:squarederror`
+- issue a warning if `blocking` was set in the Task but `blocking.cv` was not set within `makeResampleDesc() (#2788)
+
 # mlr 2.17.1.9003
 
 - Fix order of learners in `generateLearningCurveData()` (#2768)
