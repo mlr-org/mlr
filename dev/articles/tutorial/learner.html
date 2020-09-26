@@ -297,26 +297,25 @@
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># Classification tree, set it up for predicting probabilities</span>
-<span class="kw">classif.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>, predict.type = <span class="st">"prob"</span>, fix.factors.prediction = <span class="fl">TRUE</span>)
+<span class="va">classif.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, fix.factors.prediction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Regression gradient boosting machine, specify hyperparameters via a list</span>
-<span class="kw">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.gbm"</span>, par.vals = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(n.trees = <span class="fl">500</span>, interaction.depth = <span class="fl">3</span>))
+<span class="va">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.gbm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n.trees <span class="op">=</span> <span class="fl">500</span>, interaction.depth <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Cox proportional hazards model with custom name</span>
-<span class="kw">surv.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"surv.coxph"</span>, id = <span class="st">"cph"</span>)
+<span class="va">surv.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"surv.coxph"</span>, id <span class="op">=</span> <span class="st">"cph"</span><span class="op">)</span>
 
 <span class="co"># K-means with 5 clusters</span>
-<span class="kw">cluster.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"cluster.kmeans"</span>, centers = <span class="fl">5</span>)
+<span class="va">cluster.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"cluster.kmeans"</span>, centers <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
 <span class="co"># Multilabel Random Ferns classification algorithm</span>
-<span class="kw">multilabel.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"multilabel.rFerns"</span>)
-</pre></div>
+<span class="va">multilabel.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"multilabel.rFerns"</span><span class="op">)</span></pre></div>
 <p>The first argument specifies which algorithm to use. The naming convention is <code>classif.&lt;R_method_name&gt;</code> for classification methods, <code>regr.&lt;R_method_name&gt;</code> for regression methods, <code>surv.&lt;R_method_name&gt;</code> for survival analysis, <code>cluster.&lt;R_method_name&gt;</code> for clustering methods, and <code>multilabel.&lt;R_method_name&gt;</code> for multilabel classification.</p>
 <p>Hyperparameter values can be specified either via the <code>...</code> argument or as a <code>list</code> via <code>par.vals</code>. The first option is preferred as <code>par.vals</code> is mainly used to declare hyperparameters that are set differently in <code>mlr</code> compared to the defaults of the underlying model. If you want to change a hyperparameter in <code>mlr</code> by default that differs from the actual default, make sure to also add an entry in the <code>"note"</code> slot of the learner. This entry should describe the reason for the change. Common ones are turning off automatic parallelization or changing logical arguments of the learner to enable a more conservative memory management.</p>
 <p>Occasionally, <code>factor</code> features may cause problems when fewer levels are present in the test data set than in the training data. By setting <code>fix.factors.prediction = TRUE</code> these are avoided by adding a factor level for missing data in the test data set.</p>
 <p>Let’s have a look at two of the learners created above.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">classif.lrn</span>
+<span class="va">classif.lrn</span>
 <span class="co">## Learner classif.randomForest from package randomForest</span>
 <span class="co">## Type: classif</span>
 <span class="co">## Name: Random Forest; Short name: rf</span>
@@ -325,15 +324,14 @@
 <span class="co">## Predict-Type: prob</span>
 <span class="co">## Hyperparameters:</span>
 
-<span class="kw">surv.lrn</span>
+<span class="va">surv.lrn</span>
 <span class="co">## Learner cph from package survival</span>
 <span class="co">## Type: surv</span>
 <span class="co">## Name: Cox Proportional Hazard Model; Short name: coxph</span>
 <span class="co">## Class: surv.coxph</span>
 <span class="co">## Properties: numerics,factors,weights</span>
 <span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters:</span>
-</pre></div>
+<span class="co">## Hyperparameters:</span></pre></div>
 <p>All generated learners are objects of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>). This class contains the properties of the method, e.g., which types of features it can handle, what kind of output is possible during prediction, and whether multi-class problems, observations weights or missing values are supported.</p>
 <p>As you might have noticed, there is currently no special learner class for cost-sensitive classification. For ordinary misclassification costs you can use standard classification methods. For example-dependent costs there are several ways to generate cost-sensitive learners from ordinary regression and classification learners. This is explained in greater detail in the section about <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a>.</p>
 </div>
@@ -343,12 +341,12 @@
 <p>The Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) object is a <code>list</code> and the following elements contain information regarding the hyperparameters and the type of prediction.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># Get the configured hyperparameter settings that deviate from the defaults</span>
-<span class="kw">cluster.lrn</span><span class="op">$</span><span class="kw">par.vals</span>
+<span class="va">cluster.lrn</span><span class="op">$</span><span class="va">par.vals</span>
 <span class="co">## $centers</span>
 <span class="co">## [1] 5</span>
 
 <span class="co"># Get the set of hyperparameters</span>
-<span class="kw">classif.lrn</span><span class="op">$</span><span class="kw">par.set</span>
+<span class="va">classif.lrn</span><span class="op">$</span><span class="va">par.set</span>
 <span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span>
 <span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span>
 <span class="co">## mtry              integer    -     - 1 to Inf   -    TRUE     -</span>
@@ -369,19 +367,18 @@
 <span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span>
 
 <span class="co"># Get the type of prediction</span>
-<span class="kw">regr.lrn</span><span class="op">$</span><span class="kw">predict.type</span>
-<span class="co">## [1] "response"</span>
-</pre></div>
+<span class="va">regr.lrn</span><span class="op">$</span><span class="va">predict.type</span>
+<span class="co">## [1] "response"</span></pre></div>
 <p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
 <p>Moreover, <code>mlr</code> provides function <code><a href="../../reference/getHyperPars.html">getHyperPars()</a></code> or its alternative <code><a href="../../reference/getLearnerParVals.html">getLearnerParVals()</a></code> to access the current hyperparameter setting of a Learner, (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> to get a description of all possible settings. These are particularly useful in case of wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, for example if a learner is fused with a feature selection strategy, and both, the learner as well the feature selection method, have hyperparameters. For details see the section on <a href="wrapper.html">wrapped learners</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># Get current hyperparameter settings</span>
-<span class="fu"><a href="../../reference/getHyperPars.html">getHyperPars</a></span>(<span class="kw">cluster.lrn</span>)
+<span class="fu"><a href="../../reference/getHyperPars.html">getHyperPars</a></span><span class="op">(</span><span class="va">cluster.lrn</span><span class="op">)</span>
 <span class="co">## $centers</span>
 <span class="co">## [1] 5</span>
 
 <span class="co"># Get a description of all possible hyperparameter settings</span>
-<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="kw">classif.lrn</span>)
+<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">classif.lrn</span><span class="op">)</span>
 <span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span>
 <span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span>
 <span class="co">## mtry              integer    -     - 1 to Inf   -    TRUE     -</span>
@@ -399,11 +396,10 @@
 <span class="co">## norm.votes        logical    -  TRUE        -   -   FALSE     -</span>
 <span class="co">## do.trace          logical    - FALSE        -   -   FALSE     -</span>
 <span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span>
-<span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span>
-</pre></div>
+<span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></pre></div>
 <p>We can also use <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> or its alias <code><a href="../../reference/getLearnerParamSet.html">getLearnerParamSet()</a></code> to get a quick overview about the available hyperparameters and defaults of a learning method without explicitly constructing it (by calling <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span>(<span class="st">"classif.randomForest"</span>)
+<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span><span class="op">)</span>
 <span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span>
 <span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span>
 <span class="co">## mtry              integer    -     - 1 to Inf   -    TRUE     -</span>
@@ -421,26 +417,24 @@
 <span class="co">## norm.votes        logical    -  TRUE        -   -   FALSE     -</span>
 <span class="co">## do.trace          logical    - FALSE        -   -   FALSE     -</span>
 <span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span>
-<span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span>
-</pre></div>
+<span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></pre></div>
 <p>Functions for accessing a Learner’s meta information are available in <code>mlr</code>. We can use <code><a href="../../reference/getLearnerId.html">getLearnerId()</a></code>, <code><a href="../../reference/getLearnerShortName.html">getLearnerShortName()</a></code> and <code><a href="../../reference/getLearnerType.html">getLearnerType()</a></code> to get Learner’s ID, short name and type, respectively. Moreover, in order to show the required packages for the Learner, one can call <code><a href="../../reference/getLearnerPackages.html">getLearnerPackages()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="co"># Get object's id</span>
-<span class="fu"><a href="../../reference/getLearnerId.html">getLearnerId</a></span>(<span class="kw">surv.lrn</span>)
+<span class="fu"><a href="../../reference/getLearnerId.html">getLearnerId</a></span><span class="op">(</span><span class="va">surv.lrn</span><span class="op">)</span>
 <span class="co">## [1] "cph"</span>
 
 <span class="co"># Get the short name</span>
-<span class="fu"><a href="../../reference/getLearnerShortName.html">getLearnerShortName</a></span>(<span class="kw">classif.lrn</span>)
+<span class="fu"><a href="../../reference/getLearnerShortName.html">getLearnerShortName</a></span><span class="op">(</span><span class="va">classif.lrn</span><span class="op">)</span>
 <span class="co">## [1] "rf"</span>
 
 <span class="co"># Get the type of the learner</span>
-<span class="fu"><a href="../../reference/getLearnerType.html">getLearnerType</a></span>(<span class="kw">multilabel.lrn</span>)
+<span class="fu"><a href="../../reference/getLearnerType.html">getLearnerType</a></span><span class="op">(</span><span class="va">multilabel.lrn</span><span class="op">)</span>
 <span class="co">## [1] "multilabel"</span>
 
 <span class="co"># Get required packages</span>
-<span class="fu"><a href="../../reference/getLearnerPackages.html">getLearnerPackages</a></span>(<span class="kw">cluster.lrn</span>)
-<span class="co">## [1] "stats" "clue"</span>
-</pre></div>
+<span class="fu"><a href="../../reference/getLearnerPackages.html">getLearnerPackages</a></span><span class="op">(</span><span class="va">cluster.lrn</span><span class="op">)</span>
+<span class="co">## [1] "stats" "clue"</span></pre></div>
 </div>
 <div id="modifying-a-learner" class="section level1">
 <h1 class="hasAnchor">
@@ -448,8 +442,8 @@
 <p>There are also some functions that enable you to change certain aspects of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) without needing to create a new Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) from scratch. Here are some examples.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># Change the ID</span>
-<span class="kw">surv.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setLearnerId.html">setLearnerId</a></span>(<span class="kw">surv.lrn</span>, <span class="st">"CoxModel"</span>)
-<span class="kw">surv.lrn</span>
+<span class="va">surv.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setLearnerId.html">setLearnerId</a></span><span class="op">(</span><span class="va">surv.lrn</span>, <span class="st">"CoxModel"</span><span class="op">)</span>
+<span class="va">surv.lrn</span>
 <span class="co">## Learner CoxModel from package survival</span>
 <span class="co">## Type: surv</span>
 <span class="co">## Name: Cox Proportional Hazard Model; Short name: coxph</span>
@@ -459,14 +453,13 @@
 <span class="co">## Hyperparameters:</span>
 
 <span class="co"># Change the prediction type, predict a factor with class labels instead of probabilities</span>
-<span class="kw">classif.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span>(<span class="kw">classif.lrn</span>, <span class="st">"response"</span>)
+<span class="va">classif.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">classif.lrn</span>, <span class="st">"response"</span><span class="op">)</span>
 
 <span class="co"># Change hyperparameter values</span>
-<span class="kw">cluster.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setHyperPars.html">setHyperPars</a></span>(<span class="kw">cluster.lrn</span>, centers = <span class="fl">4</span>)
+<span class="va">cluster.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setHyperPars.html">setHyperPars</a></span><span class="op">(</span><span class="va">cluster.lrn</span>, centers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 
 <span class="co"># Go back to default hyperparameter values</span>
-<span class="kw">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeHyperPars.html">removeHyperPars</a></span>(<span class="kw">regr.lrn</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"n.trees"</span>, <span class="st">"interaction.depth"</span>))
-</pre></div>
+<span class="va">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeHyperPars.html">removeHyperPars</a></span><span class="op">(</span><span class="va">regr.lrn</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n.trees"</span>, <span class="st">"interaction.depth"</span><span class="op">)</span><span class="op">)</span></pre></div>
 </div>
 <div id="listing-learners" class="section level1">
 <h1 class="hasAnchor">
@@ -475,8 +468,8 @@
 <p>If you would like a list of available learners, maybe only with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use function <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># List everything in mlr</span>
-<span class="kw">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>()
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">lrns</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])
+<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                 class      package</span>
 <span class="co">## 1         classif.ada    ada,rpart</span>
 <span class="co">## 2  classif.adaboostm1        RWeka</span>
@@ -486,8 +479,8 @@
 <span class="co">## 6         classif.bst    bst,rpart</span>
 
 <span class="co"># List classifiers that can output probabilities</span>
-<span class="kw">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"classif"</span>, properties = <span class="st">"prob"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">lrns</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])
+<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                 class      package</span>
 <span class="co">## 1         classif.ada    ada,rpart</span>
 <span class="co">## 2  classif.adaboostm1        RWeka</span>
@@ -497,8 +490,8 @@
 <span class="co">## 6         classif.C50          C50</span>
 
 <span class="co"># List classifiers that can be applied to iris (i.e., multiclass) and output probabilities</span>
-<span class="kw">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="kw">iris.task</span>, properties = <span class="st">"prob"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">lrns</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)])
+<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="va">iris.task</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                class      package</span>
 <span class="co">## 1 classif.adaboostm1        RWeka</span>
 <span class="co">## 2   classif.boosting adabag,rpart</span>
@@ -508,7 +501,7 @@
 <span class="co">## 6   classif.cvglmnet       glmnet</span>
 
 <span class="co"># The calls above return character vectors, but you can also create learner objects</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="st">"cluster"</span>, create = <span class="fl">TRUE</span>), <span class="fl">2</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"cluster"</span>, create <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Learner cluster.cmeans from package e1071,clue</span>
 <span class="co">## Type: cluster</span>
@@ -526,8 +519,7 @@
 <span class="co">## Class: cluster.Cobweb</span>
 <span class="co">## Properties: numerics</span>
 <span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters:</span>
-</pre></div>
+<span class="co">## Hyperparameters:</span></pre></div>
 </div>
   </div>
 

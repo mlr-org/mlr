@@ -287,7 +287,7 @@
 <p>Some learners like random forest use bagging. Bagging means that the learner consists of an ensemble of several base learners and each base learner is trained with a different random subsample or bootstrap sample from all observations. A prediction made for an observation in the original data set using only base learners not trained on this particular observation is called out-of-bag (OOB) prediction. These predictions are not prone to overfitting, as each prediction is only made by learners that did not use the observation for training.</p>
 <p>To get a list of learners that provide OOB predictions, you can call <code><a href="../../reference/listLearners.html">listLearners(obj = NA, properties = "oobpreds")</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(obj = <span class="fl">NA</span>, properties = <span class="st">"oobpreds"</span>)[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"class"</span>, <span class="st">"package"</span>)]
+<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="cn">NA</span>, properties <span class="op">=</span> <span class="st">"oobpreds"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##                     class                  package</span>
 <span class="co">## 1    classif.randomForest             randomForest</span>
 <span class="co">## 2 classif.randomForestSRC          randomForestSRC</span>
@@ -296,14 +296,13 @@
 <span class="co">## 5       regr.randomForest             randomForest</span>
 <span class="co">## 6    regr.randomForestSRC          randomForestSRC</span>
 <span class="co">## 7             regr.ranger                   ranger</span>
-<span class="co">## 8    surv.randomForestSRC survival,randomForestSRC</span>
-</pre></div>
+<span class="co">## 8    surv.randomForestSRC survival,randomForestSRC</span></pre></div>
 <p>In <code>mlr</code> function <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code> can be used to extract these observations from the trained models. These predictions can be used to evaluate the performance of a given learner like in the following example.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, predict.type = <span class="st">"prob"</span>, predict.threshold = <span class="fl">0.6</span>)
-<span class="kw">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">lrn</span>, <span class="kw">sonar.task</span>)
-<span class="kw">oob</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getOOBPreds.html">getOOBPreds</a></span>(<span class="kw">mod</span>, <span class="kw">sonar.task</span>)
-<span class="kw">oob</span>
+<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, predict.threshold <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>
+<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span>
+<span class="va">oob</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getOOBPreds.html">getOOBPreds</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sonar.task</span><span class="op">)</span>
+<span class="va">oob</span>
 <span class="co">## Prediction: 208 observations</span>
 <span class="co">## predict.type: prob</span>
 <span class="co">## threshold: M=0.60,R=0.40</span>
@@ -317,10 +316,9 @@
 <span class="co">## 6  6     R 0.4311339 0.5688661        R</span>
 <span class="co">## ... (#rows: 208, #cols: 5)</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">oob</span>, measures = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">auc</span>, <span class="kw">mmce</span>))
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">oob</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">auc</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       auc      mmce </span>
-<span class="co">## 0.9383301 0.1442308</span>
-</pre></div>
+<span class="co">## 0.9383301 0.1442308</span></pre></div>
 <p>As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.</p>
   </div>
 

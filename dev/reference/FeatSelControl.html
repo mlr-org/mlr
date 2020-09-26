@@ -404,52 +404,52 @@ repeatedly generated until the setting is satisfied.</p></dd>
 
     </div>
 
-    <pre class="usage"><span class='fu'>makeFeatSelControlExhaustive</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  maxit = <span class='fl'>NA_integer_</span>,
-  max.features = <span class='fl'>NA_integer_</span>,
-  tune.threshold = <span class='fl'>FALSE</span>,
-  tune.threshold.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  log.fun = <span class='st'>"default"</span>
-)
+    <pre class="usage"><span class='fu'>makeFeatSelControlExhaustive</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  maxit <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  max.features <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  tune.threshold <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tune.threshold.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>
+<span class='op'>)</span>
 
-<span class='fu'>makeFeatSelControlGA</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  impute.val = <span class='kw'>NULL</span>,
-  maxit = <span class='fl'>NA_integer_</span>,
-  max.features = <span class='fl'>NA_integer_</span>,
-  comma = <span class='fl'>FALSE</span>,
-  mu = <span class='fl'>10L</span>,
-  <span class='kw'>lambda</span>,
-  crossover.rate = <span class='fl'>0.5</span>,
-  mutation.rate = <span class='fl'>0.05</span>,
-  tune.threshold = <span class='fl'>FALSE</span>,
-  tune.threshold.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  log.fun = <span class='st'>"default"</span>
-)
+<span class='fu'>makeFeatSelControlGA</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  impute.val <span class='op'>=</span> <span class='cn'>NULL</span>,
+  maxit <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  max.features <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  comma <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  mu <span class='op'>=</span> <span class='fl'>10L</span>,
+  <span class='va'>lambda</span>,
+  crossover.rate <span class='op'>=</span> <span class='fl'>0.5</span>,
+  mutation.rate <span class='op'>=</span> <span class='fl'>0.05</span>,
+  tune.threshold <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tune.threshold.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>
+<span class='op'>)</span>
 
-<span class='fu'>makeFeatSelControlRandom</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  maxit = <span class='fl'>100L</span>,
-  max.features = <span class='fl'>NA_integer_</span>,
-  prob = <span class='fl'>0.5</span>,
-  tune.threshold = <span class='fl'>FALSE</span>,
-  tune.threshold.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  log.fun = <span class='st'>"default"</span>
-)
+<span class='fu'>makeFeatSelControlRandom</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  maxit <span class='op'>=</span> <span class='fl'>100L</span>,
+  max.features <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  prob <span class='op'>=</span> <span class='fl'>0.5</span>,
+  tune.threshold <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tune.threshold.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>
+<span class='op'>)</span>
 
-<span class='fu'>makeFeatSelControlSequential</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  impute.val = <span class='kw'>NULL</span>,
-  <span class='kw'>method</span>,
-  alpha = <span class='fl'>0.01</span>,
-  beta = <span class='op'>-</span><span class='fl'>0.001</span>,
-  maxit = <span class='fl'>NA_integer_</span>,
-  max.features = <span class='fl'>NA_integer_</span>,
-  tune.threshold = <span class='fl'>FALSE</span>,
-  tune.threshold.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  log.fun = <span class='st'>"default"</span>
-)</pre>
+<span class='fu'>makeFeatSelControlSequential</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  impute.val <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>method</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.01</span>,
+  beta <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.001</span>,
+  maxit <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  max.features <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  tune.threshold <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tune.threshold.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

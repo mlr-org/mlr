@@ -346,16 +346,16 @@ change this by using the arguments <code>bit.names</code> and <code>bits.to.feat
 allowing you to switch on whole groups of features with a single bit.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>selectFeatures</span>(
-  <span class='kw'>learner</span>,
-  <span class='kw'>task</span>,
-  <span class='kw'>resampling</span>,
-  <span class='kw'>measures</span>,
-  <span class='kw'>bit.names</span>,
-  <span class='kw'>bits.to.features</span>,
-  <span class='kw'>control</span>,
-  show.info = <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>selectFeatures</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  <span class='va'>resampling</span>,
+  <span class='va'>measures</span>,
+  <span class='va'>bit.names</span>,
+  <span class='va'>bits.to.features</span>,
+  <span class='va'>control</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -428,10 +428,10 @@ Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
-<span class='kw'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlSequential</a></span>(method = <span class='st'>"sfs"</span>, maxit = <span class='fl'>NA</span>)
-<span class='kw'>res</span> <span class='op'>=</span> <span class='fu'>selectFeatures</span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>iris.task</span>, <span class='kw'>rdesc</span>, control = <span class='kw'>ctrl</span>)
-</div><div class='output co'>#&gt; <span class='message'>[FeatSel] Started selecting features for learner 'classif.rpart'</span></div><div class='output co'>#&gt; <span class='message'>With control class: FeatSelControlSequential</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 1: 0000 (0 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 1: mmce.test.mean=0.6400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 1000 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.2800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0100 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.4800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0010 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0001 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 1010 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0110 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0011 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Result: Petal.Length (1 bits)</span></div><div class='input'><span class='fu'><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a></span>(<span class='kw'>res</span>)
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span>
+<span class='va'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlSequential</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"sfs"</span>, maxit <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'>selectFeatures</span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, <span class='va'>iris.task</span>, <span class='va'>rdesc</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>[FeatSel] Started selecting features for learner 'classif.rpart'</span></div><div class='output co'>#&gt; <span class='message'>With control class: FeatSelControlSequential</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 1: 0000 (0 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 1: mmce.test.mean=0.6400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 1000 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.2800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0100 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.4800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0010 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 2: 0001 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 1010 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0110 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 3: 0011 (2 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Result: Petal.Length (1 bits)</span></div><div class='input'><span class='fu'><a href='analyzeFeatSelResult.html'>analyzeFeatSelResult</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Features         : 1
 #&gt; Performance      : mmce.test.mean=0.0400000
 #&gt; Petal.Length

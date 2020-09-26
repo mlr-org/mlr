@@ -316,8 +316,8 @@ Nested Spatial and Non-Spatial Cross-Validation
 <h2 class="hasAnchor">
 <a href="#spatial-cross-validation" class="anchor"></a>Spatial Cross-Validation</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"spatial.task"</span>)
-<span class="kw">spatial.task</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"spatial.task"</span><span class="op">)</span>
+<span class="va">spatial.task</span>
 <span class="co">## Supervised task: ecuador</span>
 <span class="co">## Type: classif</span>
 <span class="co">## Target: slides</span>
@@ -334,13 +334,13 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">##   251   500 </span>
 <span class="co">## Positive class: TRUE</span>
 
-<span class="kw">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, predict.type = <span class="st">"prob"</span>)
+<span class="va">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 
-<span class="kw">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"SpRepCV"</span>, fold = <span class="fl">5</span>, reps = <span class="fl">5</span>)
+<span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"SpRepCV"</span>, fold <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-<span class="kw">out</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(learner = <span class="kw">learner.rf</span>, task = <span class="kw">spatial.task</span>,
-  resampling = <span class="kw">resampling</span>, measures = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">auc</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="va">out</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">learner.rf</span>, task <span class="op">=</span> <span class="va">spatial.task</span>,
+  resampling <span class="op">=</span> <span class="va">resampling</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Resampling: repeated spatial cross-validation</span>
 <span class="co">## Measures:             auc</span>
 <span class="co">## [Resample] iter 1:    0.5398810</span>
@@ -372,22 +372,21 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## Aggregated Result: auc.test.mean=0.6157643</span>
 <span class="co">## </span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">out</span><span class="op">$</span><span class="kw">measures.test</span><span class="op">$</span><span class="kw">auc</span>)
-<span class="co">## [1] 0.6157643</span>
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span>
+<span class="co">## [1] 0.6157643</span></pre></div>
 <p>We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting. To do so, we simply choose <code>RepCV</code> instead of <code>SpRepCV</code>. There is no need to remove <code>coordinates</code> from the task as it is only used if <code>SpCV</code> or <code>SpRepCV</code> is selected as the resampling strategy.</p>
 </div>
 <div id="non-spatial-cross-validation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#non-spatial-cross-validation" class="anchor"></a>Non-Spatial Cross-Validation</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ranger"</span>, predict.type = <span class="st">"prob"</span>)
+<span class="va">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 
-<span class="kw">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"RepCV"</span>, fold = <span class="fl">5</span>, reps = <span class="fl">5</span>)
+<span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"RepCV"</span>, fold <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-<span class="kw">out</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(learner = <span class="kw">learner.rf</span>, task = <span class="kw">spatial.task</span>,
-  resampling = <span class="kw">resampling</span>, measures = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">auc</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="va">out</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">learner.rf</span>, task <span class="op">=</span> <span class="va">spatial.task</span>,
+  resampling <span class="op">=</span> <span class="va">resampling</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Resampling: repeated cross-validation</span>
 <span class="co">## Measures:             auc</span>
 <span class="co">## [Resample] iter 1:    0.7525173</span>
@@ -419,32 +418,30 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## Aggregated Result: auc.test.mean=0.7621898</span>
 <span class="co">## </span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">out</span><span class="op">$</span><span class="kw">measures.test</span><span class="op">$</span><span class="kw">auc</span>)
-<span class="co">## [1] 0.7621898</span>
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span>
+<span class="co">## [1] 0.7621898</span></pre></div>
 <p>The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC.</p>
 </div>
 </div>
 <div id="visualization-of-spatial-partitions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualization-of-spatial-partitions" class="anchor"></a>Visualization of spatial partitions</h1>
-<p>You can visualize the spatial partitioning using <code><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. This function creates multiple <code>ggplot2</code> objects that can then be visualized in a gridded way using your favorite “plot arrangement” function We recommend to use <code><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">cowplot::plot_grid()</a></code> and <code><a href="https://rdrr.io/pkg/cowplot/man/save_plot.html">cowplot::save_plot()</a></code> for this.</p>
+<p>You can visualize the spatial partitioning using <code><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. This function creates multiple <code>ggplot2</code> objects that can then be visualized in a gridded way using your favorite “plot arrangement” function We recommend to use <code><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">cowplot::plot_grid()</a></code> and <code><a href="https://wilkelab.org/cowplot/reference/save_plot.html">cowplot::save_plot()</a></code> for this.</p>
 <p>You can pass multiple <code>resample</code> result objects as inputs. This is useful to visualize the differences between a spatial and non-spatial partitioning. If you pass the <code>resample</code> objects in a named list, those names will be populated as plot titles. By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument <code>datum</code>. If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html">base::lapply()</a></code> or similar functions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mlr.mlr-org.com">mlr</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://wilkelab.org/cowplot">cowplot</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span>
  
-<span class="kw">rdesc1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"SpRepCV"</span>, folds = <span class="fl">5</span>, reps = <span class="fl">4</span>)
-<span class="kw">r1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.qda"</span>), <span class="kw">spatial.task</span>, <span class="kw">rdesc1</span>, show.info = <span class="fl">FALSE</span>)
-<span class="kw">rdesc2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"RepCV"</span>, folds = <span class="fl">5</span>, reps = <span class="fl">4</span>)
-<span class="kw">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span>(<span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.qda"</span>), <span class="kw">spatial.task</span>, <span class="kw">rdesc2</span>, show.info = <span class="fl">FALSE</span>)
+<span class="va">rdesc1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"SpRepCV"</span>, folds <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="va">r1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.qda"</span><span class="op">)</span>, <span class="va">spatial.task</span>, <span class="va">rdesc1</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">rdesc2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"RepCV"</span>, folds <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="va">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.qda"</span><span class="op">)</span>, <span class="va">spatial.task</span>, <span class="va">rdesc2</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
  
-<span class="kw">plots</span> <span class="op">=</span> <span class="fu"><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots</a></span>(<span class="kw">spatial.task</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"SpRepCV"</span> = <span class="kw">r1</span>, <span class="st">"RepCV"</span> = <span class="kw">r2</span>), crs = <span class="fl">32717</span>, repetitions = <span class="fl">1</span>,
-  x.axis.breaks = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">79.075</span>), y.axis.breaks = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">3.975</span>))
-<span class="fu"><a href="https://rdrr.io/pkg/cowplot/man/plot_grid.html">plot_grid</a></span>(plotlist = <span class="kw">plots</span>[[<span class="st">"Plots"</span>]], ncol = <span class="fl">5</span>, nrow = <span class="fl">2</span>,
-  labels = <span class="kw">plots</span>[[<span class="st">"Labels"</span>]], label_size = <span class="fl">8</span>)
-</pre></div>
+<span class="va">plots</span> <span class="op">=</span> <span class="fu"><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots</a></span><span class="op">(</span><span class="va">spatial.task</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"SpRepCV"</span> <span class="op">=</span> <span class="va">r1</span>, <span class="st">"RepCV"</span> <span class="op">=</span> <span class="va">r2</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span>, repetitions <span class="op">=</span> <span class="fl">1</span>,
+  x.axis.breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">79.075</span><span class="op">)</span>, y.axis.breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.975</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plots</span><span class="op">[[</span><span class="st">"Plots"</span><span class="op">]</span><span class="op">]</span>, ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">2</span>,
+  labels <span class="op">=</span> <span class="va">plots</span><span class="op">[[</span><span class="st">"Labels"</span><span class="op">]</span><span class="op">]</span>, label_size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></pre></div>
 <p><img src="handling_of_spatial_data_files/figure-html/unnamed-chunk-6-1.png" width="800px" style="display: block; margin: auto;"></p>
 </div>
 <div id="notes" class="section level1">

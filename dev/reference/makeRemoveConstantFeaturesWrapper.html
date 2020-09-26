@@ -328,13 +328,13 @@
     <p>Fuses a base learner with the preprocessing implemented in <a href='removeConstantFeatures.html'>removeConstantFeatures</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeRemoveConstantFeaturesWrapper</span>(
-  <span class='kw'>learner</span>,
-  perc = <span class='fl'>0</span>,
-  dont.rm = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  na.ignore = <span class='fl'>FALSE</span>,
-  tol = <span class='kw'>.Machine</span><span class='op'>$</span><span class='kw'>double.eps</span><span class='op'>^</span><span class='fl'>0.5</span>
-)</pre>
+    <pre class="usage"><span class='fu'>makeRemoveConstantFeaturesWrapper</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  perc <span class='op'>=</span> <span class='fl'>0</span>,
+  dont.rm <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0L</span><span class='op'>)</span>,
+  na.ignore <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tol <span class='op'>=</span> <span class='va'>.Machine</span><span class='op'>$</span><span class='va'>double.eps</span><span class='op'>^</span><span class='fl'>0.5</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

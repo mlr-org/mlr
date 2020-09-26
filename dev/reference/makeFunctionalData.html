@@ -340,7 +340,7 @@ if not specified otherwise in <code>fd.features</code>. See <code>Examples</code
 of the generated output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeFunctionalData</span>(<span class='kw'>data</span>, fd.features = <span class='kw'>NULL</span>, exclude.cols = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>makeFunctionalData</span><span class='op'>(</span><span class='va'>data</span>, fd.features <span class='op'>=</span> <span class='cn'>NULL</span>, exclude.cols <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -375,11 +375,11 @@ Default is not to exclude anything.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># data.frame where columns 1:6 and 8:10 belong to a functional feature</span>
-<span class='kw'>d1</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), nrow = <span class='fl'>10</span>), <span class='st'>"target"</span> = <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>10</span>))
+<span class='va'>d1</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>, <span class='st'>"target"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># Transform to functional data</span>
-<span class='kw'>d2</span> <span class='op'>=</span> <span class='fu'>makeFunctionalData</span>(<span class='kw'>d1</span>, fd.features = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"fd1"</span> = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='st'>"fd2"</span> = <span class='fl'>8</span><span class='op'>:</span><span class='fl'>10</span>))
+<span class='va'>d2</span> <span class='op'>=</span> <span class='fu'>makeFunctionalData</span><span class='op'>(</span><span class='va'>d1</span>, fd.features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"fd1"</span> <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='st'>"fd2"</span> <span class='op'>=</span> <span class='fl'>8</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># Create a regression task</span>
-<span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span>(data = <span class='kw'>d2</span>, target = <span class='st'>"target"</span>)
+<span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>d2</span>, target <span class='op'>=</span> <span class='st'>"target"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Supervised task: d2
 #&gt; Type: regr
 #&gt; Target: target

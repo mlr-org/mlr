@@ -289,20 +289,18 @@
 <p>Each observation of a functional covariate in the data is an evaluation of a functional, i.e., it consists of measurements of a scalar value at various time (wavelength or another type of continuum) points. A single observation might then look like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># Load required packages</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/boost-R/FDboost">FDboost</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/boost-R/FDboost">FDboost</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co"># Plot NIR curve for first observarion</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">fuelSubset</span>, package = <span class="st">"FDboost"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">fuelSubset</span>, package <span class="op">=</span> <span class="st">"FDboost"</span><span class="op">)</span>
 
 <span class="co"># NIR_Obs_1 contains the measurements for NIR of the first functional covariate and</span>
 <span class="co"># lambda indicates the wavelength points the data was measured at.</span>
-<span class="kw">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"NIR_Obs1"</span> = <span class="kw">fuelSubset</span><span class="op">$</span><span class="kw">NIR</span>[<span class="fl">1</span>, ],
-                <span class="st">"lambda"</span> = <span class="kw">fuelSubset</span><span class="op">$</span><span class="kw">nir.lambda</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">df</span>) <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(y = <span class="kw">NIR_Obs1</span>, x = <span class="kw">lambda</span>))
-</pre></div>
+<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"NIR_Obs1"</span> <span class="op">=</span> <span class="va">fuelSubset</span><span class="op">$</span><span class="va">NIR</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>,
+                <span class="st">"lambda"</span> <span class="op">=</span> <span class="va">fuelSubset</span><span class="op">$</span><span class="va">nir.lambda</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">NIR_Obs1</span>, x <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="functional_data_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p><em>Note:</em> this is an example of spectroscopic data. NIR stands for “near infra-red radiation (light)”, UVVIS (you will find this below) – “ultra-violet and visible radiation (light)”, and in spectroscopy it is common to denote wavelengths as “lambda” <span class="math inline">\((\lambda)\)</span>. For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible “colors” expressed as numbers.</p>
 <div id="how-to-model-functional-data" class="section level1">
@@ -325,7 +323,7 @@
 <p>In the following example, the data is first stored as matrix columns using the helper function <code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> for the <a href="&amp;fuelSubset.task">fuelSubset</a> data from package <code>FDboost</code>.</p>
 <p>The data is provided in the following structure:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">fuelSubset</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">fuelSubset</span><span class="op">)</span>
 <span class="co">## List of 7</span>
 <span class="co">##  $ heatan      : num [1:129] 26.8 27.5 23.8 18.2 17.5 ...</span>
 <span class="co">##  $ h2o         : num [1:129] 2.3 3 2 1.85 2.39 ...</span>
@@ -333,8 +331,7 @@
 <span class="co">##  $ NIR         : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</span>
 <span class="co">##  $ uvvis.lambda: num [1:134] 250 256 261 267 273 ...</span>
 <span class="co">##  $ UVVIS       : num [1:129, 1:134] 0.145 -1.584 -0.814 -1.311 -1.373 ...</span>
-<span class="co">##  $ h2o.fit     : num [1:129] 2.58 3.43 1.83 2.03 3.07 ...</span>
-</pre></div>
+<span class="co">##  $ h2o.fit     : num [1:129] 2.58 3.43 1.83 2.03 3.07 ...</span></pre></div>
 <ul>
 <li>
 <strong>heatan</strong> is the target variable, in this case, a numeric value.</li>
@@ -348,26 +345,24 @@
 <p>Our data already contains functional features as matrices in a list. In order to demonstrate how such a matrix can be created from arbitrary numeric columns, we transform the list into a data frame with a set of numeric columns for each matrix. These columns refer to the matrix columns in the list, i.e., <strong>UVVIS.1</strong> is the first column of the UVVIS matrix.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># Put all values into a data frame</span>
-<span class="kw">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">fuelSubset</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"heatan"</span>, <span class="st">"h2o"</span>, <span class="st">"UVVIS"</span>, <span class="st">"NIR"</span>)])
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">df</span>[, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>])
+<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">fuelSubset</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"heatan"</span>, <span class="st">"h2o"</span>, <span class="st">"UVVIS"</span>, <span class="st">"NIR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## 'data.frame':    129 obs. of  5 variables:</span>
 <span class="co">##  $ heatan : num  26.8 27.5 23.8 18.2 17.5 ...</span>
 <span class="co">##  $ h2o    : num  2.3 3 2 1.85 2.39 ...</span>
 <span class="co">##  $ UVVIS.1: num  0.145 -1.584 -0.814 -1.311 -1.373 ...</span>
 <span class="co">##  $ UVVIS.2: num  -0.0111 -2.0467 -1.053 -1.2445 -1.8826 ...</span>
-<span class="co">##  $ UVVIS.3: num  0.0372 -1.5695 -0.9381 -1.0649 -1.4016 ...</span>
-</pre></div>
+<span class="co">##  $ UVVIS.3: num  0.0372 -1.5695 -0.9381 -1.0649 -1.4016 ...</span></pre></div>
 <p>Before constructing the <a href="task.html">task</a>, the data is again reformatted therefore it contains column matrices. This is done by providing a list <strong>fd.features</strong>, that identifies the functional covariates. All columns not mentioned in the list are kept as-is. In our case, the column indices 3:136 correspond to the columns of the UVVIS matrix. Alternatively, we could also specify the respective column names.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mlr.mlr-org.com">mlr</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
 <span class="co"># fd.features is a named list, where each name corresponds to the name of the </span>
 <span class="co"># functional feature and the values to the respective column indices or column names.</span>
-<span class="kw">fd.features</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"UVVIS"</span> = <span class="fl">3</span><span class="op">:</span><span class="fl">136</span>, <span class="st">"NIR"</span> = <span class="fl">137</span><span class="op">:</span><span class="fl">367</span>)
-<span class="kw">fdf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFunctionalData.html">makeFunctionalData</a></span>(<span class="kw">df</span>, fd.features = <span class="kw">fd.features</span>)
-</pre></div>
+<span class="va">fd.features</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">136</span>, <span class="st">"NIR"</span> <span class="op">=</span> <span class="fl">137</span><span class="op">:</span><span class="fl">367</span><span class="op">)</span>
+<span class="va">fdf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFunctionalData.html">makeFunctionalData</a></span><span class="op">(</span><span class="va">df</span>, fd.features <span class="op">=</span> <span class="va">fd.features</span><span class="op">)</span></pre></div>
 <p><code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> returns a <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame</a></code>, where the functional features are contained as matrices.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">fdf</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">fdf</span><span class="op">)</span>
 <span class="co">## 'data.frame':    129 obs. of  4 variables:</span>
 <span class="co">##  $ heatan: num  26.8 27.5 23.8 18.2 17.5 ...</span>
 <span class="co">##  $ h2o   : num  2.3 3 2 1.85 2.39 ...</span>
@@ -378,14 +373,13 @@
 <span class="co">##  $ NIR   : num [1:129, 1:231] 0.2818 0.2916 -0.0042 -0.034 -0.1804 ...</span>
 <span class="co">##   ..- attr(*, "dimnames")=List of 2</span>
 <span class="co">##   .. ..$ : NULL</span>
-<span class="co">##   .. ..$ : chr [1:231] "NIR.1" "NIR.2" "NIR.3" "NIR.4" ...</span>
-</pre></div>
+<span class="co">##   .. ..$ : chr [1:231] "NIR.1" "NIR.2" "NIR.3" "NIR.4" ...</span></pre></div>
 <p>Now with a data frame containing the functionals as matrices, a <a href="task.html">task</a> can be created:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># Create a regression task, classification tasks behave analogously</span>
 <span class="co"># In this case we use column indices</span>
-<span class="kw">tsk1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeRegrTask.html">makeRegrTask</a></span>(<span class="st">"fuelsubset"</span>, data = <span class="kw">fdf</span>, target = <span class="st">"heatan"</span>)
-<span class="kw">tsk1</span>
+<span class="va">tsk1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeRegrTask.html">makeRegrTask</a></span><span class="op">(</span><span class="st">"fuelsubset"</span>, data <span class="op">=</span> <span class="va">fdf</span>, target <span class="op">=</span> <span class="st">"heatan"</span><span class="op">)</span>
+<span class="va">tsk1</span>
 <span class="co">## Supervised task: fuelsubset</span>
 <span class="co">## Type: regr</span>
 <span class="co">## Target: heatan</span>
@@ -396,8 +390,7 @@
 <span class="co">## Missings: FALSE</span>
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-</pre></div>
+<span class="co">## Has coordinates: FALSE</span></pre></div>
 </div>
 <div id="constructing-a-learner" class="section level1">
 <h1 class="hasAnchor">
@@ -407,7 +400,7 @@
 <p><strong>Either use a <a href="learner.html">learner</a> suitable for functional data:</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># The following learners can be used for tsk1 (a regression task).</span>
-<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span>(<span class="kw">tsk1</span>, properties = <span class="st">"functionals"</span>, warn.missing.packages = <span class="fl">FALSE</span>)
+<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="va">tsk1</span>, properties <span class="op">=</span> <span class="st">"functionals"</span>, warn.missing.packages <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">##              class                                        name  short.name</span>
 <span class="co">## 1     regr.FDboost Functional linear array regression boosting     FDboost</span>
 <span class="co">## 2 regr.featureless                      Featureless regression featureless</span>
@@ -425,16 +418,13 @@
 <span class="co">## 2    FALSE      FALSE         FALSE   FALSE    FALSE        TRUE</span>
 <span class="co">##   single.functional    se lcens rcens icens</span>
 <span class="co">## 1             FALSE FALSE FALSE FALSE FALSE</span>
-<span class="co">## 2             FALSE FALSE FALSE FALSE FALSE</span>
-</pre></div>
+<span class="co">## 2             FALSE FALSE FALSE FALSE FALSE</span></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># Create an FDboost learner for regression</span>
-<span class="kw">fdalrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.FDboost"</span>)
-</pre></div>
+<span class="va">fdalrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.FDboost"</span><span class="op">)</span></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co"># Or alternatively, use knn for classification:</span>
-<span class="kw">knn.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.fdausc.knn"</span>)
-</pre></div>
+<span class="va">knn.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.fdausc.knn"</span><span class="op">)</span></pre></div>
 <p>Learners can have different properties, depending on whether they support either a <code>single.functional</code> or multiple <code>functionals</code>, i.e. multiple different sensors for the same observation.</p>
 <ul>
 <li>A learner will have the property <code>functionals</code> if it can handle one or multiple functional covariates.</li>
@@ -442,15 +432,13 @@
 </ul>
 <p>We can check for those properties when selecting a leaner:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../../reference/LearnerProperties.html">getLearnerProperties</a></span>(<span class="kw">fdalrn</span>)
-<span class="co">## [1] "numerics"    "functionals"</span>
-</pre></div>
+<span class="fu"><a href="../../reference/LearnerProperties.html">getLearnerProperties</a></span><span class="op">(</span><span class="va">fdalrn</span><span class="op">)</span>
+<span class="co">## [1] "numerics"    "functionals"</span></pre></div>
 <p><strong>or use a standard <a href="learner.html">learner</a>:</strong></p>
 <p>In this case, the temporal structure is disregarded, and the functional data treated as simple numeric features.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="co"># Decision Tree learner</span>
-<span class="kw">rpartlrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>)
-</pre></div>
+<span class="va">rpartlrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></pre></div>
 <p>Alternatively, transform the functional data into a non-temporal/non-functional space by <a href="functional_data.html#feature-extraction">extracting</a> features before training. In this case, a standard regression- or classification-<a href="learner.html">learner</a> can be applied.</p>
 <p>This is explained in more detail in the <a href="functional_data.html#feature-extraction">feature extraction</a> section below.</p>
 </div>
@@ -460,25 +448,23 @@
 <p>The resulting <a href="learner.html">learner</a> can now be trained on the task created in section <a href="functional_data.html#creating-a-task">Creating a task</a> above.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="co"># Train the fdalrn on the constructed task</span>
-<span class="kw">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(learner = <span class="kw">fdalrn</span>, task = <span class="kw">tsk1</span>)
-<span class="kw">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">m</span>, <span class="kw">tsk1</span>)
-<span class="fu"><a href="../../reference/performance.html">performance</a></span>(<span class="kw">p</span>, <span class="kw">rmse</span>)
+<span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">fdalrn</span>, task <span class="op">=</span> <span class="va">tsk1</span><span class="op">)</span>
+<span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">tsk1</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">rmse</span><span class="op">)</span>
 <span class="co">##     rmse </span>
-<span class="co">## 2.181438</span>
-</pre></div>
+<span class="co">## 2.181438</span></pre></div>
 <p>Alternatively, learners that do not explicitly treat functional covariates can be applied. In this case, the temporal structure is completely disregarded, and all columns are treated as independent.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="co"># Train a normal learner on the constructed task.</span>
 <span class="co"># Note that we get a message, that functionals have been converted to numerics.</span>
-<span class="kw">rpart.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"regr.rpart"</span>)
-<span class="kw">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span>(learner = <span class="kw">rpart.lrn</span>, task = <span class="kw">tsk1</span>)
+<span class="va">rpart.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.rpart"</span><span class="op">)</span>
+<span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">rpart.lrn</span>, task <span class="op">=</span> <span class="va">tsk1</span><span class="op">)</span>
 <span class="co">## Functional features have been converted to numerics</span>
 
-<span class="kw">m</span>
+<span class="va">m</span>
 <span class="co">## Model for learner.id=regr.rpart; learner.class=regr.rpart</span>
 <span class="co">## Trained on: task.id = fuelsubset; obs = 129; features = 3</span>
-<span class="co">## Hyperparameters: xval=0</span>
-</pre></div>
+<span class="co">## Hyperparameters: xval=0</span></pre></div>
 </div>
 <div id="feature-extraction" class="section level1">
 <h1 class="hasAnchor">
@@ -496,11 +482,11 @@
 <span class="co"># feat.methods specifies what to extract from which functional</span>
 <span class="co"># In this example, we extract the Fourier transformation from the first functional.</span>
 <span class="co"># From the second functional, fpca scores are extracted.</span>
-<span class="kw">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"UVVIS"</span> = <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span>(), <span class="st">"NIR"</span> = <span class="fu"><a href="../../reference/extractFDAFPCA.html">extractFDAFPCA</a></span>())
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFPCA.html">extractFDAFPCA</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Either create a new task from an existing task</span>
-<span class="kw">extracted</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span>(<span class="kw">tsk1</span>, feat.methods = <span class="kw">feat.methods</span>)
-<span class="kw">extracted</span>
+<span class="va">extracted</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
+<span class="va">extracted</span>
 <span class="co">## $task</span>
 <span class="co">## Supervised task: fuelsubset</span>
 <span class="co">## Type: regr</span>
@@ -517,8 +503,7 @@
 <span class="co">## $desc</span>
 <span class="co">## Extraction of features from functional data:</span>
 <span class="co">## Target: heatan</span>
-<span class="co">## Remaining functional Features: 2 after extraction on 2 functional features</span>
-</pre></div>
+<span class="co">## Remaining functional Features: 2 after extraction on 2 functional features</span></pre></div>
 <div id="wavelets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wavelets" class="anchor"></a>Wavelets</h2>
@@ -526,13 +511,12 @@
 <div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="co"># Specify the feature extraction method and generate new task.</span>
 <span class="co"># Here, we use the Haar filter:</span>
-<span class="kw">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"UVVIS"</span> = <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span>(filter = <span class="st">"haar"</span>))
-<span class="kw">task.w</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span>(<span class="kw">tsk1</span>, feat.methods = <span class="kw">feat.methods</span>)
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"haar"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">task.w</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
 
 <span class="co"># Use the Daubechie wavelet with filter length 4.</span>
-<span class="kw">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"NIR"</span> = <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span>(filter = <span class="st">"d4"</span>))
-<span class="kw">task.wd4</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span>(<span class="kw">tsk1</span>, feat.methods = <span class="kw">feat.methods</span>)
-</pre></div>
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"d4"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">task.wd4</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span></pre></div>
 </div>
 <div id="fourier-transformation" class="section level2">
 <h2 class="hasAnchor">
@@ -541,11 +525,10 @@
 <div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="co"># Specify the feature extraction method and generate new task.</span>
 <span class="co"># We use the Fourier features and the amplitude for NIR, as well as the phase for UVVIS</span>
-<span class="kw">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"NIR"</span> = <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span>(trafo.coeff = <span class="st">"amplitude"</span>),
-                    <span class="st">"UVVIS"</span> = <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span>(trafo.coeff = <span class="st">"phase"</span>))
-<span class="kw">task.fourier</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span>(<span class="kw">tsk1</span>, feat.methods = <span class="kw">feat.methods</span>)
-<span class="kw">task.fourier</span>
-</pre></div>
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span>trafo.coeff <span class="op">=</span> <span class="st">"amplitude"</span><span class="op">)</span>,
+                    <span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span>trafo.coeff <span class="op">=</span> <span class="st">"phase"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">task.fourier</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
+<span class="va">task.fourier</span></pre></div>
 </div>
 </div>
 <div id="wrappers" class="section level1">
@@ -555,16 +538,15 @@
 <div class="sourceCode" id="cb18"><pre class="downlit">
 <span class="co"># Use a FDAFeatExtractWrapper</span>
 <span class="co"># In this case we extract the Fourier features from the NIR variable</span>
-<span class="kw">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"NIR"</span> = <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span>())
-<span class="kw">wrapped.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeExtractFDAFeatsWrapper.html">makeExtractFDAFeatsWrapper</a></span>(<span class="st">"regr.rpart"</span>,  feat.methods = <span class="kw">feat.methods</span>)
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">wrapped.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeExtractFDAFeatsWrapper.html">makeExtractFDAFeatsWrapper</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>,  feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
 
 <span class="co"># And run the learner</span>
-<span class="fu"><a href="../../reference/train.html">train</a></span>(<span class="kw">wrapped.lrn</span>, <span class="kw">fuelsubset.task</span>)
+<span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">wrapped.lrn</span>, <span class="va">fuelsubset.task</span><span class="op">)</span>
 <span class="co">## Functional features have been converted to numerics</span>
 <span class="co">## Model for learner.id=regr.rpart.extracted; learner.class=extractFDAFeatsWrapper</span>
 <span class="co">## Trained on: task.id = fs.fdf; obs = 129; features = 3</span>
-<span class="co">## Hyperparameters: xval=0</span>
-</pre></div>
+<span class="co">## Hyperparameters: xval=0</span></pre></div>
 </div>
   </div>
 

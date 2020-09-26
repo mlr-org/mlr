@@ -330,21 +330,21 @@ Features are then selected via select and val." />
 Features are then selected via <code>select</code> and <code>val</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterFeatures</span>(
-  <span class='kw'>task</span>,
-  method = <span class='st'>"randomForestSRC_importance"</span>,
-  fval = <span class='kw'>NULL</span>,
-  perc = <span class='kw'>NULL</span>,
-  abs = <span class='kw'>NULL</span>,
-  threshold = <span class='kw'>NULL</span>,
-  fun = <span class='kw'>NULL</span>,
-  fun.args = <span class='kw'>NULL</span>,
-  mandatory.feat = <span class='kw'>NULL</span>,
-  select.method = <span class='kw'>NULL</span>,
-  base.methods = <span class='kw'>NULL</span>,
-  cache = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>filterFeatures</span><span class='op'>(</span>
+  <span class='va'>task</span>,
+  method <span class='op'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
+  fval <span class='op'>=</span> <span class='cn'>NULL</span>,
+  perc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  abs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fun <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fun.args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mandatory.feat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  select.method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  base.methods <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cache <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -463,7 +463,7 @@ available ensemble methods.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simple filter</span>
-<span class='fu'>filterFeatures</span>(<span class='kw'>iris.task</span>, method = <span class='st'>"FSelectorRcpp_gain.ratio"</span>, abs = <span class='fl'>2</span>)
+<span class='fu'>filterFeatures</span><span class='op'>(</span><span class='va'>iris.task</span>, method <span class='op'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, abs <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species
@@ -479,9 +479,9 @@ available ensemble methods.</p>
 #&gt;     setosa versicolor  virginica 
 #&gt;         50         50         50 
 #&gt; Positive class: NA</div><div class='input'><span class='co'># ensemble filter</span>
-<span class='fu'>filterFeatures</span>(<span class='kw'>iris.task</span>, method = <span class='st'>"E-min"</span>,
-  base.methods = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>,
-    <span class='st'>"FSelectorRcpp_information.gain"</span>), abs = <span class='fl'>2</span>)
+<span class='fu'>filterFeatures</span><span class='op'>(</span><span class='va'>iris.task</span>, method <span class='op'>=</span> <span class='st'>"E-min"</span>,
+  base.methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSelectorRcpp_gain.ratio"</span>,
+    <span class='st'>"FSelectorRcpp_information.gain"</span><span class='op'>)</span>, abs <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species

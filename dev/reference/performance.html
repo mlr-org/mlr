@@ -328,14 +328,14 @@
     <p>Measures the quality of a prediction w.r.t. some performance measure.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>performance</span>(
-  <span class='kw'>pred</span>,
-  <span class='kw'>measures</span>,
-  task = <span class='kw'>NULL</span>,
-  model = <span class='kw'>NULL</span>,
-  feats = <span class='kw'>NULL</span>,
-  simpleaggr = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>performance</span><span class='op'>(</span>
+  <span class='va'>pred</span>,
+  <span class='va'>measures</span>,
+  task <span class='op'>=</span> <span class='cn'>NULL</span>,
+  model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  feats <span class='op'>=</span> <span class='cn'>NULL</span>,
+  simpleaggr <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -393,18 +393,18 @@ If TRUE, aggregation of <code>ResamplePrediction</code> objects is skipped. This
 <code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>training.set</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>iris</span>), by = <span class='fl'>2</span>)
-<span class='kw'>test.set</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>iris</span>), by = <span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='va'>training.set</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>test.set</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
-<span class='kw'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span>(data = <span class='kw'>iris</span>, target = <span class='st'>"Species"</span>)
-<span class='kw'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
-<span class='kw'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='kw'>lrn</span>, <span class='kw'>task</span>, subset = <span class='kw'>training.set</span>)
-</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='kw'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>mod</span>, newdata = <span class='kw'>iris</span>[<span class='kw'>test.set</span>, ])
-</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris[test.set, ]): object 'mod' not found</span></div><div class='input'><span class='fu'>performance</span>(<span class='kw'>pred</span>, measures = <span class='kw'>mmce</span>)
+<span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span>
+<span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, subset <span class='op'>=</span> <span class='va'>training.set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, newdata <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span><span class='va'>test.set</span>, <span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris[test.set, ]): object 'mod' not found</span></div><div class='input'><span class='fu'>performance</span><span class='op'>(</span><span class='va'>pred</span>, measures <span class='op'>=</span> <span class='va'>mmce</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'>
 <span class='co'># Compute multiple performance measures at once</span>
-<span class='kw'>ms</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"mmce"</span> = <span class='kw'>mmce</span>, <span class='st'>"acc"</span> = <span class='kw'>acc</span>, <span class='st'>"timetrain"</span> = <span class='kw'>timetrain</span>)
-<span class='fu'>performance</span>(<span class='kw'>pred</span>, measures = <span class='kw'>ms</span>, <span class='kw'>task</span>, <span class='kw'>mod</span>)
+<span class='va'>ms</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"mmce"</span> <span class='op'>=</span> <span class='va'>mmce</span>, <span class='st'>"acc"</span> <span class='op'>=</span> <span class='va'>acc</span>, <span class='st'>"timetrain"</span> <span class='op'>=</span> <span class='va'>timetrain</span><span class='op'>)</span>
+<span class='fu'>performance</span><span class='op'>(</span><span class='va'>pred</span>, measures <span class='op'>=</span> <span class='va'>ms</span>, <span class='va'>task</span>, <span class='va'>mod</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = ms, task, mod): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

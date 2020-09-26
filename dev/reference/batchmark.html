@@ -366,16 +366,16 @@ tutorial page: <a href='https://github.com/mllg/batchtools'>https://github.com/m
 from a vector of dataset IDs easily with <code>tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>batchmark</span>(
-  <span class='kw'>learners</span>,
-  <span class='kw'>tasks</span>,
-  <span class='kw'>resamplings</span>,
-  <span class='kw'>measures</span>,
-  keep.pred = <span class='fl'>TRUE</span>,
-  keep.extract = <span class='fl'>FALSE</span>,
-  models = <span class='fl'>FALSE</span>,
-  reg = <span class='kw'>batchtools</span>::<span class='fu'><a href='https://rdrr.io/pkg/batchtools/man/getDefaultRegistry.html'>getDefaultRegistry</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>batchmark</span><span class='op'>(</span>
+  <span class='va'>learners</span>,
+  <span class='va'>tasks</span>,
+  <span class='va'>resamplings</span>,
+  <span class='va'>measures</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep.extract <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  reg <span class='op'>=</span> <span class='fu'>batchtools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/batchtools/man/getDefaultRegistry.html'>getDefaultRegistry</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

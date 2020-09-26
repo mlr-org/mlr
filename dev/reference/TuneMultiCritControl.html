@@ -354,45 +354,45 @@ parameter types can be handled.</p></dd>
 
     </div>
 
-    <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  resolution = <span class='fl'>10L</span>,
-  log.fun = <span class='st'>"default"</span>,
-  final.dw.perc = <span class='kw'>NULL</span>,
-  budget = <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>makeTuneMultiCritControlGrid</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  resolution <span class='op'>=</span> <span class='fl'>10L</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>,
+  final.dw.perc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  budget <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>makeTuneMultiCritControlMBO</span>(
-  n.objectives = <span class='kw'>mbo.control</span><span class='op'>$</span><span class='kw'>n.objectives</span>,
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  impute.val = <span class='kw'>NULL</span>,
-  learner = <span class='kw'>NULL</span>,
-  mbo.control = <span class='kw'>NULL</span>,
-  tune.threshold = <span class='fl'>FALSE</span>,
-  tune.threshold.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  continue = <span class='fl'>FALSE</span>,
-  log.fun = <span class='st'>"default"</span>,
-  final.dw.perc = <span class='kw'>NULL</span>,
-  budget = <span class='kw'>NULL</span>,
-  mbo.design = <span class='kw'>NULL</span>
-)
+<span class='fu'>makeTuneMultiCritControlMBO</span><span class='op'>(</span>
+  n.objectives <span class='op'>=</span> <span class='va'>mbo.control</span><span class='op'>$</span><span class='va'>n.objectives</span>,
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  impute.val <span class='op'>=</span> <span class='cn'>NULL</span>,
+  learner <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mbo.control <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tune.threshold <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tune.threshold.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  continue <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>,
+  final.dw.perc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  budget <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mbo.design <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>makeTuneMultiCritControlNSGA2</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  impute.val = <span class='kw'>NULL</span>,
-  log.fun = <span class='st'>"default"</span>,
-  final.dw.perc = <span class='kw'>NULL</span>,
-  budget = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>makeTuneMultiCritControlNSGA2</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  impute.val <span class='op'>=</span> <span class='cn'>NULL</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>,
+  final.dw.perc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  budget <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>makeTuneMultiCritControlRandom</span>(
-  same.resampling.instance = <span class='fl'>TRUE</span>,
-  maxit = <span class='fl'>100L</span>,
-  log.fun = <span class='st'>"default"</span>,
-  final.dw.perc = <span class='kw'>NULL</span>,
-  budget = <span class='kw'>NULL</span>
-)</pre>
+<span class='fu'>makeTuneMultiCritControlRandom</span><span class='op'>(</span>
+  same.resampling.instance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  maxit <span class='op'>=</span> <span class='fl'>100L</span>,
+  log.fun <span class='op'>=</span> <span class='st'>"default"</span>,
+  final.dw.perc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  budget <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
