@@ -951,7 +951,7 @@ makeFilter(
   name = "praznik_JMI",
   desc = "Joint mutual information filter",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("JMI")
 )
@@ -962,7 +962,7 @@ makeFilter(
   name = "praznik_DISR",
   desc = "Double input symmetrical relevance filter",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("DISR")
 )
@@ -973,7 +973,7 @@ makeFilter(
   name = "praznik_JMIM",
   desc = "Minimal joint mutual information maximisation filter",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("JMIM")
 )
@@ -984,7 +984,7 @@ makeFilter(
   name = "praznik_MIM",
   desc = "conditional mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("MIM")
 )
@@ -995,7 +995,7 @@ makeFilter(
   name = "praznik_NJMIM",
   desc = "Minimal normalised joint mutual information maximisation filter",
   pkg = "praznik",
-  supported.tasks = "classif",
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("NJMIM")
 )
@@ -1006,7 +1006,7 @@ makeFilter(
   name = "praznik_MRMR",
   desc = "Minimum redundancy maximal relevancy filter",
   pkg = "praznik",
-  supported.tasks = c("classif", "regr", "surv"),
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = praznik_filter("MRMR")
 )
