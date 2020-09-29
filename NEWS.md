@@ -1,3 +1,9 @@
+# mlr 2.17.1.9006
+
+- Many praznik filters are now also able to deal with regression tasks (#2790, @bommert)
+- `praznik_MRMR`: Remove handling of survival tasks (#2790, @bommert)
+
+
 # mlr 2.17.1.9005
 
 - xgboost: update `objective` default from `reg:linear` (deprecated) to `reg:squarederror`
