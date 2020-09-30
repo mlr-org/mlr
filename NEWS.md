@@ -1,3 +1,8 @@
+# mlr 2.18.0
+
+- Internal changes only.
+
+
 # mlr 2.17.1.9006
 
 - Many praznik filters are now also able to deal with regression tasks (#2790, @bommert)
