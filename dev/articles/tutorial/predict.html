@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1.9006</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -379,9 +379,6 @@
 <p>Some learners provide standard errors for predictions, which can be accessed in <code>mlr</code>. An overview is given by calling the function <code><a href="../../reference/listLearners.html">listLearners()</a></code> and setting <code>properties = "se"</code>. By assigning <code>FALSE</code> to <code>check.packages</code> learners from packages which are not installed will be included in the overview.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"regr"</span>, check.packages <span class="op">=</span> <span class="cn">FALSE</span>, properties <span class="op">=</span> <span class="st">"se"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"name"</span><span class="op">)</span><span class="op">]</span>
-<span class="co">## Warning in listLearners.character("regr", check.packages = FALSE, properties = "se"): The following learners could not be constructed, probably because their packages are not installed:</span>
-<span class="co">## classif.h2o.deeplearning,classif.h2o.gbm,classif.h2o.glm,classif.h2o.randomForest,regr.h2o.deeplearning,regr.h2o.gbm,regr.h2o.glm,regr.h2o.randomForest</span>
-<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="co">##                class</span>
 <span class="co">## 1         regr.bcart</span>
 <span class="co">## 2           regr.bgp</span>
