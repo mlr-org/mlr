@@ -33,7 +33,7 @@ problems are created from the multiclass task. How these binary problems
 are generated is defined by an error-correcting-output-code (ECOC) code book.
 This also allows the simple and well-known one-vs-one and one-vs-rest
 approaches. Decoding is currently done via Hamming decoding, see
-e.g. here \url{http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf}.
+e.g. here \url{https://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf}.
 
 Currently, the approach always operates on the discrete predicted labels
 of the binary base models (instead of their probabilities) and the created
