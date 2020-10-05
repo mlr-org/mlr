@@ -408,7 +408,8 @@ Moreover, in the second plot we color the boxes according to the `learner.id`s.
 
 ```{r, fig.asp=7/9}
 plotBMRBoxplots(bmr, measure = mmce, order.lrn = getBMRLearnerIds(bmr))
-plotBMRBoxplots(bmr, measure = ber, style = "violin", pretty.names = FALSE,
+plotBMRBoxplots(bmr,
+  measure = ber, style = "violin", pretty.names = FALSE,
   order.lrn = getBMRLearnerIds(bmr)) +
   aes(color = learner.id) +
   theme(strip.text.x = element_text(size = 8))
@@ -533,7 +534,7 @@ An interval which extends by the given *critical difference* in both directions 
 All learners within the interval are not significantly different, while the baseline can be considered better or worse than a given learner which is outside of the interval.
 
 The critical difference $\mathit{CD}$ is calculated by $$\mathit{CD} = q_\alpha \cdot \sqrt{\frac{k(k+1)}{6N}},$$ where $N$ denotes the number of tasks, $k$ is the number of learners, and $q_\alpha$ comes from the studentized range statistic divided by $\sqrt{2}$.
-For details see [Demsar (2006)](http://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf).
+For details see [Demsar (2006)](https://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf).
 
 Function `generateCritDifferencesData()` does all necessary calculations while function `plotCritDifferences()` draws the plot. 
 See the tutorial page about [visualization](visualization.html){target="_blank"} for details on data generation and plotting functions.
@@ -561,7 +562,8 @@ Instead of boxplots (as in `plotBMRBoxplots()`) we could create density plots to
 perf = getBMRPerformances(bmr, as.df = TRUE)
 
 # Density plots for two tasks
-qplot(mmce, colour = learner.id, facets = . ~ task.id,
+qplot(mmce,
+  colour = learner.id, facets = . ~ task.id,
   data = perf[perf$task.id %in% c("iris-example", "Sonar-example"), ], geom = "density") +
   theme(strip.text.x = element_text(size = 8))
 ```
@@ -581,7 +583,8 @@ df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
 df = df[df$variable != "ber", ]
 head(df)
 
-qplot(variable, value, data = df, colour = learner.id, geom = "boxplot",
+qplot(variable, value,
+  data = df, colour = learner.id, geom = "boxplot",
   xlab = "measure", ylab = "performance") +
   facet_wrap(~task.id, nrow = 2)
 ```
