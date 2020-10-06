@@ -23,14 +23,15 @@
 #' One-versus-one Binary Classification.
 #' In: Proceedings of the Sixth Asian Conference on Machine Learning.
 #' JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
-#' <http://www.jmlr.org/proceedings/papers/v39/lin14.pdf>
+#' <https://www.jmlr.org/proceedings/papers/v39/lin14.pdf>
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
   learner = checkLearner(learner, "classif", props = "weights")
   learner = setPredictType(learner, "response")
   id = stri_paste("costsens", learner$id, sep = ".")
-  makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
+  makeHomogeneousEnsemble(id, "costsens", learner,
+    package = learner$package,
     learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
 }
 
@@ -38,6 +39,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
 trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = NULL, ...) {
 
   # note that no hyperpars can be in ..., they would refer to the wrapper
+
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)
   td = getTaskDesc(.task)
@@ -57,7 +59,8 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = 
         models[[counter]] = y[1]
       } else {
         feats$..y.. = y
-        task = makeClassifTask(data = feats, target = "..y..",
+        task = makeClassifTask(
+          data = feats, target = "..y..",
           check.data = FALSE, fixup.data = "quiet")
         w = abs(costs[, a1] - costs[, a2])
         models[[counter]] = train(.learner$next.learner, task, weights = w)

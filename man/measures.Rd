@@ -291,7 +291,7 @@ Statistics in medicine. 2011;30(10):1105-1117. \url{https://doi.org/10.1002/sim.
 
 H. Uno et al.
 \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
-Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{https://www.jstor.org/stable/27639883}.
+Journal of the American Statistical Association 102, no. 478 (2007): 527-37.
 }
 \seealso{
 Other performance: 

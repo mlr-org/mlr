@@ -11,7 +11,7 @@
 #' are generated is defined by an error-correcting-output-code (ECOC) code book.
 #' This also allows the simple and well-known one-vs-one and one-vs-rest
 #' approaches. Decoding is currently done via Hamming decoding, see
-#' e.g. here <http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf>.
+#' e.g. here <https://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf>.
 #'
 #' Currently, the approach always operates on the discrete predicted labels
 #' of the binary base models (instead of their probabilities) and the created
@@ -41,7 +41,8 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
   pv = list(mcw.method = mcw.method)
   id = stri_paste(learner$id, "multiclass", sep = ".")
 
-  x = makeHomogeneousEnsemble(id = id, type = "classif", next.learner = learner,
+  x = makeHomogeneousEnsemble(
+    id = id, type = "classif", next.learner = learner,
     package = learner$package, par.set = ps, par.vals = pv,
     learner.subclass = "MulticlassWrapper", model.subclass = "MulticlassModel")
   x = setPredictType(x, predict.type = "response")
@@ -58,7 +59,8 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset = NULL, .weig
   args = list(x = x, learner = .learner, task = .task, weights = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
-  models = parallelMap(i = seq_along(x$row.inds), doMulticlassTrainIteration,
+  models = parallelMap(
+    i = seq_along(x$row.inds), doMulticlassTrainIteration,
     more.args = args, level = "mlr.ensemble")
   m = makeHomChainModel(.learner, models)
   m$cm = cm

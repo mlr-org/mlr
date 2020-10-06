@@ -36,7 +36,7 @@ Reduction from Cost-sensitive Multiclass Classification to
 One-versus-one Binary Classification.
 In: Proceedings of the Sixth Asian Conference on Machine Learning.
 JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
-\url{http://www.jmlr.org/proceedings/papers/v39/lin14.pdf}
+\url{https://www.jmlr.org/proceedings/papers/v39/lin14.pdf}
 }
 \seealso{
 Other costsens: 

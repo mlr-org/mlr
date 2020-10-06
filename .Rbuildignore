@@ -44,3 +44,4 @@ revdep/*
 ^\.github$
 ^clang-.*
 ^gfortran.*
+^cran-comments\.md$

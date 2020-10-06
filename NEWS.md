@@ -5,40 +5,15 @@
 
 # mlr 2.18.0
 
-- Internal changes only.
-
-
-# mlr 2.17.1.9006
-
 - Many praznik filters are now also able to deal with regression tasks (#2790, @bommert)
 - `praznik_MRMR`: Remove handling of survival tasks (#2790, @bommert)
-
-
-# mlr 2.17.1.9005
-
 - xgboost: update `objective` default from `reg:linear` (deprecated) to `reg:squarederror`
 - issue a warning if `blocking` was set in the Task but `blocking.cv` was not set within `makeResampleDesc() (#2788)
-
-# mlr 2.17.1.9003
-
 - Fix order of learners in `generateLearningCurveData()` (#2768)
-
-
-# mlr 2.17.1.9002
-
  - `getFeatureImportance()`: Account for feature importance weight of linear xgboost models
-
-
-# mlr 2.17.1.9001
-
 - Fix learner note for learner glmnet (the default of param `s` did not match the learner note) (#2747)
-- Remove dep {hrbrthemes} used in `createSpatialResamplingPlots()`. The package caused issues on R-devel. In addition users should set custom themes by themselves.
+- Remove dependency {hrbrthemes} used in `createSpatialResamplingPlots()`. The package caused issues on R-devel. In addition users should set custom themes by themselves.
 - Explicitly return value in `getNestedTuneResultsOptPathDf()` (#2754)
-
-
-# mlr 2.17.1.9000
-
-- Internal changes only
 
 # mlr 2.17.1
 
@@ -235,7 +210,7 @@ PR: #2638 (@pfistl)
 ## filters - new
 
 - Ensemble features are now supported. These filters combine multiple single filters to create a final ranking based on certain statistical operations. All new filters are listed in a dedicated section "ensemble filters" in the [tutorial](https://mlr.mlr-org.com/articles/tutorial/filter_methods.html).
-  Tuning of simple features is not supported yet because of a [missing feature](https://github.com/berndbischl/ParamHelpers/pull/206) in _ParamHelpers_. (@pat-s, #2456)
+  Tuning of simple features is not supported yet because of a [missing feature](https://github.com/mlr-org/ParamHelpers/pull/206) in _ParamHelpers_. (@pat-s, #2456)
 
 # mlr 2.14.0
 

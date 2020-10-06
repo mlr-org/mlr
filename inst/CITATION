@@ -18,7 +18,7 @@ bref = c(
     volume = 17L,
     number = 170L,
     pages = "1-5",
-    url = "http://jmlr.org/papers/v17/15-066.html"
+    url = "https://jmlr.org/papers/v17/15-066.html"
   ),
   bibentry(
     bibtype = "Article",
