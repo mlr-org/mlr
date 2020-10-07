@@ -110,7 +110,7 @@ jobs:
           sudo apt install -y ccache
           mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
-      - name: "[Stage] [Linux] Install system dependencies""
+      - name: "[Stage] [Linux] Install system dependencies"
         if: runner.os == 'Linux'
         run: |
           while read -r cmd
