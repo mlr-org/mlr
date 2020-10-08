@@ -10,7 +10,7 @@
       });
 
       $('body').scrollspy({
-        target: '#sidebar',
+        target: '#pkgdown-sidebar',
         offset: 60
       });
 

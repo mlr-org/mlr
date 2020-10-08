@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -75,7 +79,7 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -90,7 +94,7 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -278,7 +282,7 @@ Multi-criteria tuning can be done with tuneParamsMultiCrit." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -334,16 +338,16 @@ by passing a corresponding control object. For a complete list of implemented al
 <p>Multi-criteria tuning can be done with <a href='tuneParamsMultiCrit.html'>tuneParamsMultiCrit</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tuneParams</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='no'>resampling</span>,
-  <span class='no'>measures</span>,
-  <span class='no'>par.set</span>,
-  <span class='no'>control</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>),
-  <span class='kw'>resample.fun</span> <span class='kw'>=</span> <span class='no'>resample</span>
-)</pre>
+    <pre class="usage"><span class='fu'>tuneParams</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  <span class='va'>resampling</span>,
+  <span class='va'>measures</span>,
+  <span class='va'>par.set</span>,
+  <span class='va'>control</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>,
+  resample.fun <span class='op'>=</span> <span class='va'>resample</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -436,79 +440,80 @@ the measure. See example code below.</p>
 <code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
 <span class='co'># a grid search for an SVM (with a tiny number of points...)</span>
 <span class='co'># note how easily we can optimize on a log-scale</span>
-<span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"C"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>),
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"sigma"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>)
-)
-<span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span>(<span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
+<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'>makeParamSet</span><span class='op'>(</span>
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"C"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>, upper <span class='op'>=</span> <span class='fl'>12</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span><span class='op'>^</span><span class='va'>x</span><span class='op'>)</span>,
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"sigma"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>, upper <span class='op'>=</span> <span class='fl'>12</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span><span class='op'>^</span><span class='va'>x</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span><span class='op'>(</span>resolution <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'>tuneParams</span><span class='op'>(</span><span class='st'>"classif.ksvm"</span>, <span class='va'>iris.task</span>, <span class='va'>rdesc</span>, par.set <span class='op'>=</span> <span class='va'>ps</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>         Type len Def    Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>C     numeric   -   - -12 to 12   -    TRUE     Y</span>
-#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0533333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0533333</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+#&gt; <span class='message'>sigma numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: C=0.000244; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: C=4.1e+03; sigma=0.000244</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0533333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: C=0.000244; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: C=4.1e+03; sigma=4.1e+03</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.7333333; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.0533333</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: C=4.1e+03; sigma=0.000244
 #&gt; mmce.test.mean=0.0533333</div><div class='input'><span class='co'># access data for all evaluated points</span>
-<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
-<span class='no'>df1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
+<span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>opt.path</span><span class='op'>)</span>
+<span class='va'>df1</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>opt.path</span>, trafo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
 #&gt; 1 -12   -12     0.73333333   1  NA          &lt;NA&gt;
 #&gt; 2  12   -12     0.05333333   2  NA          &lt;NA&gt;
 #&gt; 3 -12    12     0.73333333   3  NA          &lt;NA&gt;
-#&gt; 4  12    12     0.73333333   4  NA          &lt;NA&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df1</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
+#&gt; 4  12    12     0.73333333   4  NA          &lt;NA&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     C sigma mmce.test.mean dob eol error.message
 #&gt; 1 -12   -12     0.73333333   1  NA          &lt;NA&gt;
 #&gt; 2  12   -12     0.05333333   2  NA          &lt;NA&gt;
 #&gt; 3 -12    12     0.73333333   3  NA          &lt;NA&gt;
 #&gt; 4  12    12     0.73333333   4  NA          &lt;NA&gt;</div><div class='input'><span class='co'># access data for all evaluated points - alternative</span>
-<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>)
-<span class='no'>df3</span> <span class='kw'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span>(<span class='no'>res</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df2</span>$<span class='no'>data</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df2</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;     C sigma mmce.test.mean iteration
+<span class='va'>df2</span> <span class='op'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>df3</span> <span class='op'>=</span> <span class='fu'><a href='generateHyperParsEffectData.html'>generateHyperParsEffectData</a></span><span class='op'>(</span><span class='va'>res</span>, trafo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     C sigma mmce.test.mean iteration
 #&gt; 1 -12   -12     0.73333333         1
 #&gt; 2  12   -12     0.05333333         2
 #&gt; 3 -12    12     0.73333333         3
-#&gt; 4  12    12     0.73333333         4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df3</span>$<span class='no'>data</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df3</span>$<span class='no'>data</span>)]))</div><div class='output co'>#&gt;              C        sigma mmce.test.mean iteration
+#&gt; 4  12    12     0.73333333         4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df3</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df3</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;              C        sigma mmce.test.mean iteration
 #&gt; 1 2.441406e-04 2.441406e-04     0.73333333         1
 #&gt; 2 4.096000e+03 2.441406e-04     0.05333333         2
 #&gt; 3 2.441406e-04 4.096000e+03     0.73333333         3
-#&gt; 4 4.096000e+03 4.096000e+03     0.73333333         4</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; 4 4.096000e+03 4.096000e+03     0.73333333         4</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># we optimize the SVM over 3 kernels simultanously</span>
 <span class='co'># note how we use dependent params (requires = ...) and iterated F-racing here</span>
-<span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"C"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>),
-  <span class='fu'>makeDiscreteParam</span>(<span class='st'>"kernel"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vanilladot"</span>, <span class='st'>"polydot"</span>, <span class='st'>"rbfdot"</span>)),
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"sigma"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>,
-    <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>kernel</span> <span class='kw'>==</span> <span class='st'>"rbfdot"</span>)),
-  <span class='fu'>makeIntegerParam</span>(<span class='st'>"degree"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
-    <span class='kw'>requires</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>kernel</span> <span class='kw'>==</span> <span class='st'>"polydot"</span>))
-)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ps</span>)
-<span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></span>(<span class='kw'>maxExperiments</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>nbIterations</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minNbSurvival</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)
-<span class='no'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>)]))
+<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'>makeParamSet</span><span class='op'>(</span>
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"C"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>, upper <span class='op'>=</span> <span class='fl'>12</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span><span class='op'>^</span><span class='va'>x</span><span class='op'>)</span>,
+  <span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"kernel"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vanilladot"</span>, <span class='st'>"polydot"</span>, <span class='st'>"rbfdot"</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"sigma"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>, upper <span class='op'>=</span> <span class='fl'>12</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span><span class='op'>^</span><span class='va'>x</span>,
+    requires <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>kernel</span> <span class='op'>==</span> <span class='st'>"rbfdot"</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'>makeIntegerParam</span><span class='op'>(</span><span class='st'>"degree"</span>, lower <span class='op'>=</span> <span class='fl'>2L</span>, upper <span class='op'>=</span> <span class='fl'>5L</span>,
+    requires <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>kernel</span> <span class='op'>==</span> <span class='st'>"polydot"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span>
+<span class='va'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneControlIrace.html'>makeTuneControlIrace</a></span><span class='op'>(</span>maxExperiments <span class='op'>=</span> <span class='fl'>5</span>, nbIterations <span class='op'>=</span> <span class='fl'>1</span>, minNbSurvival <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'>tuneParams</span><span class='op'>(</span><span class='st'>"classif.ksvm"</span>, <span class='va'>iris.task</span>, <span class='va'>rdesc</span>, par.set <span class='op'>=</span> <span class='va'>ps</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>opt.path</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># include the training set performance as well</span>
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"both"</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>tuneParams</span>(<span class='st'>"classif.ksvm"</span>, <span class='no'>iris.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>,
-  <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)
-<span class='no'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>$<span class='no'>opt.path</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>df2</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df2</span>)]))
-}</div></pre>
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span>, predict <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'>tuneParams</span><span class='op'>(</span><span class='st'>"classif.ksvm"</span>, <span class='va'>iris.task</span>, <span class='va'>rdesc</span>, par.set <span class='op'>=</span> <span class='va'>ps</span>,
+  control <span class='op'>=</span> <span class='va'>ctrl</span>, measures <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span><span class='op'>(</span><span class='va'>mmce</span>, <span class='va'>train.mean</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>df2</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>opt.path</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -519,7 +524,7 @@ the measure. See example code below.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

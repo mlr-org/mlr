@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -80,7 +84,7 @@ unabalanced class distributions for each binary label." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -95,7 +99,7 @@ unabalanced class distributions for each binary label." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -283,7 +287,7 @@ unabalanced class distributions for each binary label." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -344,7 +348,7 @@ Or to tune these thresholds with <a href='tuneThreshold.html'>tuneThreshold</a>;
 unabalanced class distributions for each binary label.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeMultilabelBinaryRelevanceWrapper</span>(<span class='no'>learner</span>)</pre>
+    <pre class="usage"><span class='fu'>makeMultilabelBinaryRelevanceWrapper</span><span class='op'>(</span><span class='va'>learner</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -400,29 +404,27 @@ Dept. of Informatics, Aristotle University of Thessaloniki, Greece.</p>
 <code><a href='makeMultilabelStackingWrapper.html'>makeMultilabelStackingWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>yeast.task</span>)
+    <pre class="examples"><div class='input'><span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span><span class='op'>(</span><span class='va'>yeast.task</span><span class='op'>)</span>
 <span class='co'># drop some labels so example runs faster</span>
-<span class='no'>d</span> <span class='kw'>=</span> <span class='no'>d</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>d</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>20</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>15</span>:<span class='fl'>17</span>)]
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='MultilabelTask.html'>makeMultilabelTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"label1"</span>, <span class='st'>"label2"</span>))
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>)
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeMultilabelBinaryRelevanceWrapper</span>(<span class='no'>lrn</span>)
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='setPredictType.html'>setPredictType</a></span>(<span class='no'>lrn</span>, <span class='st'>"prob"</span>)
+<span class='va'>d</span> <span class='op'>=</span> <span class='va'>d</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>15</span><span class='op'>:</span><span class='fl'>17</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeMultilabelTask.html'>makeMultilabelTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>d</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"label1"</span>, <span class='st'>"label2"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span><span class='op'>)</span>
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeMultilabelBinaryRelevanceWrapper</span><span class='op'>(</span><span class='va'>lrn</span><span class='op'>)</span>
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='setPredictType.html'>setPredictType</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='st'>"prob"</span><span class='op'>)</span>
 <span class='co'># train, predict and evaluate</span>
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, task): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span>(<span class='no'>pred</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>multilabel.hamloss</span>, <span class='no'>multilabel.subset01</span>, <span class='no'>multilabel.f1</span>))</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measure = list(multilabel.hamloss, multilabel.subset01,     multilabel.f1)): object 'pred' not found</span></div><div class='input'><span class='co'># the next call basically has the same structure for any multilabel meta wrapper</span>
-<span class='fu'><a href='getMultilabelBinaryPerformances.html'>getMultilabelBinaryPerformances</a></span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mmce</span>, <span class='no'>auc</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'># above works also with predictions from resample!
+<span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='va'>task</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, task): object 'mod' not found</span></div><div class='input'><span class='fu'><a href='performance.html'>performance</a></span><span class='op'>(</span><span class='va'>pred</span>, measure <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>multilabel.hamloss</span>, <span class='va'>multilabel.subset01</span>, <span class='va'>multilabel.f1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measure = list(multilabel.hamloss, multilabel.subset01,     multilabel.f1)): object 'pred' not found</span></div><div class='input'><span class='co'># the next call basically has the same structure for any multilabel meta wrapper</span>
+<span class='fu'><a href='getMultilabelBinaryPerformances.html'>getMultilabelBinaryPerformances</a></span><span class='op'>(</span><span class='va'>pred</span>, measures <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>mmce</span>, <span class='va'>auc</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'pred' not found</span></div><div class='input'><span class='co'># above works also with predictions from resample!</span>
 
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -433,7 +435,7 @@ Dept. of Informatics, Aristotle University of Thessaloniki, Greece.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

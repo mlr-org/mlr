@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -85,7 +89,7 @@ a single test set. This probably mainly makes sense when cross-validation is use
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -100,7 +104,7 @@ a single test set. This probably mainly makes sense when cross-validation is use
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -288,7 +292,7 @@ a single test set. This probably mainly makes sense when cross-validation is use
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -354,10 +358,10 @@ joined to a vector y. Then yhat is simply tabulated vs. y, as if both were compu
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sums</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>set</span> <span class='kw'>=</span> <span class='st'>"both"</span>)
+    <pre class="usage"><span class='fu'>calculateConfusionMatrix</span><span class='op'>(</span><span class='va'>pred</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span>, sums <span class='op'>=</span> <span class='cn'>FALSE</span>, set <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span>
 
 <span class='co'># S3 method for ConfusionMatrix</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>both</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, both <span class='op'>=</span> <span class='cn'>TRUE</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -433,22 +437,25 @@ Currently not used.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># get confusion matrix after simple manual prediction</span>
-<span class='no'>allinds</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>150</span>
-<span class='no'>train</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>allinds</span>, <span class='fl'>75</span>)
-<span class='no'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sets.html'>setdiff</a></span>(<span class='no'>allinds</span>, <span class='no'>train</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>mod</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
+<span class='va'>allinds</span> <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>150</span>
+<span class='va'>train</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>allinds</span>, <span class='fl'>75</span><span class='op'>)</span>
+<span class='va'>test</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sets.html'>setdiff</a></span><span class='op'>(</span><span class='va'>allinds</span>, <span class='va'>train</span><span class='op'>)</span>
+<span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span>, <span class='va'>iris.task</span>, subset <span class='op'>=</span> <span class='va'>train</span><span class='op'>)</span>
+<span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='va'>iris.task</span>, subset <span class='op'>=</span> <span class='va'>test</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>calculateConfusionMatrix</span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             predicted
 #&gt; true         setosa versicolor virginica -err.-
 #&gt;   setosa         23          0         0      0
 #&gt;   versicolor      0         23         1      1
 #&gt;   virginica       0          0        28      0
-#&gt;   -err.-          0          0         1      1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>sums</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt;            setosa versicolor virginica -err.- -n-
+#&gt;   -err.-          0          0         1      1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>calculateConfusionMatrix</span><span class='op'>(</span><span class='va'>pred</span>, sums <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            setosa versicolor virginica -err.- -n-
 #&gt; setosa         23          0         0      0  23
 #&gt; versicolor      0         23         1      1  24
 #&gt; virginica       0          0        28      0  28
 #&gt; -err.-          0          0         1      1  NA
-#&gt; -n-            23         23        29     NA  75</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>pred</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; Relative confusion matrix (normalized by row/column):
+#&gt; -n-            23         23        29     NA  75</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>calculateConfusionMatrix</span><span class='op'>(</span><span class='va'>pred</span>, relative <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Relative confusion matrix (normalized by row/column):
 #&gt;             predicted
 #&gt; true         setosa    versicolor virginica -err.-   
 #&gt;   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00     
@@ -465,23 +472,19 @@ Currently not used.</p></td>
 #&gt;   virginica       0          0        28      0
 #&gt;   -err.-          0          0         1      1</div><div class='input'>
 <span class='co'># now after cross-validation</span>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>calculateConfusionMatrix</span>(<span class='no'>r</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;             predicted
+<span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span>, <span class='va'>iris.task</span>, iters <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>calculateConfusionMatrix</span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>pred</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             predicted
 #&gt; true         setosa versicolor virginica -err.-
 #&gt;   setosa         50          0         0      0
 #&gt;   versicolor      0         47         3      3
 #&gt;   virginica       0          1        49      1
 #&gt;   -err.-          0          1         3      4</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#methods-by-generic-">Methods (by generic)</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -492,7 +495,7 @@ Currently not used.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

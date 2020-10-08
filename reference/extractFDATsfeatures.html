@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -77,7 +81,7 @@ Note: Currently computes the following features:
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -92,7 +96,7 @@ Note: Currently computes the following features:
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -280,7 +284,7 @@ Note: Currently computes the following features:
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -329,8 +333,8 @@ Note: Currently computes the following features:
 
     <div class="ref-description">
     <p>The function extracts features from functional data based on known Heuristics.
-For more details refer to <code><a href='https://rdrr.io/pkg/tsfeatures/man/tsfeatures.html'>tsfeatures::tsfeatures()</a></code>.
-Under the hood this function uses the package <code><a href='https://rdrr.io/pkg/tsfeatures/man/tsfeatures.html'>tsfeatures::tsfeatures()</a></code>.
+For more details refer to <code><a href='https://pkg.robjhyndman.com/tsfeatures/reference/tsfeatures.html'>tsfeatures::tsfeatures()</a></code>.
+Under the hood this function uses the package <code><a href='https://pkg.robjhyndman.com/tsfeatures/reference/tsfeatures.html'>tsfeatures::tsfeatures()</a></code>.
 For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.</p>
 <p>Note: Currently computes the following features:<br />
 "frequency", "stl_features", "entropy", "acf_features", "arch_stat",
@@ -338,15 +342,15 @@ For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Seri
 "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity"</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extractFDATsfeatures</span>(
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>trim_amount</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.pass</span>,
-  <span class='kw'>feats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>extractFDATsfeatures</span><span class='op'>(</span>
+  scale <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  trim <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  trim_amount <span class='op'>=</span> <span class='fl'>0.1</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.action <span class='op'>=</span> <span class='va'>na.pass</span>,
+  feats <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -411,15 +415,10 @@ Further arguments passed on to the respective tsfeatures functions.</p></td>
 <code><a href='extractFDAWavelets.html'>extractFDAWavelets</a>()</code></p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -430,7 +429,7 @@ Further arguments passed on to the respective tsfeatures functions.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

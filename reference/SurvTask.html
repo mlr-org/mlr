@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -70,7 +74,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -85,7 +89,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -273,7 +277,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -324,16 +328,16 @@
     <p>Create a survival task.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeSurvTask</span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>data</span>)),
-  <span class='no'>data</span>,
-  <span class='no'>target</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixup.data</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
-  <span class='kw'>check.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>makeSurvTask</span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='va'>data</span>,
+  <span class='va'>target</span>,
+  weights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  blocking <span class='op'>=</span> <span class='cn'>NULL</span>,
+  coordinates <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fixup.data <span class='op'>=</span> <span class='st'>"warn"</span>,
+  check.data <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -403,16 +407,13 @@ Default is <code>TRUE</code>.</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a></p></div>
+    <div class='dont-index'><p><a href='Task.html'>Task</a> <a href='makeClassifTask.html'>ClassifTask</a> <a href='makeClusterTask.html'>ClusterTask</a> <a href='makeCostSensTask.html'>CostSensTask</a> <a href='makeMultilabelTask.html'>MultilabelTask</a> <a href='makeRegrTask.html'>RegrTask</a></p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -423,7 +424,7 @@ Default is <code>TRUE</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

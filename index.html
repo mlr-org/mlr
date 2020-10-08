@@ -12,7 +12,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -25,11 +26,11 @@
     descriptions. There is also an experimental extension for survival
     analysis, clustering and general, example-specific cost-sensitive
     learning. Generic resampling, including cross-validation,
-    bootstrapping and subsampling. Hyperparameter tuning with modern
+    bootstrapping and subsampling.  Hyperparameter tuning with modern
     optimization techniques, for single- and multi-objective problems.
     Filter and wrapper methods for feature selection. Extension of basic
     learners with additional operations common in machine learning, also
-    allowing for easy nested resampling. Most operations can be
+    allowing for easy nested resampling.  Most operations can be
     parallelized.">
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png">
 <meta name="twitter:card" content="summary">
@@ -38,7 +39,7 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -52,7 +53,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -240,7 +241,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -293,7 +294,7 @@
 <ul>
 <li><p><a href="https://CRAN.R-project.org/package=mlr">CRAN release site</a></p></li>
 <li><p><a href="https://mlr.mlr-org.com/index.html">Online tutorial</a></p></li>
-<li><p><a href="https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf">Cheatsheet</a></p></li>
+<li><p><a href="https://cheatsheets.mlr-org.com/mlr.pdf">Cheatsheet</a></p></li>
 <li><p><a href="https://mlr.mlr-org.com/news/index.html">Changelog</a></p></li>
 <li><p><a href="https://stackoverflow.com/questions/tagged/mlr">Stackoverflow</a>: <code>#mlr</code></p></li>
 <li><p><a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">Mattermost</a></p></li>
@@ -309,9 +310,11 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p><strong>Release</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"mlr"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"mlr"</span><span class="op">)</span></pre></div>
 <p><strong>Development</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"mlr-org/mlr"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/mlr"</span><span class="op">)</span></pre></div>
 </div>
 <div id="citing-mlr-in-publications" class="section level2">
 <h2 class="hasAnchor">
@@ -378,17 +381,17 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=mlr">https://​cloud.r-project.org/​package=mlr</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/mlr-org/mlr">https://​github.com/​mlr-org/​mlr</a>
+<li>Browse source code at <br><a href="https://github.com/mlr-org/mlr/">https://​github.com/​mlr-org/​mlr/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/mlr-org/mlr/issues">https://​github.com/​mlr-org/​mlr/​issues</a>
 </li>
-<li>Cheatsheet at <br><a href="https://github.com/mlr-org/mlr/blob/master/addon/cheatsheet/MlrCheatsheet.pdf">https://​github.com/​mlr-org/​mlr/​blob/​master/​addon/​cheatsheet/​MlrCheatsheet.pdf</a>
+<li>Cheatsheet at <br><a href="https://cheatsheets.mlr-org.com/mlr.pdf">https://​cheatsheets.mlr-org.com/​mlr.pdf</a>
 </li>
 </ul>
 </div>
@@ -409,14 +412,14 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Bernd Bischl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6002-6980" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
-<li>Michel Lang <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9754-0393" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>Bernd Bischl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6002-6980" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Michel Lang <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9754-0393" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Lars Kotthoff <br><small class="roles"> Author </small>  </li>
-<li>Patrick Schratz <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0748-6624" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>Patrick Schratz <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0748-6624" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Julia Schiffner <br><small class="roles"> Author </small>  </li>
 <li>Jakob Richter <br><small class="roles"> Author </small>  </li>
 <li>Zachary Jones <br><small class="roles"> Author </small>  </li>
-<li>Giuseppe Casalicchio <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-5324-5966" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>Giuseppe Casalicchio <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-5324-5966" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Mason Gallo <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
@@ -425,14 +428,13 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mlr-org/mlr/actions"><img src="https://img.shields.io/github/workflow/status/mlr-org/mlr/R%20CMD%20Check%20via%20%7Btic%7D?logo=github&amp;label=R%20CMD%20Check%20via%20%7Btic%7D&amp;style=flat-square" alt="R CMD Check via {tic}"></a></li>
+<li><a href="https://github.com/mlr-org/mlr/actions"><img src="https://github.com/mlr-org/mlr/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
 <li><a href="https://cran.r-project.org/package=mlr"><img src="https://www.r-pkg.org/badges/version-ago/mlr" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/web/checks/check_results_mlr.html"><img src="https://cranchecks.info/badges/worst/mlr" alt="cran checks"></a></li>
 <li><a href="https://cran.rstudio.com/web/packages/mlr/index.html"><img src="https://cranlogs.r-pkg.org/badges/mlr" alt="CRAN Downloads"></a></li>
 <li><a href="https://stackoverflow.com/questions/tagged/mlr"><img src="https://img.shields.io/badge/stackoverflow-mlr-blue.svg" alt="StackOverflow"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#retired"><img src="https://img.shields.io/badge/lifecycle-retired-orange.svg" alt="lifecycle"></a></li>
-<li><a href="https://codecov.io/github/mlr-org/mlr?branch=master"><img src="https://img.shields.io/codecov/c/github/mlr-org/mlr/master.svg" alt="Coverage Status"></a></li>
-<li><a href="https://cran.r-project.org/package=mlr"><img src="https://tinyverse.netlify.com/badge/mlr" alt="Dependencies"></a></li>
+<li><a href="https://codecov.io/gh/mlr-org/mlr"><img src="https://codecov.io/gh/mlr-org/mlr/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 </div>
@@ -444,7 +446,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -12,7 +12,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
+<script src="../../bootstrap-toc.js"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
@@ -20,7 +21,7 @@
 <script src="../../pkgdown.js"></script><!-- docsearch --><script src="../../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Wrapper">
-<meta property="og:description" content="">
+<meta property="og:description" content="mlr">
 <meta property="og:image" content="https://mlr.mlr-org.com/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -28,7 +29,7 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,7 +43,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -230,7 +231,7 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -269,10 +270,11 @@
 
       
 
-      </header><div class="row">
+      </header><script src="wrapper_files/header-attrs-2.4.1/header-attrs.js"></script><link href="wrapper_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="wrapper_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Wrapper</h1>
+      <h1 data-toc-skip>Wrapper</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/wrapper.Rmd"><code>vignettes/tutorial/wrapper.Rmd</code></a></small>
@@ -301,89 +303,94 @@
 <a href="#example-bagging-wrapper" class="anchor"></a>Example: Bagging wrapper</h1>
 <p>In this section we exemplary describe the bagging wrapper to create a random forest which supports weights. To achieve that we combine several decision trees from the <code>rpart</code> package to create our own custom random forest.</p>
 <p>First, we create a weighted toy task.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(iris)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>task =<span class="st"> </span><span class="kw"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span>(<span class="dt">data =</span> iris, <span class="dt">target =</span> <span class="st">"Species"</span>, <span class="dt">weights =</span> <span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(iris<span class="op">$</span>Species))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Next, we use <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code> to create the base learners and the bagged learner. We choose to set equivalents of <code>ntree</code> (100 base learners) and <code>mtry</code> (proportion of randomly selected features).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>base.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.rpart"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>wrapped.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper</a></span>(base.lrn, <span class="dt">bw.iters =</span> <span class="dv">100</span>, <span class="dt">bw.feats =</span> <span class="fl">0.5</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(wrapped.lrn)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">## Learner classif.rpart.bagged from package rpart</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## Type: classif</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">## Name: ; Short name: </span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">## Class: BaggingWrapper</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">## Properties: twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">## Predict-Type: response</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="va">base.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span>
+<span class="va">wrapped.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper</a></span><span class="op">(</span><span class="va">base.lrn</span>, bw.iters <span class="op">=</span> <span class="fl">100</span>, bw.feats <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">wrapped.lrn</span><span class="op">)</span>
+<span class="co">## Learner classif.rpart.bagged from package rpart</span>
+<span class="co">## Type: classif</span>
+<span class="co">## Name: ; Short name: </span>
+<span class="co">## Class: BaggingWrapper</span>
+<span class="co">## Properties: twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp</span>
+<span class="co">## Predict-Type: response</span>
+<span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></pre></div>
 <p>As we can see in the output, the wrapped learner inherited all properties from the base learner, especially the “weights” attribute is still present. We can use this newly constructed learner like all base learners, i.e. we can use it in <code><a href="../../reference/train.html">train()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code>, <code><a href="../../reference/resample.html">resample()</a></code>, etc.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../../reference/benchmark.html">benchmark</a></span>(<span class="dt">tasks =</span> task, <span class="dt">learners =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(base.lrn, wrapped.lrn))</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">## Task: iris, Learner: classif.rpart</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">## Resampling: cross-validation</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">## Measures:             mmce</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">## [Resample] iter 1:    0.0000000</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">## [Resample] iter 2:    0.2000000</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">## [Resample] iter 3:    0.2000000</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">## [Resample] iter 4:    0.0666667</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">## [Resample] iter 5:    0.0666667</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">## [Resample] iter 6:    0.0000000</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">## [Resample] iter 7:    0.0666667</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">## [Resample] iter 8:    0.0000000</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">## [Resample] iter 9:    0.1333333</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">## [Resample] iter 10:   0.0666667</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">## </span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">## Aggregated Result: mmce.test.mean=0.0800000</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">## </span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">## Task: iris, Learner: classif.rpart.bagged</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">## Resampling: cross-validation</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">## Measures:             mmce</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">## [Resample] iter 1:    0.0000000</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">## [Resample] iter 2:    0.2000000</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">## [Resample] iter 3:    0.0666667</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">## [Resample] iter 4:    0.0666667</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co">## [Resample] iter 5:    0.0000000</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="co">## [Resample] iter 6:    0.0000000</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="co">## [Resample] iter 7:    0.0000000</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="co">## [Resample] iter 8:    0.0000000</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a><span class="co">## [Resample] iter 9:    0.0666667</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a><span class="co">## [Resample] iter 10:   0.0666667</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="co">## </span></span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="co">## Aggregated Result: mmce.test.mean=0.0466667</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a><span class="co">## </span></span>
-<span id="cb3-34"><a href="#cb3-34"></a><span class="co">##   task.id           learner.id mmce.test.mean</span></span>
-<span id="cb3-35"><a href="#cb3-35"></a><span class="co">## 1    iris        classif.rpart     0.08000000</span></span>
-<span id="cb3-36"><a href="#cb3-36"></a><span class="co">## 2    iris classif.rpart.bagged     0.04666667</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span>tasks <span class="op">=</span> <span class="va">task</span>, learners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">base.lrn</span>, <span class="va">wrapped.lrn</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## Task: iris, Learner: classif.rpart</span>
+<span class="co">## Resampling: cross-validation</span>
+<span class="co">## Measures:             mmce</span>
+<span class="co">## [Resample] iter 1:    0.0000000</span>
+<span class="co">## [Resample] iter 2:    0.2000000</span>
+<span class="co">## [Resample] iter 3:    0.2000000</span>
+<span class="co">## [Resample] iter 4:    0.0666667</span>
+<span class="co">## [Resample] iter 5:    0.0666667</span>
+<span class="co">## [Resample] iter 6:    0.0000000</span>
+<span class="co">## [Resample] iter 7:    0.0666667</span>
+<span class="co">## [Resample] iter 8:    0.0000000</span>
+<span class="co">## [Resample] iter 9:    0.1333333</span>
+<span class="co">## [Resample] iter 10:   0.0666667</span>
+<span class="co">## </span>
+<span class="co">## Aggregated Result: mmce.test.mean=0.0800000</span>
+<span class="co">## </span>
+<span class="co">## Task: iris, Learner: classif.rpart.bagged</span>
+<span class="co">## Resampling: cross-validation</span>
+<span class="co">## Measures:             mmce</span>
+<span class="co">## [Resample] iter 1:    0.0000000</span>
+<span class="co">## [Resample] iter 2:    0.2000000</span>
+<span class="co">## [Resample] iter 3:    0.0666667</span>
+<span class="co">## [Resample] iter 4:    0.0666667</span>
+<span class="co">## [Resample] iter 5:    0.0000000</span>
+<span class="co">## [Resample] iter 6:    0.0000000</span>
+<span class="co">## [Resample] iter 7:    0.0000000</span>
+<span class="co">## [Resample] iter 8:    0.0000000</span>
+<span class="co">## [Resample] iter 9:    0.0666667</span>
+<span class="co">## [Resample] iter 10:   0.0666667</span>
+<span class="co">## </span>
+<span class="co">## Aggregated Result: mmce.test.mean=0.0466667</span>
+<span class="co">## </span>
+<span class="co">##   task.id           learner.id mmce.test.mean</span>
+<span class="co">## 1    iris        classif.rpart     0.08000000</span>
+<span class="co">## 2    iris classif.rpart.bagged     0.04666667</span></pre></div>
 <p>That far we are quite happy with our new learner. But we hope for a better performance by tuning some hyperparameters of both the decision trees and bagging wrapper. Let’s have a look at the available hyperparameters of the fused learner:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../../reference/getParamSet.html">getParamSet</a></span>(wrapped.lrn)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">##                    Type len   Def   Constr Req Tunable Trafo</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">## bw.iters        integer   -    10 1 to Inf   -    TRUE     -</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">## bw.replace      logical   -  TRUE        -   -    TRUE     -</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">## bw.size         numeric   -     -   0 to 1   -    TRUE     -</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">## bw.feats        numeric   - 0.667   0 to 1   -    TRUE     -</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">## minsplit        integer   -    20 1 to Inf   -    TRUE     -</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## minbucket       integer   -     - 1 to Inf   -    TRUE     -</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">## cp              numeric   -  0.01   0 to 1   -    TRUE     -</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## maxcompete      integer   -     4 0 to Inf   -    TRUE     -</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## maxsurrogate    integer   -     5 0 to Inf   -    TRUE     -</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## usesurrogate   discrete   -     2    0,1,2   -    TRUE     -</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## surrogatestyle discrete   -     0      0,1   -    TRUE     -</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## maxdepth        integer   -    30  1 to 30   -    TRUE     -</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## xval            integer   -    10 0 to Inf   -   FALSE     -</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## parms           untyped   -     -        -   -    TRUE     -</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">wrapped.lrn</span><span class="op">)</span>
+<span class="co">##                    Type len   Def   Constr Req Tunable Trafo</span>
+<span class="co">## bw.iters        integer   -    10 1 to Inf   -    TRUE     -</span>
+<span class="co">## bw.replace      logical   -  TRUE        -   -    TRUE     -</span>
+<span class="co">## bw.size         numeric   -     -   0 to 1   -    TRUE     -</span>
+<span class="co">## bw.feats        numeric   - 0.667   0 to 1   -    TRUE     -</span>
+<span class="co">## minsplit        integer   -    20 1 to Inf   -    TRUE     -</span>
+<span class="co">## minbucket       integer   -     - 1 to Inf   -    TRUE     -</span>
+<span class="co">## cp              numeric   -  0.01   0 to 1   -    TRUE     -</span>
+<span class="co">## maxcompete      integer   -     4 0 to Inf   -    TRUE     -</span>
+<span class="co">## maxsurrogate    integer   -     5 0 to Inf   -    TRUE     -</span>
+<span class="co">## usesurrogate   discrete   -     2    0,1,2   -    TRUE     -</span>
+<span class="co">## surrogatestyle discrete   -     0      0,1   -    TRUE     -</span>
+<span class="co">## maxdepth        integer   -    30  1 to 30   -    TRUE     -</span>
+<span class="co">## xval            integer   -    10 0 to Inf   -   FALSE     -</span>
+<span class="co">## parms           untyped   -     -        -   -    TRUE     -</span></pre></div>
 <p>We choose to tune the parameters <code>minsplit</code> and <code>bw.feats</code> for the <a href="measures.html" target="_blank">mmce</a> using a random search (<code><a href="../../reference/TuneControl.html">TuneControl()</a></code>) in a 3-fold CV:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span>(<span class="dt">maxit =</span> <span class="dv">10</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a>rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">3</span>)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>par.set =<span class="st"> </span><span class="kw">makeParamSet</span>(</span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="kw">makeIntegerParam</span>(<span class="st">"minsplit"</span>, <span class="dt">lower =</span> <span class="dv">1</span>, <span class="dt">upper =</span> <span class="dv">10</span>),</span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="kw">makeNumericParam</span>(<span class="st">"bw.feats"</span>, <span class="dt">lower =</span> <span class="fl">0.25</span>, <span class="dt">upper =</span> <span class="dv">1</span>)</span>
-<span id="cb5-6"><a href="#cb5-6"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7"></a>tuned.lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span>(wrapped.lrn, rdesc, mmce, par.set, ctrl)</span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(tuned.lrn)</span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">## Learner classif.rpart.bagged.tuned from package rpart</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## Type: classif</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## Name: ; Short name: </span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## Class: TuneWrapper</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass,featimp</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## Predict-Type: response</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">par.set</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
+  <span class="fu">makeIntegerParam</span><span class="op">(</span><span class="st">"minsplit"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,
+  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"bw.feats"</span>, lower <span class="op">=</span> <span class="fl">0.25</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">tuned.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="va">wrapped.lrn</span>, <span class="va">rdesc</span>, <span class="va">mmce</span>, <span class="va">par.set</span>, <span class="va">ctrl</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">tuned.lrn</span><span class="op">)</span>
+<span class="co">## Learner classif.rpart.bagged.tuned from package rpart</span>
+<span class="co">## Type: classif</span>
+<span class="co">## Name: ; Short name: </span>
+<span class="co">## Class: TuneWrapper</span>
+<span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass,featimp</span>
+<span class="co">## Predict-Type: response</span>
+<span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></pre></div>
 <p>Calling the train method of the newly constructed learner performs the following steps:</p>
 <ol style="list-style-type: decimal">
 <li>The tuning wrapper sets parameters for the underlying model in slot <code>$next.learner</code> and calls its train method.</li>
@@ -391,52 +398,48 @@
 <li>The bagged models are evaluated using the mean <a href="measures.html" target="_blank">mmce</a> (default aggregation for this performance measure) and new parameters are selected using the tuning method.</li>
 <li>This is repeated until the tuner terminates. Output is a tuned bagged learner.</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>lrn =<span class="st"> </span><span class="kw"><a href="../../reference/train.html">train</a></span>(tuned.lrn, <span class="dt">task =</span> task)</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## [Tune] Started tuning learner classif.rpart.bagged for parameter set:</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">##             Type len Def    Constr Req Tunable Trafo</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">## minsplit integer   -   -   1 to 10   -    TRUE     -</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">## bw.feats numeric   -   - 0.25 to 1   -    TRUE     -</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">## With control class: TuneControlRandom</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">## Imputation value: 1</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">## [Tune-x] 1: minsplit=5; bw.feats=0.533</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">## [Tune-y] 1: mmce.test.mean=0.0466667; time: 0.0 min</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">## [Tune-x] 2: minsplit=3; bw.feats=0.377</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">## [Tune-y] 2: mmce.test.mean=0.0600000; time: 0.0 min</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## [Tune-x] 3: minsplit=8; bw.feats=0.29</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">## [Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">## [Tune-x] 4: minsplit=6; bw.feats=0.555</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">## [Tune-y] 4: mmce.test.mean=0.0533333; time: 0.0 min</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">## [Tune-x] 5: minsplit=9; bw.feats=0.699</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">## [Tune-y] 5: mmce.test.mean=0.0466667; time: 0.0 min</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="co">## [Tune-x] 6: minsplit=6; bw.feats=0.985</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">## [Tune-y] 6: mmce.test.mean=0.0466667; time: 0.0 min</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="co">## [Tune-x] 7: minsplit=10; bw.feats=0.632</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="co">## [Tune-y] 7: mmce.test.mean=0.0400000; time: 0.0 min</span></span>
-<span id="cb6-22"><a href="#cb6-22"></a><span class="co">## [Tune-x] 8: minsplit=1; bw.feats=0.943</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="co">## [Tune-y] 8: mmce.test.mean=0.0600000; time: 0.0 min</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="co">## [Tune-x] 9: minsplit=9; bw.feats=0.715</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co">## [Tune-y] 9: mmce.test.mean=0.0533333; time: 0.0 min</span></span>
-<span id="cb6-26"><a href="#cb6-26"></a><span class="co">## [Tune-x] 10: minsplit=1; bw.feats=0.503</span></span>
-<span id="cb6-27"><a href="#cb6-27"></a><span class="co">## [Tune-y] 10: mmce.test.mean=0.0466667; time: 0.0 min</span></span>
-<span id="cb6-28"><a href="#cb6-28"></a><span class="co">## [Tune] Result: minsplit=10; bw.feats=0.632 : mmce.test.mean=0.0400000</span></span>
-<span id="cb6-29"><a href="#cb6-29"></a></span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(lrn)</span>
-<span id="cb6-31"><a href="#cb6-31"></a><span class="co">## Model for learner.id=classif.rpart.bagged.tuned; learner.class=TuneWrapper</span></span>
-<span id="cb6-32"><a href="#cb6-32"></a><span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span></span>
-<span id="cb6-33"><a href="#cb6-33"></a><span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">tuned.lrn</span>, task <span class="op">=</span> <span class="va">task</span><span class="op">)</span>
+<span class="co">## [Tune] Started tuning learner classif.rpart.bagged for parameter set:</span>
+<span class="co">##             Type len Def    Constr Req Tunable Trafo</span>
+<span class="co">## minsplit integer   -   -   1 to 10   -    TRUE     -</span>
+<span class="co">## bw.feats numeric   -   - 0.25 to 1   -    TRUE     -</span>
+<span class="co">## With control class: TuneControlRandom</span>
+<span class="co">## Imputation value: 1</span>
+<span class="co">## [Tune-x] 1: minsplit=5; bw.feats=0.533</span>
+<span class="co">## [Tune-y] 1: mmce.test.mean=0.0466667; time: 0.0 min</span>
+<span class="co">## [Tune-x] 2: minsplit=3; bw.feats=0.377</span>
+<span class="co">## [Tune-y] 2: mmce.test.mean=0.0600000; time: 0.0 min</span>
+<span class="co">## [Tune-x] 3: minsplit=8; bw.feats=0.29</span>
+<span class="co">## [Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span>
+<span class="co">## [Tune-x] 4: minsplit=6; bw.feats=0.555</span>
+<span class="co">## [Tune-y] 4: mmce.test.mean=0.0533333; time: 0.0 min</span>
+<span class="co">## [Tune-x] 5: minsplit=9; bw.feats=0.699</span>
+<span class="co">## [Tune-y] 5: mmce.test.mean=0.0466667; time: 0.0 min</span>
+<span class="co">## [Tune-x] 6: minsplit=6; bw.feats=0.985</span>
+<span class="co">## [Tune-y] 6: mmce.test.mean=0.0466667; time: 0.0 min</span>
+<span class="co">## [Tune-x] 7: minsplit=10; bw.feats=0.632</span>
+<span class="co">## [Tune-y] 7: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class="co">## [Tune-x] 8: minsplit=1; bw.feats=0.943</span>
+<span class="co">## [Tune-y] 8: mmce.test.mean=0.0600000; time: 0.0 min</span>
+<span class="co">## [Tune-x] 9: minsplit=9; bw.feats=0.715</span>
+<span class="co">## [Tune-y] 9: mmce.test.mean=0.0533333; time: 0.0 min</span>
+<span class="co">## [Tune-x] 10: minsplit=1; bw.feats=0.503</span>
+<span class="co">## [Tune-y] 10: mmce.test.mean=0.0466667; time: 0.0 min</span>
+<span class="co">## [Tune] Result: minsplit=10; bw.feats=0.632 : mmce.test.mean=0.0400000</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
+<span class="co">## Model for learner.id=classif.rpart.bagged.tuned; learner.class=TuneWrapper</span>
+<span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span>
+<span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></pre></div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#example-bagging-wrapper">Example: Bagging wrapper</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -447,7 +450,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

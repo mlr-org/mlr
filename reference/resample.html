@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -79,7 +83,7 @@ test splits (i.e., resampling instances), you have to stick with resample." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -94,7 +98,7 @@ test splits (i.e., resampling instances), you have to stick with resample." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -282,7 +286,7 @@ test splits (i.e., resampling instances), you have to stick with resample." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -342,130 +346,130 @@ existing resampling strategies. Note that if you need to work with precomputed t
 test splits (i.e., resampling instances), you have to stick with <code>resample</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>resample</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='no'>resampling</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>extract</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+    <pre class="usage"><span class='fu'>resample</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  <span class='va'>resampling</span>,
+  <span class='va'>measures</span>,
+  weights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>extract</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>crossval</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>crossval</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  iters <span class='op'>=</span> <span class='fl'>10L</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>repcv</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>folds</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>repcv</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  folds <span class='op'>=</span> <span class='fl'>10L</span>,
+  reps <span class='op'>=</span> <span class='fl'>10L</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>holdout</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>3</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>holdout</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  split <span class='op'>=</span> <span class='fl'>2</span><span class='op'>/</span><span class='fl'>3</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>subsample</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>3</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>subsample</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  iters <span class='op'>=</span> <span class='fl'>30</span>,
+  split <span class='op'>=</span> <span class='fl'>2</span><span class='op'>/</span><span class='fl'>3</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>bootstrapOOB</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>bootstrapOOB</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  iters <span class='op'>=</span> <span class='fl'>30</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>bootstrapB632</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>bootstrapB632</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  iters <span class='op'>=</span> <span class='fl'>30</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>bootstrapB632plus</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>bootstrapB632plus</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  iters <span class='op'>=</span> <span class='fl'>30</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>growingcv</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>horizon</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>initial.window</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)
+<span class='fu'>growingcv</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  horizon <span class='op'>=</span> <span class='fl'>1</span>,
+  initial.window <span class='op'>=</span> <span class='fl'>0.5</span>,
+  skip <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>fixedcv</span>(
-  <span class='no'>learner</span>,
-  <span class='no'>task</span>,
-  <span class='kw'>horizon</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>initial.window</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>measures</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.pred</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>show.info</span> <span class='kw'>=</span> <span class='fu'>getMlrOption</span>(<span class='st'>"show.info"</span>)
-)</pre>
+<span class='fu'>fixedcv</span><span class='op'>(</span>
+  <span class='va'>learner</span>,
+  <span class='va'>task</span>,
+  horizon <span class='op'>=</span> <span class='fl'>1L</span>,
+  initial.window <span class='op'>=</span> <span class='fl'>0.5</span>,
+  skip <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>measures</span>,
+  models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep.pred <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -598,12 +602,16 @@ the measure. See example code below.</p>
 <code><a href='makeResampleInstance.html'>makeResampleInstance</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>resample</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.qda"</span>), <span class='no'>task</span>, <span class='no'>rdesc</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>aggr</span>)</div><div class='output co'>#&gt; mmce.test.mean 
-#&gt;     0.04666667 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>measures.test</span>)</div><div class='output co'>#&gt;   iter       mmce
+    <pre class="examples"><div class='input'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>r</span> <span class='op'>=</span> <span class='fu'>resample</span><span class='op'>(</span><span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.qda"</span><span class='op'>)</span>, <span class='va'>task</span>, <span class='va'>rdesc</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>aggr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; mmce.test.mean 
+#&gt;     0.04666667 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>measures.test</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   iter       mmce
 #&gt; 1    1 0.02666667
-#&gt; 2    2 0.06666667</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>pred</span>)</div><div class='output co'>#&gt; Resampled Prediction for:
+#&gt; 2    2 0.06666667</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>pred</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Resampled Prediction for:
 #&gt; Resample description: cross-validation with 2 iterations.
 #&gt; Predict: test
 #&gt; Stratification: FALSE
@@ -619,21 +627,17 @@ the measure. See example code below.</p>
 #&gt; 6 15 setosa   setosa    1 test
 #&gt; ... (#rows: 150, #cols: 5)</div><div class='input'>
 <span class='co'># include the training set performance as well</span>
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"both"</span>)
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'>resample</span>(<span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.qda"</span>), <span class='no'>task</span>, <span class='no'>rdesc</span>,
-  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>mmce</span>, <span class='no'>train.mean</span>)))</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0000000    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667,mmce.train.mean=0.0066667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>$<span class='no'>aggr</span>)</div><div class='output co'>#&gt;  mmce.test.mean mmce.train.mean 
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2</span>, predict <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span>
+<span class='va'>r</span> <span class='op'>=</span> <span class='fu'>resample</span><span class='op'>(</span><span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.qda"</span><span class='op'>)</span>, <span class='va'>task</span>, <span class='va'>rdesc</span>,
+  measures <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>mmce</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span><span class='op'>(</span><span class='va'>mmce</span>, <span class='va'>train.mean</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0133333    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0000000    0.0266667    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0266667,mmce.train.mean=0.0066667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>aggr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  mmce.test.mean mmce.train.mean 
 #&gt;     0.026666667     0.006666667 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -644,7 +648,7 @@ the measure. See example code below.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

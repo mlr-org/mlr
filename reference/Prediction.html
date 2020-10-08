@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -90,7 +94,7 @@ Internal, do not use!" />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -105,7 +109,7 @@ Internal, do not use!" />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -293,7 +297,7 @@ Internal, do not use!" />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -351,7 +355,7 @@ either a numeric or a factor, the true target values.
 If probabilities were predicted, as many numeric columns as there were classes named
 <code>prob.classname</code>. If standard errors were predicted, a numeric column named <code>se</code>.</p>
 <p>The constructor <code>makePrediction</code> is mainly for internal use.</p>
-<p>Object members:</p><dl class='dl-horizontal'>
+<p>Object members:</p><dl>
 <dt>predict.type (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Type set in <a href='setPredictType.html'>setPredictType</a>.</p></dd>
 <dt>data (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)</dt><dd><p>See details.</p></dd>
 <dt>threshold (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)</dt><dd><p>Threshold set in predict function.</p></dd>
@@ -364,27 +368,26 @@ If probabilities were predicted, as many numeric columns as there were classes n
 <p>Internal, do not use!</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makePrediction</span>(
-  <span class='no'>task.desc</span>,
-  <span class='no'>row.names</span>,
-  <span class='no'>id</span>,
-  <span class='no'>truth</span>,
-  <span class='no'>predict.type</span>,
-  <span class='kw'>predict.threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>y</span>,
-  <span class='no'>time</span>,
-  <span class='kw'>error</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>,
-  <span class='kw'>dump</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>makePrediction</span><span class='op'>(</span>
+  <span class='va'>task.desc</span>,
+  <span class='va'>row.names</span>,
+  <span class='va'>id</span>,
+  <span class='va'>truth</span>,
+  <span class='va'>predict.type</span>,
+  predict.threshold <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>y</span>,
+  <span class='va'>time</span>,
+  error <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  dump <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
 
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -395,7 +398,7 @@ If probabilities were predicted, as many numeric columns as there were classes n
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

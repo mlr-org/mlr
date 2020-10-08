@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -85,7 +89,7 @@ something like a new &amp;#8220;class.weights&amp;#8221; parameter for the learn
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -100,7 +104,7 @@ something like a new &amp;#8220;class.weights&amp;#8221; parameter for the learn
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -288,7 +292,7 @@ something like a new &amp;#8220;class.weights&amp;#8221; parameter for the learn
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -354,7 +358,7 @@ We set this weight depending on the class internally in the wrapper. Basically w
 something like a new &#8220;class.weights&#8221; parameter for the learner via observation weights.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeWeightedClassesWrapper</span>(<span class='no'>learner</span>, <span class='kw'>wcw.param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>wcw.weight</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>makeWeightedClassesWrapper</span><span class='op'>(</span><span class='va'>learner</span>, wcw.param <span class='op'>=</span> <span class='cn'>NULL</span>, wcw.weight <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -421,48 +425,49 @@ Default is 1.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
 <span class='co'># using the direct parameter of the SVM (which is already defined in the learner)</span>
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>wcw.weight</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.5428571 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.5428571</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeWeightedClassesWrapper</span><span class='op'>(</span><span class='st'>"classif.ksvm"</span>, wcw.weight <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.5428571 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.5428571</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>pred</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         predicted
 #&gt; true     M  R -err.-
 #&gt;   M      0 38     38
 #&gt;   R      0 32      0
 #&gt;   -err.- 0 38     38</div><div class='input'>
 <span class='co'># using the observation weights of logreg</span>
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.logreg"</span>, <span class='kw'>wcw.weight</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.3285714 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3285714</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span>(<span class='no'>res</span>$<span class='no'>pred</span>))</div><div class='output co'>#&gt;         predicted
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeWeightedClassesWrapper</span><span class='op'>(</span><span class='st'>"classif.logreg"</span>, wcw.weight <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>holdout</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Resampling: holdout</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.3285714 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3285714</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='calculateConfusionMatrix.html'>calculateConfusionMatrix</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>$</span><span class='va'>pred</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         predicted
 #&gt; true      M  R -err.-
 #&gt;   M      28  7      7
 #&gt;   R      16 19     16
 #&gt;   -err.- 16  7     23</div><div class='input'>
 <span class='co'># tuning the imbalancy param and the SVM param in one go</span>
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeWeightedClassesWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>wcw.param</span> <span class='kw'>=</span> <span class='st'>"class.weights"</span>)
-<span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"wcw.weight"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>),
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"C"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>),
-  <span class='fu'>makeNumericParam</span>(<span class='st'>"sigma"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>12</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>2</span>^<span class='no'>x</span>)
-)
-<span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></span>(<span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
-<span class='no'>rdesc</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='no'>rdesc</span>, <span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner weightedclasses.classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>              Type len Def    Constr Req Tunable Trafo</span>
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeWeightedClassesWrapper</span><span class='op'>(</span><span class='st'>"classif.ksvm"</span>, wcw.param <span class='op'>=</span> <span class='st'>"class.weights"</span><span class='op'>)</span>
+<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'>makeParamSet</span><span class='op'>(</span>
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"wcw.weight"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"C"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>, upper <span class='op'>=</span> <span class='fl'>12</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span><span class='op'>^</span><span class='va'>x</span><span class='op'>)</span>,
+  <span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"sigma"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>, upper <span class='op'>=</span> <span class='fl'>12</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span><span class='op'>^</span><span class='va'>x</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneControlRandom.html'>makeTuneControlRandom</a></span><span class='op'>(</span>maxit <span class='op'>=</span> <span class='fl'>3L</span><span class='op'>)</span>
+<span class='va'>rdesc</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2L</span>, stratify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>=</span> <span class='fu'><a href='tuneParams.html'>tuneParams</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span>, <span class='va'>rdesc</span>, par.set <span class='op'>=</span> <span class='va'>ps</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner weightedclasses.classif.ksvm for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>              Type len Def    Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>wcw.weight numeric   -   -   1 to 10   -    TRUE     -</span>
 #&gt; <span class='message'>C          numeric   -   - -12 to 12   -    TRUE     Y</span>
-#&gt; <span class='message'>sigma      numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: wcw.weight=1.11; C=441; sigma=0.0013</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.2644231; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: wcw.weight=3.81; C=0.336; sigma=6.86</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: wcw.weight=4.05; C=3.78; sigma=241</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: wcw.weight=1.11; C=441; sigma=0.0013 : mmce.test.mean=0.2644231</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; Tune result:
+#&gt; <span class='message'>sigma      numeric   -   - -12 to 12   -    TRUE     Y</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: wcw.weight=1.11; C=441; sigma=0.0013</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.2644231; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: wcw.weight=3.81; C=0.336; sigma=6.86</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: wcw.weight=4.05; C=3.78; sigma=241</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.4663462; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: wcw.weight=1.11; C=441; sigma=0.0013 : mmce.test.mean=0.2644231</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tune result:
 #&gt; Op. pars: wcw.weight=1.11; C=441; sigma=0.0013
-#&gt; mmce.test.mean=0.2644231</div><div class='input'># print(res$opt.path)
-# }
+#&gt; mmce.test.mean=0.2644231</div><div class='input'><span class='co'># print(res$opt.path)</span>
+<span class='co'># }</span>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -473,7 +478,7 @@ Default is 1.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

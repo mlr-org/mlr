@@ -20,6 +20,10 @@ multilabel task. — Task • mlr</title>
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -93,7 +97,7 @@ makeFunctionalData." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -108,7 +112,7 @@ makeFunctionalData." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -296,7 +300,7 @@ makeFunctionalData." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -356,7 +360,7 @@ It also contains a description object detailing further aspects of the data.</p>
 <li><p><a href='subsetTask.html'>subsetTask</a>.</p></li>
 </ul>
 
-<p>Object members:</p><dl class='dl-horizontal'>
+<p>Object members:</p><dl>
 <dt>env (<code>environment</code>)</dt><dd><p>Environment where data for the task are stored.
 Use <a href='getTaskData.html'>getTaskData</a> in order to access it.</p></dd>
 <dt>weights (<a href='https://rdrr.io/r/base/numeric.html'>numeric</a>)</dt><dd><p>See argument. <code>NULL</code> if not present.</p></dd>
@@ -458,22 +462,23 @@ Provided <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> needs t
     <p>Task.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='ClassifTask.html'>ClassifTask</a> <a href='ClusterTask.html'>ClusterTask</a> <a href='CostSensTask.html'>CostSensTask</a> <a href='MultilabelTask.html'>MultilabelTask</a> <a href='RegrTask.html'>RegrTask</a> <a href='SurvTask.html'>SurvTask</a></p></div>
+    <div class='dont-index'><p><a href='makeClassifTask.html'>ClassifTask</a> <a href='makeClusterTask.html'>ClusterTask</a> <a href='makeCostSensTask.html'>CostSensTask</a> <a href='makeMultilabelTask.html'>MultilabelTask</a> <a href='makeRegrTask.html'>RegrTask</a> <a href='makeSurvTask.html'>SurvTask</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlbench"</span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlbench</span>)
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BostonHousing</span>)
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Ionosphere</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mlbench</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BostonHousing</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Ionosphere</span><span class='op'>)</span>
 
-  <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-  <span class='fu'><a href='RegrTask.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
+  <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
+  <span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>BostonHousing</span>, target <span class='op'>=</span> <span class='st'>"medv"</span><span class='op'>)</span>
   <span class='co'># an example of a classification task with more than those standard arguments:</span>
-  <span class='no'>blocking</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>51</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>300</span>)))
-  <span class='fu'><a href='ClassifTask.html'>makeClassifTask</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"myIonosphere"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Ionosphere</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Class"</span>,
-    <span class='kw'>positive</span> <span class='kw'>=</span> <span class='st'>"good"</span>, <span class='kw'>blocking</span> <span class='kw'>=</span> <span class='no'>blocking</span>)
-  <span class='fu'><a href='ClusterTask.html'>makeClusterTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5L</span>])
-}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mlbench</span></div><div class='output co'>#&gt; Unsupervised task: iris[, -5L]
+  <span class='va'>blocking</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>51</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>300</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"myIonosphere"</span>, data <span class='op'>=</span> <span class='va'>Ionosphere</span>, target <span class='op'>=</span> <span class='st'>"Class"</span>,
+    positive <span class='op'>=</span> <span class='st'>"good"</span>, blocking <span class='op'>=</span> <span class='va'>blocking</span><span class='op'>)</span>
+  <span class='fu'><a href='makeClusterTask.html'>makeClusterTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5L</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mlbench</span></div><div class='output co'>#&gt; Unsupervised task: iris[, -5L]
 #&gt; Type: cluster
 #&gt; Observations: 150
 #&gt; Features:
@@ -484,15 +489,10 @@ Provided <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> needs t
 #&gt; Has blocking: FALSE
 #&gt; Has coordinates: FALSE</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -503,7 +503,7 @@ Provided <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> needs t
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -271,7 +271,8 @@
 
       
 
-      </header><script src="benchmark_experiments_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="benchmark_experiments_files/header-attrs-2.4.1/header-attrs.js"></script><link href="benchmark_experiments_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="benchmark_experiments_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Benchmark Experiments</h1>
@@ -722,7 +723,8 @@
 <span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, measure <span class="op">=</span> <span class="va">mmce</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, measure <span class="op">=</span> <span class="va">ber</span>, style <span class="op">=</span> <span class="st">"violin"</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span>,
+<span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>,
+  measure <span class="op">=</span> <span class="va">ber</span>, style <span class="op">=</span> <span class="st">"violin"</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span>,
   order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">learner.id</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
@@ -840,7 +842,7 @@
 <li>Choosing <code>test = "nemenyi"</code> compares all pairs of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s to each other, thus the output are groups of not significantly different learners. The diagram connects all groups of learners where the mean ranks do not differ by more than the critical differences. Learners that are not connected by a bar are significantly different, and the learner(s) with the lower mean rank can be considered “better” at the chosen significance level.</li>
 <li>Choosing <code>test = "bd"</code> performs a <em>pairwise comparison with a baseline</em>. An interval which extends by the given <em>critical difference</em> in both directions is drawn around the <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> chosen as baseline, though only comparisons with the baseline are possible. All learners within the interval are not significantly different, while the baseline can be considered better or worse than a given learner which is outside of the interval.</li>
 </ul>
-<p>The critical difference <span class="math inline">\(\mathit{CD}\)</span> is calculated by <span class="math display">\[\mathit{CD} = q_\alpha \cdot \sqrt{\frac{k(k+1)}{6N}},\]</span> where <span class="math inline">\(N\)</span> denotes the number of tasks, <span class="math inline">\(k\)</span> is the number of learners, and <span class="math inline">\(q_\alpha\)</span> comes from the studentized range statistic divided by <span class="math inline">\(\sqrt{2}\)</span>. For details see <a href="http://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf">Demsar (2006)</a>.</p>
+<p>The critical difference <span class="math inline">\(\mathit{CD}\)</span> is calculated by <span class="math display">\[\mathit{CD} = q_\alpha \cdot \sqrt{\frac{k(k+1)}{6N}},\]</span> where <span class="math inline">\(N\)</span> denotes the number of tasks, <span class="math inline">\(k\)</span> is the number of learners, and <span class="math inline">\(q_\alpha\)</span> comes from the studentized range statistic divided by <span class="math inline">\(\sqrt{2}\)</span>. For details see <a href="https://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf">Demsar (2006)</a>.</p>
 <p>Function <code><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData()</a></code> does all necessary calculations while function <code><a href="../../reference/plotCritDifferences.html">plotCritDifferences()</a></code> draws the plot. See the tutorial page about <a href="visualization.html" target="_blank">visualization</a> for details on data generation and plotting functions.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit">
 <span class="co"># Nemenyi test</span>
@@ -865,7 +867,8 @@
 <span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Density plots for two tasks</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">mmce</span>, colour <span class="op">=</span> <span class="va">learner.id</span>, facets <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">task.id</span>,
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">mmce</span>,
+  colour <span class="op">=</span> <span class="va">learner.id</span>, facets <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">task.id</span>,
   data <span class="op">=</span> <span class="va">perf</span><span class="op">[</span><span class="va">perf</span><span class="op">$</span><span class="va">task.id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iris-example"</span>, <span class="st">"Sonar-example"</span><span class="op">)</span>, <span class="op">]</span>, geom <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
@@ -883,7 +886,8 @@
 <span class="co">## 5 iris-example        lda    5     mmce 0.06666667</span>
 <span class="co">## 6 iris-example        lda    6     mmce 0.00000000</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">variable</span>, <span class="va">value</span>, data <span class="op">=</span> <span class="va">df</span>, colour <span class="op">=</span> <span class="va">learner.id</span>, geom <span class="op">=</span> <span class="st">"boxplot"</span>,
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">variable</span>, <span class="va">value</span>,
+  data <span class="op">=</span> <span class="va">df</span>, colour <span class="op">=</span> <span class="va">learner.id</span>, geom <span class="op">=</span> <span class="st">"boxplot"</span>,
   xlab <span class="op">=</span> <span class="st">"measure"</span>, ylab <span class="op">=</span> <span class="st">"performance"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">task.id</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>

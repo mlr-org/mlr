@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -71,7 +75,7 @@ create a ResampleInstance, when given the size of the data set." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -86,7 +90,7 @@ create a ResampleInstance, when given the size of the data set." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -274,7 +278,7 @@ create a ResampleInstance, when given the size of the data set." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -326,15 +330,15 @@ create a ResampleInstance, when given the size of the data set." />
 create a <a href='makeResampleInstance.html'>ResampleInstance</a>, when given the size of the data set.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeResampleDesc</span>(
-  <span class='no'>method</span>,
-  <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"test"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>stratify.cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>blocking.cv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>makeResampleDesc</span><span class='op'>(</span>
+  <span class='va'>method</span>,
+  predict <span class='op'>=</span> <span class='st'>"test"</span>,
+  <span class='va'>...</span>,
+  stratify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  stratify.cols <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fixed <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  blocking.cv <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -356,7 +360,7 @@ Default is &#8220;test&#8221;.</p></td>
     <tr>
       <th>...</th>
       <td><p>(any)<br />
-Further parameters for strategies.<br /></p><dl class='dl-horizontal'>
+Further parameters for strategies.<br /></p><dl>
 <dt>iters (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Number of iterations, for &#8220;CV&#8221;, &#8220;Subsample&#8221;
 and &#8220;Bootstrap&#8221;.</p></dd>
 <dt>split (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)</dt><dd><p>Proportion of training cases for &#8220;Holdout&#8221; and
@@ -426,7 +430,7 @@ for more details.</p></td>
     <p>(ResampleDesc).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Some notes on some special strategies:</p><dl class='dl-horizontal'>
+    <p>Some notes on some special strategies:</p><dl>
 <dt>Repeated cross-validation</dt><dd><p>Use &#8220;RepCV&#8221;. Then you have to set the aggregation function
 for your preferred performance measure to &#8220;testgroup.mean&#8221;
 via <a href='setAggregation.html'>setAggregation</a>.</p></dd>
@@ -440,7 +444,7 @@ Then you have to set the aggregation function for your preferred performance mea
 
 </dl>
 
-<p>Object slots:</p><dl class='dl-horizontal'>
+<p>Object slots:</p><dl>
 <dt>id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Name of resampling strategy.</p></dd>
 <dt>iters (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)</dt><dd><p>Number of iterations. Note that this is always the complete number
 of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.</p></dd>
@@ -455,7 +459,7 @@ of generated train/test sets, so for a 10-times repeated 5fold cross-validation 
     
 
 <p>For common resampling strategies you can save some typing
-by using the following description objects:</p><dl class='dl-horizontal'>
+by using the following description objects:</p><dl>
 <dt>hout</dt><dd><p>holdout a.k.a. test sample estimation
 (two-thirds training set, one-third testing set)</p></dd>
 <dt>cv2</dt><dd><p>2-fold cross-validation</p></dd>
@@ -480,33 +484,31 @@ by using the following description objects:</p><dl class='dl-horizontal'>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Bootstraping</span>
-<span class='fu'>makeResampleDesc</span>(<span class='st'>"Bootstrap"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; Resample description: OOB bootstrapping with 10 iterations.
+<span class='fu'>makeResampleDesc</span><span class='op'>(</span><span class='st'>"Bootstrap"</span>, iters <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Resample description: OOB bootstrapping with 10 iterations.
 #&gt; Predict: test
-#&gt; Stratification: FALSE</div><div class='input'><span class='fu'>makeResampleDesc</span>(<span class='st'>"Bootstrap"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>predict</span> <span class='kw'>=</span> <span class='st'>"both"</span>)</div><div class='output co'>#&gt; Resample description: OOB bootstrapping with 10 iterations.
+#&gt; Stratification: FALSE</div><div class='input'><span class='fu'>makeResampleDesc</span><span class='op'>(</span><span class='st'>"Bootstrap"</span>, iters <span class='op'>=</span> <span class='fl'>10</span>, predict <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Resample description: OOB bootstrapping with 10 iterations.
 #&gt; Predict: both
 #&gt; Stratification: FALSE</div><div class='input'>
 <span class='co'># Subsampling</span>
-<span class='fu'>makeResampleDesc</span>(<span class='st'>"Subsample"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>3</span> / <span class='fl'>4</span>)</div><div class='output co'>#&gt; Resample description: subsampling with 10 iterations and 0.75 split rate.
+<span class='fu'>makeResampleDesc</span><span class='op'>(</span><span class='st'>"Subsample"</span>, iters <span class='op'>=</span> <span class='fl'>10</span>, split <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>/</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Resample description: subsampling with 10 iterations and 0.75 split rate.
 #&gt; Predict: test
-#&gt; Stratification: FALSE</div><div class='input'><span class='fu'>makeResampleDesc</span>(<span class='st'>"Subsample"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; Resample description: subsampling with 10 iterations and 0.67 split rate.
+#&gt; Stratification: FALSE</div><div class='input'><span class='fu'>makeResampleDesc</span><span class='op'>(</span><span class='st'>"Subsample"</span>, iters <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Resample description: subsampling with 10 iterations and 0.67 split rate.
 #&gt; Predict: test
 #&gt; Stratification: FALSE</div><div class='input'>
 <span class='co'># Holdout a.k.a. test sample estimation</span>
-<span class='fu'>makeResampleDesc</span>(<span class='st'>"Holdout"</span>)</div><div class='output co'>#&gt; Resample description: holdout with 0.67 split rate.
+<span class='fu'>makeResampleDesc</span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Resample description: holdout with 0.67 split rate.
 #&gt; Predict: test
 #&gt; Stratification: FALSE</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#standard-resampledesc-objects">Standard ResampleDesc objects</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -517,7 +519,7 @@ by using the following description objects:</p><dl class='dl-horizontal'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

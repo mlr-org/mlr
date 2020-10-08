@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -76,7 +80,7 @@ The row names of the input task or newdata are preserved in the output." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -91,7 +95,7 @@ The row names of the input task or newdata are preserved in the output." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -279,7 +283,7 @@ The row names of the input task or newdata are preserved in the output." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -337,7 +341,7 @@ prediction object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for WrappedModel</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>object</span>, <span class='no'>task</span>, <span class='no'>newdata</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>task</span>, <span class='va'>newdata</span>, subset <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -386,22 +390,25 @@ Currently ignored.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># train and predict</span>
-<span class='no'>train.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>150</span>, <span class='fl'>2</span>)
-<span class='no'>test.set</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>2</span>, <span class='fl'>150</span>, <span class='fl'>2</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='st'>"classif.lda"</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>model</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, newdata = iris, subset = test.set): object 'model' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(p): object 'p' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>model</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, task = iris.task, subset = test.set): object 'model' not found</span></div><div class='input'>
+<span class='va'>train.set</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>150</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>test.set</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>150</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span>, <span class='va'>iris.task</span>, subset <span class='op'>=</span> <span class='va'>train.set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model</span>, newdata <span class='op'>=</span> <span class='va'>iris</span>, subset <span class='op'>=</span> <span class='va'>test.set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, newdata = iris, subset = test.set): object 'model' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(p): object 'p' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model</span>, task <span class='op'>=</span> <span class='va'>iris.task</span>, subset <span class='op'>=</span> <span class='va'>test.set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, task = iris.task, subset = test.set): object 'model' not found</span></div><div class='input'>
 <span class='co'># predict now probabiliies instead of class labels</span>
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>train.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>model</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>iris.task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>test.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, task = iris.task, subset = test.set): object 'model' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(p): object 'p' not found</span></div><div class='input'><span class='fu'><a href='getPredictionProbabilities.html'>getPredictionProbabilities</a></span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'p' not found</span></div></pre>
+<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>iris.task</span>, subset <span class='op'>=</span> <span class='va'>train.set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model</span>, task <span class='op'>=</span> <span class='va'>iris.task</span>, subset <span class='op'>=</span> <span class='va'>test.set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in predict(model, task = iris.task, subset = test.set): object 'model' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in print(p): object 'p' not found</span></div><div class='input'><span class='fu'><a href='getPredictionProbabilities.html'>getPredictionProbabilities</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in checkClass(x, classes, ordered, null.ok): object 'p' not found</span></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -412,7 +419,7 @@ Currently ignored.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

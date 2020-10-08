@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -86,7 +90,7 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -101,7 +105,7 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -289,7 +293,7 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -337,11 +341,11 @@ Supported ensemble methods are the makeBaggingWrapper, makeCostSensRegrWrapper, 
     </div>
 
     <div class="ref-description">
-    <p>mlr supports different methods to activate parallel computing capabilities through the integration of the <a href='https://rdrr.io/pkg/parallelMap/man/parallelMap.html'>parallelMap::parallelMap</a> package, which supports all major parallelization backends for R.
-You can start parallelization with <code><a href='https://rdrr.io/pkg/parallelMap/man/parallelStart.html'>parallelStart</a>*</code>, where <code>*</code> should be replaced with the chosen backend.
-<a href='https://rdrr.io/pkg/parallelMap/man/parallelStop.html'>parallelMap::parallelStop</a> is used to stop all parallelization backends.</p>
-<p>Parallelization is divided into different levels and will automatically be carried out for the first level that occurs, e.g. if you call <code><a href='resample.html'>resample()</a></code> after <a href='https://rdrr.io/pkg/parallelMap/man/parallelStart.html'>parallelMap::parallelStart</a>, each resampling iteration is a parallel job and possible underlying calls like parameter tuning won't be parallelized further.</p>
-<p>The supported levels of parallelization are:</p><dl class='dl-horizontal'>
+    <p>mlr supports different methods to activate parallel computing capabilities through the integration of the <a href='https://parallelmap.mlr-org.com/reference/parallelMap.html'>parallelMap::parallelMap</a> package, which supports all major parallelization backends for R.
+You can start parallelization with <code><a href='https://parallelmap.mlr-org.com/reference/parallelStart.html'>parallelStart</a>*</code>, where <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code> should be replaced with the chosen backend.
+<a href='https://parallelmap.mlr-org.com/reference/parallelStop.html'>parallelMap::parallelStop</a> is used to stop all parallelization backends.</p>
+<p>Parallelization is divided into different levels and will automatically be carried out for the first level that occurs, e.g. if you call <code><a href='resample.html'>resample()</a></code> after <a href='https://parallelmap.mlr-org.com/reference/parallelStart.html'>parallelMap::parallelStart</a>, each resampling iteration is a parallel job and possible underlying calls like parameter tuning won't be parallelized further.</p>
+<p>The supported levels of parallelization are:</p><dl>
 <dt><code>"mlr.resample"</code></dt><dd><p>Each resampling iteration (a train/test step) is a parallel job.</p></dd>
 <dt><code>"mlr.benchmark"</code></dt><dd><p>Each experiment "run this learner on this data set" is a parallel job.</p></dd>
 <dt><code>"mlr.tuneParams"</code></dt><dd><p>Each evaluation in hyperparameter space "resample with these parameter settings" is a parallel job.
@@ -360,11 +364,10 @@ Supported ensemble methods are the <a href='makeBaggingWrapper.html'>makeBagging
 
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -375,7 +378,7 @@ Supported ensemble methods are the <a href='makeBaggingWrapper.html'>makeBagging
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

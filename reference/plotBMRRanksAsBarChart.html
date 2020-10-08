@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -73,7 +77,7 @@ the x-axis. Areas are always colored according to the learner.id." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -88,7 +92,7 @@ the x-axis. Areas are always colored according to the learner.id." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -276,7 +280,7 @@ the x-axis. Areas are always colored according to the learner.id." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -330,16 +334,16 @@ for details. In all plot variants the ranks of the learning algorithms are displ
 the x-axis. Areas are always colored according to the <code>learner.id</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotBMRRanksAsBarChart</span>(
-  <span class='no'>bmr</span>,
-  <span class='kw'>measure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ties.method</span> <span class='kw'>=</span> <span class='st'>"average"</span>,
-  <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>pos</span> <span class='kw'>=</span> <span class='st'>"stack"</span>,
-  <span class='kw'>order.lrns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>order.tsks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pretty.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotBMRRanksAsBarChart</span><span class='op'>(</span>
+  <span class='va'>bmr</span>,
+  measure <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ties.method <span class='op'>=</span> <span class='st'>"average"</span>,
+  aggregation <span class='op'>=</span> <span class='st'>"default"</span>,
+  pos <span class='op'>=</span> <span class='st'>"stack"</span>,
+  order.lrns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  order.tsks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  pretty.names <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -439,18 +443,13 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
 <code><a href='reduceBatchmarkResults.html'>reduceBatchmarkResults</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># see benchmark
+    <pre class="examples"><div class='input'><span class='co'># see benchmark</span>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -461,7 +460,7 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

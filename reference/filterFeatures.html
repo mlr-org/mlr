@@ -19,6 +19,10 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
@@ -71,7 +75,7 @@ Features are then selected via select and val." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -86,7 +90,7 @@ Features are then selected via select and val." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.17.1</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.18.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -274,7 +278,7 @@ Features are then selected via select and val." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr">
+  <a href="https://github.com/mlr-org/mlr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -326,21 +330,21 @@ Features are then selected via select and val." />
 Features are then selected via <code>select</code> and <code>val</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterFeatures</span>(
-  <span class='no'>task</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  <span class='kw'>fval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>perc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>abs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fun.args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mandatory.feat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>select.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>filterFeatures</span><span class='op'>(</span>
+  <span class='va'>task</span>,
+  method <span class='op'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
+  fval <span class='op'>=</span> <span class='cn'>NULL</span>,
+  perc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  abs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fun <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fun.args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mandatory.feat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  select.method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  base.methods <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cache <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -459,7 +463,8 @@ available ensemble methods.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simple filter</span>
-<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
+<span class='fu'>filterFeatures</span><span class='op'>(</span><span class='va'>iris.task</span>, method <span class='op'>=</span> <span class='st'>"FSelectorRcpp_gain.ratio"</span>, abs <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species
 #&gt; Observations: 150
@@ -474,9 +479,10 @@ available ensemble methods.</p>
 #&gt;     setosa versicolor  virginica 
 #&gt;         50         50         50 
 #&gt; Positive class: NA</div><div class='input'><span class='co'># ensemble filter</span>
-<span class='fu'>filterFeatures</span>(<span class='no'>iris.task</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"E-min"</span>,
-  <span class='kw'>base.methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FSelectorRcpp_gain.ratio"</span>,
-    <span class='st'>"FSelectorRcpp_information.gain"</span>), <span class='kw'>abs</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Supervised task: iris-example
+<span class='fu'>filterFeatures</span><span class='op'>(</span><span class='va'>iris.task</span>, method <span class='op'>=</span> <span class='st'>"E-min"</span>,
+  base.methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSelectorRcpp_gain.ratio"</span>,
+    <span class='st'>"FSelectorRcpp_information.gain"</span><span class='op'>)</span>, abs <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Supervised task: iris-example
 #&gt; Type: classif
 #&gt; Target: Species
 #&gt; Observations: 150
@@ -492,17 +498,10 @@ available ensemble methods.</p>
 #&gt;         50         50         50 
 #&gt; Positive class: NA</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#caching">Caching</a></li>
-      <li><a href="#simple-and-ensemble-filters">Simple and ensemble filters</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -513,7 +512,7 @@ available ensemble methods.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
