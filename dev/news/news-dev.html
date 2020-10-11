@@ -367,61 +367,6 @@
 <li>remove <code>regr_slim</code> learner due to pkg (flare) being orphaned on CRAN</li>
 </ul>
 </div>
-    <div id="mlr-21719000" class="section level1">
-<h1 class="page-header" data-toc-text="2.17.1.9000">
-<a href="#mlr-21719000" class="anchor"></a>mlr 2.17.1.9000<small> Unreleased </small>
-</h1>
-<ul>
-<li>Internal changes only</li>
-</ul>
-</div>
-    <div id="mlr-21719001" class="section level1">
-<h1 class="page-header" data-toc-text="2.17.1.9001">
-<a href="#mlr-21719001" class="anchor"></a>mlr 2.17.1.9001<small> Unreleased </small>
-</h1>
-<ul>
-<li>Fix learner note for learner glmnet (the default of param <code>s</code> did not match the learner note) (<a href='https://github.com/mlr-org/mlr/issues/2747'>#2747</a>)</li>
-<li>Remove dep {hrbrthemes} used in <code><a href="../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. The package caused issues on R-devel. In addition users should set custom themes by themselves.</li>
-<li>Explicitly return value in <code><a href="../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2754'>#2754</a>)</li>
-</ul>
-</div>
-    <div id="mlr-21719002" class="section level1">
-<h1 class="page-header" data-toc-text="2.17.1.9002">
-<a href="#mlr-21719002" class="anchor"></a>mlr 2.17.1.9002<small> Unreleased </small>
-</h1>
-<ul>
-<li>
-<code><a href="../reference/getFeatureImportance.html">getFeatureImportance()</a></code>: Account for feature importance weight of linear xgboost models</li>
-</ul>
-</div>
-    <div id="mlr-21719003" class="section level1">
-<h1 class="page-header" data-toc-text="2.17.1.9003">
-<a href="#mlr-21719003" class="anchor"></a>mlr 2.17.1.9003<small> Unreleased </small>
-</h1>
-<ul>
-<li>Fix order of learners in <code><a href="../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2768'>#2768</a>)</li>
-</ul>
-</div>
-    <div id="mlr-21719005" class="section level1">
-<h1 class="page-header" data-toc-text="2.17.1.9005">
-<a href="#mlr-21719005" class="anchor"></a>mlr 2.17.1.9005<small> Unreleased </small>
-</h1>
-<ul>
-<li>xgboost: update <code>objective</code> default from <code>reg:linear</code> (deprecated) to <code>reg:squarederror</code>
-</li>
-<li>issue a warning if <code>blocking</code> was set in the Task but <code>blocking.cv</code> was not set within `makeResampleDesc() (<a href='https://github.com/mlr-org/mlr/issues/2788'>#2788</a>)</li>
-</ul>
-</div>
-    <div id="mlr-21719006" class="section level1">
-<h1 class="page-header" data-toc-text="2.17.1.9006">
-<a href="#mlr-21719006" class="anchor"></a>mlr 2.17.1.9006<small> Unreleased </small>
-</h1>
-<ul>
-<li>Many praznik filters are now also able to deal with regression tasks (<a href='https://github.com/mlr-org/mlr/issues/2790'>#2790</a>, <a href='https://github.com/bommert'>@bommert</a>)</li>
-<li>
-<code>praznik_MRMR</code>: Remove handling of survival tasks (<a href='https://github.com/mlr-org/mlr/issues/2790'>#2790</a>, <a href='https://github.com/bommert'>@bommert</a>)</li>
-</ul>
-</div>
     <div id="mlr-21809000" class="section level1">
 <h1 class="page-header" data-toc-text="2.18.0.9000">
 <a href="#mlr-21809000" class="anchor"></a>mlr 2.18.0.9000<small> Unreleased </small>

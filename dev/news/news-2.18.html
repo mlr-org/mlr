@@ -324,10 +324,21 @@
 
     <div id="mlr-2180" class="section level1">
 <h1 class="page-header" data-toc-text="2.18.0">
-<a href="#mlr-2180" class="anchor"></a>mlr 2.18.0<small> Unreleased </small>
+<a href="#mlr-2180" class="anchor"></a>mlr 2.18.0<small> 2020-10-05 </small>
 </h1>
 <ul>
-<li>Internal changes only.</li>
+<li>Many praznik filters are now also able to deal with regression tasks (<a href='https://github.com/mlr-org/mlr/issues/2790'>#2790</a>, <a href='https://github.com/bommert'>@bommert</a>)</li>
+<li>
+<code>praznik_MRMR</code>: Remove handling of survival tasks (<a href='https://github.com/mlr-org/mlr/issues/2790'>#2790</a>, <a href='https://github.com/bommert'>@bommert</a>)</li>
+<li>xgboost: update <code>objective</code> default from <code>reg:linear</code> (deprecated) to <code>reg:squarederror</code>
+</li>
+<li>issue a warning if <code>blocking</code> was set in the Task but <code>blocking.cv</code> was not set within `makeResampleDesc() (<a href='https://github.com/mlr-org/mlr/issues/2788'>#2788</a>)</li>
+<li>Fix order of learners in <code><a href="../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2768'>#2768</a>)</li>
+<li>
+<code><a href="../reference/getFeatureImportance.html">getFeatureImportance()</a></code>: Account for feature importance weight of linear xgboost models</li>
+<li>Fix learner note for learner glmnet (the default of param <code>s</code> did not match the learner note) (<a href='https://github.com/mlr-org/mlr/issues/2747'>#2747</a>)</li>
+<li>Remove dependency {hrbrthemes} used in <code><a href="../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. The package caused issues on R-devel. In addition users should set custom themes by themselves.</li>
+<li>Explicitly return value in <code><a href="../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf()</a></code> (<a href='https://github.com/mlr-org/mlr/issues/2754'>#2754</a>)</li>
 </ul>
 </div>
   </div>
