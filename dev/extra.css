@@ -24,8 +24,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /* navbar */
 .navbar {
-    font-weight: 400;
-    font-size: 17px;
+    font-weight: 300;
+    font-size: 15px;
+    font-family: "Roboto";
 }
 
 
@@ -77,6 +78,7 @@ body {
 
 .navbar .navbar-brand {
   font-size: 20px;
+  font-weight: 500;
   line-height: 26px;
   color: #03638e;
   min-height: 40px;
@@ -126,4 +128,9 @@ small, .small {
   font-size: 70%;
   font-weight: 400;
   letter-spacing: 0.03em;
+}
+
+/* reference styling ----------------------------------------------- */
+.csl-entry {
+  margin-bottom: 20px;
 }
