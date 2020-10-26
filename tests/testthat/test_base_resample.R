@@ -210,6 +210,5 @@ test_that("resample drops unseen factors in predict data set", {
   train_task = makeClassifTask("unseen.factors", data[1:4,], "trg", fixup = "quiet") # quiet becasue
   # we get dropped factors warning (which we want here)
   model = train(lrn, train_task)
-  predict(model, newdata = data[5:6,])
-
+  expect_warning(predict(model, newdata = data[5:6,]), "produced NAs because of new factor levels")
 })
