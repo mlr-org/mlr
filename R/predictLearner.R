@@ -55,8 +55,13 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
     ns = intersect(colnames(.newdata), ns)
     fls = fls[ns]
     if (length(ns) > 0L) {
-      .newdata[ns] = mapply(factor, x = .newdata[ns],
-        levels = fls, SIMPLIFY = FALSE)
+      safe_factor = function(x, levels) {
+        if (length(setdiff(levels(x), levels)) > 0) {
+          warning("fix.factors.prediction = TRUE produced NAs because of new factor levels in prediction data.")
+        }
+        factor(x, levels)
+      }
+      .newdata[ns] = mapply(safe_factor, x = .newdata[ns], levels = fls, SIMPLIFY = FALSE)
     }
   }
   p = predictLearner(.learner, .model, .newdata, ...)

@@ -48,3 +48,21 @@ test_that("classif_ksvm", {
   testCV("classif.ksvm", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
     parset = list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5))
 })
+
+test_that("classif_ksvm produces error for new factor levels on predict" {
+  # https://github.com/mlr-org/mlr/issues/2771
+  train_data = data.frame(
+    A = sample(c("A","B"), 10, TRUE),
+    B = factor(sample(c("A", "B"), 10, replace = T))
+  )
+  test_data = data.frame(
+    A = sample(c("A","B"), 10, TRUE),
+    B = factor(sample(c("A", "B","C"), 10, replace = T))
+  )
+  lrn = makeLearner("classif.ksvm", fix.factors.prediction = TRUE)
+  train_task = makeClassifTask(data = train_data, target = "A")
+  model = train(lrn, train_task)
+  expect_warning({
+    expect_error(predict(model, newdata = test_data), "has returned .+ instead of 10")
+  }, "produced NAs because of new factor levels")
+})

@@ -144,6 +144,12 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
         dump = addClasses(get("last.dump", envir = .GlobalEnv), "mlr.dump")
       }
     }
+    # did the prediction fail otherwise?
+    np = nrow(p)
+    if (is.null(np)) np = length(p)
+    if (np != nrow(newdata)) {
+      stopf("predictLearner for %s has returned %i predictions instead of %i!", learner$id, np, nrow(newdata))
+    }
   }
   if (missing(task)) {
     ids = NULL
