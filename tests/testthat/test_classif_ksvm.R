@@ -49,7 +49,7 @@ test_that("classif_ksvm", {
     parset = list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5))
 })
 
-test_that("classif_ksvm produces error for new factor levels on predict" {
+test_that("classif_ksvm produces error for new factor levels on predict", {
   # https://github.com/mlr-org/mlr/issues/2771
   train_data = data.frame(
     A = sample(c("A","B"), 10, TRUE),

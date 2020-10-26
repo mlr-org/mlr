@@ -203,8 +203,8 @@ test_that("resample drops unseen factors in predict data set", {
 
   lrn = makeLearner("classif.logreg", fix.factors.prediction = TRUE)
   model = train(lrn, subsetTask(task, 1:4))
-  predict(model, subsetTask(task, 5:6))
-  resample(lrn, task, resinst)
+  expect_warning(predict(model, subsetTask(task, 5:6)), "produced NAs because of new factor levels")
+  expect_warning(resample(lrn, task, resinst), "produced NAs because of new factor levels")
 
   # do it manually
   train_task = makeClassifTask("unseen.factors", data[1:4,], "trg", fixup = "quiet") # quiet becasue
