@@ -134,3 +134,13 @@ small, .small {
 .csl-entry {
   margin-bottom: 20px;
 }
+
+.ref-index th {
+  font-weight: 300;
+  font-size: 14px;
+}
+bootstrap.min.css:11:29763
+
+.ref-index .code{
+    margin-bottom: 10px;
+ }
