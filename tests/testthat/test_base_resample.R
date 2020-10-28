@@ -186,7 +186,8 @@ test_that("resample printer respects show.info", {
 })
 
 test_that("resample drops unseen factors in predict data set", {
-  data = data.frame(a = c("a", "b", "a", "b", "a", "c"),
+  data = data.frame(
+    a = c("a", "b", "a", "b", "a", "c"),
     b = c(1, 1, 2, 2, 2, 1),
     trg = c("a", "b", "a", "b", "a", "b"),
     stringsAsFactors = TRUE)
@@ -202,6 +203,12 @@ test_that("resample drops unseen factors in predict data set", {
 
   lrn = makeLearner("classif.logreg", fix.factors.prediction = TRUE)
   model = train(lrn, subsetTask(task, 1:4))
-  predict(model, subsetTask(task, 5:6))
-  resample(lrn, task, resinst)
+  expect_warning(predict(model, subsetTask(task, 5:6)), "produced NAs because of new factor levels")
+  expect_warning(resample(lrn, task, resinst), "produced NAs because of new factor levels")
+
+  # do it manually
+  train_task = makeClassifTask("unseen.factors", data[1:4,], "trg", fixup = "quiet") # quiet becasue
+  # we get dropped factors warning (which we want here)
+  model = train(lrn, train_task)
+  expect_warning(predict(model, newdata = data[5:6,]), "produced NAs because of new factor levels")
 })
