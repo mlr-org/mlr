@@ -1,6 +1,8 @@
 # mlr 2.18.0.9000
 
-- Internal changes only.
+- Warning if `fix.factors.prediction = TRUE` causes the generation of NAs for new factor levels in prediction.
+- Clear error message if prediction of wrapped learner has not the same length as `newdata`.
+- Internal changes.
 
 
 # mlr 2.18.0
