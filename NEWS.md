@@ -1,7 +1,11 @@
+# mlr 2.18.0.9001
+
+- Warning if `fix.factors.prediction = TRUE` causes the generation of NAs for new factor levels in prediction (@jakob-r, #2794)
+- Clear error message if prediction of wrapped learner has not the same length as `newdata` (@jakob-r, #2794)
+
+
 # mlr 2.18.0.9000
 
-- Warning if `fix.factors.prediction = TRUE` causes the generation of NAs for new factor levels in prediction.
-- Clear error message if prediction of wrapped learner has not the same length as `newdata`.
 - Internal changes.
 
 
