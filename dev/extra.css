@@ -20,6 +20,7 @@ samp {
 /* headers */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Roboto", sans;
+    font-weight: 500;
 }
 
 /* navbar */
@@ -41,7 +42,8 @@ body {
   /* font-family: Crimson Text, serif; */
   font-family: "Roboto" , sans;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 300;
+  line-height: 1.5;
   color: black;
   padding-top: 15px; /* a bit of space to the navbar */
 }
