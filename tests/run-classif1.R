@@ -4,5 +4,5 @@ library(testthat)
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   set.seed(getOption("mlr.debug.seed"))
-  test_check("mlr", "_classif_[a-l].*")
+  test_check("mlr", filter = "_classif_[a-l].*")
 }
