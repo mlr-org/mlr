@@ -1,4 +1,3 @@
-context("measures")
 
 test_that("measures", {
   requirePackagesOrSkip("Hmisc", default.method = "load")
@@ -6,12 +5,14 @@ test_that("measures", {
   ct = binaryclass.task
   options(warn = 2)
   on.exit(options(warn = 0))
-  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
-    "regr", "predtype.response", "predtype.prob"),
-  fun = function(task, model, pred, feats, extra.args) {
-    tt = pred
-    1
-  })
+  mymeasure = makeMeasure(
+    id = "foo", minimize = TRUE, properties = c(
+      "classif", "classif.multi",
+      "regr", "predtype.response", "predtype.prob"),
+    fun = function(task, model, pred, feats, extra.args) {
+      tt = pred
+      1
+    })
   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1, mymeasure)
 
   lrn = makeLearner("classif.rpart")
@@ -22,11 +23,15 @@ test_that("measures", {
 
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
-  expect_equal(names(r$measures.train),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+  expect_equal(
+    names(r$measures.train),
+    c(
+      "iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
       "fnr", "ppv", "npv", "mcc", "f1", "foo"))
-  expect_equal(names(r$measures.test),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+  expect_equal(
+    names(r$measures.test),
+    c(
+      "iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
       "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # test that measures work for se
@@ -41,7 +46,8 @@ test_that("measures", {
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
   mod = train(lrn, task = multiclass.task, subset = multiclass.train.inds)
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
-  perf = performance(pred, measures = list(multiclass.aunu, multiclass.aunp,
+  perf = performance(pred, measures = list(
+    multiclass.aunu, multiclass.aunp,
     multiclass.au1u, multiclass.au1p))
   expect_numeric(perf, any.missing = FALSE)
 
@@ -66,7 +72,8 @@ test_that("measures", {
     expect_numeric(res, any.missing = FALSE)
     Map(function(measure) {
       r = range(measure$worst, measure$best)
-      expect_number(res[[sprintf("%s.test.mean", measure$id)]], lower = r[1],
+      expect_number(res[[sprintf("%s.test.mean", measure$id)]],
+        lower = r[1],
         upper = r[2], label = measure$id)
     }, measure = ms)
   }
@@ -355,7 +362,8 @@ test_that("check measure calculations", {
   # msle throws error for values smaller than -1
   pred.art.regr.neg = pred.art.regr
   pred.art.regr.neg[[1L]] = -3
-  expect_error(measureMSLE(tar.regr, pred.art.regr.neg),
+  expect_error(
+    measureMSLE(tar.regr, pred.art.regr.neg),
     "values must be greater or equal -1")
 
   # rmsle
@@ -445,9 +453,11 @@ test_that("check measure calculations", {
   expect_equal(colauc2[, 1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[, 1]))
 
   # multiclass.auc
-  expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
-    multiclass.aunp, multiclass.au1u, multiclass.au1p))),
-  as.numeric(rep(performance(pred.bin, measures = auc), 4)))
+  expect_equal(
+    as.numeric(performance(pred.bin, measures = list(
+      multiclass.aunu,
+      multiclass.aunp, multiclass.au1u, multiclass.au1p))),
+    as.numeric(rep(performance(pred.bin, measures = auc), 4)))
   auc.lrn = makeLearner("classif.rpart", predict.type = "prob")
   auc.fit = train(auc.lrn, iris.task)
   auc.pred.constant = predict(auc.fit, subsetTask(iris.task, 1:50))
@@ -791,7 +801,8 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelTPR(multi.y, multi.y), multilabel.tpr$best)
   expect_equal(measureMultilabelTPR(multi.y, !multi.y), multilabel.tpr$worst)
   # compare with mldr (it throws a warning when recall() would divide by zero)
-  expect_equal(suppressWarnings(mldr::recall(multi.y, multi.p, undefined_value = "ignore")),
+  expect_equal(
+    suppressWarnings(mldr::recall(multi.y, multi.p, undefined_value = "ignore")),
     measureMultilabelTPR(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 1)
@@ -814,14 +825,17 @@ test_that("check measure calculations", {
 
   # meancosts
   meancosts.test = (0 + 0 + 0 + 1) / 4L
-  meancosts.perf = performance(pred.costsens, measures = meancosts,
+  meancosts.perf = performance(pred.costsens,
+    measures = meancosts,
     model = mod.costsens, task = task.costsens)
-  expect_equal(meancosts.test,
+  expect_equal(
+    meancosts.test,
     meancosts$fun(pred = pred.costsens, task = task.costsens))
   expect_equal(meancosts.test, as.numeric(meancosts.perf))
   # mcp
   mcp.test = meancosts.test - 0
-  mcp.perf = performance(pred.costsens, measures = mcp,
+  mcp.perf = performance(pred.costsens,
+    measures = mcp,
     task = task.costsens, model = mod.costsens)
   expect_equal(mcp.test, mcp$fun(pred = pred.costsens, task = task.costsens))
   expect_equal(mcp.test, as.numeric(mcp.perf))
@@ -835,9 +849,11 @@ test_that("check measure calculations", {
     sum((data.cluster[4, ] - c1)^2)) / 3L)
   M = sqrt(sum((c2 - c1)^2))
   db.test = s1 / M
-  db.perf = performance(pred.cluster, measures = db,
+  db.perf = performance(pred.cluster,
+    measures = db,
     model = mod.cluster, feats = data.cluster)
-  expect_equal(db.test, db$fun(task = task.cluster,
+  expect_equal(db.test, db$fun(
+    task = task.cluster,
     pred = pred.cluster, feats = data.cluster))
   expect_equal(db.test, as.numeric(db.perf))
 
@@ -847,7 +863,8 @@ test_that("check measure calculations", {
   insum = sqrt(sum((c(1, 3) - c(2, 4))^2)) + sqrt(sum((c(1, 3) - c(4, 2))^2)) +
     sqrt(sum((c(2, 4) - c(4, 2))^2))
   g1.test = exsum / insum
-  g1.perf = performance(pred.cluster, measures = G1,
+  g1.perf = performance(pred.cluster,
+    measures = G1,
     model = mod.cluster, feats = data.cluster)
   expect_equal(g1.test, G1$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(g1.test, as.numeric(g1.perf))
@@ -858,14 +875,17 @@ test_that("check measure calculations", {
   c2.dists = c2.dists[c2.dists != 0L]
   c1.dists = unique(as.vector(dists [-3L, -3L]))
   c1.dists = c1.dists[c1.dists != 0L]
-  con.pairs = vapply(c1.dists, function(x) x < c2.dists,
+  con.pairs = vapply(
+    c1.dists, function(x) x < c2.dists,
     logical(length = length(c2.dists)))
   con.pairs = sum(rowSums(con.pairs))
-  dis.pairs = vapply(c2.dists, function(x) x < c1.dists,
+  dis.pairs = vapply(
+    c2.dists, function(x) x < c1.dists,
     logical(length = length(c1.dists)))
   dis.pairs = sum(rowSums(dis.pairs))
   g2.test = (con.pairs - dis.pairs) / (con.pairs + dis.pairs)
-  g2.perf = performance(pred.cluster, measures = G2,
+  g2.perf = performance(pred.cluster,
+    measures = G2,
     model = mod.cluster, feats = data.cluster)
   expect_equal(g2.test, G2$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(g2.test, as.numeric(g2.perf))
@@ -878,7 +898,8 @@ test_that("check measure calculations", {
   sil.data = data.frame(t(rbind(ais, bis)))
   sils = (sil.data$bis - sil.data$ais) / pmax(sil.data$bis, sil.data$ais)
   silhouette.test = sum(sils) / nrow(data.cluster)
-  silhouette.perf = performance(pred.cluster, measures = silhouette,
+  silhouette.perf = performance(pred.cluster,
+    measures = silhouette,
     model = mod.cluster, feats = data.cluster)
   expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
@@ -886,15 +907,15 @@ test_that("check measure calculations", {
   # test that some measures are only transformations of each other
 
   # qsr is identical to the 1 - multiclass brier
-  expect_equal(1 - measureMulticlassBrier(p1, y1), measureQSR(p1, y1), check.names = FALSE)
+  expect_equal(1 - measureMulticlassBrier(p1, y1), measureQSR(p1, y1))
   qsr.bin.perf = performance(pred.bin, measures = qsr, model = mod.bin)
-  expect_equal(1 - 2 * brier.perf, qsr.bin.perf, check.names = FALSE)
+  expect_equal(1 - 2 * brier.perf, qsr.bin.perf, ignore_attr = "names")
 
-  expect_equal(lsr.perf, -1 * logloss.perf, check.names = FALSE)
+  expect_equal(lsr.perf, -1 * logloss.perf, ignore_attr = "names")
 
   # multiclass brier for a two class problem should be two times the binary brier score.
   multiclass.brier.twoclass.perf = performance(pred.bin, measures = multiclass.brier, model = mod.bin)
-  expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, check.names = FALSE)
+  expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, ignore_attr = "names")
 })
 
 test_that("getDefaultMeasure", {
@@ -907,14 +928,16 @@ test_that("getDefaultMeasure", {
 
 test_that("measure properties", {
   # hasMeasureProps yields correct properties
-  expect_true(all(vlapply(listMeasures(create = TRUE),
+  expect_true(all(vlapply(
+    listMeasures(create = TRUE),
     function(m) {
       res = hasMeasureProperties(m, m$properties)
       all(res) & length(res) > 0
     })))
   props = listMeasureProperties()
   # all props exist in mlr$measure.properties
-  expect_true(all(vlapply(listMeasures(create = TRUE),
+  expect_true(all(vlapply(
+    listMeasures(create = TRUE),
     function(m) {
       res = all(getMeasureProperties(m) %in% props)
       all(res) & length(res) > 0
@@ -990,8 +1013,9 @@ test_that("new bac gives the same result as old implementation", {
   pred = predict(mod, task = task)
   perf = performance(pred, measures = bac)
 
-  old.bac = mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
+  old.bac = mean(c(
+    tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
     tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
 
-  expect_equivalent(old.bac, perf)
+  expect_equal(ignore_attr = TRUE, old.bac, perf)
 })

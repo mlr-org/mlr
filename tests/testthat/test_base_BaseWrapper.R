@@ -1,4 +1,3 @@
-context("BaseWrapper")
 
 test_that("BaseWrapper", {
   lrn1 = makeLearner("classif.rpart", minsplit = 2L)
@@ -46,7 +45,7 @@ test_that("Joint model performance estimation, tuning, and model performance", {
     resampling = makeResampleDesc(method = "Holdout")
   )
   bmrk = benchmark(lrn3, pid.task, makeResampleDesc(method = "Holdout"), measures = getDefaultMeasure(pid.task))
-  expect_is(bmrk, "BenchmarkResult")
+  expect_s3_class(bmrk, "BenchmarkResult")
 })
 
 test_that("Error when wrapping tune wrapper around another optimization wrapper", {

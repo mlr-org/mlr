@@ -1,13 +1,12 @@
-context("plotResiduals")
 
 test_that("plotResiduals with prediction object", {
   learner = makeLearner("regr.rpart")
   mod = train(learner, regr.task)
   preds = predict(mod, regr.task)
-  plotResiduals(preds)
+  suppressMessages(plotResiduals(preds))
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   # points
   expect_equal(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), getTaskSize(regr.task))
@@ -20,7 +19,7 @@ test_that("plotResiduals with prediction object", {
   plotResiduals(preds, type = "hist")
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), 30L)
   # task.type == "classif"
@@ -30,7 +29,7 @@ test_that("plotResiduals with prediction object", {
   plotResiduals(preds)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   num.points = sum(calculateConfusionMatrix(preds)$result[1:3, 1:3] != 0)
   expect_true(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)) > num.points)
@@ -43,7 +42,7 @@ test_that("plotResiduals with BenchmarkResult", {
   plotResiduals(bmr, type = "scatterplot")
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   grid.size = length(getBMRTaskIds(bmr)) * length(getBMRLearnerIds(bmr))
   # facets
@@ -52,7 +51,7 @@ test_that("plotResiduals with BenchmarkResult", {
   plotResiduals(bmr, type = "hist")
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   # barplot now. We can't test for exact number of bars anymore
   expect_true(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)) > 0L)
@@ -63,7 +62,7 @@ test_that("plotResiduals with BenchmarkResult", {
   plotResiduals(bmr, pretty.names = FALSE)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
 

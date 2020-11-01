@@ -1,4 +1,3 @@
-context("regr_logicreg")
 
 skip("still in todo")
 

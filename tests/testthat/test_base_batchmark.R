@@ -1,11 +1,10 @@
-context("batchmark")
+suppressMessages(library(batchtools))
 
 prev = getOption("batchtools.verbose")
 options(batchtools.verbose = FALSE)
 
 test_that("batchmark", {
   skip_if_not_installed("batchtools")
-  library(batchtools)
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
 
   task.names = c("binary", "multiclass")
@@ -38,10 +37,10 @@ test_that("batchmark", {
   expect_true(setequal(names(preds1), "classif.lda"))
 
   preds11 = preds1[[1L]]
-  expect_is(preds11, "Prediction")
+  expect_s3_class(preds11, "Prediction")
 
   preds = getBMRPredictions(res, as.df = TRUE)
-  expect_is(preds, "data.frame")
+  expect_s3_class(preds, "data.frame")
   expect_equal(nrow(preds), getTaskSize(binaryclass.task))
   expect_equal(ncol(preds), 9)
   expect_equal(unique(preds$iter), 1:2)
@@ -78,18 +77,18 @@ test_that("batchmark", {
   expect_true(setequal(names(preds1), learner.names))
 
   preds11 = preds1[[1L]]
-  expect_is(preds11, "Prediction")
+  expect_s3_class(preds11, "Prediction")
 
   preds = getBMRPredictions(res, as.df = TRUE)
-  expect_is(preds, "data.frame")
+  expect_s3_class(preds, "data.frame")
   expect_equal(nrow(preds), 2 * (getTaskSize(multiclass.task) + getTaskSize(binaryclass.task)))
 
   p = getBMRPerformances(res, as.df = TRUE)
-  expect_is(p, "data.frame")
+  expect_s3_class(p, "data.frame")
   expect_equal(nrow(p), length(task.names) * length(learner.names) * rin$iters)
 
   a = getBMRAggrPerformances(res, as.df = TRUE)
-  expect_is(a, "data.frame")
+  expect_s3_class(a, "data.frame")
   expect_equal(nrow(a), length(task.names) * length(learner.names))
 
   # make it more complex
@@ -134,21 +133,21 @@ test_that("batchmark", {
   expect_true(setequal(names(preds1), learner.names))
 
   preds11 = preds1[[1L]]
-  expect_is(preds11, "Prediction")
+  expect_s3_class(preds11, "Prediction")
 
   preds = getBMRPredictions(res, as.df = TRUE)
-  expect_is(preds, "data.frame")
+  expect_s3_class(preds, "data.frame")
 
   p = getBMRPerformances(res, as.df = TRUE)
-  expect_is(p, "data.frame")
+  expect_s3_class(p, "data.frame")
   expect_equal(nrow(p), length(task.names) * length(learner.names) * rin$iters)
 
   a = getBMRAggrPerformances(res, as.df = TRUE)
-  expect_is(a, "data.frame")
+  expect_s3_class(a, "data.frame")
   expect_equal(nrow(a), length(task.names) * length(learner.names))
 
   tr = getBMRTuneResults(res, as.df = FALSE)
-  expect_is(tr, "list")
+  expect_list(tr)
   expect_equal(length(tr), 2)
   expect_true(setequal(names(tr), task.names))
 
@@ -160,10 +159,10 @@ test_that("batchmark", {
   expect_equal(length(tr11), 2)
 
   tr111 = tr11[[1L]]
-  expect_is(tr111, "TuneResult")
+  expect_s3_class(tr111, "TuneResult")
 
   trd = getBMRTuneResults(res, as.df = TRUE)
-  expect_is(trd, "data.frame")
+  expect_s3_class(trd, "data.frame")
   expect_equal(ncol(trd), 5)
   expect_equal(nrow(trd), 4)
   expect_equal(levels(as.factor(trd$task.id)), task.names)
@@ -171,7 +170,7 @@ test_that("batchmark", {
   expect_equal(unique(trd$iter), 1:2)
 
   tf = getBMRFeatSelResults(res, as.df = FALSE)
-  expect_is(tf, "list")
+  expect_list(tf)
   expect_equal(length(tf), 2)
   expect_true(setequal(names(tf), task.names))
 
@@ -183,10 +182,10 @@ test_that("batchmark", {
   expect_equal(length(tf11), 2)
 
   tf111 = tf11[[1L]]
-  expect_is(tf111, "FeatSelResult")
+  expect_s3_class(tf111, "FeatSelResult")
 
   tfd = getBMRFeatSelResults(res, as.df = TRUE)
-  expect_is(tfd, "data.frame")
+  expect_s3_class(tfd, "data.frame")
   expect_equal(ncol(tfd), 4)
   feats = c(
     lapply(tf$binary$classif.lda.featsel, function(x) x$x),
@@ -198,7 +197,7 @@ test_that("batchmark", {
   expect_equal(unique(tfd$iter), 1:2)
 
   tff = getBMRFilteredFeatures(res, as.df = FALSE)
-  expect_is(tff, "list")
+  expect_list(tff)
   expect_equal(length(tff), 2)
   expect_true(setequal(names(tff), task.names))
   tff1 = tff[[task.names[1L]]]
@@ -207,10 +206,10 @@ test_that("batchmark", {
   tff11 = tff1[[paste0(learner.names[1L], ".filtered")]]
   expect_equal(length(tff11), 2)
   tff111 = tff11[[1L]]
-  expect_is(tff111, "character")
+  expect_type(tff111, "character")
 
   tffd = getBMRFilteredFeatures(res, as.df = TRUE)
-  expect_is(tffd, "data.frame")
+  expect_s3_class(tffd, "data.frame")
   expect_equal(ncol(tffd), 4)
   expect_equal(nrow(tffd), 64)
   expect_equal(levels(as.factor(tffd$task.id)), task.names)
@@ -219,7 +218,6 @@ test_that("batchmark", {
 
   f = function(tmp, cl) {
 
-    context(sprintf("batchmark: extracting %s", cl))
     expect_true(is.list(tmp))
     expect_true(setequal(names(tmp), task.names))
     tmp = tmp[[1L]]
@@ -250,9 +248,9 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_true(waitForJobs(reg = reg))
   res = reduceBatchmarkResults(reg = reg, keep.pred = TRUE)
   x = res$results$binary$classif.lda
-  expect_is(x, "ResampleResult")
+  expect_s3_class(x, "ResampleResult")
   expect_list(x$models, types = "WrappedModel")
-  expect_is(x$pred, "ResamplePrediction")
+  expect_s3_class(x$pred, "ResamplePrediction")
 
   ## test getter function for models
   models = getBMRModels(res)
@@ -268,7 +266,7 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_equal(length(models11), 2L)
 
   models111 = models11[[1L]]
-  expect_is(models111, "WrappedModel")
+  expect_s3_class(models111, "WrappedModel")
 
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
   res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
@@ -279,7 +277,7 @@ test_that("keep.preds and models are passed down to resample()", {
   res = reduceBatchmarkResults(reg = reg, keep.pred = FALSE)
   x = res$results$binary$classif.lda
   models11 = getBMRModels(res)[[1L]][[1L]]
-  expect_is(x, "ResampleResult")
+  expect_s3_class(x, "ResampleResult")
   expect_null(x$pred)
   expect_null(models11)
 })

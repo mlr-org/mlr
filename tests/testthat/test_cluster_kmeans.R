@@ -1,4 +1,3 @@
-context("cluster_kmeans")
 
 test_that("cluster_kmeans", {
   requirePackagesOrSkip("stats", default.method = "load")
@@ -32,7 +31,7 @@ test_that("cluster_kmeans", {
   m = train(lrn, task = makeClusterTask(data = noclass.train))
   pp = as.matrix(predict(m, newdata = noclass.test)$data)
 
-  expect_equal(getMaxIndexOfRows(p), pp[, 1], check.attributes = FALSE)
-  expect_equal(p[, 1], pp[, 2], check.attributes = FALSE)
-  expect_equal(p[, 2], pp[, 3], check.attributes = FALSE)
+  expect_equal(getMaxIndexOfRows(p), pp[, 1], ignore_attr = TRUE)
+  expect_equal(p[, 1], pp[, 2], ignore_attr = TRUE)
+  expect_equal(p[, 2], pp[, 3], ignore_attr = TRUE)
 })

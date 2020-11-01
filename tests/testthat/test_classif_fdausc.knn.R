@@ -1,4 +1,3 @@
-context("Rlearner_classif_fdausc.knn")
 
 test_that("classif_fdausc.knn behaves like original api", {
   requirePackagesOrSkip("fda.usc", default.method = "load")

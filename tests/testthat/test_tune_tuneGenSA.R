@@ -1,4 +1,3 @@
-context("tuneGenSA")
 
 test_that("tuneGenSA", {
   res = makeResampleDesc("CV", iters = 2)

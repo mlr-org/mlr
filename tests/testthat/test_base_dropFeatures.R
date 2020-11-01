@@ -1,4 +1,3 @@
-context("dropFeatures")
 
 test_that("dropFeatures", {
   fns = getTaskFeatureNames(multiclass.task)

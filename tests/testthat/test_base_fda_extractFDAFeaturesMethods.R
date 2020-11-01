@@ -1,4 +1,9 @@
-context("extactFDAFeaturesMethods")
+library(tsfeatures)
+suppressPackageStartupMessages(library(mboost, quietly = TRUE))
+suppressPackageStartupMessages(library(FDboost, quietly = TRUE))
+library(stabs)
+library(rucrdtw)
+library(parallel)
 
 test_that("Wavelet method are equal to package", {
   requirePackagesOrSkip("wavelets", default.method = "load")
@@ -105,7 +110,7 @@ test_that("extractFPCAFeatures is equivalent to prcomp", {
   fpca.df2 = predict(prcomp(gp.mat, rank. = 5L), gp.mat)
   expect_true((nrow(gp.mat) == nrow(fpca.df2)))
   expect_true((ncol(fpca.df2) == 5L))
-  expect_equivalent(fpca.df, data.frame(fpca.df2))
+  expect_equal(ignore_attr = TRUE, fpca.df, data.frame(fpca.df2))
 })
 
 test_that("extract and reextract FPCA", {
@@ -155,7 +160,6 @@ test_that("Fourier equal to expected", {
 })
 
 test_that("tsfeatures works", {
-  requirePackagesOrSkip("tsfeatures")
   gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30, ]
   lrn = extractFDATsfeatures()$learn
   gpvals = lrn(data = gp1, col = "UVVIS")
@@ -189,7 +193,7 @@ test_that("dtw extract works", {
   res = extractFDAFeatures(fuelsubset.task, feat.methods = fmethods)
   # check output data
   df = getTaskData(res$task, functionals.as = "matrix")
-  expect_is(df, "data.frame")
+  expect_s3_class(df, "data.frame")
   expect_equal(nrow(df), 129)
   expect_equal(ncol(df), 9)
 })
@@ -201,7 +205,7 @@ test_that("extractBsignal features", {
   t2 = reextractFDAFeatures(fuelsubset.task, t$desc)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_s3_class(df, "data.frame")
   expect_equal(nrow(df), 129L)
   expect_equal(ncol(df), 30L)
 })
@@ -212,6 +216,6 @@ test_that("extractFDAFeaturesDTW", {
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_s3_class(df, "data.frame")
   expect_equal(nrow(df), 129)
 })

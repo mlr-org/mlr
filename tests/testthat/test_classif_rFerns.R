@@ -1,4 +1,3 @@
-context("classif_rFerns")
 
 test_that("classif_rFerns", {
   requirePackagesOrSkip("rFerns", default.method = "load")

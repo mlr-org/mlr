@@ -1,4 +1,3 @@
-context("classif_neuralnet")
 
 test_that("classif_neuralnet", {
   requirePackagesOrSkip("neuralnet", default.method = "load")

@@ -1,4 +1,3 @@
-context("classif_randomForest")
 
 test_that("classif_randomForest", {
   requirePackagesOrSkip("randomForest", default.method = "load")
@@ -56,5 +55,5 @@ test_that("fix factors work", {
   model = train(learner, task)
   newdata = data[head(test, 1L), ]
   newdata$Species = droplevels(newdata$Species)
-  expect_is(predict(model, newdata = newdata), "Prediction")
+  expect_s3_class(predict(model, newdata = newdata), "Prediction")
 })

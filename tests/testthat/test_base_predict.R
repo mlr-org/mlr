@@ -1,4 +1,4 @@
-context("predict")
+suppressMessages(requirePackagesOrSkip("kknn"))
 
 test_that("predict", {
   inds = multiclass.train.inds

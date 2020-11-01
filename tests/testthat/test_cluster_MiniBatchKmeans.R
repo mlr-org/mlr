@@ -1,4 +1,3 @@
-context("cluster_MiniBatchKmeans")
 
 test_that("cluster_MiniBatchKmeans", {
   requirePackagesOrSkip("ClusterR", default.method = "load")

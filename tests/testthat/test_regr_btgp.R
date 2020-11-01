@@ -1,4 +1,3 @@
-context("regr_btgp")
 
 test_that("regr_btgp", {
   requirePackagesOrSkip("tgp", default.method = "load")

@@ -1,4 +1,3 @@
-context("relativeOverfitting")
 
 test_that("relativeOverfitting works with ResampleDesc", {
   rdesc = makeResampleDesc("CV", iters = 2)

@@ -1,4 +1,3 @@
-context("regr_bgpllm")
 
 test_that("regr_bgpllm", {
   requirePackagesOrSkip("tgp", default.method = "load")
@@ -20,6 +19,7 @@ test_that("regr_bgpllm", {
     old.predicts.list[[i]] = predict(m,
       XX = regr.num.df[-inds, -regr.num.class.col], pred.n = FALSE)$ZZ.km
   }
+  set.seed(getOption("mlr.debug.seed"))
   testSimpleParsets("regr.bgpllm", regr.num.df, regr.num.target, inds,
     old.predicts.list, parset.list)
 })

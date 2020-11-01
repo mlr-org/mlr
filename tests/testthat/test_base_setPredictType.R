@@ -1,4 +1,3 @@
-context("setPredictType")
 
 test_that("predict.type gets propagated", {
   inner = makeResampleDesc("Holdout")

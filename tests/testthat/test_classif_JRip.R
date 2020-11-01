@@ -1,4 +1,3 @@
-context("classif_JRip")
 
 test_that("classif_JRip", {
   requirePackagesOrSkip("RWeka", default.method = "load")

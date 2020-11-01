@@ -1,4 +1,3 @@
-context("regr_penalized")
 
 test_that("regr_penalized", {
   requirePackages("!penalized", default.method = "load")

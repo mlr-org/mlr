@@ -1,11 +1,11 @@
-context("classif_dcSVM")
 
 test_that("classif_dcSVM", {
   requirePackagesOrSkip("SwarmSVM", default.method = "load")
 
   # Early Prediction
-  model = SwarmSVM::dcSVM(x = data.matrix(binaryclass.train[, -61]), y = binaryclass.train[, 61],
-    m = 100, k = 10, max.levels = 1, early = 1, seed = 0)
+  model = suppressMessages(SwarmSVM::dcSVM(
+    x = data.matrix(binaryclass.train[, -61]), y = binaryclass.train[, 61],
+    m = 100, k = 10, max.levels = 1, early = 1, seed = 0))
   p = predict(model, data.matrix(binaryclass.test[, -61]))
   p = factor(p, labels = levels(binaryclass.train[, 61]))
 
@@ -14,8 +14,9 @@ test_that("classif_dcSVM", {
 
   # Exact Prediction
   # suppressed Warning: "max.levels reduced"
-  model = suppressWarnings(SwarmSVM::dcSVM(x = data.matrix(binaryclass.train[, -61]),
-    y = binaryclass.train[, 61], m = 100, k = 2, max.levels = 3, early = 0, seed = 0))
+  model = suppressMessages(suppressWarnings(SwarmSVM::dcSVM(
+    x = data.matrix(binaryclass.train[, -61]),
+    y = binaryclass.train[, 61], m = 100, k = 2, max.levels = 3, early = 0, seed = 0)))
   p = predict(model, data.matrix(binaryclass.test[, -61]))
   p = factor(p, labels = levels(binaryclass.train[, 61]))
 

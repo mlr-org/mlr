@@ -1,4 +1,3 @@
-context("classif_adaboostm1")
 
 test_that("classif_adaboostm1", {
   requirePackagesOrSkip("RWeka", default.method = "load")

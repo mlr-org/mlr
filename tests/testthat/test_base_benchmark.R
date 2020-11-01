@@ -1,4 +1,3 @@
-context("benchmark")
 
 test_that("benchmark", {
   set.seed(getOption("mlr.debug.seed"))
@@ -9,7 +8,8 @@ test_that("benchmark", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  res = benchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
+  res = benchmark(
+    learners = makeLearner("classif.lda", predict.type = "prob"),
     task = binaryclass.task, resamplings = rin)
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
@@ -18,10 +18,10 @@ test_that("benchmark", {
   expect_true(is.list(preds1))
   expect_true(setequal(names(preds1), "classif.lda"))
   preds11 = preds1[[1L]]
-  expect_is(preds11, "Prediction")
+  expect_s3_class(preds11, "Prediction")
 
   preds = getBMRPredictions(res, as.df = TRUE)
-  expect_is(preds, "data.frame")
+  expect_s3_class(preds, "data.frame")
   expect_equal(nrow(preds), getTaskSize(binaryclass.task))
   expect_equal(ncol(preds), 9)
   expect_equal(unique(preds$iter), 1:2)
@@ -48,38 +48,43 @@ test_that("benchmark", {
   expect_true(is.list(preds1))
   expect_true(setequal(names(preds1), learner.names))
   preds11 = preds1[[1L]]
-  expect_is(preds11, "Prediction")
+  expect_s3_class(preds11, "Prediction")
 
   preds = getBMRPredictions(res, as.df = TRUE)
-  expect_is(preds, "data.frame")
+  expect_s3_class(preds, "data.frame")
   expect_equal(nrow(preds), 2 * (getTaskSize(multiclass.task) +
     getTaskSize(binaryclass.task)))
 
   p = getBMRPerformances(res, as.df = TRUE)
-  expect_is(p, "data.frame")
+  expect_s3_class(p, "data.frame")
   expect_equal(nrow(p), length(task.names) * length(learner.names) * rin$iters)
 
   a = getBMRAggrPerformances(res, as.df = TRUE)
-  expect_is(a, "data.frame")
+  expect_s3_class(a, "data.frame")
   expect_equal(nrow(a), length(task.names) * length(learner.names))
 
   # make it more complex
   ps = makeParamSet(makeDiscreteLearnerParam("cp", values = c(0.01, 0.1)))
-  learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel",
+  learner.names = c(
+    "classif.lda", "classif.rpart", "classif.lda.featsel",
     "classif.rpart.tuned", "classif.lda.filtered")
-  learners = list(makeLearner("classif.lda"),
+  learners = list(
+    makeLearner("classif.lda"),
     makeLearner("classif.rpart"))
   learners = c(learners, list(
-    makeFeatSelWrapper(learners[[1L]], resampling = rin,
+    makeFeatSelWrapper(learners[[1L]],
+      resampling = rin,
       control = makeFeatSelControlRandom(maxit = 3)),
-    makeTuneWrapper(learners[[2L]], resampling = rin, par.set = ps,
+    makeTuneWrapper(learners[[2L]],
+      resampling = rin, par.set = ps,
       control = makeTuneControlGrid()),
     makeFilterWrapper(learners[[1L]], fw.perc = 0.5)
   ))
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 2L))
   measures = list(mmce, acc)
 
-  res = benchmark(learners = learners, tasks = tasks, resamplings = resamplings,
+  res = benchmark(
+    learners = learners, tasks = tasks, resamplings = resamplings,
     measures = measures, keep.extract = TRUE)
   expect_true("BenchmarkResult" %in% class(res))
 
@@ -101,21 +106,21 @@ test_that("benchmark", {
   expect_true(is.list(preds1))
   expect_true(setequal(names(preds1), learner.names))
   preds11 = preds1[[1L]]
-  expect_is(preds11, "Prediction")
+  expect_s3_class(preds11, "Prediction")
 
   preds = getBMRPredictions(res, as.df = TRUE)
-  expect_is(preds, "data.frame")
+  expect_s3_class(preds, "data.frame")
 
   p = getBMRPerformances(res, as.df = TRUE)
-  expect_is(p, "data.frame")
+  expect_s3_class(p, "data.frame")
   expect_equal(nrow(p), length(task.names) * length(learner.names) * rin$iters)
 
   a = getBMRAggrPerformances(res, as.df = TRUE)
-  expect_is(a, "data.frame")
+  expect_s3_class(a, "data.frame")
   expect_equal(nrow(a), length(task.names) * length(learner.names))
 
   tr = getBMRTuneResults(res, as.df = FALSE)
-  expect_is(tr, "list")
+  expect_list(tr)
   expect_equal(length(tr), 2)
   expect_true(setequal(names(tr), task.names))
   tr1 = tr[[task.names[1L]]]
@@ -124,10 +129,10 @@ test_that("benchmark", {
   tr11 = tr1[[paste0(learner.names[2L], ".tuned")]]
   expect_equal(length(tr11), 2)
   tr111 = tr11[[1L]]
-  expect_is(tr111, "TuneResult")
+  expect_s3_class(tr111, "TuneResult")
 
   trd = getBMRTuneResults(res, as.df = TRUE)
-  expect_is(trd, "data.frame")
+  expect_s3_class(trd, "data.frame")
   expect_equal(ncol(trd), 5)
   expect_equal(nrow(trd), 4)
   expect_equal(levels(as.factor(trd$task.id)), task.names)
@@ -135,7 +140,7 @@ test_that("benchmark", {
   expect_equal(unique(trd$iter), 1:2)
 
   tf = getBMRFeatSelResults(res, as.df = FALSE)
-  expect_is(tf, "list")
+  expect_list(tf)
   expect_equal(length(tf), 2)
   expect_true(setequal(names(tf), task.names))
   tf1 = tf[[task.names[1L]]]
@@ -144,10 +149,10 @@ test_that("benchmark", {
   tf11 = tf1[[paste0(learner.names[1L], ".featsel")]]
   expect_equal(length(tf11), 2)
   tf111 = tf11[[1L]]
-  expect_is(tf111, "FeatSelResult")
+  expect_s3_class(tf111, "FeatSelResult")
 
   tfd = getBMRFeatSelResults(res, as.df = TRUE)
-  expect_is(tfd, "data.frame")
+  expect_s3_class(tfd, "data.frame")
   expect_equal(ncol(tfd), 4)
   expect_gt(nrow(tfd), 10)
   expect_equal(levels(as.factor(tfd$task.id)), task.names)
@@ -155,7 +160,7 @@ test_that("benchmark", {
   expect_equal(unique(tfd$iter), 1:2)
 
   tff = getBMRFilteredFeatures(res, as.df = FALSE)
-  expect_is(tff, "list")
+  expect_list(tff)
   expect_equal(length(tff), 2)
   expect_true(setequal(names(tff), task.names))
   tff1 = tff[[task.names[1L]]]
@@ -164,10 +169,10 @@ test_that("benchmark", {
   tff11 = tff1[[paste0(learner.names[1L], ".filtered")]]
   expect_equal(length(tff11), 2)
   tff111 = tff11[[1L]]
-  expect_is(tff111, "character")
+  expect_type(tff111, "character")
 
   tffd = getBMRFilteredFeatures(res, as.df = TRUE)
-  expect_is(tffd, "data.frame")
+  expect_s3_class(tffd, "data.frame")
   expect_equal(ncol(tffd), 4)
   expect_equal(nrow(tffd), 64)
   expect_equal(levels(as.factor(tffd$task.id)), task.names)
@@ -175,8 +180,6 @@ test_that("benchmark", {
   expect_equal(unique(tffd$iter), 1:2)
 
   f = function(tmp, cl) {
-
-    context(sprintf("benchmark: extracting %s", cl))
     expect_true(is.list(tmp))
     expect_true(setequal(names(tmp), task.names))
     tmp = tmp[[1L]]
@@ -199,12 +202,13 @@ test_that("keep.preds and models are passed down to resample()", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  res = benchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
+  res = benchmark(
+    learners = makeLearner("classif.lda", predict.type = "prob"),
     task = binaryclass.task, resampling = rin, keep.pred = TRUE, models = TRUE)
   x = res$results$binary$classif.lda
-  expect_is(x, "ResampleResult")
+  expect_s3_class(x, "ResampleResult")
   expect_list(x$models, types = "WrappedModel")
-  expect_is(x$pred, "ResamplePrediction")
+  expect_s3_class(x$pred, "ResamplePrediction")
 
   ## test getter function for models
   models = getBMRModels(res)
@@ -217,14 +221,15 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_true(is.list(models11))
   expect_equal(length(models11), 2L)
   models111 = models11[[1L]]
-  expect_is(models111, "WrappedModel")
+  expect_s3_class(models111, "WrappedModel")
 
-  res = benchmark(learners = makeLearner("classif.lda", predict.type = "prob"),
+  res = benchmark(
+    learners = makeLearner("classif.lda", predict.type = "prob"),
     task = binaryclass.task, resampling = rin, keep.pred = FALSE,
     models = FALSE)
   x = res$results$binary$classif.lda
   models11 = getBMRModels(res)[[1L]][[1L]]
-  expect_is(x, "ResampleResult")
+  expect_s3_class(x, "ResampleResult")
   expect_null(x$pred)
   expect_null(models11)
 })
@@ -245,11 +250,14 @@ test_that("drop option works for BenchmarkResults_operators", {
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)
   two_two = benchmark(learners = learners, task = tasks, resampling = hout)
-  two_one = benchmark(learners = learners[[1L]], task = tasks,
+  two_one = benchmark(
+    learners = learners[[1L]], task = tasks,
     resampling = hout)
-  one_two = benchmark(learners = learners, task = tasks[[1L]],
+  one_two = benchmark(
+    learners = learners, task = tasks[[1L]],
     resampling = hout)
-  one_one = benchmark(learners = learners[[1L]], task = tasks[[1L]],
+  one_one = benchmark(
+    learners = learners[[1L]], task = tasks[[1L]],
     resampling = hout)
 
   # check behavior extensively
@@ -272,25 +280,31 @@ test_that("drop option works for BenchmarkResults_operators", {
     expect_true(all(names(res) == new.names))
   }
 
-  funs_to_test = c(getBMRPerformances, getBMRTuneResults,
+  funs_to_test = c(
+    getBMRPerformances, getBMRTuneResults,
     getBMRFeatSelResults, getBMRFilteredFeatures, getBMRModels)
-  lapply(funs_to_test, FUN = testDropOption, bmr = one_two,
+  lapply(funs_to_test,
+    FUN = testDropOption, bmr = one_two,
     new.names = learner.names)
 
   # getBMROptResults needs separate checking since it needs extra argument
-  testDropOption(one_two, getBMROptResults, new.names = learner.names,
+  testDropOption(one_two, getBMROptResults,
+    new.names = learner.names,
     wrapper.class = "cl")
 })
 
 test_that("benchmark works with ensemble filters", {
   lrn = makeLearner("classif.ksvm")
-  lrn = makeFilterWrapper(lrn, fw.method = "E-Borda",
+  lrn = makeFilterWrapper(lrn,
+    fw.method = "E-Borda",
     fw.base.methods = c("anova.test", "variance"))
 
   par.set = makeParamSet(
-    makeNumericParam("C", lower = -2, upper = 2,
+    makeNumericParam("C",
+      lower = -2, upper = 2,
       trafo = function(x) 2^x),
-    makeNumericParam("sigma", lower = -2, upper = 2,
+    makeNumericParam("sigma",
+      lower = -2, upper = 2,
       trafo = function(x) 2^x),
     makeNumericParam("fw.perc", lower = 0, upper = 1)
   )
@@ -300,11 +314,13 @@ test_that("benchmark works with ensemble filters", {
   rin = makeResampleDesc("CV", iters = 2L)
   tune.ctrl = makeTuneControlRandom(maxit = 3)
 
-  tune_wrapper_svm = makeTuneWrapper(lrn, resampling = rin, par.set = par.set,
+  tune_wrapper_svm = makeTuneWrapper(lrn,
+    resampling = rin, par.set = par.set,
     control = tune.ctrl, show.info = FALSE,
     measures = list(acc))
 
-  expect_class(benchmark(learners = tune_wrapper_svm, task = tasks,
+  expect_class(benchmark(
+    learners = tune_wrapper_svm, task = tasks,
     resampling = rin, measures = list(acc)), "BenchmarkResult"
   )
 })
@@ -318,7 +334,8 @@ test_that("benchmark handles failure models correctly", {
   task = binaryclass.task
 
   # Define filter parameter set
-  filter.ps = makeParamSet(makeIntegerParam("fw.abs", lower = 1,
+  filter.ps = makeParamSet(makeIntegerParam("fw.abs",
+    lower = 1,
     upper = getTaskNFeats(task)))
 
   # Define tuning control
@@ -334,7 +351,8 @@ test_that("benchmark handles failure models correctly", {
   quiet_learner = makeFilterWrapper(quiet_learner,
     fw.method = "FSelector_chi.squared")
 
-  quiet_learner = makeTuneWrapper(quiet_learner, resampling = inner,
+  quiet_learner = makeTuneWrapper(quiet_learner,
+    resampling = inner,
     control = ctrl,
     par.set = filter.ps, show.info = TRUE)
 
@@ -343,7 +361,8 @@ test_that("benchmark handles failure models correctly", {
   stop.learner = makeFilterWrapper(stop.learner,
     fw.method = "FSelector_chi.squared")
 
-  stop.learner = makeTuneWrapper(stop.learner, resampling = inner,
+  stop.learner = makeTuneWrapper(stop.learner,
+    resampling = inner,
     control = ctrl,
     par.set = filter.ps, show.info = TRUE)
 
@@ -352,26 +371,36 @@ test_that("benchmark handles failure models correctly", {
   warn_learner = makeFilterWrapper(warn_learner,
     fw.method = "FSelector_chi.squared")
 
-  warn_learner = makeTuneWrapper(warn_learner, resampling = inner,
+  warn_learner = makeTuneWrapper(warn_learner,
+    resampling = inner,
     control = ctrl,
     par.set = filter.ps, show.info = TRUE)
 
   # Tests
   # Expect benchmark failing
-  expect_error(benchmark(learners = stop.learner, tasks = task,
+  suppressMessages(
+  expect_error(benchmark(
+    learners = stop.learner, tasks = task,
     resamplings = outer,
     keep.pred = FALSE, models = FALSE, show.info = TRUE))
+  )
 
   # Expect benchmark warning
-  expect_warning(benchmark(learners = warn_learner, tasks = task,
-    resamplings = outer,
-    keep.pred = FALSE, models = FALSE, show.info = TRUE))
+  suppressWarnings(suppressMessages(
+    expect_warning(benchmark(
+      learners = warn_learner, tasks = task,
+      resamplings = outer,
+      keep.pred = FALSE, models = FALSE, show.info = TRUE))
+  ))
 
   # Expect benchmark messages
-  expect_message({
-    bmr = benchmark(learners = quiet_learner, tasks = task,
-      resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)
-  })
+  suppressMessages(
+    expect_message({
+      bmr = benchmark(
+        learners = quiet_learner, tasks = task,
+        resamplings = outer, keep.pred = FALSE, models = FALSE, show.info = TRUE)
+    })
+  )
   aggr_perf = getBMRAggrPerformances(bmr = bmr)
 
   # Check result

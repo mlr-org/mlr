@@ -1,4 +1,3 @@
-context("plotBMRSummary")
 
 test_that("BenchmarkSummary", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -15,14 +14,14 @@ test_that("BenchmarkSummary", {
   plotBMRSummary(res)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res))
 
   plotBMRSummary(res, pretty.names = FALSE)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerIds(res))
 

@@ -1,4 +1,3 @@
-context("regr_IBk")
 
 test_that("regr_IBk", {
   requirePackagesOrSkip("RWeka", default.method = "load")

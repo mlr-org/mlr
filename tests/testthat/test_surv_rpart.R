@@ -1,4 +1,3 @@
-context("surv_rpart")
 
 test_that("surv_rpart", {
   requirePackagesOrSkip("rpart", default.method = "load")

@@ -1,4 +1,3 @@
-context("getOOBPreds")
 
 test_that("getOOBPreds", {
   lrns = list(

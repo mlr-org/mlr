@@ -1,4 +1,3 @@
-context("classif_LiblineaRL2LogReg")
 
 test_that("classif_LiblineaRL2LogReg", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")

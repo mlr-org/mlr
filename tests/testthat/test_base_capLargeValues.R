@@ -1,4 +1,3 @@
-context("capLargeValues")
 
 test_that("capLargeValues.data.frame", {
 

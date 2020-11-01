@@ -1,4 +1,3 @@
-context("costs")
 
 test_that("costs", {
   lrn = makeLearner("classif.rpart")

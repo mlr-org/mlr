@@ -1,4 +1,3 @@
-context("classif_probit")
 
 test_that("classif_probit", {
   # suppressed warnings: "glm.fit: algorithm did not converge"

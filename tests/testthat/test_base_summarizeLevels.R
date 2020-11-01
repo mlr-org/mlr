@@ -1,4 +1,3 @@
-context("summarizeLevels")
 
 test_that("summarizeLevels", {
   data = data.frame(num = as.numeric(1:6), fac = as.factor(1:6), int = as.integer(1:6))

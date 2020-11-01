@@ -1,4 +1,3 @@
-context("SupervisedTask")
 
 test_that("SupervisedTask", {
   ct1 = multiclass.task

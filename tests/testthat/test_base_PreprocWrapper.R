@@ -1,4 +1,3 @@
-context("PreprocWrapper")
 
 test_that("PreprocWrapper", {
   f1 = function(data, target, args) {
@@ -35,8 +34,8 @@ test_that("getLearnerModel on nested PreprocWrapper", {
   lrn = makeDummyFeaturesWrapper(lrn)
   lrn = makeImputeWrapper(lrn, classes = list(numeric = imputeMax(5), factor = imputeConstant("NA")))
   m = train(lrn, binaryclass.task)
-  expect_is(getLearnerModel(m), "PreprocModel")
-  expect_is(getLearnerModel(m, TRUE), "rpart")
+  expect_s3_class(getLearnerModel(m), "PreprocModel")
+  expect_s3_class(getLearnerModel(m, TRUE), "rpart")
 })
 
 test_that("PreprocWrapper with glmnet (#958)", {

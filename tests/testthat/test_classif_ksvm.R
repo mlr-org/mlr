@@ -1,4 +1,3 @@
-context("classif_ksvm")
 
 test_that("classif_ksvm", {
   requirePackagesOrSkip("kernlab", default.method = "load")

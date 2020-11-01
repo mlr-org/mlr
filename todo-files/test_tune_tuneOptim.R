@@ -1,4 +1,3 @@
-context("tuneOptim")
 
 test_that("tuneOptim", {
   res = makeResampleDesc("CV", iters=2)

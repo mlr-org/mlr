@@ -1,4 +1,3 @@
-context("classif_xyf")
 
 test_that("classif_xyf", {
   requirePackagesOrSkip("kohonen", default.method = "load")

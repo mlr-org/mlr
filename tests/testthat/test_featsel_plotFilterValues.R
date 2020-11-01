@@ -1,4 +1,3 @@
-context("featsel")
 
 cat("plotFilterValues")
 test_that("n.show arg has an effect in plotFilterValues()", {

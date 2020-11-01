@@ -1,4 +1,3 @@
-context("cluster_EM")
 
 test_that("cluster_EM", {
   requirePackagesOrSkip("RWeka", default.method = "load")

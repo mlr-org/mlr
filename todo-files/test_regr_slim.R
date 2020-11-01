@@ -1,4 +1,3 @@
-context("regr_slim")
 
 test_that("regr_slim", {
   requirePackagesOrSkip("flare", default.method = "load")

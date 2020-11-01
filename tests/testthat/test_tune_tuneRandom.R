@@ -1,4 +1,3 @@
-context("tuneRandom")
 
 test_that("tuneRandom", {
   lrn = makeLearner("classif.ksvm")

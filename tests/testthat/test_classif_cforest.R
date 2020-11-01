@@ -1,4 +1,3 @@
-context("classif_cforest")
 
 test_that("classif_cforest", {
   requirePackagesOrSkip("party", default.method = "load")

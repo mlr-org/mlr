@@ -1,4 +1,3 @@
-context("classif_pamr")
 
 test_that("classif_pamr", {
   requirePackagesOrSkip("pamr", default.method = "load")

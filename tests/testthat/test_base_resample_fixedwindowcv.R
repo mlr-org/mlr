@@ -1,4 +1,3 @@
-context("resample_fixedwindowcv")
 
 test_that("fixed instance works", {
   rin = makeResampleInstance(makeResampleDesc("FixedWindowCV"), size = 25)

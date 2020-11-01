@@ -1,4 +1,3 @@
-context("resample_growingwindowcv")
 
 test_that("growing window instance works", {
   rin = makeResampleInstance(desc = makeResampleDesc(method = "GrowingWindowCV"), size = 25)

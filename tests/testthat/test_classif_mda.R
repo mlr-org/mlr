@@ -1,7 +1,6 @@
-context("classif_mda")
 
 test_that("classif_mda", {
-  requirePackagesOrSkip("mda", default.method = "load")
+  suppressMessages(library(mda))
 
   parset.list1 = list(
     list(start.method = "lvq"),

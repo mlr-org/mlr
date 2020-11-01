@@ -1,4 +1,3 @@
-context("clustering")
 
 test_that("clustering predict", {
 

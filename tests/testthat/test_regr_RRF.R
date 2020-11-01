@@ -1,4 +1,3 @@
-context("regr_RRF")
 
 test_that("regr_RRF", {
   requirePackages("RRF", default.method = "load")

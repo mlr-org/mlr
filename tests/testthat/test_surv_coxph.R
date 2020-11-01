@@ -1,4 +1,3 @@
-context("surv_coxph")
 
 test_that("surv_coxph", {
   requirePackagesOrSkip("survival", default.method = "load")

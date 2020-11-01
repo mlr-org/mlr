@@ -1,4 +1,3 @@
-context("fda")
 
 test_that("makeFunctionalData works", {
   df = data.frame(matrix(rnorm(10^2), nrow = 10))
@@ -123,7 +122,7 @@ test_that("getFunctionalFeatures works for different inputs", {
 
   # Params for task method work
   fdf = getFunctionalFeatures(fuelsubset.task, subset = 1:100, features = 1:2)
-  expect_is(fdf[, 1], "matrix")
+  expect_class(fdf[, 1], "matrix")
   expect_data_frame(fdf, ncols = 1L, nrows = 100L)
 })
 
@@ -237,7 +236,10 @@ test_that("changeData for functionals", {
   # After changeData, task stays the same
   clt = makeClassifTask(data = fdf, target = "tcl")
   tdata = getTaskData(clt, functionals.as = "matrix")
-  expect_equal(changeData(clt, tdata), clt)
+  changedata = changeData(clt, tdata)
+  changedata$env = NULL
+  clt$env = NULL
+  expect_equal(changedata, clt)
 
   subs.clt = changeData(clt, tdata[1:3, 1:3])
   expect_class(subs.clt, c("ClassifTask", "SupervisedTask", "Task"))
@@ -396,7 +398,7 @@ test_that("makeFunctionalData for matricies contained in data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
   df2 = makeFunctionalData(df, fd.features = list("UVVIS" = "UVVIS", "NIR" = "NIR"),
     exclude.cols = c("heatan", "h20"))
-  expect_equivalent(df, df2)
+  expect_equal(ignore_attr = TRUE, df, df2)
 
   df = data.frame(matrix(rnorm(100), ncol = 10L))
   df$fd1 = matrix(rnorm(100), ncol = 10L)

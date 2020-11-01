@@ -1,4 +1,3 @@
-context("cluster_kkmeans")
 
 test_that("cluster_kkmeans", {
   requirePackagesOrSkip("kernlab", default.method = "load")

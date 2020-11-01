@@ -1,4 +1,3 @@
-context("BaseEnsemble")
 
 test_that("BaseEnsemble", {
   bl1 = makeLearner("classif.rpart", minsplit = 2L, id = "a")

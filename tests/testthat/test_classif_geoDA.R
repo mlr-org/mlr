@@ -1,7 +1,6 @@
-context("classif_geoDA")
 
 test_that("classif_geoDA", {
-  requirePackagesOrSkip("DiscriMiner", default.method = "load")
+  suppressMessages(requirePackagesOrSkip("DiscriMiner", default.method = "load"))
 
   m = DiscriMiner::geoDA(multiclass.train[, -multiclass.class.col],
     group = multiclass.train[, multiclass.class.col])

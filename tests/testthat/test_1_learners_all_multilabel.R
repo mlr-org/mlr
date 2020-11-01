@@ -1,4 +1,3 @@
-context("learners_all_multilabel")
 
 test_that("learners work: multilabel", {
 

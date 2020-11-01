@@ -1,4 +1,3 @@
-context("RLearner_classif_fdausc.glm")
 
 test_that("classif_fdausc.glm behaves like original api", {
   requirePackagesOrSkip("fda.usc", default.method = "load")

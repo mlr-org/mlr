@@ -1,4 +1,3 @@
-context("weightedclasses")
 
 test_that("WeightedClassesWrapper, binary", {
   pos = getTaskDesc(binaryclass.task)$positive
@@ -56,13 +55,12 @@ test_that("WeightedClassesWrapper, multiclass", {
   expect_error(f("classif.lda", setNames(object = c(1, 10000, 1), classes)))
 })
 
-context("getClassWeightParam")
 
 test_that("getClassWeightParam", {
   f = function(lrn) {
     lrn1 = makeLearner(lrn)
-    expect_is(getClassWeightParam(lrn), "LearnerParam")
-    expect_is(getClassWeightParam(lrn1), "LearnerParam")
+    expect_s3_class(getClassWeightParam(lrn), "LearnerParam")
+    expect_s3_class(getClassWeightParam(lrn1), "LearnerParam")
   }
 
   learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",

@@ -1,4 +1,3 @@
-context("regr_ksvm")
 
 test_that("regr_ksvm", {
   requirePackagesOrSkip("kernlab", default.method = "load")

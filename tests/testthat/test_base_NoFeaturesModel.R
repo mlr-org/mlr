@@ -1,11 +1,10 @@
-context("NoFeaturesModel")
 
 test_that("NoFeaturesModel", {
   task = subsetTask(multiclass.task, features = character(0))
   lrn = makeLearner("classif.lda", predict.type = "prob")
   m = train(lrn, task)
-  expect_is(m$learner.model, "NoFeaturesModel")
-  expect_is(m$learner, "classif.lda")
+  expect_s3_class(m$learner.model, "NoFeaturesModel")
+  expect_s3_class(m$learner, "classif.lda")
   expect_equal(m$learner$predict.type, "prob")
 
   p = predict(m, newdata = multiclass.df)

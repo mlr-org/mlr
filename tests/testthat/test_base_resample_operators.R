@@ -1,4 +1,3 @@
-context("resample getter work")
 
 test_that("resample getter work", {
   lrn = makeLearner("classif.rpart")

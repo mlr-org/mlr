@@ -1,4 +1,3 @@
-context("regr_bst")
 
 test_that("classif_bst", {
   requirePackagesOrSkip("bst", default.method = "load")

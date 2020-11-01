@@ -1,4 +1,3 @@
-context("classif_lssvm")
 
 test_that("classif_lssvm", {
   requirePackagesOrSkip("kernlab", default.method = "load")
@@ -22,8 +21,8 @@ test_that("classif_lssvm", {
     pars = list(x = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     # set.seed(getOption("mlr.debug.seed"))
-    m = do.call(kernlab::lssvm, pars)
-    old.predicts.list[[i]] = kernlab::predict(m, newdata = multiclass.test)
+    m = suppressMessages(do.call(kernlab::lssvm, pars))
+    old.predicts.list[[i]] = suppressMessages(kernlab::predict(m, newdata = multiclass.test))
   }
 
   testSimpleParsets("classif.lssvm", multiclass.df, multiclass.target,

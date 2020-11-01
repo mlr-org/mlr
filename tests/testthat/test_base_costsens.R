@@ -1,4 +1,3 @@
-context("costsens")
 
 test_that("costsens", {
   rdesc = makeResampleDesc("CV", iters = 2L)

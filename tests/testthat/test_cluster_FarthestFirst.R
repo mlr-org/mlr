@@ -1,4 +1,3 @@
-context("cluster_FarthestFirst")
 
 test_that("cluster_FarthestFirst", {
   requirePackagesOrSkip("RWeka", default.method = "load")

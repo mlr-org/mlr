@@ -1,5 +1,3 @@
-context("test_friedmanTestBMR")
-
 test_that("test_friedmanTestBMR", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
   tasks = list(multiclass.task, binaryclass.task)
@@ -9,14 +7,14 @@ test_that("test_friedmanTestBMR", {
 
   # For friedmanTest
   r1 = friedmanTestBMR(res, acc)
-  expect_is(r1, "htest")
+  expect_s3_class(r1, "htest")
   r2 = friedmanTestBMR(res, ber, "mean")
-  expect_is(r2, "htest")
+  expect_s3_class(r2, "htest")
 
   # For friedmanPostHocTest
   # Case: Do not reject null
   expect_warning({r3 = friedmanPostHocTestBMR(res, acc, p.value = 10^ (-10))})
-  expect_is(r3, "htest")
+  expect_s3_class(r3, "htest")
   expect_false(r3$f.rejnull)
 
   # Case: Reject null
@@ -25,10 +23,10 @@ test_that("test_friedmanTestBMR", {
   res$results$multiclass$classif.nnet$measures.test$acc = 1
   expect_warning({r4 = friedmanPostHocTestBMR(res, acc, p.value = .99)})
   if (r4$p.value < .99) {
-    expect_is(r4, "PMCMR")
+    expect_s3_class(r4, "PMCMR")
     expect_true(r4$f.rejnull)
   }
-  expect_is(r4$crit.difference[[1]], "numeric")
+  expect_s3_class(r4$crit.difference[[1]], "numeric")
   expect_gt(r4$crit.difference[[1]], 0L)
 })
 

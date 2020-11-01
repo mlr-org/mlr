@@ -1,4 +1,3 @@
-context("classif_glmnet")
 
 test_that("classif_glmnet", {
   requirePackagesOrSkip("glmnet", default.method = "load")

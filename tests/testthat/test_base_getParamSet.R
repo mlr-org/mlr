@@ -1,4 +1,3 @@
-context("getParamSet")
 
 test_that("getParamSet", {
   lrn = makeLearner("classif.lda")

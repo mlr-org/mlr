@@ -1,4 +1,3 @@
-context("calculateROCMeasures")
 
 test_that("calculateROCMeasures", {
   rdesc = makeResampleDesc("CV", iters = 3)

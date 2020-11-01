@@ -1,4 +1,3 @@
-context("tuneThreshold")
 
 test_that("tuneThreshold", {
 

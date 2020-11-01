@@ -1,4 +1,3 @@
-context("cluster_SimpleKMeans")
 
 test_that("cluster_SimpleKMeans", {
   requirePackagesOrSkip("RWeka", default.method = "load")

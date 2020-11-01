@@ -1,4 +1,3 @@
-context("regr_bcart")
 
 test_that("regr_bcart", {
   requirePackagesOrSkip("tgp", default.method = "load")

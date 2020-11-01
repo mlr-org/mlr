@@ -1,4 +1,3 @@
-context("classif_multinom")
 
 test_that("classif_multinom", {
   requirePackagesOrSkip("nnet", default.method = "load")

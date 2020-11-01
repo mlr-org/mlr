@@ -1,4 +1,3 @@
-context("classif_xgboost")
 
 test_that("classif_xgboost", {
   requirePackagesOrSkip("xgboost", default.method = "load")

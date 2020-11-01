@@ -1,4 +1,3 @@
-context("extactFDAFeaturesWrapper")
 
 test_that("extractFDAFeaturesWrapper", {
   methods = list("UVVIS" = extractFDAMultiResFeatures(), "NIR" = extractFDAFourier())

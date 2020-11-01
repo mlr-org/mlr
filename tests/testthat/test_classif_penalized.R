@@ -1,7 +1,8 @@
-context("classif_penalized")
+suppressMessages(library(survival))
+suppressMessages(library(penalized, quietly = TRUE))
 
 test_that("classif_penalized", {
-  requirePackages("!penalized", default.method = "load")
+  suppressMessages(requirePackages("!penalized", default.method = "load"))
   parset.list = list(
     list(maxiter = 100),
     list(lambda1 = 2),

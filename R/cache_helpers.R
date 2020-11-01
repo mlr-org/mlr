@@ -19,5 +19,5 @@ getCacheDir = function() {
 #' @export
 deleteCacheDir = function() {
   unlink(rappdirs::user_cache_dir("mlr", "mlr-org"), recursive = TRUE)
-  catf("Successfully cleared directory '%s'.", rappdirs::user_cache_dir("mlr", "mlr-org"))
+  messagef("Successfully cleared directory '%s'.", rappdirs::user_cache_dir("mlr", "mlr-org"))
 }

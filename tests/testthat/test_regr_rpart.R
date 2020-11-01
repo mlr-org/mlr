@@ -1,4 +1,3 @@
-context("regr_rpart")
 
 test_that("regr_rpart", {
   requirePackagesOrSkip("rpart", default.method = "load")

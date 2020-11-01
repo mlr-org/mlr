@@ -1,4 +1,3 @@
-context("fixed")
 
 test_that("fixed in single resampling", {
   df = multiclass.df
@@ -9,7 +8,7 @@ test_that("fixed in single resampling", {
   # test blocking in single resample
   lrn = makeLearner("classif.lda")
   rdesc = makeResampleDesc("CV", fixed = TRUE)
-  p = resample(lrn, ct, rdesc)$pred
+  p = suppressWarnings(resample(lrn, ct, rdesc)$pred)
 
   # check if all test.inds are unique
   expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
@@ -37,8 +36,8 @@ test_that("fixed in nested resampling", {
   tune.wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE, measures = getDefaultMeasure(ct))
 
-  p = resample(tune.wrapper, ct, outer, show.info = FALSE,
-    extract = getTuneResult)
+  p = suppressWarnings(resample(tune.wrapper, ct, outer, show.info = FALSE,
+    extract = getTuneResult))
 
   # check if all outer test.inds are unique
   expect_length(unique(unlist(
@@ -57,7 +56,9 @@ test_that("fixed in nested resampling", {
   outer = makeResampleDesc("CV", fixed = TRUE)
   tune.wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE, measures = getDefaultMeasure(ct))
+  suppressWarnings({
   p = resample(tune.wrapper, ct, outer, show.info = FALSE,
     extract = getTuneResult)
+  })
   expect_length(getResamplingIndices(p, inner = TRUE)[[1]][[1]], 6)
 })

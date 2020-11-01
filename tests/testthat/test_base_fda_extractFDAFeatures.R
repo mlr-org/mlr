@@ -1,4 +1,3 @@
-context("extactFDAFeatures")
 
 test_that("extractFDAFeatures", {
   methods = list("UVVIS" = extractFDAMultiResFeatures(),
@@ -6,7 +5,7 @@ test_that("extractFDAFeatures", {
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_s3_class(df, "data.frame")
   expect_equal(nrow(df), 129L)
   expect_subset(colnames(df), c(paste0("NIR.phase.", seq_len(231)),
     paste0("UVVIS.multires.", seq_len(9)), "heatan", "h20"))
@@ -31,7 +30,7 @@ test_that("extractFeatures multiple times", {
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_s3_class(df, "data.frame")
   expect_true(nrow(df) == 129L)
   expect_true(ncol(df) == 385L)
   expect_subset(colnames(df),
@@ -95,7 +94,7 @@ test_that("extractFDAFeaturesDesc", {
     "NIR" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check desc
-  expect_is(t$desc, "extractFDAFeatDesc")
+  expect_s3_class(t$desc, "extractFDAFeatDesc")
   expect_subset(t$desc$coln, c(getTaskFeatureNames(fuelsubset.task),
     getTaskTargetNames(fuelsubset.task)))
   expect_subset(t$desc$target, getTaskTargetNames(fuelsubset.task))

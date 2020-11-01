@@ -1,4 +1,3 @@
-context("impute")
 
 test_that("Impute data frame", {
   data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5),
@@ -181,10 +180,10 @@ test_that("ImputeWrapper", {
   expect_true(!any(is.na(p$data$response)))
   mm = getLearnerModel(m, more.unwrap = TRUE)
   expect_output(print(mm), "root")
-  expect_is(mm, "rpart")
+  expect_s3_class(mm, "rpart")
   mm = getLearnerModel(m, more.unwrap = FALSE)
   expect_output(print(mm), "Model")
-  expect_is(mm, "WrappedModel")
+  expect_s3_class(mm, "WrappedModel")
   expect_match(lrn$id, "[.]imputed$")
 })
 

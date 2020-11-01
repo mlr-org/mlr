@@ -1,4 +1,3 @@
-context("classif_quaDA")
 
 test_that("classif_quaDA", {
   requirePackagesOrSkip("DiscriMiner", default.method = "load")

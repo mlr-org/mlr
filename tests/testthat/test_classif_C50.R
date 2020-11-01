@@ -1,4 +1,3 @@
-context("classif_C50")
 
 test_that("classif_C50", {
   # test for issue #1573: make C50 learner objects not stochastic

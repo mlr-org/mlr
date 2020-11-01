@@ -1,4 +1,3 @@
-context("regr_extraTrees")
 
 test_that("regr_extraTrees", {
   requirePackagesOrSkip("extraTrees", default.method = "load")

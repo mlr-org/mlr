@@ -1,6 +1,6 @@
-context("regr_h2odeeplearning")
 
 test_that("regr_h2odeeplearning", {
+  skip("h2o problematic")
   skip_on_ci()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()

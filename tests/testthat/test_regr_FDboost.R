@@ -1,4 +1,3 @@
-context("FDA_FDboost")
 
 test_that("regr_FDboost is equal to reference", {
   skip_on_cran()

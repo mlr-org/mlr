@@ -1,4 +1,3 @@
-context("DummyFeaturesWrapper")
 
 test_that("DummyFeaturesWrapper", {
   methods = c("1-of-n", "reference")

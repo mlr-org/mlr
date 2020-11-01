@@ -1,4 +1,3 @@
-context("learnerArgsToControl")
 
 test_that("learnerArgsToControl with list returns the input", {
   checkLearnerArgsToControl = function(arg1, arg2, ...) {

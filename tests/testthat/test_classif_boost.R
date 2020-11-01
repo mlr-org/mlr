@@ -1,4 +1,3 @@
-context("classif_boosting")
 
 # FIXME: Test takes 80s if we test with the default mfinal=100. Without 10s
 # Is there any reasons why testing mfinal=100 would be absolutely necessary?

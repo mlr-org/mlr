@@ -1,4 +1,3 @@
-context("multiLabelWrapperIds")
 
 binary.learner = makeLearner("classif.rpart")
 

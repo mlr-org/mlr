@@ -1,4 +1,3 @@
-context("generateLearningCurve")
 
 test_that("generateLearningCurve", {
   r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
@@ -9,14 +8,14 @@ test_that("generateLearningCurve", {
   plotLearningCurve(r)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
-    equals(length(r$measures)))
-  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)),
-    equals(length(unique(r$data$learner))))
-  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)),
-    equals(length(unique(r$data$learner))))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
+    length(r$measures))
+  expect_equal(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)),
+    length(unique(r$data$learner)))
+  expect_equal(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)),
+    length(unique(r$data$learner)))
 
   r = generateLearningCurveData(learners = list("regr.lm", "regr.svm"),
     task = regr.num.task, percs = c(0.1, 0.2),
@@ -25,28 +24,28 @@ test_that("generateLearningCurve", {
   expect_true(all(c("learner", "percentage", "sse", "timeboth") %in% colnames(r$data)))
 
   plotLearningCurve(r)
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
-    equals(length(r$measures)))
-  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)),
-    equals(length(unique(r$data$learner))))
-  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)),
-    equals(length(unique(r$data$learner))))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
+    length(r$measures))
+  expect_equal(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)),
+    length(unique(r$data$learner)))
+  expect_equal(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)),
+    length(unique(r$data$learner)))
 
   r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
     task = binaryclass.task, percs = c(0.1, 0.3),
     resampling = makeResampleDesc("Holdout", predict = "both"),
     measures = list(acc, setAggregation(acc, train.mean)))
   plotLearningCurve(r)
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
-    equals(length(r$measures)))
-  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)),
-    equals(length(unique(r$data$learner))))
-  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)),
-    equals(length(unique(r$data$learner))))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
+    length(r$measures))
+  expect_equal(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)),
+    length(unique(r$data$learner)))
+  expect_equal(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)),
+    length(unique(r$data$learner)))
 
   # facetting works for plotLearningCurveData
 

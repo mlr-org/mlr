@@ -1,4 +1,3 @@
-context("removeConstantFeatures")
 
 test_that("removeConstantFeatures", {
   data = data.frame(

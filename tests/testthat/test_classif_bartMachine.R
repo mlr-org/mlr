@@ -1,4 +1,3 @@
-context("classif_bartMachine")
 
 test_that("classif_bartMachine", {
   requirePackagesOrSkip("bartMachine", default.method = "load")
@@ -34,9 +33,11 @@ test_that("classif_bartMachine", {
     old.probs.list[[i]] = p2
   }
 
+  set.seed(getOption("mlr.debug.seed"))
   testSimpleParsets("classif.bartMachine", binaryclass.df,
     binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
+  set.seed(getOption("mlr.debug.seed"))
   testProbParsets("classif.bartMachine", binaryclass.df,
     binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)

@@ -1,4 +1,3 @@
-context("classif_glmboost")
 
 test_that("classif_glmboost", {
   requirePackagesOrSkip("mboost", default.method = "load")

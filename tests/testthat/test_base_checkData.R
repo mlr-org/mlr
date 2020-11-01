@@ -1,4 +1,3 @@
-context("checkData")
 
 test_that("checkData", {
   expect_error(
@@ -62,6 +61,9 @@ test_that("changeData . getTaskData is a noop on builtin tasks", {
   for (task in tasknames) {
     taskdata = get(task)
     changeddata = changeData(taskdata, getTaskData(taskdata, functionals.as = "matrix"))
+    # need to drop the env slot since this will cause a failure
+    taskdata$env = NULL
+    changeddata$env = NULL
     expect_equal(taskdata, changeddata)
   }
 })

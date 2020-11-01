@@ -1,4 +1,3 @@
-context("classif_gamboost")
 
 test_that("classif_gamboost", {
   requirePackagesOrSkip("mboost", default.method = "attach")

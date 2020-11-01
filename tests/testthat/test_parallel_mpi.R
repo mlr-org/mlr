@@ -1,6 +1,6 @@
-context("parallel_all")
 
 test_that("parallel resampling", {
+  skip_on_os("mac")
   skip_on_ci()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
@@ -18,6 +18,7 @@ test_that("parallel resampling", {
 })
 
 test_that("parallel tuning", {
+  skip_on_os("mac")
   skip_on_ci()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
@@ -37,6 +38,7 @@ test_that("parallel tuning", {
 })
 
 test_that("parallel featsel", {
+  skip_on_os("mac")
   skip_on_ci()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
@@ -55,6 +57,7 @@ test_that("parallel featsel", {
 })
 
 test_that("parallel exporting of options works", {
+  skip_on_os("mac")
   skip_on_ci()
   doit = function(mode, level) {
 
@@ -77,6 +80,7 @@ test_that("parallel exporting of options works", {
 })
 
 test_that("parallel partial dependence", {
+  skip_on_os("mac")
   skip_on_ci()
   doit = function(mode) {
     lrn = makeLearner("regr.rpart")
@@ -92,6 +96,7 @@ test_that("parallel partial dependence", {
 })
 
 test_that("parallel ensembles", {
+  skip_on_os("mac")
   skip_on_ci()
   doit = function(mode, level) {
 

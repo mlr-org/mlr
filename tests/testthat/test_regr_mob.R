@@ -1,4 +1,3 @@
-context("regr_mob")
 
 test_that("regr_mob", {
   requirePackagesOrSkip("party", default.method = "load")

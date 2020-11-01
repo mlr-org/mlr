@@ -1,11 +1,14 @@
-context("learners_all_regr")
 
 test_that("learners work: regr ", {
 
   # because of missing rJava for bartMachine
   skip_on_os("windows")
 
-  requirePackagesOrSkip("crs", default.method = "load")
+  suppressPackageStartupMessages(library("crs", quietly = TRUE))
+  library("kknn", quietly = TRUE)
+  suppressPackageStartupMessages(library("penalized", quietly = TRUE))
+  library("survival", quietly = TRUE)
+  #suppressPackageStartupMessages(requirePackagesOrSkip("crs", default.method = "load"))
 
   # settings to make learners faster and deal with small data size
   hyperpars = list(
@@ -26,50 +29,50 @@ test_that("learners work: regr ", {
     features = getTaskFeatureNames(regr.task)[c(1, 3)])
 
   # normal regr
-  lrns = listLearnersCustom(task, create = TRUE)
-  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
+  lrns = suppressMessages(listLearnersCustom(task, create = TRUE))
+  foo = lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
+  foo = lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # regr with factors
-  lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesFactors, task = task,
+  lrns = suppressMessages(listLearnersCustom(task, properties = "factors", create = TRUE))
+  foo = lapply(lrns, testThatLearnerHandlesFactors, task = task,
     hyperpars = hyperpars)
 
   # regr with ordered factors
-  lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task,
+  lrns = suppressMessages(listLearnersCustom(task, properties = "ordered", create = TRUE))
+  foo = lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task,
     hyperpars = hyperpars)
 
   # regr with se
-  lrns = listLearnersCustom(task, properties = "se", create = TRUE)
-  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars,
+  lrns = suppressMessages(listLearnersCustom(task, properties = "se", create = TRUE))
+  foo = lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars,
     pred.type = "se")
 
   # regr with weights
-  lrns = listLearnersCustom(task, properties = "weights", create = TRUE)
-  lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
+  lrns = suppressMessages(listLearnersCustom(task, properties = "weights", create = TRUE))
+  foo = lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = task, train.inds = 1:70, test.inds = 1:70, weights = rep(c(1, 5),
       length.out = 70),
     pred.type = "response", get.pred.fun = getPredictionResponse)
 
   # regr with missing
-  lrns = listLearnersCustom(task, properties = "missings", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesMissings, task = task,
+  lrns = suppressMessages(listLearnersCustom(task, properties = "missings", create = TRUE))
+  foo = lapply(lrns, testThatLearnerHandlesMissings, task = task,
     hyperpars = hyperpars)
 
   # regr variable importance
-  lrns = listLearnersCustom(task, properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerCanCalculateImportance, task = task,
+  lrns = suppressMessages(listLearnersCustom(task, properties = "featimp", create = TRUE))
+  foo = lapply(lrns, testThatLearnerCanCalculateImportance, task = task,
     hyperpars = hyperpars)
 
   # regr with oobpreds
-  lrns = listLearnersCustom(task, properties = "oobpreds", create = TRUE)
-  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  lrns = suppressMessages(listLearnersCustom(task, properties = "oobpreds", create = TRUE))
+  foo = lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # regr with only one feature
   min.task = makeRegrTask("oneCol", data.frame(x = 1:10, y = 1:10),
     target = "y")
-  lrns = listLearnersCustom(min.task, create = TRUE)
+  lrns = suppressMessages(listLearnersCustom(min.task, create = TRUE))
   # regr.gbm: Meaningfull error about too small dataset
   # regr.cforest: Error in model@fit(data, ...) : fraction of 0.000000 is too small
   # regr.nodeHarvest: Error in ZRULES[[1]] : subscript out of bounds
@@ -85,6 +88,6 @@ test_that("learners work: regr ", {
     "regr.nodeHarvest",
     "regr.slim")
   lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
-  lapply(lrns, testBasicLearnerProperties, task = min.task,
-    hyperpars = hyperpars)
+  foo = suppressWarnings(lapply(lrns, testBasicLearnerProperties, task = min.task,
+    hyperpars = hyperpars))
 })

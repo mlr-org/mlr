@@ -1,4 +1,3 @@
-context("plotBMRRanksAsBarChart")
 
 test_that("plotBMRRanksAsBarChart", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -16,14 +15,14 @@ test_that("plotBMRRanksAsBarChart", {
   plotBMRRanksAsBarChart(res)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res))
 
   plotBMRRanksAsBarChart(res, pretty.names = FALSE)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerIds(res))
 
@@ -32,7 +31,7 @@ test_that("plotBMRRanksAsBarChart", {
   plotBMRRanksAsBarChart(res, pretty.names = TRUE, order.lrns = new.order)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1], ordered = TRUE)
 

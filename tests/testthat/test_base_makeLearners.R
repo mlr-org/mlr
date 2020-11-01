@@ -1,4 +1,3 @@
-context("makeLearners")
 
 test_that("makeLearners", {
   cls1 = c("classif.rpart", "classif.lda")

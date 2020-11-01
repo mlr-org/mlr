@@ -1,4 +1,3 @@
-context("classif_LiblineaRMultiClassSVC")
 
 test_that("classif_LiblineaRMultiClassSVC", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")

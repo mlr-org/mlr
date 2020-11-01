@@ -1,4 +1,3 @@
-context("RLearner_classif_fdausc.kernel")
 # FIXME: This is a copy of knn to be used for kernel, because no unittest
 # for kernel exists.
 test_that("classif_fdausc.kernel behaves like original api", {

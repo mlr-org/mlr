@@ -1,4 +1,3 @@
-context("regr_featureless")
 
 test_that("regr_featureless", {
   df = data.frame(

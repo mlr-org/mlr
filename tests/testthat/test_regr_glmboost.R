@@ -1,4 +1,3 @@
-context("regr_glmboost")
 
 test_that("regr_glmboost", {
   requirePackagesOrSkip("mboost", default.method = "load")

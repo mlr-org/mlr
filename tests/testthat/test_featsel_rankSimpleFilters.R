@@ -1,4 +1,3 @@
-context("filters")
 
 cat("rankSimpleFilters")
 test_that("base filters of ensemble filters are ranked correctly", {

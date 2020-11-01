@@ -1,4 +1,3 @@
-context("classif_clusterSVM")
 
 test_that("classif_clusterSVM", {
   requirePackagesOrSkip("SwarmSVM", default.method = "load")
@@ -19,7 +18,7 @@ test_that("classif_clusterSVM", {
     parset = parset.list1[[i]]
     pars = list(data.matrix(binaryclass.train[, -61]), y = binaryclass.train[, 61])
     pars = c(pars, parset)
-    m = do.call(SwarmSVM::clusterSVM, pars)
+    m = suppressMessages(do.call(SwarmSVM::clusterSVM, pars))
     old.predicts.list[[i]] = predict(m, data.matrix(binaryclass.test[, -61]))$predictions
   }
 

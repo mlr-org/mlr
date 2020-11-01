@@ -1,4 +1,3 @@
-context("regr_gbm")
 
 test_that("regr_gbm", {
   requirePackagesOrSkip("gbm", default.method = "load")

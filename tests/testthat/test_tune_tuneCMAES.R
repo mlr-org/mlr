@@ -1,4 +1,3 @@
-context("tuneCMAES")
 
 test_that("tuneCMAES", {
   res = makeResampleDesc("CV", iters = 2)

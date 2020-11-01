@@ -1,5 +1,4 @@
 
-context("helpLearner")
 
 test_that("helpLearner of learner with single help page", {
   testfn = helpLearner
@@ -36,7 +35,7 @@ test_that("helpLearner of learner with multiple help pages", {
   rfhelp = utils::help("regr.randomForest", package = "mlr")
   # unfortunately, rtest breaks help("regr.randomForest"), so we skip this test if help() is broken.
   if (length(rfhelp) > 0) {
-    expect_equivalent(rfhelp, quiet(testfn("regr.randomForest")))
+    expect_equal(ignore_attr = TRUE, rfhelp, quiet(testfn("regr.randomForest")))
   }
 
   environment(testfn)$readline = function(x) {
@@ -106,8 +105,8 @@ test_that("helpLearnerParam of wrapped learner", {
   w2 = makeOversampleWrapper(w1)
 
   # correct info is given
-  expect_output(helpLearnerParam(w1, "nu"), "Value: +4")
-  expect_output(helpLearnerParam(w2, "nu"), "Value: +4")
+  suppressMessages(expect_output(helpLearnerParam(w1, "nu"), "Value: +4"))
+  suppressMessages(expect_output(helpLearnerParam(w2, "nu"), "Value: +4"))
 
   expect_message(quiet(helpLearnerParam(w1)),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)

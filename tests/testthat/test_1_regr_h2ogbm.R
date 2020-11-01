@@ -1,9 +1,8 @@
-context("regr_h2ogbm")
 
 test_that("regr_h2ogbm", {
   skip_on_ci()
   requirePackages("h2o", default.method = "load")
-  h2o::h2o.init()
+  foo = capture.output(h2o::h2o.init())
 
   parset.list = list(
     list(),
@@ -42,7 +41,7 @@ test_that("regr_h2ogbm", {
       y = regr.target,
       training_frame = h2o::as.h2o(regr.train)))
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(h2o::h2o.gbm, parset)
+    m = suppressMessages(do.call(h2o::h2o.gbm, parset))
     p = predict(m, newdata = h2o::as.h2o(regr.test))
     old.predicts.list[[i]] = as.data.frame(p)[, 1L]
   }

@@ -1,4 +1,3 @@
-context("regr_evtree")
 
 test_that("regr_evtree", {
   requirePackagesOrSkip("evtree", default.method = "load")

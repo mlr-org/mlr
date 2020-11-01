@@ -1,4 +1,3 @@
-context("classif_plr")
 
 test_that("classif_plr", {
   requirePackagesOrSkip("stepPlr", default.method = "load")

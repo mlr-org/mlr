@@ -49,6 +49,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   train = df[inds, ]
   test = df[-inds, ]
 
+  set.seed(getOption("mlr.debug.seed"))
   lrn = do.call("makeLearner", c(list(t.name), parset))
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0) {
@@ -67,7 +68,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   m = train(lrn, task, subset = inds)
 
   if (inherits(m, "FailureModel")) {
-    expect_is(old.predicts, "try-error")
+    expect_s3_class(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
     # Multilabel has a special data structure
@@ -78,9 +79,9 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
       # to avoid issues with dropped levels in the class factor we only check the elements as chars
       if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {
         if (lrn$predict.type == "se") {
-          expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tol = 1e-5)
+          expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tolerance = 1e-5)
         } else {
-          expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+          expect_equal(unname(cp$data$response), unname(old.predicts), tolerance = 1e-5)
         }
       } else {
         expect_equal(as.character(cp$data$response), as.character(old.predicts))
@@ -114,11 +115,12 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   } else {
     task = makeMultilabelTask(data = df, target = target)
   }
+  set.seed(getOption("mlr.debug.seed"))
   lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
   m = try(train(lrn, task, subset = inds))
 
   if (inherits(m, "FailureModel")) {
-    expect_is(old.predicts, "try-error")
+    expect_s3_class(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
     # dont need names for num vector, 2 classes
@@ -142,7 +144,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
 
 
 testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = list(),
-  tol = 1e-04) {
+  tolerance = 1e-04) {
 
   inds = train.inds
   train = df[inds, ]
@@ -157,7 +159,7 @@ testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = l
   m = try(train(lrn, task, subset = inds))
 
   if (inherits(m, "FailureModel")) {
-    expect_is(old.predicts, "try-error")
+    expect_s3_class(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
     # dont need names for num vector, 2 classes
@@ -194,7 +196,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
 
 
 testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list, parset.list,
-  tol = 1e-04) {
+  tolerance = 1e-04) {
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -202,7 +204,7 @@ testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
-    testProbWithTol(t.name, df, target, train.inds, old.probs, parset, tol = tol)
+    testProbWithTol(t.name, df, target, train.inds, old.probs, parset, tolerance = tol)
   }
 }
 
@@ -229,7 +231,8 @@ testCV = function(t.name, df, target, folds = 2, parset = list(),
     return(p)
   }
 
-  tr = e1071::tune(method = tt, predict.func = tp, train.x = formula,
+  tr = e1071::tune(
+    method = tt, predict.func = tp, train.x = formula,
     data = data,
     tunecontrol = e1071::tune.control(cross = folds, best.model = FALSE))
 
@@ -242,11 +245,11 @@ testCV = function(t.name, df, target, folds = 2, parset = list(),
   }
   ms = resample(lrn, task, cv.instance)$measures.test
   if (inherits(task, "ClassifTask")) {
-    expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2], check.names = FALSE)
-    expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3], check.names = FALSE)
+    expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2])
+    expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3])
   } else {
-    expect_equal(mean(ms[, "mse"]), tr$performances[1, 2], check.names = FALSE)
-    expect_equal(sd(ms[, "mse"]), tr$performances[1, 3], check.names = FALSE)
+    expect_equal(mean(ms[, "mse"]), tr$performances[1, 2])
+    expect_equal(sd(ms[, "mse"]), tr$performances[1, 3])
   }
   invisible(TRUE)
 }
@@ -264,7 +267,8 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
   requirePackages("e1071", default.method = "load")
   data = df
   formula = formula(paste(target, "~."))
-  tr = e1071::tune(method = tune.train, predict.func = tune.predict, train.x = formula, data = data,
+  tr = e1071::tune(
+    method = tune.train, predict.func = tune.predict, train.x = formula, data = data,
     tunecontrol = e1071::tune.control(sampling = "bootstrap", nboot = iters, boot.size = 1))
 
   bs.instance = e1071BootstrapToMlrBootstrap(tr)
@@ -277,11 +281,11 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
   }
   ms = resample(lrn, task, bs.instance)$measures.test
   if (inherits(task, "ClassifTask")) {
-    expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2], check.names = FALSE)
-    expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3], check.names = FALSE)
+    expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2])
+    expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3])
   } else {
-    expect_equal(mean(ms[, "mse"]), tr$performances[1, 2], check.names = FALSE)
-    expect_equal(sd(ms[, "mse"]), tr$performances[1, 3], check.names = FALSE)
+    expect_equal(mean(ms[, "mse"]), tr$performances[1, 2])
+    expect_equal(sd(ms[, "mse"]), tr$performances[1, 3])
   }
 }
 
@@ -304,7 +308,8 @@ testFacetting = function(obj, nrow = NULL, ncol = NULL) {
 
 testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
   text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
-    x, "')]]", sep = "")
+    x, "')]]",
+    sep = "")
   nodes = XML::getNodeSet(doc, text.paths, ns.svg)
   expect_equal(length(nodes), length(x) * grid.size)
   if (ordered) {

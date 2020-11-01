@@ -1,4 +1,3 @@
-context("classif_ctree")
 
 test_that("classif_ctree", {
   requirePackagesOrSkip("party", default.method = "load")

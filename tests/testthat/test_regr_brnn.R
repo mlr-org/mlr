@@ -1,4 +1,3 @@
-context("regr_brnn")
 
 test_that("regr_brnn", {
   requirePackagesOrSkip("brnn", default.method = "load")

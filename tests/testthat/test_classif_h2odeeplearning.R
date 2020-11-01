@@ -1,9 +1,9 @@
-context("classif_h2odeeplearning")
 
 test_that("classif_h2odeeplearning", {
+  skip("h2o is only trouble")
   skip_on_ci()
   requirePackages("h2o", default.method = "load")
-  h2o::h2o.init()
+  suppressMessages(h2o::h2o.init())
 
   parset.list = list(
     list(),
@@ -34,6 +34,7 @@ test_that("classif_h2odeeplearning", {
 })
 
 test_that("class names are integers and probabilities predicted (#1787)", {
+  skip("h2o is only trouble")
   skip_on_ci()
   df = data.frame(matrix(runif(100, 0, 1), 100, 9))
   classx = factor(sample(c(0, 1), 100, replace = TRUE))
@@ -48,6 +49,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
 })
 
 test_that("feature importances are returned", {
+  skip("h2o is only trouble")
   skip_on_ci()
   skip_on_cran()
   iris2 = iris[iris$Species %in% c("versicolor", "virginica"), ]

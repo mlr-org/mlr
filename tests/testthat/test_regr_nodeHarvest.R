@@ -1,4 +1,3 @@
-context("regr_nodeHarvest")
 
 test_that("regr_nodeHarvest", {
   requirePackagesOrSkip("nodeHarvest", default.method = "load")

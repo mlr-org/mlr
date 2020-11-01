@@ -1,4 +1,3 @@
-context("resample_repcv")
 
 test_that("repcv instance works", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3),

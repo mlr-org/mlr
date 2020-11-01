@@ -1,4 +1,3 @@
-context("chains")
 
 test_that("chains extra", {
   lrn1 = makeLearner("classif.rpart", minsplit = 10)

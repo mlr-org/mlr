@@ -1,4 +1,3 @@
-context("classif_mlp")
 
 test_that("classif_mlp", {
   requirePackagesOrSkip("RSNNS", default.method = "load")

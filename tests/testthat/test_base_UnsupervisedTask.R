@@ -1,4 +1,3 @@
-context("UnsupervisedTask")
 
 test_that("UnsupervisedTask", {
   ct1 = noclass.task

@@ -1,4 +1,3 @@
-context("tuning")
 
 test_that("tune", {
   requirePackagesOrSkip("e1071", default.method = "load")
@@ -11,14 +10,16 @@ test_that("tune", {
   ctrl = makeTuneControlGrid()
   folds = 3
 
-  tr = e1071::tune.rpart(formula = multiclass.formula, data = multiclass.df,
+  tr = e1071::tune.rpart(
+    formula = multiclass.formula, data = multiclass.df,
     cp = cp, minsplit = minsplit,
     tunecontrol = e1071::tune.control(sampling = "cross", cross = folds))
   lrn = makeLearner("classif.rpart")
   cv.instance = e1071CVToMlrCV(tr)
   m1 = setAggregation(mmce, test.mean)
   m2 = setAggregation(mmce, test.sd)
-  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1,
+  tr2 = tuneParams(lrn, multiclass.task, cv.instance,
+    par.set = ps1,
     control = ctrl, measures = list(m1, m2))
   pp = as.data.frame(tr2$opt.path)
   for (i in seq_len(nrow(tr$performances))) {
@@ -39,13 +40,15 @@ test_that("tune", {
   ms = c("acc", "mmce", "timefit")
   lrn2 = makeLearner("classif.rpart", predict.type = "prob")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
-  tr2 = tuneParams(lrn2, binaryclass.task, rdesc, par.set = ps1, control = ctrl,
+  tr2 = tuneParams(lrn2, binaryclass.task, rdesc,
+    par.set = ps1, control = ctrl,
     measures = getDefaultMeasure(binaryclass.task))
   expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
   expect_true(isScalarNumeric(tr2$threshold))
 
   # check multiclass thresholding
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE,
+  ctrl = makeTuneControlGrid(
+    tune.threshold = TRUE,
     tune.threshold.args = list(control = list(maxit = 2)))
   tr3 = tuneParams(lrn2, multiclass.task, rdesc, par.set = ps1, control = ctrl)
   op.df = as.data.frame(tr3$opt.path)
@@ -69,7 +72,8 @@ test_that("tuning works with infeasible pars", {
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   ctrl = makeTuneControlGrid()
-  z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  z = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     measures = getDefaultMeasure(multiclass.task))
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
@@ -86,7 +90,8 @@ test_that("tuning works with errors", {
   lrn = makeLearner("classif.__mlrmocklearners__2")
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid()
-  z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  z = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     measures = getDefaultMeasure(multiclass.task))
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
@@ -104,7 +109,8 @@ test_that("tuning works with tuneThreshold and multiple measures", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 0.2)
   )
-  res = tuneParams(lrn, binaryclass.task, resampling = rdesc,
+  res = tuneParams(lrn, binaryclass.task,
+    resampling = rdesc,
     measures = list(mmce, auc), par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 
@@ -113,7 +119,8 @@ test_that("tuning works with tuneThreshold and multiple measures", {
     makeDiscreteParam("cp", values = c(0.1, -1))
   )
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
-  res = tuneParams(lrn, sonar.task, resampling = rdesc, measures = list(mmce, auc),
+  res = tuneParams(lrn, sonar.task,
+    resampling = rdesc, measures = list(mmce, auc),
     par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 })
@@ -134,7 +141,8 @@ test_that("tuning allows usage of budget", {
     makeDiscreteParam("cp", values = c(0.1, -1))
   )
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, budget = 2L)
-  res = tuneParams(lrn, sonar.task, resampling = rdesc, measures = list(mmce, auc),
+  res = tuneParams(lrn, sonar.task,
+    resampling = rdesc, measures = list(mmce, auc),
     par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 
@@ -144,7 +152,8 @@ test_that("tuning allows usage of budget", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 0.2)
   )
-  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc),
+  res = tuneParams(lrn, binaryclass.task,
+    resampling = rdesc, measures = list(mmce, auc),
     par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
   expect_identical(getOptPathLength(res$opt.path), 3L)
@@ -181,6 +190,8 @@ test_that("tuning works with large param.sets", {
     makeParamSet(makeIntegerLearnerParam(paste0("some.parameter", x), 1, 10))
   }))
   lrn$par.set = c(lrn$par.set, long.learner.params)
-  res = tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
+  suppressMessages({
+    res = tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
+  })
   expect_class(res, "TuneResult")
 })

@@ -1,4 +1,3 @@
-context("classif_mxff")
 
 test_that("classif_mxff", {
   requirePackagesOrSkip("mxnet", default.method = "load")

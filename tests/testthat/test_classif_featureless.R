@@ -1,4 +1,3 @@
-context("classif_featureless")
 
 test_that("classif_featureless", {
   # check content of learner model

@@ -1,8 +1,5 @@
 # this is a long test suite that is used to test the validity of ALL filters
 
-context("filterFeatures")
-
-cat("filters")
 test_that("filterFeatures 1", {
 
   # FSelector not avail
@@ -79,7 +76,7 @@ test_that("randomForestSRC_var.select filter handles user choices correctly", {
 
   # method = "vh.imp" is not supported
   expect_error(
-    fv = suppressWarnings(generateFilterValuesData(task = multiclass.task,
+    suppressWarnings(generateFilterValuesData(task = multiclass.task,
       method = "randomForestSRC_var.select",
       more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
   )

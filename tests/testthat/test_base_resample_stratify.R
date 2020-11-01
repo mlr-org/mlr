@@ -1,4 +1,3 @@
-context("resample_stratify")
 
 test_that("stratification instances work", {
   mytest = function(rin, size1, size2) {

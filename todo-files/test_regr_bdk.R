@@ -1,4 +1,3 @@
-context("regr_bdk")
 
 test_that("regr_bdk", {
   requirePackagesOrSkip("kohonen", default.method = "load")

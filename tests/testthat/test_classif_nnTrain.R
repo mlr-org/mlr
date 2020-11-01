@@ -1,4 +1,3 @@
-context("classif_nnTrain")
 
 test_that("classif_nnTrain", {
   requirePackagesOrSkip("deepnet", default.method = "load")

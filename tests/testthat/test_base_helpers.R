@@ -1,4 +1,3 @@
-context("helpers")
 
 test_that("makeOptPathDFFromMeasures", {
   measures = list(mae, auc)

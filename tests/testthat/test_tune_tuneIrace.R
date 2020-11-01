@@ -1,4 +1,3 @@
-context("tuneIrace")
 
 test_that("tuneIrace", {
   rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
@@ -116,7 +115,7 @@ test_that("tuneIrace uses digits", {
   lrn.tune = makeTuneWrapper("classif.gbm",
     resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
-  res = resample(lrn.tune, task = multiclass.task, rdesc)
+  res = suppressWarnings(resample(lrn.tune, task = multiclass.task, rdesc))
 
   lrn = makeLearner("classif.rpart")
   ctrl = makeTuneControlIrace(
@@ -128,26 +127,26 @@ test_that("tuneIrace uses digits", {
     control = ctrl, show.info = FALSE)
   res = resample(lrn.tune, task = multiclass.task, rdesc)
 
-  ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = 4L)
+  ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = 4)
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn,
     resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
-  expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
+  expect_error(resample(lrn.tune, task = multiclass.task, rdesc))
 
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = "a")
-  ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
+  ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-2))
   lrn.tune = makeTuneWrapper(lrn,
     resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
-  expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
+  expect_error(resample(lrn.tune, task = multiclass.task, rdesc))
 
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = c(6L, 7L))
-  ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
+  ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-2))
   lrn.tune = makeTuneWrapper(lrn,
     resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
-  expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
+  expect_error(resample(lrn.tune, task = multiclass.task, rdesc))
 })
 
 test_that("makeTuneControlIrace handles budget parameter", {

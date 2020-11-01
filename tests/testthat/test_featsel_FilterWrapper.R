@@ -1,4 +1,3 @@
-context("FilterWrapper")
 
 cat("FilterWrapper")
 test_that("FilterWrapper", {

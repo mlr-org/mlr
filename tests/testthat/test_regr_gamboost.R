@@ -1,4 +1,3 @@
-context("regr_gamboost")
 
 test_that("regr_gamboost", {
   requirePackagesOrSkip("mboost", default.method = "attach")

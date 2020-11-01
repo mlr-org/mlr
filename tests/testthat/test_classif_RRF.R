@@ -1,7 +1,6 @@
-context("classif_RRF")
 
 test_that("classif_RRF", {
-  requirePackages("RRF", default.method = "load")
+  suppressMessages(requirePackages("RRF", default.method = "load"))
 
   parset.list = list(
     list(),

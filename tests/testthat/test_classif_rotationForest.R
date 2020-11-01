@@ -1,4 +1,3 @@
-context("classif_rotationForest")
 
 test_that("classif_rotationForest", {
   requirePackagesOrSkip("rotationForest", default.method = "load")

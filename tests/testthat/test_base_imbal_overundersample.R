@@ -1,4 +1,3 @@
-context("overundersample")
 
 test_that("over and undersample works", {
   y = binaryclass.df[, binaryclass.target]

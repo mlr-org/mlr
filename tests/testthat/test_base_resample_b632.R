@@ -1,4 +1,3 @@
-context("resample_b632")
 
 test_that("b632", {
   res = makeResampleDesc("Bootstrap", iters = 2, predict = "both")

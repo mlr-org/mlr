@@ -1,4 +1,12 @@
-context("getCaretParamSet")
+suppressMessages(library("ggplot2", quietly = TRUE))
+library(rpart, quietly = TRUE)
+library(earth, quietly = TRUE)
+library(Formula, quietly = TRUE)
+library(plotmo, quietly = TRUE)
+library(plotrix, quietly = TRUE)
+library(TeachingDemos, quietly = TRUE)
+suppressMessages(library(caret, quietly = TRUE))
+library(lattice, quietly = TRUE)
 
 test_that("getCaretParamSet", {
   requirePackagesOrSkip(c("caret", "rpart", "earth"))

@@ -1,4 +1,3 @@
-context("prediction_operators")
 
 mypredict = function(task) predict(train(sprintf("%s.rpart", getTaskType(task)), task), task)
 classif.pred = mypredict(binaryclass.task)

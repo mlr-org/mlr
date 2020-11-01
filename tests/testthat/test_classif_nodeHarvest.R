@@ -1,4 +1,3 @@
-context("classif_nodeHarvest")
 
 test_that("classif_nodeHarvest", {
   requirePackagesOrSkip("nodeHarvest", default.method = "load")
