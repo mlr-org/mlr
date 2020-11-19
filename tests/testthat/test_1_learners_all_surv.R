@@ -1,4 +1,3 @@
-suppressMessages(library(CoxBoost))
 suppressMessages(library(Matrix))
 suppressMessages(library(prodlim))
 
