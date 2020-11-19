@@ -107,7 +107,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
-          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags
+          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags libmpfr-dev
           mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
       - name: "[Custom block] [macOS] macOS system libs setup"
@@ -115,7 +115,7 @@ jobs:
         run: |
           # conflicts with gfortran from r-lib/actions when linking gcc
           rm '/usr/local/bin/gfortran'
-          brew install udunits gdal proj nlopt
+          brew install udunits gdal proj nlopt mpfr
           brew install ccache
           brew cask install xquartz
           mkdir -p ~/.R && echo -e 'CC=ccache clang\nCPP=ccache clang\nCXX=ccache clang++\nCXX11=ccache clang++\nCXX14=ccache clang++\nCXX17=ccache clang++\nF77=ccache /usr/local/gfortran/bin/gfortran\nFC=ccache /usr/local/gfortran/bin/gfortran' > $HOME/.R/Makevars
