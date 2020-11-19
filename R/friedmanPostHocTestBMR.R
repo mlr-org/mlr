@@ -1,7 +1,7 @@
 #' @title Perform a posthoc Friedman-Nemenyi test.
 #'
 #' @description
-#' Performs a [PMCMR::posthoc.friedman.nemenyi.test] for a
+#' Performs a [PMCMRplus::frdAllPairsNemenyiTest] for a
 #' [BenchmarkResult] and a selected measure.
 #'
 #' This means *all pairwise comparisons* of `learners` are performed. The null
@@ -32,7 +32,7 @@
 #' # see benchmark
 friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregation = "default") {
 
-  requirePackages("PMCMR")
+  requirePackages("PMCMRplus")
   assertClass(bmr, "BenchmarkResult")
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
   assertChoice(aggregation, c("default", "mean"))
@@ -78,7 +78,7 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
 
   if (f.rejnull) {
     form = as.formula(stri_paste(aggr.meas, " ~ learner.id | task.id", sep = ""))
-    nem.test = PMCMR::posthoc.friedman.nemenyi.test(form, data = df)
+    nem.test = PMCMRplus::frdAllPairsNemenyiTest(form, data = df)
     nem.test$crit.difference = list("nemenyi" = cd.nemenyi, "bd" = cd.bd)
     nem.test$f.rejnull = f.rejnull
     return(nem.test)

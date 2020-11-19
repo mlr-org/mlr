@@ -161,6 +161,7 @@ Suggests:
     adabag,
     bartMachine,
     batchtools,
+    bit64,
     brnn,
     bst,
     C50,
@@ -228,7 +229,7 @@ Suggests:
     party,
     penalized (>= 0.9-47),
     pls,
-    PMCMR (>= 4.1),
+    PMCMRplus,
     praznik (>= 5.0.0),
     randomForest,
     randomForestSRC (>= 2.7.0),
@@ -240,6 +241,7 @@ Suggests:
     rgenoud,
     rknn,
     rmarkdown,
+    Rmpi,
     ROCR,
     rotationForest,
     rpart,
@@ -264,9 +266,7 @@ Suggests:
     tsfeatures,
     vdiffr,
     wavelets,
-    xgboost (>= 0.7),
-    bit64,
-    Rmpi
+    xgboost (>= 0.7)
 VignetteBuilder:
     knitr
 ByteCompile: yes

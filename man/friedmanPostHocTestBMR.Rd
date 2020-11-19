@@ -38,7 +38,7 @@ learners need to have in order to be significantly different
 }
 }
 \description{
-Performs a \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test} for a
+Performs a \link[PMCMRplus:frdAllPairsNemenyiTest]{PMCMRplus::frdAllPairsNemenyiTest} for a
 \link{BenchmarkResult} and a selected measure.
 
 This means \emph{all pairwise comparisons} of \code{learners} are performed. The null
