@@ -1,5 +1,6 @@
-
 test_that("regr_btlm", {
+  skip("not runnable in parallel")
+  # due to https://github.com/cran/tgp/blob/689168f5e43941e2808c36bc43603329641028db/R/tgp.postprocess.R#L75 # nocov
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(

@@ -1,5 +1,6 @@
-
 test_that("regr_bgp", {
+  skip("not runnable in parallel")
+  # due to https://github.com/cran/tgp/blob/689168f5e43941e2808c36bc43603329641028db/R/tgp.postprocess.R#L75 # nocov
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(
@@ -10,7 +11,8 @@ test_that("regr_bgp", {
   old.predicts.list = list()
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(X = regr.num.df[inds, -regr.num.class.col], Z = y, verb = 0,
+    pars = list(
+      X = regr.num.df[inds, -regr.num.class.col], Z = y, verb = 0,
       pred.n = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
@@ -18,6 +20,7 @@ test_that("regr_bgp", {
     old.predicts.list[[i]] = predict(m,
       XX = regr.num.df[-inds, -regr.num.class.col], pred.n = FALSE)$ZZ.km
   }
-  testSimpleParsets("regr.bgp", regr.num.df, regr.num.target, inds,
+  testSimpleParsets(
+    "regr.bgp", regr.num.df, regr.num.target, inds,
     old.predicts.list, parset.list)
 })

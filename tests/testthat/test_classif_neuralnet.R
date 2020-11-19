@@ -2,6 +2,7 @@
 test_that("classif_neuralnet", {
   requirePackagesOrSkip("neuralnet", default.method = "load")
 
+    set.seed(getOption("mlr.debug.seed"))
   # test with empty paramset
   capture.output({
     # neuralnet is not dealing with formula with `.` well
@@ -22,6 +23,7 @@ test_that("classif_neuralnet", {
     p = factor(p, labels = binaryclass.class.levs)
   })
 
+    set.seed(getOption("mlr.debug.seed"))
   testSimple("classif.neuralnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, p,
     parset = list())

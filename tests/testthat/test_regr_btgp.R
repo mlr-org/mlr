@@ -1,5 +1,8 @@
-
 test_that("regr_btgp", {
+  skip("not runnable in parallel")
+  # due to https://github.com/cran/tgp/blob/689168f5e43941e2808c36bc43603329641028db/R/tgp.postprocess.R#L75 # nocov
+  requirePackagesOrSkip("tgp", default.method = "load")
+
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(
@@ -27,6 +30,7 @@ test_that("regr_btgp", {
     m = do.call(tgp::btgp, pars)
     old.predicts.list[[i]] = predict(m, XX = test, pred.n = FALSE)$ZZ.km
   }
-  testSimpleParsets("regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds,
+  testSimpleParsets(
+    "regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds,
     old.predicts.list, parset.list)
 })
