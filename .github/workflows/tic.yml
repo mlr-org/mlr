@@ -1,5 +1,5 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-08-06
+## revision date: 2020-11-14
 on:
   workflow_dispatch:
   push:
@@ -28,20 +28,20 @@ jobs:
           - { os: ubuntu-latest, r: "release" }
 
     env:
-      # [Custom env] Set max dll number higher
-      R_MAX_NUM_DLLS: 999
-      # [Custom env] Account for udunits2 linking
-      UDUNITS2_LIBS: /usr/local/lib
-      # [Custom env var] setting some ccache options - 1
-      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
-      # [Custom env var] setting some ccache options - 2
-      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
-      # [Custom env var] setting some ccache options - 3
-      CCACHE_NOHASHDIR: true
-      # [Custom env var] setting some ccache options - 4
-      CCACHE_SLOPPINESS: include_file_ctime
       # [Custom env var] fake virtual display for rgl package
       DISPLAY: ":99"
+      # [Custom env var] setting some ccache options - 4
+      CCACHE_SLOPPINESS: include_file_ctime
+      # [Custom env var] setting some ccache options - 3
+      CCACHE_NOHASHDIR: true
+      # [Custom env var] setting some ccache options - 2
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      # [Custom env var] setting some ccache options - 1
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      # [Custom env] Account for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
+      # [Custom env] Set max dll number higher
+      R_MAX_NUM_DLLS: 999
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
@@ -58,7 +58,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.4
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -89,7 +89,7 @@ jobs:
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v2.1.0
+        uses: pat-s/always-upload-cache@v2.1.3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
@@ -136,6 +136,14 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt install libcurl4-openssl-dev
 
+      - name: "[Stage] [macOS] Install system libs for pkgdown"
+        if: runner.os == 'macOS' && matrix.config.pkgdown != ''
+        run: brew install harfbuzz fribidi
+
+      - name: "[Stage] [Linux] Install system libs for pkgdown"
+        if: runner.os == 'Linux' && matrix.config.pkgdown != ''
+        run: sudo apt install libharfbuzz-dev libfribidi-dev
+
       - name: "[Stage] Install"
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
         run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
@@ -156,7 +164,7 @@ jobs:
 
       - name: "[Stage] Upload R CMD check artifacts"
         if: failure()
-        uses: actions/upload-artifact@v2.1.1
+        uses: actions/upload-artifact@v2.2.1
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
