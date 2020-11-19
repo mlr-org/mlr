@@ -1,6 +1,6 @@
-suppressMessages(library(mmpf))
-
 test_that("generate data", {
+  requirePackagesOrSkip("mmpf")
+
   # generate data with nested no trafo
   ps = makeParamSet(makeNumericParam("C",
     lower = -5, upper = 5,

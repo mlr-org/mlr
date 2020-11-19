@@ -27,7 +27,7 @@ p-value for the tests. Default: 0.05}
 for details on \dQuote{default}.}
 }
 \value{
-(\code{pairwise.htest}): See \link[PMCMR:posthoc.friedman.nemenyi.test]{PMCMR::posthoc.friedman.nemenyi.test} for
+(\code{pairwise.htest}): See \link[PMCMRplus:frdAllPairsNemenyiTest]{PMCMRplus::frdAllPairsNemenyiTest} for
 details.
 Additionally two components are added to the list:
 \itemize{

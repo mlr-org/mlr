@@ -1,7 +1,6 @@
-suppressMessages(library(Matrix))
-suppressMessages(library(prodlim))
-
 test_that("learners work: surv ", {
+  requirePackagesOrSkip("prodlim")
+  requirePackagesOrSkip("proMatrixdlim")
   requirePackagesOrSkip("Hmisc", default.method = "load")
 
   # settings to make learners faster and deal with small sample size

@@ -1,15 +1,14 @@
-suppressMessages(library("ggplot2", quietly = TRUE))
-suppressMessages(library(rpart, quietly = TRUE))
-suppressMessages(library(earth, quietly = TRUE))
-suppressMessages(library(Formula, quietly = TRUE))
-suppressMessages(library(plotmo, quietly = TRUE))
-suppressMessages(library(plotrix, quietly = TRUE))
-suppressMessages(library(TeachingDemos, quietly = TRUE))
-suppressMessages(library(caret, quietly = TRUE))
-suppressMessages(library(lattice, quietly = TRUE))
-
 test_that("getCaretParamSet", {
-  requirePackagesOrSkip(c("caret", "rpart", "earth"))
+  requirePackagesOrSkip("ggplot2")
+  requirePackagesOrSkip("rpart")
+  requirePackagesOrSkip("earth")
+  requirePackagesOrSkip("Formula")
+  requirePackagesOrSkip("plotmo")
+  requirePackagesOrSkip("plotrix")
+  requirePackagesOrSkip("TeachingDemos")
+  requirePackagesOrSkip("caret")
+  requirePackagesOrSkip("lattice")
+
   checkCaretParams = function(lrn, k, task) {
 
     set.seed(getOption("mlr.debug.seed"))
@@ -30,7 +29,8 @@ test_that("getCaretParamSet", {
     }
   }
 
-  caret.learners = c("gbm", "rf", "svmPoly", "svmLinear", "svmRadial",
+  caret.learners = c(
+    "gbm", "rf", "svmPoly", "svmLinear", "svmRadial",
     "rpart", "J48", "stepLDA", "earth")
 
   # binaryclass problems
@@ -42,7 +42,8 @@ test_that("getCaretParamSet", {
   r2 = lapply(caret.learners, checkCaretParams, k = 5, task = multiclass.task)
 
   # regression problems
-  caret.learners = c("gbm", "rf", "svmPoly", "svmLinear",
+  caret.learners = c(
+    "gbm", "rf", "svmPoly", "svmLinear",
     "rpart", "J48", "stepLDA", "earth")
   r1 = lapply(caret.learners, checkCaretParams, k = 9, task = regr.task)
   r2 = lapply(caret.learners, checkCaretParams, k = 5, task = regr.task)

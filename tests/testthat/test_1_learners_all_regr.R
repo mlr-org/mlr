@@ -1,13 +1,11 @@
 
 test_that("learners work: regr ", {
 
+  requirePackagesOrSkip("kknn")
+  requirePackagesOrSkip("survival")
+
   # because of missing rJava for bartMachine
   skip_on_os("windows")
-
-  suppressPackageStartupMessages(library("crs", quietly = TRUE))
-  library("kknn", quietly = TRUE)
-  suppressPackageStartupMessages(library("penalized", quietly = TRUE))
-  library("survival", quietly = TRUE)
   #suppressPackageStartupMessages(requirePackagesOrSkip("crs", default.method = "load"))
 
   # settings to make learners faster and deal with small data size

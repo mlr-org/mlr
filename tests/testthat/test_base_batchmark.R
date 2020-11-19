@@ -1,10 +1,9 @@
-suppressMessages(library(batchtools))
-
 prev = getOption("batchtools.verbose")
 options(batchtools.verbose = FALSE)
 
 test_that("batchmark", {
-  skip_if_not_installed("batchtools")
+  requirePackagesOrSkip("batchtools")
+
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
 
   task.names = c("binary", "multiclass")
@@ -235,7 +234,8 @@ test_that("batchmark", {
 
 test_that("keep.preds and models are passed down to resample()", {
   skip_if_not_installed("batchtools")
-  library(batchtools)
+  requirePackagesOrSkip("batchtools")
+
   task.names = "binary"
   tasks = list(binaryclass.task)
   learner.names = "classif.lda"
@@ -296,7 +296,6 @@ test_that("batchmark works with resampling instances", {
 
 test_that("batchmark works with incomplete results", {
   requirePackagesOrSkip("batchtools")
-  library(batchtools)
   reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
   task = binaryclass.task
   learner.names = c("classif.lda", "classif.rpart")

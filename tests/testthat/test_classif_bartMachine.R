@@ -1,5 +1,6 @@
 
 test_that("classif_bartMachine", {
+  skip_on_os("mac")
   requirePackagesOrSkip("bartMachine", default.method = "load")
 
   parset.list = list(

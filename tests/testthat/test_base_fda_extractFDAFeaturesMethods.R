@@ -1,11 +1,11 @@
-library(tsfeatures)
-suppressPackageStartupMessages(library(mboost, quietly = TRUE))
-suppressPackageStartupMessages(library(FDboost, quietly = TRUE))
-library(stabs)
-library(rucrdtw)
-library(parallel)
-
 test_that("Wavelet method are equal to package", {
+  requirePackagesOrSkip("tsfeatures")
+  requirePackagesOrSkip("mboost")
+  requirePackagesOrSkip("FDboost")
+  requirePackagesOrSkip("stabs")
+  requirePackagesOrSkip("rucrdtw")
+  requirePackagesOrSkip("parallel")
+
   requirePackagesOrSkip("wavelets", default.method = "load")
   gp = getTaskData(gunpoint.task, subset = seq_len(10), target.extra = TRUE, functionals.as = "matrix")
 
@@ -43,13 +43,15 @@ test_that("extract and reextract Wavelets", {
 test_that("getFDAMultiResFeatures works on data.frame", {
   gp = getTaskData(fda.binary.gp.task.small, functionals.as = "matrix")
 
-  ngp1 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", res.level = 3,
+  ngp1 = extractFDAMultiResFeatures()$learn(
+    data = gp, col = "fd", res.level = 3,
     shift = 0.5, seg.lens = NULL)
   ngp1 = extractFDAMultiResFeatures()$reextract(data = gp, col = "fd", vals = ngp1)
   expect_true(nrow(ngp1) == nrow(gp))
   expect_true(ncol(ngp1) == 9L)
 
-  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", seg.lens = c(15, 15),
+  ngp2 = extractFDAMultiResFeatures()$learn(
+    data = gp, col = "fd", seg.lens = c(15, 15),
     res.level = 3, shift = 0.5)
   ngp2 = extractFDAMultiResFeatures()$reextract(data = gp, col = "fd", vals = ngp2)
   expect_true(nrow(ngp2) == nrow(gp))
@@ -180,7 +182,8 @@ test_that("extraction returns correct cols", {
     feat.methods = list("UVVIS" = extractFDATsfeatures()))
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 8:14), extr$desc)
   expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
-  expect_equal(colnames(getTaskData(extr$task, functionals.as = "matrix")),
+  expect_equal(
+    colnames(getTaskData(extr$task, functionals.as = "matrix")),
     colnames(getTaskData(reextr, functionals.as = "matrix")))
 })
 

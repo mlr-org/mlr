@@ -18,7 +18,7 @@
 #' @param p.value (`numeric(1)`)\cr
 #'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
-#' @return (`pairwise.htest`): See [PMCMR::posthoc.friedman.nemenyi.test] for
+#' @return (`pairwise.htest`): See [PMCMRplus::frdAllPairsNemenyiTest] for
 #'   details.
 #' Additionally two components are added to the list:
 #'   - f.rejnull (`logical(1)`):\cr Whether the according friedman.test rejects

@@ -1,6 +1,6 @@
 
 test_that("classif_mda", {
-  suppressMessages(library(mda))
+  requirePackagesOrSkip("mda")
 
   parset.list1 = list(
     list(start.method = "lvq"),

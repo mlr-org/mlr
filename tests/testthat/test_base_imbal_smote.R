@@ -52,6 +52,7 @@ test_that("smote works with only factor features", {
 })
 
 test_that("smote wrapper", {
+  set.seed(getOption("mlr.debug.seed"))
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeSMOTEWrapper(lrn1, sw.rate = 2)
