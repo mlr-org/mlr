@@ -107,7 +107,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo R CMD javareconf
-          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags libmpfr-dev
+          sudo apt install -y ccache libglu1-mesa-dev libgmp-dev libgs-dev libgdal-dev libproj-dev libgeos-dev libudunits2-dev jags libmpfr-dev libopenmpi-dev
           mkdir -p ~/.R && echo -e 'CC=ccache gcc -std=gnu99\nCXX=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
       - name: "[Custom block] [macOS] macOS system libs setup"

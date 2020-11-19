@@ -278,4 +278,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 SystemRequirements: gdal (optional), geos (optional), proj
     (optional), udunits (optional), gsl (optional), gmp (optional), glu
-    (optional), jags (optional), mpfr (optional)
+    (optional), jags (optional), mpfr (optional), openmpi (optional)
