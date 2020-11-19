@@ -27,3 +27,4 @@ cran-comments.md
 .vscode/
 docs/
 CRAN-RELEASE
+inst/debug.R
