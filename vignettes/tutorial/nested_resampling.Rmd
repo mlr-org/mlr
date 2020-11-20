@@ -26,7 +26,7 @@ knitr::include_graphics("img/nested_resampling.png")
 ```
 
 ```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Nested Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
-knitr::include_graphics("https://raw.githubusercontent.com/pat-s/mlr/master/vignettes/tutorial/devel/pdf/img/nested_resampling.png")
+knitr::include_graphics("img/nested_resampling.png")
 ```
 
 The graphic above illustrates nested resampling for parameter tuning with 3-fold cross-validation in the outer and 4-fold cross-validation in the inner loop.
@@ -36,7 +36,7 @@ On each of these outer training sets parameter tuning is done, thereby executing
 This way, we get one set of selected hyperparameters for each outer training set.
 Then the learner is fitted on each outer training set using the corresponding selected hyperparameters and its performance is evaluated on the outer test sets.
 
-In `mlr`, you can get nested resampling for free without programming any looping by using the [wrapper functionality](wrapper.html){target="_blank"}. 
+In `mlr`, you can get nested resampling for free without programming any looping by using the [wrapper functionality](wrapper.html){target="_blank"}.
 This works as follows:
 
 1. Generate a wrapped Learner (`makeLearner()`) via function `makeTuneWrapper()` or `makeFeatSelWrapper()`.
@@ -47,7 +47,7 @@ You can freely combine different inner and outer resampling strategies.
 
 The outer strategy can be a resample description `ResampleDesc` (`makeResampleDesc()`)) or a
 resample instance (`makeResampleInstance()`)).
-A common setup is prediction and performance evaluation on a fixed outer test set. 
+A common setup is prediction and performance evaluation on a fixed outer test set.
 This can be achieved by using function `makeFixedHoldoutInstance()` to generate the outer resample instance` (`makeResampleInstance()`).
 
 The inner resampling strategy should preferably be a `ResampleDesc` (`makeResampleDesc()`), as the sizes of the outer training sets might differ.
@@ -56,7 +56,7 @@ This way during tuning/feature selection all parameter or feature sets are compa
 You can also turn this off using the `same.resampling.instance` argument of `makeTuneControl*` (`TuneControl()`) or `makeFeatSelControl*` (`FeatSelControl()`).
 
 Nested resampling is computationally expensive.
-For this reason in the examples shown below we use relatively small search spaces and a low number of resampling iterations. 
+For this reason in the examples shown below we use relatively small search spaces and a low number of resampling iterations.
 In practice, you normally have to increase both.
 As this is computationally intensive you might want to have a look at section [parallelization](parallelization.html){target="_blank"}.
 
@@ -134,7 +134,7 @@ names(r$extract[[1]])
 ```
 
 We can compare the optimal parameter settings obtained in the 3 resampling iterations.
-As you can see, the optimal configuration usually depends on the data. 
+As you can see, the optimal configuration usually depends on the data.
 You may be able to identify a *range* of parameter settings that achieve good
 performance though, e.g., the values for `C` should be at least 1 and the values for `sigma` should be between 0 and 1.
 
@@ -188,10 +188,10 @@ As you might recall from the section about [feature selection](feature_selection
 
 ## Wrapper methods
 
-Wrapper methods use the performance of a learning algorithm to assess the usefulness of a feature set. 
+Wrapper methods use the performance of a learning algorithm to assess the usefulness of a feature set.
 In order to select a feature subset a learner is trained repeatedly on different feature subsets and the subset which leads to the best learner performance is chosen.
 
-For feature selection in the inner resampling loop, you need to choose a search strategy (function `makeFeatSelControl*` (`FeatSelControl()`)), a performance measure and the inner resampling strategy. 
+For feature selection in the inner resampling loop, you need to choose a search strategy (function `makeFeatSelControl*` (`FeatSelControl()`)), a performance measure and the inner resampling strategy.
 Then use function `makeFeatSelWrapper()` to bind everything together.
 
 Below we use sequential forward selection with linear regression on the
@@ -296,7 +296,7 @@ Often, neither the theshold nor the number or percentage of features is known in
 
 In the example below the threshold value (`fw.threshold`) is tuned in the inner resampling loop.
 For this purpose the base Learner (`makeLearner()`) `"regr.lm"` is wrapped two times.
-First, `makeFilterWrapper()` is used to fuse linear regression with a feature filtering preprocessing step. 
+First, `makeFilterWrapper()` is used to fuse linear regression with a feature filtering preprocessing step.
 Then a tuning step is added by `makeTuneWrapper()`.
 
 ```{r echo = FALSE, results='hide'}
@@ -416,7 +416,7 @@ lrns = list(lrn1, lrn2)
 
 # Outer resampling loop
 outer = list(makeResampleDesc("Holdout"), makeResampleDesc("Bootstrap", iters = 2))
-res = benchmark(lrns, tasks, outer, measures = list(acc, ber), show.info = FALSE, 
+res = benchmark(lrns, tasks, outer, measures = list(acc, ber), show.info = FALSE,
   keep.extract = TRUE)
 res
 ```
@@ -470,7 +470,7 @@ lrns = list("regr.rpart", lrn)
 
 # Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
-res = benchmark(tasks = bh.task, learners = lrns, resampling = outer, 
+res = benchmark(tasks = bh.task, learners = lrns, resampling = outer,
   show.info = FALSE, keep.extract = TRUE)
 
 res
@@ -497,7 +497,7 @@ feats[[1]]$x
 feats[[1]]$y
 ```
 
-As for tuning, you can extract the optimization paths. 
+As for tuning, you can extract the optimization paths.
 The resulting `data.frame`s contain, among others, binary columns for all features, indicating if they were included in the linear regression model, and the corresponding performances.
 `analyzeFeatSelResult()` gives a clearer overview.
 

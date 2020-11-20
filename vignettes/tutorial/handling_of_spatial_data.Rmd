@@ -43,7 +43,7 @@ knitr::include_graphics("img/spatial_cross_validation.png")
 ```
 
 ```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Nested Spatial and Non-Spatial Cross-Validation", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
-knitr::include_graphics("https://raw.githubusercontent.com/pat-s/mlr/master/vignettes/tutorial/devel/pdf/img/spatial_cross_validation.png")
+knitr::include_graphics("img/spatial_cross_validation.png")
 ```
 
 By doing a random sampling of the data set (i.e., non-spatial sampling), training and test set data are often located directly next to each other (in geographical space).
