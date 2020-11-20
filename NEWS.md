@@ -1,3 +1,8 @@
+# mlr 2.18.0.9002
+
+- Internal changes only.
+
+
 # mlr 2.18.0.9001
 
 - Warning if `fix.factors.prediction = TRUE` causes the generation of NAs for new factor levels in prediction (@jakob-r, #2794)
