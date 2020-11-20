@@ -1,4 +1,3 @@
-context("classif_fnn")
 
 test_that("classif_fnn", {
   requirePackagesOrSkip("FNN", default.method = "load")

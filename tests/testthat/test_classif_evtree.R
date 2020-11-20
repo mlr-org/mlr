@@ -1,4 +1,3 @@
-context("classif_evtree")
 
 test_that("classif_evtree", {
   requirePackagesOrSkip("evtree", default.method = "load")

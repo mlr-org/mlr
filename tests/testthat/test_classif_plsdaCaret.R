@@ -1,4 +1,3 @@
-context("classif_plsdaCaret")
 
 test_that("classif_plsdaCaret_binary", {
   skip("until klaR pkg was updated")

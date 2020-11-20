@@ -1,4 +1,3 @@
-context("regr_rsm")
 
 test_that("regr_rsm", {
   requirePackagesOrSkip("rsm", default.method = "load")

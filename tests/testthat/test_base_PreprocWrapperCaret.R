@@ -1,4 +1,3 @@
-context("PreprocWrapperCaret")
 
 test_that("basic PreprocWrapperCaret works", {
   lrn1 = makeLearner("classif.rpart")

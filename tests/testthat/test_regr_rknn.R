@@ -1,4 +1,3 @@
-context("regr_rknn")
 
 test_that("regr_rknn", {
   requirePackagesOrSkip("rknn", default.method = "load")

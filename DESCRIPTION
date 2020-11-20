@@ -161,6 +161,7 @@ Suggests:
     adabag,
     bartMachine,
     batchtools,
+    bit64,
     brnn,
     bst,
     C50,
@@ -173,7 +174,6 @@ Suggests:
     clusterSim (>= 0.44-5),
     cmaes,
     cowplot,
-    CoxBoost,
     crs,
     Cubist,
     deepnet,
@@ -228,7 +228,7 @@ Suggests:
     party,
     penalized (>= 0.9-47),
     pls,
-    PMCMR (>= 4.1),
+    PMCMRplus,
     praznik (>= 5.0.0),
     randomForest,
     randomForestSRC (>= 2.7.0),
@@ -240,6 +240,7 @@ Suggests:
     rgenoud,
     rknn,
     rmarkdown,
+    Rmpi,
     ROCR,
     rotationForest,
     rpart,
@@ -268,10 +269,12 @@ Suggests:
 VignetteBuilder:
     knitr
 ByteCompile: yes
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-SystemRequirements: gdal (optional), geos (optional), proj (optional),
-    udunits (optional), gsl (optional), gmp (optional), glu (optional),
-    jags (optional)
+SystemRequirements: gdal (optional), geos (optional), proj
+    (optional), udunits (optional), gsl (optional), gmp (optional), glu
+    (optional), jags (optional), mpfr (optional), openmpi (optional)

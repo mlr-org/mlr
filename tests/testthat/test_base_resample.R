@@ -1,4 +1,3 @@
-context("resample")
 
 test_that("resample", {
   rin1 = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 4), task = multiclass.task)
@@ -82,12 +81,12 @@ test_that("resampling, predicting train set works", {
 
 test_that("ResampleInstance can bew created from string", {
   rin = makeResampleInstance("CV", size = 100)
-  expect_is(rin$desc, "CVDesc")
+  expect_s3_class(rin$desc, "CVDesc")
   expect_equal(rin$size, 100)
   expect_equal(rin$desc$iters, 10)
 
   rin = makeResampleInstance("CV", task = iris.task, iters = 17, stratify = TRUE)
-  expect_is(rin$desc, "CVDesc")
+  expect_s3_class(rin$desc, "CVDesc")
   expect_equal(rin$size, 150)
   expect_equal(rin$desc$iters, 17)
 })
@@ -177,7 +176,7 @@ test_that("resample printer respects show.info", {
   lrn = makeLearner("regr.lm")
 
   configureMlr(show.info = TRUE)
-  expect_message(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+  suppressMessages(expect_message(resample(lrn, bh.task, cv10, list(mape, medae, mse))))
 
   configureMlr(show.info = FALSE)
   expect_silent(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
@@ -212,3 +211,4 @@ test_that("resample drops unseen factors in predict data set", {
   model = train(lrn, train_task)
   expect_warning(predict(model, newdata = data[5:6,]), "produced NAs because of new factor levels")
 })
+

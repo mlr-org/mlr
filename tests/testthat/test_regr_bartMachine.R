@@ -1,4 +1,3 @@
-context("regr_bartMachine")
 
 test_that("regr_bartMachine", {
   requirePackagesOrSkip("bartMachine", default.method = "load")

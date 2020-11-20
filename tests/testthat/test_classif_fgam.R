@@ -1,4 +1,3 @@
-context("FDA_classif_fgam")
 
 test_that("fgam works for classifcation", {
   requirePackagesOrSkip("refund")

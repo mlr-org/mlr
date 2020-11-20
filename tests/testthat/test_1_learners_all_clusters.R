@@ -1,4 +1,3 @@
-context("learners_all_clusters")
 
 test_that("learners work: cluster", {
   requirePackagesOrSkip("clusterSim", default.method = "load")
@@ -6,6 +5,9 @@ test_that("learners work: cluster", {
 
   # RWeka not avail on CRAN
   skip_on_cran()
+
+  RWeka::WPM("refresh-cache")
+  RWeka::WPM("install-package", "XMeans")
 
   # settings to make learners faster and deal with small sample size
   hyperpars = list()

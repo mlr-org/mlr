@@ -1,4 +1,3 @@
-context("Learner_properties")
 
 test_that("Learner_properties", {
   lrn.char = "regr.glm"

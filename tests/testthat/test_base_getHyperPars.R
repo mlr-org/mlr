@@ -1,4 +1,3 @@
-context("getHyperPars")
 
 test_that("getHyperPars", {
   lrn = makeLearner("classif.rpart")

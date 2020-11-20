@@ -1,4 +1,3 @@
-context("learners_all_general")
 
 test_that("learners_all_general listLearners", {
   x1 = listLearnersCustom()

@@ -45,3 +45,4 @@ revdep/*
 ^clang-.*
 ^gfortran.*
 ^cran-comments\.md$
+^inst/debug\.R$

@@ -1,4 +1,3 @@
-context("filterFeatures_praznik")
 
 cat("praznik")
 test_that("filterFeatures_praznik", {

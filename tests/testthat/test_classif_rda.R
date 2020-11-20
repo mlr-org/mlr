@@ -1,4 +1,3 @@
-context("classif_rda")
 
 test_that("classif_rda", {
   requirePackagesOrSkip("klaR", default.method = "load")

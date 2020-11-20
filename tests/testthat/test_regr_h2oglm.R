@@ -1,9 +1,8 @@
-context("regr_h2oglm")
 
 test_that("regr_h2oglm", {
   skip_on_ci()
   requirePackages("h2o", default.method = "load")
-  h2o::h2o.init()
+  foo = capture.output(h2o::h2o.init())
 
   parset.list = list(
     list(),

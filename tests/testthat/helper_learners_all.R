@@ -37,7 +37,7 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
   expect_true(!is.na(perf3), info = lrn$id)
   # FIXME: "tolerance" was previously set to 0.0001 -> seems fine with this value on Travis
   # but locally I do not achieve more than 0.1 tolerance (Patrick)
-  expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id, tolerance = 0.5, scale = 1)
+  expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id, tolerance = 0.5)
   expect_false(isTRUE(all.equal(get.pred.fun(p1), get.pred.fun(p3))), info = lrn$id)
 }
 
@@ -107,7 +107,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
     expect_true(info = info, all(probdf >= 0))
     expect_true(info = info, all(probdf <= 1))
 
-    expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE, tolerance = 0.01)
+    expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), ignore_attr = "names", tolerance = 0.01)
   }
 }
 
@@ -173,15 +173,15 @@ testThatGetOOBPredsWorks = function(lrn, task) {
 
   if (type == "classif") {
     if (lrn$predict.type == "response") {
-      expect_is(oob$data, "data.frame")
+      expect_s3_class(oob$data, "data.frame")
       expect_equal(levels(oob$data$response), task$task.desc$class.levels)
     } else {
-      expect_is(oob$data, "data.frame")
+      expect_s3_class(oob$data, "data.frame")
       expect_numeric(getPredictionProbabilities(oob))
     }
   } else {
     if (type %in% c("regr", "surv")) {
-      expect_is(oob$data$response, "numeric")
+      expect_numeric(oob$data$response)
     }
   }
   expect_equal(nrow(oob$data), nrow(getTaskData(task)))

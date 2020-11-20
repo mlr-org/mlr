@@ -1,4 +1,3 @@
-context("classif_sda")
 
 test_that("classif_sda", {
   requirePackagesOrSkip("sda", default.method = "load")

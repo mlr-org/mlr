@@ -1,9 +1,9 @@
-context("classif_h2orandomForest")
 
 test_that("classif_h2orandomForest", {
   skip_on_ci()
   requirePackages("h2o", default.method = "load")
-  h2o::h2o.init()
+  foo = capture.output(h2o::h2o.init())
+  h2o::h2o.no_progress()
 
   parset.list = list(
     list(),
@@ -51,11 +51,10 @@ test_that("feature importances are returned", {
 
   lrn = makeLearner("classif.h2o.randomForest")
   mod = train(lrn, task)
-  feat.imp = getFeatureImportance(mod)$res
-  feat.imp.h2o = h2o::h2o.varimp(getLearnerModel(mod))[, c("variable", "relative_importance")]
-  # Convert to data.frame with same structure for equality check
-  feat.imp.h2o = data.frame(as.list(xtabs(relative_importance ~ variable,
-    data = feat.imp.h2o)))[names(feat.imp)]
+  feat.imp = as.data.frame(getFeatureImportance(mod)$res)
+  feat.imp.h2o = na.omit(h2o::h2o.varimp(getLearnerModel(mod))[, c("variable", "relative_importance")])
+  names(feat.imp) = names(feat.imp.h2o)
+  feat.imp = feat.imp[order(feat.imp$relative_importance, decreasing = TRUE), ]
 
-  expect_equal(feat.imp, feat.imp.h2o)
+  expect_equal(feat.imp, feat.imp.h2o, ignore_attr = c("class", "row.names"))
 })

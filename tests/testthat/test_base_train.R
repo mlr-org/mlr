@@ -1,4 +1,3 @@
-context("train")
 
 test_that("train works with subset", {
   subs = 1:5

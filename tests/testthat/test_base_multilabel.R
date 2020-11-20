@@ -1,4 +1,3 @@
-context("multilabel")
 
 test_that("multilabel task", {
   mt = multilabel.task

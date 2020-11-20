@@ -1,4 +1,3 @@
-context("learners_all_classif")
 
 test_that("learners work: classif", {
 
@@ -23,7 +22,7 @@ test_that("learners work: classif", {
   task = subsetTask(binaryclass.task,
     subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
-  lrns = listLearnersCustom(task, create = TRUE)
+  lrns = suppressMessages(listLearnersCustom(task, create = TRUE))
   # some learners are not avail on windows
   if (Sys.info()[["sysname"]] == "Windows") {
     names = vapply(lrns, function(x) x$id, FUN.VALUE = character(1))
@@ -31,41 +30,41 @@ test_that("learners work: classif", {
     lrns[row_ids] = NULL
   }
 
-  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
+  foo = lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
+  foo = suppressWarnings(lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars))
 
   # binary classif with factors
-  lrns = listLearnersCustom(task, properties = "factors", create = TRUE)
+  lrns = suppressMessages(listLearnersCustom(task, properties = "factors", create = TRUE))
 
-  lapply(lrns, testThatLearnerHandlesFactors,
+  foo = capture.output(suppressWarnings(lapply(lrns, testThatLearnerHandlesFactors,
     task = task,
-    hyperpars = hyperpars)
+    hyperpars = hyperpars)))
 
   # binary classif with ordered factors
   lrns = listLearnersCustom(task, properties = "ordered", create = TRUE)
 
-  lapply(lrns, testThatLearnerHandlesOrderedFactors,
+  foo = lapply(lrns, testThatLearnerHandlesOrderedFactors,
     task = task,
     hyperpars = hyperpars)
 
   # binary classif with prob
   lrns = listLearnersCustom(binaryclass.task, properties = "prob", create = TRUE)
-  lapply(lrns, testBasicLearnerProperties,
+  foo = suppressWarnings(lapply(lrns, testBasicLearnerProperties,
     task = binaryclass.task,
-    hyperpars = hyperpars, pred.type = "prob")
+    hyperpars = hyperpars, pred.type = "prob"))
 
   # binary classif with weights
   lrns = listLearnersCustom(binaryclass.task, properties = "weights", create = TRUE)
-  lapply(lrns, testThatLearnerRespectsWeights,
+  foo = suppressWarnings(lapply(lrns, testThatLearnerRespectsWeights,
     hyperpars = hyperpars,
     task = binaryclass.task, train.inds = binaryclass.train.inds,
     test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
-    pred.type = "prob", get.pred.fun = getPredictionProbabilities)
+    pred.type = "prob", get.pred.fun = getPredictionProbabilities))
 
   # classif with missing
   lrns = listLearnersCustom(task, properties = "missings", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
+  foo = suppressWarnings(lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars))
 
   # classif with oobpreds
   # FIXME: rFerns issue: https://notabug.org/mbq/rFerns/issues/3
@@ -74,16 +73,16 @@ test_that("learners work: classif", {
   row_ids = which(names %in% "classif.rFerns")
   lrns[row_ids] = NULL
 
-  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  foo = lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with oobpreds and probability
   lrns = listLearnersCustom(task, properties = c("oobpreds", "prob"), create = TRUE)
   lrns = lapply(lrns, setPredictType, predict.type = "prob")
-  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  foo = lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with variable importance
   lrns = listLearnersCustom(task, properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerCanCalculateImportance,
+  foo = lapply(lrns, testThatLearnerCanCalculateImportance,
     task = task,
     hyperpars = hyperpars)
 
@@ -122,9 +121,9 @@ test_that("learners work: classif", {
     "classif.rrlda",
     "classif.rknn")
   lrns_sub = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
-  lapply(lrns_sub, testBasicLearnerProperties,
+  foo = suppressWarnings(lapply(lrns_sub, testBasicLearnerProperties,
     task = min.task,
-    hyperpars = hyperpars)
+    hyperpars = hyperpars))
 })
 
 

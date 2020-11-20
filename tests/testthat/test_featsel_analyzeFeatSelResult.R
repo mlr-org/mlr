@@ -1,4 +1,3 @@
-context("analyzeFeatSelResult")
 
 cat("analyzeFeatSelResult")
 test_that("analyzeFeatSelResult", {

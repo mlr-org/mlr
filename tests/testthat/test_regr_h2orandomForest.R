@@ -1,4 +1,3 @@
-context("regr_h2orandomForest")
 
 test_that("regr_h2orandomForest", {
   skip_on_ci()

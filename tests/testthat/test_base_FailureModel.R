@@ -1,4 +1,3 @@
-context("FailureModel")
 
 test_that("FailureModel", {
   configureMlr(on.learner.error = "quiet", show.learner.output = FALSE)

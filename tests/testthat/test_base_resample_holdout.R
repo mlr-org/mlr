@@ -1,4 +1,3 @@
-context("resample_holdout")
 
 test_that("holdout instance works", {
   rin = makeResampleInstance(makeResampleDesc("Holdout", split = 0.25), size = 20)

@@ -1,4 +1,3 @@
-context("regr_nnet")
 
 test_that("regr_nnet", {
   requirePackagesOrSkip("nnet", default.method = "load")

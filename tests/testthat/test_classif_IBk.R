@@ -1,4 +1,3 @@
-context("classif_IBk")
 
 test_that("classif_IBk", {
   requirePackagesOrSkip("RWeka", default.method = "load")

@@ -1,4 +1,3 @@
-context("plotViperCharts")
 
 test_that("plotViperCharts", {
   skip_on_cran()

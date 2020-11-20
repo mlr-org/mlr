@@ -1,6 +1,7 @@
 data(Sonar, package = "mlbench", envir = environment())
 data(BreastCancer, package = "mlbench", envir = environment())
 data(spatial.task, package = "mlr", envir = environment())
+data(iris, package = "datasets", envir = environment())
 
 binaryclass.df = Sonar
 binaryclass.formula = Class ~ .

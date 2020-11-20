@@ -1,4 +1,3 @@
-context("convertBMRToRankMatrix")
 
 test_that("convertBMRToRankMatrix", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -11,17 +10,17 @@ test_that("convertBMRToRankMatrix", {
 
   # measure = NULL
   r = convertBMRToRankMatrix(res)
-  expect_is(r, "matrix")
+  expect_class(r, "matrix")
   expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(colnames(r), getBMRTaskIds(res))
-  expect_equivalent(rownames(r), getBMRLearnerIds(res))
+  expect_equal(ignore_attr = TRUE, colnames(r), getBMRTaskIds(res))
+  expect_equal(ignore_attr = TRUE, rownames(r), getBMRLearnerIds(res))
   expect_equal(sum(r), sum(1:n.lrns * n.tsks))
 
   # measure = ber
   r = convertBMRToRankMatrix(res, ber)
-  expect_is(r, "matrix")
+  expect_class(r, "matrix")
   expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(rownames(r), getBMRLearnerIds(res))
+  expect_equal(ignore_attr = TRUE, rownames(r), getBMRLearnerIds(res))
   expect_equal(sum(r), sum(1:n.lrns * n.tsks))
 
   # check ties.method
@@ -35,6 +34,6 @@ test_that("convertBMRToRankMatrix", {
   # check that col and row names are right if only one task is given
   res = benchmark(lrns, binaryclass.task, rdesc, meas)
   r = convertBMRToRankMatrix(res)
-  expect_equivalent(rownames(r), getBMRLearnerIds(res))
-  expect_equivalent(colnames(r), getBMRTaskIds(res))
+  expect_equal(ignore_attr = TRUE, rownames(r), getBMRLearnerIds(res))
+  expect_equal(ignore_attr = TRUE, colnames(r), getBMRTaskIds(res))
 })

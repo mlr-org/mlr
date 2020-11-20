@@ -16,8 +16,8 @@ test_that("Nested SpRepCV works without errors", {
 
   outer = makeResampleDesc("SpRepCV", folds = 2, reps = 2)
 
-  out = resample(wrapper, spatial.task,
-    resampling = outer, show.info = TRUE, measures = list(auc))
+  out = suppressMessages(resample(wrapper, spatial.task,
+    resampling = outer, show.info = TRUE, measures = list(auc)))
 
   expect_atomic_vector(out$measures.test$auc, min.len = 4, max.len = 4)
 })

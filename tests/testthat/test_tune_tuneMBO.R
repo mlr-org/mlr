@@ -1,4 +1,3 @@
-context("tuneMBO")
 
 test_that("tuneMBO", {
   n.des = 8

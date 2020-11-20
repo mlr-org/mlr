@@ -1,4 +1,3 @@
-context("TuneWrapper")
 
 test_that("TuneWrapper", {
   # FIXME check opt. parameter is same with tune and tune.wrapper

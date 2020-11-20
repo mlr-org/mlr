@@ -1,4 +1,3 @@
-context("MulticlassWrapper")
 
 test_that("MulticlassWrapper", {
   # cmatrix function

@@ -1,4 +1,3 @@
-context("regr_earth")
 
 test_that("regr_earth", {
   requirePackagesOrSkip("earth", default.method = "load")

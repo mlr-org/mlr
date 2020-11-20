@@ -1,4 +1,3 @@
-context("dump")
 
 test_that("error dump is created in train", {
   lrn = makeLearner("classif.qda", predict.type = "prob",

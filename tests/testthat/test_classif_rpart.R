@@ -1,4 +1,3 @@
-context("classif_rpart")
 
 test_that("classif_rpart", {
   requirePackagesOrSkip("rpart", default.method = "load")

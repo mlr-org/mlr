@@ -1,4 +1,3 @@
-context("classif_lda")
 
 test_that("classif_lda", {
   requirePackagesOrSkip("MASS", default.method = "load")

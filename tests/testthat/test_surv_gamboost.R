@@ -1,4 +1,3 @@
-context("surv_gamboost")
 
 test_that("surv_gamboost", {
   requirePackagesOrSkip(c("survival", "mboost"), default.method = "attach")

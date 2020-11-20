@@ -1,17 +1,15 @@
-context("classif_logreg")
-
 test_that("classif_logreg", {
   # "did not converge":
-  m = glm(formula = binaryclass.formula, data = binaryclass.train, family = binomial)
+  m = suppressWarnings(glm(formula = binaryclass.formula, data = binaryclass.train, family = binomial))
 
   p = predict(m, newdata = binaryclass.test, type = "response")
   p.prob = 1 - p
   p.class = as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
 
-  testSimple("classif.logreg", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.class)
+  suppressWarnings(testSimple("classif.logreg", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.class))
 
 
-  testProb("classif.logreg", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.prob)
+  suppressWarnings(testProb("classif.logreg", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.prob))
 
   tt = function(formula, data) {
     glm(formula, data = data, family = binomial)
@@ -21,5 +19,5 @@ test_that("classif_logreg", {
     as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }
 
-  testCV("classif.logreg", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp)
+  suppressWarnings(testCV("classif.logreg", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp))
 })

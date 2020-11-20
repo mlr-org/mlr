@@ -1,4 +1,3 @@
-context("classif_qda")
 
 test_that("classif_qda", {
   requirePackagesOrSkip("MASS", default.method = "load")

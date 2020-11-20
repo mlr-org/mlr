@@ -1,4 +1,3 @@
-context("Rlearner_classif_classiFunc.knn")
 
 test_that("classif_classiFunc.knn behaves like original api", {
   requirePackagesOrSkip("classiFunc", default.method = "load")

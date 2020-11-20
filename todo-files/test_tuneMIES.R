@@ -1,4 +1,3 @@
-context("tuneMIES")
 
 test_that("tuneMIES", {
   res = makeResampleDesc("Holdout")

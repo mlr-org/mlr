@@ -1,4 +1,3 @@
-context("PreprocWrapperRemoveOutliers")
 
 test_that("PreprocWrapperRemoveOutliers", {
   lrn1 = makeLearner("classif.rpart", minsplit=10)

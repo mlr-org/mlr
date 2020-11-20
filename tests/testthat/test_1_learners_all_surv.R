@@ -1,6 +1,6 @@
-context("learners_all_surv")
-
 test_that("learners work: surv ", {
+  requirePackagesOrSkip("prodlim")
+  requirePackagesOrSkip("proMatrixdlim")
   requirePackagesOrSkip("Hmisc", default.method = "load")
 
   # settings to make learners faster and deal with small sample size
@@ -29,11 +29,13 @@ test_that("learners work: surv ", {
   # surv with weights
   # normal size of surv.task necessary otherwise cvglmnet does not converge
   lrns = listLearnersCustom("surv", properties = "weights", create = TRUE)
-  lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
+  suppressWarnings(
+    lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = surv.task, train.inds = surv.train.inds,
     test.inds = surv.test.inds,
     weights = rep(c(1L, 5L), length.out = length(surv.train.inds)),
     pred.type = "response", get.pred.fun = getPredictionResponse)
+  )
 
   # survival with missings
   lrns = listLearnersCustom("surv", properties = "missings", create = TRUE)
@@ -48,6 +50,6 @@ test_that("learners work: surv ", {
   lrns = listLearnersCustom("surv", properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = surv.task,
     hyperpars = hyperpars)
-  lapply(lrns, testThatLearnerCanCalculateImportance, task = surv.task,
-    hyperpars = hyperpars)
+  foo = capture.output(lapply(lrns, testThatLearnerCanCalculateImportance, task = surv.task,
+    hyperpars = hyperpars))
 })

@@ -1,4 +1,3 @@
-context("classif_plsDA")
 
 test_that("classif_plsDA", {
   requirePackages("DiscriMiner", default.method = "load")

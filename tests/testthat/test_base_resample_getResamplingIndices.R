@@ -1,4 +1,3 @@
-context("resample_cv")
 
 test_that("getResamplingIndices works with getTuneResult", {
   task = makeClassifTask(data = iris, target = "Species")
@@ -13,7 +12,6 @@ test_that("getResamplingIndices works with getTuneResult", {
   outer = makeResampleDesc("CV", iters = 2)
   lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)
   mod = train(lrn, task)
-  print(getTuneResult(mod))
 
   # nested resampling for evaluation
   r = resample(lrn, task, outer, extract = getTuneResult)

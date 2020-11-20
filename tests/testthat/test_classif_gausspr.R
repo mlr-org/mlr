@@ -1,4 +1,3 @@
-context("classif_gausspr")
 
 test_that("classif_gausspr", {
   requirePackages("kernlab", default.method = "load")
@@ -17,9 +16,9 @@ test_that("classif_gausspr", {
     pars = list(multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(kernlab::gausspr, pars)
-    p = kernlab::predict(m, newdata = multiclass.test[, -5], type = "response")
-    p2 = kernlab::predict(m, newdata = multiclass.test[, -5], type = "probabilities")
+    m = suppressMessages(do.call(kernlab::gausspr, pars))
+    p = suppressMessages(kernlab::predict(m, newdata = multiclass.test[, -5], type = "response"))
+    p2 = suppressMessages(kernlab::predict(m, newdata = multiclass.test[, -5], type = "probabilities"))
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }

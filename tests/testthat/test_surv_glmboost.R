@@ -1,4 +1,3 @@
-context("surv_glmboost")
 
 test_that("surv_glmboost", {
   requirePackagesOrSkip(c("survival", "mboost"), default.method = "load")

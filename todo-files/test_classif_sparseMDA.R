@@ -1,4 +1,3 @@
-context("classif_sparseMDA")
 
 test_that("classif_sparseMDA", {
   requirePackages(c("sparseLDA", "MASS", "elasticnet"))

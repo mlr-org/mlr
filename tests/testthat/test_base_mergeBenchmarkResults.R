@@ -1,4 +1,3 @@
-context("mergeBenchmarkResults")
 
 test_that("mergeBenchmarkResults", {
   learners = list(makeLearner("classif.rpart"),
@@ -8,7 +7,7 @@ test_that("mergeBenchmarkResults", {
 
   # checks if list of unmerged BenchmarkResults is equal to the merged BenchmarkResults
   checkBenchmarkResults = function(list, merged) {
-    expect_is(merged, "BenchmarkResult")
+    expect_s3_class(merged, "BenchmarkResult")
     rbinded = do.call("rbind", lapply(list, as.data.frame))
     res = merge(rbinded, merged, by = c("task.id", "learner.id", "iter"), all = TRUE)
     expect_true(nrow(res) == nrow(rbinded))

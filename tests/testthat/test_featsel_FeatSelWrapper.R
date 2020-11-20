@@ -1,4 +1,3 @@
-context("FeatSelWrapper")
 
 cat("FeatSelWrapper")
 test_that("FeatSelWrapper", {

@@ -1,4 +1,3 @@
-context("ClassificationViaRegressionWrapper")
 
 test_that("ClassificationViaRegressionWrapper predicts with response", {
   lrn1 = makeLearner("regr.rpart")

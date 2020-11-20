@@ -1,4 +1,3 @@
-context("tuneParams")
 
 test_that("names for minimize are set correctly", {
   lrn = makeLearner("classif.ksvm")
@@ -7,9 +6,10 @@ test_that("names for minimize are set correctly", {
     makeNumericParam("C", lower = 0.001, upper = 1)
   )
   ctrl = makeTuneControlRandom(maxit = 2)
-  tr = tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc),
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    measures = list(foo = acc),
     par.set = ps, control = ctrl)
-  expect_is(tr, "TuneResult")
+  expect_s3_class(tr, "TuneResult")
   expect_equal(names(tr$opt.path$minimize), "acc.test.mean")
 })
 
@@ -21,28 +21,34 @@ test_that("tuneParams with resample.fun", {
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
   ctrl = makeTuneControlRandom(maxit = 2)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 
   ctrl = makeTuneControlGrid(resolution = 3L)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 
-  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L,
+  ctrl = makeTuneControlIrace(
+    maxExperiments = 20L, nbIterations = 1L,
     minNbSurvival = 1)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 
   ctrl = makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 
   ctrl = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 
@@ -50,7 +56,8 @@ test_that("tuneParams with resample.fun", {
     # this currently is a warning because printHead is in mlr and BBmisc
     makeTuneControlMBO(budget = 10, learner = "regr.lm")
   })
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl,
+  tr = tuneParams(lrn, multiclass.task, rdesc,
+    par.set = ps, control = ctrl,
     resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 })
@@ -69,20 +76,23 @@ test_that("tuneParams output works as documented", {
     message("Hi")
   })
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc,
-    measures = list(foo = acc), par.set = ps, control = ctrl.default,
-    show.info = TRUE),
-  "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
+  expect_message(
+    tuneParams(lrn, multiclass.task, rdesc,
+      measures = list(foo = acc), par.set = ps, control = ctrl.default,
+      show.info = TRUE),
+    "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc,
-    measures = list(foo = acc), par.set = ps, control = ctrl.memory,
-    show.info = TRUE),
-  "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
+  expect_message(
+    tuneParams(lrn, multiclass.task, rdesc,
+      measures = list(foo = acc), par.set = ps, control = ctrl.memory,
+      show.info = TRUE),
+    "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc,
-    measures = list(foo = acc), par.set = ps, control = ctrl.user,
-    show.info = TRUE),
-  "^Hi")
+  expect_message(
+    tuneParams(lrn, multiclass.task, rdesc,
+      measures = list(foo = acc), par.set = ps, control = ctrl.user,
+      show.info = TRUE),
+    "^Hi")
 })
 
 test_that("tuneParams output works as documented", {
@@ -99,20 +109,23 @@ test_that("tuneParams output works as documented", {
     message("Hi")
   })
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc,
-    measures = list(foo = acc), par.set = ps, control = ctrl.default,
-    show.info = TRUE),
-  "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
+  expect_message(
+    tuneParams(lrn, multiclass.task, rdesc,
+      measures = list(foo = acc), par.set = ps, control = ctrl.default,
+      show.info = TRUE),
+    "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc,
-    measures = list(foo = acc), par.set = ps, control = ctrl.memory,
-    show.info = TRUE),
-  "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
+  expect_message(
+    tuneParams(lrn, multiclass.task, rdesc,
+      measures = list(foo = acc), par.set = ps, control = ctrl.memory,
+      show.info = TRUE),
+    "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc,
-    measures = list(foo = acc), par.set = ps, control = ctrl.user,
-    show.info = TRUE),
-  "^Hi")
+  expect_message(
+    tuneParams(lrn, multiclass.task, rdesc,
+      measures = list(foo = acc), par.set = ps, control = ctrl.user,
+      show.info = TRUE),
+    "^Hi")
 })
 
 test_that("tuning with a fixed ensemble methods and varying base methods works", {
@@ -129,16 +142,20 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
     "univariate", "rf.importance", "randomForestSRC_var.select"))
 
   ps = makeParamSet(
-    makeDiscreteVectorParam("fw.base.methods", len = 2,
+    makeDiscreteVectorParam("fw.base.methods",
+      len = 2,
       values = filter.list.classif),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
-    makeNumericParam("C", lower = -10, upper = 10,
+    makeNumericParam("C",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x),
-    makeNumericParam("sigma", lower = -10, upper = 10,
+    makeNumericParam("sigma",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x)
   )
   rdesc = makeResampleDesc("CV", iters = 3)
-  out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
+  out = tuneParams(lrn,
+    task = iris.task, resampling = rdesc, par.set = ps,
     control = makeTuneControlRandom(maxit = 5), show.info = TRUE)
 })
 
@@ -156,37 +173,49 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
     "univariate", "rf.importance", "randomForestSRC_var.select"))
 
   ps = makeParamSet(
-    makeDiscreteVectorParam("fw.base.methods", len = 2,
+    makeDiscreteVectorParam("fw.base.methods",
+      len = 2,
       values = filter.list.classif),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
-    makeNumericParam("C", lower = -10, upper = 10,
+    makeNumericParam("C",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x),
-    makeNumericParam("sigma", lower = -10, upper = 10,
+    makeNumericParam("sigma",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x)
   )
   rdesc = makeResampleDesc("CV", iters = 3)
-  out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
+  out = tuneParams(lrn,
+    task = iris.task, resampling = rdesc, par.set = ps,
     control = makeTuneControlRandom(maxit = 5), show.info = TRUE)
 })
 
 test_that("tuning with fixed base methods and varying ensemble methods works", {
-  lrn = makeFilterWrapper(learner = "classif.ksvm",
+  lrn = makeFilterWrapper(
+    learner = "classif.ksvm", fw.method = "E-max",
     fw.base.methods = c("gain.ratio", "information.gain"))
 
-  ps = makeParamSet(makeDiscreteParam("fw.method", values = c("E-min", "E-max")),
+  ps = makeParamSet(
+    makeDiscreteParam("fw.method", values = c("E-min", "E-max")),
     makeNumericParam("fw.perc", lower = 0, upper = 1),
-    makeNumericParam("C", lower = -10, upper = 10,
+    makeNumericParam("C",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x),
-    makeNumericParam("sigma", lower = -10, upper = 10,
+    makeNumericParam("sigma",
+      lower = -10, upper = 10,
       trafo = function(x) 2^x)
   )
   rdesc = makeResampleDesc("CV", iters = 3)
-  out = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
-    control = makeTuneControlRandom(maxit = 5), show.info = TRUE)
+  out = suppressWarnings(
+    suppressMessages(tuneParams(lrn,
+      task = iris.task, resampling = rdesc, par.set = ps,
+      control = makeTuneControlRandom(maxit = 5), show.info = TRUE))
+  )
 })
 
 test_that("passing more than one fw.method raises an error", {
-  expect_error(makeFilterWrapper(learner = "classif.ksvm",
+  expect_error(makeFilterWrapper(
+    learner = "classif.ksvm",
     fw.method = c("E-min", "E-max"),
     fw.base.methods = c("gain.ratio", "information.gain"))
   )

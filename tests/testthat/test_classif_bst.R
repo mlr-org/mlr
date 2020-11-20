@@ -1,4 +1,3 @@
-context("classif_bst")
 
 test_that("classif_bst", {
   requirePackagesOrSkip("bst", default.method = "load")

@@ -1,4 +1,3 @@
-context("smote")
 
 test_that("smote works", {
   y = binaryclass.df[, binaryclass.target]
@@ -53,6 +52,7 @@ test_that("smote works with only factor features", {
 })
 
 test_that("smote wrapper", {
+  set.seed(getOption("mlr.debug.seed"))
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeSMOTEWrapper(lrn1, sw.rate = 2)
@@ -97,12 +97,6 @@ test_that("smote works with constant factor features", {
     task = makeClassifTask(data = d, target = "y")
     task2 = smote(task, rate = 9, nn = 4L)
 
-    # for some reason we get a different result on macOS than on Linux + Windows
-    if (Sys.info()[["sysname"]] == "Darwin") {
-      expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
-
-    } else {
-      expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10)
-    }
+    expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 10)
   }
 })

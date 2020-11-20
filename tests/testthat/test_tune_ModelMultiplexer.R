@@ -1,4 +1,3 @@
-context("Tuning ModelMultiplexer")
 
 test_that("makeModelMultiplexerParamSet works", {
   bls = list(
@@ -176,9 +175,9 @@ test_that("ModelMultiplexer handles tasks with no features", {
   learner = makeModelMultiplexer(base.learners)
   task = subsetTask(bh.task, features = character(0))
   m = train(learner, task)
-  expect_is(m$learner.model, "NoFeaturesModel")
+  expect_s3_class(m$learner.model, "NoFeaturesModel")
   p = predict(m, task)
-  expect_is(p$data, "data.frame")
+  expect_s3_class(p$data, "data.frame")
   expect_true(all(p$data$response == mean(p$data$response)))
 })
 

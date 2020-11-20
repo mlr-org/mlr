@@ -1,4 +1,3 @@
-context("generatePartialDependence")
 
 test_that("generatePartialDependenceData", {
   m = c(4, 10)
@@ -10,16 +9,16 @@ test_that("generatePartialDependenceData", {
   nfeat = length(dr$features)
   nfacet = length(unique(regr.df[["chas"]]))
   n = getTaskSize(regr.task)
-  expect_that(nrow(dr$data), equals(m[1] * nfeat))
+  expect_equal(nrow(dr$data), m[1] * nfeat)
   expect_true(all(dr$data$medv >= min(regr.df$medv) | dr$data$medv <= max(regr.df$medv)))
 
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * m[1]))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), nfacet)
+  expect_equal(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), nfacet * m[1])
 
   # check that if the input is a data.frame things work
   dr.df = generatePartialDependenceData(fr, input = regr.df, features = "lstat")
@@ -27,14 +26,14 @@ test_that("generatePartialDependenceData", {
   # check that the interactions and centering work with ICE
   dr = generatePartialDependenceData(fr, input = regr.task,
     features = c("lstat", "chas"), interaction = TRUE, individual = TRUE, n = m)
-  expect_that(nrow(dr$data), equals(m[1] * nfeat * m[2]))
+  expect_equal(nrow(dr$data), m[1] * nfeat * m[2])
 
   plotPartialDependence(dr, facet = "chas", data = regr.df, p = 1)
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), nfacet)
   # black.circle.xpath counts points which are omitted when individual = TRUE
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(n + prod(m) * nfacet))
+  expect_equal(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), n + prod(m) * nfacet)
 
   # check that multiple features w/o interaction work with a label outputting classifier with
   # an appropriate aggregation function
@@ -44,13 +43,13 @@ test_that("generatePartialDependenceData", {
   nfeat = length(dc$features)
   n = getTaskSize(multiclass.task)
   plotPartialDependence(dc, data = multiclass.df)
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   # minus one because the of the legend
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
-  expect_that(length(XML::getNodeSet(doc, red.circle.xpath, ns.svg)) - 1, equals(nfeat * m[1]))
-  expect_that(length(XML::getNodeSet(doc, blue.circle.xpath, ns.svg)) - 1, equals(nfeat * m[1]))
-  expect_that(length(XML::getNodeSet(doc, green.circle.xpath, ns.svg)) - 1, equals(nfeat * m[1]))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), nfeat)
+  expect_equal(length(XML::getNodeSet(doc, red.circle.xpath, ns.svg)) - 1, nfeat * m[1])
+  expect_equal(length(XML::getNodeSet(doc, blue.circle.xpath, ns.svg)) - 1, nfeat * m[1])
+  expect_equal(length(XML::getNodeSet(doc, green.circle.xpath, ns.svg)) - 1, nfeat * m[1])
 
   fcp = train(makeLearner("classif.svm", predict.type = "prob"), multiclass.task)
 
@@ -78,10 +77,10 @@ test_that("generatePartialDependenceData", {
   nfeat = length(ds$features)
   n = getTaskSize(surv.task)
   plotPartialDependence(ds, data = surv.df)
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(m[1] * nfeat))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), nfeat)
+  expect_equal(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), m[1] * nfeat)
 
   # issue 1180 test
   pd = generatePartialDependenceData(fr, input = regr.task,
@@ -94,12 +93,12 @@ test_that("generatePartialDependenceData", {
     fun = function(x) quantile(x, c(.25, .5, .75)), n = m)
   nfacet = length(unique(regr.df[["chas"]]))
   n = getTaskSize(regr.task)
-  expect_that(colnames(db$data), equals(c("medv", "Function", "lstat", "chas")))
+  expect_equal(colnames(db$data), c("medv", "Function", "lstat", "chas"))
   plotPartialDependence(db, facet = "chas", data = regr.df)
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet * 3))
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * 3 * m[1] + n * 3))
+  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), nfacet * 3)
+  expect_equal(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), nfacet * 3 * m[1] + n * 3)
 
   # check derivative and factor feature failure
   expect_error(generatePartialDependenceData(fr, input = regr.task, features = c("lstat", "chas"),

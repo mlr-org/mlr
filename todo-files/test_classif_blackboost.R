@@ -1,4 +1,3 @@
-context("classif_blackboost")
 
 test_that("classif_blackboost", {
   requirePackagesOrSkip(c("mboost", "party"), default.method = "load")

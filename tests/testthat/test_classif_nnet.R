@@ -1,4 +1,3 @@
-context("classif_nnet")
 
 test_that("classif_nnet", {
 

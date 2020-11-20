@@ -1,4 +1,3 @@
-context("cluster_Cobweb")
 
 test_that("cluster_Cobweb", {
   requirePackagesOrSkip("RWeka", default.method = "load")

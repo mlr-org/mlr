@@ -1,4 +1,3 @@
-context("TaskDesc")
 
 test_that("TaskDesc", {
   ct = makeClassifTask(target = "Class", binaryclass.df, id = "mytask", positive = "M")

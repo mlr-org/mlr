@@ -1,4 +1,3 @@
-context("classif_binomial")
 
 test_that("classif_binomial", {
   parset.list1 = list(

@@ -1,4 +1,3 @@
-context("lint")
 # run only on
 # - PR
 # - R-release

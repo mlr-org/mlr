@@ -1,4 +1,3 @@
-context("classif_randomForestSRCSyn")
 
 test_that("classif_randomForestSRCSyn", {
   requirePackagesOrSkip("randomForestSRC", default.method = "load")

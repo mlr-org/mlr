@@ -1,4 +1,3 @@
-context("getFeatureImportance")
 
 test_that("getFeatureImportance", {
 

@@ -1,4 +1,3 @@
-context("roc from mlr")
 
 test_that("roc coords work", {
 
@@ -20,7 +19,7 @@ test_that("roc coords work", {
     0.3, 1.0, 0.5,
     0.1, 1.0, 1.0,
     0.0, 1.0, 1.0
-  ), byrow = TRUE, ncol = 3L)), check.names = FALSE)
+  ), byrow = TRUE, ncol = 3L)))
 
   p = makePred(c("a", "b", "b", "a"), c(0.7, 0.3, 0.3, 0.1))
   rc = getROCCoords(p)
@@ -31,7 +30,7 @@ test_that("roc coords work", {
     0.3, 1.0, 0.5,
     0.1, 1.0, 1.0,
     0.0, 1.0, 1.0
-  ), byrow = TRUE, ncol = 3L)), check.names = FALSE)
+  ), byrow = TRUE, ncol = 3L)))
 
   p = makePred(c("b", "a", "b", "b", "a", "b"), c(0.7, 0.7, 0.3, 0.3, 0.1, 0.1))
   rc = getROCCoords(p)
@@ -42,7 +41,7 @@ test_that("roc coords work", {
     0.3, 3/4, 0.5,
     0.1, 1.0, 1.0,
     0.0, 1.0, 1.0
-  ), byrow = TRUE, ncol = 3L)), check.names = FALSE)
+  ), byrow = TRUE, ncol = 3L)))
 })
 
 

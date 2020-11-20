@@ -1,4 +1,3 @@
-context("regr_xgboost")
 
 test_that("regr_xgboost", {
   requirePackagesOrSkip("xgboost", default.method = "load")

@@ -1,4 +1,3 @@
-context("surv_cv.CoxBoost")
 
 test_that("surv_cv.CoxBoost", {
   requirePackagesOrSkip(c("!Matrix", "!CoxBoost"), default.method = "load")

@@ -1,4 +1,3 @@
-context("multilabel_randomForestSRC")
 
 test_that("multilabel_randomForestSRC", {
   skip_on_os("mac")

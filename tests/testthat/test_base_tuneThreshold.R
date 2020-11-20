@@ -1,4 +1,3 @@
-context("tuneThreshold")
 
 test_that("tuneThreshold", {
   # binary classification
@@ -17,7 +16,7 @@ test_that("tuneThreshold", {
   # a measure that has to be maximized
   rf3 = resample(lrn, task = multiclass.task, resampling = res, measures = list(acc))
   th3 = tuneThreshold(rf2$pred, measure = acc, control = list(max.call = 5))
-  expect_equal(th3$th, th2$th, tolreance = 0.0001)
+  expect_equal(th3$th, th2$th)
 
   expect_equal(length(th2$perf), 1L) # 1d-performance value
   expect_equal(length(th2$th), length(getTaskClassLevels(multiclass.task))) # no. of threshold = no. of classes

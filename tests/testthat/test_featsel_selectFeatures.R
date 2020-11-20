@@ -1,4 +1,3 @@
-context("selectFeatures")
 
 cat("selectFeatures")
 test_that("selectFeatures", {

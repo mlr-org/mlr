@@ -1,4 +1,3 @@
-context("aggregations")
 
 test_that("aggregations", {
   ms = list(mmce, acc, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1, auc)

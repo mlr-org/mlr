@@ -1,4 +1,3 @@
-context("surv_cforest")
 
 test_that("surv_cforest", {
   requirePackagesOrSkip(c("party", "!survival"), default.method = "load")

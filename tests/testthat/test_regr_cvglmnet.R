@@ -1,4 +1,3 @@
-context("regr_cvglmnet")
 
 test_that("regr_cvglmnet", {
   requirePackagesOrSkip("glmnet", default.method = "load")

@@ -1,4 +1,3 @@
-context("classif_bdk")
 
 test_that("classif_bdk", {
   requirePackagesOrSkip("kohonen", default.method = "load")

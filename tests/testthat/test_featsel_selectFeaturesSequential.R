@@ -1,4 +1,3 @@
-context("selectFeaturesSequential")
 
 cat("selectFeaturesSequential")
 # This used to cause an error. Now ensure it does not.

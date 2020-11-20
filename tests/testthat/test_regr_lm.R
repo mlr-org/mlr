@@ -1,4 +1,3 @@
-context("regr_lm")
 
 test_that("regr_lm", {
   pars = list(regr.formula, data = regr.train)

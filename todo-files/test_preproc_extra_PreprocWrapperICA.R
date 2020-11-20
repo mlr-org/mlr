@@ -1,4 +1,3 @@
-context("PreprocWrapperICA")
 
 test_that("PreprocWrapperICA", {
   lrn1 = makeLearner("classif.rpart", minsplit=10)

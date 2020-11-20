@@ -1,4 +1,3 @@
-context("tuneGrid")
 
 test_that("tuneGrid", {
   lrn = makeLearner("classif.ksvm")

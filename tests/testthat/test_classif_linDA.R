@@ -1,4 +1,3 @@
-context("classif_linDA")
 
 test_that("classif_linDA", {
   requirePackagesOrSkip("DiscriMiner", default.method = "load")

@@ -1,4 +1,3 @@
-context("classif_ranger")
 
 ## FIXME: Add "response" test if R seed is respected in ranger::predict()
 test_that("classif_ranger", {

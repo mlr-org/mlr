@@ -1,4 +1,3 @@
-context("getTuneResultOptPath")
 
 test_that("getTuneResultOptPath", {
   ctrl = makeTuneControlRandom(maxit = 3L)

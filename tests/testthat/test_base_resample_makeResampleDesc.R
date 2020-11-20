@@ -1,4 +1,3 @@
-context("makeResampleDesc")
 
 test_that("makeResampleDesc", {
   desc1 = makeResampleDesc("CV", predict = "test", iters = 2)

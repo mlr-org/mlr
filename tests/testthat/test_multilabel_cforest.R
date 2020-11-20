@@ -1,4 +1,3 @@
-context("multilabel_cforest")
 
 test_that("multilabel_cforest", {
   requirePackagesOrSkip("party", default.method = "load")

@@ -1,5 +1,4 @@
 # Be carefull that one need to change the columns name again after cbine several matrix
-context("FDA_regr_fgam")
 test_that("FDA_regr_fgam", {
   # requirePackagesOrSkip("refund")
   # data(DTI)

@@ -1,4 +1,3 @@
-context("classif_OneR")
 
 test_that("classif_OneR", {
   requirePackagesOrSkip("RWeka", default.method = "load")

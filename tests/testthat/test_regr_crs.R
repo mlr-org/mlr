@@ -1,4 +1,3 @@
-context("regr_crs")
 
 test_that("regr_crs", {
   requirePackagesOrSkip("crs", default.method = "load")

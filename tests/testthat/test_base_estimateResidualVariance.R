@@ -1,4 +1,3 @@
-context("estimateResidualVariance")
 
 test_that("estimateResidualVariance", {
   set.seed(getOption("mlr.debug.seed"))

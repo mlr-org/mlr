@@ -1,4 +1,3 @@
-context("regr_cubist")
 
 test_that("regr_cubist", {
   requirePackagesOrSkip("Cubist", default.method = "load")

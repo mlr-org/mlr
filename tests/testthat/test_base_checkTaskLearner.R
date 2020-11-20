@@ -1,4 +1,3 @@
-context("checkTaskLearner")
 
 test_that("checkTaskLearner", {
   df = multiclass.df

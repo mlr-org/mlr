@@ -1,5 +1,3 @@
-context("normalizeFeatures")
-
 test_that("normalizeFeatures", {
   df = data.frame(x1 = c(0, -1, 4, 2, 3), x2 = letters[1:5],
     target = letters[1:5], stringsAsFactors = TRUE)
@@ -9,10 +7,13 @@ test_that("normalizeFeatures", {
   expect_equal(normalized, df)
 
   normalized = normalizeFeatures(task, method = "range", range = c(-1, 4))
-  expect_equal(normalized, task)
-
   normed.x = getTaskData(normalizeFeatures(task, method = "center"))$x1
   expect_equal(mean(normed.x), 0)
+  # comparing envs leads to test failures
+  normalized$env = NULL
+  task$env = NULL
+  expect_equal(normalized, task)
+
 
   normed.task = normalizeFeatures(multiclass.task, method = "range")
   expect_equal(normed.task$task.desc, multiclass.task$task.desc)

@@ -1,4 +1,3 @@
-context("regr_cforest")
 
 test_that("regr_cforest", {
   requirePackagesOrSkip("party", default.method = "load")

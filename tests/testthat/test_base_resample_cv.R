@@ -1,4 +1,3 @@
-context("resample_cv")
 
 test_that("cv instance works", {
   rin = makeResampleInstance(makeResampleDesc("CV", iters = 3), size = 25)

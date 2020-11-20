@@ -1,4 +1,3 @@
-context("classif_parallelForest")
 
 test_that("classif_parallelForest", {
   requirePackages("ParallelForest", default.method = "load")
@@ -13,10 +12,10 @@ test_that("classif_parallelForest", {
   for(i in seq_along(parset.list)){
     parset = parset.list[[i]]
     pf.classif.lrn = try(makeLearner("classif.parallelForest", par.vals = parset, predict.type = "response"))
-    expect_is(pf.classif.lrn, "classif.parallelForest")
+    expect_s3_class(pf.classif.lrn, "classif.parallelForest")
     pf.classif.m = try(train(pf.classif.lrn, binaryclass.task))
-    #expect_is(pf.classif.m, "WrappedModel")
+    #expect_s3_class(pf.classif.m, "WrappedModel")
     pf.classif.p = try(predict(pf.classif.m, newdata = binaryclass.test))
-    expect_is(pf.classif.p, c("PredictionClassif", "Prediction"))
+    expect_s3_class(pf.classif.p, c("PredictionClassif", "Prediction"))
   }
 }) 

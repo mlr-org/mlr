@@ -1,4 +1,3 @@
-context("joinClassLevels")
 
 test_that("joinClassLevels", {
   expect_error(joinClassLevels(multiclass.task, "foo"), "list")

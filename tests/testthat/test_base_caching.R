@@ -1,4 +1,3 @@
-context("caching")
 
 test_that("caching works with most filters", {
   filters = as.character(listFilterMethods()$id)
@@ -14,23 +13,27 @@ test_that("caching works with most filters", {
   out = lapply(list(FALSE, tempdir()), function(i) {
     tune.out = lapply(filter.list.regr, function(.x) {
       lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = .x, cache = i)
-      ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
-        makeNumericParam("C", lower = -1, upper = 1,
+      ps = makeParamSet(
+        makeNumericParam("fw.perc", lower = 0, upper = 1),
+        makeNumericParam("C",
+          lower = -1, upper = 1,
           trafo = function(x) 2^x),
-        makeNumericParam("sigma", lower = -1, upper = 1,
+        makeNumericParam("sigma",
+          lower = -1, upper = 1,
           trafo = function(x) 2^x)
       )
       rdesc = makeResampleDesc("CV", iters = 2)
 
-      tuneParams(lrn, task = regr.num.task, resampling = rdesc, par.set = ps,
+      tuneParams(lrn,
+        task = regr.num.task, resampling = rdesc, par.set = ps,
         control = makeTuneControlRandom(maxit = 2),
         show.info = FALSE, measures = getDefaultMeasure(regr.num.task))
     })
 
   })
-  expect_equal(out[[1]][["opt.path"]][["env"]][["path"]][["mse.test.mean"]],
-    out[[2]][["opt.path"]][["env"]][["path"]][["mse.test.mean"]],
-    out[[3]][["opt.path"]][["env"]][["path"]][["mse.test.mean"]])
+  expect_equal(
+    out[[1]][["opt.path"]][["env"]][["path"]][["mse.test.mean"]],
+    out[[2]][["opt.path"]][["env"]][["path"]][["mse.test.mean"]])
 })
 
 test_that("cache dir is successfully deleted", {
@@ -41,6 +44,6 @@ test_that("cache dir is successfully deleted", {
   }
   expect_true(dir.exists(getCacheDir()))
 
-  deleteCacheDir()
+  suppressMessages(deleteCacheDir())
   expect_false(dir.exists(getCacheDir()))
 })

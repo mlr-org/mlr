@@ -1,4 +1,3 @@
-context("fda_classif_shapelets")
 
 test_that("fda_classif_shapelets", {
   requirePackagesOrSkip("shapeletLib", default.method = "load")

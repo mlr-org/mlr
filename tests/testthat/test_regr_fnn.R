@@ -1,4 +1,3 @@
-context("regr_fnn")
 
 test_that("regr_fnn", {
   requirePackagesOrSkip("FNN", default.method = "load")

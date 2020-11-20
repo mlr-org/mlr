@@ -1,4 +1,3 @@
-context("RLearner_classif_FDboost")
 
 test_that("test if classif_FDboost train works", {
   requirePackagesOrSkip("FDboost", default.method = "load")

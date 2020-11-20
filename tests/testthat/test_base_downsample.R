@@ -1,4 +1,3 @@
-context("downsample")
 
 test_that("downsample", {
   down.tsk = downsample(multiclass.task, perc = 1 / 3)

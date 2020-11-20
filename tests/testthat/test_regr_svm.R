@@ -1,4 +1,3 @@
-context("regr_svm")
 
 test_that("regr_svm", {
   requirePackagesOrSkip("e1071", default.method = "load")

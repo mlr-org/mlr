@@ -1,6 +1,5 @@
 # Be careful that one need to change the columns name again after cbine several
 # matrix
-context("FDA_regr_fgam")
 
 test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   requirePackagesOrSkip("refund")

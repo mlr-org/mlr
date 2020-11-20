@@ -1,4 +1,3 @@
-context("classif_knn")
 
 test_that("classif_knn", {
   requirePackagesOrSkip("class", default.method = "load")

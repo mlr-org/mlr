@@ -1,4 +1,3 @@
-context("surv_cvglmnet")
 
 test_that("surv_cvglmnet", {
   requirePackagesOrSkip(c("survival", "glmnet"), default.method = "load")

@@ -1,7 +1,6 @@
-context("classif_sparseLDA")
 
 test_that("classif_sparseLDA", {
-  requirePackagesOrSkip(c("sparseLDA", "MASS", "elasticnet"))
+  suppressMessages(requirePackagesOrSkip(c("sparseLDA", "MASS", "elasticnet")))
 
   parset.list = list(
     list(),

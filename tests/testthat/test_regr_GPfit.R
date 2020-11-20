@@ -1,4 +1,3 @@
-context("regr_GPfit")
 
 test_that("regr_GPfit", {
   testFun = function(x) {

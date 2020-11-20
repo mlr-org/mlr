@@ -1,4 +1,3 @@
-context("classif_extraTrees")
 
 test_that("classif_extraTrees", {
   requirePackagesOrSkip("extraTrees", default.method = "load")

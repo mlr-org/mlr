@@ -1,4 +1,3 @@
-context("classif_earth")
 
 test_that("classif_earth can do binary classification", {
   requirePackagesOrSkip("earth", default.method = "load")

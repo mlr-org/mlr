@@ -1,4 +1,3 @@
-context("classif_naiveBayes")
 
 test_that("classif_naiveBayes", {
   requirePackagesOrSkip("e1071", default.method = "load")

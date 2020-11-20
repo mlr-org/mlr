@@ -1,4 +1,3 @@
-context("plotBMRBoxplots")
 
 test_that("BenchmarkResult", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -9,7 +8,7 @@ test_that("BenchmarkResult", {
   plotBMRBoxplots(res)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), length(getBMRTaskIds(res)))
 
@@ -25,7 +24,7 @@ test_that("BenchmarkResult", {
   plotBMRBoxplots(res)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res), grid.size = 2L)
   testDocForStrings(doc, getBMRMeasures(res)[[1L]]$name)
@@ -33,7 +32,7 @@ test_that("BenchmarkResult", {
   plotBMRBoxplots(res, pretty.names = FALSE)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerIds(res), grid.size = 2L)
   testDocForStrings(doc, getBMRMeasureIds(res)[[1L]])
@@ -43,7 +42,7 @@ test_that("BenchmarkResult", {
   plotBMRBoxplots(res, pretty.names = TRUE, order.lrns = new.order)
   dir = tempdir()
   path = file.path(dir, "test.svg")
-  ggsave(path)
+  suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
     grid.size = 2L, ordered = TRUE)
@@ -65,6 +64,6 @@ test_that("BenchmarkResult allows spaces", {
     makeLearner("classif.rpart", predict.type = "prob")
   )
   res = benchmark(learners, sonar.task, cv, measures)
-  plotBMRBoxplots(res, measure = auc)
-  ggsave(tempfile(fileext = ".png"))
+  expect_s3_class(plotBMRBoxplots(res, measure = auc), "gg")
+  suppressMessages(ggsave(tempfile(fileext = ".png")))
 })

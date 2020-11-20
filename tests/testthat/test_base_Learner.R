@@ -1,4 +1,3 @@
-context("Learner")
 
 test_that("Learner", {
   wl = makeLearner("classif.rpart", minsplit = 3)

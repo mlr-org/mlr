@@ -1,4 +1,3 @@
-context("classif_PART")
 
 test_that("classif_PART", {
   requirePackagesOrSkip("RWeka", default.method = "load")

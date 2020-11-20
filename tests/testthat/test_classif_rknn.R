@@ -1,4 +1,3 @@
-context("classif_rknn")
 
 test_that("classif_rknn", {
   requirePackagesOrSkip("rknn", default.method = "load")

@@ -1,4 +1,3 @@
-context("regr_blackboost")
 
 test_that("regr_blackboost", {
   requirePackagesOrSkip(c("mboost", "party"), default.method = "load")

@@ -1,4 +1,3 @@
-context("regr_laGP")
 
 test_that("regr_laGP", {
   requirePackagesOrSkip("laGP", default.method = "load")

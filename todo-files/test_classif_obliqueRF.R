@@ -1,4 +1,3 @@
-context("classif_obliqueRF")
 
 test_that("classif_obliqueRF", {
   requirePackages("obliqueRF", default.method = "load")

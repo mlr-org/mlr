@@ -1,4 +1,3 @@
-context("classif_randomForestSRC")
 
 test_that("classif_randomForestSRC", {
   skip_on_os("mac")

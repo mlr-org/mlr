@@ -1,4 +1,3 @@
-context("survival measures")
 
 test_that("survival measures do not do stupid things", {
   requirePackagesOrSkip("glmnet", default.method = "load")

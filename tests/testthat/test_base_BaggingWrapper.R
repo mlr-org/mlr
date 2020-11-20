@@ -1,12 +1,11 @@
-context("BaggingWrapper")
 
 test_that("BaggingWrapper", {
   # classification
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3L)
   m = train(lrn2, multiclass.task)
-  expect_is(m, "BaggingModel")
-  expect_is(m, "HomogeneousEnsembleModel")
+  expect_s3_class(m, "BaggingModel")
+  expect_s3_class(m, "HomogeneousEnsembleModel")
   expect_true(!inherits(m, "FailureModel"))
 
   bms = getLearnerModel(m, more.unwrap = FALSE)

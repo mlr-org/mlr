@@ -1,4 +1,3 @@
-context("regr_mxff")
 
 test_that("regr_mxff", {
   requirePackagesOrSkip("mxnet", default.method = "load")

@@ -1,4 +1,3 @@
-context("classif_gbm")
 
 test_that("classif_gbm", {
   requirePackagesOrSkip("gbm", default.method = "load")
@@ -33,13 +32,13 @@ test_that("classif_gbm", {
   testProbParsets("classif.gbm", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
 
-  m = gbm::gbm(multiclass.formula, data = multiclass.train, n.trees = 300,
-    interaction.depth = 2, distribution = "multinomial")
+  m = suppressWarnings(gbm::gbm(multiclass.formula, data = multiclass.train, n.trees = 300,
+    interaction.depth = 2, distribution = "multinomial"))
   p = gbm::predict.gbm(m, newdata = multiclass.test, n.trees = 300)
   y = factor(apply(array(c(p), dim(p)[-3], dimnames = dimnames(p)[1:2]), 1,
     function(r) colnames(p)[which.max(r)]))
-  testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,
-    parset = list(n.trees = 300, interaction.depth = 2, distribution = "multinomial"))
+  suppressWarnings(testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,
+    parset = list(n.trees = 300, interaction.depth = 2, distribution = "multinomial")))
 })
 
 test_that("classif_gbm keep.data is passed correctly", {
@@ -50,6 +49,6 @@ test_that("classif_gbm keep.data is passed correctly", {
 # issue https://github.com/mlr-org/mlr/issues/2673
 test_that("prediction values of newdata with only one row are handled correctly", {
   lrn = makeLearner("classif.gbm", predict.type = "prob")
-  model = train(lrn, iris.task)
+  model = suppressWarnings(train(lrn, iris.task))
   expect_s3_class(predict(model, newdata = iris[1, ]), "Prediction")
 })

@@ -1,4 +1,3 @@
-context("getTaskData")
 
 test_that("getTaskData", {
   df = getTaskData(multiclass.task)

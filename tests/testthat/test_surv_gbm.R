@@ -1,4 +1,3 @@
-context("surv_gbm")
 
 test_that("surv_gbm", {
   requirePackagesOrSkip("gbm", default.method = "load")

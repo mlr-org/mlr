@@ -1,4 +1,3 @@
-context("classif_wsrf")
 
 test_that("classif_wsrf", {
   requirePackages("wsrf", default.method = "load")

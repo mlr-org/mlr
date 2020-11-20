@@ -1,7 +1,7 @@
-context("classif_penalized")
-
 test_that("classif_penalized", {
-  requirePackages("!penalized", default.method = "load")
+  suppressMessages(requirePackages("!penalized", default.method = "load"))
+  suppressMessages(requirePackages("survival"))
+
   parset.list = list(
     list(maxiter = 100),
     list(lambda1 = 2),

@@ -1,4 +1,3 @@
-context("listLearners")
 
 test_that("listLearners", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)

@@ -1,4 +1,3 @@
-context("ConstantClassWrapper")
 
 test_that("ConstantClassWrapper predicts with response", {
   lrn1 = makeLearner("classif.rpart")

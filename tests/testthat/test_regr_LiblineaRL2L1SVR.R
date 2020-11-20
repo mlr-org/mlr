@@ -1,4 +1,3 @@
-context("regr_LiblineaRL2L1SVR")
 
 test_that("regr_LiblineaRL2L1SVR", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")

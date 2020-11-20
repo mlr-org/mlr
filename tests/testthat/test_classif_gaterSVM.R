@@ -1,4 +1,3 @@
-context("classif_gaterSVM")
 
 test_that("classif_gaterSVM", {
   requirePackagesOrSkip("SwarmSVM", default.method = "load")

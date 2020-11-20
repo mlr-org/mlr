@@ -1,4 +1,3 @@
-context("blocking")
 
 test_that("blocking", {
   df = multiclass.df

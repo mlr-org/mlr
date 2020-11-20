@@ -1,4 +1,3 @@
-context("checkTaskSubset")
 
 test_that("checkTaskSubset", {
   expect_equal(1:50, checkTaskSubset(1:50, size = 50))

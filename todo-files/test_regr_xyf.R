@@ -1,4 +1,3 @@
-context("regr_xyf")
 
 test_that("regr_xyf", {
   requirePackagesOrSkip("kohonen", default.method = "load")

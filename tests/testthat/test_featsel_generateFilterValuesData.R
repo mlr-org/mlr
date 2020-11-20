@@ -2,19 +2,19 @@
 # we test the general code here, for exhaustive tests for all filters please look at file
 # "test_featsel_filters.R"
 
-context("filterFeatures")
-
-cat("generateFilterValuesData")
-
 test_that("filterFeatures", {
 
   # winbuilder gets stuck here
   skip_on_cran()
 
   ns = getTaskFeatureNames(binaryclass.task)
-  f = filterFeatures(binaryclass.task, method = "variance", select = "threshold",
+  f = filterFeatures(binaryclass.task,
+    method = "variance", select = "threshold",
     threshold = -Inf)
-  expect_equal(f, binaryclass.task)
+  f$env = NULL
+  binaryclass.task.cp = binaryclass.task
+  binaryclass.task.cp$env = NULL
+  expect_equal(f, binaryclass.task.cp)
 
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task))
   expect_data_frame(feat.imp.old$data,
@@ -41,43 +41,55 @@ test_that("filterFeatures", {
 
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data,
-    "value", asc = FALSE), 5L)$name))
+    "value",
+    asc = FALSE), 5L)$name))
 
   # now check that we get the same result by operating on
   # generateFilterValuesData
   feat.imp.old = suppressWarnings(generateFilterValuesData(binaryclass.task,
     method = "variance"))
   ff = filterFeatures(binaryclass.task, fval = feat.imp.old, abs = 5L)
+  f$env = NULL
+  ff$env = NULL
   expect_equal(f, ff)
 
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
-  expect_data_frame(feat.imp.new$data, types = c("character", "numeric", "factor"),
+  expect_data_frame(feat.imp.new$data,
+    types = c("character", "numeric", "factor"),
     nrow = length(ns), ncols = 4, col.names = "named")
   expect_equal(names(feat.imp.new$data), c("name", "type", "filter", "value"))
   expect_equal(ns, feat.imp.new$data$name)
 
   f = filterFeatures(binaryclass.task, method = "variance", abs = 5L)
-  expect_true(setequal(getTaskFeatureNames(f),
+  expect_true(setequal(
+    getTaskFeatureNames(f),
     head(sortByCol(feat.imp.new$data, "value", asc = FALSE), 5L)$name))
 
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "variance")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
+  f$env = NULL
+  ff$env = NULL
   expect_equal(f, ff)
 
-  f1 = filterFeatures(binaryclass.task, abs = 1L, mandatory.feat = "V1",
+  f1 = filterFeatures(binaryclass.task,
+    abs = 1L, mandatory.feat = "V1",
     ntree = 1L)
   f2 = subsetTask(binaryclass.task, features = "V1")
+  f1$env = NULL
+  f2$env = NULL
   expect_equal(f1, f2)
 
   f1 = filterFeatures(multiclass.task, abs = round(0.5 * ncol(multiclass.df)))
   f2 = filterFeatures(multiclass.task, perc = 0.5)
+  f1$env = NULL
+  f2$env = NULL
   expect_equal(f1, f2)
 
   lrn1 = makeFilterWrapper("classif.rpart", fw.perc = 0.2)
   m = train(lrn1, multiclass.task)
   f = getFilteredFeatures(m)
-  expect_is(f, "character")
+  expect_type(f, "character")
   expect_equal(length(f), 1L)
 })
 
@@ -107,7 +119,8 @@ test_that("args are passed down to filter methods", {
 
   f1 = generateFilterValuesData(task, method = "variance", na.rm = FALSE)
   f2 = generateFilterValuesData(task, method = "variance", na.rm = TRUE)
-  f3 = generateFilterValuesData(task, method = "variance",
+  f3 = generateFilterValuesData(task,
+    method = "variance",
     more.args = list(variance = list(na.rm = TRUE)))
   f4 = generateFilterValuesData(task,
     method = c("univariate.model.score", "variance"),
@@ -180,7 +193,8 @@ test_that("ensemble methods work", {
   skip_on_cran()
 
   fi = generateFilterValuesData(multiclass.task,
-    method = list("E-min", c("FSelectorRcpp_gain.ratio",
+    method = list("E-min", c(
+      "FSelectorRcpp_gain.ratio",
       "FSelectorRcpp_information.gain")))
   expect_true(all(!is.na(fi$data$value) == TRUE))
 })

@@ -1,4 +1,3 @@
-context("regr_randomForestSRCSyn")
 
 test_that("regr_randomForestSRCSyn", {
   requirePackagesOrSkip("randomForestSRC", default.method = "load")

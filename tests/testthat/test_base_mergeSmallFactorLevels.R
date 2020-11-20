@@ -1,4 +1,3 @@
-context("mergeSmallFactorLevels")
 
 test_that("mergeSmallFactorLevels", {
   f1 = as.factor(rep(c("a", "b", "c"), times = c(85, 10, 5)))

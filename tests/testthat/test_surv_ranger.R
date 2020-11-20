@@ -1,4 +1,3 @@
-context("surv_ranger")
 
 ## FIXME: Proper test required when predictions working
 test_that("surv_ranger", {
@@ -10,7 +9,7 @@ test_that("surv_ranger", {
   m = mlr::train(lrn, task)
   expect_equal(m$learner.model$treetype, "Survival")
   p = predict(m, newdata = surv.test)
-  expect_is(p, "PredictionSurv")
+  expect_s3_class(p, "PredictionSurv")
 
   parset.list = list(
     list(),

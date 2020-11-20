@@ -1,4 +1,3 @@
-context("surv_randomForestSRC")
 
 test_that("surv_randomForestSRC", {
   requirePackagesOrSkip(c("survival", "randomForestSRC"),

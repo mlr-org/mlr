@@ -1,4 +1,3 @@
-context("regr_kknn")
 
 test_that("regr_kknn", {
   requirePackagesOrSkip("!kknn", default.method = "load")

@@ -1,4 +1,3 @@
-context("configureMlr")
 
 test_that("getOptions and configureMlr", {
   mlr.options = getMlrOptions()

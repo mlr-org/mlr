@@ -1,4 +1,3 @@
-context("regr_ctree")
 
 test_that("regr_ctree", {
   requirePackagesOrSkip("party", default.method = "load")

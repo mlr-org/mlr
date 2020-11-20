@@ -1,4 +1,3 @@
-context("regr_glm")
 
 test_that("regr_glm", {
   parset.list = list(

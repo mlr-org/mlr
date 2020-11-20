@@ -1,4 +1,3 @@
-context("tuneParamsMultiCrit")
 
 test_that("tuneParamsMultiCrit", {
   lrn = makeLearner("classif.rpart")

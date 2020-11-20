@@ -1,4 +1,3 @@
-context("classif_ada")
 
 test_that("classif_ada", {
   requirePackagesOrSkip("ada", default.method = "load")
