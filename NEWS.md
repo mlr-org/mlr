@@ -1,7 +1,10 @@
 # mlr 2.18.0.9002
 
-- Internal changes only.
-
+- Switch to testthat v3 (#2796)
+- Enable parallel tests (#2796)
+- replace package PMCMR by PMCMRplus (#2796)
+- Remove CoxBoost learner due to CRAN removal
+- Silence warnings in tests
 
 # mlr 2.18.0.9001
 
