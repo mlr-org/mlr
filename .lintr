@@ -5,5 +5,6 @@ linters: with_defaults(
     object_name_linter = object_name_linter(c("snake_case", "CamelCase")), # only allow snake case and camel case object names
     cyclocomp_linter = NULL, # do not check function complexity
     commented_code_linter = NULL, # allow code in comments
+    todo_comment_linter = NULL,
     line_length_linter = line_length_linter(120)
     )
