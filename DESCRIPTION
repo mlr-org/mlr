@@ -271,7 +271,7 @@ VignetteBuilder:
 ByteCompile: yes
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/testthat/start-first: featsel_filters, learners_all*, regr_h2ogbm
+Config/testthat/start-first: classif_bartMachine,tune_tuneIrace, featsel_filters, learners_all*, regr_h2ogbm
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(markdown = TRUE)
