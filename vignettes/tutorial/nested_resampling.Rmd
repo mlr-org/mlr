@@ -22,11 +22,11 @@ In order to obtain honest performance estimates for a learner all parts of the m
 For steps that themselves require resampling like parameter [tuning](tune.html){target="_blank"} or [feature selection](feature_selection.html){target="_blank"} (via the wrapper approach) this results in two nested resampling loops.
 
 ```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Nested Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") == "latex"}
-knitr::include_graphics("img/nested_resampling.png")
+knitr::include_graphics("../pdf/img/nested_resampling.png")
 ```
 
 ```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Nested Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
-knitr::include_graphics("img/nested_resampling.png")
+knitr::include_graphics("../pdf/img/nested_resampling.png")
 ```
 
 The graphic above illustrates nested resampling for parameter tuning with 3-fold cross-validation in the outer and 4-fold cross-validation in the inner loop.
