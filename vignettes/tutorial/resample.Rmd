@@ -27,11 +27,11 @@ Then the $B$ individual performance values are aggregated, most often by calcula
 There exist various different resampling strategies, for example cross-validation and bootstrap, to mention just two popular approaches.
 
 ```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") == "latex"}
-knitr::include_graphics("img/resampling.png")
+knitr::include_graphics("../pdf/img/resampling.png")
 ```
 
 ```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
-knitr::include_graphics("img/resampling.png")
+knitr::include_graphics("../pdf/img/resampling.png")
 ```
 
 If you want to read up on further details, the paper [Resampling Strategies for Model Assessment and Selection](http://link.springer.com/chapter/10.1007%2F978-0-387-47509-7_8) by Simon is probably not a bad choice.
