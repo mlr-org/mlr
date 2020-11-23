@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9001</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9002</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -286,6 +286,8 @@
 
     
     
+<p><strong>Attention</strong></p>
+<p><em>If you arrive here and did not yet start with {mlr}, please consider using {mlr3} and its extension package <a href="https://mlr3spatiotempcv.mlr-org.com">{mlr3spatiotempcv}</a> for spatiotemporal data handling.</em> <em>It is much more advanced and actively maintained while {mlr} and the solution shown below is deprecated and considered as legacy.</em></p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -293,7 +295,7 @@
 <p>Treating spatial data sets like non-spatial ones leads to overoptimistic results in predictive accuracy of models (<a href="https://www.nat-hazards-earth-syst-sci.net/5/853/2005/">Brenning 2005</a>). This is due to the underlying spatial autocorrelation in the data. Spatial autocorrelation does occur in all spatial data sets. Magnitude varies depending on the characteristics of the data set. The closer observations are located to each other, the more similar they are.</p>
 <p>If common validation procedures like cross-validation are applied to such data sets, they assume independence of the observation upfront to provide unbiased estimates. However, this assumption is violated in the spatial case due to spatial autocorrelation. Subsequently, non-spatial cross-validation will fail to provide accurate performance estimates.</p>
 <div class="figure" style="text-align: center">
-<img src="https://raw.githubusercontent.com/pat-s/mlr/master/vignettes/tutorial/devel/pdf/img/spatial_cross_validation.png" alt="Nested Spatial and Non-Spatial Cross-Validation" width="600px"><p class="caption">
+<img src="../pdf/img/spatial_cross_validation.png" alt="Nested Spatial and Non-Spatial Cross-Validation" width="600px"><p class="caption">
 Nested Spatial and Non-Spatial Cross-Validation
 </p>
 </div>
@@ -316,8 +318,8 @@ Nested Spatial and Non-Spatial Cross-Validation
 <div id="spatial-cross-validation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#spatial-cross-validation" class="anchor"></a>Spatial Cross-Validation</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"spatial.task"</span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"spatial.task"</span><span class="op">)</span>
 <span class="va">spatial.task</span>
 <span class="co">## Supervised task: ecuador</span>
 <span class="co">## Type: classif</span>
@@ -374,14 +376,14 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## </span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span>
-<span class="co">## [1] 0.6157643</span></pre></div>
+<span class="co">## [1] 0.6157643</span></code></pre></div>
 <p>We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting. To do so, we simply choose <code>RepCV</code> instead of <code>SpRepCV</code>. There is no need to remove <code>coordinates</code> from the task as it is only used if <code>SpCV</code> or <code>SpRepCV</code> is selected as the resampling strategy.</p>
 </div>
 <div id="non-spatial-cross-validation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#non-spatial-cross-validation" class="anchor"></a>Non-Spatial Cross-Validation</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 
 <span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"RepCV"</span>, fold <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
@@ -420,7 +422,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## </span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span>
-<span class="co">## [1] 0.7621898</span></pre></div>
+<span class="co">## [1] 0.7621898</span></code></pre></div>
 <p>The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC.</p>
 </div>
 </div>
@@ -429,20 +431,20 @@ Nested Spatial and Non-Spatial Cross-Validation
 <a href="#visualization-of-spatial-partitions" class="anchor"></a>Visualization of spatial partitions</h1>
 <p>You can visualize the spatial partitioning using <code><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. This function creates multiple <code>ggplot2</code> objects that can then be visualized in a gridded way using your favorite “plot arrangement” function We recommend to use <code><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">cowplot::plot_grid()</a></code> and <code><a href="https://wilkelab.org/cowplot/reference/save_plot.html">cowplot::save_plot()</a></code> for this.</p>
 <p>You can pass multiple <code>resample</code> result objects as inputs. This is useful to visualize the differences between a spatial and non-spatial partitioning. If you pass the <code>resample</code> objects in a named list, those names will be populated as plot titles. By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument <code>datum</code>. If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html">base::lapply()</a></code> or similar functions.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span>
- 
+
 <span class="va">rdesc1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"SpRepCV"</span>, folds <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="va">r1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.qda"</span><span class="op">)</span>, <span class="va">spatial.task</span>, <span class="va">rdesc1</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">rdesc2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"RepCV"</span>, folds <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="va">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.qda"</span><span class="op">)</span>, <span class="va">spatial.task</span>, <span class="va">rdesc2</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
- 
+
 <span class="va">plots</span> <span class="op">=</span> <span class="fu"><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots</a></span><span class="op">(</span><span class="va">spatial.task</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"SpRepCV"</span> <span class="op">=</span> <span class="va">r1</span>, <span class="st">"RepCV"</span> <span class="op">=</span> <span class="va">r2</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span>, repetitions <span class="op">=</span> <span class="fl">1</span>,
   x.axis.breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">79.075</span><span class="op">)</span>, y.axis.breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.975</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plots</span><span class="op">[[</span><span class="st">"Plots"</span><span class="op">]</span><span class="op">]</span>, ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">2</span>,
-  labels <span class="op">=</span> <span class="va">plots</span><span class="op">[[</span><span class="st">"Labels"</span><span class="op">]</span><span class="op">]</span>, label_size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></pre></div>
+  labels <span class="op">=</span> <span class="va">plots</span><span class="op">[[</span><span class="st">"Labels"</span><span class="op">]</span><span class="op">]</span>, label_size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></code></pre></div>
 <p><img src="handling_of_spatial_data_files/figure-html/unnamed-chunk-6-1.png" width="800px" style="display: block; margin: auto;"></p>
 </div>
 <div id="notes" class="section level1">

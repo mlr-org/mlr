@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9001</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9002</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -293,8 +293,8 @@
 <li>evaluate the performance of the model (<a href="performance.html">here</a>).</li>
 </ul>
 <p>First, let’s have a look at the data.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BostonHousing</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BostonHousing</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">BostonHousing</span><span class="op">)</span>
 <span class="co">##       crim                zn             indus       chas         nox        </span>
 <span class="co">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471   Min.   :0.3850  </span>
@@ -323,14 +323,14 @@
 <span class="co">##  Median :21.20  </span>
 <span class="co">##  Mean   :22.53  </span>
 <span class="co">##  3rd Qu.:25.00  </span>
-<span class="co">##  Max.   :50.00</span></pre></div>
+<span class="co">##  Max.   :50.00</span></code></pre></div>
 <p>This data set concerns housing in the suburban area of Boston. The target variable, chosen for the regression task, is <code>medv</code> - the median value of owner-occupied homes in $1000’s. Description of the others 13 attributes can be found at <code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>).</p>
 <div id="define-a-task" class="section level1">
 <h1 class="hasAnchor">
 <a href="#define-a-task" class="anchor"></a>Define a task</h1>
 <p>Now, let us continue with defining the regression <a href="task.html">task</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># Make a task</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Make a task</span>
 <span class="va">regr.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeRegrTask.html">makeRegrTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">BostonHousing</span>, target <span class="op">=</span> <span class="st">"medv"</span><span class="op">)</span>
 <span class="va">regr.task</span>
 <span class="co">## Supervised task: BostonHousing</span>
@@ -343,7 +343,7 @@
 <span class="co">## Missings: FALSE</span>
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></pre></div>
+<span class="co">## Has coordinates: FALSE</span></code></pre></div>
 <p>In order to get an overview of the features type, we can print out the <code>regr.task</code>. This shows that there are 12 numeric and one factor variables in the data set.</p>
 </div>
 <div id="tuning" class="section level1">
@@ -353,8 +353,8 @@
 <p>With so many learners it is difficult to choose which one would be optimal for this specific task. As such we will choose a sample of these learners and compare their results. This analysis uses the classical linear regression model (<code>regr.lm</code>), SVM (<code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code>) with a radial basis kernel (<code>regr.ksvm</code>) and random forest from the ranger (<code><a href="https://rdrr.io/pkg/ranger/man/ranger.html">ranger::ranger()</a></code>) package (<code>regr.ranger</code>). In order to get a quick overview of all learner-specific tunable parameters you can call <code><a href="../../reference/getLearnerParamSet.html">getLearnerParamSet()</a></code> or its alias <code><a href="https://paramhelpers.mlr-org.com/reference/getParamSet.html">ParamHelpers::getParamSet()</a></code>, which will list learner’s hyperparameters and their properties.</p>
 <p>Before setting up a <a href="benchmark_experiments.html">benchmark experiment</a> we can specify which hyperparameters are going to be tuned. The <code>mlr</code> package provides powerful tuning algorithms, such as iterated F-racing (<code><a href="https://rdrr.io/pkg/irace/man/irace.html">irace::irace()</a></code>), CMA Evolution Strategy (<code><a href="https://rdrr.io/pkg/cmaes/man/cma_es.html">cmaes::cma_es()</a></code>), model-based / Bayesian optimization (<code><a href="https://rdrr.io/pkg/mlrMBO/man/mbo.html">mlrMBO::mbo()</a></code>) and generalized simulated annealing (<code><a href="https://rdrr.io/pkg/GenSA/man/GenSA.html">GenSA::GenSA()</a></code>). See <a href="tuning.html">Tuning</a> and <a href="advanced_tune.html">Advanced Tuning</a> for more details.</p>
 <p>For each learner one hyperparameter will be tuned, i.e. kernel parameter <code>sigma</code> for SVM model and the number of trees (<code>num.trees</code>) in the random forest model. We start with specifying a search space for each of these parameters. With <code><a href="../../reference/makeTuneControlCMAES.html">makeTuneControlCMAES()</a></code> we set the tuning method to be CMA Evolution Strategy (<code><a href="https://rdrr.io/pkg/cmaes/man/cma_es.html">cmaes::cma_es()</a></code>). Afterwards we take 5-fold cross validation as our <a href="resample.html">resampling strategy</a> and root mean squared error (<code>rmse</code>) as optimization criterion. Finally, we make tuning wrapper for each learner.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
 
 <span class="co"># Define a search space for each learner'S parameter</span>
 <span class="va">ps_ksvm</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
@@ -378,26 +378,26 @@
 <span class="va">tuned.ksvm</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="st">"regr.ksvm"</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">meas</span>,
   par.set <span class="op">=</span> <span class="va">ps_ksvm</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">tuned.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="st">"regr.ranger"</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">meas</span>,
-  par.set <span class="op">=</span> <span class="va">ps_rf</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+  par.set <span class="op">=</span> <span class="va">ps_rf</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="benchmark-experiment" class="section level1">
 <h1 class="hasAnchor">
 <a href="#benchmark-experiment" class="anchor"></a>Benchmark Experiment</h1>
 <p>In order to conduct a <a href="benchmark_experiments.html">benchmark experiment</a>, it is necessary to choose an evaluation method. We will use the resampling strategy and the performance measure from the previous section and then pass the tuning wrappers as arguments into the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># Four learners to be compared</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Four learners to be compared</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.lm"</span><span class="op">)</span>, <span class="va">tuned.ksvm</span>, <span class="va">tuned.rf</span><span class="op">)</span>
 
 <span class="co"># Conduct the benchmark experiment</span>
 <span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span>learners <span class="op">=</span> <span class="va">lrns</span>, tasks <span class="op">=</span> <span class="va">regr.task</span>, resamplings <span class="op">=</span> <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">rmse</span>, 
-  show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+  show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="performance" class="section level1">
 <h1 class="hasAnchor">
 <a href="#performance" class="anchor"></a>Performance</h1>
 <p>Now we want to evaluate the results.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## $BostonHousing</span>
 <span class="co">## $BostonHousing$regr.lm</span>
 <span class="co">## rmse.test.rmse </span>
@@ -409,10 +409,10 @@
 <span class="co">## </span>
 <span class="co">## $BostonHousing$regr.ranger.tuned</span>
 <span class="co">## rmse.test.rmse </span>
-<span class="co">##       3.510068</span></pre></div>
+<span class="co">##       3.510068</span></code></pre></div>
 <p>A closer look at the boxplot reveals that RF outperforms the other learners for this specific task. Despite the tuning procedure performed before, the benchmark experiment for linear and lasso regression yields similar but poor results.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></code></pre></div>
 <p><img src="usecase_regression_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>

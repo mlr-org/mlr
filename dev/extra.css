@@ -146,3 +146,24 @@ bootstrap.min.css:11:29763
 .ref-index .code{
     margin-bottom: 10px;
  }
+
+/* mlr3extralearners table ----------------------------------------------- */
+table.dataTable {
+  font-size: 13px;
+  line-height: 1.0;
+}
+
+table.dataTable thead {
+  font-size: 12px;
+  line-height: 1.0;
+}
+
+.form-control {
+height: 25px;
+padding: 8px 12px;
+font-size: 10px;
+}
+
+div.datatables {
+  font-size: 12px;
+}

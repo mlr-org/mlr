@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9001</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9002</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -287,7 +287,7 @@
     
 <p>Resampling strategies are usually used to assess the performance of a learning algorithm: The entire data set is (repeatedly) split into training sets <span class="math inline">\(D^{*b}\)</span> and test sets <span class="math inline">\(D \setminus D^{*b}\)</span>, <span class="math inline">\(b = 1,\ldots,B\)</span>. The learner is trained on each training set, predictions are made on the corresponding test set (sometimes on the training set as well) and the performance measure <span class="math inline">\(S(D^{*b}, D \setminus D^{*b})\)</span> is calculated. Then the <span class="math inline">\(B\)</span> individual performance values are aggregated, most often by calculating the mean. There exist various different resampling strategies, for example cross-validation and bootstrap, to mention just two popular approaches.</p>
 <div class="figure" style="text-align: center">
-<img src="https://raw.githubusercontent.com/pat-s/mlr/master/vignettes/tutorial/devel/pdf/img/resampling.png" alt="Resampling Figure" width="600px"><p class="caption">
+<img src="../pdf/img/resampling.png" alt="Resampling Figure" width="600px"><p class="caption">
 Resampling Figure
 </p>
 </div>
@@ -305,24 +305,24 @@ Resampling Figure
 <li>Holdout (training/test) (<code>"Holdout"</code>).</li>
 </ul>
 <p>For example if you want to use 3-fold cross-validation type:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># 3-fold cross-validation</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 3-fold cross-validation</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">rdesc</span>
 <span class="co">## Resample description: cross-validation with 3 iterations.</span>
 <span class="co">## Predict: test</span>
-<span class="co">## Stratification: FALSE</span></pre></div>
+<span class="co">## Stratification: FALSE</span></code></pre></div>
 <p>For holdout estimation use:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># Holdout estimation</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Holdout estimation</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
 <span class="va">rdesc</span>
 <span class="co">## Resample description: holdout with 0.67 split rate.</span>
 <span class="co">## Predict: test</span>
-<span class="co">## Stratification: FALSE</span></pre></div>
+<span class="co">## Stratification: FALSE</span></code></pre></div>
 <p>In order to save you some typing <code>mlr</code> contains some pre-defined resample descriptions for very common strategies like holdout (<code>hout</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>)) as well as cross-validation with different numbers of folds (e.g., <code>cv5</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) or <code>cv10</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>)).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">hout</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hout</span>
 <span class="co">## Resample description: holdout with 0.67 split rate.</span>
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
@@ -330,7 +330,7 @@ Resampling Figure
 <span class="va">cv3</span>
 <span class="co">## Resample description: cross-validation with 3 iterations.</span>
 <span class="co">## Predict: test</span>
-<span class="co">## Stratification: FALSE</span></pre></div>
+<span class="co">## Stratification: FALSE</span></code></pre></div>
 </div>
 <div id="performing-the-resampling" class="section level2">
 <h2 class="hasAnchor">
@@ -347,8 +347,8 @@ Resampling Figure
 ## 
 ## Aggregated Result: mse.test.mean=23.5385766
 ## </code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># Specify the resampling strategy (3-fold cross-validation)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Specify the resampling strategy (3-fold cross-validation)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># Calculate the performance</span>
@@ -358,19 +358,19 @@ Resampling Figure
 <span class="co">## [Resample] iter 1:    25.1371739</span>
 <span class="co">## [Resample] iter 2:    23.1279497</span>
 <span class="co">## [Resample] iter 3:    21.9152672</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Aggregated Result: mse.test.mean=23.3934636</span>
-<span class="co">## </span>
+<span class="co">##</span>
 
 <span class="va">r</span>
 <span class="co">## Resample Result</span>
 <span class="co">## Task: BostonHousing-example</span>
 <span class="co">## Learner: regr.lm</span>
 <span class="co">## Aggr perf: mse.test.mean=23.3934636</span>
-<span class="co">## Runtime: 0.0375051</span></pre></div>
+<span class="co">## Runtime: 0.0375051</span></code></pre></div>
 <p>The result <code>r</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> result. It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># Peak into r</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Peak into r</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="co">##  [1] "learner.id"     "task.id"        "task.desc"      "measures.train"</span>
 <span class="co">##  [5] "measures.test"  "aggr"           "pred"           "models"        </span>
@@ -384,13 +384,13 @@ Resampling Figure
 <span class="co">##   iter      mse</span>
 <span class="co">## 1    1 19.86306</span>
 <span class="co">## 2    2 29.48319</span>
-<span class="co">## 3    3 21.26948</span></pre></div>
+<span class="co">## 3    3 21.26948</span></code></pre></div>
 <p><code>r$measures.test</code> gives the performance on each of the 3 test data sets. <code>r$aggr</code> shows the aggregated performance value. Its name <code>"mse.test.mean"</code> indicates the performance measure, <a href="measures.html" target="_blank">mse</a>, and the method, <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), used to aggregate the 3 individual performances. <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>) is the default aggregation scheme for most performance measures and, as the name implies, takes the mean over the performances on the test data sets.</p>
 <p>Resampling in <code>mlr</code> works the same way for all types of learning problems and learners. Below is a classification example where a classification tree (rpart) (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code>) is evaluated on the <code>Sonar</code> (<code>mlbench::sonar()</code>) data set by subsampling with 5 iterations.</p>
 <p>In each subsampling iteration the data set <span class="math inline">\(D\)</span> is randomly partitioned into a training and a test set according to a given percentage, e.g., 2/3 training and 1/3 test set. If there is just one iteration, the strategy is commonly called <em>holdout</em> or <em>test sample estimation</em>.</p>
 <p>You can calculate several measures at once by passing a <code>list</code> of Measures (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>)s to <code><a href="../../reference/resample.html">resample()</a></code>. Below, the error rate (<a href="measures.html" target="_blank">mmce</a>), false positive and false negative rates (<a href="measures.html" target="_blank">fpr</a>, <a href="measures.html" target="_blank">fnr</a>), and the time it takes to train the learner (<a href="measures.html" target="_blank">timetrain</a>) are estimated by <em>subsampling</em> with 5 iterations.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="co"># Subsampling with 5 iterations and default split ratio 2/3</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Subsampling with 5 iterations and default split ratio 2/3</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Subsample"</span>, iters <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
 <span class="co"># Subsampling with 5 iterations and 4/5 training data</span>
@@ -408,30 +408,30 @@ Resampling Figure
 <span class="co">## [Resample] iter 3:    0.3333333   0.1333333   0.4444444   0.0100000</span>
 <span class="co">## [Resample] iter 4:    0.2380952   0.3913043   0.0526316   0.0280000</span>
 <span class="co">## [Resample] iter 5:    0.3095238   0.2800000   0.3529412   0.0080000</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000</span>
-<span class="co">## </span>
+<span class="co">##</span>
 
 <span class="va">r</span>
 <span class="co">## Resample Result</span>
 <span class="co">## Task: Sonar-example</span>
 <span class="co">## Learner: classif.rpart</span>
 <span class="co">## Aggr perf: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000</span>
-<span class="co">## Runtime: 0.10692</span></pre></div>
+<span class="co">## Runtime: 0.10692</span></code></pre></div>
 <p>If you want to add further measures afterwards, use <code><a href="../../reference/addRRMeasure.html">addRRMeasure()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="co"># Add balanced error rate (ber) and time used to predict</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Add balanced error rate (ber) and time used to predict</span>
 <span class="fu"><a href="../../reference/addRRMeasure.html">addRRMeasure</a></span><span class="op">(</span><span class="va">r</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">ber</span>, <span class="va">timepredict</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## Resample Result</span>
 <span class="co">## Task: Sonar-example</span>
 <span class="co">## Learner: classif.rpart</span>
 <span class="co">## Aggr perf: mmce.test.mean=0.2904762,fpr.test.mean=0.2932609,fnr.test.mean=0.2615067,timetrain.test.mean=0.0128000,ber.test.mean=0.2773838,timepredict.test.mean=0.0032000</span>
-<span class="co">## Runtime: 0.10692</span></pre></div>
+<span class="co">## Runtime: 0.10692</span></code></pre></div>
 <p>By default, <code><a href="../../reference/resample.html">resample()</a></code> prints progress messages and intermediate results. You can turn this off by setting <code>show.info = FALSE</code>, as done in the code chunk below. (If you are interested in suppressing these messages permanently have a look at the tutorial page about <a href="configureMlr.html" target="_blank">configuring mlr</a>.)</p>
 <p>In the above example, the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) was explicitly constructed. For convenience you can also specify the learner as a string and pass any learner parameters via the <code>...</code> argument of <code><a href="../../reference/resample.html">resample()</a></code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>,
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>,
   measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">timetrain</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="va">r</span>
@@ -440,7 +440,7 @@ Resampling Figure
 <span class="co">## Task: Sonar-example</span>
 <span class="co">## Learner: classif.rpart</span>
 <span class="co">## Aggr perf: mmce.test.mean=0.2428571,fpr.test.mean=0.2968173,fnr.test.mean=0.1970195,timetrain.test.mean=0.0084000</span>
-<span class="co">## Runtime: 0.0791025</span></pre></div>
+<span class="co">## Runtime: 0.0791025</span></code></pre></div>
 </div>
 <div id="accessing-resample-results" class="section level2">
 <h2 class="hasAnchor">
@@ -451,14 +451,14 @@ Resampling Figure
 <a href="#predictions" class="anchor"></a>Predictions</h3>
 <p>Per default, the <code><a href="../../reference/resample.html">resample()</a></code> result contains the predictions made during the resampling. If you do not want to keep them, e.g., in order to conserve memory, set <code>keep.pred = FALSE</code> when calling <code><a href="../../reference/resample.html">resample()</a></code>.</p>
 <p>The predictions are stored in slot <code>$pred</code> of the resampling result, which can also be accessed by function <code><a href="../../reference/getRRPredictions.html">getRRPredictions()</a></code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">r</span><span class="op">$</span><span class="va">pred</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">r</span><span class="op">$</span><span class="va">pred</span>
 <span class="co">## Resampled Prediction for:</span>
 <span class="co">## Resample description: subsampling with 5 iterations and 0.80 split rate.</span>
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time (mean): 0.00</span>
 <span class="co">##    id truth response iter  set</span>
 <span class="co">## 1  18     R        M    1 test</span>
@@ -476,7 +476,7 @@ Resampling Figure
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time (mean): 0.00</span>
 <span class="co">##    id truth response iter  set</span>
 <span class="co">## 1  18     R        M    1 test</span>
@@ -485,10 +485,10 @@ Resampling Figure
 <span class="co">## 4 121     M        R    1 test</span>
 <span class="co">## 5 165     M        R    1 test</span>
 <span class="co">## 6 111     M        M    1 test</span>
-<span class="co">## ... (#rows: 210, #cols: 5)</span></pre></div>
+<span class="co">## ... (#rows: 210, #cols: 5)</span></code></pre></div>
 <p><code>pred</code> is an object of class <code><a href="../../reference/resample.html">resample()</a></code> Prediction. Just as a <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (see the tutorial page on making <a href="predict.html" target="_blank">predictions</a> it has an element <code>$data</code> which is a <code>data.frame</code> that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s). You can use <code>as.data.frame</code> (<code><a href="../../reference/Prediction.html">Prediction()</a></code> to directly access the <code>$data</code> slot. Moreover, all getter functions for <code><a href="../../reference/Prediction.html">Prediction()</a></code> objects like <code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code> or <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code> are applicable.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##    id truth response iter  set</span>
 <span class="co">## 1  66     R        R    1 test</span>
 <span class="co">## 2 170     M        M    1 test</span>
@@ -503,12 +503,12 @@ Resampling Figure
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] R M M R R M</span>
-<span class="co">## Levels: M R</span></pre></div>
+<span class="co">## Levels: M R</span></code></pre></div>
 <p>The columns <code>iter</code> and <code>set</code> in the <code>data.frame</code> indicate the resampling iteration and the data set (<code>train</code> or <code>test</code>) for which the prediction was made.</p>
 <p>By default, predictions are made for the test sets only. If predictions for the training set are required, set <code>predict = "train"</code> (for predictions on the train set only) or <code>predict = "both"</code> (for predictions on both train and test sets) in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>. In any case, this is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and some examples are shown later on.</p>
 <p>Below, we use simple Holdout, i.e., split the data once into a training and test set, as resampling strategy and make predictions on both sets.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="co"># Make predictions on both training and test sets</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Make predictions on both training and test sets</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span>, predict <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
 
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -521,17 +521,17 @@ Resampling Figure
 
 <span class="va">r</span><span class="op">$</span><span class="va">measures.train</span>
 <span class="co">##   iter mmce</span>
-<span class="co">## 1    1 0.02</span></pre></div>
+<span class="co">## 1    1 0.02</span></code></pre></div>
 <p>(Please note that nonetheless the misclassification rate <code>r$aggr</code> is estimated on the test data only. How to calculate performance measures on the training sets is shown below.)</p>
 <p>A second function to extract predictions from resample results is <code><a href="../../reference/getRRPredictionList.html">getRRPredictionList()</a></code> which returns a <code>list</code> of predictions split by data set (train/test) and resampling iteration.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">predList</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getRRPredictionList.html">getRRPredictionList</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">predList</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getRRPredictionList.html">getRRPredictionList</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="va">predList</span>
 <span class="co">## $train</span>
 <span class="co">## $train$`1`</span>
 <span class="co">## Prediction: 100 observations</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time: 0.00</span>
 <span class="co">##      id      truth   response</span>
 <span class="co">## 96   96 versicolor versicolor</span>
@@ -541,13 +541,13 @@ Resampling Figure
 <span class="co">## 23   23     setosa     setosa</span>
 <span class="co">## 59   59 versicolor versicolor</span>
 <span class="co">## ... (#rows: 100, #cols: 3)</span>
-<span class="co">## </span>
-<span class="co">## </span>
+<span class="co">##</span>
+<span class="co">##</span>
 <span class="co">## $test</span>
 <span class="co">## $test$`1`</span>
 <span class="co">## Prediction: 50 observations</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time: 0.00</span>
 <span class="co">##      id      truth   response</span>
 <span class="co">## 92   92 versicolor versicolor</span>
@@ -556,14 +556,14 @@ Resampling Figure
 <span class="co">## 103 103  virginica  virginica</span>
 <span class="co">## 70   70 versicolor versicolor</span>
 <span class="co">## 82   82 versicolor versicolor</span>
-<span class="co">## ... (#rows: 50, #cols: 3)</span></pre></div>
+<span class="co">## ... (#rows: 50, #cols: 3)</span></code></pre></div>
 </div>
 <div id="learner-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#learner-models" class="anchor"></a>Learner models</h3>
 <p>In each resampling iteration a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) is fitted on the respective training set. By default, the resulting <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>)s are not included in the <code><a href="../../reference/resample.html">resample()</a></code> result and slot <code>$models</code> is empty. In order to keep them, set <code>models = TRUE</code> when calling <code><a href="../../reference/resample.html">resample()</a></code>, as in the following survival analysis example.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="co"># 3-fold cross-validation</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 3-fold cross-validation</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"surv.coxph"</span>, <span class="va">lung.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>, models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -581,15 +581,15 @@ Resampling Figure
 <span class="co">## [[3]]</span>
 <span class="co">## Model for learner.id=surv.coxph; learner.class=surv.coxph</span>
 <span class="co">## Trained on: task.id = lung-example; obs = 112; features = 8</span>
-<span class="co">## Hyperparameters:</span></pre></div>
+<span class="co">## Hyperparameters:</span></code></pre></div>
 </div>
 <div id="the-extract-option" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-extract-option" class="anchor"></a>The extract option</h3>
 <p>Keeping complete fitted models can be memory-intensive if these objects are large or the number of resampling iterations is high. Alternatively, you can use the <code>extract</code> argument of <code><a href="../../reference/resample.html">resample()</a></code> to retain only the information you need. To this end you need to pass a function to <code>extract</code> which is applied to each <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) object fitted in each resampling iteration.</p>
 <p>Below, we cluster the <code><a href="https://rdrr.io/r/datasets/mtcars.html">datasets::mtcars()</a></code> data using the <span class="math inline">\(k\)</span>-means algorithm with <span class="math inline">\(k = 3\)</span> and keep only the cluster centers.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="co"># 3-fold cross-validation</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 3-fold cross-validation</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># Extract the compute cluster centers</span>
@@ -624,10 +624,10 @@ Resampling Figure
 <span class="co">##       gear     carb</span>
 <span class="co">## 1 4.000000 3.800000</span>
 <span class="co">## 2 4.142857 1.571429</span>
-<span class="co">## 3 3.222222 3.333333</span></pre></div>
+<span class="co">## 3 3.222222 3.333333</span></code></pre></div>
 <p>As a second example, we extract the variable importances from fitted regression trees using function <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code>. (For more detailed information on this topic see the <a href="feature_selection.html" target="_blank">feature selection</a> page.)</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="co"># Extract the variable importance in a regression tree</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Extract the variable importance in a regression tree</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>, <span class="va">bh.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>, extract <span class="op">=</span> <span class="va">getFeatureImportance</span><span class="op">)</span>
 <span class="va">r</span><span class="op">$</span><span class="va">extract</span>
 <span class="co">## [[1]]</span>
@@ -691,10 +691,10 @@ Resampling Figure
 <span class="co">## 3 indus         4145.</span>
 <span class="co">## 4 chas             0 </span>
 <span class="co">## 5 nox           3114.</span>
-<span class="co">## 6 rm            8294.</span></pre></div>
+<span class="co">## 6 rm            8294.</span></code></pre></div>
 <p>There is also an convenience function <code><a href="../../reference/getResamplingIndices.html">getResamplingIndices()</a></code> to extract the resampling indices from the <code>ResampleResult</code> object:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="co">## $train.inds</span>
 <span class="co">## $train.inds[[1]]</span>
 <span class="co">##   [1] 366 235  79 466 361  88  16 346 218 438 444 397  55 456 327 226  38 172</span>
@@ -795,7 +795,7 @@ Resampling Figure
 <span class="co">## [109] 314 316 322 325 328 329 330 332 339 340 341 344 345 350 352 353 355 363</span>
 <span class="co">## [127] 376 377 380 383 384 387 389 391 394 406 409 410 411 414 416 418 419 421</span>
 <span class="co">## [145] 422 425 426 428 429 431 432 442 451 452 455 456 461 463 482 484 489 491</span>
-<span class="co">## [163] 499 500 501 502 503 504</span></pre></div>
+<span class="co">## [163] 499 500 501 502 503 504</span></code></pre></div>
 </div>
 </div>
 <div id="stratification-blocking-and-grouping" class="section level2">
@@ -810,8 +810,8 @@ Resampling Figure
 <h3 class="hasAnchor">
 <a href="#stratification-with-respect-to-the-target-variables" class="anchor"></a>Stratification with respect to the target variable(s)</h3>
 <p>For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. This is particularly useful in the case of imbalanced classes and small data sets. Otherwise, it may happen that observations of less frequent classes are missing in some of the training sets which can decrease the performance of the learner, or lead to model crashes. In order to conduct stratified resampling, set <code>stratify = TRUE</code> in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="co"># 3-fold cross-validation</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 3-fold cross-validation</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -820,15 +820,15 @@ Resampling Figure
 <span class="co">## Task: iris-example</span>
 <span class="co">## Learner: classif.lda</span>
 <span class="co">## Aggr perf: mmce.test.mean=0.0200000</span>
-<span class="co">## Runtime: 0.0176296</span></pre></div>
+<span class="co">## Runtime: 0.0176296</span></code></pre></div>
 <p>Stratification is also available for survival tasks. Here the stratification balances the censoring rate.</p>
 </div>
 <div id="stratification-with-respect-to-explanatory-variables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stratification-with-respect-to-explanatory-variables" class="anchor"></a>Stratification with respect to explanatory variables</h3>
 <p>Sometimes it is required to also stratify on the input data, e.g., to ensure that all subgroups are represented in all training and test sets. To stratify on the input columns, specify <code>factor</code> columns of your task data via <code>stratify.cols</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify.cols <span class="op">=</span> <span class="st">"chas"</span><span class="op">)</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify.cols <span class="op">=</span> <span class="st">"chas"</span><span class="op">)</span>
 
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>, <span class="va">bh.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">r</span>
@@ -836,14 +836,14 @@ Resampling Figure
 <span class="co">## Task: BostonHousing-example</span>
 <span class="co">## Learner: regr.rpart</span>
 <span class="co">## Aggr perf: mse.test.mean=23.8843587</span>
-<span class="co">## Runtime: 0.0268815</span></pre></div>
+<span class="co">## Runtime: 0.0268815</span></code></pre></div>
 </div>
 <div id="blocking-cv-with-flexible-predefined-indices" class="section level3">
 <h3 class="hasAnchor">
 <a href="#blocking-cv-with-flexible-predefined-indices" class="anchor"></a>Blocking: CV with flexible predefined indices</h3>
 <p>If some observations “belong together” and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a <code>blocking</code> factor when creating the <a href="task.html" target="_blank">task</a>.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="co"># 5 blocks containing 30 observations each</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 5 blocks containing 30 observations each</span>
 <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span>, blocking <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, each <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">task</span>
 <span class="co">## Supervised task: iris</span>
@@ -860,10 +860,10 @@ Resampling Figure
 <span class="co">## Classes: 3</span>
 <span class="co">##     setosa versicolor  virginica </span>
 <span class="co">##         50         50         50 </span>
-<span class="co">## Positive class: NA</span></pre></div>
+<span class="co">## Positive class: NA</span></code></pre></div>
 <p>When performing a simple “CV” resampling and inspecting the result, we see that the training indices in fold 1 correspond to the specified grouping set in <code>blocking</code> in the task. To initiate this method, we need to set <code>blocking.cv = TRUE</code> when creating the resample description object.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, blocking.cv <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, blocking.cv <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">task</span>, <span class="va">rdesc</span><span class="op">)</span>
 <span class="co">## Resampling: cross-validation</span>
 <span class="co">## Measures:             mmce</span>
@@ -881,10 +881,10 @@ Resampling Figure
 <span class="co">##  [55]  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 101 102</span>
 <span class="co">##  [73] 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120</span>
 <span class="co">##  [91] 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138</span>
-<span class="co">## [109] 139 140 141 142 143 144 145 146 147 148 149 150</span></pre></div>
+<span class="co">## [109] 139 140 141 142 143 144 145 146 147 148 149 150</span></code></pre></div>
 <p>However, please note the effects of this method: The created folds will not have the same size! Here, Fold 1 has a 120/30 split while the other two folds have a 90/60 split.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">pred</span><span class="op">$</span><span class="va">instance</span><span class="op">$</span><span class="va">train.inds</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">pred</span><span class="op">$</span><span class="va">instance</span><span class="op">$</span><span class="va">train.inds</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## [1] 120</span>
 <span class="co">## </span>
@@ -892,7 +892,7 @@ Resampling Figure
 <span class="co">## [1] 90</span>
 <span class="co">## </span>
 <span class="co">## [[3]]</span>
-<span class="co">## [1] 90</span></pre></div>
+<span class="co">## [1] 90</span></code></pre></div>
 <p>This is caused by the fact that we supplied five groups that must belong together but only used a three fold resampling strategy here.</p>
 </div>
 <div id="grouping-cv-with-fixed-predefined-indices" class="section level3">
@@ -900,8 +900,8 @@ Resampling Figure
 <a href="#grouping-cv-with-fixed-predefined-indices" class="anchor"></a>Grouping: CV with fixed predefined indices</h3>
 <p>There is a second way of using predefined indices in resampling in <code>mlr</code>: Constructing the folds based on the supplied indices in <code>blocking</code>. We refer to this method here as “grouping” to distinguish it from “blocking”. This method is more restrictive in the way that it will always use the number of levels supplied via <code>blocking</code> as the number of folds. To use this method, we need to set <code>fixed = TRUE</code> instead of <code>blocking.cv</code> when creating the resampling description object.</p>
 <p>We can leave out the <code>iters</code> argument, as it will be set internally to the number of supplied factor levels.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">task</span>, <span class="va">rdesc</span><span class="op">)</span>
 <span class="co">## Warning in makeResampleInstance(resampling, task = task): 'Blocking' features in</span>
 <span class="co">## the task were detected but 'blocking.cv' was not set in 'resample()'.</span>
@@ -927,11 +927,11 @@ Resampling Figure
 <span class="co">##  [55]  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 101 102</span>
 <span class="co">##  [73] 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120</span>
 <span class="co">##  [91] 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138</span>
-<span class="co">## [109] 139 140 141 142 143 144 145 146 147 148 149 150</span></pre></div>
+<span class="co">## [109] 139 140 141 142 143 144 145 146 147 148 149 150</span></code></pre></div>
 <p>You can see that we automatically created five folds in which the test set always corresponds to one factor level.</p>
 <p>Doing it this way also means that we cannot do repeated CV because there is no way to create multiple shuffled folds of this fixed arrangement.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">pred</span><span class="op">$</span><span class="va">instance</span><span class="op">$</span><span class="va">train.inds</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">pred</span><span class="op">$</span><span class="va">instance</span><span class="op">$</span><span class="va">train.inds</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## [1] 120</span>
 <span class="co">## </span>
@@ -945,11 +945,11 @@ Resampling Figure
 <span class="co">## [1] 120</span>
 <span class="co">## </span>
 <span class="co">## [[5]]</span>
-<span class="co">## [1] 120</span></pre></div>
+<span class="co">## [1] 120</span></code></pre></div>
 <p>However, this method can also be used in nested resampling settings (e.g. in hyperparameter tuning). In the inner level, the factor levels are honored and the function simply creates one fold less than in the outer level.</p>
 <p>Please note that the <code>iters</code> argument has no effect in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code> if <code>fixed = TRUE</code>. The number of folds will be automatically set based on the supplied number of factor levels via <code>blocking</code>. In the inner level, the number of folds will simply be one less than in the outer level.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="co"># test fixed in nested resampling</span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># test fixed in nested resampling</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"nu"</span>, lower <span class="op">=</span> <span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span>
@@ -959,11 +959,11 @@ Resampling Figure
   control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">tune_wrapper</span>, <span class="va">task</span>, <span class="va">outer</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
-  extract <span class="op">=</span> <span class="va">getTuneResult</span><span class="op">)</span></pre></div>
+  extract <span class="op">=</span> <span class="va">getTuneResult</span><span class="op">)</span></code></pre></div>
 <p>To check on the inner resampling indices, you can call <code><a href="../../reference/getResamplingIndices.html">getResamplingIndices(inner = TRUE)</a></code>. You can see that for every outer fold (List of 5), four inner folds were created that respect the grouping supplied via the <code>blocking</code> argument.</p>
 <p>Of course you can also use a normal random sampling “CV” description in the inner level by just setting <code>fixed = FALSE</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span><span class="op">(</span><span class="va">p</span>, inner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getResamplingIndices.html">getResamplingIndices</a></span><span class="op">(</span><span class="va">p</span>, inner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## List of 5</span>
 <span class="co">##  $ :List of 2</span>
 <span class="co">##   ..$ train.inds:List of 4</span>
@@ -1019,15 +1019,15 @@ Resampling Figure
 <span class="co">##   .. ..$ : int [1:30] 35 46 37 54 31 53 51 58 48 33 ...</span>
 <span class="co">##   .. ..$ : int [1:30] 74 68 78 88 67 73 62 85 86 89 ...</span>
 <span class="co">##   .. ..$ : int [1:30] 138 146 149 126 123 143 124 139 136 150 ...</span>
-<span class="co">##   .. ..$ : int [1:30] 23 22 13 18 10 16 1 30 11 15 ...</span></pre></div>
+<span class="co">##   .. ..$ : int [1:30] 23 22 13 18 10 16 1 30 11 15 ...</span></code></pre></div>
 </div>
 </div>
 <div id="resample-descriptions-and-resample-instances" class="section level2">
 <h2 class="hasAnchor">
 <a href="#resample-descriptions-and-resample-instances" class="anchor"></a>Resample descriptions and resample instances</h2>
 <p>As already mentioned, you can specify a resampling strategy using function <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">rdesc</span>
 <span class="co">## Resample description: cross-validation with 3 iterations.</span>
 <span class="co">## Predict: test</span>
@@ -1053,11 +1053,11 @@ Resampling Figure
 <span class="co">##  $ stratify.cols: chr "chas"</span>
 <span class="co">##  $ fixed        : logi FALSE</span>
 <span class="co">##  $ blocking.cv  : logi FALSE</span>
-<span class="co">##  - attr(*, "class")= chr [1:2] "SubsampleDesc" "ResampleDesc"</span></pre></div>
+<span class="co">##  - attr(*, "class")= chr [1:2] "SubsampleDesc" "ResampleDesc"</span></code></pre></div>
 <p>The result <code>rdesc</code> inherits from class <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) (short for resample description) and, in principle, contains all necessary information about the resampling strategy including the number of iterations, the proportion of training and test sets, stratification variables, etc.</p>
 <p>Given either the size of the data set at hand or the <code><a href="../../reference/Task.html">Task()</a></code>, function <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code> draws the training and test sets according to the <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>).</p>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="co"># Create a resample instance based an a task</span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a resample instance based an a task</span>
 <span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="va">rdesc</span>, <span class="va">iris.task</span><span class="op">)</span>
 <span class="va">rin</span>
 <span class="co">## Resample instance for 150 cases.</span>
@@ -1118,15 +1118,15 @@ Resampling Figure
 <span class="co">##  [37] 113  68 149 102 115  74 129 147 130  97 106  76  66  67  50  61   6  72</span>
 <span class="co">##  [55]  42  54  45 111  52 108  95 120 101  63  31  43 141  47  51  89 142  23</span>
 <span class="co">##  [73] 136 148 116 122  10  13  26 126 123   7  60 118 140 139  18  93  71   2</span>
-<span class="co">##  [91]  84  15  35   3 109  79  87 124 114  57</span></pre></div>
+<span class="co">##  [91]  84  15  35   3 109  79  87 124 114  57</span></code></pre></div>
 <p>The result <code>rin</code> inherits from class <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) and contains <code>list</code>s of index vectors for the train and test sets.</p>
 <p>If a <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) is passed to <code><a href="../../reference/resample.html">resample()</a></code>, it is instantiated internally. Naturally, it is also possible to pass a <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) directly.</p>
 <p>While the separation between resample descriptions, resample instances, and the <code><a href="../../reference/resample.html">resample()</a></code> function itself seems overly complicated, it has several advantages:</p>
 <ul>
 <li>Resample instances readily allow for paired experiments, that is comparing the performance of several learners on exactly the same training and test sets. This is particularly useful if you want to add another method to a comparison experiment you already did. Moreover, you can store the resample instance along with your data in order to be able to reproduce your results later on.</li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="va">rdesc</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
 
 <span class="co"># Calculate the performance of two learners based on the same resample instance</span>
@@ -1138,18 +1138,18 @@ Resampling Figure
 
 <span class="va">r.rpart</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean </span>
-<span class="co">##           0.06</span></pre></div>
+<span class="co">##           0.06</span></code></pre></div>
 <ul>
 <li>In order to add further resampling methods you can simply derive from the <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) and <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) classes, but you do neither have to touch <code><a href="../../reference/resample.html">resample()</a></code> nor any further methods that use the resampling strategy.</li>
 </ul>
 <p>Usually, when calling <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code> the train and test index sets are drawn randomly. Mainly for <em>holdout</em> (<em>test sample</em>) <em>estimation</em> you might want full control about the training and tests set and specify them manually. This can be done using function <code><a href="../../reference/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance()</a></code>.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></span><span class="op">(</span>train.inds <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, test.inds <span class="op">=</span> <span class="fl">101</span><span class="op">:</span><span class="fl">150</span>, size <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></span><span class="op">(</span>train.inds <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, test.inds <span class="op">=</span> <span class="fl">101</span><span class="op">:</span><span class="fl">150</span>, size <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>
 <span class="va">rin</span>
 <span class="co">## Resample instance for 150 cases.</span>
 <span class="co">## Resample description: holdout with 0.67 split rate.</span>
 <span class="co">## Predict: test</span>
-<span class="co">## Stratification: FALSE</span></pre></div>
+<span class="co">## Stratification: FALSE</span></code></pre></div>
 </div>
 <div id="aggregating-performance-values" class="section level2">
 <h2 class="hasAnchor">
@@ -1157,13 +1157,13 @@ Resampling Figure
 <p>In each resampling iteration <span class="math inline">\(b = 1,\ldots,B\)</span> we get performance values <span class="math inline">\(S(D^{*b}, D \setminus D^{*b})\)</span> (for each measure we wish to calculate), which are then aggregated to an overall performance.</p>
 <p>For the great majority of common resampling strategies (like holdout, cross-validation, subsampling) performance values are calculated on the test data sets only and for most measures aggregated by taking the mean (<code>test.mean</code>(<code><a href="../../reference/aggregations.html">aggregations()</a></code>)).</p>
 <p>Each performance <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) in <code>mlr</code> has a corresponding default aggregation method which is stored in slot <code>$aggr</code>. The default aggregation for most measures is <code>test.mean</code>(<code><a href="../../reference/aggregations.html">aggregations()</a></code>). One exception is the root mean square error (<a href="measures.html" target="_blank">rmse</a>).</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="co"># Mean misclassification error</span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Mean misclassification error</span>
 <span class="va">mmce</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## Aggregation function: test.mean</span>
 
 <span class="va">mmce</span><span class="op">$</span><span class="va">aggr</span><span class="op">$</span><span class="va">fun</span>
-<span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span>
+<span class="co">## function (task, perf.test, perf.train, measure, group, pred)</span>
 <span class="co">## mean(perf.test)</span>
 <span class="co">## &lt;bytecode: 0xc8eade8&gt;</span>
 <span class="co">## &lt;environment: namespace:mlr&gt;</span>
@@ -1173,10 +1173,10 @@ Resampling Figure
 <span class="co">## Aggregation function: test.rmse</span>
 
 <span class="va">rmse</span><span class="op">$</span><span class="va">aggr</span><span class="op">$</span><span class="va">fun</span>
-<span class="co">## function (task, perf.test, perf.train, measure, group, pred) </span>
+<span class="co">## function (task, perf.test, perf.train, measure, group, pred)</span>
 <span class="co">## sqrt(mean(perf.test^2))</span>
 <span class="co">## &lt;bytecode: 0x23ad72d8&gt;</span>
-<span class="co">## &lt;environment: namespace:mlr&gt;</span></pre></div>
+<span class="co">## &lt;environment: namespace:mlr&gt;</span></code></pre></div>
 <p>You can change the aggregation method of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. All available aggregation schemes are listed on the <code><a href="../../reference/aggregations.html">aggregations()</a></code> documentation page.</p>
 <div id="example-one-measure-with-different-aggregations" class="section level4">
 <h4 class="hasAnchor">
@@ -1190,8 +1190,8 @@ Resampling Figure
 ## 
 ## Aggregated Result: mse.test.mean=24.8338993,mse.test.median=25.3960953,mse.test.min=19.5859439,mse.test.max=29.5196588
 ## </code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="va">mseTestMedian</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mse</span>, <span class="va">test.median</span><span class="op">)</span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mseTestMedian</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mse</span>, <span class="va">test.median</span><span class="op">)</span>
 <span class="va">mseTestMin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mse</span>, <span class="va">test.min</span><span class="op">)</span>
 <span class="va">mseTestMax</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mse</span>, <span class="va">test.max</span><span class="op">)</span>
 
@@ -1202,7 +1202,7 @@ Resampling Figure
 <span class="co">## Minimize: TRUE</span>
 <span class="co">## Best: 0; Worst: Inf</span>
 <span class="co">## Aggregated by: test.median</span>
-<span class="co">## Arguments: </span>
+<span class="co">## Arguments:</span>
 <span class="co">## Note: Defined as: mean((response - truth)^2)</span>
 
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -1212,9 +1212,9 @@ Resampling Figure
 <span class="co">## [Resample] iter 1:    24.078202624.078202624.078202624.0782026</span>
 <span class="co">## [Resample] iter 2:    29.498307729.498307729.498307729.4983077</span>
 <span class="co">## [Resample] iter 3:    18.689471818.689471818.689471818.6894718</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Aggregated Result: mse.test.mean=24.0886607,mse.test.median=24.0782026,mse.test.min=18.6894718,mse.test.max=29.4983077</span>
-<span class="co">## </span>
+<span class="co">##</span>
 
 <span class="va">r</span>
 <span class="co">## Resample Result</span>
@@ -1224,15 +1224,15 @@ Resampling Figure
 <span class="co">## Runtime: 0.0288048</span>
 
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
-<span class="co">##   mse.test.mean mse.test.median    mse.test.min    mse.test.max </span>
-<span class="co">##        24.08866        24.07820        18.68947        29.49831</span></pre></div>
+<span class="co">##   mse.test.mean mse.test.median    mse.test.min    mse.test.max</span>
+<span class="co">##        24.08866        24.07820        18.68947        29.49831</span></code></pre></div>
 </div>
 <div id="example-calculating-the-training-error" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-calculating-the-training-error" class="anchor"></a>Example: Calculating the training error</h3>
 <p>Below we calculate the mean misclassification error (<a href="measures.html" target="_blank">mmce</a>) on the training and the test data sets. Note that we have to set <code>predict = "both"</code> when calling <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code> in order to get predictions on both training and test sets.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="va">mmceTrainMean</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">train.mean</span><span class="op">)</span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mmceTrainMean</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">train.mean</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, predict <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">mmceTrainMean</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Resampling: cross-validation</span>
@@ -1252,7 +1252,7 @@ Resampling Figure
 
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">##  mmce.test.mean mmce.train.mean </span>
-<span class="co">##      0.06000000      0.03333333</span></pre></div>
+<span class="co">##      0.06000000      0.03333333</span></code></pre></div>
 </div>
 <div id="example-bootstrap" class="section level3">
 <h3 class="hasAnchor">
@@ -1264,8 +1264,8 @@ Resampling Figure
                      |resampling_nested_resampling_figure|
 )-->
 <p>The <em>b632</em> and <em>b632+</em> variants calculate a convex combination of the training performance and the out-of-bag bootstrap performance and thus require predictions on the training sets and an appropriate aggregation strategy.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="co"># Use bootstrap as resampling strategy and predict on both train and test sets</span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Use bootstrap as resampling strategy and predict on both train and test sets</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Bootstrap"</span>, predict <span class="op">=</span> <span class="st">"both"</span>, iters <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 
 <span class="co"># Set aggregation schemes for b632 and b632+ bootstrap</span>
@@ -1296,7 +1296,7 @@ Resampling Figure
 <span class="co"># Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap</span>
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean      mmce.b632  mmce.b632plus </span>
-<span class="co">##     0.05059931     0.04228276     0.04303127</span></pre></div>
+<span class="co">##     0.05059931     0.04228276     0.04303127</span></code></pre></div>
 </div>
 </div>
 <div id="convenience-functions" class="section level2">
@@ -1319,16 +1319,16 @@ Resampling Figure
 ## 
 ## Aggregated Result: mse.b632plus=24.5409802,mae.b632plus=3.5372475
 ## </code></pre>
-<div class="sourceCode" id="cb37"><pre class="downlit">
-<span class="fu"><a href="../../reference/resample.html">crossval</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, iters <span class="op">=</span> <span class="fl">3</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/resample.html">crossval</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, iters <span class="op">=</span> <span class="fl">3</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Resampling: cross-validation</span>
 <span class="co">## Measures:             mmce      ber</span>
 <span class="co">## [Resample] iter 1:    0.0200000 0.0238095</span>
 <span class="co">## [Resample] iter 2:    0.0400000 0.0370370</span>
 <span class="co">## [Resample] iter 3:    0.0000000 0.0000000</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0202822</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Resample Result</span>
 <span class="co">## Task: iris-example</span>
 <span class="co">## Learner: classif.lda</span>
@@ -1341,14 +1341,14 @@ Resampling Figure
 <span class="co">## [Resample] iter 1:    24.6425511  3.4107320   16.3415466  3.0123263</span>
 <span class="co">## [Resample] iter 2:    17.0963191  2.9809210   29.6056968  3.7131236</span>
 <span class="co">## [Resample] iter 3:    23.1440608  3.5079975   24.4183753  3.3467443</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Aggregated Result: mse.b632plus=22.9359054,mae.b632plus=3.3459751</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Resample Result</span>
 <span class="co">## Task: BostonHousing-example</span>
 <span class="co">## Learner: regr.lm</span>
 <span class="co">## Aggr perf: mse.b632plus=22.9359054,mae.b632plus=3.3459751</span>
-<span class="co">## Runtime: 0.0419419</span></pre></div>
+<span class="co">## Runtime: 0.0419419</span></code></pre></div>
 </div>
   </div>
 

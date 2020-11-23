@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9001</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0.9002</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -291,20 +291,20 @@
 <h2 class="hasAnchor">
 <a href="#plotting-the-learning-curve" class="anchor"></a>Plotting the learning curve</h2>
 <p>The <code>mlr</code> function <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> can generate the data for <em>learning curves</em> for <a href="integrated_learners.html" target="_blank">multiple learners</a> and multiple <a href="measures.html" target="_blank">performance measures</a> at once. With <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code> the result of <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> can be plotted using <code>ggplot2</code>. <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code> has an argument <code>facet</code> which can be either <code>"measure"</code> or <code>"learner"</code>. By default <code>facet = "measure"</code> and facetted subplots are created for each measure input to <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code>. If <code>facet = "measure"</code> learners are mapped to color, and vice versa.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span><span class="op">(</span>
   learners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="st">"classif.knn"</span><span class="op">)</span>,
   task <span class="op">=</span> <span class="va">sonar.task</span>,
   percs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,
   measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fp</span>, <span class="va">tn</span>, <span class="va">fn</span><span class="op">)</span>,
   resampling <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></code></pre></div>
 <p><img src="learning_curve_files/figure-html/LearningCurveTPFP-1-1.png" width="700"></p>
 <p>What happens in <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code> is the following: Each learner will be internally wrapped in a <code>DownsampleWrapper</code> (<code><a href="../../reference/makeDownsampleWrapper.html">makeDownsampleWrapper()</a></code>). To measure the performance at the first step of <code>percs</code>, say <code>0.1</code>, first the data will be split into a <em>training</em> and a <em>test set</em> according to the given <em>resampling strategy</em>. Then a random sample containing 10% of the observations of the <em>training set</em> will be drawn and used to train the learner. The performance will be measured on the <em>complete test set</em>. These steps will be repeated as defined by the given <em>resampling method</em> and for each value of <code>percs</code>.</p>
 <p>In the first example we simply passed a vector of learner names to <code><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData()</a></code>. As usual, you can also create the learners beforehand and provide a <code>list</code> of Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects, or even pass a mixed <code>list</code> of Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects and strings. Make sure that all learners have unique <code>id</code>s.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"classif.ksvm"</span>, id <span class="op">=</span> <span class="st">"ksvm1"</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, C <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"classif.ksvm"</span>, id <span class="op">=</span> <span class="st">"ksvm2"</span>, sigma <span class="op">=</span> <span class="fl">0.1</span>, C <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
   <span class="st">"classif.randomForest"</span>
@@ -313,16 +313,16 @@
 <span class="va">lc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span><span class="op">(</span>learners <span class="op">=</span> <span class="va">lrns</span>, task <span class="op">=</span> <span class="va">sonar.task</span>,
   percs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, measures <span class="op">=</span> <span class="va">acc</span>,
   resampling <span class="op">=</span> <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span><span class="op">(</span><span class="va">lc</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span><span class="op">(</span><span class="va">lc</span><span class="op">)</span></code></pre></div>
 <p><img src="learning_curve_files/figure-html/LearningCurveACCx-1-1.png" width="700"></p>
 <p>We can display performance on the train set as well as the test set:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">rin2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">5</span>, predict <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rin2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">5</span>, predict <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
 <span class="va">lc2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateLearningCurveData.html">generateLearningCurveData</a></span><span class="op">(</span>learners <span class="op">=</span> <span class="va">lrns</span>, task <span class="op">=</span> <span class="va">sonar.task</span>,
   percs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,
   measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">train.mean</span><span class="op">)</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rin2</span>,
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span><span class="op">(</span><span class="va">lc2</span>, facet <span class="op">=</span> <span class="st">"learner"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../../reference/plotLearningCurve.html">plotLearningCurve</a></span><span class="op">(</span><span class="va">lc2</span>, facet <span class="op">=</span> <span class="st">"learner"</span><span class="op">)</span></code></pre></div>
 <p><img src="learning_curve_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
   </div>
