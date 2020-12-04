@@ -1,5 +1,7 @@
 
 test_that("fgam works for classifcation", {
+  # errors on R 4.1
+  skip_if(sessionInfo()$R.version$status == "Under development (unstable)")
   requirePackagesOrSkip("refund")
   dd = getTaskData(gunpoint.task, functionals.as = "matrix", target.extra = TRUE)
   matdd = list()
