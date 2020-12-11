@@ -1,4 +1,5 @@
 on:
+  workflow_dispatch:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron: "0 4 * * *"
@@ -22,7 +23,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@master
         with:
           persist-credentials: false
 
@@ -33,7 +34,7 @@ jobs:
 
       - name: "[Stage] Dependencies"
         run: |
-            sudo apt install libcurl4-openssl-dev libsodium-dev libharfbuzz-dev libfribidi-dev
+            sudo apt install libcurl4-openssl-dev libsodium-dev libharfbuzz-dev libfribidi-dev libgit2-dev
             Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes', type = 'source')"
             Rscript -e "remotes::install_github('ropensci/tic', dependencies = TRUE)"
 
@@ -42,7 +43,7 @@ jobs:
             Rscript -e "tic::update_yml()"
 
       - name: "[Stage] Create Pull Request"
-        uses: peter-evans/create-pull-request@v3.5.0
+        uses: peter-evans/create-pull-request@master
         with:
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           token: ${{ secrets.TIC_UPDATE }}
