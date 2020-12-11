@@ -1,5 +1,5 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-11-14
+## revision date: 2020-12-11
 on:
   workflow_dispatch:
   push:
@@ -28,20 +28,20 @@ jobs:
           - { os: ubuntu-latest, r: "release" }
 
     env:
-      # [Custom env var] fake virtual display for rgl package
-      DISPLAY: ":99"
-      # [Custom env var] setting some ccache options - 4
-      CCACHE_SLOPPINESS: include_file_ctime
-      # [Custom env var] setting some ccache options - 3
-      CCACHE_NOHASHDIR: true
-      # [Custom env var] setting some ccache options - 2
-      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
-      # [Custom env var] setting some ccache options - 1
-      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
-      # [Custom env] Account for udunits2 linking
-      UDUNITS2_LIBS: /usr/local/lib
       # [Custom env] Set max dll number higher
       R_MAX_NUM_DLLS: 999
+      # [Custom env] Account for udunits2 linking
+      UDUNITS2_LIBS: /usr/local/lib
+      # [Custom env var] setting some ccache options - 1
+      CCACHE_BASEDIR: ${{ GITHUB.WORKSPACE }}
+      # [Custom env var] setting some ccache options - 2
+      CCACHE_DIR: ${{ GITHUB.WORKSPACE }}/.ccache
+      # [Custom env var] setting some ccache options - 3
+      CCACHE_NOHASHDIR: true
+      # [Custom env var] setting some ccache options - 4
+      CCACHE_SLOPPINESS: include_file_ctime
+      # [Custom env var] fake virtual display for rgl package
+      DISPLAY: ":99"
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
@@ -132,9 +132,13 @@ jobs:
           R CMD javareconf
           Rscript -e "install.packages('rJava', type = 'source')"
 
-      - name: "[Stage] [Linux] Install curl"
+      - name: "[Stage] [Linux] Install curl and libgit2"
         if: runner.os == 'Linux'
-        run: sudo apt install libcurl4-openssl-dev
+        run: sudo apt install libcurl4-openssl-dev libgit2-dev
+
+      - name: "[Stage] [macOS] Install libgit2"
+        if: runner.os == 'macOS'
+        run: brew install libgit2
 
       - name: "[Stage] [macOS] Install system libs for pkgdown"
         if: runner.os == 'macOS' && matrix.config.pkgdown != ''
