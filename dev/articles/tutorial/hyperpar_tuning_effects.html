@@ -444,7 +444,7 @@
 <p>In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.</p>
 <p>In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. We specify the x-axis with the <code>x</code> argument and the y-axis with the <code>y</code> argument. If the <code>plot.type</code> argument is not specified, <code>mlr</code> will attempt to plot a scatterplot by default. Since <code><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> returns a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> object, we can easily customize it to our liking!</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://keii.ue.wroc.pl/clusterSim">"clusterSim"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://keii.ue.wroc.pl/clusterSim/">"clusterSim"</a></span><span class="op">)</span>
 
 <span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
   <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"centers"</span>, values <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
