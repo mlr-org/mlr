@@ -6,13 +6,13 @@ Machine learning in R.
 
 <!-- badges: start -->
 
-[![tic](https://github.com/mlr-org/mlr/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr/actions)
+[![tic](https://github.com/mlr-org/mlr/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)
 [![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 [![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://www.tidyverse.org/lifecycle/#retired)
-[![codecov](https://codecov.io/gh/mlr-org/mlr/branch/master/graph/badge.svg)](https://codecov.io/gh/mlr-org/mlr)
+[![codecov](https://codecov.io/gh/mlr-org/mlr/branch/main/graph/badge.svg)](https://codecov.io/gh/mlr-org/mlr)
 
 <!-- badges: end -->
 

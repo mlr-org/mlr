@@ -57,7 +57,7 @@ Their superclasses are `RLearner()` and finally `Learner` (`makeLearner()`).
 For all these (sub)classes there exist constructor functions `makeRLearner` (`RLearner()`), `makeRLearnerClassif` (`RLearner()`), `makeRLearneRegr` (`RLearner()`) etc. that are called internally by `makeLearner()`.
 
 A short side remark:
-As you might have noticed there does not exist a special learner class for [cost-sensitive classification (costsens)](cost_sensitive_classif.html){target="_blank"} with example-specific costs. 
+As you might have noticed there does not exist a special learner class for [cost-sensitive classification (costsens)](cost_sensitive_classif.html){target="_blank"} with example-specific costs.
 This type of learning task is currently exclusively handled through [wrappers](wrapper.html){target="_blank"} like `makeCostSensWeightedPairsWrapper()`.
 
 In the following we show how to integrate learners for the five types of learning tasks mentioned above.
@@ -73,35 +73,35 @@ package `MASS` has been integrated into the classification learner ``classif.lda
 
 ## Definition of the learner
 
-The minimal information required to define a learner is the `mlr` name of the learner, its package, the parameter set, and the set of properties of your learner. 
+The minimal information required to define a learner is the `mlr` name of the learner, its package, the parameter set, and the set of properties of your learner.
 In addition, you may provide a human-readable name, a short name and a note with information relevant to users of the learner.
 
 First, name your learner. According to the naming conventions above the name starts with ``classif.`` and we choose ``classif.lda``.
 
-Second, we need to define the parameters of the learner. 
-These are any options that can be set when running it to change how it learns, how input is interpreted, how and what output is generated, and so on. 
+Second, we need to define the parameters of the learner.
+These are any options that can be set when running it to change how it learns, how input is interpreted, how and what output is generated, and so on.
 `mlr` provides a number of functions to define parameters, a complete list can be found in the documentation of `LearnerParam` (`ParamHelpers::LearnerParam()`) of the `ParamHelpers` package.
 
-In our example, we have discrete and numeric parameters, so we use `makeDiscreteLearnerParam` (`ParamHelpers::LearnerParam()`) and `makeNumericLearnerParam` (`ParamHelpers::LearnerParam()`) to incorporate the complete description of the parameters. 
-We include all possible values for discrete parameters and lower and upper bounds for numeric parameters. 
+In our example, we have discrete and numeric parameters, so we use `makeDiscreteLearnerParam` (`ParamHelpers::LearnerParam()`) and `makeNumericLearnerParam` (`ParamHelpers::LearnerParam()`) to incorporate the complete description of the parameters.
+We include all possible values for discrete parameters and lower and upper bounds for numeric parameters.
 Strictly speaking it is not necessary to provide bounds for all parameters and if this information is not available they can be estimated, but providing accurate and specific information here makes it possible to tune the learner much better (see the section on [tuning](tune.html){target="_blank"}).
 
-Next, we add information on the properties of the learner (see also the section on [learners](learner.html){target="_blank"}). 
-Which types of features are supported (numerics, factors)? 
-Are case weights supported? 
-Are class weights supported? 
+Next, we add information on the properties of the learner (see also the section on [learners](learner.html){target="_blank"}).
+Which types of features are supported (numerics, factors)?
+Are case weights supported?
+Are class weights supported?
 Can the method deal with missing values in the features and deal with NA's in a meaningful way (not ``na.omit``)?
-Are one-class, two-class, multi-class problems supported? 
+Are one-class, two-class, multi-class problems supported?
 Can the learner predict posterior probabilities?
 
 If the learner supports class weights the name of the relevant learner parameter can be specified via argument `class.weights.param`.
 
-Sometimes parameters allow certain values that don't "fit" the formal parameter types. 
-Often, these are also the default values. 
+Sometimes parameters allow certain values that don't "fit" the formal parameter types.
+Often, these are also the default values.
 For example:
 A numeric parameter that accepts values as `NA`, `NULL`, `"auto"`, and so on.
-For these there is the option `special.vals`, which allows to list these extra values as feasible. 
-An example is the `missing` argument in `xgboost`. 
+For these there is the option `special.vals`, which allows to list these extra values as feasible.
+An example is the `missing` argument in `xgboost`.
 It accepts numeric values (that's why it's set as a numeric parameter) and `NULL` but the default is `NA`.
 
 ```{r, eval = FALSE}
@@ -112,9 +112,9 @@ makeNumericLearnerParam(id = "missing", default = NA, tunable = FALSE, when = "b
 If a parameter depends on another one, the `requires` attribute is added as an argument.
 Dependent parameters with a `requires` field must use `quote()` and not `expression()` to define it.
 
-Below is the complete code for the definition of the LDA learner. 
-It has one discrete parameter, ``method``, and two continuous ones, ``nu`` and ``tol``. 
-It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables. 
+Below is the complete code for the definition of the LDA learner.
+It has one discrete parameter, ``method``, and two continuous ones, ``nu`` and ``tol``.
+It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables.
 It can predict posterior probabilities.
 
 ```{r, include=FALSE, purl= FALSE}
@@ -131,12 +131,12 @@ makeRLearner.classif.lda = function() {
     cl = "classif.lda",
     package = "MASS",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "method", default = "moment", 
+      makeDiscreteLearnerParam(id = "method", default = "moment",
         values = c("moment", "mle", "mve", "t")),
-      makeNumericLearnerParam(id = "nu", lower = 2, 
+      makeNumericLearnerParam(id = "nu", lower = 2,
         requires = quote(method == "t")),
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0),
-      makeDiscreteLearnerParam(id = "predict.method", 
+      makeDiscreteLearnerParam(id = "predict.method",
         values = c("plug-in", "predictive", "debiased"),
         default = "plug-in", when = "predict"),
       makeLogicalLearnerParam(id = "CV", default = FALSE, tunable = FALSE)
@@ -151,21 +151,21 @@ makeRLearner.classif.lda = function() {
 
 ## Creating the training function of the learner
 
-Once the learner has been defined, we need to tell `mlr` how to call it to train a model. 
-The name of the function has to start with ``trainLearner.``, followed by the `mlr` name of the learner as defined above (``classif.lda`` here). 
+Once the learner has been defined, we need to tell `mlr` how to call it to train a model.
+The name of the function has to start with ``trainLearner.``, followed by the `mlr` name of the learner as defined above (``classif.lda`` here).
 The prototype of the function looks as follows.
 
 ```{r, eval=FALSE}
 function(.learner, .task, .subset, .weights = NULL, ...) { }
 ```
 
-This function must fit a model on the data of the task ``.task`` with regard to the subset defined in the integer vector ``.subset`` and the parameters passed in the ``...`` arguments. 
-Usually, the data should be extracted from the task using `getTaskData()`. 
-This will take care of any subsetting as well. 
-It must return the fitted model. 
+This function must fit a model on the data of the task ``.task`` with regard to the subset defined in the integer vector ``.subset`` and the parameters passed in the ``...`` arguments.
+Usually, the data should be extracted from the task using `getTaskData()`.
+This will take care of any subsetting as well.
+It must return the fitted model.
 `mlr` assumes no special data type for the return value -- it will be passed to the predict function we are going to define below, so any special code the learner may need can be encapsulated there.
 
-For our example, the definition of the function looks like this. 
+For our example, the definition of the function looks like this.
 In addition to the data of the task, we also need the formula that describes what to predict.
 We use the function `getTaskFormula()` to extract this from the task.
 
@@ -178,8 +178,8 @@ trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  
 
 ## Creating the prediction method
 
-Finally, the prediction function needs to be defined. 
-The name of this function starts with ``predictLearner.``, followed again by the `mlr` name of the learner. 
+Finally, the prediction function needs to be defined.
+The name of this function starts with ``predictLearner.``, followed again by the `mlr` name of the learner.
 The prototype of the function is as follows.
 
 ```{r, eval=FALSE}
@@ -189,10 +189,10 @@ function(.learner, .model, .newdata, ...) { }
 It must predict for the new observations in the `data.frame` ``.newdata`` with the wrapped model ``.model``, which is returned from the training function.
 The actual model the learner built is stored in the ``$learner.model`` member and can be accessed simply through ``.model$learner.model``.
 
-For classification, you have to return a factor of predicted classes if ``.learner$predict.type`` is ``"response"``, or a matrix of predicted probabilities if ``.learner$predict.type`` is ``"prob"`` and this type of prediction is supported by the learner. 
+For classification, you have to return a factor of predicted classes if ``.learner$predict.type`` is ``"response"``, or a matrix of predicted probabilities if ``.learner$predict.type`` is ``"prob"`` and this type of prediction is supported by the learner.
 In the latter case the matrix must have the same number of columns as there are classes in the task and the columns have to be named by the class names.
 
-The definition for LDA looks like this. 
+The definition for LDA looks like this.
 It is pretty much just a straight pass-through of the arguments to the `base::predict()` function and some extraction of prediction data depending on the type of prediction requested.
 
 ```{r, code=showFunctionDef(mlr:::predictLearner.classif.lda), eval=FALSE, tidy=TRUE, tidy.opts=list(indent=2, width.cutoff=100)}
@@ -207,10 +207,10 @@ predictLearner.classif.lda = function(.learner, .model, .newdata, predict.method
 
 # Regression
 
-The main difference for regression is that the type of predictions are different (numeric instead of labels or probabilities) and that not all of the properties are relevant. 
+The main difference for regression is that the type of predictions are different (numeric instead of labels or probabilities) and that not all of the properties are relevant.
 In particular, whether one-, two-, or multi-class problems and posterior probabilities are supported is not applicable.
 
-Apart from this, everything explained above applies. 
+Apart from this, everything explained above applies.
 Below is the definition for the `earth::earth()` learner.
 
 ```{r}
@@ -259,8 +259,8 @@ Again most of the data is passed straight through to/from the train/predict func
 
 # Survival analysis
 
-For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the [cindex](measures.html){target="_blank"} (for ``.learner$predict.type`` == ``"response"``). 
-For ``.learner$predict.type`` == ``"prob"``, there is no substantially meaningful measure (yet). 
+For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the [cindex](measures.html){target="_blank"} (for ``.learner$predict.type`` == ``"response"``).
+For ``.learner$predict.type`` == ``"prob"``, there is no substantially meaningful measure (yet).
 You may either ignore this case or return something like predicted survival curves (cf. example below).
 
 There are three properties that are specific to survival learners:
@@ -274,14 +274,14 @@ makeRLearner.surv.coxph = function() {
     cl = "surv.coxph",
     package = "survival",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "ties", default = "efron", 
+      makeDiscreteLearnerParam(id = "ties", default = "efron",
         values = c("efron", "breslow", "exact")),
       makeLogicalLearnerParam(id = "singular.ok", default = TRUE),
       makeNumericLearnerParam(id = "eps", default = 1e-09, lower = 0),
-      makeNumericLearnerParam(id = "toler.chol", 
+      makeNumericLearnerParam(id = "toler.chol",
         default = .Machine$double.eps^0.75, lower = 0),
       makeIntegerLearnerParam(id = "iter.max", default = 20L, lower = 1L),
-      makeNumericLearnerParam(id = "toler.inf", 
+      makeNumericLearnerParam(id = "toler.inf",
         default = sqrt(.Machine$double.eps^0.75), lower = 0),
       makeIntegerLearnerParam(id = "outer.max", default = 10L, lower = 1L),
       makeLogicalLearnerParam(id = "model", default = FALSE, tunable = FALSE),
@@ -318,7 +318,7 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   } else if (.learner$predict.type == "prob") {
     surv.range = getTrainingInfo(.model$learner.model)$surv.range
     times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
-    t(summary(survival::survfit(.model$learner.model, newdata = .newdata, 
+    t(summary(survival::survfit(.model$learner.model, newdata = .newdata,
                 se.fit = FALSE, conf.int = FALSE), times = times)$surv)
   } else {
     stop("Unknown predict type")
@@ -328,11 +328,11 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
 
 # Clustering
 
-For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to. 
+For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to.
 The numbering should start at 1.
 
 Below is the definition for the `FarthestFirst` (`RWeka::FarthestFirst()`) learner
-from the `RWeka` package. 
+from the `RWeka` package.
 Weka starts the IDs of the clusters at 0, so we add 1 to the predicted clusters.
 RWeka has a different way of setting learner parameters; we use the special ``Weka_control`` function to do this.
 
@@ -344,7 +344,7 @@ makeRLearner.cluster.FarthestFirst = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "N", default = 2L, lower = 1L),
       makeIntegerLearnerParam(id = "S", default = 1L, lower = 1L),
-      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, 
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE,
         tunable = FALSE)
     ),
     properties = c("numerics"),
@@ -372,14 +372,14 @@ predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...)
 
 As stated in the [multilabel](multilabel.html){target="_blank"} section, multilabel classification methods can be divided into problem transformation methods and algorithm adaptation methods.
 
-At this moment the only problem transformation method implemented in `mlr` is the binary relevance method (`makeMultilabelBinaryRelevanceWrapper()`). 
+At this moment the only problem transformation method implemented in `mlr` is the binary relevance method (`makeMultilabelBinaryRelevanceWrapper()`).
 Integrating more of these methods requires good knowledge of the architecture of the `mlr` package.
 
 The integration of an algorithm adaptation multilabel classification learner is easier and works very similar to the normal multiclass-classification.
 In contrast to the multiclass case, not all of the learner properties are relevant.
 In particular, whether one-, two-, or multi-class problems are supported is not applicable.
-Furthermore the prediction function output must be a matrix with each prediction of a label in one column and the names of the labels as column names. 
-If ``.learner$predict.type`` is ``"response"`` the predictions must be logical. 
+Furthermore the prediction function output must be a matrix with each prediction of a label in one column and the names of the labels as column names.
+If ``.learner$predict.type`` is ``"response"`` the predictions must be logical.
 If ``.learner$predict.type`` is ``"prob"`` and this type of prediction is supported by the learner, the matrix must consist of predicted probabilities.
 
 Below is the definition of the `rFerns::rFerns()` learner from the `rFerns` package, which does not support probability predictions.
@@ -467,11 +467,11 @@ If your interface code to a new learning algorithm exists only locally, i.e., it
 You can do this as follows:
 
 ```{r, eval=FALSE}
-registerS3method("makeRLearner", "<awesome_new_learner_class>", 
+registerS3method("makeRLearner", "<awesome_new_learner_class>",
   makeRLearner.<awesome_new_learner_class>)
-registerS3method("trainLearner", "<awesome_new_learner_class>", 
+registerS3method("trainLearner", "<awesome_new_learner_class>",
   trainLearner.<awesome_new_learner_class>)
-registerS3method("predictLearner", "<awesome_new_learner_class>", 
+registerS3method("predictLearner", "<awesome_new_learner_class>",
   predictLearner.<awesome_new_learner_class>)
 ```
 
@@ -485,7 +485,7 @@ registerS3method("getFeatureImportanceLearner", "<awesome_new_learner_class>",
 For the new learner to work with parallelization, you may have to export the new methods explicitly:
 
 ```{r, eval=FALSE}
-parallelExport("trainLearner.<awesome_new_learner_class>", 
+parallelExport("trainLearner.<awesome_new_learner_class>",
   "predictLearner.<awesome_new_learner_class>")
 ```
 
@@ -495,7 +495,7 @@ If you haven't written a learner interface for private use only, but intend to s
 
 For general information about contributing to the package, unit testing, version control setup and the like please also read the [coding guidelines in the mlr Wiki](https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines).
 
-* The R file containing the interface code should adhere to the naming convention `RLearner_<type>_<learner_name>.R`, e.g., `RLearner_classif_lda.R`, see for example <https://github.com/mlr-org/mlr/blob/master/R/RLearner_classif_lda.R> and contain the necessary roxygen `@export` tags to register the S3 methods in the NAMESPACE.
+* The R file containing the interface code should adhere to the naming convention `RLearner_<type>_<learner_name>.R`, e.g., `RLearner_classif_lda.R`, see for example <https://github.com/mlr-org/mlr/blob/main/R/RLearner_classif_lda.R> and contain the necessary roxygen `@export` tags to register the S3 methods in the NAMESPACE.
 
 * The learner interfaces should work out of the box without requiring any parameters to be set, e.g., `train("classif.lda", iris.task)` should run.
 Sometimes, this makes it necessary to change or set some additional defaults as explained above and -- very important -- informing the user about this in the `note`.
@@ -509,10 +509,10 @@ Sometimes, this makes it necessary to change or set some additional defaults as 
 The tests make sure that we get the same results when the learner is invoked through the `mlr` interface and when using the original functions.
 If you are not familiar or want to learn more about unit testing and package `testthat` have a look at [the Testing chapter in Hadley Wickham's R packages](http://r-pkgs.had.co.nz/tests.html){target="_blank"}.
 
-In `mlr` all unit tests are in the following directory: <https://github.com/mlr-org/mlr/tree/master/tests/testthat>.
-For each learner interface there is an individual file whose name follows the scheme `test_<type>_<learner_name>.R`, for example <https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R>.
+In `mlr` all unit tests are in the following directory: <https://github.com/mlr-org/mlr/tree/main/tests/testthat>.
+For each learner interface there is an individual file whose name follows the scheme `test_<type>_<learner_name>.R`, for example <https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R>.
 
-Below is a snippet from the tests of the lda interface <https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R>.
+Below is a snippet from the tests of the lda interface <https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R>.
 
 ```{r, eval = FALSE}
 test_that("classif_lda", {
@@ -529,10 +529,10 @@ test_that("classif_lda", {
 ```
 
 The tests make use of numerous helper objects and helper functions.
-All of these are defined in the `helper_` files in <https://github.com/mlr-org/mlr/blob/master/tests/testthat/>.
+All of these are defined in the `helper_` files in <https://github.com/mlr-org/mlr/blob/main/tests/testthat/>.
 
 In the above code the first line just loads package `MASS` or skips the test if the package is not available.
-The objects `multiclass.formula`, `multiclass.train`, `multiclass.test` etc. are defined in <https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_objects.R>.
+The objects `multiclass.formula`, `multiclass.train`, `multiclass.test` etc. are defined in <https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_objects.R>.
 We tried to choose fairly self-explanatory names:
 For example `multiclass` indicates a multi-class classification problem, `multiclass.train` contains data for training, `multiclass.formula` a `formula` object etc.
 
@@ -541,14 +541,14 @@ The helper functions `testSimple` and `testProb` perform training and prediction
 
 In order to get reproducible results seeding is required for many learners.
 The `"mlr.debug.seed"` works as follows:
-When invoking the tests the option `"mlr.debug.seed"` is set (see <https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_zzz.R>), and `set.seed(getOption("mlr.debug.seed"))` is used to specify the seed.
-Internally, `mlr`'s [train](https://github.com/mlr-org/mlr/blob/master/R/train.R#L73) and [predict.WrappedModel](https://github.com/mlr-org/mlr/blob/master/R/predict.R#L100) functions check if the `"mlr.debug.seed"` option is set and if yes, also specify the seed.
+When invoking the tests the option `"mlr.debug.seed"` is set (see <https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_zzz.R>), and `set.seed(getOption("mlr.debug.seed"))` is used to specify the seed.
+Internally, `mlr`'s [train](https://github.com/mlr-org/mlr/blob/main/R/train.R#L73) and [predict.WrappedModel](https://github.com/mlr-org/mlr/blob/main/R/predict.R#L100) functions check if the `"mlr.debug.seed"` option is set and if yes, also specify the seed.
 
 Note that the option `"mlr.debug.seed"` is only set for testing, so no seeding happens in normal usage of `mlr`.
 
 Let's look at a second example.
 Many learners have parameters that are commonly changed or tuned and it is important to make sure that these are passed through correctly.
-Below is a snippet from <https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_regr_randomForest.R>.
+Below is a snippet from <https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_regr_randomForest.R>.
 
 ```{r, eval = FALSE}
 test_that("regr_randomForest", {
@@ -586,7 +586,7 @@ Then we simply loop over all parameter settings and store the resulting predicti
 Again the helper function `testSimpleParsets` does the same using the `mlr` interface and compares the outcomes.
 
 Additional to tests for individual learners we also have general tests that loop through all integrated learners and make for example sure that learners have the correct properties (e.g. a learner with property `"factors"` can cope with `factor` (`base::factor()`) features, a learner with property `"weights"` takes observation weights into account properly etc.).
-For example <https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R> runs through all classification learners.
+For example <https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_learners_all_classif.R> runs through all classification learners.
 Similar tests exist for all types of learning methods like regression, cluster and survival analysis as well as multilabel classification.
 
 In order to run all tests for, e.g., classification learners on your machine you can invoke the tests from within **R** by

@@ -128,7 +128,7 @@ iris.task.filtered
 getTaskFeatureNames(iris.task.filtered)
 ```
 
-You might also want to have a look at the [source code](https://github.com/mlr-org/mlr/blob/master/R/Filter.R#L95) of the filter methods already integrated in `mlr` for some more complex and meaningful examples.
+You might also want to have a look at the [source code](https://github.com/mlr-org/mlr/blob/main/R/Filter.R#L95) of the filter methods already integrated in `mlr` for some more complex and meaningful examples.
 
 ```{r, echo = FALSE}
 rm("nonsense.filter", envir = mlr:::.FilterRegister)
