@@ -51,4 +51,3 @@ jobs:
           commit-message: "update tic templates"
           body: "{tic} templates can be updated :rocket: :robot:"
           branch: update-tic
-          base: master
