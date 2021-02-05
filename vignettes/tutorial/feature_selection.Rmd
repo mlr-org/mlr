@@ -123,7 +123,8 @@ We use `information.gain` as importance measure with the aim to subset the datas
 In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.fnn",
+lrn = makeFilterWrapper(
+  learner = "classif.fnn",
   fw.method = "FSelectorRcpp_information.gain", fw.abs = 2)
 rdesc = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
@@ -160,15 +161,23 @@ Additionally, we [tune](tune.html){target="_blank"} the hyperparameters of the a
 As search strategy for tuning a random search with five iterations is used.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.ksvm", fw.method = "FSelector_chi.squared")
-ps = makeParamSet(makeNumericParam("fw.perc", lower = 0, upper = 1),
-  makeNumericParam("C", lower = -10, upper = 10,
+lrn = makeFilterWrapper(
+  learner = "regr.ksvm",
+  fw.method = "FSelectorRcpp_information.gain",
+  more.args = list("FSelectorRcpp_information.gain" = list(
+    equal = TRUE)))
+ps = makeParamSet(
+  makeNumericParam("fw.perc", lower = 0, upper = 1),
+  makeNumericParam("C",
+    lower = -10, upper = 10,
     trafo = function(x) 2^x),
-  makeNumericParam("sigma", lower = -10, upper = 10,
+  makeNumericParam("sigma",
+    lower = -10, upper = 10,
     trafo = function(x) 2^x)
 )
 rdesc = makeResampleDesc("CV", iters = 3)
-res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
+res = tuneParams(lrn,
+  task = bh.task, resampling = rdesc, par.set = ps,
   control = makeTuneControlRandom(maxit = 5))
 res
 ```
@@ -190,7 +199,8 @@ res$y
 After tuning we can generate a new wrapped learner with the optimal percentage value for further use (e.g. to predict to new data).
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared",
+lrn = makeFilterWrapper(
+  learner = "regr.lm", fw.method = "FSelector_chi.squared",
   fw.perc = res$x$fw.perc, C = res$x$C, sigma = res$x$sigma)
 mod = train(lrn, bh.task)
 mod
@@ -240,7 +250,8 @@ ctrl
 rdesc = makeResampleDesc("Holdout")
 
 # Select features
-sfeats = selectFeatures(learner = "surv.coxph", task = wpbc.task, resampling = rdesc,
+sfeats = selectFeatures(
+  learner = "surv.coxph", task = wpbc.task, resampling = rdesc,
   control = ctrl, show.info = FALSE)
 sfeats
 ```
@@ -265,7 +276,8 @@ ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.02)
 
 # Select features
 rdesc = makeResampleDesc("CV", iters = 10)
-sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = rdesc, control = ctrl,
+sfeats = selectFeatures(
+  learner = "regr.lm", task = bh.task, resampling = rdesc, control = ctrl,
   show.info = FALSE)
 sfeats
 ```
@@ -284,7 +296,8 @@ Then, the learner is trained on the selected feature subset.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)
-lrn = makeFeatSelWrapper("surv.coxph", resampling = rdesc,
+lrn = makeFeatSelWrapper("surv.coxph",
+  resampling = rdesc,
   control = makeFeatSelControlRandom(maxit = 10), show.info = FALSE)
 mod = train(lrn, task = wpbc.task)
 mod
@@ -308,7 +321,8 @@ The 5-fold cross-validated performance of the learner specified above can be com
 ```{r}
 out.rdesc = makeResampleDesc("CV", iters = 5)
 
-r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = TRUE,
+r = resample(
+  learner = lrn, task = wpbc.task, resampling = out.rdesc, models = TRUE,
   show.info = FALSE)
 r$aggr
 ```
