@@ -1069,6 +1069,7 @@ makeFilter(
     Y = data[[getTaskTargetNames(task)]]
     res = FSelectorRcpp::relief(x = X, y = Y, ...)
     res = setNames(res$importance, res$attributes)
+    replace(res, is.nan(res), 0) # FIXME: this is a technical fix, need to report upstream
   }
   )
 
