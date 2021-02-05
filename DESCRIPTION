@@ -192,7 +192,7 @@ Suggests:
     fpc,
     frbs,
     FSelector,
-    FSelectorRcpp (>= 0.2.1),
+    FSelectorRcpp (>= 0.3.5),
     gbm,
     GenSA,
     ggpubr,
