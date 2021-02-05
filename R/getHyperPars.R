@@ -36,6 +36,12 @@ getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")
 }
 
 getHyperParsString = function(learner, show.missing.values = TRUE) {
+  # filter methods in the param set let `paramValueToString` fail.
+  # Delete them for the printer to work
+  if ("fw.base.methods" %in% names(learner$par.set$pars)) {
+    learner$par.set$pars$fw.base.methods = NULL
+    learner$par.set$pars$fw.method = NULL
+  }
   hps = getHyperPars(learner)
   ns = names(hps)
   pars = getParamSet(learner)$pars[ns]
