@@ -200,8 +200,11 @@ After tuning we can generate a new wrapped learner with the optimal percentage v
 
 ```{r}
 lrn = makeFilterWrapper(
-  learner = "regr.lm", fw.method = "FSelector_chi.squared",
-  fw.perc = res$x$fw.perc, C = res$x$C, sigma = res$x$sigma)
+  learner = makeLearner("regr.ksvm", C = res$x$C, sigma = res$x$sigma),
+  fw.method = "FSelectorRcpp_information.gain",
+  more.args = list("FSelectorRcpp_information.gain" = list(
+    equal = TRUE)),
+  fw.perc = res$x$fw.perc)
 mod = train(lrn, bh.task)
 mod
 
