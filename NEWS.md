@@ -1,3 +1,9 @@
+# mlr 2.18.0.9003
+
+- Add filter `FSelectoRcpp::relief()`. This C++ based implementation of the RelieF filter algorithm is way faster than the Java based one from the {FSelector} package (#2804)
+- Fix S3 print method for `FilterWrapper` objects
+
+
 # mlr 2.18.0.9002
 
 - Switch to testthat v3 (#2796)
