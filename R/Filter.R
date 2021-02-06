@@ -1042,6 +1042,37 @@ FSelectorRcpp.filter = function(type) {
   }
 }
 
+# FSelectorRcpp_relief ----------------
+
+#' Filter \dQuote{relief} is based on the feature selection algorithm \dQuote{ReliefF}
+#' by Kononenko et al., which is a generalization of the orignal \dQuote{Relief}
+#' algorithm originally proposed by Kira and Rendell. Feature weights are initialized
+#' with zeros. Then for each instance `sample.size` instances are sampled,
+#' `neighbours.count` nearest-hit and nearest-miss neighbours are computed
+#' and the weight vector for each feature is updated based on these values.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
+NULL
+
+# FSelectorRcpp_relief ----------------
+
+makeFilter(
+  name = "FSelectorRcpp_relief",
+  desc = "RELIEF algorithm",
+  pkg = "FSelectorRcpp",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    data = getTaskData(task)
+    X = data[getTaskFeatureNames(task)]
+    Y = data[[getTaskTargetNames(task)]]
+    res = FSelectorRcpp::relief(x = X, y = Y, ...)
+    res = setNames(res$importance, res$attributes)
+    replace(res, is.nan(res), 0) # FIXME: this is a technical fix, need to report upstream
+  }
+  )
+
 # FSelectorRcpp_info.gain ----------------
 
 makeFilter(
