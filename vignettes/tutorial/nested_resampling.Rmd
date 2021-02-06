@@ -167,7 +167,7 @@ Below we visualize the `opt.path`s for the 3 outer resampling iterations.
 
 ```{r fig.asp = 0.5}
 g = ggplot(opt.paths, aes(x = C, y = sigma, fill = mmce.test.mean))
-g + geom_tile() + facet_wrap(~ iter)
+g + geom_tile() + facet_wrap(~iter)
 ```
 
 Another useful function is `getNestedTuneResultsX()`, which extracts the best found hyperparameter settings for each outer resampling iteration.
@@ -200,12 +200,14 @@ Below we use sequential forward selection with linear regression on the
 ```{r echo = FALSE, results = 'hide'}
 # Feature selection in inner resampling loop
 inner = makeResampleDesc("CV", iters = 3)
-lrn = makeFeatSelWrapper("regr.lm", resampling = inner,
+lrn = makeFeatSelWrapper("regr.lm",
+  resampling = inner,
   control = makeFeatSelControlSequential(method = "sfs"), show.info = FALSE)
 
 # Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
-r = resample(learner = lrn, task = bh.task, resampling = outer, extract = getFeatSelResult,
+r = resample(
+  learner = lrn, task = bh.task, resampling = outer, extract = getFeatSelResult,
   show.info = FALSE)
 
 r
@@ -216,12 +218,14 @@ r$measures.test
 ```{r eval = FALSE}
 # Feature selection in inner resampling loop
 inner = makeResampleDesc("CV", iters = 3)
-lrn = makeFeatSelWrapper("regr.lm", resampling = inner,
+lrn = makeFeatSelWrapper("regr.lm",
+  resampling = inner,
   control = makeFeatSelControlSequential(method = "sfs"), show.info = FALSE)
 
 # Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
-r = resample(learner = lrn, task = bh.task, resampling = outer, extract = getFeatSelResult,
+r = resample(
+  learner = lrn, task = bh.task, resampling = outer, extract = getFeatSelResult,
   show.info = FALSE)
 
 r
@@ -301,7 +305,7 @@ Then a tuning step is added by `makeTuneWrapper()`.
 
 ```{r echo = FALSE, results='hide'}
 # Tuning of the percentage of selected filters in the inner loop
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelectorRcpp_information.gain")
 ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(0, 1, 0.2)))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iters = 3)
@@ -315,7 +319,7 @@ r
 
 ```{r eval = FALSE}
 # Tuning of the percentage of selected filters in the inner loop
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelectorRcpp_information.gain")
 ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(0, 1, 0.2)))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iters = 3)
@@ -401,14 +405,16 @@ ps = makeParamSet(
   makeDiscreteParam("sigma", 2^(-1:1)))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("Holdout")
-lrn1 = makeTuneWrapper("classif.ksvm", resampling = inner, par.set = ps, control = ctrl,
+lrn1 = makeTuneWrapper("classif.ksvm",
+  resampling = inner, par.set = ps, control = ctrl,
   show.info = FALSE)
 
 # Tune k-nearest neighbor in inner resampling loop
 ps = makeParamSet(makeDiscreteParam("k", 3:5))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("Subsample", iters = 3)
-lrn2 = makeTuneWrapper("classif.kknn", resampling = inner, par.set = ps, control = ctrl,
+lrn2 = makeTuneWrapper("classif.kknn",
+  resampling = inner, par.set = ps, control = ctrl,
   show.info = FALSE)
 
 # Learners
@@ -416,7 +422,8 @@ lrns = list(lrn1, lrn2)
 
 # Outer resampling loop
 outer = list(makeResampleDesc("Holdout"), makeResampleDesc("Bootstrap", iters = 2))
-res = benchmark(lrns, tasks, outer, measures = list(acc, ber), show.info = FALSE,
+res = benchmark(lrns, tasks, outer,
+  measures = list(acc, ber), show.info = FALSE,
   keep.extract = TRUE)
 res
 ```
@@ -448,7 +455,8 @@ getBMRTuneResults(res, as.df = TRUE)
 It is also possible to extract the tuning results for individual tasks and learners and, as shown in earlier examples, inspect the optimization path (`ParamHelpers::OptPath()`).
 
 ```{r}
-tune.res = getBMRTuneResults(res, task.ids = "Sonar-example", learner.ids = "classif.ksvm.tuned",
+tune.res = getBMRTuneResults(res,
+  task.ids = "Sonar-example", learner.ids = "classif.ksvm.tuned",
   as.df = TRUE)
 tune.res
 
@@ -470,7 +478,8 @@ lrns = list("regr.rpart", lrn)
 
 # Outer resampling loop
 outer = makeResampleDesc("Subsample", iters = 2)
-res = benchmark(tasks = bh.task, learners = lrns, resampling = outer,
+res = benchmark(
+  tasks = bh.task, learners = lrns, resampling = outer,
   show.info = FALSE, keep.extract = TRUE)
 
 res
@@ -514,11 +523,12 @@ Here is a minimal example for feature filtering with tuning of the feature subse
 
 ```{r}
 # Feature filtering with tuning in the inner resampling loop
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelector_chi.squared")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "FSelectorRcpp_information.gain")
 ps = makeParamSet(makeDiscreteParam("fw.abs", values = seq_len(getTaskNFeats(bh.task))))
 ctrl = makeTuneControlGrid()
 inner = makeResampleDesc("CV", iter = 2)
-lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl,
+lrn = makeTuneWrapper(lrn,
+  resampling = inner, par.set = ps, control = ctrl,
   show.info = FALSE)
 
 # Learners
@@ -535,4 +545,3 @@ res
 # Performances on individual outer test data sets
 getBMRPerformances(res, as.df = TRUE)
 ```
-

@@ -11,6 +11,7 @@ Default is \code{TRUE}.}
 \item{impute.val}{(\link{numeric})\cr
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
+Imputation is only active if \code{on.learner.error} is configured not to stop in \link{configureMlr}.
 It is not stored in the optimization path, an NA and a corresponding error message are
 logged instead.
 Note that this value is later multiplied by -1 for maximization measures internally, so you
