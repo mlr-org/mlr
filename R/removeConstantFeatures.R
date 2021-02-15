@@ -19,33 +19,43 @@
 #'   (Or should they be treated as a single, extra level in the percentage calculation?)
 #'   Note that if the feature has only missing values, it is always removed.
 #'   Default is `FALSE`.
-#' @param tol (`numeric(1)`)\cr
+#' @param wrap.tol (`numeric(1)`)\cr
 #'   Numerical tolerance to treat two numbers as equal.
 #'   Variables stored as `double` will get rounded accordingly before computing the mode.
 #'   Default is `sqrt(.Maschine$double.eps)`.
+#'
 #' @template arg_showinfo
 #' @template ret_taskdf
 #' @export
 #' @family eda_and_preprocess
-removeConstantFeatures = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
+removeConstantFeatures = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, wrap.tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info"), ...) {
   UseMethod("removeConstantFeatures")
 }
 
 #' @export
-removeConstantFeatures.Task = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
+removeConstantFeatures.Task = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, wrap.tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info"), ...) {
+
+  # backward comp after renaming tol to wrap.tol due to hyperpar name clash with base learners
+  ellipsis = list(...)
+
+  if (any(names(ellipsis) == "tol")) {
+    warning("removeConstantFeatures(): Argument 'tol' has been renamed to 'wrap.tol'. Please adjust your local code.")
+    wrap.tol = ellipsis$tol
+  }
+
   assertCharacter(dont.rm)
   dont.rm = union(dont.rm, getTaskTargetNames(obj))
-  data = removeConstantFeatures(getTaskData(obj, functionals.as = "matrix"), perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, tol = tol, show.info = show.info)
+  data = removeConstantFeatures(getTaskData(obj, functionals.as = "matrix"), perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, wrap.tol = wrap.tol, show.info = show.info, ...)
   changeData(task = obj, data = data)
 }
 
 #' @export
-removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
+removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(0L), na.ignore = FALSE, wrap.tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info"), ...) {
 
   assertNumber(perc, lower = 0, upper = 1)
   assertSubset(dont.rm, choices = names(obj))
   assertFlag(na.ignore)
-  assertNumber(tol, lower = 0)
+  assertNumber(wrap.tol, lower = 0)
   assertFlag(show.info)
 
   if (any(!dim(obj))) {
@@ -56,7 +66,7 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
     res = (x == y) | (is.na(x) & is.na(y))
     replace(res, is.na(res), FALSE)
   }
-  digits = ceiling(log10(1 / tol))
+  digits = ceiling(log10(1 / wrap.tol))
   cns = setdiff(colnames(obj), dont.rm)
   ratio = vnapply(obj[cns], function(x) {
     if (allMissing(x)) {
