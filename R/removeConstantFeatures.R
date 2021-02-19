@@ -23,6 +23,7 @@
 #'   Numerical tolerance to treat two numbers as equal.
 #'   Variables stored as `double` will get rounded accordingly before computing the mode.
 #'   Default is `sqrt(.Maschine$double.eps)`.
+#' @param ... To ensure backward compatibility with old argument `tol`
 #'
 #' @template arg_showinfo
 #' @template ret_taskdf

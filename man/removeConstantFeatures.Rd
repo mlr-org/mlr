@@ -40,6 +40,8 @@ Default is \code{sqrt(.Maschine$double.eps)}.}
 \item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
 Default is set via \link{configureMlr}.}
+
+\item{...}{To ensure backward compatibility with old argument \code{tol}}
 }
 \value{
 \link{data.frame} | \link{Task}. Same type as \code{obj}.
