@@ -8,10 +8,10 @@
 #' @export
 #' @family wrapper
 #' @template ret_learner
-makeRemoveConstantFeaturesWrapper = function(learner, perc = 0, dont.rm = character(0L), na.ignore = FALSE, tol = .Machine$double.eps^.5) {
+makeRemoveConstantFeaturesWrapper = function(learner, perc = 0, dont.rm = character(0L), na.ignore = FALSE, wrap.tol = .Machine$double.eps^.5) {
 
   learner = checkLearner(learner)
-  args = list(perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, tol = tol)
+  args = list(perc = perc, dont.rm = dont.rm, na.ignore = na.ignore, wrap.tol = wrap.tol)
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
@@ -24,6 +24,13 @@ makeRemoveConstantFeaturesWrapper = function(learner, perc = 0, dont.rm = charac
     dropNamed(data, control$dropped.cols)
   }
 
-  lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
+  lrn = makePreprocWrapper(learner, trainfun, predictfun,
+    par.set = makeParamSet(
+      makeNumericLearnerParam(id = "perc", lower = 0),
+      makeUntypedLearnerParam(id = "dont.rm", default = character(0L)),
+      makeLogicalLearnerParam(id = "na.ignore", default = FALSE),
+      makeNumericLearnerParam(id = "wrap.tol")
+    ),
+    par.vals = args)
   addClasses(lrn, "RemoveConstantFeaturesWrapper")
 }

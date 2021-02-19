@@ -9,8 +9,9 @@ removeConstantFeatures(
   perc = 0,
   dont.rm = character(0L),
   na.ignore = FALSE,
-  tol = .Machine$double.eps^0.5,
-  show.info = getMlrOption("show.info")
+  wrap.tol = .Machine$double.eps^0.5,
+  show.info = getMlrOption("show.info"),
+  ...
 )
 }
 \arguments{
@@ -31,7 +32,7 @@ Should NAs be ignored in the percentage calculation?
 Note that if the feature has only missing values, it is always removed.
 Default is \code{FALSE}.}
 
-\item{tol}{(\code{numeric(1)})\cr
+\item{wrap.tol}{(\code{numeric(1)})\cr
 Numerical tolerance to treat two numbers as equal.
 Variables stored as \code{double} will get rounded accordingly before computing the mode.
 Default is \code{sqrt(.Maschine$double.eps)}.}
@@ -39,6 +40,8 @@ Default is \code{sqrt(.Maschine$double.eps)}.}
 \item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
 Default is set via \link{configureMlr}.}
+
+\item{...}{To ensure backward compatibility with old argument \code{tol}}
 }
 \value{
 \link{data.frame} | \link{Task}. Same type as \code{obj}.

@@ -41,7 +41,7 @@ jobs:
       # [Custom env var] setting some ccache options - 4
       CCACHE_SLOPPINESS: include_file_ctime
       # [Custom env var] fake virtual display for rgl package
-      DISPLAY: ":99"
+      DISPLAY: ""
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.cran }}
