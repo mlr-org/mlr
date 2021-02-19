@@ -341,8 +341,9 @@ differ from the mode value.</p>
   perc <span class='op'>=</span> <span class='fl'>0</span>,
   dont.rm <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0L</span><span class='op'>)</span>,
   na.ignore <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  tol <span class='op'>=</span> <span class='va'>.Machine</span><span class='op'>$</span><span class='va'>double.eps</span><span class='op'>^</span><span class='fl'>0.5</span>,
-  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>
+  wrap.tol <span class='op'>=</span> <span class='va'>.Machine</span><span class='op'>$</span><span class='va'>double.eps</span><span class='op'>^</span><span class='fl'>0.5</span>,
+  show.info <span class='op'>=</span> <span class='fu'>getMlrOption</span><span class='op'>(</span><span class='st'>"show.info"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -374,7 +375,7 @@ Note that if the feature has only missing values, it is always removed.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>tol</th>
+      <th>wrap.tol</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Numerical tolerance to treat two numbers as equal.
 Variables stored as <code>double</code> will get rounded accordingly before computing the mode.
@@ -385,6 +386,10 @@ Default is <code><a href='https://rdrr.io/r/base/MathFun.html'>sqrt(.Maschine$do
       <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Print verbose output on console?
 Default is set via <a href='configureMlr.html'>configureMlr</a>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>To ensure backward compatibility with old argument <code>tol</code></p></td>
     </tr>
     </table>
 
