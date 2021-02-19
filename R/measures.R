@@ -1442,12 +1442,10 @@ ibrier = makeMeasure(
 
     probs = predictSurvProb(getLearnerModel(model, more.unwrap = TRUE), newdata = newdata, times = grid)
     perror = pec(probs, f,
-      data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
+      data = newdata[, tn, with = FALSE], times = grid, exact = FALSE, exactness = 99L,
       maxtime = max.time, verbose = FALSE, reference = FALSE)
 
-
-    # FIXME: this might be the wrong number!
-    crps(perror, times = max.time)[1L, ]
+    crps(perror, times = max.time)[[1]]
   },
   extra.args = list(max.time = NULL, resolution = 1000L)
 )

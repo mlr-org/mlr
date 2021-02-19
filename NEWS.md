@@ -2,6 +2,7 @@
 
 - Add filter `FSelectoRcpp::relief()`. This C++ based implementation of the RelieF filter algorithm is way faster than the Java based one from the {FSelector} package (#2804)
 - Fix S3 print method for `FilterWrapper` objects
+- Make ibrier measure work with survival tasks (#2789)
 
 
 # mlr 2.18.0.9002
