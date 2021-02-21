@@ -43,7 +43,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -232,7 +232,7 @@
 </li>
         <li>
   <a href="https://github.com/mlr-org/mlr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -244,13 +244,13 @@
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -270,8 +270,7 @@
 
       
 
-      </header><script src="create_imputation_files/header-attrs-2.4.1/header-attrs.js"></script><link href="create_imputation_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="create_imputation_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="create_imputation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating an Imputation Method</h1>
@@ -297,16 +296,19 @@
 <h1 class="hasAnchor">
 <a href="#example-imputation-using-the-mean" class="anchor"></a>Example: Imputation using the mean</h1>
 <p>Let’s have a look at function imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">imputeMean</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span>learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, 
-        impute <span class="op">=</span> <span class="va">simpleImpute</span><span class="op">)</span>
-<span class="op">}</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">imputeMean</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="op">)</span> 
+<span class="op">{</span>
+    <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span>learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, 
+        na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, impute <span class="op">=</span> <span class="va">simpleImpute</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
 <p>imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>) calls the unexported <code>mlr</code> function <code>simpleImpute</code> which is defined as follows.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">simpleImpute</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span>, <span class="va">const</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simpleImpute</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span>, <span class="va">const</span><span class="op">)</span> 
+<span class="op">{</span>
     <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="fu"><a href="https://rdrr.io/pkg/BBmisc/man/stopf.html">stopf</a></span><span class="op">(</span><span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, <span class="va">col</span><span class="op">)</span>
+        <span class="fu"><a href="https://rdrr.io/pkg/BBmisc/man/stopf.html">stopf</a></span><span class="op">(</span><span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, 
+            <span class="va">col</span><span class="op">)</span>
     <span class="op">}</span>
     <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>
     <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -316,7 +318,7 @@
         <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
     <span class="fu"><a href="https://rdrr.io/r/base/replace.html">replace</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">const</span><span class="op">)</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <p>The <em>learn</em> function calculates the mean of the non-missing observations in column <code>col</code>. The mean is passed via argument <code>const</code> to the <em>impute</em> function that replaces all missing values in feature <code>col</code>.</p>
 </div>
 <div id="writing-your-own-imputation-method" class="section level1">
@@ -324,8 +326,8 @@
 <a href="#writing-your-own-imputation-method" class="anchor"></a>Writing your own imputation method</h1>
 <p>Now let’s write a new imputation method: A frequently used simple technique for longitudinal data is <em>last observation carried forward</em> (LOCF). Missing values are replaced by the most recent observed value.</p>
 <p>In the <strong>R</strong> code below the <em>learn</em> function determines the last observed value previous to each <code>NA</code> (<code>values</code>) as well as the corresponding number of consecutive <code>NA's</code> (<code>times</code>). The <em>impute</em> function generates a vector by replicating the entries in <code>values</code> according to <code>times</code> and replaces the <code>NA's</code> in feature <code>col</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">imputeLOCF</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">imputeLOCF</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span>
     learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="op">{</span>
       <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>
@@ -342,10 +344,10 @@
       <span class="fu"><a href="https://rdrr.io/r/base/replace.html">replace</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">values</span>, <span class="va">times</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
   <span class="op">)</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <p>Note that this function is just for demonstration and is lacking some checks for real-world usage (for example ‘What should happen if the first value in <code>x</code> is already missing?’). Below it is used to impute the missing values in features <code>Ozone</code> and <code>Solar.R</code> in the airquality (<code><a href="https://rdrr.io/r/datasets/airquality.html">datasets::airquality()</a></code>) data set.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span>
 <span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="../../reference/impute.html">impute</a></span><span class="op">(</span><span class="va">airquality</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Ozone <span class="op">=</span> <span class="fu">imputeLOCF</span><span class="op">(</span><span class="op">)</span>, Solar.R <span class="op">=</span> <span class="fu">imputeLOCF</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
   dummy.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ozone"</span>, <span class="st">"Solar.R"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">imp</span><span class="op">$</span><span class="va">data</span>, <span class="fl">10</span><span class="op">)</span>
@@ -359,7 +361,7 @@
 <span class="co">## 7     23     299  8.6   65     5   7       FALSE         FALSE</span>
 <span class="co">## 8     19      99 13.8   59     5   8       FALSE         FALSE</span>
 <span class="co">## 9      8      19 20.1   61     5   9       FALSE         FALSE</span>
-<span class="co">## 10     8     194  8.6   69     5  10        TRUE         FALSE</span></pre></div>
+<span class="co">## 10     8     194  8.6   69     5  10        TRUE         FALSE</span></code></pre></div>
 </div>
   </div>
 

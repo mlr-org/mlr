@@ -43,7 +43,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -232,7 +232,7 @@
 </li>
         <li>
   <a href="https://github.com/mlr-org/mlr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -244,13 +244,13 @@
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -270,8 +270,7 @@
 
       
 
-      </header><script src="advanced_tune_files/header-attrs-2.4.1/header-attrs.js"></script><link href="advanced_tune_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="advanced_tune_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="advanced_tune_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Iterated F-Racing for mixed spaces and dependencies</h1>
@@ -285,8 +284,8 @@
     
     
 <p>The package supports a larger number of tuning algorithms, which can all be looked up and selected via <code><a href="../../reference/TuneControl.html">TuneControl()</a></code>. One of the cooler algorithms is iterated F-racing from the <code><a href="https://rdrr.io/pkg/irace/man/irace.html">irace::irace()</a></code> package (technical description <a href="http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf">here</a>). This not only works for arbitrary parameter types (numeric, integer, discrete, logical), but also for so-called dependent / hierarchical parameters:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
   <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
   <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"kernel"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"vanilladot"</span>, <span class="st">"polydot"</span>, <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span>,
@@ -306,21 +305,21 @@
 <span class="co">## 3  2.595082    polydot        NA      4           0.10   1  NA          &lt;NA&gt;</span>
 <span class="co">## 4 -4.176448     rbfdot -7.601708     NA           0.68   1  NA          &lt;NA&gt;</span>
 <span class="co">## 5  4.040167 vanilladot        NA     NA           0.02   1  NA          &lt;NA&gt;</span>
-<span class="co">## 6 10.677478    polydot        NA      4           0.10   1  NA          &lt;NA&gt;</span></pre></div>
+<span class="co">## 6 10.677478    polydot        NA      4           0.10   1  NA          &lt;NA&gt;</span></code></pre></div>
 <p>See how we made the kernel parameters like <code>sigma</code> and <code>degree</code> dependent on the <code>kernel</code> selection parameters? This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.</p>
 <div id="tuning-across-whole-model-spaces-with-modelmultiplexer" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tuning-across-whole-model-spaces-with-modelmultiplexer" class="anchor"></a>Tuning across whole model spaces with ModelMultiplexer</h1>
 <p>We can now take the following example even one step further. If we use the <code><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer()</a></code> we can tune over different model classes at once, just as we did with the SVM kernels above.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">base.learners</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">base.learners</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span><span class="op">)</span>,
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer</a></span><span class="op">(</span><span class="va">base.learners</span><span class="op">)</span></pre></div>
+<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer</a></span><span class="op">(</span><span class="va">base.learners</span><span class="op">)</span></code></pre></div>
 <p>Function <code><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet()</a></code> offers a simple way to construct a parameter set for tuning: The parameter names are prefixed automatically and the <code>requires</code> element is set, too, to make all parameters subordinate to <code>selected.learner</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></span><span class="op">(</span><span class="va">lrn</span>,
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></span><span class="op">(</span><span class="va">lrn</span>,
   <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
   <span class="fu">makeIntegerParam</span><span class="op">(</span><span class="st">"ntree"</span>, lower <span class="op">=</span> <span class="fl">1L</span>, upper <span class="op">=</span> <span class="fl">500L</span><span class="op">)</span>
 <span class="op">)</span>
@@ -353,7 +352,7 @@
 <span class="co">## 3     0.70000000   1  NA          &lt;NA&gt;</span>
 <span class="co">## 4     0.07333333   1  NA          &lt;NA&gt;</span>
 <span class="co">## 5     0.06666667   1  NA          &lt;NA&gt;</span>
-<span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></pre></div>
+<span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></code></pre></div>
 </div>
 <div id="multi-criteria-evaluation-and-optimization" class="section level1">
 <h1 class="hasAnchor">
@@ -361,8 +360,8 @@
 <p>During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.</p>
 <p>In the following example we aim to minimize both, the false positive and the false negative rates (<code>fpr</code> and <code>fnr</code>). We again tune the hyperparameters of an SVM (function <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code>) with a radial basis kernel and use <code><a href="../../reference/sonar.task.html">sonar.task()</a></code> for illustration. As search strategy we choose a random search.</p>
 <p>For all available multi-criteria tuning algorithms see <code><a href="../../reference/TuneMultiCritControl.html">TuneMultiCritControl()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
   <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
   <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -389,10 +388,10 @@
 <span class="co">## 3     0.70000000   1  NA          &lt;NA&gt;</span>
 <span class="co">## 4     0.07333333   1  NA          &lt;NA&gt;</span>
 <span class="co">## 5     0.06666667   1  NA          &lt;NA&gt;</span>
-<span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></pre></div>
+<span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></code></pre></div>
 <p>The results can be visualized with function <code><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult()</a></code>. The plot shows the false positive and false negative rates for all parameter settings evaluated during tuning. Points on the Pareto front are slightly increased.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></code></pre></div>
 <p><img src="advanced_tune_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
   </div>

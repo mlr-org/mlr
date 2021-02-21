@@ -43,7 +43,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -232,7 +232,7 @@
 </li>
         <li>
   <a href="https://github.com/mlr-org/mlr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -244,13 +244,13 @@
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -270,8 +270,7 @@
 
       
 
-      </header><script src="parallelization_files/header-attrs-2.4.1/header-attrs.js"></script><link href="parallelization_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="parallelization_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="parallelization_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Parallelization</h1>
@@ -286,8 +285,8 @@
     
 <p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code>parallel()</code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
 <p>All you have to do is select a backend by calling one of the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) functions. The first loop <code>mlr</code> encounters which is marked as parallel executable will be automatically parallelized. It is good practice to call <code>parallelStop</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html">parallelMap::parallelStop()</a></code>) at the end of your script.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://parallelmap.mlr-org.com">"parallelMap"</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://parallelmap.mlr-org.com">"parallelMap"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelStartSocket</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">## Starting parallelization in mode=socket with cpus=2.</span>
 
@@ -302,15 +301,15 @@
 <span class="co">## </span>
 
 <span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html">parallelStop</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## Stopped parallelization. All cleaned up.</span></pre></div>
+<span class="co">## Stopped parallelization. All cleaned up.</span></code></pre></div>
 <p>On Linux or Mac OS X, you may want to use <code>parallelStartMulticore</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) instead.</p>
 <div id="parallelization-levels" class="section level1">
 <h1 class="hasAnchor">
 <a href="#parallelization-levels" class="anchor"></a>Parallelization levels</h1>
 <p>We offer different parallelization levels for fine grained control over the parallelization. E.g., if you do not want to parallelize the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function because it has only very few iterations but want to parallelize the resampling (<code><a href="../../reference/resample.html">resample()</a></code>) of each learner instead, you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) function. Currently the following levels are supported:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelGetRegisteredLevels.html">parallelGetRegisteredLevels</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## mlr: mlr.benchmark, mlr.resample, mlr.selectFeatures, mlr.tuneParams, mlr.ensemble</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelGetRegisteredLevels.html">parallelGetRegisteredLevels</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">## mlr: mlr.benchmark, mlr.resample, mlr.selectFeatures, mlr.tuneParams, mlr.ensemble</span></code></pre></div>
 <p>For further details please see the <code><a href="../../reference/parallelization.html">parallelization()</a></code> documentation page.</p>
 </div>
 <div id="custom-learners-and-parallelization" class="section level1">

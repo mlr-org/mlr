@@ -43,7 +43,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="../../index.html">mlr <small>v2.18.0</small></a>
+        <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -232,7 +232,7 @@
 </li>
         <li>
   <a href="https://github.com/mlr-org/mlr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -244,13 +244,13 @@
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -270,8 +270,7 @@
 
       
 
-      </header><script src="benchmark_experiments_files/header-attrs-2.4.1/header-attrs.js"></script><link href="benchmark_experiments_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="benchmark_experiments_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="benchmark_experiments_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Benchmark Experiments</h1>
@@ -292,8 +291,8 @@
 <p>We start with a small example. Two learners, <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code> and a <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code>, are applied to one classification problem (<code><a href="../../reference/sonar.task.html">sonar.task()</a></code>). As resampling strategy we choose <code>"Holdout"</code>. The performance is thus calculated on a single randomly sampled test data set.</p>
 <p>In the example below we create a resample description (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>), which is automatically instantiated by <code><a href="../../reference/benchmark.html">benchmark()</a></code>. The instantiation is done only once per <code><a href="../../reference/Task.html">Task()</a></code>, i.e., the same training and test sets are used for all learners. It is also possible to directly pass a <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>.</p>
 <p>If you would like to use a <em>fixed test data set</em> instead of a randomly selected one, you can create a suitable <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code> through function <code><a href="../../reference/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance()</a></code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># Two learners to be compared</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Two learners to be compared</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span>, <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Choose the resampling strategy</span>
@@ -319,10 +318,10 @@
 <span class="va">bmr</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3142857</span>
-<span class="co">## 2 Sonar-example classif.rpart      0.3285714</span></pre></div>
+<span class="co">## 2 Sonar-example classif.rpart      0.3285714</span></code></pre></div>
 <p>For convenience, if you don’t want to pass any additional arguments to <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, you don’t need to generate the <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s explicitly, but it’s sufficient to provide the learner name. In the above example we could also have written:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># Vector of strings</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Vector of strings</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="st">"classif.rpart"</span><span class="op">)</span>
 
 <span class="co"># A mixed list of Learner objects and strings works, too</span>
@@ -347,7 +346,7 @@
 <span class="va">bmr</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
-<span class="co">## 2 Sonar-example classif.rpart      0.3714286</span></pre></div>
+<span class="co">## 2 Sonar-example classif.rpart      0.3714286</span></code></pre></div>
 <p>We also need to set <code>models = TRUE</code> explicitly if we want to take a look at them later. By default, models are not stored in the benchmark result object.</p>
 <p>In the printed summary table every row corresponds to one pair of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. The entries show the <a href="measures.html" target="_blank">mean misclassification error</a>, the default performance measure for classification, on the test data set.</p>
 <p>The result <code>bmr</code> is an object of class <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>. Basically, it contains a <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code> of lists of <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects, first ordered by <code><a href="../../reference/Task.html">Task()</a></code> and then by <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>.</p>
@@ -366,8 +365,8 @@
 <h2 class="hasAnchor">
 <a href="#learner-performances" class="anchor"></a>Learner performances</h2>
 <p>Let’s have a look at the benchmark result above. <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code> returns individual performances in resampling runs, while <code><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances()</a></code> gives the aggregated values.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## $`Sonar-example`</span>
 <span class="co">## $`Sonar-example`$classif.lda</span>
 <span class="co">##   iter      mmce</span>
@@ -385,21 +384,21 @@
 <span class="co">## </span>
 <span class="co">## $`Sonar-example`$classif.rpart</span>
 <span class="co">## mmce.test.mean </span>
-<span class="co">##      0.3714286</span></pre></div>
+<span class="co">##      0.3714286</span></code></pre></div>
 <p>Since we used holdout as resampling strategy, individual and aggregated performance values coincide.</p>
 <p>By default, nearly all “getter” functions return a nested <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code>, with the first level indicating the task and the second level indicating the learner. If only a single learner or, as in our case a single task is considered, setting <code>drop = TRUE</code> simplifies the result to a flat <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## $classif.lda</span>
 <span class="co">##   iter      mmce</span>
 <span class="co">## 1    1 0.3285714</span>
 <span class="co">## </span>
 <span class="co">## $classif.rpart</span>
 <span class="co">##   iter      mmce</span>
-<span class="co">## 1    1 0.3714286</span></pre></div>
+<span class="co">## 1    1 0.3714286</span></code></pre></div>
 <p>Often it is more convenient to work with <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame()</a></code>s. You can easily convert the result structure by setting <code>as.df = TRUE</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">##         task.id    learner.id iter      mmce</span>
 <span class="co">## 1 Sonar-example   classif.lda    1 0.3285714</span>
 <span class="co">## 2 Sonar-example classif.rpart    1 0.3714286</span>
@@ -407,19 +406,19 @@
 <span class="fu"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
-<span class="co">## 2 Sonar-example classif.rpart      0.3714286</span></pre></div>
+<span class="co">## 2 Sonar-example classif.rpart      0.3714286</span></code></pre></div>
 </div>
 <div id="predictions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predictions" class="anchor"></a>Predictions</h2>
 <p>Per default, the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> contains the learner predictions. If you do not want to keep them, e.g., to conserve memory, set <code>keep.pred = FALSE</code> when calling <code><a href="../../reference/benchmark.html">benchmark()</a></code>.</p>
 <p>You can access the predictions using function <code><a href="../../reference/getBMRPredictions.html">getBMRPredictions()</a></code>. Per default, you get a nested <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code> of <code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code>objects. As above, you can use the <code>drop</code> or <code>as.df</code> options to simplify the result.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 
 <span class="co">## $`Sonar-example`</span>
 <span class="co">## $`Sonar-example`$classif.lda</span>
@@ -471,39 +470,39 @@
 <span class="co">## 3    1 test</span>
 <span class="co">## 4    1 test</span>
 <span class="co">## 5    1 test</span>
-<span class="co">## 6    1 test</span></pre></div>
+<span class="co">## 6    1 test</span></code></pre></div>
 <p>It is also easily possible to access results for certain learners or tasks via their IDs. For this purpose many “getter” functions have a <code>learner.ids</code> and a <code>task.ids</code> argument.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span>, learner.ids <span class="op">=</span> <span class="st">"classif.rpart"</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span>, learner.ids <span class="op">=</span> <span class="st">"classif.rpart"</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##         task.id    learner.id  id truth response iter  set</span>
 <span class="co">## 1 Sonar-example classif.rpart 112     M        R    1 test</span>
 <span class="co">## 2 Sonar-example classif.rpart 191     M        M    1 test</span>
 <span class="co">## 3 Sonar-example classif.rpart 208     M        M    1 test</span>
 <span class="co">## 4 Sonar-example classif.rpart 203     M        M    1 test</span>
 <span class="co">## 5 Sonar-example classif.rpart  23     R        M    1 test</span>
-<span class="co">## 6 Sonar-example classif.rpart 162     M        M    1 test</span></pre></div>
+<span class="co">## 6 Sonar-example classif.rpart 162     M        M    1 test</span></code></pre></div>
 <p>If you don’t like the default IDs, you can set the IDs of learners and tasks via the <code>id</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and <code>makeTask()</code>. Moreover, you can conveniently change the ID of a <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> via function <code>setLearnerid()</code>.</p>
 </div>
 <div id="ids" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ids" class="anchor"></a>IDs</h2>
 <p>The IDs of all <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s, <code><a href="../../reference/Task.html">Task()</a></code>s and Measure’s (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) in a benchmark experiment can be retrieved as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRTaskIds.html">getBMRTaskIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRTaskIds.html">getBMRTaskIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "Sonar-example"</span>
 
 <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "classif.lda"   "classif.rpart"</span>
 
 <span class="fu"><a href="../../reference/getBMRMeasureIds.html">getBMRMeasureIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
-<span class="co">## [1] "mmce"</span></pre></div>
+<span class="co">## [1] "mmce"</span></code></pre></div>
 </div>
 <div id="fitted-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fitted-models" class="anchor"></a>Fitted models</h2>
 <p>By default the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> does not contain the fitted models for all learners on all tasks. Since we used <code>models = TRUE</code> when calling <code><a href="../../reference/benchmark.html">benchmark()</a></code>, we can also inspect the created models. The fitted models can be retrieved by function <code><a href="../../reference/getBMRModels.html">getBMRModels()</a></code>. It returns a (possibly nested) <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code> of <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) objects.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRModels.html">getBMRModels</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRModels.html">getBMRModels</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## $`Sonar-example`</span>
 <span class="co">## $`Sonar-example`$classif.lda</span>
 <span class="co">## $`Sonar-example`$classif.lda[[1]]</span>
@@ -538,14 +537,14 @@
 <span class="co">## $`Sonar-example`$classif.lda[[1]]</span>
 <span class="co">## Model for learner.id=classif.lda; learner.class=classif.lda</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 138; features = 60</span>
-<span class="co">## Hyperparameters:</span></pre></div>
+<span class="co">## Hyperparameters:</span></code></pre></div>
 </div>
 <div id="learners-and-measures" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learners-and-measures" class="anchor"></a>Learners and measures</h2>
 <p>Moreover, you can extract the employed <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s and Measure’s (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>).</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../../reference/getBMRLearners.html">getBMRLearners</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRLearners.html">getBMRLearners</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## $classif.lda</span>
 <span class="co">## Learner classif.lda from package MASS</span>
 <span class="co">## Type: classif</span>
@@ -574,7 +573,7 @@
 <span class="co">## Best: 0; Worst: 1</span>
 <span class="co">## Aggregated by: test.mean</span>
 <span class="co">## Arguments: </span>
-<span class="co">## Note: Defined as: mean(response != truth)</span></pre></div>
+<span class="co">## Note: Defined as: mean(response != truth)</span></code></pre></div>
 </div>
 </div>
 <div id="merging-benchmark-results" class="section level1">
@@ -582,8 +581,8 @@
 <a href="#merging-benchmark-results" class="anchor"></a>Merging benchmark results</h1>
 <p>Sometimes after completing a benchmark experiment it turns out that you want to extend it by another <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> or another <code><a href="../../reference/Task.html">Task()</a></code>. In this case you can perform an additional benchmark experiment and then use function <code><a href="../../reference/mergeBenchmarkResults.html">mergeBenchmarkResults()</a></code> to combine the results to a single <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> object that can be accessed and analyzed as usual.</p>
 <p>For example in the benchmark experiment above we applied <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code> and <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code> to the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. We now perform a second experiment using a <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> and quadratic discriminant analysis <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> and merge the results.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="co"># First benchmark result</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># First benchmark result</span>
 <span class="va">bmr</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
@@ -603,12 +602,12 @@
 <span class="co">## 1 Sonar-example          classif.lda      0.3285714</span>
 <span class="co">## 2 Sonar-example        classif.rpart      0.3714286</span>
 <span class="co">## 3 Sonar-example classif.randomForest      0.1285714</span>
-<span class="co">## 4 Sonar-example          classif.qda      0.4000000</span></pre></div>
+<span class="co">## 4 Sonar-example          classif.qda      0.4000000</span></code></pre></div>
 <p>Note that in the above examples in each case a resample description (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) was passed to the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function. For this reason <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code> and <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code> were most likely evaluated on a different training/test set pair than <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> and <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>.</p>
 <p>Differing training/test set pairs across learners pose an additional source of variation in the results, which can make it harder to detect actual performance differences between learners. Therefore, if you suspect that you will have to extend your benchmark experiment by another <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> later on it’s probably easiest to work with <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>s from the start. These can be stored and used for any additional experiments.</p>
 <p>Alternatively, if you used a resample description in the first benchmark experiment you could also extract the <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>s from the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> <code>bmr</code> and pass these to all further <code><a href="../../reference/benchmark.html">benchmark()</a></code> calls.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">instance</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPredictions.html">getBMRPredictions</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">instance</span>
 <span class="va">rin</span>
 <span class="co">## Resample instance for 208 cases.</span>
 <span class="co">## Resample description: holdout with 0.67 split rate.</span>
@@ -628,7 +627,7 @@
 <span class="co">## 1 Sonar-example          classif.lda      0.3285714</span>
 <span class="co">## 2 Sonar-example        classif.rpart      0.3714286</span>
 <span class="co">## 3 Sonar-example classif.randomForest      0.1428571</span>
-<span class="co">## 4 Sonar-example          classif.qda      0.3285714</span></pre></div>
+<span class="co">## 4 Sonar-example          classif.qda      0.3285714</span></code></pre></div>
 </div>
 <div id="benchmark-analysis-and-visualization" class="section level1">
 <h1 class="hasAnchor">
@@ -644,8 +643,8 @@
 <p>It is also possible to choose a different resampling strategy for each <code><a href="../../reference/Task.html">Task()</a></code> by passing a <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code> of the same length as the number of tasks that can contain both resample descriptions (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) and resample instances (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>).</p>
 <p>We use the mean misclassification error <a href="measures.html" target="_blank">mmce</a> as primary performance measure, but also calculate the balanced error rate <a href="measures.html" target="_blank">ber</a> and the training time <code>timetrain</code>.</p>
 <pre><code>## Loading required package: mlbench</code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="co"># Create a list of learners</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a list of learners</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, id <span class="op">=</span> <span class="st">"lda"</span><span class="op">)</span>,
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, id <span class="op">=</span> <span class="st">"rpart"</span><span class="op">)</span>,
@@ -692,12 +691,12 @@
 <span class="co">## 12              0.4108</span>
 <span class="co">## 13              0.0147</span>
 <span class="co">## 14              0.0128</span>
-<span class="co">## 15              0.2335</span></pre></div>
+<span class="co">## 15              0.2335</span></code></pre></div>
 <p>From the aggregated performance values we can see that for the iris- and PimaIndiansDiabetes-example linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) performs well while for all other tasks the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> seems superior. Training takes longer for the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> than for the other learners.</p>
 <p>In order to draw any conclusions from the average performances at least their variability has to be taken into account or, preferably, the distribution of performance values across resampling iterations.</p>
 <p>The individual performances on the 10 folds for every task, learner, and measure are retrieved below.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">perf</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">perf</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##        task.id learner.id iter       mmce        ber</span>
 <span class="co">## 1 iris-example        lda    1 0.06666667 0.05555556</span>
@@ -705,7 +704,7 @@
 <span class="co">## 3 iris-example        lda    3 0.06666667 0.04761905</span>
 <span class="co">## 4 iris-example        lda    4 0.00000000 0.00000000</span>
 <span class="co">## 5 iris-example        lda    5 0.06666667 0.04166667</span>
-<span class="co">## 6 iris-example        lda    6 0.00000000 0.00000000</span></pre></div>
+<span class="co">## 6 iris-example        lda    6 0.00000000 0.00000000</span></code></pre></div>
 <p>A closer look at the result reveals that the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> outperforms the classification tree (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code>) in every instance, while linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) performs better than <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code> most of the time. Additionally <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code> sometimes even beats the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code>. With increasing size of such <code><a href="../../reference/benchmark.html">benchmark()</a></code> experiments, those tables become almost unreadable and hard to comprehend.</p>
 <p><code>mlr</code> features some plotting functions to visualize results of benchmark experiments that you might find useful. Moreover, <code>mlr</code> offers statistical hypothesis tests to assess performance differences between learners.</p>
 </div>
@@ -718,22 +717,22 @@
 <a href="#visualizing-performances" class="anchor"></a>Visualizing performances</h3>
 <p><code><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots()</a></code> creates box or violin plots which show the distribution of performance values across resampling iterations for one performance measure and for all learners and tasks (and thus visualize the output of <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code>).</p>
 <p>Below are both variants, box and violin plots. The first plot shows the <a href="measures.html" target="_blank">mmce</a> and the second plot the <a href="measures.html" target="_blank">ber</a>. Moreover, in the second plot we color the boxes according to the <code>learner.id</code>s.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, measure <span class="op">=</span> <span class="va">mmce</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, measure <span class="op">=</span> <span class="va">mmce</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>,
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>,
   measure <span class="op">=</span> <span class="va">ber</span>, style <span class="op">=</span> <span class="st">"violin"</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span>,
   order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">learner.id</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Warning: `fun.y` is deprecated. Use `fun` instead.</span>
 <span class="co">## Warning: `fun.ymin` is deprecated. Use `fun.min` instead.</span>
-<span class="co">## Warning: `fun.ymax` is deprecated. Use `fun.max` instead.</span></pre></div>
+<span class="co">## Warning: `fun.ymax` is deprecated. Use `fun.max` instead.</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-18-2.png" width="700"></p>
 <p>Note that by default the measure <code>name</code>s and the learner <code>short.name</code>s are used as axis labels.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="va">mmce</span><span class="op">$</span><span class="va">name</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mmce</span><span class="op">$</span><span class="va">name</span>
 <span class="co">## [1] "Mean misclassification error"</span>
 
 <span class="va">mmce</span><span class="op">$</span><span class="va">id</span>
@@ -743,11 +742,11 @@
 <span class="co">## [1] "lda"          "rpart"        "randomForest"</span>
 
 <span class="fu"><a href="../../reference/getBMRLearnerShortNames.html">getBMRLearnerShortNames</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
-<span class="co">## [1] "lda"   "rpart" "rf"</span></pre></div>
+<span class="co">## [1] "lda"   "rpart" "rf"</span></code></pre></div>
 <p>If you prefer the <code>id</code>s like, e.g., mmce and ber set <code>pretty.names = FALSE</code> (as done for the second plot). Of course you can also use the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html">ggplot2::ggplot2()</a></code> functionality like the <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggplot2::labs()</a></code> function to choose completely different labels.</p>
 <p>One question which comes up quite often is how to change the panel headers (which default to the <code><a href="../../reference/Task.html">Task()</a></code> IDs) and the learner names on the x-axis. For example looking at the above plots we would like to remove the “example” suffixes and the “mlbench” prefixes from the panel headers. Moreover, we want uppercase learner labels. Currently, the probably simplest solution is to change the factor levels of the plotted data as shown below.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, measure <span class="op">=</span> <span class="va">mmce</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, measure <span class="op">=</span> <span class="va">mmce</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##        task.id learner.id iter       mmce        ber</span>
 <span class="co">## 1 iris-example        lda    1 0.06666667 0.05555556</span>
@@ -760,15 +759,15 @@
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">task.id</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Iris"</span>, <span class="st">"Ringnorm"</span>, <span class="st">"Waveform"</span>, <span class="st">"Diabetes"</span>, <span class="st">"Sonar"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">learner.id</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"LDA"</span>, <span class="st">"CART"</span>, <span class="st">"RF"</span><span class="op">)</span>
 
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Error rate"</span><span class="op">)</span></pre></div>
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Error rate"</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 </div>
 <div id="visualizing-aggregated-performances" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualizing-aggregated-performances" class="anchor"></a>Visualizing aggregated performances</h3>
 <p>The aggregated performance values (resulting from <code><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances()</a></code>) can be visualized by function <code><a href="../../reference/plotBMRSummary.html">plotBMRSummary()</a></code>. This plot draws one line for each task on which the aggregated values of one performance measure for all learners are displayed. By default, the first measure in the <code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code> of Measure’s (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) passed to <code><a href="../../reference/benchmark.html">benchmark()</a></code> is used, in our example <a href="measures.html" target="_blank">mmce</a>. Moreover, a small vertical jitter is added to prevent overplotting.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 </div>
 <div id="calculating-and-visualizing-ranks" class="section level3">
@@ -776,8 +775,8 @@
 <a href="#calculating-and-visualizing-ranks" class="anchor"></a>Calculating and visualizing ranks</h3>
 <p>Additional to the absolute performance, relative performance, i.e., ranking the learners is usually of interest and might provide valuable additional insight.</p>
 <p>Function <code><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix()</a></code> calculates ranks based on aggregated learner performances of one measure. We choose the <a href="measures.html" target="_blank">mean misclassification error</a>. The rank structure can be visualized by <code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code>.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="va">mmce</span><span class="op">)</span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="va">mmce</span><span class="op">)</span>
 <span class="va">m</span>
 <span class="co">##              PimaIndiansDiabetes-example Sonar-example iris-example</span>
 <span class="co">## lda                                    1             2            1</span>
@@ -786,20 +785,20 @@
 <span class="co">##              mlbench.ringnorm mlbench.waveform</span>
 <span class="co">## lda                         3                2</span>
 <span class="co">## randomForest                1                1</span>
-<span class="co">## rpart                       2                3</span></pre></div>
+<span class="co">## rpart                       2                3</span></code></pre></div>
 <p>Methods with best performance, i.e., with lowest <a href="measures.html" target="_blank">mmce</a>, are assigned the lowest rank. Linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) is best for the iris and PimaIndiansDiabetes-examples while the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code> shows best results on the remaining tasks.</p>
 <p><code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code> with option <code>pos = "tile"</code> shows a corresponding heat map. The ranks are displayed on the x-axis and the learners are color-coded.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, pos <span class="op">=</span> <span class="st">"tile"</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, pos <span class="op">=</span> <span class="st">"tile"</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 <p>A similar plot can also be obtained via <code><a href="../../reference/plotBMRSummary.html">plotBMRSummary()</a></code>. With option <code>trafo = "rank"</code> the ranks are displayed instead of the aggregated performances.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span>, trafo <span class="op">=</span> <span class="st">"rank"</span>, jitter <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span>, trafo <span class="op">=</span> <span class="st">"rank"</span>, jitter <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>Alternatively, you can draw stacked bar charts (the default) or bar charts with juxtaposed bars (<code>pos = "dodge"</code>) that are better suited to compare the frequencies of learners within and across ranks.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, pos <span class="op">=</span> <span class="st">"dodge"</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, pos <span class="op">=</span> <span class="st">"dodge"</span>, order.lrn <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-25-1.png" width="50%"><img src="benchmark_experiments_files/figure-html/unnamed-chunk-25-2.png" width="50%"></p>
 </div>
 </div>
@@ -809,27 +808,19 @@
 <p>Many researchers feel the need to display an algorithm’s superiority by employing some sort of hypothesis testing. As non-parametric tests seem better suited for such benchmark results the tests provided in <code>mlr</code> are the <strong>Overall Friedman test</strong> and the <strong>Friedman-Nemenyi post hoc test</strong>.</p>
 <p>While the ad hoc <code><a href="../../reference/friedmanTestBMR.html">friedmanTestBMR()</a></code> based on <code><a href="https://rdrr.io/r/stats/friedman.test.html">stats::friedman.test()</a></code> is testing the hypothesis whether there is a significant difference between the employed learners, the post hoc <code><a href="../../reference/friedmanPostHocTestBMR.html">friedmanPostHocTestBMR()</a></code> tests for significant differences between all pairs of learners. <em>Non parametric</em> tests often do have less power then their <em>parametric</em> counterparts but less assumptions about underlying distributions have to be made. This often means many <strong>data sets</strong> are needed in order to be able to show significant differences at reasonable significance levels.</p>
 <p>In our example, we want to compare the three learners on the selected data sets. First we might we want to test the hypothesis whether there is a difference between the learners.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="../../reference/friedmanTestBMR.html">friedmanTestBMR</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/friedmanTestBMR.html">friedmanTestBMR</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##  Friedman rank sum test</span>
 <span class="co">## </span>
 <span class="co">## data:  mmce.test.mean and learner.id and task.id</span>
-<span class="co">## Friedman chi-squared = 5.2, df = 2, p-value = 0.07427</span></pre></div>
+<span class="co">## Friedman chi-squared = 5.2, df = 2, p-value = 0.07427</span></code></pre></div>
 <p>In order to keep the computation time for this tutorial small, the <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s are only evaluated on five tasks. This also means that we operate on a relatively low significance level <span class="math inline">\(\alpha = 0.1\)</span>. As we can reject the null hypothesis of the Friedman test at a reasonable significance level we might now want to test where these differences lie exactly.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu"><a href="../../reference/friedmanPostHocTestBMR.html">friedmanPostHocTestBMR</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
-<span class="co">## </span>
-<span class="co">##  Pairwise comparisons using Nemenyi multiple comparison test </span>
-<span class="co">##              with q approximation for unreplicated blocked data </span>
-<span class="co">## </span>
-<span class="co">## data:  mmce.test.mean and learner.id and task.id </span>
-<span class="co">## </span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/friedmanPostHocTestBMR.html">friedmanPostHocTestBMR</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
 <span class="co">##              lda   randomForest</span>
 <span class="co">## randomForest 0.802 -           </span>
-<span class="co">## rpart        0.254 0.069       </span>
-<span class="co">## </span>
-<span class="co">## P value adjustment method: none</span></pre></div>
+<span class="co">## rpart        0.254 0.069</span></code></pre></div>
 <p>At this level of significance, we can reject the null hypothesis that there exists no performance difference between the decision tree (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart::rpart()</a></code>) and the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest::randomForest()</a></code>.</p>
 </div>
 <div id="critical-differences-diagram" class="section level2">
@@ -843,18 +834,18 @@
 </ul>
 <p>The critical difference <span class="math inline">\(\mathit{CD}\)</span> is calculated by <span class="math display">\[\mathit{CD} = q_\alpha \cdot \sqrt{\frac{k(k+1)}{6N}},\]</span> where <span class="math inline">\(N\)</span> denotes the number of tasks, <span class="math inline">\(k\)</span> is the number of learners, and <span class="math inline">\(q_\alpha\)</span> comes from the studentized range statistic divided by <span class="math inline">\(\sqrt{2}\)</span>. For details see <a href="https://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf">Demsar (2006)</a>.</p>
 <p>Function <code><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData()</a></code> does all necessary calculations while function <code><a href="../../reference/plotCritDifferences.html">plotCritDifferences()</a></code> draws the plot. See the tutorial page about <a href="visualization.html" target="_blank">visualization</a> for details on data generation and plotting functions.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="co"># Nemenyi test</span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Nemenyi test</span>
 <span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.1</span>, test <span class="op">=</span> <span class="st">"nemenyi"</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># Bonferroni-Dunn test</span>
 <span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.1</span>, test <span class="op">=</span> <span class="st">"bd"</span>, baseline <span class="op">=</span> <span class="st">"randomForest"</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-28-2.png" width="700"></p>
 </div>
 <div id="custom-plots" class="section level2">
@@ -862,18 +853,18 @@
 <a href="#custom-plots" class="anchor"></a>Custom plots</h2>
 <p>You can easily generate your own visualizations by customizing the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> objects returned by the plots above, retrieve the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> objects and use them as basis for your own plots, or rely on the <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame()</a></code>s returned by <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code> or <code><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances()</a></code>. Here are some examples.</p>
 <p>Instead of boxplots (as in <code><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots()</a></code>) we could create density plots to show the performance values resulting from individual resampling iterations.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Density plots for two tasks</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">mmce</span>,
   colour <span class="op">=</span> <span class="va">learner.id</span>, facets <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">task.id</span>,
   data <span class="op">=</span> <span class="va">perf</span><span class="op">[</span><span class="va">perf</span><span class="op">$</span><span class="va">task.id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iris-example"</span>, <span class="st">"Sonar-example"</span><span class="op">)</span>, <span class="op">]</span>, geom <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
 <p>In order to plot multiple performance measures in parallel, <code>perf</code> is reshaped to long format. Below we generate grouped boxplots showing the error rate and the training time <a href="measures.html" target="_blank">timetrain</a>.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="co"># Compare mmce and timetrain</span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Compare mmce and timetrain</span>
 <span class="va">df</span> <span class="op">=</span> <span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">perf</span>, id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"task.id"</span>, <span class="st">"learner.id"</span>, <span class="st">"iter"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">=</span> <span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">variable</span> <span class="op">!=</span> <span class="st">"ber"</span>, <span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
@@ -888,11 +879,11 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">variable</span>, <span class="va">value</span>,
   data <span class="op">=</span> <span class="va">df</span>, colour <span class="op">=</span> <span class="va">learner.id</span>, geom <span class="op">=</span> <span class="st">"boxplot"</span>,
   xlab <span class="op">=</span> <span class="st">"measure"</span>, ylab <span class="op">=</span> <span class="st">"performance"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">task.id</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">task.id</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
 <p>It might also be useful to assess if learner performances in single resampling iterations, i.e., in one fold, are related. This might help to gain further insight, for example by having a closer look at train and test sets from iterations where one learner performs exceptionally well while another one is fairly bad. Moreover, this might be useful for the construction of ensembles of learning algorithms. Below, function <code><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a></code> from package <code><a href="https://ggobi.github.io/ggally/reference/GGally-package.html">GGally::GGally()</a></code> is used to generate a scatterplot matrix of <a href="measures.html" target="_blank">mean misclassification errors</a> on the <code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html">mlbench::Sonar()</a></code> data set.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, task.id <span class="op">=</span> <span class="st">"Sonar-example"</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">perf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, task.id <span class="op">=</span> <span class="st">"Sonar-example"</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">=</span> <span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">perf</span>, id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"task.id"</span>, <span class="st">"learner.id"</span>, <span class="st">"iter"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">=</span> <span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"mmce"</span>, <span class="op">]</span>
 <span class="va">df</span> <span class="op">=</span> <span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/cast.html">dcast</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">task.id</span> <span class="op">+</span> <span class="va">iter</span> <span class="op">~</span> <span class="va">variable</span> <span class="op">+</span> <span class="va">learner.id</span><span class="op">)</span>
@@ -908,7 +899,7 @@
 <span class="fu">GGally</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">## Registered S3 method overwritten by 'GGally':</span>
 <span class="co">##   method from   </span>
-<span class="co">##   +.gg   ggplot2</span></pre></div>
+<span class="co">##   +.gg   ggplot2</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-32-1.png" width="700"></p>
 </div>
 </div>
