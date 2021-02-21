@@ -1,3 +1,8 @@
+# mlr 2.19.0
+
+- Internal changes only.
+
+
 # mlr 2.18.0.9003
 
 - Add filter `FSelectoRcpp::relief()`. This C++ based implementation of the RelieF filter algorithm is way faster than the Java based one from the {FSelector} package (#2804)

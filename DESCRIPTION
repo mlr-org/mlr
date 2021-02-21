@@ -1,6 +1,6 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.18.0.9003
+Version: 2.19.0
 Authors@R:
     c(person(given = "Bernd",
              family = "Bischl",
