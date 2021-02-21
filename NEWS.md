@@ -1,33 +1,14 @@
 # mlr 2.19.0
 
-- Internal changes only.
-
-
-# mlr 2.18.0.9003
-
 - Add filter `FSelectoRcpp::relief()`. This C++ based implementation of the RelieF filter algorithm is way faster than the Java based one from the {FSelector} package (#2804)
 - Fix S3 print method for `FilterWrapper` objects
 - Make ibrier measure work with survival tasks (#2789)
-
-
-# mlr 2.18.0.9002
-
 - Switch to testthat v3 (#2796)
 - Enable parallel tests (#2796)
-- replace package PMCMR by PMCMRplus (#2796)
+- Replace package PMCMR by PMCMRplus (#2796)
 - Remove CoxBoost learner due to CRAN removal
-- Silence warnings in tests
-
-# mlr 2.18.0.9001
-
 - Warning if `fix.factors.prediction = TRUE` causes the generation of NAs for new factor levels in prediction (@jakob-r, #2794)
 - Clear error message if prediction of wrapped learner has not the same length as `newdata` (@jakob-r, #2794)
-
-
-# mlr 2.18.0.9000
-
-- Internal changes.
-
 
 # mlr 2.18.0
 
