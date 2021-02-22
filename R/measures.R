@@ -1375,7 +1375,7 @@ cindex = makeMeasure(
 #' @references
 #' H. Uno et al.
 #' *On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data*
-#' Statistics in medicine. 2011;30(10):1105-1117. <https://doi.org/10.1002/sim.4154>.
+#' Statistics in medicine. 2011;30(10):1105-1117. \doi{10.1002/sim.4154}.
 cindex.uno = makeMeasure(
   id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),

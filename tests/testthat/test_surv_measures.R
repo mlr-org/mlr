@@ -34,6 +34,8 @@ test_that("survival measures do not do stupid things", {
 })
 
 test_that("setting measure pars works", {
+  requirePackagesOrSkip("survAUC", default.method = "load")
+
   mod = train("surv.rpart", wpbc.task)
   pred = predict(mod, wpbc.task)
 
@@ -58,6 +60,8 @@ test_that("setting measure pars works", {
 
 test_that("hand constructed tests", {
   requirePackagesOrSkip("Hmisc", default.method = "load")
+  requirePackagesOrSkip("survAUC", default.method = "load")
+
   n = 100
   time = sort(rexp(n, 0.1)) + 1
   data = data.frame(time = time, status = 1, x1 = order(time))
@@ -76,8 +80,10 @@ test_that("hand constructed tests", {
   expect_equal(unname(perf), c(1, 1, 0.99))
 })
 
-
 test_that("ibrier measure works with surv tasks", {
+  requirePackagesOrSkip("survAUC", default.method = "load")
+  requirePackagesOrSkip("pec", default.method = "load")
+
   set.seed(getOption("mlr.debug.seed"))
   rin = makeResampleInstance(makeResampleDesc("CV", iters = 2), task = wpbc.task)
   lrn = makeLearner("surv.coxph", x = TRUE)

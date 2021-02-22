@@ -72,7 +72,7 @@
 #' `ntree = se.ntree`, the latter of which controls the number of trees in the
 #' individual random forests which are bootstrapped. The "noisy bootstrap" is
 #' executed when `se.ntree < ntree` which is less computationally expensive. A
-#' Monte-Carlo bias correction may make the latter option prefarable in many
+#' Monte-Carlo bias correction may make the latter option preferable in many
 #' cases. Defaults are `se.boot = 50` and `se.ntree = 100`.
 #'
 #' \item If `se.method = "sd"`, the default, the standard deviation of the
@@ -105,20 +105,21 @@
 #' the target feature in training data, respectively.
 #'
 #' The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
-#' from WEKA, see <https://weka.wikispaces.com/ZeroR>.
+#' from WEKA.
 #'
 #' @section classif.featureless:
 #'
 #' Method \dQuote{majority} predicts always the majority class for each new
-#' observation. In the case of ties, one randomly sampled, constant class is predicted
-#' for all observations in the test set.
-#' This method is used as the default. It is very similar to the ZeroR classifier
-#' from WEKA (see <https://weka.wikispaces.com/ZeroR>). The only difference is
+#' observation. In the case of ties, one randomly sampled, constant class is
+#' predicted for all observations in the test set.
+#' This method is used as the default. It is very similar to the ZeroR
+#' classifier from WEKA. The only difference is
 #' that ZeroR always predicts the first class of the tied class values instead
 #' of sampling them randomly.
 #'
-#' Method \dQuote{sample-prior} always samples a random class for each individual test
-#' observation according to the prior probabilities observed in the training data.
+#' Method \dQuote{sample-prior} always samples a random class for each
+#' individual test observation according to the prior probabilities observed in
+#' the training data.
 #'
 #' If you opt to predict probabilities, the class probabilities always
 #' correspond to the prior probabilities observed in the training data.

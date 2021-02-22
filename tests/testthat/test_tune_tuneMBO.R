@@ -1,5 +1,6 @@
 
 test_that("tuneMBO", {
+  requirePackagesOrSkip("rgenoud", default.method = "load")
   n.des = 8
   n.iter = 2
   res = makeResampleDesc("Holdout")

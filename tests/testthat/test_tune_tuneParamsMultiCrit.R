@@ -1,5 +1,7 @@
 
 test_that("tuneParamsMultiCrit", {
+  requirePackagesOrSkip("emoa", default.method = "load")
+
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -75,6 +77,9 @@ test_that("tuneParamsMultiCrit", {
 
 
 test_that("tuneParamsMultiCrit works with low number of evals and dependencies", {
+
+  requirePackagesOrSkip("emoa", default.method = "load")
+
   # we had a bug here triggered thru code in PH
   ps = makeParamSet(
     makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
@@ -92,6 +97,8 @@ test_that("tuneParamsMultiCrit works with low number of evals and dependencies",
 
 # FIXME: I am not sure how we can check wich value is imputed for the optimizer?
 test_that("y imputing works", {
+  requirePackagesOrSkip("emoa", default.method = "load")
+
   configureMlr(on.learner.error = "quiet")
   lrn = makeLearner("classif.__mlrmocklearners__2")
   rdesc = makeResampleDesc("Holdout")
@@ -110,6 +117,8 @@ test_that("y imputing works", {
 })
 
 test_that("tuneParamsMultiCrit with budget", {
+  requirePackagesOrSkip("emoa", default.method = "load")
+
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -162,6 +171,7 @@ test_that("tuneParamsMultiCrit with budget", {
 })
 
 test_that("plotTuneMultiCritResult works with pretty.names", {
+  requirePackagesOrSkip("emoa", default.method = "load")
   lrn = makeLearner("classif.rpart")
   ps = makeParamSet(
     makeDiscreteParam("minsplit", values = c(5, 10))
@@ -174,6 +184,7 @@ test_that("plotTuneMultiCritResult works with pretty.names", {
 })
 
 test_that("tuneParamsMultiCrit with resample.fun", {
+  requirePackagesOrSkip("emoa", default.method = "load")
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -210,6 +221,8 @@ test_that("tuneParamsMultiCrit with resample.fun", {
 })
 
 test_that("check n.objectives for MBO multi crit", {
+  requirePackagesOrSkip("emoa", default.method = "load")
+
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(

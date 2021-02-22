@@ -2,6 +2,8 @@
 test_that("parallel resampling", {
   skip_on_os("mac")
   skip_on_ci()
+  skip_on_cran()
+
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
@@ -20,6 +22,8 @@ test_that("parallel resampling", {
 test_that("parallel tuning", {
   skip_on_os("mac")
   skip_on_ci()
+  skip_on_cran()
+
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
@@ -40,6 +44,7 @@ test_that("parallel tuning", {
 test_that("parallel featsel", {
   skip_on_os("mac")
   skip_on_ci()
+  skip_on_cran()
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
@@ -59,6 +64,8 @@ test_that("parallel featsel", {
 test_that("parallel exporting of options works", {
   skip_on_os("mac")
   skip_on_ci()
+  skip_on_cran()
+
   doit = function(mode, level) {
 
     data = iris
@@ -82,6 +89,8 @@ test_that("parallel exporting of options works", {
 test_that("parallel partial dependence", {
   skip_on_os("mac")
   skip_on_ci()
+  skip_on_cran()
+
   doit = function(mode) {
     lrn = makeLearner("regr.rpart")
     fit = train(lrn, regr.task)
@@ -98,6 +107,8 @@ test_that("parallel partial dependence", {
 test_that("parallel ensembles", {
   skip_on_os("mac")
   skip_on_ci()
+  skip_on_cran()
+
   doit = function(mode, level) {
 
     on.exit(parallelStop())
