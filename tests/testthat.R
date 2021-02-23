@@ -1,2 +1,5 @@
 library(testthat)
-test_check("mlr")
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+  set.seed(getOption("mlr.debug.seed"))
+  test_check("mlr")
+}

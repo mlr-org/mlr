@@ -14,6 +14,8 @@ test_that("names for minimize are set correctly", {
 })
 
 test_that("tuneParams with resample.fun", {
+  cl =
+
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -63,6 +65,7 @@ test_that("tuneParams with resample.fun", {
 })
 
 test_that("tuneParams output works as documented", {
+  cl =
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -96,6 +99,8 @@ test_that("tuneParams output works as documented", {
 })
 
 test_that("tuneParams output works as documented", {
+  cl =
+
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -130,6 +135,8 @@ test_that("tuneParams output works as documented", {
 
 test_that("tuning with a fixed ensemble methods and varying base methods works", {
 
+  cl =
+
   # TODO: make it possible to choose arbitrary number of base.methods -> cannot
   # tune an argument of a param. We need to make makeDiscreteVectorParam more
   # flexible to allow more than one ensemble.method
@@ -160,6 +167,8 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
 })
 
 test_that("tuning with a fixed ensemble methods and varying base methods works", {
+
+  cl =
 
   # TODO: choose arbitrary number of base.methods -> cannot tune an argument of
   # a param. We need to make makeDiscreteVectorParam more flexible. allow more

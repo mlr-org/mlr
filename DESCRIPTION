@@ -254,6 +254,7 @@ Suggests:
     sda,
     sf,
     smoof,
+    snow,
     sparseLDA,
     stepPlr,
     survAUC,

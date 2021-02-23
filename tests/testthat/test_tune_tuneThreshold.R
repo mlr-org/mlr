@@ -1,5 +1,6 @@
 
 test_that("tuneThreshold", {
+  requirePackagesOrSkip("lhs", default.method = "load")
 
   # binary classes, 1 th
   lrn = makeLearner("classif.lda", predict.type = "prob")
