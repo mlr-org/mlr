@@ -14,13 +14,24 @@ kbd,
 pre,
 samp {
   font-family: IBM Plex Mono, monospace;
-  font-size: 0.9em;
+}
+
+pre code {
+  font-size: 0.9em; !important
 }
 
 /* headers */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Roboto", sans;
     font-weight: 500;
+}
+
+h1 {
+  font-size: 35px;
+}
+
+h2 {
+  font-size: 30px;
 }
 
 /* navbar */
@@ -41,7 +52,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 body {
   /* font-family: Crimson Text, serif; */
   font-family: "Roboto" , sans;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 1.5;
   color: black;
