@@ -43,6 +43,7 @@ getHyperParsString = function(learner, show.missing.values = TRUE) {
     learner$par.set$pars$fw.base.methods = NULL
     learner$par.set$pars$fw.method = NULL
     learner$par.vals$fw.method = NULL
+    learner$par.vals$fw.base.methods = NULL
   }
   hps = getHyperPars(learner)
   ns = names(hps)
