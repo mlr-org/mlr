@@ -20,6 +20,10 @@ pre code {
   font-size: 0.9em; !important
 }
 
+pre {
+  font-size: 0.9em; !important
+}
+
 /* headers */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Roboto", sans;
@@ -27,11 +31,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 h1 {
-  font-size: 35px;
+  font-size: 30px;
 }
 
 h2 {
-  font-size: 30px;
+  font-size: 27px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 21px;
 }
 
 /* navbar */
