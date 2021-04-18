@@ -84,7 +84,7 @@ For left and right censored problems these consist of the survival time and a bi
 For interval censored data the two target columns must be specified in the ``"interval2"`` format (see `survival::Surv()`).
 
 ```{r}
-data(lung, package = "survival")
+data(cancer, package = "survival")
 lung$status = (lung$status == 2) # convert to logical
 surv.task = makeSurvTask(data = lung, target = c("time", "status"))
 surv.task

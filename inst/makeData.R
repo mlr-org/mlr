@@ -51,7 +51,7 @@ wpbc.task = makeSurvTask("wpbc-example", data = wpbc, target = c("time", "status
 use_data(wpbc.task, overwrite = TRUE, compress = COMPRESSION)
 
 set.seed(DATASEED)
-data(lung, package = "survival")
+data(cancer, package = "survival")
 lung$status = lung$status - 1
 lung = lung[complete.cases(lung), ]
 lung.task = makeSurvTask("lung-example", data = lung, target = c("time", "status"))
