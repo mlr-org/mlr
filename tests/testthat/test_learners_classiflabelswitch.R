@@ -50,6 +50,8 @@ test_that("no labels are switched", {
   # because of missing rJava for bartMachine
   skip_on_os("windows")
 
+  set.seed(getOption("mlr.debug.seed"))
+
   configureMlr(on.learner.error = "warn", show.learner.output = FALSE)
 
 
