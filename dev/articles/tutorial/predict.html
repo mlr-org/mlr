@@ -239,7 +239,7 @@
 </li>
 <li>
   <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
-    <span class="fa fa fa fa-comments"></span>
+    <span class="fa fa-comments"></span>
      
   </a>
 </li>
@@ -251,7 +251,7 @@
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fas fa-rss"></span>
+    <span class="fa fa-rss"></span>
      
   </a>
 </li>
@@ -659,7 +659,9 @@
 <p>The plot title displays the ID of the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (in the following example CART), its parameters, its training performance and its cross-validation performance. <a href="measures.html" target="_blank">mmce</a> stands for <em>mean misclassification error</em>, i.e., the error rate. See the sections on <a href="performance.html" target="_blank">performance</a> and <a href="resample.html" target="_blank">resampling</a> for further explanations.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, id <span class="op">=</span> <span class="st">"CART"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
+<span class="co">## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
+<span class="co">## "none")` instead.</span></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
 <p>For <em>clustering</em> we also get a scatter plot of two selected features. The color of the points indicates the predicted cluster.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -672,7 +674,9 @@
 <p><img src="predict_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
 <p>The 2D variant, as in the classification case, generates a scatter plot of 2 features. The fill color of the dots illustrates the value of the target variable <code>"medv"</code>, the background colors show the estimated mean. The plot does not represent the estimated standard error.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lstat"</span>, <span class="st">"rm"</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">bh.task</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lstat"</span>, <span class="st">"rm"</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">bh.task</span><span class="op">)</span>
+<span class="co">## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
+<span class="co">## "none")` instead.</span></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
   </div>
