@@ -510,6 +510,9 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Learners that accept observation weights</span>
 <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
+<span class="co">## Warning in listLearners.character("classif", properties = "weights"): The following learners could not be constructed, probably because their packages are not installed:</span>
+<span class="co">## classif.rrlda</span>
+<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="co">##                       class         package</span>
 <span class="co">## 1          classif.binomial           stats</span>
 <span class="co">## 2               classif.C50             C50</span>
@@ -538,6 +541,9 @@
 
 <span class="co"># Learners that can deal with class weights</span>
 <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"class.weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
+<span class="co">## Warning in listLearners.character("classif", properties = "class.weights"): The following learners could not be constructed, probably because their packages are not installed:</span>
+<span class="co">## classif.rrlda</span>
+<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="co">##                            class      package</span>
 <span class="co">## 1                   classif.ksvm      kernlab</span>
 <span class="co">## 2       classif.LiblineaRL1L2SVC    LiblineaR</span>
