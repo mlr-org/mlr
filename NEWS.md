@@ -1,3 +1,10 @@
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# mlr 2.19.0.9001
+
+- Fixed `information.gain` filter calculation. Before, `chi.squared` was calculated even though `information.gain` was requested due to a glitch in the filter naming (#2816, @jokokojote)
+
+
 # mlr 2.19.0.9000
 
 - Internal changes only.
