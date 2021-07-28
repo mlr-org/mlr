@@ -606,7 +606,7 @@ makeFilter(
   })
 
 chi.squared = makeFilter(
-  name = "FSelector_gain.ratio",
+  name = "FSelector_chi.squared",
   desc = "Chi-squared statistic of independence between feature and target",
   pkg = "FSelector",
   supported.tasks = c("classif", "regr"),
