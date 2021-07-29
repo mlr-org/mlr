@@ -88,7 +88,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr <small>v2.19.0.9000</small></a>
+        <a class="navbar-brand" href="../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -373,6 +373,14 @@
 </h1>
 <ul>
 <li>Internal changes only.</li>
+</ul>
+</div>
+    <div id="mlr-21909001" class="section level1">
+<h1 class="page-header" data-toc-text="2.19.0.9001">
+<a href="#mlr-21909001" class="anchor"></a>mlr 2.19.0.9001<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fixed <code>information.gain</code> filter calculation. Before, <code>chi.squared</code> was calculated even though <code>information.gain</code> was requested due to a glitch in the filter naming (<a href='https://github.com/mlr-org/mlr/issues/2816'>#2816</a>, <a href='https://github.com/jokokojote'>@jokokojote</a>)</li>
 </ul>
 </div>
   </div>
