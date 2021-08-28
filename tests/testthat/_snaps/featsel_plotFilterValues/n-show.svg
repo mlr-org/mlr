@@ -21,37 +21,37 @@
 <rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
 </g>
 <defs>
-  <clipPath id='cpMjguMDV8NzE0LjUyfDIyLjc4fDUxMC41MQ=='>
-    <rect x='28.05' y='22.78' width='686.47' height='487.72' />
+  <clipPath id='cpMjcuOTB8NzE0LjUyfDIyLjc4fDUxMC43NA=='>
+    <rect x='27.90' y='22.78' width='686.62' height='487.96' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMjguMDV8NzE0LjUyfDIyLjc4fDUxMC41MQ==)'>
-<rect x='28.05' y='22.78' width='686.47' height='487.72' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
-<polyline points='28.05,417.20 714.52,417.20 ' style='stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='28.05,274.92 714.52,274.92 ' style='stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='28.05,132.64 714.52,132.64 ' style='stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='28.05,488.34 714.52,488.34 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='28.05,346.06 714.52,346.06 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='28.05,203.78 714.52,203.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='28.05,61.50 714.52,61.50 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='215.27,510.51 215.27,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<polyline points='527.30,510.51 527.30,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
-<rect x='74.85' y='44.95' width='280.83' height='443.38' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #595959;' />
-<rect x='386.89' y='390.78' width='280.83' height='97.56' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #595959;' />
+<g clip-path='url(#cpMjcuOTB8NzE0LjUyfDIyLjc4fDUxMC43NA==)'>
+<rect x='27.90' y='22.78' width='686.62' height='487.96' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
+<polyline points='27.90,417.39 714.52,417.39 ' style='stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='27.90,275.04 714.52,275.04 ' style='stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='27.90,132.69 714.52,132.69 ' style='stroke-width: 0.53; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='27.90,488.56 714.52,488.56 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='27.90,346.21 714.52,346.21 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='27.90,203.86 714.52,203.86 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='27.90,61.52 714.52,61.52 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='215.16,510.74 215.16,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
+<polyline points='527.26,510.74 527.26,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
+<rect x='74.71' y='44.96' width='280.89' height='443.60' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #595959;' />
+<rect x='386.81' y='390.96' width='280.89' height='97.61' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #595959;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<text x='23.12' y='491.36' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='23.12' y='349.08' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='23.12' y='206.80' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='23.12' y='64.52' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>3</text>
-<polyline points='25.31,488.34 28.05,488.34 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='25.31,346.06 28.05,346.06 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='25.31,203.78 28.05,203.78 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='25.31,61.50 28.05,61.50 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='215.27,513.25 215.27,510.51 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='527.30,513.25 527.30,510.51 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text transform='translate(219.55,519.72) rotate(-45)' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='49.42px' lengthAdjust='spacingAndGlyphs'>Petal.Length</text>
-<text transform='translate(531.58,519.72) rotate(-45)' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='51.87px' lengthAdjust='spacingAndGlyphs'>Sepal.Length</text>
-<text x='28.05' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='287.25px' lengthAdjust='spacingAndGlyphs'>iris-example (2 out of 4 features), filter = variance</text>
+<text x='22.97' y='491.59' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='22.97' y='349.24' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='22.97' y='206.89' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='22.97' y='64.54' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>3</text>
+<polyline points='25.16,488.56 27.90,488.56 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='25.16,346.21 27.90,346.21 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='25.16,203.86 27.90,203.86 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='25.16,61.52 27.90,61.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='215.16,513.48 215.16,510.74 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='527.26,513.48 527.26,510.74 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<text transform='translate(219.44,519.96) rotate(-45)' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='49.42px' lengthAdjust='spacingAndGlyphs'>Petal.Length</text>
+<text transform='translate(531.54,519.96) rotate(-45)' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='51.87px' lengthAdjust='spacingAndGlyphs'>Sepal.Length</text>
+<text x='27.90' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='287.25px' lengthAdjust='spacingAndGlyphs'>iris-example (2 out of 4 features), filter = variance</text>
 </g>
 </svg>
