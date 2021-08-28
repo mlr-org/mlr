@@ -1,5 +1,6 @@
 
 test_that("smote works", {
+  skip_on_os("mac")
   y = binaryclass.df[, binaryclass.target]
   tab1 = table(y)
   task = smote(binaryclass.task, rate = 2)
@@ -21,6 +22,7 @@ test_that("smote works", {
 })
 
 test_that("smote works with rate 1 (no new examples)", {
+  skip_on_os("mac")
   y = binaryclass.df[, binaryclass.target]
   tab1 = table(y)
   task = smote(binaryclass.task, rate = 1)
@@ -37,6 +39,7 @@ test_that("smote works with rate 1 (no new examples)", {
 })
 
 test_that("smote works with only factor features", {
+  skip_on_os("mac")
   n = 10
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
@@ -52,6 +55,7 @@ test_that("smote works with only factor features", {
 })
 
 test_that("smote wrapper", {
+  skip_on_os("mac")
   set.seed(getOption("mlr.debug.seed"))
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
@@ -73,6 +77,7 @@ test_that("smote wrapper", {
 })
 
 test_that("smote works with only integer features", {
+  skip_on_os("mac")
   dat = getTaskData(pid.task)
   i = sapply(dat, is.numeric)
   dat[, i] = lapply(dat[, i], as.integer)
@@ -82,6 +87,7 @@ test_that("smote works with only integer features", {
 })
 
 test_that("smote works with constant factor features", {
+  skip_on_os("mac")
 
   # covr has some issues here while testthat works
   if (Sys.getenv("R_COVR") == "") {
