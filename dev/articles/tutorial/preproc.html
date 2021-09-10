@@ -389,12 +389,10 @@
 <span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span>
 <span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span>
-
 <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span>
 <span class="co">## Hyperparameters:</span>
-
 <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## Call:</span>
 <span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span>
@@ -504,7 +502,6 @@
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span>
 <span class="co">## mmce.test.mean=0.1779848</span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span>
 <span class="co">## 1            1        plug-in      0.4518288</span>
@@ -667,7 +664,6 @@
 <span class="co">## Properties: numerics,factors,weights</span>
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span>
-
 <span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
 <span class="co">##            Type len    Def      Constr Req Tunable Trafo</span>
 <span class="co">## center  logical   -      -           -   -    TRUE     -</span>
@@ -697,7 +693,6 @@
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: decay=0; center=FALSE; scale=TRUE</span>
 <span class="co">## mse.test.mean=15.3770780</span>
-
 <span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
 <span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##    decay center scale mse.test.mean dob eol error.message</span>

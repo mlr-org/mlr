@@ -329,7 +329,7 @@
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span><span class="op">(</span><span class="va">fv2</span>, filter <span class="op">=</span> <span class="st">"FSelectorRcpp_information.gain"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
 <p>By default <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code> will create facetted subplots if multiple filter methods are passed as input to <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>.</p>
 <p>According to the <code>"information.gain"</code> measure, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information about the target variable <code>Species</code>.</p>
@@ -485,7 +485,6 @@
 <span class="co">## Model for learner.id=regr.ksvm.filtered; learner.class=FilterWrapper</span>
 <span class="co">## Trained on: task.id = BostonHousing-example; obs = 506; features = 13</span>
 <span class="co">## Hyperparameters: fit=FALSE,C=46.1,sigma=0.817,fw.perc=0.416</span>
-
 <span class="fu"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## [1] "indus"   "nox"     "rm"      "ptratio" "lstat"</span></code></pre></div>
 </div>

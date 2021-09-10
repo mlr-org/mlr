@@ -335,7 +335,6 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## FALSE  TRUE </span>
 <span class="co">##   251   500 </span>
 <span class="co">## Positive class: TRUE</span>
-
 <span class="va">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 
 <span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"SpRepCV"</span>, fold <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
@@ -373,7 +372,6 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## </span>
 <span class="co">## Aggregated Result: auc.test.mean=0.6157643</span>
 <span class="co">## </span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span>
 <span class="co">## [1] 0.6157643</span></code></pre></div>
 <p>We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting. To do so, we simply choose <code>RepCV</code> instead of <code>SpRepCV</code>. There is no need to remove <code>coordinates</code> from the task as it is only used if <code>SpCV</code> or <code>SpRepCV</code> is selected as the resampling strategy.</p>
@@ -419,7 +417,6 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span class="co">## </span>
 <span class="co">## Aggregated Result: auc.test.mean=0.7621898</span>
 <span class="co">## </span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span>
 <span class="co">## [1] 0.7621898</span></code></pre></div>
 <p>The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC.</p>

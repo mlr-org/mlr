@@ -333,7 +333,6 @@
 <span class="co">## selected.learner             -    TRUE     -</span>
 <span class="co">## classif.ksvm.sigma           Y    TRUE     Y</span>
 <span class="co">## classif.randomForest.ntree   Y    TRUE     -</span>
-
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span><span class="op">(</span>maxExperiments <span class="op">=</span> <span class="fl">200L</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
@@ -374,7 +373,6 @@
 <span class="va">res</span>
 <span class="co">## Tune multicrit result:</span>
 <span class="co">## Points on front: 5</span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       selected.learner classif.ksvm.sigma classif.randomForest.ntree</span>
 <span class="co">## 1         classif.ksvm           5.459183                         NA</span>

@@ -352,7 +352,6 @@
 <span class="va">credit.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GermanCredit</span>, target <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span>
 <span class="va">credit.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span><span class="op">(</span><span class="va">credit.task</span><span class="op">)</span>
 <span class="co">## Removing 2 columns: Purpose.Vacation,Personal.Female.Single</span>
-
 <span class="va">credit.task</span>
 <span class="co">## Supervised task: GermanCredit</span>
 <span class="co">## Type: classif</span>
@@ -369,7 +368,6 @@
 <span class="co">##  Bad Good </span>
 <span class="co">##  300  700 </span>
 <span class="co">## Positive class: Bad</span>
-
 <span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">credit.task</span><span class="op">)</span>
 <span class="va">costs</span>
@@ -446,7 +444,6 @@
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## credit.costs         mmce </span>
 <span class="co">##        0.774        0.214</span>
-
 <span class="co"># Performance with theoretical thresholds</span>
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred.th</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## credit.costs         mmce </span>
@@ -538,7 +535,6 @@
 <span class="co">## 22           classif.ranger          ranger</span>
 <span class="co">## 23            classif.rpart           rpart</span>
 <span class="co">## 24          classif.xgboost         xgboost</span>
-
 <span class="co"># Learners that can deal with class weights</span>
 <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"class.weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
 <span class="co">## Warning in listLearners.character("classif", properties = "class.weights"): The following learners could not be constructed, probably because their packages are not installed:</span>
@@ -608,7 +604,6 @@
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: wcw.weight=8</span>
 <span class="co">## credit.costs.test.mean=0.5139601,mmce.test.mean=0.4020038</span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">tune.res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">##    wcw.weight credit.costs.test.mean mmce.test.mean</span>
 <span class="co">## 1           4              0.5439032      0.3279867</span>
@@ -844,7 +839,6 @@
 <span class="co">## Properties: twoclass,multiclass,numerics,factors</span>
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: trace=FALSE</span>
-
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">costsens.task</span><span class="op">)</span>
 <span class="va">mod</span>
 <span class="co">## Model for learner.id=costsens.classif.multinom; learner.class=CostSensWeightedPairsWrapper</span>

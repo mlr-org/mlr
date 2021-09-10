@@ -385,7 +385,6 @@
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">my.mmce</span><span class="op">)</span>
 <span class="co">## my.mmce </span>
 <span class="co">##    0.02</span>
-
 <span class="co"># Apparently the result coincides with the mlr implementation</span>
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">mmce</span><span class="op">)</span>
 <span class="co">## mmce </span>
@@ -470,7 +469,6 @@
 <span class="co">## 4            0.06          0.04          0.10</span>
 <span class="co">## 5            0.06          0.02          0.08</span>
 <span class="co">## 6            0.22          0.28          0.50</span>
-
 <span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html">position_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.005</span>, height <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mmce.test.range</span>, y <span class="op">=</span> <span class="va">mmce.test.mean</span>, ymax <span class="op">=</span> <span class="va">mmce.test.max</span>, ymin <span class="op">=</span> <span class="va">mmce.test.min</span>,
   color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">Petal.Width</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">perf.data</span><span class="op">)</span> <span class="op">+</span>

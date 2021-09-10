@@ -325,7 +325,6 @@ Resampling Figure
 <span class="co">## Resample description: holdout with 0.67 split rate.</span>
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
-
 <span class="va">cv3</span>
 <span class="co">## Resample description: cross-validation with 3 iterations.</span>
 <span class="co">## Predict: test</span>
@@ -374,11 +373,9 @@ Resampling Figure
 <span class="co">##  [1] "learner.id"     "task.id"        "task.desc"      "measures.train"</span>
 <span class="co">##  [5] "measures.test"  "aggr"           "pred"           "models"        </span>
 <span class="co">##  [9] "err.msgs"       "err.dumps"      "extract"        "runtime"</span>
-
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mse.test.mean </span>
 <span class="co">##      23.53858</span>
-
 <span class="va">r</span><span class="op">$</span><span class="va">measures.test</span>
 <span class="co">##   iter      mse</span>
 <span class="co">## 1    1 19.86306</span>
@@ -495,11 +492,9 @@ Resampling Figure
 <span class="co">## 4  26     R        R    1 test</span>
 <span class="co">## 5 187     M        R    1 test</span>
 <span class="co">## 6  89     R        M    1 test</span>
-
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] R M R R M R</span>
 <span class="co">## Levels: M R</span>
-
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] R M M R R M</span>
 <span class="co">## Levels: M R</span></code></pre></div>
@@ -872,7 +867,6 @@ Resampling Figure
 <span class="co">## </span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.0333333</span>
 <span class="co">## </span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">pred</span><span class="op">$</span><span class="va">instance</span><span class="op">$</span><span class="va">train.inds</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##   [1]  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47  48</span>
 <span class="co">##  [19]  49  50  51  52  53  54  55  56  57  58  59  60  61  62  63  64  65  66</span>
@@ -1031,7 +1025,6 @@ Resampling Figure
 <span class="co">## Resample description: cross-validation with 3 iterations.</span>
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
-
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">rdesc</span><span class="op">)</span>
 <span class="co">## List of 6</span>
 <span class="co">##  $ fixed      : logi FALSE</span>
@@ -1041,7 +1034,6 @@ Resampling Figure
 <span class="co">##  $ predict    : chr "test"</span>
 <span class="co">##  $ stratify   : logi FALSE</span>
 <span class="co">##  - attr(*, "class")= chr [1:2] "CVDesc" "ResampleDesc"</span>
-
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Subsample"</span>, stratify.cols <span class="op">=</span> <span class="st">"chas"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## List of 8</span>
 <span class="co">##  $ split        : num 0.667</span>
@@ -1063,7 +1055,6 @@ Resampling Figure
 <span class="co">## Resample description: cross-validation with 3 iterations.</span>
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
-
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">rin</span><span class="op">)</span>
 <span class="co">## List of 5</span>
 <span class="co">##  $ desc      :List of 6</span>
@@ -1085,7 +1076,6 @@ Resampling Figure
 <span class="co">##   ..$ : int [1:50] 2 8 9 13 18 24 25 26 28 30 ...</span>
 <span class="co">##  $ group     : Factor w/ 0 levels: </span>
 <span class="co">##  - attr(*, "class")= chr "ResampleInstance"</span>
-
 <span class="co"># Create a resample instance given the size of the data set</span>
 <span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="va">rdesc</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">rin</span><span class="op">)</span>
@@ -1109,7 +1099,6 @@ Resampling Figure
 <span class="co">##   ..$ : int [1:50] 1 4 5 8 9 11 14 16 17 21 ...</span>
 <span class="co">##  $ group     : Factor w/ 0 levels: </span>
 <span class="co">##  - attr(*, "class")= chr "ResampleInstance"</span>
-
 <span class="co"># Access the indices of the training observations in iteration 3</span>
 <span class="va">rin</span><span class="op">$</span><span class="va">train.inds</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>
 <span class="co">##   [1]  38  94  73  90  85  36  19 104 127  55 103  91  44  49 132  59  34  12</span>
@@ -1134,7 +1123,6 @@ Resampling Figure
 <span class="va">r.lda</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean </span>
 <span class="co">##           0.02</span>
-
 <span class="va">r.rpart</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean </span>
 <span class="co">##           0.06</span></code></pre></div>
@@ -1242,13 +1230,11 @@ Resampling Figure
 <span class="co">## </span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.0600000,mmce.train.mean=0.0333333</span>
 <span class="co">## </span>
-
 <span class="va">r</span><span class="op">$</span><span class="va">measures.train</span>
 <span class="co">##   iter mmce mmce</span>
 <span class="co">## 1    1 0.03 0.03</span>
 <span class="co">## 2    2 0.04 0.04</span>
 <span class="co">## 3    3 0.03 0.03</span>
-
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">##  mmce.test.mean mmce.train.mean </span>
 <span class="co">##      0.06000000      0.03333333</span></code></pre></div>
@@ -1280,7 +1266,6 @@ Resampling Figure
 <span class="co">## Aggregated by: b632</span>
 <span class="co">## Arguments: </span>
 <span class="co">## Note: Defined as: mean(response != truth)</span>
-
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">mmceB632</span>, <span class="va">mmceB632plus</span><span class="op">)</span>,
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">measures.train</span><span class="op">)</span>
@@ -1291,7 +1276,6 @@ Resampling Figure
 <span class="co">## 4    4 0.02666667 0.02666667 0.02666667</span>
 <span class="co">## 5    5 0.03333333 0.03333333 0.03333333</span>
 <span class="co">## 6    6 0.02000000 0.02000000 0.02000000</span>
-
 <span class="co"># Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap</span>
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean      mmce.b632  mmce.b632plus </span>

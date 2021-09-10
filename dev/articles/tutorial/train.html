@@ -336,12 +336,10 @@
 <span class="co">## Model for learner.id=cluster.kmeans; learner.class=cluster.kmeans</span>
 <span class="co">## Trained on: task.id = ruspini; obs = 75; features = 2</span>
 <span class="co">## Hyperparameters: centers=4</span>
-
 <span class="co"># Peak into mod</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## [1] "learner"       "learner.model" "task.desc"     "subset"       </span>
 <span class="co">## [5] "features"      "factor.levels" "time"          "dump"</span>
-
 <span class="va">mod</span><span class="op">$</span><span class="va">learner</span>
 <span class="co">## Learner cluster.kmeans from package stats,clue</span>
 <span class="co">## Type: cluster</span>
@@ -350,10 +348,8 @@
 <span class="co">## Properties: numerics,prob</span>
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: centers=4</span>
-
 <span class="va">mod</span><span class="op">$</span><span class="va">features</span>
 <span class="co">## [1] "x" "y"</span>
-
 <span class="co"># Extract the fitted model</span>
 <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## K-means clustering with 4 clusters of sizes 23, 17, 20, 15</span>
